@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>транзакции | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/tranzakcii/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:53:04 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Путь к транзакции по меню</title>
+		<link>https://abap-blog.ru/osnovy-abap/put-k-tranzakcii-v-menyu/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/put-k-tranzakcii-v-menyu/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 09 Jan 2012 10:57:05 +0000</pubDate>
+				<category><![CDATA[ABAP Словарь]]></category>
+		<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[транзакции]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=177</guid>
+
+					<description><![CDATA[<p>Под катом отчёт показывающий все возможные пути по коду стандартной транзакции [crayon-618a1792c4fd4769552031/]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/put-k-tranzakcii-v-menyu/">Путь к транзакции по меню</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Под катом отчёт показывающий все возможные пути по коду <strong>стандартной</strong> транзакции<span id="more-177"></span></p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZNEWPATH.
+
+TYPES: BEGIN OF ty_menu,
+        parent TYPE MENU_NUM_5,
+        children TYPE MENU_NUM_5,
+        LEVEL TYPE MENU_NUM_2,
+       END OF ty_menu.
+
+DATA: lt_mencu TYPE STANDARD TABLE OF SMENCUSNEW,
+      ls_mencu TYPE SMENCUSNEW,
+      lt_menu  TYPE STANDARD TABLE OF ty_menu,
+      ls_menu  TYPE ty_menu,
+      lv_parent TYPE MENU_NUM_5.
+
+FIELD-SYMBOLS:
+      &lt;fs_mencu&gt; TYPE SMENCUSNEW,
+      &lt;fs_menu&gt;  TYPE ty_menu.
+
+PARAMETERS: TRANS LIKE TSTC-TCODE OBLIGATORY.
+
+START-OF-SELECTION.
+  SELECT * FROM SMENCUSNEW INTO CORRESPONDING FIELDS OF TABLE lt_mencu WHERE REPORT = TRANS AND CUSTOMIZED = 'S'.
+  IF sy-subrc NE 0.
+    MESSAGE 'Транзакции не существует' TYPE 'S'.
+    EXIT.
+  ENDIF.
+
+  LOOP AT lt_mencu ASSIGNING &lt;fs_mencu&gt;.
+    CLEAR ls_menu.
+    ls_menu-parent = &lt;fs_mencu&gt;-object_id.
+    ls_menu-LEVEL  = &lt;fs_mencu&gt;-menu_level.
+    APPEND ls_menu TO lt_menu.
+
+    lv_parent = &lt;fs_mencu&gt;-parent_id.
+    CLEAR sy-subrc.
+    WHILE sy-subrc EQ 0.
+      SELECT SINGLE * FROM SMENCUSNEW INTO ls_mencu WHERE OBJECT_ID EQ lv_parent AND CUSTOMIZED = 'S'.
+      IF sy-subrc EQ 0.
+        ls_menu-children = ls_mencu-object_id.
+        ls_menu-LEVEL = ls_mencu-menu_level.
+        APPEND ls_menu TO lt_menu.
+        lv_parent = ls_mencu-parent_id.
+        CLEAR ls_mencu.
+      ENDIF.
+    ENDWHILE.
+  ENDLOOP.
+
+  SORT lt_menu BY parent children LEVEL.
+
+  LOOP AT lt_menu ASSIGNING &lt;fs_menu&gt; WHERE children IS INITIAL.
+    WRITE: /(30) 'Главное меню' COLOR 2.
+    LOOP AT lt_menu INTO ls_menu WHERE parent EQ &lt;fs_menu&gt;-parent AND children IS NOT INITIAL.
+      PERFORM GET_MENUTEXT USING ls_menu-children ls_menu-LEVEL.
+    ENDLOOP.
+    PERFORM GET_MENUTEXT USING &lt;fs_menu&gt;-parent &lt;fs_menu&gt;-LEVEL.
+    ULINE.
+  ENDLOOP.
+
+* Запуск транзакции
+AT LINE-SELECTION.
+  IF NOT TRANS IS INITIAL.
+    CALL TRANSACTION TRANS.
+  ENDIF.
+
+FORM GET_MENUTEXT USING objectid TYPE MENU_NUM_5
+                        LEVEL    TYPE MENU_NUM_2.
+  DATA: lv_title TYPE SSM_TITLE,
+        lvl TYPE MENU_NUM_2.
+  lvl = LEVEL + 1.
+  SELECT SINGLE TEXT FROM SMENCUST INTO lv_title WHERE OBJECT_ID EQ objectid AND SPRAS EQ sy-langu.
+  WRITE: /lvl(140) lv_title COLOR 2.
+ENDFORM.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/put-k-tranzakcii-v-menyu/">Путь к транзакции по меню</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/put-k-tranzakcii-v-menyu/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

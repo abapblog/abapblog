@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>se91 | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/se91/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:06:12 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Чтение подробного текста из класса сообщений</title>
+		<link>https://abap-blog.ru/osnovy-abap/chtenie-podrobnogo-teksta-iz-klassa-soobshhenij/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/chtenie-podrobnogo-teksta-iz-klassa-soobshhenij/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 13 Dec 2013 06:29:01 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[se91]]></category>
+		<category><![CDATA[класс сообщений]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1679</guid>
+
+					<description><![CDATA[<p>Пример использования ФМ, который позволяет считывать подробные тексты из класса сообщений (транзакция SE91): [crayon-618a1f8470c32336058340/] Результат: Альтернативный способ, с возможностью передачи параметров: [crayon-618a1f8470c43184957121/] Параметры, в подробном тексте, указываются следующим образом (а параметры передаваемые через оператор MESSAGE: &#38;V1&#38; &#8212; &#38;V4&#38;):</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/chtenie-podrobnogo-teksta-iz-klassa-soobshhenij/">Чтение подробного текста из класса сообщений</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Пример использования ФМ, который позволяет считывать подробные тексты из класса сообщений (транзакция SE91):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/12/se91.png"><img loading="lazy" class="alignnone size-full wp-image-1680" src="http://abap-blog.ru/wp-content/uploads/2013/12/se91.png" alt="se91" width="685" height="256" srcset="https://abap-blog.ru/wp-content/uploads/2013/12/se91.png 685w, https://abap-blog.ru/wp-content/uploads/2013/12/se91-300x112.png 300w" sizes="(max-width: 685px) 100vw, 685px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  lt_lines TYPE STANDARD TABLE OF tline.
+
+CALL FUNCTION 'DOCU_GET'
+  EXPORTING
+    id                = 'NA'
+    object            = 'ZTEST001'
+    typ               = ''
+    langu             = sy-langu
+  TABLES
+    line              = lt_lines
+  EXCEPTIONS
+    no_docu_on_screen = 1
+    no_docu_self_def  = 2
+    no_docu_temp      = 3
+    ret_code          = 4
+    OTHERS            = 5.
+
+BREAK-POINT.</pre><p>Результат:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/12/result.png"><img loading="lazy" class="alignnone size-full wp-image-1681" src="http://abap-blog.ru/wp-content/uploads/2013/12/result.png" alt="result" width="902" height="291" srcset="https://abap-blog.ru/wp-content/uploads/2013/12/result.png 902w, https://abap-blog.ru/wp-content/uploads/2013/12/result-300x96.png 300w" sizes="(max-width: 902px) 100vw, 902px" /></a></p>
+<p>Альтернативный способ, с возможностью передачи параметров:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_t100_message TYPE REF TO CL_T100_MESSAGE,
+  gt_parameters   TYPE NAME2VALUE_TABLE,
+  gv_text         TYPE string.
+
+FIELD-SYMBOLS: &lt;fs_parameter&gt; TYPE NAME2VALUE.
+
+APPEND INITIAL LINE TO gt_parameters ASSIGNING &lt;fs_parameter&gt;.
+&lt;fs_parameter&gt;-name = '1'.
+&lt;fs_parameter&gt;-value = 'Значение'.
+
+CREATE OBJECT go_t100_message
+  EXPORTING
+    the_msg_class  = 'ZTEST'
+    the_msg_number = '001'.
+
+go_t100_message-&gt;set_substitution_table( gt_parameters ).
+
+gv_text = go_t100_message-&gt;get_longtext(  ).</pre><p>Параметры, в подробном тексте, указываются следующим образом (а параметры передаваемые через оператор MESSAGE: &amp;V1&amp; &#8212; &amp;V4&amp;):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/12/dynparameters.png"><img loading="lazy" class="alignnone size-full wp-image-1697" src="http://abap-blog.ru/wp-content/uploads/2013/12/dynparameters.png" alt="dynparameters" width="367" height="47" srcset="https://abap-blog.ru/wp-content/uploads/2013/12/dynparameters.png 367w, https://abap-blog.ru/wp-content/uploads/2013/12/dynparameters-300x38.png 300w" sizes="(max-width: 367px) 100vw, 367px" /></a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/chtenie-podrobnogo-teksta-iz-klassa-soobshhenij/">Чтение подробного текста из класса сообщений</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/chtenie-podrobnogo-teksta-iz-klassa-soobshhenij/feed/</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

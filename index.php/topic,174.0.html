@@ -1,0 +1,1769 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" type="text/css" href="https://sapforum.biz/Themes/default/css/index.css?fin20"/>
+	<link rel="stylesheet" type="text/css" href="https://sapforum.biz/Themes/default/css/responsive.css?fin20"/>
+	<link rel="stylesheet" type="text/css" href="https://sapforum.biz/Themes/default/css/boardhover.css?rc4"/>
+	<script type="text/javascript" src="https://sapforum.biz/Themes/default/scripts/script.js?fin20"></script>
+	<script type="text/javascript" src="https://sapforum.biz/Themes/default/scripts/theme.js?fin20"></script>
+	<script type="text/javascript">//<![CDATA[
+var smf_theme_url="https://sapforum.biz/Themes/default";var smf_default_theme_url="https://sapforum.biz/Themes/default";var smf_images_url="https://sapforum.biz/Themes/default/images";var smf_scripturl="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;";var smf_iso_case_folding=false;var smf_charset="UTF-8";var ajax_notification_text="Загружается...";var ajax_notification_cancel_text="Отменить";
+//]]></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="description" content="Оптимизация ABAP-а"/>
+	<meta name="keywords" content="HANA S/4HANA SAP ERP R/3 ABAP ECC FI CO MM SD"/>
+	<title>Оптимизация ABAP-а</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="canonical" href="http://sapforum.biz/index.php?topic=174.0"/>
+	<link rel="help" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=help"/>
+	<link rel="search" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=search"/>
+	<link rel="contents" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;"/>
+	<link rel="alternate" type="application/rss+xml" title="Sapforum.Biz - RSS" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;type=rss;action=.xml"/>
+	<link rel="prev" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.0;prev_next=prev"/>
+	<link rel="next" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.0;prev_next=next"/>
+	<link rel="index" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;board=10.0"/><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({google_ad_client:"ca-pub-6499536846365177",enable_page_level_ads:true});</script> 
+		    <script type="text/javascript">function streamPublish(name,description,hrefTitle,hrefLink,userPrompt){FB.ui({method:'stream.publish',message:'',attachment:{name:name,caption:'',description:(description),href:hrefLink,media:[{'type':'image','src':'https://sapforum.biz/Themes/default/images/topic/veryhot_post.gif','href':hrefLink}]},action_links:[{text:hrefTitle,href:hrefLink}],user_prompt_message:userPrompt},function(response){});}function publishStream(suject,body,href){streamPublish(""+suject+"",""+body+"",""+suject+"",""+href+"");}</script>
+			    <style type="text/css">li.fbpub_button{display:inline;font-weight:bold;background:url(https://sapforum.biz/Themes/default/images/facebook.png) no-repeat 0 0;padding-left:18px}#forumposts h3 span#facebook{float:right;margin:6px .5em 0 0}ul.quickbuttons li.fbpub_button{background:url(https://sapforum.biz/Themes/default/images/facebook.png) no-repeat 0 0}</style><script src="https://www.google.com/recaptcha/api.js"></script>
+	<link rel="stylesheet" type="text/css" id="recaptcha_css" href="https://sapforum.biz/Themes/default/css/recaptcha.css"/>
+		<script type="text/javascript" src="https://sapforum.biz/Themes/default/scripts/captcha.js"></script>
+        <!-- App Indexing for Google Search -->
+        <link href="android-app://com.quoord.tapatalkpro.activity/tapatalk/sapforum.biz/?location=topic&amp;fid=10&amp;tid=174&amp;perpage=25&amp;page=1&amp;channel=google-indexing" rel="alternate"/>
+        <link href="ios-app://307880732/tapatalk/sapforum.biz/?location=topic&amp;fid=10&amp;tid=174&amp;perpage=25&amp;page=1&amp;channel=google-indexing" rel="alternate"/>
+        
+
+	<script type="text/javascript">//<![CDATA[
+var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-24768914-1']);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();
+//]]></script>
+</head>
+<body>
+<!-- Tapatalk Detect body start -->
+<script type="text/javascript">if(typeof(tapatalkDetect)=="function")tapatalkDetect();</script>
+<!-- Tapatalk Detect banner body end -->
+
+
+<div id="wrapper" style="width: 95%">
+	<div id="header"><div class="frame">
+		<div id="top_section">
+			<h1 class="forumtitle">
+				<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;">Sapforum.Biz</a>
+			</h1>
+			<img id="upshrink" src="https://sapforum.biz/Themes/default/images/upshrink.png" alt="*" title="Свернуть/Развернуть" style="display: none;"/>
+			<img id="smflogo" src="https://sapforum.biz/Themes/default/images/smflogo.png" alt="Simple Machines Forum" title="Simple Machines Forum"/>
+		</div>
+		<div id="upper_section" class="middletext">
+			<div class="user">
+				<script type="text/javascript" src="https://sapforum.biz/Themes/default/scripts/sha1.js"></script>
+				<form id="guest_form" action="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login2" method="post" accept-charset="UTF-8" onsubmit="hashLoginPassword(this, 'b94c2ad2acbef66f6b75f508f8fe087b');">
+					<div class="info">Добро пожаловать, <strong>Гость</strong>. Пожалуйста, <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">войдите</a> или <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">зарегистрируйтесь</a>.<br/>Не получили <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=activate">письмо с кодом активации</a>?</div>
+					<input type="text" name="user" size="10" class="input_text"/>
+					<input type="password" name="passwrd" size="10" class="input_password"/>
+					<select name="cookielength">
+						<option value="60">1 час</option>
+						<option value="1440">1 день</option>
+						<option value="10080">1 неделя</option>
+						<option value="43200">1 месяц</option>
+						<option value="-1" selected="selected">Навсегда</option>
+					</select>
+					<input type="submit" value="Вход" class="button_submit"/><br/>
+					<div class="info"></div>
+					<br/><input type="text" name="openid_identifier" id="openid_url" size="25" class="input_text openid_login"/>
+					<input type="hidden" name="hash_passwrd" value=""/><input type="hidden" name="f54592a63" value="b94c2ad2acbef66f6b75f508f8fe087b"/>
+				</form>
+			</div>
+			<div class="news normaltext">
+				<form id="search_form" action="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=search2" method="post" accept-charset="UTF-8">
+					<input type="text" name="search" value="" class="input_text"/>&nbsp;
+					<input type="submit" name="submit" value="Поиск" class="button_submit"/>
+					<input type="hidden" name="advanced" value="0"/>
+					<input type="hidden" name="topic" value="174"/></form>
+				<h2>Новости: </h2>
+				<p>Twitter: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a><br/>RSS лента: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></p>
+			</div>
+		</div>
+		<br class="clear"/>
+		<script type="text/javascript">//<![CDATA[
+var oMainHeaderToggle=new smc_Toggle({bToggleEnabled:true,bCurrentlyCollapsed:false,aSwappableContainers:['upper_section'],aSwapImages:[{sId:'upshrink',srcExpanded:smf_images_url+'/upshrink.png',altExpanded:'Свернуть/Развернуть',srcCollapsed:smf_images_url+'/upshrink2.png',altCollapsed:'Свернуть/Развернуть'}],oThemeOptions:{bUseThemeSettings:false,sOptionName:'collapse_header',sSessionVar:'f54592a63',sSessionId:'b94c2ad2acbef66f6b75f508f8fe087b'},oCookieOptions:{bUseCookie:true,sCookieName:'upshrink'}});
+//]]></script>
+		<div id="main_menu">
+			<ul class="dropmenu" id="menu_nav">
+				<li id="button_home">
+					<a class="active firstlevel" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;">
+						<span class="responsive_menu home"></span>
+
+						<span class="last firstlevel">Начало</span>
+					</a>
+				</li>
+				<li id="button_help">
+					<a class="firstlevel" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=help">
+						<span class="responsive_menu help"></span>
+
+						<span class="firstlevel">Помощь</span>
+					</a>
+				</li>
+				<li id="button_search">
+					<a class="firstlevel" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=search">
+						<span class="responsive_menu search"></span>
+
+						<span class="firstlevel">Поиск</span>
+					</a>
+				</li>
+				<li id="button_calendar">
+					<a class="firstlevel" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=calendar">
+						<span class="responsive_menu calendar"></span>
+
+						<span class="firstlevel">Календарь</span>
+					</a>
+				</li>
+				<li id="button_mlist">
+					<a class="firstlevel" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=mlist">
+						<span class="responsive_menu mlist"></span>
+
+						<span class="firstlevel">Пользователи</span>
+					</a>
+					<ul>
+						<li>
+							<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=mlist">
+								<span>Просмотр списка пользователей</span>
+							</a>
+						</li>
+						<li>
+							<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=mlist;sa=search">
+								<span class="last">Поиск пользователей</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li id="button_login">
+					<a class="firstlevel" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">
+						<span class="responsive_menu login"></span>
+
+						<span class="firstlevel">Вход</span>
+					</a>
+				</li>
+				<li id="button_register">
+					<a class="firstlevel" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">
+						<span class="responsive_menu register"></span>
+
+						<span class="last firstlevel">Регистрация</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<br class="clear"/>
+	</div></div><script>(function(){var cx='001300690541689160005:3cxhdki3zb4';var gcse=document.createElement('script');gcse.type='text/javascript';gcse.async=true;gcse.src='https://cse.google.com/cse.js?cx='+cx;var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(gcse,s);})();</script>
+<gcse:search></gcse:search><br/>
+<div id="cse-search-results" < div>
+<script type="text/javascript">var googleSearchIframeName="cse-search-results";var googleSearchFormName="cse-search-box";var googleSearchFrameWidth=800;var googleSearchDomain="www.google.com";var googleSearchPath="/cse";</script>
+<script type="text/javascript" src="http://www.google.com/afsonline/show_afs_search.js"></script>
+<br/>
+	<div id="content_section"><div class="frame">
+		<div id="main_content_section"> <div class="navigate_hvr_section"> <div class="linktree_border1"><ul><li class="linktree_b"> <div class="linktree_1 linktree_1_hover" onclick="window.location.href='http://sapforum.biz/index.php'"><a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;" style="text-decoration: none;">Sapforum.Biz</a> &nbsp;</div> <div class="linktree_2 linktree_2_hover" onclick="window.location.href='http://sapforum.biz/index.php#c4'"><a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;#c4" style="text-decoration: none;">Инструменты</a> &nbsp;</div></li><li class="linktree_b"> <div class="linktree_3 linktree_3_hover" onclick="window.location.href='http://sapforum.biz/index.php?board=10.0'"><a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;board=10.0" style="text-decoration: none;">ABAP - Инструментальные средства</a> &nbsp;</div> <div class="linktree_4 linktree_4_hover" onclick="window.location.href='http://sapforum.biz/index.php?topic=174.0'"><a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.0" style="text-decoration: none;">Оптимизация ABAP-а</a> &nbsp;</div> </li> </ul></div></div><div id="fb-root"></div>
+    <script type="text/javascript">window.fbAsyncInit=function(){FB.init({appId:'218568648175529',channelURL:'http://sapforum.biz/facebookauth/channel.html',status:true,cookie:true,oauth:true,xfbml:true,});FB.XFBML.parse();};(function(d){var js,id='facebook-jssdk';if(d.getElementById(id)){return;}js=d.createElement('script');js.id=id;js.async=true;js.src='//connect.facebook.net/ru_RU/all.js';d.getElementsByTagName('head')[0].appendChild(js);}(document));</script><script src="http://connect.facebook.net/ru_RU/all.js#appId=218568648175529&amp;xfbml=1"></script><fb:like href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.0" send="true" layout="standard" action="recommend" colorscheme="light" width="450" show_faces="true" font=""></fb:like><br/><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- responsive -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6499536846365177" data-ad-slot="1623398091" data-ad-format="auto"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+			<a id="top"></a>
+			<a id="msg713"></a>
+			<div class="pagesection">
+				<div class="nextlinks"><a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.0;prev_next=prev#new">&laquo; предыдущая тема</a> <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.0;prev_next=next#new">следующая тема &raquo;</a></div>
+		<div class="buttonlist floatright">
+			<ul>
+				<li><a class="button_strip_print" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=printpage;topic=174.0" rel="new_win nofollow"><span class="last">Печать</span></a></li>
+			</ul>
+		</div>
+				<div class="pagelinks floatleft">Страницы: [<strong>1</strong>] <a class="navPages" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.25">2</a> <a class="navPages" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.50">3</a> <span style="font-weight: bold;" onclick="expandPages(this, 'http://sapforum.biz/index.php?topic=174.%1$d', 75, 200, 25);" onmouseover="this.style.cursor='pointer';"> ... </span><a class="navPages" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.200">9</a> &nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.0;all">Все</a>   &nbsp;&nbsp;<a href="#lastPost"><strong>Вниз</strong></a></div>
+			</div>
+			<div id="forumposts">
+				<div class="cat_bar">
+					<h3 class="catbg">
+						<img src="https://sapforum.biz/Themes/default/images/topic/veryhot_post_sticky.gif" align="bottom" alt=""/>
+						<span id="author">Автор</span>
+						Тема: Оптимизация ABAP-а &nbsp;(Прочитано 251196 раз)
+					</h3>
+				</div>
+				<p id="whoisviewing" class="smalltext">0 Пользователей и 3 Гостей просматривают эту тему.
+				</p>
+				<form action="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=quickmod2;topic=174.0" method="post" accept-charset="UTF-8" name="quickModForm" id="quickModForm" style="margin: 0;" onsubmit="return oQuickModify.bInEditMode ? oQuickModify.modifySave('b94c2ad2acbef66f6b75f508f8fe087b', 'f54592a63') : false">
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_713_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/clip.gif" alt=""/>
+									</div>
+									<h5 id="subject_713">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg713#msg713" rel="nofollow">Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong> :</strong> Май 16, 2008, 11:39:58 am &#187;</div>
+									<div id="msg_713_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_713">Данное первое сообщение темы будет содержать обобщенный документ по оптимизации ABAP.<br/><br/><strong><span style="color: maroon;" class="bbc_color">25.10.2010</span></strong> - Первая версия документа 1.0<br/><br/><strong><span style="color: maroon;" class="bbc_color">21.03.2011</span> </strong>- Изменения к оптимизации ABAP версия 1.1<br/><div class="quoteheader"><div class="topslice_quote">Цитировать</div></div><blockquote class="bbc_standard_quote">Краткий список изменений:<br/><ul class="bbc_list"><li>Расширено описание пункта 8 – Определение внутренних таблиц, добавлен раздел 8.1 описывающий внутреннюю организацию и принципы выделения памяти системой для внутренних таблиц, так же описан параметр INITIAL SIZE используемый при объявлении внутренних таблиц в программах и общие рекомендации по его использованию.<br/></li><li>Расширено описание пункта 8 – Определение внутренних таблиц, добавлен раздел 8.2 описывающий организацию индексов для внутренних таблиц и принципов их построения.<br/></li><li>Расширено и изменено описание пункта 9, работа операторов REFRESH и FREE, в связи с получением более подробной информации по их функционированию.<br/></li><li>Небольшие несущественные правки по тексту из-за внесенных выше изменений в раздел 8</li></ul></blockquote><div class="quotefooter"><div class="botslice_quote"></div></div><br/><strong><span style="color: maroon;" class="bbc_color">21.09.2011</span> </strong>- Изменения к оптимизации ABAP версия 1.2<br/><div class="quoteheader"><div class="topslice_quote">Цитировать</div></div><blockquote class="bbc_standard_quote">Краткий список изменений:<br/><ul class="bbc_list"><li>Расширено описание пункта 10 – Тестирование программ, дополнено описание использования транзакций расширенной проверки программы SLIN и анализатора код транзакции SCI / SCII.<br/></li></ul></blockquote><div class="quotefooter"><div class="botslice_quote"></div></div><br/><span style="color: green;" class="bbc_color"><em>PS: Предыдущие версии документа, пока удаляться не будут...</em></span> <br/><span style="color: green;" class="bbc_color">PPS: И кстати качать предыдущие версии документа не обязательно, хотя если вы хотите отследить как менялось мое и всех кто помогал мне писать документ, представление об оптимизации ABAP-а, ну тогда да, качайте&nbsp; <img src="http://sapforum.biz/Smileys/default/xgrin.gif.pagespeed.ic.QVVz6XIT20.png" alt=";D" title="Усмешка" class="smiley"/></span></div>
+							</div>
+							<div id="msg_713_footer" class="attachments smalltext">
+								<div style="overflow: auto;">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;topic=174.0;attach=1999"><img src="https://sapforum.biz/Themes/default/images/icons/clip.gif" align="middle" alt="*"/>&nbsp;Оптимизация ABAP v1-0.pdf</a> 
+										(462.07 кБ - загружено 4910 раз.)<br/>
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;topic=174.0;attach=2299"><img src="https://sapforum.biz/Themes/default/images/icons/clip.gif" align="middle" alt="*"/>&nbsp;Оптимизация ABAP v1-1.pdf</a> 
+										(552.8 кБ - загружено 4879 раз.)<br/>
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;topic=174.0;attach=2653"><img src="https://sapforum.biz/Themes/default/images/icons/clip.gif" align="middle" alt="*"/>&nbsp;Оптимизация ABAP v1-2.pdf</a> 
+										(1090.19 кБ - загружено 9325 раз.)<br/>
+								</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_713">
+								&#171; <em>Последнее редактирование: Сентябрь 21, 2011, 04:42:16 pm от Uukrul</em> &#187;
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.0;msg=713">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg714"></a>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_714_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_714">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg714#msg714" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #1 :</strong> Май 16, 2008, 11:50:20 am &#187;</div>
+									<div id="msg_714_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_714">В общем как не крутись а писать на ABAP приходится и очень часто это какие-то отчеты/обработки, которые гудят долго и жрут как памяти так и процессора много, в общем-то зубры и так знают как писать правильно, а вот молодЕжь такие перлы выдает, что иногда... хотя опять же если вспомнить прошлый век и свой первый отчет, то как говориться сам такой был. А поэтому предлагают тут поделиться примерами того как надо писать, чтобы или работало быстрее или памяти жрало меньше или.. ну в общем от ситуации. <br/><br/>PS: При этом не надо думать, что если что-то вам кажется общеизвестным, то это таки действительно общеизвестно&nbsp; <img src="http://sapforum.biz/Smileys/default/xwink.gif.pagespeed.ic.cldandycH0.png" alt=";&#41;" title="Подмигивающий" class="smiley"/><br/><br/>Работу запросов можно проверить через транзакцию <strong>ST05</strong> включив трассировку запросов, однако в продуктиве можете отгрести за это, плюс не забываем что два чтения подряд одних и тех же данных, дадут разное время, так как во втором чтении данные скорее всего будут уже частично кешированы и соответственно прочитаются быстрее без изменения запроса.<br/><br/>Выборка данных из таблиц.<br/><br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">DATA: lt_mara LIKE mara OCCURS 1 WITH HEADER LINE.<br/><br/>SELECT * INTO CORRESPONDIG FIELDS OF TABLE lt_mara<br/>FROM mara</code>работает медленнее, чем<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT * INTO TABLE lt_mara<br/>FROM mara</code><br/>В общем случае время выполнения первого запроса раза в 4 больше чем второй вариант.</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_714">
+								&#171; <em>Последнее редактирование: Октябрь 25, 2010, 12:03:47 am от Uukrul </em> &#187;
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.1;msg=714">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg717"></a>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=17" title="Просмотр профиля Паганель">Паганель</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_717_extra_info">
+								<li class="title">Я НЕ ЗАНИМАЮСЬ SAP</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Full Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=17">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3654;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 1 367</li>
+								<li class="karma">Репутация: +20/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li>
+								<li class="blurb">https://noteifyapp.com</li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="https://noteifyapp.com" title="MacPlus Software" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="MacPlus Software"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_717">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg717#msg717" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #2 :</strong> Май 16, 2008, 10:21:16 pm &#187;</div>
+									<div id="msg_717_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_717">-- а что лутше select sum(xxx) from yyy или&nbsp; ....<br/><br/><div class="quoteheader"><div class="topslice_quote">Цитировать</div></div><blockquote class="bbc_standard_quote">В общем как не крутись а писать на ABAP приходится и очень часто это какие-то отчеты/обработк</blockquote><div class="quotefooter"><div class="botslice_quote"></div></div>-- ну вижу (у нас) то знание абап - только вред - так тебя начинают грузить программерской работой, никагого росту, за деревьями леса не видиш ....<br/>а рядок девушки&nbsp; - абпапа нифига - так у них и задачи поинтересней,&nbsp; и загрузка полутше ...<br/><br/>p.s. может тему начать ? Типа консультант без знания абап, хорошо или плохо .... <br/>или &quot;Насколько большой недостаток - знать абап&quot;</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_717">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.2;msg=717">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+							<div class="signature" id="msg_717_signature">You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a><br/>You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a><br/>You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a><br/>You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg718"></a>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_718_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_718">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg718#msg718" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #3 :</strong> Май 16, 2008, 10:39:09 pm &#187;</div>
+									<div id="msg_718_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_718"><div class="quoteheader"><div class="topslice_quote">You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div></div><blockquote class="bbc_standard_quote">-- а что лучше select sum(xxx) from yyy или&nbsp; ....<br/></blockquote><div class="quotefooter"><div class="botslice_quote"></div></div>Для больших таблиц... ну скажем так, как отрабатывает операция SUM(XXX), при такой конструкции всегда подразумевается что есть группа записей с одинаковым значением одного поля и числовым полем, т.е.<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">ID<span style="white-space: pre;">	</span>COST<br/>------------<br/>01<span style="white-space: pre;">	</span>2<br/>02<span style="white-space: pre;">	</span>2<br/>01<span style="white-space: pre;">	</span>3<br/>01<span style="white-space: pre;">	</span>1<br/>02<span style="white-space: pre;">	</span>1<br/></code>Без индекса к чему это ведет? А к тому что при операции суммирования, для каждого из значений ID в общем случае система пробегает по всей таблице, да кеширование и оптимизация при обработки SQL-запросов + индексы ускорят процесс, но в общем случае без индекса сумму для каждого ID можно получить выполнив для данного примера двойной проход по таблице, сначала для ID = 01, затем для ID = 02, а поэтому иногда может быть быстрее загрузить все во внутреннюю таблицу (если по памяти есть куда) и уже в памяти пройтись и просуммировать данные.<br/><br/>Опять же, все таки желательно смотреть на данные и уже из этого решать, что будет быстрее, т.е. запрос с суммированием или чтение SELECT * INTO TABLE xxx и уже затем LOOP AT lt_xxx. ENDLOOP. С суммированием в цикле.<br/><br/>Из личного опыта на большой таблице, &gt;30 000 000 записей, но записи длинной порядка 100 байт, мне надо было посчитать не сумму, а количество записей с определенными ID. Так вот, операция SELECT COUNT(*) просто зависло и не вернулось из задумчивости, а вот вариант с выбором во внутреннюю таблицу и ручным суммированием, оказался очень даже быстрым и приемлимым. Индексы были построены и первый SELECT по плану запроса ходил как раз именно по индексу.<br/><br/><div class="quoteheader"><div class="topslice_quote">You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div></div><blockquote class="bbc_standard_quote">а рядок девушки&nbsp; - абпапа нифига - так у них и задачи поинтересней,&nbsp; и загрузка полутше ...<br/>p.s. может тему начать ? Типа консультант без знания абап, хорошо или плохо .... <br/>или &quot;Насколько большой недостаток - знать абап&quot;<br/></blockquote><div class="quotefooter"><div class="botslice_quote"></div></div>Ну открывай, в другой ветке конечно&nbsp; <img src="http://sapforum.biz/Smileys/default/rolleyes.gif.pagespeed.ce.XcUK202Yqt.gif" alt="&#58;&#58;&#41;" title="Строит глазки" class="smiley"/></div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_718">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.3;msg=718">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg721"></a>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=17" title="Просмотр профиля Паганель">Паганель</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_721_extra_info">
+								<li class="title">Я НЕ ЗАНИМАЮСЬ SAP</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Full Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=17">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3654;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 1 367</li>
+								<li class="karma">Репутация: +20/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li>
+								<li class="blurb">https://noteifyapp.com</li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="https://noteifyapp.com" title="MacPlus Software" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="MacPlus Software"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_721">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg721#msg721" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #4 :</strong> Май 16, 2008, 11:10:29 pm &#187;</div>
+									<div id="msg_721_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_721"><div class="quoteheader"><div class="topslice_quote">Цитировать</div></div><blockquote class="bbc_standard_quote"> уже в памяти пройтись и просуммировать данные.</blockquote><div class="quotefooter"><div class="botslice_quote"></div></div><br/>Можеш пример в студию - простенький лиш бы понять смысл ?</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_721">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.4;msg=721">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+							<div class="signature" id="msg_721_signature">You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a><br/>You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a><br/>You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a><br/>You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg726"></a>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_726_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_726">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg726#msg726" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #5 :</strong> Май 17, 2008, 12:07:40 am &#187;</div>
+									<div id="msg_726_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_726"><div class="quoteheader"><div class="topslice_quote">You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div></div><blockquote class="bbc_standard_quote">Можеш пример в студию - простенький лиш бы понять смысл ?<br/></blockquote><div class="quotefooter"><div class="botslice_quote"></div></div>Так а чего там пример то? Ну схематично, без системы типа так:<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">*&amp;---------------------------------------------------------------------*<br/>*&amp; Report&nbsp; YUUK_TEST<br/>*&amp;<br/>*&amp;---------------------------------------------------------------------*<br/>*&amp; В общем пример суммы свободного запаса по заводам для материалов<br/>*&amp;<br/>*&amp;---------------------------------------------------------------------*<br/><br/>REPORT&nbsp; yuuk_test.<br/>DATA: BEGIN OF lt_mard OCCURS 1.<br/>&nbsp; &nbsp; &nbsp; &nbsp; INCLUDE STRUCTURE mard.<br/>DATA: index LIKE sy-tabix,<br/>END OF lt_mard.<br/>DATA: l_mard LIKE lt_mard.<br/><br/>*--------------------------<br/>SELECT * INTO TABLE lt_mard<br/>FROM mard<br/>ORDER BY werks matnr.<br/><br/>* Опять же может окажется что SORT lt_mard BY werks matnr.<br/>* может быстрее быть чем сортировка в запросе. Тут надо смотреть<br/>* на память и объемы выборки...<br/><br/>LOOP AT lt_mard.<br/>&nbsp; ON CHANGE OF lt_mard-werks OR lt_mard-matnr.<br/>&nbsp; &nbsp; IF sy-tabix = 1.<br/>&nbsp; &nbsp; &nbsp; lt_mard-index = sy-tabix.<br/>&nbsp; &nbsp; &nbsp; l_mard = lt_mard.<br/>&nbsp; &nbsp; ELSE.<br/>&nbsp; &nbsp; &nbsp; MODIFY lt_mard FROM l_mard INDEX l_mard-index.<br/>&nbsp; &nbsp; &nbsp; lt_mard-index = sy-tabix.<br/>&nbsp; &nbsp; &nbsp; l_mard = lt_mard.<br/>&nbsp; &nbsp; ENDIF.<br/>&nbsp; &nbsp; CONTINUE.<br/>&nbsp; ENDON.<br/>&nbsp; l_mard-labst = l_mard-labst + lt_mard-labst.<br/>ENDLOOP.<br/>IF lt_mard-index = 0.<br/>&nbsp; l_mard-labst = l_mard-labst + lt_mard-labst.<br/>ENDIF.<br/>MODIFY lt_mard FROM l_mard INDEX l_mard-index.<br/><br/>DELETE lt_mard WHERE index = 0.<br/><br/>LOOP AT lt_mard.<br/>&nbsp; WRITE: / lt_mard-werks, lt_mard-lgort, lt_mard-matnr, lt_mard-labst.<br/>ENDLOOP.<br/></code></div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_726">
+								&#171; <em>Последнее редактирование: Май 17, 2008, 01:30:44 am от Uukrul</em> &#187;
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.5;msg=726">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg727"></a>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=17" title="Просмотр профиля Паганель">Паганель</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_727_extra_info">
+								<li class="title">Я НЕ ЗАНИМАЮСЬ SAP</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Full Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=17">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3654;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 1 367</li>
+								<li class="karma">Репутация: +20/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li>
+								<li class="blurb">https://noteifyapp.com</li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="https://noteifyapp.com" title="MacPlus Software" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="MacPlus Software"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_727">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg727#msg727" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #6 :</strong> Май 17, 2008, 12:17:07 am &#187;</div>
+									<div id="msg_727_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_727">Спасибо, что то такое я и думал ... только не мог вспомнить где видел подобное ... <br/>Кажется аналогично делается отчет с суммами по группам с помощю WRITE ...<br/><br/>Вопрос: а зачем так <div class="quoteheader"><div class="topslice_quote">Цитировать</div></div><blockquote class="bbc_standard_quote">DELETE lt_mard WHERE index = 0.</blockquote><div class="quotefooter"><div class="botslice_quote"></div></div><br/>Как я понял - для очистки строки (шапки таблицы) ...<br/><br/>А чего не clear ...&nbsp; сейчас еще посмотрю ..ю</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_727">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.6;msg=727">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+							<div class="signature" id="msg_727_signature">You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a><br/>You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a><br/>You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a><br/>You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg729"></a>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_729_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_729">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg729#msg729" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #7 :</strong> Май 17, 2008, 12:39:00 am &#187;</div>
+									<div id="msg_729_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_729"><div class="quoteheader"><div class="topslice_quote">You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div></div><blockquote class="bbc_standard_quote">Вопрос: а зачем так <br/>Как я понял - для очистки строки (шапки таблицы) ...<br/></blockquote><div class="quotefooter"><div class="botslice_quote"></div></div>Нет, конечно... я убираю из памяти лишние запаси которые уже вошли в суммирование... т.е. пример есть пять записей на двух заводах одного материала:<br/><br/>1000 0088 M1 1<br/>1000 0001 M1 2<br/>1000 0088 M1 5<br/>1000 0010 M1 3<br/>1200 0001 M1 4<br/><br/>Так вот после выборки с сортировкой я получу, ну пусть такой порядок:<br/>1000 0001 M1 2<br/>1000 0088 M1 5<br/>1000 0088 M1 1<br/>1000 0010 M1 3<br/>1200 0001 M1 4<br/><br/>После обработки будет такая ситуация во внутренней таблице:<br/>1000 0001 M1 11 1<br/>1000 0088 M1 5 0<br/>1000 0088 M1 1 0<br/>1000 0010 M1 3 0<br/>1200 0001 M1 4 5<br/><br/>Затем я оператом DELETE грохну нулевые индексы и получу<br/>1000 0001 M1 11 1<br/>1200 0001 M1 4 5<br/><br/>На склад забиваем и того имею суммы запасов материала по заводу в целом.<br/></div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_729">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.7;msg=729">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg730"></a>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_730_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_730">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg730#msg730" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #8 :</strong> Май 17, 2008, 12:48:08 am &#187;</div>
+									<div id="msg_730_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_730">Поля в примере идут:<br/>Завод, Склад, Код материала, Количество<br/><br/>В результирующей выборке, последнее число, это индекс записи внутренней таблицы... из примера программы это поле index.</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_730">
+								&#171; <em>Последнее редактирование: Май 17, 2008, 01:19:13 am от Uukrul</em> &#187;
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.8;msg=730">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg731"></a>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_731_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_731">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg731#msg731" rel="nofollow">Re: Оптимизация ABAP-а (SELECT * ENDSELECT.)</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #9 :</strong> Май 19, 2008, 10:39:05 am &#187;</div>
+									<div id="msg_731_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_731">Самый тормознутый способ выборки чего либо из таблиц это операция:<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT * FROM mard.<br/>ENDSELECT.<br/></code>Однако исключать данный способ из применения не следует, так как он дает наименьшую нагрузку на сервер + минимальное использование памяти. Так что если таблица небольшая или выборка данных будет небольшой, то вполне можно обойтись и данной конструкцией, т.е. без операции SELECT * INTO TABLE и дальнейшим LOOP AT lt_tab. ENDLOOP.&nbsp; Ну и как обычно смотрим трассировку запросов. Если эта конструкция является самой тормознутой в вашем приложении, то имеет смысл ее заменить, а иначе, нефиг заниматься оптимизацией так где и без нее все бегает&nbsp; <img src="http://sapforum.biz/Smileys/default/xwink.gif.pagespeed.ic.cldandycH0.png" alt=";&#41;" title="Подмигивающий" class="smiley"/></div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_731">
+								&#171; <em>Последнее редактирование: Май 19, 2008, 10:40:50 am от Uukrul</em> &#187;
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.9;msg=731">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg741"></a>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=5" title="Просмотр профиля №1">№1</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_741_extra_info">
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Jr. Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=5">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 636</li>
+								<li class="karma">Репутация: +23/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li>
+								<li class="blurb">Судьбы я вызов принимаю прямым пожатием руки</li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_741">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg741#msg741" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #10 :</strong> Май 20, 2008, 09:11:11 am &#187;</div>
+									<div id="msg_741_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_741"><div class="quoteheader"><div class="topslice_quote">You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div></div><blockquote class="bbc_standard_quote">PS: При этом не надо думать, что если что-то вам кажется общеизвестным, то это таки действительно общеизвестно&nbsp; <img src="http://sapforum.biz/Smileys/default/xwink.gif.pagespeed.ic.cldandycH0.png" alt=";&#41;" title="Подмигивающий" class="smiley"/><br/></blockquote><div class="quotefooter"><div class="botslice_quote"></div></div>Добавлю свои пять копеек... про конструкцию <strong>SELECT .... FOR ALL ENTRIES IN itab</strong> <br/>Если itab пустая, то будет перебор всей таблицы, т.е. FULL SCAN. Поэтому надо до оператора поставить проверку на непустоту.<br/>ЗЫ. Непонятно одно - почему САПы не воткнули такую проверку на уровне ядра? Жить было бы куда проще.</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_741">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.10;msg=741">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+							<div class="signature" id="msg_741_signature">Мой You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg830"></a>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_830_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/lamp.gif" alt=""/>
+									</div>
+									<h5 id="subject_830">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg830#msg830" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #11 :</strong> Июнь 22, 2008, 08:48:15 pm &#187;</div>
+									<div id="msg_830_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_830">Ну поехали дальше (Опять же из обще известного, так сказать примеры из документации SAP, руки до которой почему-то у многих не доходят):<br/><br/>Требуется проверить на существование записи в таблице БД по определенному не полному ключу. Варианта тут есть два, первый делаем SELECT с нужными ключами и внутри EXIT.<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT * FROM &lt;table&gt; INTO &lt;work_line&gt;<br/>&nbsp; &nbsp; WHERE &lt;Field&gt; = 'xxx'.<br/>&nbsp; EXIT.<br/>ENDSELECT.<br/></code>или<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT * FROM &lt;table&gt; INTO &lt;work_line&gt;<br/>&nbsp; UP TO 1 ROWS<br/>&nbsp; WHERE &lt;Field&gt; = 'xxx'.<br/>ENDSELECT.<br/></code>Так вот второй вариант с UP TO 1 ROWS (кстати многие похоже о такой конструкции даже не подозревают), работает так раз в 6-7 быстрее, чем первый вариант.</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_830">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.11;msg=830">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg831"></a>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_831_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_831">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg831#msg831" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #12 :</strong> Июнь 22, 2008, 09:05:26 pm &#187;</div>
+									<div id="msg_831_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_831">Ну и дальше возвращаясь к теме агрегирующих функций, собственно с чего началась данная тема, вообще-то документация советует использовать именно функции агрегации типа MAX, MIN, SUM и т.д. вместо использования построчного подсчета значений. В справке приведены такие два примера, по поиску максимального значения:<br/><br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">DATA: MAX_MSGNR type t100-msgnr.<br/>MAX_MSGNR = '000'.<br/>SELECT * FROM T100 INTO T100_WA<br/>&nbsp; WHERE SPRSL = 'D' AND<br/>&nbsp; &nbsp; &nbsp; &nbsp; ARBGB = '00'.<br/>&nbsp; CHECK: T100_WA-MSGNR &gt; MAX_MSGNR.<br/>&nbsp; MAX_MSGNR = T100_WA-MSGNR.<br/>ENDSELECT.<br/></code>и<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">DATA: MAX_MSGNR type t100-msgnr.<br/>SELECT MAX( MSGNR ) FROM T100 INTO max_msgnr<br/>&nbsp; WHERE SPRSL = 'D' AND<br/>&nbsp; &nbsp; &nbsp; &nbsp; ARBGB = '00'.<br/></code>Разница в выполнении этих двух примеров где-то раз в 100, т.е. первый пример будет работать ну на много дольше. Однако если вернуться к конструкции UP TO 1 ROWS, то добавив конструкцию ORDER BY с соответсующей сортировке по убыванию&nbsp; для MAX или по возрастанию для MIN получим время выполнения такое же как и в примере с агрегирующей функцией.&nbsp; Пример ниже:<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">DATA: MAX_MSGNR type t100-msgnr.<br/>MAX_MSGNR = '000'.<br/><br/>SELECT * FROM T100 INTO T100_WA UP TO 1 ROWS<br/>&nbsp; WHERE SPRSL = 'D' AND<br/>&nbsp; &nbsp; &nbsp; &nbsp; ARBGB = '00'<br/>ORDER BY MSGNR DESCENDING.<br/>ENDSELECT.<br/></code>В общем замеры времени выполнения для примера 2 и 3 показали 81 и 85 миллисекунд (для примера 1, кстати было 7360), т.е.&nbsp; для функций MIN и MAX, можно использовать альтернативу UP TO 1 ROWS совместно с ORDER BY. Ну а сумма и среднее значение, это уже по обстоятельствам надо смотреть&nbsp; <img src="http://sapforum.biz/Smileys/default/xwink.gif.pagespeed.ic.cldandycH0.png" alt=";&#41;" title="Подмигивающий" class="smiley"/></div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_831">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.12;msg=831">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg832"></a>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_832_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_832">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg832#msg832" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #13 :</strong> Июнь 22, 2008, 09:27:11 pm &#187;</div>
+									<div id="msg_832_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_832">По поводу данных которые мы выбираем. В общем не следует без всякой необходимости использовать <span style="color: red;" class="bbc_color"><span style="font-family: Verdana;" class="bbc_font"><strong>*</strong></span></span> в операторе SELECT, если вас интересует значение одного или пары полей из сотни, которые входят в таблицу. Пример из справки:<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT * FROM DD01L INTO DD01L_WA<br/>&nbsp; WHERE DOMNAME LIKE 'CHAR%'<br/>&nbsp; &nbsp; &nbsp; &nbsp; AND AS4LOCAL = 'A'.<br/>ENDSELECT.<br/></code>и<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT DOMNAME FROM DD01L<br/>&nbsp; INTO DD01L_WA-DOMNAME<br/>&nbsp; WHERE DOMNAME LIKE 'CHAR%'<br/>&nbsp; &nbsp; &nbsp; &nbsp; AND AS4LOCAL = 'A'.<br/>ENDSELECT.<br/></code>В первом случае&nbsp; получаем время выполнения порядка 8285 миллисекунд, а во втором случае 2596. Ну т.е. где-то раза в 4.<br/><br/>Однако теперь, зная что и как выбирать и возвращаясь к предыдущему сообщению, по поводу агрегирующих функций, пример 3 можно еще дожать следующим образом:<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">DATA: MAX_MSGNR type t100-msgnr.<br/><br/>SELECT MSGNR FROM T100 INTO (MAX_MSGNR) UP TO 1 ROWS<br/>&nbsp; WHERE SPRSL = 'D' AND<br/>&nbsp; &nbsp; &nbsp; &nbsp; ARBGB = '00'<br/>ORDER BY MSGNR DESCENDING.<br/>ENDSELECT.<br/></code>т.е. задав выбор только поля по которому требуется получить максимальное значение и после этого выполнение станет практически такое же как и с использованием функции MAX, у меня получилось после нескольких прогонов разница в 1-2 миллисекунды. В общем так как не ассемблер, то на эти миллисекунды уже можно и забить.</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_832">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.13;msg=832">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg833"></a>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_833_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_833">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg833#msg833" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #14 :</strong> Июнь 22, 2008, 09:37:56 pm &#187;</div>
+									<div id="msg_833_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_833">Если имеются часто изменяемые данные в таблицах, например это очереди в таблице сообщений, то читают такие данные обычно с выключением буфера. Однако не следует этим перебарщивать, а то скорость обработки ясное дело будет печальной. Примеры из справки:<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT SINGLE * FROM T100 INTO T100_WA<br/>&nbsp; BYPASSING BUFFER<br/>&nbsp; WHERE&nbsp; &nbsp; &nbsp;SPRSL = 'D'<br/>&nbsp; &nbsp; &nbsp; &nbsp; AND ARBGB = '00'<br/>&nbsp; &nbsp; &nbsp; &nbsp; AND MSGNR = '999'.<br/></code>и<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT SINGLE * FROM T100&nbsp; INTO T100_WA<br/>&nbsp; WHERE&nbsp; &nbsp; &nbsp;SPRSL = 'D'<br/>&nbsp; &nbsp; &nbsp; &nbsp; AND ARBGB = '00'<br/>&nbsp; &nbsp; &nbsp; &nbsp; AND MSGNR = '999'.<br/></code>В общем случае скорость для первого запроса ~80 миллисекунд, а во втором порядка 5 миллисекунд.</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_833">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.14;msg=833">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg834"></a>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_834_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_834">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg834#msg834" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #15 :</strong> Июнь 22, 2008, 09:49:02 pm &#187;</div>
+									<div id="msg_834_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_834">Возвращаясь к вариантам выбора записей из таблиц и их последующей обработке есть два варианта, выбрать все и затем пройтись по внутренней таблице или же обрабатывать данные по мере из выбора внутри конструкции SELECT ENDSELECT. В общем случае быстрее будет выбрать данные во внутреннюю таблицу и затем обработать выборку. Примеры:<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT * FROM T006<br/>&nbsp; INTO TABLE X006.<br/>LOOP AT X006 INTO X006_WA.<br/>ENDLOOP.<br/></code>и<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT * FROM T006 INTO X006_WA.<br/>ENDSELECT.<br/></code>Первый вариант работает быстрее в среднем в полтора-два раза чем вариант два. По замерам время исполнения в среднем колебалось 60 и 110 миллисекунд.</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_834">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.15;msg=834">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg835"></a>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_835_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_835">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg835#msg835" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #16 :</strong> Июнь 22, 2008, 10:01:11 pm &#187;</div>
+									<div id="msg_835_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_835">Вложенные SELECT или SELECT с JOIN. Я вообще-то предпочитаю&nbsp; использовать конструкцию JOIN хотя как показывают замеры, первый вариант работает быстрее. В общем случае констуркция<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT * FROM SPFLI INTO SPFLI_WA.<br/>&nbsp; SELECT * FROM SFLIGHT INTO SFLIGHT_WA<br/>&nbsp; &nbsp; &nbsp; WHERE CARRID = SPFLI_WA-CARRID<br/>&nbsp; &nbsp; &nbsp; &nbsp; AND CONNID = SPFLI_WA-CONNID.<br/>&nbsp; ENDSELECT.<br/>ENDSELECT.<br/></code>была быстрее чем конструкция<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT * INTO WA<br/>&nbsp; &nbsp; FROM SPFLI AS P JOIN SFLIGHT AS F<br/>&nbsp; &nbsp; &nbsp; ON P~CARRID = F~CARRID AND<br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;P~CONNID = F~CONNID.<br/>ENDSELECT.<br/></code>По времени выполнения&nbsp; получается 6100 миллисекунд против 8300 во втором случае. Но пять же, требуется смотреть на таблицы из которых выбираются данные и на объем который требуется выбрать.</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_835">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.16;msg=835">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg836"></a>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_836_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_836">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg836#msg836" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #17 :</strong> Июнь 22, 2008, 10:10:18 pm &#187;</div>
+									<div id="msg_836_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_836">Подзапросы или FOR ALL ENTRIES IN T_SPFLI с использованием двух операторов SELECT. Исходя из примера по справке, существуют следующие варианты выборки:<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT * FROM SPFLI<br/>&nbsp; INTO TABLE T_SPFLI<br/>&nbsp; WHERE CITYFROM = 'FRANKFURT'<br/>&nbsp; &nbsp; AND CITYTO = 'NEW YORK'.<br/>SELECT * FROM SFLIGHT AS F<br/>&nbsp; &nbsp; INTO SFLIGHT_WA<br/>&nbsp; &nbsp; FOR ALL ENTRIES IN T_SPFLI<br/>&nbsp; &nbsp; WHERE SEATSOCC &lt; F~SEATSMAX<br/>&nbsp; &nbsp; &nbsp; AND CARRID = T_SPFLI-CARRID<br/>&nbsp; &nbsp; &nbsp; AND CONNID = T_SPFLI-CONNID<br/>&nbsp; &nbsp; &nbsp; AND FLDATE BETWEEN '19990101' AND '19990331'.<br/>ENDSELECT.<br/></code>и<br/><div class="codeheader">Код: You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div><code class="bbc_code">SELECT * FROM SFLIGHT AS F INTO SFLIGHT_WA<br/>&nbsp; &nbsp; WHERE SEATSOCC &lt; F~SEATSMAX<br/>&nbsp; &nbsp; &nbsp; AND EXISTS ( SELECT * FROM SPFLI<br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;WHERE CARRID = F~CARRID<br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;AND CONNID = F~CONNID<br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;AND CITYFROM = 'FRANKFURT'<br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;AND CITYTO = 'NEW YORK' )<br/>&nbsp; &nbsp; &nbsp; AND FLDATE BETWEEN '19990101' AND '19990331'.<br/>ENDSELECT.<br/></code>В общем случае второй вариант работает быстрее, 210 простив 130 миллисекунд, чем использование FOR ALL ENTRIES.&nbsp; Кстати по поводу FOR ALL ENTRIES, не забываем, что если табличка T_SPFLI, будет пустой, то как уже писал №1, будет полный проход таблицы.</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_836">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.17;msg=836">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg894"></a>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=55" title="Просмотр профиля bdmalex">bdmalex</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_894_extra_info">
+								<li class="postgroup">Newbie</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/star.gif" alt="*"/></li>
+								<li class="postcount">Сообщений: 79</li>
+								<li class="karma">Репутация: +2/-0</li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://clck.ru/NpqJ" title="Качественная телефония по разумной цене..." target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Качественная телефония по разумной цене..."/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_894">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg894#msg894" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #18 :</strong> Июнь 27, 2008, 07:07:17 pm &#187;</div>
+									<div id="msg_894_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_894">ВВерну свои 5 копеек...<br/><br/>Начиная с какой-то версии 4.x(точно не скажу) - есть прекрасный инструмент: Сode Inspector(Код инспектор)<br/>...<br/>IMHO - помогает бороться с ошибками(явными и не очень) ЛЮБЫХ абаперов...<img src="http://sapforum.biz/Smileys/default/xsmiley.gif.pagespeed.ic.R8GFI-pF6f.png" alt="&#58;&#41;" title="Улыбающийся" class="smiley"/>...<br/>...<br/>А вообще - инфа на курсах ADM315(немного) и BC490....</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_894">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.18;msg=894">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg895"></a>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=5" title="Просмотр профиля №1">№1</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_895_extra_info">
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Jr. Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=5">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 636</li>
+								<li class="karma">Репутация: +23/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li>
+								<li class="blurb">Судьбы я вызов принимаю прямым пожатием руки</li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_895">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg895#msg895" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #19 :</strong> Июнь 27, 2008, 08:04:31 pm &#187;</div>
+									<div id="msg_895_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_895"><div class="quoteheader"><div class="topslice_quote">You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div></div><blockquote class="bbc_standard_quote">прекрасный инструмент: Сode Inspector(Код инспектор)<br/></blockquote><div class="quotefooter"><div class="botslice_quote"></div></div>Тада свой полтинник... от избыточных выборок по базе это чудо бессильно <img src="http://sapforum.biz/Smileys/default/xcool.gif.pagespeed.ic.cOxV6sPNRd.png" alt="8&#41;" title="Крутой" class="smiley"/></div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_895">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.19;msg=895">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+							<div class="signature" id="msg_895_signature">Мой You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg907"></a>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_907_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_907">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg907#msg907" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #20 :</strong> Июль 01, 2008, 05:52:49 pm &#187;</div>
+									<div id="msg_907_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_907"><div class="quoteheader"><div class="topslice_quote">You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div></div><blockquote class="bbc_standard_quote">Начиная с какой-то версии 4.x(точно не скажу) - есть прекрасный инструмент: Сode Inspector(Код инспектор)<br/></blockquote><div class="quotefooter"><div class="botslice_quote"></div></div>Это транзакция SLIN имеется в виду?</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_907">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.20;msg=907">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg908"></a>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=5" title="Просмотр профиля №1">№1</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_908_extra_info">
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Jr. Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=5">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 636</li>
+								<li class="karma">Репутация: +23/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li>
+								<li class="blurb">Судьбы я вызов принимаю прямым пожатием руки</li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_908">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg908#msg908" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #21 :</strong> Июль 01, 2008, 06:09:49 pm &#187;</div>
+									<div id="msg_908_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_908"><div class="quoteheader"><div class="topslice_quote">You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div></div><blockquote class="bbc_standard_quote">Это транзакция SLIN имеется в виду?<br/></blockquote><div class="quotefooter"><div class="botslice_quote"></div></div>SCI</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_908">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.21;msg=908">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+							<div class="signature" id="msg_908_signature">Мой You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg909"></a>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_909_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_909">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg909#msg909" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #22 :</strong> Июль 01, 2008, 06:38:58 pm &#187;</div>
+									<div id="msg_909_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_909"><div class="quoteheader"><div class="topslice_quote">You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div></div><blockquote class="bbc_standard_quote">SCI<br/></blockquote><div class="quotefooter"><div class="botslice_quote"></div></div>Чего-то в 4.6С сказало нет такой буквы...</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_909">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.22;msg=909">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg910"></a>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=5" title="Просмотр профиля №1">№1</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_910_extra_info">
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Jr. Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=5">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 636</li>
+								<li class="karma">Репутация: +23/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li>
+								<li class="blurb">Судьбы я вызов принимаю прямым пожатием руки</li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_910">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg910#msg910" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #23 :</strong> Июль 01, 2008, 07:43:45 pm &#187;</div>
+									<div id="msg_910_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_910">А в 4.6С надо отдельным транспортом это тащить - есть нота</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_910">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.23;msg=910">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+							<div class="signature" id="msg_910_signature">Мой You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				<a id="msg912"></a>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="post_wrapper">
+						<div class="poster">
+							<h4>
+								<img src="https://sapforum.biz/Themes/default/images/useroff.gif" alt="Оффлайн"/>
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2" title="Просмотр профиля Uukrul">Uukrul</a>
+							</h4>
+							<ul class="reset smalltext" id="msg_912_extra_info">
+								<li class="title">SAP ECC 6.0 Ehp(*)</li>
+								<li class="membergroup">Administrator</li>
+								<li class="postgroup">Epic Member</li>
+								<li class="stars"><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/><img src="https://sapforum.biz/Themes/default/images/staradmin.gif" alt="*"/></li>
+								<li class="avatar">
+									<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=profile;u=2">
+										<img class="avatar" src="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=dlattach;attach=3896;type=avatar" alt=""/>
+									</a>
+								</li>
+								<li class="postcount">Сообщений: 3 780</li>
+								<li class="karma">Репутация: +47/-0</li>
+								<li class="gender">Пол: <img class="gender" src="https://sapforum.biz/Themes/default/images/Male.gif" alt="Мужской"/></li><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/><img src="https://sapforum.biz/Themes/default/images/icons/gold_star.png" alt="Years"/>
+								<li class="profile">
+									<ul>
+										<li><a href="http://www.sapforum.biz" title="Sapforum.BIZ" target="_blank" rel="noopener noreferrer" class="new_win"><img src="https://sapforum.biz/Themes/default/images/www_sm.gif" alt="Sapforum.BIZ"/></a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="postarea">
+							<div class="flow_hidden">
+								<div class="keyinfo">
+									<div class="messageicon">
+										<img src="https://sapforum.biz/Themes/default/images/post/xx.gif" alt=""/>
+									</div>
+									<h5 id="subject_912">
+										<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.msg912#msg912" rel="nofollow">Re: Оптимизация ABAP-а</a>
+									</h5>
+									<div class="smalltext">&#171; <strong>Ответ #24 :</strong> Июль 02, 2008, 09:36:22 am &#187;</div>
+									<div id="msg_912_quick_mod"></div>
+								</div>
+							</div>
+							<div class="post">
+								<div class="inner" id="msg_912"><div class="quoteheader"><div class="topslice_quote">You are not allowed to view links.
+ <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=register">Register</a>&nbsp;or&nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=login">Login</a></div></div><blockquote class="bbc_standard_quote">А в 4.6С надо отдельным транспортом это тащить - есть нота<br/></blockquote><div class="quotefooter"><div class="botslice_quote"></div></div>А номерок ноты? А то я что-то не нашел, о разных исправлениях ошибок есть... а саму программку где тянуть не находиться...</div>
+							</div>
+						</div>
+						<div class="moderatorbar">
+							<div class="smalltext modified" id="modified_912">
+							</div>
+							<div class="smalltext reportlinks">
+								<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=reporttm;topic=174.24;msg=912">Сообщить модератору</a> &nbsp;
+								<img src="https://sapforum.biz/Themes/default/images/ip.gif" alt=""/>
+								Записан
+							</div>
+						</div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+				<hr class="post_separator"/>
+				</form>
+			</div>
+			<a id="lastPost"></a>
+			<div class="pagesection">
+				
+		<div class="buttonlist floatright">
+			<ul>
+				<li><a class="button_strip_print" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=printpage;topic=174.0" rel="new_win nofollow"><span class="last">Печать</span></a></li>
+			</ul>
+		</div>
+				<div class="pagelinks floatleft">Страницы: [<strong>1</strong>] <a class="navPages" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.25">2</a> <a class="navPages" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.50">3</a> <span style="font-weight: bold;" onclick="expandPages(this, 'http://sapforum.biz/index.php?topic=174.%1$d', 75, 200, 25);" onmouseover="this.style.cursor='pointer';"> ... </span><a class="navPages" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.200">9</a> &nbsp;<a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.0;all">Все</a>   &nbsp;&nbsp;<a href="#top"><strong>Вверх</strong></a></div>
+				<div class="nextlinks_bottom"><a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.0;prev_next=prev#new">&laquo; предыдущая тема</a> <a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.0;prev_next=next#new">следующая тема &raquo;</a></div>
+			</div> <div class="navigate_hvr_section"> <div class="linktree_border1"><ul><li class="linktree_b"> <div class="linktree_1 linktree_1_hover" onclick="window.location.href='http://sapforum.biz/index.php'"><a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;" style="text-decoration: none;">Sapforum.Biz</a> &nbsp;</div> <div class="linktree_2 linktree_2_hover" onclick="window.location.href='http://sapforum.biz/index.php#c4'"><a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;#c4" style="text-decoration: none;">Инструменты</a> &nbsp;</div></li><li class="linktree_b"> <div class="linktree_3 linktree_3_hover" onclick="window.location.href='http://sapforum.biz/index.php?board=10.0'"><a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;board=10.0" style="text-decoration: none;">ABAP - Инструментальные средства</a> &nbsp;</div> <div class="linktree_4 linktree_4_hover" onclick="window.location.href='http://sapforum.biz/index.php?topic=174.0'"><a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;topic=174.0" style="text-decoration: none;">Оптимизация ABAP-а</a> &nbsp;</div> </li> </ul></div></div>
+			<div id="moderationbuttons"></div>
+			<div class="plainbox" id="display_jump_to">&nbsp;</div>
+		<br class="clear"/>
+				<script type="text/javascript" src="https://sapforum.biz/Themes/default/scripts/topic.js"></script>
+				<script type="text/javascript">//<![CDATA[
+if('XMLHttpRequest'in window){var oQuickModify=new QuickModify({sScriptUrl:smf_scripturl,bShowModify:true,iTopicId:174,sTemplateBodyEdit:'\n\t\t\t\t\t\t\t\t<div id="quick_edit_body_container" style="width: 90%">\n\t\t\t\t\t\t\t\t\t<div id="error_box" style="padding: 4px;" class="error"><'+'/div>\n\t\t\t\t\t\t\t\t\t<textarea class="editor" name="message" rows="12" style="width: 100%; margin-bottom: 10px;" tabindex="1">%body%<'+'/textarea><br />\n\t\t\t\t\t\t\t\t\t<input type="hidden" name="f54592a63" value="b94c2ad2acbef66f6b75f508f8fe087b" />\n\t\t\t\t\t\t\t\t\t<input type="hidden" name="topic" value="174" />\n\t\t\t\t\t\t\t\t\t<input type="hidden" name="msg" value="%msg_id%" />\n\t\t\t\t\t\t\t\t\t<div class="righttext">\n\t\t\t\t\t\t\t\t\t\t<input type="submit" name="post" value="Сохранить" tabindex="2" onclick="return oQuickModify.modifySave(\'b94c2ad2acbef66f6b75f508f8fe087b\', \'f54592a63\');" accesskey="s" class="button_submit" />&nbsp;&nbsp;<input type="submit" name="cancel" value="Отменить" tabindex="3" onclick="return oQuickModify.modifyCancel();" class="button_submit" />\n\t\t\t\t\t\t\t\t\t<'+'/div>\n\t\t\t\t\t\t\t\t<'+'/div>',sTemplateSubjectEdit:'<input type="text" style="width: 90%;" name="subject" value="%subject%" size="80" maxlength="80" tabindex="4" class="input_text" />',sTemplateBodyNormal:'%body%',sTemplateSubjectNormal:'<a hr'+'ef="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;'+'?topic=174.msg%msg_id%#msg%msg_id%" rel="nofollow">%subject%<'+'/a>',sTemplateTopSubject:'Тема: %subject% &nbsp;(Прочитано 251196 раз)',sErrorBorderStyle:'1px solid red'});aJumpTo[aJumpTo.length]=new JumpTo({sContainerId:"display_jump_to",sJumpToTemplate:"<label class=\"smalltext\" for=\"%select_id%\">Перейти в:<"+"/label> %dropdown_list%",iCurBoardId:10,iCurBoardChildLevel:0,sCurBoardName:"ABAP - Инструментальные средства",sBoardChildLevelIndicator:"==",sBoardPrefix:"=> ",sCatSeparator:"-----------------------------",sCatPrefix:"",sGoButtonLabel:"да"});aIconLists[aIconLists.length]=new IconList({sBackReference:"aIconLists["+aIconLists.length+"]",sIconIdPrefix:"msg_icon_",sScriptUrl:smf_scripturl,bShowModify:true,iBoardId:10,iTopicId:174,sSessionId:"b94c2ad2acbef66f6b75f508f8fe087b",sSessionVar:"f54592a63",sLabelIconList:"Иконка сообщения",sBoxBackground:"transparent",sBoxBackgroundHover:"#ffffff",iBoxBorderWidthHover:1,sBoxBorderColorHover:"#adadad",sContainerBackground:"#ffffff",sContainerBorder:"1px solid #adadad",sItemBorder:"1px solid #ffffff",sItemBorderHover:"1px dotted gray",sItemBackground:"transparent",sItemBackgroundHover:"#e0e0f0"});}
+//]]></script>
+			<script type="text/javascript">//<![CDATA[
+var verificationpostHandle=new smfCaptcha("http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=verificationcode;vid=post;rand=14be5e48747b8b271a60d8485117fcc3","post",1);
+//]]></script><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- responsive -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6499536846365177" data-ad-slot="1623398091" data-ad-format="auto"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+		</div>
+	</div></div>
+	<div id="footer_section"><div class="frame">
+		<ul class="reset">
+			<li class="copyright">
+			<span class="smalltext" style="display: inline; visibility: visible; font-family: Verdana, Arial, sans-serif;"><a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=credits" title="Simple Machines Forum" target="_blank" class="new_win">SMF 2.0.18</a> |
+ <a href="http://www.simplemachines.org/about/smf/license.php" title="License" target="_blank" class="new_win">SMF &copy; 2011</a>, <a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a><br/><span class="smalltext"><a href="http://www.smfads.com" target="_blank">SMFAds</a> for <a href="http://www.createaforum.com" title="Forum Hosting">Free Forums</a></span>
+			</span></li>
+			<li><a href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=sitemap"><span>Sitemap</span></a></li>
+			<li><a id="button_xhtml" href="http://validator.w3.org/check?uri=referer" target="_blank" class="new_win" title="Valid XHTML 1.0!"><span>XHTML</span></a></li>
+			<li><a id="button_rss" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;action=.xml;type=rss" class="new_win"><span>RSS</span></a></li>
+			<li class="last"><a id="button_wap2" href="http://sapforum.biz/index.php?PHPSESSID=a3pglaeo1fhdstdj9fqokj4iu0&amp;wap2" class="new_win"><span>Мобильная версия</span></a></li>
+		</ul>
+		<ul class="reset">
+		<li><a href="http://www.eastcoastrollingthunder.com" target="_blank" class="new_win">BH Mod &copy; 2010</a></li>
+		</ul>
+		<p>Страница сгенерирована за 0.344 секунд. Запросов: 28.</p>
+	</div></div>
+</div>
+</body></html>

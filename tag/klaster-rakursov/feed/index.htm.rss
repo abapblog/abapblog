@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Кластер ракурсов | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/klaster-rakursov/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:11:51 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Ведение пользовательских настроек в кластерах ракурсов</title>
+		<link>https://abap-blog.ru/osnovy-abap/slovar/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/slovar/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 24 Jun 2015 13:52:58 +0000</pubDate>
+				<category><![CDATA[ABAP Словарь]]></category>
+		<category><![CDATA[SE54]]></category>
+		<category><![CDATA[SM30]]></category>
+		<category><![CDATA[Кластер ракурсов]]></category>
+		<category><![CDATA[ракурс ведения]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2481</guid>
+
+					<description><![CDATA[<p>Очень часто в процессе разработки необходимо предоставить гибкость программного решения, в зависимости от каких-либо требований, определенными теми или иными настройками. Подобная гибкость в SAP системах традиционно решается путём определения пользовательских настроек в транзакции SPRO.  В статье будет рассмотрен способ определения своих настроек на базе ведения многоуровневого кластера ракурсов и создание ссылки на него в SPRO. [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/slovar/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov/">Ведение пользовательских настроек в кластерах ракурсов</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/office-configuration-tool.jpg"><img loading="lazy" class=" wp-image-2482 alignleft" src="http://abap-blog.ru/wp-content/uploads/2015/06/office-configuration-tool.jpg" alt="office-configuration-tool" width="180" height="189" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/office-configuration-tool.jpg 420w, https://abap-blog.ru/wp-content/uploads/2015/06/office-configuration-tool-286x300.jpg 286w" sizes="(max-width: 180px) 100vw, 180px" /></a></p>
+<p>Очень часто в процессе разработки необходимо предоставить гибкость программного решения, в зависимости от каких-либо требований, определенными теми или иными настройками. Подобная гибкость в SAP системах традиционно решается путём определения пользовательских настроек в транзакции SPRO.  В статье будет рассмотрен способ определения своих настроек на базе ведения многоуровневого кластера ракурсов и создание ссылки на него в SPRO.</p>
+<p><span id="more-2481"></span></p>
+<p>Транзакция SPRO открывает заранее определенную иерархическую структуру, в которой настройки разделены относительно функциональности:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/1.jpg"><img loading="lazy" class="alignnone size-full wp-image-2483" src="http://abap-blog.ru/wp-content/uploads/2015/06/1.jpg" alt="1" width="659" height="458" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/1.jpg 659w, https://abap-blog.ru/wp-content/uploads/2015/06/1-300x208.jpg 300w" sizes="(max-width: 659px) 100vw, 659px" /></a></p>
+<p class="">Большинство настроек в SPRO представляют собой ссылки на переход к ведению данных в простом ракурсе ссылающемся на какую-либо таблицу, однако встречаются и кластеры ракурсов – набор ракурсов объединенных либо в иерархическую структуру, либо сгруппированных вместе. В качестве примера можете перейти по следующему адресу:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/2.png"><img loading="lazy" class="alignnone size-full wp-image-2484" src="http://abap-blog.ru/wp-content/uploads/2015/06/2.png" alt="2" width="458" height="241" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/2.png 458w, https://abap-blog.ru/wp-content/uploads/2015/06/2-300x158.png 300w" sizes="(max-width: 458px) 100vw, 458px" /></a></p>
+<p>Как видно из рисунка, настройка представляет собой кластер ракурсов (набор ракурсов) объединенных для ведения в рамках одной настройки:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/3.png"><img loading="lazy" class="alignnone wp-image-2485" src="http://abap-blog.ru/wp-content/uploads/2015/06/3.png" alt="3" width="712" height="213" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/3.png 935w, https://abap-blog.ru/wp-content/uploads/2015/06/3-300x90.png 300w" sizes="(max-width: 712px) 100vw, 712px" /></a></p>
+<p>В кластере присутствует 5 вложенных ракурсов: часовые пояса, правила для часовых поясов, правила для летнего времени и др. Кластеры не связаны друг с другом иерархией, они не зависимы друг от друга.</p>
+<p>Встречаются и такие кластеры ракурсов, где один ракурс, может быть зависимым от другого ракурса, в таком случае, чтобы перейти в ведение зависимого, потребуется выбрать запись из ракурса на уровне выше, пример:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/4.png"><img loading="lazy" class="alignnone size-full wp-image-2486" src="http://abap-blog.ru/wp-content/uploads/2015/06/4.png" alt="4" width="602" height="335" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/4.png 602w, https://abap-blog.ru/wp-content/uploads/2015/06/4-300x167.png 300w" sizes="(max-width: 602px) 100vw, 602px" /></a></p>
+<p>Для того чтобы перейти на изменение в «Присвоение логический путь – физический путь» необходимо выбрать запись в ракурсе «Определение логических путей к файлу»:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/5.png"><img loading="lazy" class="alignnone wp-image-2487" src="http://abap-blog.ru/wp-content/uploads/2015/06/5.png" alt="5" width="719" height="194" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/5.png 800w, https://abap-blog.ru/wp-content/uploads/2015/06/5-300x81.png 300w" sizes="(max-width: 719px) 100vw, 719px" /></a></p>
+<h3>Определение кластера ракурсов</h3>
+<p>В качестве простого примера создадим кластер ракурсов, состоящий из трёх ракурсов, первые два будут зависимыми, третий будет сам по себе.</p>
+<p>Предположим у нас есть система, в которой относительно одного логина могут работать сразу несколько человек, каждый из которых может быть пользователем определенного типа (администратор или рядовой пользователь) и нам необходимо настроить ведение людей относительно логина. Кроме того, нужно иметь возможность в рамках одного кластера ракурсов хранить настройку e-mail’ов для типа пользователя.</p>
+<p>Первым шагом идет определение Z таблиц (тр. SE11).</p>
+<p>Для всех таблиц проставим следующие параметры поставки:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/6.png"><img loading="lazy" class="alignnone size-full wp-image-2488" src="http://abap-blog.ru/wp-content/uploads/2015/06/6.png" alt="6" width="682" height="135" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/6.png 682w, https://abap-blog.ru/wp-content/uploads/2015/06/6-300x59.png 300w" sizes="(max-width: 682px) 100vw, 682px" /></a></p>
+<p>Таблица ZCUST_LOGINS:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/7.png"><img loading="lazy" class="alignnone size-full wp-image-2489" src="http://abap-blog.ru/wp-content/uploads/2015/06/7.png" alt="7" width="616" height="203" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/7.png 616w, https://abap-blog.ru/wp-content/uploads/2015/06/7-300x99.png 300w" sizes="(max-width: 616px) 100vw, 616px" /></a></p>
+<p>Определим домен ZCUSD_LOGIN_TYPE:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/8.png"><img loading="lazy" class="alignnone size-full wp-image-2490" src="http://abap-blog.ru/wp-content/uploads/2015/06/8.png" alt="8" width="529" height="347" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/8.png 529w, https://abap-blog.ru/wp-content/uploads/2015/06/8-300x197.png 300w" sizes="(max-width: 529px) 100vw, 529px" /></a></p>
+<p>Для домена зададим диапазон значений:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/9.png"><img loading="lazy" class="alignnone size-full wp-image-2491" src="http://abap-blog.ru/wp-content/uploads/2015/06/9.png" alt="9" width="455" height="225" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/9.png 455w, https://abap-blog.ru/wp-content/uploads/2015/06/9-300x148.png 300w" sizes="(max-width: 455px) 100vw, 455px" /></a></p>
+<p>Определим элемент на базе домена:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/10.png"><img loading="lazy" class="alignnone size-full wp-image-2492" src="http://abap-blog.ru/wp-content/uploads/2015/06/10.png" alt="10" width="590" height="214" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/10.png 590w, https://abap-blog.ru/wp-content/uploads/2015/06/10-300x109.png 300w" sizes="(max-width: 590px) 100vw, 590px" /></a></p>
+<p>Таблица ZCUST_LOGIN_INFO:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/11.png"><img loading="lazy" class="alignnone size-full wp-image-2493" src="http://abap-blog.ru/wp-content/uploads/2015/06/11.png" alt="11" width="615" height="286" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/11.png 615w, https://abap-blog.ru/wp-content/uploads/2015/06/11-300x140.png 300w" sizes="(max-width: 615px) 100vw, 615px" /></a></p>
+<p>Таблица ZCUST_ROLE_MAILS:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/12.png"><img loading="lazy" class="alignnone size-full wp-image-2494" src="http://abap-blog.ru/wp-content/uploads/2015/06/12.png" alt="12" width="646" height="217" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/12.png 646w, https://abap-blog.ru/wp-content/uploads/2015/06/12-300x101.png 300w" sizes="(max-width: 646px) 100vw, 646px" /></a></p>
+<p>После создания таблиц и элементов данных необходимо подготовить ракурсы ведения для каждой из таблицы (тр. SE11). Но перед этим создадим группу функций, отвечающую за хранение сгенерированных к ракурсам ФМ по обновлению данных и экранов. Назовем её ZFG_UCONF. Создать группу функций можно в транзакции SE80.</p>
+<p>Ракурс ZCUST_V_LOG:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/13.png"><img loading="lazy" class="alignnone wp-image-2495" src="http://abap-blog.ru/wp-content/uploads/2015/06/13.png" alt="13" width="701" height="193" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/13.png 756w, https://abap-blog.ru/wp-content/uploads/2015/06/13-300x83.png 300w" sizes="(max-width: 701px) 100vw, 701px" /></a></p>
+<p>Ракурс ZCUST_V_INF:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/14.png"><img loading="lazy" class="alignnone wp-image-2496" src="http://abap-blog.ru/wp-content/uploads/2015/06/14.png" alt="14" width="704" height="257" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/14.png 803w, https://abap-blog.ru/wp-content/uploads/2015/06/14-300x109.png 300w" sizes="(max-width: 704px) 100vw, 704px" /></a></p>
+<p>Для данного ракурса поля LOGIN и MANDT будет образовывать подмножество, т.е. перед тем как начать ведение ракурса необходимо будет задать ограничение по этим полям (можете попробовать нажать просмотр данных), необходимо проставить флаг «S».</p>
+<p>В кластере ракурсов ракурс ZCUST_V_INF будет зависимым от ракурса ZCUST_V_LOG, таким образом, поля LOGIN и MANDT через настройку зависимости будут автоматически заполняться по выбранной записи выше по иерархии.</p>
+<p>Ракурс ZCUST_V_MAILS:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/16.png"><img loading="lazy" class="alignnone wp-image-2497" src="http://abap-blog.ru/wp-content/uploads/2015/06/16.png" alt="16" width="684" height="175" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/16.png 872w, https://abap-blog.ru/wp-content/uploads/2015/06/16-300x77.png 300w" sizes="(max-width: 684px) 100vw, 684px" /></a></p>
+<p>Далее для всех ракурсов будем генерировать ракурс ведения, Меню -&gt; Утилиты -&gt; Генератор ведения таблиц:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/17.png"><img loading="lazy" class="alignnone size-full wp-image-2498" src="http://abap-blog.ru/wp-content/uploads/2015/06/17.png" alt="17" width="596" height="422" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/17.png 596w, https://abap-blog.ru/wp-content/uploads/2015/06/17-300x212.png 300w" sizes="(max-width: 596px) 100vw, 596px" /></a></p>
+<p>Так как группа функций у нас будет одна, экраны должны иметь разные названия для каждого ракурса: 101 – для ZCUST_V_LOG, 102 – ZCUST_V_INF и т.д. Если наши настройки должны автоматически попадать в запрос на перенос, для этого необходимо проставить галочку – «Стандартная программа записи» (после генерации экрана).</p>
+<p>Кроме того, выберем одноуровневый тип ведения и группу полномочий без проверки на полномочия. Разница между типами ведения лишь в том, что при двухуровневом типе во время редактирования вы проваливаетесь в отдельный экран ведения выбранной записи, когда как в одноуровневом, редактирование происходит на экранной таблице.</p>
+<p>После определения всех ракурсов необходимо объединить их в кластере. Создание кластера ракурсов происходит в транзакции SE54 -&gt; Обработка кластера ракурсов. Назовем наш кластер ZCUST_VC_CONF:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/18.png"><img loading="lazy" class="alignnone size-full wp-image-2499" src="http://abap-blog.ru/wp-content/uploads/2015/06/18.png" alt="18" width="624" height="262" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/18.png 624w, https://abap-blog.ru/wp-content/uploads/2015/06/18-300x126.png 300w" sizes="(max-width: 624px) 100vw, 624px" /></a></p>
+<p>Обработка иерархической операции ведения может принимать следующие значения:</p>
+<p><strong>Показывать диалоговое окно</strong>. Если вы меняете запись в ракурсе, от которой зависят другие записи в зависимом ракурсе, будет появляться диалоговое окно, в котором необходимо будет выбрать решение того, что делать с зависимыми записями:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/191.png"><img loading="lazy" class="alignnone size-full wp-image-2526" src="http://abap-blog.ru/wp-content/uploads/2015/06/191.png" alt="19" width="610" height="289" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/191.png 610w, https://abap-blog.ru/wp-content/uploads/2015/06/191-300x142.png 300w" sizes="(max-width: 610px) 100vw, 610px" /></a></p>
+<p><strong>Без диалога с изменением зависимых записей</strong>. В этом случае все зависимые записи будут так же удалены (изменены).</p>
+<p><strong>Без диалога и без изменения зависимых записей</strong> (ограничение на один уровень). Зависимые записи не будут затронуты.</p>
+<p>Вид считывания отвечает за то, как будут считываться записи из БД. Если стоит первый вариант, все данные для всех кластеров будут считаны сразу. Если второй вариант, данные будут считаны только для первого ракурса и зависимых от него. Остальные будут считываться по мере необходимости. Обычно второй вариант выставляется для оптимизации при большом кол-ве данных в ракурсах.</p>
+<p>Перейдем в структуру объекта. В структуре кластера прописываются все ракурсы, из которых он состоит:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/20.png"><img loading="lazy" class="alignnone wp-image-2501" src="http://abap-blog.ru/wp-content/uploads/2015/06/20.png" alt="20" width="718" height="163" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/20.png 806w, https://abap-blog.ru/wp-content/uploads/2015/06/20-300x68.png 300w" sizes="(max-width: 718px) 100vw, 718px" /></a></p>
+<p>Кроме того указывается зависимость ракурсов, в нашем случае ракурс ZCUST_V_INF зависим от предыдущего ZCUST_V_LOG, а ракурс ZCUST_V_MAILS ни от кого не зависит. Зависимость может иметь несколько типов:</p>
+<ul>
+<li>R – Без зависимостей</li>
+<li>S – Зависимость от одной записи в главном ракурсе.</li>
+<li>M – Зависимость от нескольких записей в главном ракурсе. Этот тип применим тогда, когда относительно нескольких записей в главном ракурсе, необходимо редактировать все от них зависимые в зависимом ракурсе. Пример такого ракурса: T804.</li>
+</ul>
+<p>Для настройки зависимостей необходимо выделить строку с ракурсом ZCUST_V_INF и перейти в настройку зависимости и прописать зависимые поля (если будут прописаны внешние ключи в таблицах и на предыдущем экране нажать на кнопку «зависимость поля», выделив зависимый ракурс, система пропишет зависимость за вас):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/21.png"><img loading="lazy" class="alignnone wp-image-2502" src="http://abap-blog.ru/wp-content/uploads/2015/06/21.png" alt="21" width="712" height="151" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/21.png 731w, https://abap-blog.ru/wp-content/uploads/2015/06/21-300x64.png 300w" sizes="(max-width: 712px) 100vw, 712px" /></a></p>
+<p>После настройки кластера ракурса, его необходимо активировать, делается это по кнопке в определении заголовка (первый экран ведения ракурса). После активации можно выйти на предыдущий экран и протестировать наш кластер:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/22.png"><img loading="lazy" class="alignnone size-full wp-image-2503" src="http://abap-blog.ru/wp-content/uploads/2015/06/22.png" alt="22" width="464" height="133" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/22.png 464w, https://abap-blog.ru/wp-content/uploads/2015/06/22-300x86.png 300w" sizes="(max-width: 464px) 100vw, 464px" /></a></p>
+<p>В итоге мы можем завести учётные данные (логины):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/23.png"><img loading="lazy" class="alignnone size-full wp-image-2504" src="http://abap-blog.ru/wp-content/uploads/2015/06/23.png" alt="23" width="328" height="117" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/23.png 328w, https://abap-blog.ru/wp-content/uploads/2015/06/23-300x107.png 300w" sizes="(max-width: 328px) 100vw, 328px" /></a></p>
+<p>Относительно каждой учётной записи завести людей, которые ими пользуются и к какому типу они принадлежат:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/24.png"><img loading="lazy" class="alignnone size-full wp-image-2505" src="http://abap-blog.ru/wp-content/uploads/2015/06/24.png" alt="24" width="696" height="136" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/24.png 696w, https://abap-blog.ru/wp-content/uploads/2015/06/24-300x59.png 300w" sizes="(max-width: 696px) 100vw, 696px" /></a></p>
+<p>Относительно типа пользователя определить в настройке почтовый адрес:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/25.png"><img loading="lazy" class="alignnone size-full wp-image-2506" src="http://abap-blog.ru/wp-content/uploads/2015/06/25.png" alt="25" width="652" height="100" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/25.png 652w, https://abap-blog.ru/wp-content/uploads/2015/06/25-300x46.png 300w" sizes="(max-width: 652px) 100vw, 652px" /></a></p>
+<h3>Создание ветки в SPRO</h3>
+<p>Так как ракурсов в рамках разных задач может быть множество, а запомнить их на память не представляется возможным, необходимо их сгруппировать в виде ветки в SPRO и желательно сопроводить необходимой документацией.</p>
+<p>Обычно создание своих веток происходит через транзакцию <strong>SIMGH</strong>, но в нашем случае мы будем расширять стандарт (транзакция SPRO отображает определенную заранее IMG структуру), поэтому воспользуемся транзакцией <strong>S_</strong><strong>IMG_</strong><strong>EXTENSION</strong>:</p>
+<p>Первым делом выбираем стандартную IMG структуру:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/26.png"><img loading="lazy" class="alignnone size-full wp-image-2507" src="http://abap-blog.ru/wp-content/uploads/2015/06/26.png" alt="26" width="591" height="103" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/26.png 591w, https://abap-blog.ru/wp-content/uploads/2015/06/26-300x52.png 300w" sizes="(max-width: 591px) 100vw, 591px" /></a></p>
+<p>Далее необходимо создать ID расширений:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/271.png"><img loading="lazy" class="alignnone size-full wp-image-2527" src="http://abap-blog.ru/wp-content/uploads/2015/06/271.png" alt="27" width="606" height="474" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/271.png 606w, https://abap-blog.ru/wp-content/uploads/2015/06/271-300x235.png 300w" sizes="(max-width: 606px) 100vw, 606px" /></a></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/281.png"><img loading="lazy" class="alignnone size-full wp-image-2528" src="http://abap-blog.ru/wp-content/uploads/2015/06/281.png" alt="28" width="595" height="120" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/281.png 595w, https://abap-blog.ru/wp-content/uploads/2015/06/281-300x61.png 300w" sizes="(max-width: 595px) 100vw, 595px" /></a></p>
+<p>После создания ID расширения, выбираем его и нажимаем кнопку «Расширить структуру», в итоге попадаем на экран ведения стандартной структуры SPRO.</p>
+<p>Создадим узел на том же уровне:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/291.png"><img loading="lazy" class="alignnone wp-image-2529" src="http://abap-blog.ru/wp-content/uploads/2015/06/291.png" alt="29" width="713" height="351" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/291.png 782w, https://abap-blog.ru/wp-content/uploads/2015/06/291-300x148.png 300w" sizes="(max-width: 713px) 100vw, 713px" /></a></p>
+<p>Далее вставим новую операцию, при создании операции желательно документировать её, создав документ описания:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/30.png"><img loading="lazy" class="alignnone size-full wp-image-2511" src="http://abap-blog.ru/wp-content/uploads/2015/06/30.png" alt="30" width="710" height="227" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/30.png 710w, https://abap-blog.ru/wp-content/uploads/2015/06/30-300x96.png 300w" sizes="(max-width: 710px) 100vw, 710px" /></a></p>
+<p>Созданный документ можно будет просмотреть в описании к настройке:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/31.png"><img loading="lazy" class="alignnone wp-image-2512" src="http://abap-blog.ru/wp-content/uploads/2015/06/31.png" alt="31" width="708" height="202" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/31.png 865w, https://abap-blog.ru/wp-content/uploads/2015/06/31-300x86.png 300w" sizes="(max-width: 708px) 100vw, 708px" /></a></p>
+<p>На закладке объекты ведения необходимо прописать наш кластер:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/32.png"><img loading="lazy" class="alignnone wp-image-2513" src="http://abap-blog.ru/wp-content/uploads/2015/06/32.png" alt="32" width="710" height="425" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/32.png 707w, https://abap-blog.ru/wp-content/uploads/2015/06/32-300x179.png 300w" sizes="(max-width: 710px) 100vw, 710px" /></a></p>
+<p>Сохранив операцию, выйдем и сохраним иерархию. После чего можно убедиться в наличии нашей ветки, запустив SPRO:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/33.png"><img loading="lazy" class="alignnone size-full wp-image-2514" src="http://abap-blog.ru/wp-content/uploads/2015/06/33.png" alt="33" width="594" height="356" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/33.png 594w, https://abap-blog.ru/wp-content/uploads/2015/06/33-300x180.png 300w" sizes="(max-width: 594px) 100vw, 594px" /></a></p>
+<h3></h3>
+<h3>Дополнительная информация</h3>
+<p>Если вдруг возникает желание проверить, каким образом сконфигурировано действие в IMG структуре, сделать это можно перейдя по меню к технической информации:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/34.png"><img loading="lazy" class="alignnone size-full wp-image-2515" src="http://abap-blog.ru/wp-content/uploads/2015/06/34.png" alt="34" width="565" height="218" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/34.png 565w, https://abap-blog.ru/wp-content/uploads/2015/06/34-300x116.png 300w" sizes="(max-width: 565px) 100vw, 565px" /></a></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/35.png"><img loading="lazy" class="alignnone size-full wp-image-2516" src="http://abap-blog.ru/wp-content/uploads/2015/06/35.png" alt="35" width="715" height="425" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/35.png 715w, https://abap-blog.ru/wp-content/uploads/2015/06/35-300x178.png 300w" sizes="(max-width: 715px) 100vw, 715px" /></a></p>
+<p>Одноуровневые ракурсы ведения отображают для редактирования экранную таблицу, но при большом количестве полей требуется прокручивать таблицу, так как таблица не растягивается на весь экран:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/36.png"><img loading="lazy" class="alignnone wp-image-2517" src="http://abap-blog.ru/wp-content/uploads/2015/06/36.png" alt="36" width="713" height="372" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/36.png 1214w, https://abap-blog.ru/wp-content/uploads/2015/06/36-300x157.png 300w, https://abap-blog.ru/wp-content/uploads/2015/06/36-1024x535.png 1024w" sizes="(max-width: 713px) 100vw, 713px" /></a></p>
+<p>Выхода их этой ситуации 2, можно отредактировать сгенерированный экран, но это надо будет выполнять каждый раз, при его генерации. Второй способ более удобный, необходимо воспользоваться  событиями в генераторе ведения, подробнее <a href="http://scn.sap.com/community/abap/blog/2013/08/29/sm30-change-standard-width-of-tablecontrol">тут</a>.</p>
+<p>После создания кластера может потребоваться создание транзакции к его ведению, сделать это можно через создание транзакции с параметрами к SM34:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/06/1.png"><img loading="lazy" class="alignnone size-full wp-image-2544" src="http://abap-blog.ru/wp-content/uploads/2015/06/1.png" alt="1" width="461" height="668" srcset="https://abap-blog.ru/wp-content/uploads/2015/06/1.png 461w, https://abap-blog.ru/wp-content/uploads/2015/06/1-207x300.png 207w" sizes="(max-width: 461px) 100vw, 461px" /></a></p>
+<p>На рисунке созданная транзакция Z01MAPT_VC будет запускать на ведение ракурс с тем же именем, прописанным в значениях по умолчанию.</p>
+<p>Официальная документация по кластерам и генератору ведения доступна по <a href="http://help.sap.com/saphelp_erp60_sp/helpdata/en/a7/5133ac407a11d1893b0000e8323c4f/content.htm?current_toc=/en/a7/5139ef407a11d1893b0000e8323c4f/plain.htm&amp;show_children=true">ссылке</a>.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/slovar/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov/">Ведение пользовательских настроек в кластерах ракурсов</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/slovar/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov/feed/</wfw:commentRss>
+			<slash:comments>4</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

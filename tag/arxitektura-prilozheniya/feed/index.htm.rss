@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>архитектура приложения | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/arxitektura-prilozheniya/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:03:38 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Немного о рефакторинге</title>
+		<link>https://abap-blog.ru/osnovy-abap/refactoring/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/refactoring/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 27 Oct 2012 09:43:10 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[архитектура приложения]]></category>
+		<category><![CDATA[качество кода]]></category>
+		<category><![CDATA[рефакторинг]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1107</guid>
+
+					<description><![CDATA[<p>Рефакторинг &#8212; представляет собой процесс такого изменения программной системы, при котором не меняется внешнее поведение кода, но улучшается его внутренняя структура. Это способ систематического приведения кода в порядок, при котором шансы появления новых ошибок минимальны. В сущности, при проведении рефакторинга кода вы улучшаете его дизайн уже после того, как он написан. (М. Фаулер). В данной [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/refactoring/">Немного о рефакторинге</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2012/10/1.jpg"><img loading="lazy" class="alignleft size-full wp-image-1108" title="Рефакторинг" src="http://abap-blog.ru/wp-content/uploads/2012/10/1.jpg" alt="" width="368" height="240" srcset="https://abap-blog.ru/wp-content/uploads/2012/10/1.jpg 368w, https://abap-blog.ru/wp-content/uploads/2012/10/1-300x195.jpg 300w" sizes="(max-width: 368px) 100vw, 368px" /></a>Рефакторинг &#8212; представляет собой процесс такого изменения программной системы, при котором не меняется внешнее поведение кода, но улучшается его внутренняя структура. Это способ систематического приведения кода в порядок, при котором шансы появления новых ошибок минимальны. В сущности, при проведении рефакторинга кода вы улучшаете его дизайн уже после того, как он написан. (<a href="http://www.ozon.ru/context/detail/id/1308678/" target="_blank" rel="noopener">М. Фаулер</a>).</p>
+<p>В данной статье будут рассмотрены лишь некоторые способы рефакторинга, статья не затрагивает теоретические основы и проблемы, возникающие при анализе возможности рефакторинга. <span id="more-1107"></span></p>
+<h2>1. Избавление от временных переменных.</h2>
+<p>Исходя из того правила что каждой переменной присвоение должно осуществляться один раз, за исключением переменных в циклах и тех что накапливают значения. При чтении кода, когда одна и та же переменная имеет разный смысл в разных участках кода, уследить за общей логикой работы программы становится сложнее, упростим задачу.</p>
+<p><strong>До</strong>:</p><pre class="urvanov-syntax-highlighter-plain-tag">temp = 2 * (height + WIDTH);
+  WRITE temp;
+  temp = height * WIDTH;
+  echo temp;</pre><p><strong>После</strong>:</p><pre class="urvanov-syntax-highlighter-plain-tag">perimetr = 2 * (height + WIDTH);
+  WRITE perimetr;
+  AREA = height * WIDTH;
+  echo AREA;</pre><p></p>
+<h2><strong>2. Замещение алгоритма</strong></h2>
+<p>Суть метода заключается в том, чтобы избавиться от старого кода и заменить его новым который не будет включать повторяющихся участков.</p>
+<p><strong>До:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: gv_price  TYPE I VALUE 150,
+      gv_discount  TYPE P DECIMALS 2.
+
+IF gv_price &gt; 100.
+  gv_discount = gv_price * '0.2'.
+  WRITE gv_discount. " Повторяющийся код
+ELSE.
+  gv_discount = gv_price * '0.1'.
+  WRITE gv_discount. " Повторяющийся код
+ENDIF.</pre><p><strong>После:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: gv_price  TYPE I VALUE 150,
+      gv_discount  TYPE P DECIMALS 2.
+
+IF gv_price &gt; 100.
+  gv_discount = gv_price * '0.2'.
+ELSE.
+  gv_discount = gv_price * '0.1'.
+ENDIF.
+
+WRITE gv_discount.</pre><p></p>
+<h2><strong>3. Передача объекта вместо его атрибутов</strong></h2>
+<p>Данный метод применим тогда, когда вы используете большое количество атрибутов объекта для вызова других методов (функций) и т.п.</p>
+<p><strong>До:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_order DEFINITION.
+  PUBLIC SECTION.
+    METHODS: CONSTRUCTOR
+    IMPORTING
+      iv_id  TYPE char5
+      iv_material_id  TYPE char10
+      iv_quantity  TYPE I
+      iv_unit  TYPE char3
+      iv_unit_price  TYPE I.
+    DATA: mv_id  TYPE char5  READ-ONLY,
+          mv_material_id  TYPE char10  READ-ONLY,
+          mv_quantity  TYPE I  READ-ONLY,
+          mv_unit  TYPE char3  READ-ONLY,
+          mv_unit_price  TYPE I.
+ENDCLASS.  "lcl_order DEFINITION
+
+CLASS lcl_order_collector DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS: write_total_order_price
+    IMPORTING
+    iv_id  TYPE char5
+    iv_material_id  TYPE char10
+    iv_quantity  TYPE I
+    iv_unit  TYPE char3
+    iv_unit_price  TYPE I.
+ENDCLASS.  "lcl_order_collector DEFINITION
+
+CLASS lcl_order IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+    mv_id = iv_id.
+    mv_material_id = iv_material_id.
+    mv_unit = iv_unit.
+    mv_unit_price = iv_unit_price.
+    mv_quantity = iv_quantity.
+  ENDMETHOD.  "constructor
+ENDCLASS.  "lcl_order IMPLEMENTATION
+
+CLASS lcl_order_collector IMPLEMENTATION.
+  METHOD write_total_order_price.
+    DATA: lv_total_order_price TYPE I.
+    lv_total_order_price = iv_quantity * iv_unit_price.
+    WRITE:/ 'The total price of order ', iv_id, ' for material ', iv_material_id,
+    ' is ', lv_total_order_price.
+  ENDMETHOD.  "write_total_order_price
+ENDCLASS.  "lcl_order_collector IMPLEMENTATION
+
+DATA: go_order  TYPE REF TO lcl_order.
+
+START-OF-SELECTION.
+  CREATE OBJECT go_order
+    EXPORTING
+      iv_id          = '001'
+      iv_material_id = 'MAT_A'
+      iv_quantity    = '10'
+      iv_unit        = 'EA'
+      iv_unit_price  = 7.
+
+  lcl_order_collector=&gt;write_total_order_price(
+   EXPORTING
+   iv_id = go_order-&gt;mv_id
+   iv_material_id = go_order-&gt;mv_material_id
+   iv_quantity = go_order-&gt;mv_quantity
+   iv_unit = go_order-&gt;mv_unit
+   iv_unit_price = go_order-&gt;mv_unit_price ).</pre><p><strong>После:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_order_collector DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS: write_total_order_price
+    IMPORTING
+    io_order TYPE REF TO lcl_order.
+ENDCLASS.  "lcl_order_collector DEFINITION
+
+...
+CLASS lcl_order_collector IMPLEMENTATION.
+  METHOD write_total_order_price.
+    DATA: lv_total_order_price TYPE I.
+    lv_total_order_price = io_order-&gt;mv_quantity * io_order-&gt;mv_unit_price.
+
+    WRITE:/ 'The total price of order ', io_order-&gt;mv_id,  'for material ', io_order-&gt;mv_material_id,' is ', lv_total_order_price.
+  ENDMETHOD.  "write_total_order_price
+ENDCLASS.  "lcl_order_collector IMPLEMENTATION
+
+DATA: go_order  TYPE REF TO lcl_order.
+
+START-OF-SELECTION.
+  CREATE OBJECT go_order
+    EXPORTING
+      iv_id          = '001'
+      iv_material_id = 'MAT_A'
+      iv_quantity    = '10'
+      iv_unit        = 'EA'
+      iv_unit_price  = 7.
+
+  lcl_order_collector=&gt;write_total_order_price(
+    EXPORTING
+      io_order = go_order ).</pre><p><strong style="font-size: 1.5em;">4. Введение поясняющих переменных в условиях</strong></p>
+<p>Идея данного способа рефакторинга заключается в том чтобы избежать сложных и длинных условий. Вместо них предполагается либо выделять методы (процедуры) возвращающие результат  отдельных условий, либо поясняющие переменные.</p>
+<p><strong>До:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: gv_string TYPE STRING VALUE 'AIRCOFFEE'.
+
+IF SUBSTRING( val = gv_string OFF = 0 len = 3 ) = 'AIR' AND SUBSTRING( val = gv_string OFF = 3 len = STRLEN( gv_string ) - 3 ) = 'COFFEE'.
+  WRITE 'Some action'.
+ELSE.
+  WRITE 'Another action'.
+ENDIF.</pre><p><strong>После:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_utils DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS:
+      get_drink
+        IMPORTING i_code TYPE CSEQUENCE
+        RETURNING VALUE(re_drink) TYPE STRING.
+ENDCLASS.
+
+CLASS lcl_utils IMPLEMENTATION.
+  METHOD get_drink.
+    re_drink = SUBSTRING( val = i_code OFF = 3 len = STRLEN( i_code ) - 3 ).
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA: gv_string TYPE STRING VALUE 'AIRCOFFEE',
+        gv_is_air TYPE abap_bool,
+        gv_drink  TYPE STRING.
+
+  gv_is_air = BOOLC( SUBSTRING( val = gv_string OFF = 0 len = 3 ) = 'AIR' ).
+  gv_drink = lcl_utils=&gt;get_drink( gv_string ).
+
+  IF  gv_is_air = abap_true AND gv_drink = 'COFFEE'.
+    WRITE 'Some action'.
+  ELSE.
+    WRITE 'Another action'.
+  ENDIF.</pre><p></p>
+<h2><strong>5. Извлечение метода</strong></h2>
+<p>Данный способ применим когда код отдельного метода слишком большой, в нем используется большое количество поясняющего кода, разбирать подобные методы довольно сложно и если есть возможность разделить код по разным методам, то лучше сделать это.</p>
+<p><strong>До:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_bank DEFINITION.
+  PUBLIC SECTION.
+    TYPES: ty_interest TYPE P LENGTH 8 DECIMALS 3.
+    CLASS-METHODS: calculate_interest
+      IMPORTING
+      iv_capital_amount TYPE I
+      iv_interest_rate  TYPE I
+      iv_no_of_months  TYPE I
+    RETURNING VALUE(rv_interest_amount) TYPE ty_interest.
+ENDCLASS.  "lcl_bank DEFINITION
+
+CLASS lcl_bank IMPLEMENTATION.
+  METHOD calculate_interest.
+    DATA: lv_last_capital  TYPE ty_interest,
+    lv_interest_in_percent  TYPE ty_interest,
+    lv_interest_amount  TYPE ty_interest.
+*Write header information
+    WRITE / 'Calculating interest'.
+    ULINE.
+    WRITE: / 'Capital Amount:', iv_capital_amount.
+    WRITE: / 'Interest Rate in Percent:', iv_interest_rate.
+    WRITE: / 'Number of months :', iv_no_of_months.
+*Calculate Interest Rate
+    lv_interest_in_percent = iv_interest_rate / 100.
+    lv_last_capital = iv_capital_amount.
+    DO iv_no_of_months TIMES.
+      lv_interest_amount = lv_last_capital * lv_interest_in_percent.
+      lv_last_capital = lv_last_capital + lv_interest_amount.
+      ADD lv_interest_amount TO rv_interest_amount.
+    ENDDO.
+*Write footer information
+    ULINE.
+    WRITE:/ 'Interest amount is calculated for:', sy-uname.
+    WRITE:/ 'Calculated interest amount :', rv_interest_amount.
+  ENDMETHOD.  "calculate_interest
+ENDCLASS.  "lcl_bank IMPLEMENTATION
+
+START-OF-SELECTION.
+  DATA: gv_interest_amount TYPE lcl_bank=&gt;ty_interest.
+  gv_interest_amount = lcl_bank=&gt;calculate_interest(
+    iv_capital_amount = 100
+    iv_interest_rate = 5
+    iv_no_of_months = 4
+  ).</pre><p><strong>После:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_bank DEFINITION.
+  PUBLIC SECTION.
+    TYPES: ty_interest TYPE P LENGTH 8 DECIMALS 3.
+    CLASS-METHODS: calculate_interest
+    IMPORTING
+    iv_capital_amount TYPE I
+    iv_interest_rate  TYPE I
+    iv_no_of_months  TYPE I
+    RETURNING VALUE(rv_interest_amount) TYPE ty_interest.
+
+  PRIVATE SECTION.
+    CLASS-METHODS: write_header
+      IMPORTING
+        iv_capital_amount TYPE I
+        iv_interest_rate TYPE I
+        iv_no_of_months TYPE I,
+
+    calculate_interest_amount
+      IMPORTING
+        iv_capital_amount TYPE I
+        iv_interest_rate TYPE I
+        iv_no_of_months TYPE I
+      CHANGING
+        cv_interest_amount TYPE ty_interest,
+
+    write_footer
+      IMPORTING iv_interest_amount TYPE ty_interest.
+ENDCLASS.                    "lcl_bank DEFINITION
+
+CLASS lcl_bank IMPLEMENTATION.
+  METHOD write_footer.
+    ULINE.
+    WRITE:/ 'Interest amount is calculated for:', sy-uname.
+    WRITE:/ 'Calculated interest amount :', iv_interest_amount.
+  ENDMETHOD.  "write_footer
+
+  METHOD write_header .
+    WRITE / 'Calculating interest'.
+    ULINE.
+    WRITE: / 'Capital Amount:', iv_capital_amount.
+    WRITE: / 'Interest Rate in Percent:', iv_interest_rate.
+    WRITE: / 'Number of months :', iv_no_of_months.
+  ENDMETHOD.  "write_header
+
+  METHOD calculate_interest_amount .
+    DATA lv_interest_amount TYPE ty_interest .
+    DATA lv_interest_in_percent TYPE ty_interest .
+    DATA lv_last_capital TYPE ty_interest .
+
+    lv_interest_in_percent = iv_interest_rate / 100.
+    lv_last_capital = iv_capital_amount.
+    DO iv_no_of_months TIMES.
+      lv_interest_amount = lv_last_capital * lv_interest_in_percent.
+      lv_last_capital = lv_last_capital + lv_interest_amount.
+      ADD lv_interest_amount TO cv_interest_amount.
+    ENDDO.
+  ENDMETHOD.                    "calculate_interest_amount
+
+  METHOD calculate_interest.
+    DATA: lv_last_capital  TYPE ty_interest,
+    lv_interest_in_percent  TYPE ty_interest,
+    lv_interest_amount  TYPE ty_interest.
+*Write header information
+    write_header(
+    EXPORTING
+      iv_capital_amount = iv_capital_amount
+      iv_interest_rate = iv_interest_rate
+      iv_no_of_months = iv_no_of_months
+    ).
+*Calculate Interest Rate
+    calculate_interest_amount(
+    EXPORTING
+      iv_capital_amount = iv_capital_amount
+      iv_interest_rate = iv_interest_rate
+      iv_no_of_months = iv_no_of_months
+    CHANGING
+      cv_interest_amount = rv_interest_amount
+    ).
+*Write footer information
+    write_footer( iv_interest_amount = rv_interest_amount ).
+  ENDMETHOD.  "calculate_interest
+ENDCLASS.  "lcl_bank IMPLEMENTATION
+
+START-OF-SELECTION.
+  DATA: gv_interest_amount TYPE lcl_bank=&gt;ty_interest.
+
+  gv_interest_amount = lcl_bank=&gt;calculate_interest(
+    iv_capital_amount = 100
+    iv_interest_rate = 5
+    iv_no_of_months = 4
+  ).</pre><p></p>
+<h2> <strong>6. Самостоятельная инкапсуляция атрибутов класса</strong></h2>
+<p>Если в классе существует множество атрибутов открытых для прямого чтения и записи, то лучше изменить порядок доступа к ним через set и get методы. Плюсы: мы всегда знаем где и в каких местах происходит изменение (инициализация) атрибутов, возможность переопределения логики в дочерних классах.</p>
+<p><strong>До:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_man DEFINITION.
+
+  PUBLIC SECTION.
+    DATA: gv_name TYPE STRING,
+          gv_nick TYPE STRING.
+    METHODS:
+      CONSTRUCTOR
+        IMPORTING
+          i_name TYPE CSEQUENCE
+          i_nick TYPE CSEQUENCE.
+ENDCLASS.
+
+CLASS lcl_man IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+    gv_name = i_name.
+    gv_nick = i_nick.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA: lo_man TYPE REF TO lcl_man.
+
+  CREATE OBJECT lo_man
+    EXPORTING
+      i_name = 'MIKE'
+      i_nick = 'ROBOCOP'.
+
+  lo_man-&gt;gv_name = 'SERJ'.
+
+  WRITE: lo_man-&gt;gv_name, lo_man-&gt;gv_nick.</pre><p><strong>После:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_man DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      CONSTRUCTOR
+        IMPORTING
+          i_name TYPE CSEQUENCE
+          i_nick TYPE CSEQUENCE,
+      get_name RETURNING VALUE(re_name) TYPE STRING,
+      get_nick RETURNING VALUE(re_nick) TYPE STRING,
+      set_name IMPORTING i_name TYPE STRING,
+      set_nick IMPORTING i_nick TYPE STRING.
+  PRIVATE SECTION.
+    DATA: gv_name TYPE STRING,
+          gv_nick TYPE STRING.
+ENDCLASS.
+
+CLASS lcl_man IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+    gv_name = i_name.
+    gv_nick = i_nick.
+  ENDMETHOD.
+
+  METHOD get_name.
+    re_name = gv_name.
+  ENDMETHOD.
+
+  METHOD get_nick.
+    re_nick = gv_nick.
+  ENDMETHOD.
+
+  METHOD set_name.
+    gv_name = i_name.
+  ENDMETHOD.
+
+  METHOD set_nick.
+    gv_nick = i_nick.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA: lo_man TYPE REF TO lcl_man,
+        lv_str TYPE STRING.
+
+  CREATE OBJECT lo_man
+    EXPORTING
+      i_name = 'MIKE'
+      i_nick = 'ROBOCOP'.
+
+  lo_man-&gt;set_name( 'SERJ' ).
+
+  lv_str = |{ lo_man-&gt;get_name( ) } { lo_man-&gt;get_nick( ) }|.
+  WRITE lv_str.</pre><p></p>
+<h2><strong>7. Замена литералов и магических чисел константами</strong></h2>
+<p>Достаточно часто в коде приходится сталкиваться с условиями в которых фигурируют одни и те же непонятные обозначения и магические числа, причем бывают ситуации в которых понять логику работы такого кода без отладчика просто невозможно. Решением данной проблемы становится замена литералов и чисел константами (конечно же с последующим комментированием того для чего они необходимы).</p>
+<p><strong>До:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lv_unit_price  TYPE I,
+      lv_number_of_units_sold  TYPE I,
+      lv_customer_type  TYPE C LENGTH 1,
+      lv_total_price  TYPE I.
+
+lv_customer_type = 'P'.
+lv_number_of_units_sold = 20.
+IF lv_customer_type  EQ 'P'.
+  lv_unit_price = 10.
+ELSEIF lv_customer_type EQ 'C'.
+  lv_unit_price = 9.
+ELSEIF lv_customer_type EQ 'U'.
+  lv_unit_price = 6.
+ENDIF.
+
+lv_total_price = lv_unit_price * lv_number_of_units_sold.
+IF lv_customer_type  EQ 'P'.
+  WRITE:/ 'The total price for a person is ', lv_total_price.
+ELSEIF lv_customer_type EQ 'C'.
+  WRITE:/ 'The total price for a company is', lv_total_price.
+ELSEIF lv_customer_type EQ 'U'.
+  WRITE:/ 'The total price for a university is', lv_total_price.
+ENDIF.</pre><p><strong>После:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">CONSTANTS: c_customer_person  TYPE C LENGTH 1 VALUE 'P',
+           c_customer_company  TYPE C LENGTH 1 VALUE 'C',
+           c_customer_university  TYPE C LENGTH 1 VALUE 'U'.
+
+DATA: lv_unit_price  TYPE I,
+      lv_number_of_units_sold  TYPE I,
+      lv_customer_type  TYPE C LENGTH 1,
+      lv_total_price  TYPE I.
+
+lv_customer_type = c_customer_person.
+lv_number_of_units_sold = 20.
+IF lv_customer_type  EQ c_customer_person.
+  lv_unit_price = 10.
+ELSEIF lv_customer_type EQ c_customer_company.
+  lv_unit_price = 9.
+ELSEIF lv_customer_type EQ c_customer_university.
+  lv_unit_price = 6.
+ENDIF.
+
+lv_total_price = lv_unit_price * lv_number_of_units_sold.
+IF lv_customer_type  EQ c_customer_person.
+  WRITE:/ 'The total price for a person is ', lv_total_price.
+ELSEIF lv_customer_type EQ c_customer_company.
+  WRITE:/ 'The total price for a company is', lv_total_price.
+ELSEIF lv_customer_type EQ c_customer_university.
+  WRITE:/ 'The total price for a university is', lv_total_price.
+ENDIF.</pre><p></p>
+<h2><strong>8. Разделение метода получения и изменения данных на отдельные методы</strong></h2>
+<p>Допустим мы имеем метод который прибавляет какое либо значение к внутренней переменной класса и при этом возвращает результат. Если мы захотим неоднократно просто получить значение переменной нужно будет либо прибавить ноль, либо написать отдельный дополнительный метод для получения значения. В обоих случаях результат будет не очень красивым. Само наличие метода который выполняет сразу несколько ролей является источником проблем при разборе кода и возможным источником ошибок при его изменении. При рефактиринге в данном случае необходимо выделить метод который будет менять данные и метод который будет возвращать значение внутренней переменной класса.</p>
+<p><strong>До:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_customer DEFINITION.
+  PUBLIC SECTION.
+    METHODS: add_order_and_get_debt
+    IMPORTING iv_order_amount TYPE I
+    RETURNING VALUE(rv_debt) TYPE I.
+  PRIVATE SECTION.
+    DATA: mv_debt  TYPE I VALUE '1000',
+    mv_open_order_amount  TYPE I VALUE '100'.
+ENDCLASS. 
+
+CLASS lcl_customer IMPLEMENTATION.
+  METHOD add_order_and_get_debt.
+    ADD iv_order_amount TO mv_open_order_amount.
+    ADD iv_order_amount TO mv_debt.
+    rv_debt = mv_debt.
+  ENDMETHOD.  
+ENDCLASS.  
+
+START-OF-SELECTION.
+
+  DATA: lo_customer TYPE REF TO lcl_customer,
+        lv_debt  TYPE I.
+
+  CREATE OBJECT lo_customer.
+  lo_customer-&gt;add_order_and_get_debt(
+    EXPORTING
+    iv_order_amount = 50
+    RECEIVING
+    rv_debt = lv_debt ).
+
+  WRITE / lv_debt.</pre><p><strong>После:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_customer DEFINITION.
+  PUBLIC SECTION.
+    METHODS: get_debt
+    RETURNING VALUE(rv_debt) TYPE I,
+    add_order_amount
+    IMPORTING iv_order_amount TYPE I.
+  PRIVATE SECTION.
+    DATA: mv_debt  TYPE I VALUE '1000',
+    mv_open_order_amount  TYPE I VALUE '100'.
+ENDCLASS.                    "lcl_customer DEFINITION
+
+CLASS lcl_customer IMPLEMENTATION.
+  METHOD get_debt.
+    rv_debt = mv_debt.
+  ENDMETHOD.  "add_order_and_get_debt
+  METHOD add_order_amount.
+    ADD iv_order_amount TO mv_open_order_amount.
+    ADD iv_order_amount TO mv_debt.
+  ENDMETHOD.  "add_order_amount
+ENDCLASS.                    "lcl_customer IMPLEMENTATION
+
+START-OF-SELECTION.
+  DATA: lo_customer TYPE REF TO lcl_customer,
+  lv_debt  TYPE I.
+  CREATE OBJECT lo_customer.
+  lo_customer-&gt;add_order_amount( iv_order_amount = 50 ).
+  lv_debt = lo_customer-&gt;get_debt( ).
+  WRITE / lv_debt.</pre><p></p>
+<h2><strong>9. Параметризация метода</strong></h2>
+<p>Бывают такие ситуации, когда несколько методов выполняют одни и те же действия, но с разными значениями внутри. Например, один метод увеличивает значение стоимости товара на 10, а другой – на 30 процентов. И тут конечно лучше было бы создать просто один метод, но для разных значений, который принимал бы параметр, сколько прибавлять процентов к стоимости – 10 или 30, а может и 50 и т.д. Отсюда и название приема – параметризация метода. Пример в данном случае будет лишним, из описания все и так понятно.</p>
+<h2><strong>10. Перемещение методов и полей вверх по иерархии классов.</strong></h2>
+<p>Предположим имеем иерархию классов: <strong>ZCL_MAN</strong> (человек) &#8212; абстрактный класс. Унаследованный от него класс <strong>ZCL_POST_MAN</strong> (почтальон) в котором есть открытый атрибут имени (gv_name), не унаследованный, а объявленный непосредственно в самом классе. Очевидно что каждый человек, несмотря на его должность имеет имя, благодаря встроенному в редактор классов рефакторинг ассистенту мы можем с легкостью переместить данный атрибут выше по иерархии в абстрактный класс. Для начала необходимо открыть класс <strong>ZCL_POST_MAN</strong> на изменение и перейти на вкладку атрибутов, далее нажать F7 (<a href="http://help.sap.com/saphelp_erp2005/helpdata/RU/6a/42d41b192311d5969b00a0c94260a5/frameset.htm" target="_blank" rel="noopener">вызов ассистента</a>).</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/10/se24assistent.png"><img loading="lazy" class="size-full wp-image-1144 alignnone" title="se24assistent" src="http://abap-blog.ru/wp-content/uploads/2012/10/se24assistent.png" alt="" width="789" height="362" srcset="https://abap-blog.ru/wp-content/uploads/2012/10/se24assistent.png 789w, https://abap-blog.ru/wp-content/uploads/2012/10/se24assistent-300x137.png 300w" sizes="(max-width: 789px) 100vw, 789px" /></a> Переместив атрибут мышкой на класс ZCL_MAN мы тем самым перенесем его вверх по иерархии классов, после чего останется только активировать классы. Перемещение методов работает аналогичным образом. Кроме того ассистент позволяет переносить как вниз так и вверх по иерархии классов и интерфейсов. Перемещать реализацию интерфейсов, разделать классы и интерфейсы.</p>
+<h2><strong>11. Встраивание метода</strong></h2>
+<p>Правило использования коротких методов в программе может дойти до того что код метода будет столь же прозрачен как и имя метода, например когда метод будет перемножать два числа, естественно таких методов стоит избегать и в данном случае перемножение проще вставить там где оно необходимо напрямую.</p>
+<h2><strong>12. Замена внутренней переменной вызовом метода</strong></h2>
+<p>«Замена временной переменной вызовом метода» часто представляет собой необходимый шаг перед «Выделением метода». Локальные переменные затрудняют выделение, поэтому замените как можно больше переменных вызовами методов. Кроме того большой объем локальных переменных усложняет разбор кода.</p>
+<p><strong>До:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: 
+ lv_base_price TYPE I, 
+ lv_discount_factor TYPE DECFLOAT34.
+
+lv_base_price = gv_quantity * gv_item_price.
+
+IF lv_base_price &gt; 1000.
+  lv_discount_factor = '0.98'.
+ELSE.
+  lv_discount_factor = '1'.
+ENDIF.
+
+re_price = lv_base_price * lv_discount_factor.</pre><p><strong>После:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">re_price = get_base_price( ) * get_discount_factor( ).</pre><p>В качестве заключения хотелось бы сказать что не смотря на все плюсы рефакторинга, не нужно впадать в <a href="http://habrahabr.ru/post/116346/" target="_blank" rel="noopener">одержимость</a>, кроме того хорошей практикой будет изменение старого кода с учётом новых возможностей языка, например <a href="http://abap-blog.ru/abap/abap-osnovi/proshhaj-write-to-privet-shablony/">строковых шаблонов</a>.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/refactoring/">Немного о рефакторинге</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/refactoring/feed/</wfw:commentRss>
+			<slash:comments>6</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

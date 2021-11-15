@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>cl_gui_alv_grid | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_gui_alv_grid/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:58:23 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Редактируемый ALV в 3 строки</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/redaktiruemyj-alv-v-3-stroki/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/redaktiruemyj-alv-v-3-stroki/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 18 Mar 2012 06:17:51 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[cl_gui_alv_grid]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=601</guid>
+
+					<description><![CDATA[<p>[crayon-618a1f3aab65b059714150/]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/redaktiruemyj-alv-v-3-stroki/">Редактируемый ALV в 3 строки</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zalv_grid.
+
+DATA:
+  lo_alv TYPE REF TO cl_gui_alv_grid,
+  lt_tab TYPE TABLE OF t001.
+
+SELECTION-SCREEN BEGIN OF SCREEN 1100.
+SELECTION-SCREEN END OF SCREEN 1100.
+
+SELECT * FROM t001 INTO TABLE lt_tab.
+
+*-- Строка 1 - создание инстанции грида
+CREATE OBJECT lo_alv
+  EXPORTING
+    i_parent = cl_gui_container=&gt;screen0.
+
+*-- Строка 2 - привязка внутренней таблицы к гриду
+CALL METHOD lo_alv-&gt;set_table_for_first_display
+  EXPORTING
+    i_structure_name = 'T001'
+  CHANGING
+    it_outtab        = lt_tab.
+
+*-- Строка 3 - показать экран с гридом
+CALL SELECTION-SCREEN 1100.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/redaktiruemyj-alv-v-3-stroki/">Редактируемый ALV в 3 строки</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/redaktiruemyj-alv-v-3-stroki/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,1222 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>HANA | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/category/hana/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Wed, 28 Apr 2021 11:59:44 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Оценка похожести строк через Fuzzy Search</title>
+		<link>https://abap-blog.ru/hana/hana-fuzzy-search/</link>
+					<comments>https://abap-blog.ru/hana/hana-fuzzy-search/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 26 Apr 2021 13:05:19 +0000</pubDate>
+				<category><![CDATA[HANA]]></category>
+		<guid isPermaLink="false">https://abap-blog.ru/?p=7264</guid>
+
+					<description><![CDATA[<p>Использование функционала поиска в HANA довольно обширная тема, которой посвящена отдельный гайд в документации. В данной же статье хотелось бы рассмотреть её небольшую часть, а именно нечёткий поиск или Fuzzy Search для оценки похожести строк. В целом нечёткий поиск может быть использован в разных сценариях, например: Для облегчения поиска пользователя, когда заранее может быть неизвестно [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/hana/hana-fuzzy-search/">Оценка похожести строк через Fuzzy Search</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/database-search-2361-2.png"><img loading="lazy" class="wp-image-7274 alignright" src="https://abap-blog.ru/wp-content/uploads/2021/04/database-search-2361-2.png" alt="" width="255" height="255" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/database-search-2361-2.png 512w, https://abap-blog.ru/wp-content/uploads/2021/04/database-search-2361-2-300x300.png 300w, https://abap-blog.ru/wp-content/uploads/2021/04/database-search-2361-2-150x150.png 150w" sizes="(max-width: 255px) 100vw, 255px" /></a>Использование функционала поиска в HANA довольно обширная тема, которой посвящена <a href="https://help.sap.com/viewer/691cb949c1034198800afde3e5be6570/2.0.05/en-US/ce86ef2fd97610149eaaaa0244ca4d36.html" target="_blank" rel="noopener">отдельный гайд в документации</a>.</p>
+<p>В данной же статье хотелось бы рассмотреть её небольшую часть, а именно нечёткий поиск или <a href="https://help.sap.com/viewer/691cb949c1034198800afde3e5be6570/2.0.05/en-US/cc602780bb5710148aa2bf6cab3c015b.html" target="_blank" rel="noopener"><strong>Fuzzy Search</strong></a> для оценки похожести строк.</p>
+<p>В целом нечёткий поиск может быть использован в разных сценариях, например:</p>
+<ul>
+<li>Для облегчения поиска пользователя, когда заранее может быть неизвестно точное наименование материала или номера документа.</li>
+<li>Для поиска по заранее определённым столбцам, когда пользователь ищет некоторый адрес вводя индекс или часть названия улицы.</li>
+<li>Для сопоставления распознанных данных в каком-нибудь OCR движке (который может иногда выдавать не 100% результат) с тем что лежит в системе.</li>
+</ul>
+<p><span id="more-7264"></span></p>
+<p>В ABAP есть встроенный механизм позволяющий оценить похожесть двух строк &#8212; функция <strong>distance</strong>, которая работает на базе алгоритма подсчёта расстояния <a href="https://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D1%81%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D0%B5_%D0%9B%D0%B5%D0%B2%D0%B5%D0%BD%D1%88%D1%82%D0%B5%D0%B9%D0%BD%D0%B0" target="_blank" rel="noopener">Левенштейна</a>.</p>
+<p>Функция возвращает количество операций удаления, вставки и изменения, необходимых для преобразования одной строки в другую. Однако данная функция в отличие от Fuzzy Search не обладает той же гибкостью.</p>
+<h3>Fuzzy Search в средствах поиска</h3>
+<p>Если Вы работаете в более менее современных системах на базе СУБД HANA, то наверное уже замечали встроенный механизм нечёткого поиска при вводе в средствах поиска, например поиск по имени класса:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/class_search.png"><img loading="lazy" class="alignnone size-full wp-image-7270" src="https://abap-blog.ru/wp-content/uploads/2021/04/class_search.png" alt="" width="756" height="281" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/class_search.png 756w, https://abap-blog.ru/wp-content/uploads/2021/04/class_search-300x112.png 300w" sizes="(max-width: 756px) 100vw, 756px" /></a></p>
+<p>В соответствующем СП выставлены параметры нечёткого поиска:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/class_sh_conf.png"><img loading="lazy" class="alignnone size-full wp-image-7271" src="https://abap-blog.ru/wp-content/uploads/2021/04/class_sh_conf.png" alt="" width="803" height="295" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/class_sh_conf.png 803w, https://abap-blog.ru/wp-content/uploads/2021/04/class_sh_conf-300x110.png 300w, https://abap-blog.ru/wp-content/uploads/2021/04/class_sh_conf-768x282.png 768w" sizes="(max-width: 803px) 100vw, 803px" /></a></p>
+<p>В интерфейсах вызова СП появились соответствующие опции:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  ls_shlp_descr TYPE shlp_descr,
+  lv_rc         LIKE sy-subrc,
+  lt_values     TYPE STANDARD TABLE OF ddshretval.
+
+PARAMETERS:
+  p_req TYPE string.
+
+START-OF-SELECTION.
+  CONSTANTS:
+    lc_search_help TYPE shlpname VALUE 'SEO_CLASSES_INTERFACES'.
+
+  CALL FUNCTION 'F4IF_GET_SHLP_DESCR'
+    EXPORTING
+      shlpname = lc_search_help
+      shlptype = 'SH'
+    IMPORTING
+      shlp     = ls_shlp_descr.
+
+  ls_shlp_descr-textsearch-fields = VALUE ddsh_textsearch_fields( ( CONV #( 'NAME' ) )
+                                                                  ( CONV #( 'DESCRIPTION' ) ) ).
+
+  ls_shlp_descr-textsearch-request = p_req.
+  ls_shlp_descr-intdescr-fuzzy_search = abap_true.
+  ls_shlp_descr-intdescr-fuzzy_similarity = '0.8'.
+
+  CALL FUNCTION 'F4IF_SELECT_VALUES'
+    EXPORTING
+      shlp       = ls_shlp_descr
+      maxrows    = 12
+    TABLES
+      record_tab = lt_values.
+
+  cl_demo_output=&gt;display( lt_values ).</pre><p>Внутри вызывается движок SADL и преобразование к Native SQL следующего вида:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/sql_trace.png"><img loading="lazy" class="alignnone size-full wp-image-7272" src="https://abap-blog.ru/wp-content/uploads/2021/04/sql_trace.png" alt="" width="599" height="440" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/sql_trace.png 599w, https://abap-blog.ru/wp-content/uploads/2021/04/sql_trace-300x220.png 300w" sizes="(max-width: 599px) 100vw, 599px" /></a></p>
+<p>Обратите внимание на режим поиска: similarCalculationMode=<strong>search</strong>. Позже рассмотрим этот и другие режимы когда будем рассматривать сопоставления строк.</p>
+<h3>Синтаксис вызова Fuzzy Search в SQLScript</h3>
+<p>Упрощённый синтаксис вызова Fuzzy Search в SQLScript выглядит следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT SCORE() AS score, *
+FROM table_name
+WHERE CONTAINS(column_name, '123', FUZZY(0.8))
+ORDER BY score DESC;</pre><p>В данном запросе мы найдём все строки в таблице table_name, где для поля column_name будут найдены значения, уровень похожести которых на &#171;123&#187; будет более 0.8.</p>
+<ul>
+<li>Уровень похожести определяется числом от 0 до 1, где 1 &#8212; полное соответствие.</li>
+<li>Значение 0.0 переданное в функцию FUZZY будет обозначать выборку всех значений &gt; 0.</li>
+<li>Функция SCORE() выдаёт результат оценки похожести.</li>
+</ul>
+<p>Функция CONTAINS может быть использована для разного рода поиска, но в данном случае используется именно нечёткий поиск &#8212; функция FUZZY.</p>
+<p>Функция FUZZY можно настраивать через передачу параметров:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT SCORE() AS score, *
+FROM table_name
+WHERE CONTAINS(column_name, 'Значение', FUZZY(0.8, 'option1=value1, option2=value2'))
+ORDER BY score DESC;</pre><p>Поиск может быть выполнен с учётом нескольких столбцов:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT ... WHERE CONTAINS((col1, col2, col3), 'term1 term2 term3', FUZZY(0.7)) ...;</pre><p>Внутри функции CONTAINS можно использовать специальный синтаксис запросов включающий в себя зарезервированные слова и символы:</p>
+<ul>
+<li>CONTAINS(col, &#8216;sap OR hana&#8217;), где OR (чувствителен к регистру) обозначает ИЛИ, выбрать все значения где есть sap или hana.</li>
+<li>CONTAINS(col, &#8216;sap -hana&#8217;), выбрать все значения где есть sap, но не hana.</li>
+<li>CONTAINS(col, &#8216;&#187;sap hana&#187;&#8216;), если брать в двойных кавычках поиск будет по фразе целиком.</li>
+<li>* (%) или ?, активируют поиск по шаблону, при этом нечёткий поиск выполняться не будет.</li>
+</ul>
+<p>Следует учитывать что при передаче параметров в функцию FUZZY одновременно с вышеуказанными параметрами CONTAINS запрос разбивается на подзапросы:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT ... WHERE CONTAINS(col1, 'terma OR termb', FUZZY(0.7, 'opt1=val1, opt2=val2')) ...;
+ 
+/* будет преобразован в два подзапроса */
+SELECT ... WHERE (CONTAINS(col1, 'terma', FUZZY(0.7, 'opt1=val1, opt2=val2'))
+              OR  CONTAINS(col1, 'termb', FUZZY(0.7, 'opt1=val1, opt2=val2'))) ...;
+ 
+ 
+SELECT ... WHERE CONTAINS(col1, 'this is a "search term"', FUZZY(0.7, 'opt1=val1, opt2=val2')) ...;
+ 
+/* Так же будет преобразован в несколько подзапросов */
+SELECT ... WHERE (CONTAINS(col1, 'this is a', FUZZY(0.7, 'opt1=val1, opt2=val2'))
+             AND  CONTAINS(col1, '"search term"', FUZZY(0.7, 'opt1=val1, opt2=val2'))) ...;</pre><p>Аналогичное поведение будет при использовании поиска по нескольким столбцам:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT ... WHERE CONTAINS((col1, col2), 'terma termb', FUZZY((0.7, 'opt1=val1, opt2=val2'), (0.9, 'opt3=val3'))) ...;
+ 
+/* Будет выполнено несколько подзапросов */
+SELECT ... WHERE
+ ( CONTAINS(col1, 'terma', FUZZY(0.7, 'opt1=val1, opt2=val2')) AND CONTAINS(col1, 'termb', FUZZY(0.7, 'opt1=val1, opt2=val2')) )
+OR
+ ( CONTAINS(col1, 'terma', FUZZY(0.7, 'opt1=val1, opt2=val2')) AND CONTAINS(col2, 'termb', FUZZY((0.9, 'opt3=val3')) )
+OR
+ ( CONTAINS(col2, 'terma', FUZZY((0.9, 'opt3=val3'))           AND CONTAINS(col1, 'termb', FUZZY(0.7, 'opt1=val1, opt2=val2')) )
+OR
+ ( CONTAINS(col2, 'terma', FUZZY((0.9, 'opt3=val3'))           AND CONTAINS(col2, 'termb', FUZZY((0.9, 'opt3=val3')) )
+OR
+ CONTAINS(col1, '"terma termb"', FUZZY(0.7, 'opt1=val1, opt2=val2'))
+OR
+ CONTAINS(col2, '"terma termb"', FUZZY((0.9, 'opt3=val3'))
+...;</pre><p>Если внутри запроса используется поиск по нескольким полям, функция SCORE будет возвращать средневзвешенное значение по всем полям используемым в запросе:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT SCORE(), col1, col2, ... FROM tab
+WHERE CONTAINS(col1, 'x y z')
+  AND CONTAINS(col2, 'a b c')
+  AND ...
+ORDER BY SCORE() DESC;</pre><p>Вес каждого поля по умолчанию равен 1 (т.е. при оценке они равны между собой), допускается ручное указание весов:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT SCORE(), ... FROM tab
+WHERE CONTAINS((col1, col2, col3), 'a b c', FUZZY(0.8), WEIGHT(1.0, 0.5, 0.5))
+  AND CONTAINS(col4, 'x y z', FUZZY(0.7), WEIGHT(0.7))
+  AND CONTAINS(col5, 'u v w', FUZZY(0.7))
+  AND ...
+ORDER BY SCORE() DESC;</pre><p></p>
+<h3>Оценка похожести строк</h3>
+<p>С помощью опции similarCalculationMode мы можем определить то, каким образом будет оцениваться похожесть строк.</p>
+<p>Похожесть строки А (строка поиска) по отношению к строке Б (строка в таблице) оценивается на основании следующих критериев:</p>
+<ul>
+<li>общие символы в А и Б</li>
+<li>дополнительные символы в строке А</li>
+<li>дополнительные символы в строке Б</li>
+<li>ошибочные символы (опечатки) в строке А</li>
+</ul>
+<p>По своей сути допустимые для выставления режимы сопоставления отличаются влиянием вышеуказанных критериев на результат:</p>
+
+<div class="wpdt-c row wpDataTableContainerSimpleTable wpDataTables wpDataTablesWrapper
+"
+    >
+        <table id="wpdtSimpleTable-1"
+           class="wpdtSimpleTable wpDataTable"
+           style="border-collapse:collapse;
+                   border-spacing:0px;"
+           data-column="4"
+           data-rows="8"
+           data-wpID="1"
+           data-responsive="1"
+           data-has-header="1">
+
+                    <thead>        <tr class="wpdt-cell-row " >
+                            <th class="wpdt-cell wpdt-bold wpdt-valign-middle"
+                                    data-cell-id="A1"
+                data-col-index="0"
+                data-row-index="0"
+                style=" width:25.170998632%;                padding:5px;
+                "
+                >
+                                Режим                </th>
+                                            <th class="wpdt-cell wpdt-bold wpdt-valign-middle"
+                                    data-cell-id="B1"
+                data-col-index="1"
+                data-row-index="0"
+                style=" width:19.9726402189%;                padding:5px;
+                "
+                >
+                                Опечатки                </th>
+                                            <th class="wpdt-cell wpdt-bold wpdt-valign-middle"
+                                    data-cell-id="C1"
+                data-col-index="2"
+                data-row-index="0"
+                style=" width:23.2558139535%;                padding:5px;
+                "
+                >
+                                Доп. символы в А                </th>
+                                            <th class="wpdt-cell wpdt-bold wpdt-valign-middle"
+                                    data-cell-id="D1"
+                data-col-index="3"
+                data-row-index="0"
+                style=" width:31.6005471956%;                padding:5px;
+                "
+                >
+                                Доп. символы в Б                </th>
+                                        </tr>
+                    <tbody>        <tr class="wpdt-cell-row odd" >
+                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="A2"
+                data-col-index="0"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                compare (по умолчанию)                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="B2"
+                data-col-index="1"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                среднее                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="C2"
+                data-col-index="2"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                высокое                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="D2"
+                data-col-index="3"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                высокое                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row even" >
+                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="A3"
+                data-col-index="0"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                search                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="B3"
+                data-col-index="1"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                высокое                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="C3"
+                data-col-index="2"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                высокое                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="D3"
+                data-col-index="3"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                низкое                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row odd" >
+                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="A4"
+                data-col-index="0"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                searchCompare                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="B4"
+                data-col-index="1"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                среднее/высокое                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="C4"
+                data-col-index="2"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                высокое                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="D4"
+                data-col-index="3"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                низкое                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row even" >
+                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="A5"
+                data-col-index="0"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                symmetricsearch                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="B5"
+                data-col-index="1"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                высокое                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="C5"
+                data-col-index="2"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                среднее                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="D5"
+                data-col-index="3"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                среднее                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row odd" >
+                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="A6"
+                data-col-index="0"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                substringsearch                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="B6"
+                data-col-index="1"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                высокое                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="C6"
+                data-col-index="2"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                высокое                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="D6"
+                data-col-index="3"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                низкое                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row even" >
+                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="A7"
+                data-col-index="0"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                typeAhead                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="B7"
+                data-col-index="1"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                высокое                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="C7"
+                data-col-index="2"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                очень высокое                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="D7"
+                data-col-index="3"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                низкое                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row odd" >
+                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="A8"
+                data-col-index="0"
+                data-row-index="7"
+                style="                padding:5px;
+                "
+                >
+                                flexible                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="B8"
+                data-col-index="1"
+                data-row-index="7"
+                style="                padding:5px;
+                "
+                >
+                                управляется параметром errorDevaluate                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="C8"
+                data-col-index="2"
+                data-row-index="7"
+                style="                padding:5px;
+                "
+                >
+                                очень высокое                </td>
+                                            <td class="wpdt-cell wpdt-valign-middle"
+                                    data-cell-id="D8"
+                data-col-index="3"
+                data-row-index="7"
+                style="                padding:5px;
+                "
+                >
+                                управляется параметром lengthTolerance                </td>
+                                        </tr>
+                    </table>
+</div><style id='wpdt-custom-style-1'>
+</style>
+
+<p>Рассмотрим на примерах:</p>
+
+<div class="wpdt-c row wpDataTableContainerSimpleTable wpDataTables wpDataTablesWrapper
+"
+    >
+        <table id="wpdtSimpleTable-2"
+           class="wpdtSimpleTable wpDataTable"
+           style="border-collapse:collapse;
+                   border-spacing:0px;"
+           data-column="5"
+           data-rows="7"
+           data-wpID="2"
+           data-responsive="1"
+           data-has-header="1">
+
+                    <thead>        <tr class="wpdt-cell-row " >
+                            <th class="wpdt-cell wpdt-bold"
+                                    data-cell-id="A1"
+                data-col-index="0"
+                data-row-index="0"
+                style=" width:28.0487804878%;                padding:5px;
+                "
+                >
+                                Строка А                </th>
+                                            <th class="wpdt-cell wpdt-bold"
+                                    data-cell-id="B1"
+                data-col-index="1"
+                data-row-index="0"
+                style=" width:28.1842818428%;                padding:5px;
+                "
+                >
+                                Строка Б                </th>
+                                            <th class="wpdt-cell wpdt-bold"
+                                    data-cell-id="C1"
+                data-col-index="2"
+                data-row-index="0"
+                style=" width:13.5501355014%;                padding:5px;
+                "
+                >
+                                compare                </th>
+                                            <th class="wpdt-cell wpdt-bold"
+                                    data-cell-id="D1"
+                data-col-index="3"
+                data-row-index="0"
+                style=" width:13.5501355014%;                padding:5px;
+                "
+                >
+                                typeAhead                </th>
+                                            <th class="wpdt-cell wpdt-bold"
+                                    data-cell-id="E1"
+                data-col-index="4"
+                data-row-index="0"
+                style=" width:16.6666666667%;                padding:5px;
+                "
+                >
+                                searchCompare                </th>
+                                        </tr>
+                    <tbody>        <tr class="wpdt-cell-row odd" >
+                            <td class="wpdt-cell "
+                                    data-cell-id="A2"
+                data-col-index="0"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                search                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="B2"
+                data-col-index="1"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                searching                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="C2"
+                data-col-index="2"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                0.76                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="D2"
+                data-col-index="3"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                1.0                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="E2"
+                data-col-index="4"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                1.0                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row even" >
+                            <td class="wpdt-cell "
+                                    data-cell-id="A3"
+                data-col-index="0"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                search                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="B3"
+                data-col-index="1"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                seerch                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="C3"
+                data-col-index="2"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                0.85                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="D3"
+                data-col-index="3"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                0.85                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="E3"
+                data-col-index="4"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                0.85                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row odd" >
+                            <td class="wpdt-cell "
+                                    data-cell-id="A4"
+                data-col-index="0"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                search                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="B4"
+                data-col-index="1"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                searchingforextraterrestriallife                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="C4"
+                data-col-index="2"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                0.0                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="D4"
+                data-col-index="3"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                0.91                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="E4"
+                data-col-index="4"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                0.91                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row even" >
+                            <td class="wpdt-cell "
+                                    data-cell-id="A5"
+                data-col-index="0"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                searchingforextraterrestriallife                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="B5"
+                data-col-index="1"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                searching                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="C5"
+                data-col-index="2"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                0.0                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="D5"
+                data-col-index="3"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                0                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="E5"
+                data-col-index="4"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                0                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row odd" >
+                            <td class="wpdt-cell "
+                                    data-cell-id="A6"
+                data-col-index="0"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                searchingforextraterrestriallife                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="B6"
+                data-col-index="1"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                seerch                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="C6"
+                data-col-index="2"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                0.0                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="D6"
+                data-col-index="3"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                0                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="E6"
+                data-col-index="4"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                0                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row even" >
+                            <td class="wpdt-cell "
+                                    data-cell-id="A7"
+                data-col-index="0"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                searchingforextraterrestriallife                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="B7"
+                data-col-index="1"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                searchingforthemeaningoflife                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="C7"
+                data-col-index="2"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                0.6                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="D7"
+                data-col-index="3"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                0.6                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="E7"
+                data-col-index="4"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                0.6                </td>
+                                        </tr>
+                    </table>
+</div><style id='wpdt-custom-style-2'>
+</style>
+
+
+<div class="wpdt-c row wpDataTableContainerSimpleTable wpDataTables wpDataTablesWrapper
+"
+    >
+        <table id="wpdtSimpleTable-3"
+           class="wpdtSimpleTable wpDataTable"
+           style="border-collapse:collapse;
+                   border-spacing:0px;"
+           data-column="5"
+           data-rows="7"
+           data-wpID="3"
+           data-responsive="1"
+           data-has-header="1">
+
+                    <thead>        <tr class="wpdt-cell-row " >
+                            <th class="wpdt-cell wpdt-bold"
+                                    data-cell-id="A1"
+                data-col-index="0"
+                data-row-index="0"
+                style=" width:31.9018404908%;                padding:5px;
+                "
+                >
+                                Строка А                </th>
+                                            <th class="wpdt-cell wpdt-bold"
+                                    data-cell-id="B1"
+                data-col-index="1"
+                data-row-index="0"
+                style=" width:31.9018404908%;                padding:5px;
+                "
+                >
+                                Строка Б                </th>
+                                            <th class="wpdt-cell wpdt-bold"
+                                    data-cell-id="C1"
+                data-col-index="2"
+                data-row-index="0"
+                style=" width:9.96932515337%;                padding:5px;
+                "
+                >
+                                search                </th>
+                                            <th class="wpdt-cell wpdt-bold"
+                                    data-cell-id="D1"
+                data-col-index="3"
+                data-row-index="0"
+                style=" width:13.6503067485%;                padding:5px;
+                "
+                >
+                                symmetric                </th>
+                                            <th class="wpdt-cell wpdt-bold"
+                                    data-cell-id="E1"
+                data-col-index="4"
+                data-row-index="0"
+                style=" width:12.5766871166%;                padding:5px;
+                "
+                >
+                                substring                </th>
+                                        </tr>
+                    <tbody>        <tr class="wpdt-cell-row odd" >
+                            <td class="wpdt-cell "
+                                    data-cell-id="A2"
+                data-col-index="0"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                search                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="B2"
+                data-col-index="1"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                searching                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="C2"
+                data-col-index="2"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                0.96                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="D2"
+                data-col-index="3"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                0.86                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="E2"
+                data-col-index="4"
+                data-row-index="1"
+                style="                padding:5px;
+                "
+                >
+                                0.9                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row even" >
+                            <td class="wpdt-cell "
+                                    data-cell-id="A3"
+                data-col-index="0"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                search                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="B3"
+                data-col-index="1"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                seerch                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="C3"
+                data-col-index="2"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                0.75                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="D3"
+                data-col-index="3"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                0.75                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="E3"
+                data-col-index="4"
+                data-row-index="2"
+                style="                padding:5px;
+                "
+                >
+                                0.8                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row odd" >
+                            <td class="wpdt-cell "
+                                    data-cell-id="A4"
+                data-col-index="0"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                search                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="B4"
+                data-col-index="1"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                searchingforextraterrestriallife                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="C4"
+                data-col-index="2"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                0.91                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="D4"
+                data-col-index="3"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                0.87                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="E4"
+                data-col-index="4"
+                data-row-index="3"
+                style="                padding:5px;
+                "
+                >
+                                0.88                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row even" >
+                            <td class="wpdt-cell "
+                                    data-cell-id="A5"
+                data-col-index="0"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                searchingforextraterrestriallife                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="B5"
+                data-col-index="1"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                searching                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="C5"
+                data-col-index="2"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                0.35                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="D5"
+                data-col-index="3"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                0.84                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="E5"
+                data-col-index="4"
+                data-row-index="4"
+                style="                padding:5px;
+                "
+                >
+                                0                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row odd" >
+                            <td class="wpdt-cell "
+                                    data-cell-id="A6"
+                data-col-index="0"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                searchingforextraterrestriallife                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="B6"
+                data-col-index="1"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                seerch                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="C6"
+                data-col-index="2"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                0.24                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="D6"
+                data-col-index="3"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                0.79                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="E6"
+                data-col-index="4"
+                data-row-index="5"
+                style="                padding:5px;
+                "
+                >
+                                0                </td>
+                                        </tr>
+                            <tr class="wpdt-cell-row even" >
+                            <td class="wpdt-cell "
+                                    data-cell-id="A7"
+                data-col-index="0"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                searchingforextraterrestriallife                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="B7"
+                data-col-index="1"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                searchingforthemeaningoflife                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="C7"
+                data-col-index="2"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                0.57                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="D7"
+                data-col-index="3"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                0.6                </td>
+                                            <td class="wpdt-cell "
+                                    data-cell-id="E7"
+                data-col-index="4"
+                data-row-index="6"
+                style="                padding:5px;
+                "
+                >
+                                0                </td>
+                                        </tr>
+                    </table>
+</div><style id='wpdt-custom-style-3'>
+</style>
+
+<p>Более подробное пояснение по каждому из режимов можно найти в <a href="https://help.sap.com/viewer/691cb949c1034198800afde3e5be6570/2.0.05/en-US/f3d72af569ab4360b347c73ed4806067.html" target="_blank" rel="noopener">официальной документации</a>.</p>
+<h3>Вызов из ABAP</h3>
+<p>Вызвать функционал сопоставления строк через Fuzzy Search можно в AMDP процедуре:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS zcl_hdb_string_comparator DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC.
+
+  PUBLIC SECTION.
+    CONSTANTS: BEGIN OF gc_search_modes,
+                 compare         TYPE string VALUE 'compare',
+                 search          TYPE string VALUE 'search',
+                 searchcompare   TYPE string VALUE 'searchCompare',
+                 symmetricsearch TYPE string VALUE 'symmetricsearch',
+                 substringsearch TYPE string VALUE 'substringsearch',
+                 typeahead       TYPE string VALUE 'typeAhead',
+                 flexible        TYPE string VALUE 'flexible',
+                 abap            TYPE string VALUE 'ABAP',
+               END OF gc_search_modes.
+    TYPES:
+      ty_score TYPE p LENGTH 3 DECIMALS 4,
+
+      BEGIN OF ts_score,
+        score TYPE ty_score,
+      END OF ts_score,
+
+      tt_scores TYPE STANDARD TABLE OF ts_score WITH DEFAULT KEY.
+    INTERFACES:
+      if_amdp_marker_hdb.
+    CLASS-METHODS:
+      match IMPORTING iv_sub          TYPE string
+                      iv_val          TYPE string
+                      iv_fuzzy_score  TYPE ty_score   OPTIONAL
+                      iv_search_mode  TYPE string     OPTIONAL
+                      iv_flex_conf    TYPE string     OPTIONAL
+            EXPORTING ev_fact_score   TYPE ty_score
+            RETURNING VALUE(rv_score) TYPE ty_score.
+  PRIVATE SECTION.
+    CLASS-METHODS:
+      match_int IMPORTING VALUE(iv_sub)         TYPE string
+                          VALUE(iv_val)         TYPE string
+                          VALUE(iv_search_mode) TYPE string
+                          VALUE(iv_fuzzy_score) TYPE ty_score
+                EXPORTING VALUE(et_scores)      TYPE tt_scores
+                RAISING cx_amdp_error.
+ENDCLASS.
+
+CLASS zcl_hdb_string_comparator IMPLEMENTATION.
+  METHOD match.
+    DATA:
+      lv_mode TYPE string.
+
+    CLEAR ev_fact_score.
+
+    IF iv_search_mode IS INITIAL.
+      rv_score = ev_fact_score = COND #( WHEN iv_sub = iv_val THEN 1 ELSE 0 ).
+      RETURN.
+    ENDIF.
+
+    IF iv_search_mode = gc_search_modes-abap.
+      rv_score = ev_fact_score = ( 1 - distance( val1 = iv_sub val2 = iv_val ) / nmax( val1 = strlen( iv_sub ) val2 = strlen( iv_val ) ) ).
+    ELSE.
+      lv_mode = iv_search_mode.
+
+      IF iv_flex_conf IS NOT INITIAL.
+        lv_mode = lv_mode &amp;&amp; `, ` &amp;&amp; iv_flex_conf.
+      ENDIF.
+
+      TRY.
+          match_int( EXPORTING iv_search_mode = lv_mode
+                               iv_val         = iv_val
+                               iv_sub         = iv_sub
+                               iv_fuzzy_score = 0
+                     IMPORTING et_scores = DATA(lt_scores) ).
+
+          rv_score = ev_fact_score = VALUE #( lt_scores[ 1 ]-score OPTIONAL ).
+        CATCH cx_amdp_error.
+          RETURN.
+      ENDTRY.
+    ENDIF.
+
+    rv_score = COND #( WHEN rv_score &gt;= iv_fuzzy_score THEN rv_score ELSE 0 ).
+  ENDMETHOD.
+
+  METHOD match_int BY DATABASE PROCEDURE
+                   FOR HDB LANGUAGE SQLSCRIPT
+                   OPTIONS READ-ONLY.
+
+    DECLARE lt_search_tab TABLE ( col_search NVARCHAR(1000));
+    lt_search_tab[1] = :iv_val;
+
+    et_scores = SELECT SCORE() AS score
+      FROM :lt_search_tab
+        WHERE CONTAINS( col_search, :iv_sub, FUZZY( :iv_fuzzy_score, :iv_search_mode ) );
+  ENDMETHOD.
+
+ENDCLASS.</pre><p>В классе можно воспользоваться как ABAP режимом сопоставления через функцию distance, так и прочими режимами рассмотренными ранее.</p>
+<p>Программа для тестирования сопоставлений:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS:
+  p_1    TYPE text1024,
+  p_2    TYPE text1024,
+  p_m    TYPE text1024 DEFAULT 'COMPARE',
+  p_sc   TYPE zcl_hdb_string_comparator=&gt;ty_score DEFAULT '0.5',
+  p_flex TYPE text1024.
+
+TYPES:
+  BEGIN OF ts_modes,
+    mode TYPE char100,
+  END OF ts_modes,
+  tt_modes TYPE STANDARD TABLE OF ts_modes WITH EMPTY KEY.
+
+DATA lt_return_table  TYPE STANDARD TABLE OF ddshretval.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_m.
+  DATA(lt_modes) = VALUE tt_modes( FOR &lt;ls&gt; IN
+    CAST cl_abap_structdescr(
+      CAST cl_abap_classdescr( cl_abap_classdescr=&gt;describe_by_name( 'ZCL_HDB_STRING_COMPARATOR' )
+        )-&gt;get_attribute_type( 'GC_SEARCH_MODES' )
+          )-&gt;get_components( ) ( mode = &lt;ls&gt;-name ) ).
+
+  CALL FUNCTION 'F4IF_INT_TABLE_VALUE_REQUEST'
+    EXPORTING
+      retfield   = 'MODE'
+      value_org  = 'S'
+    TABLES
+      value_tab  = lt_modes
+      return_tab = lt_return_table.
+
+  p_m = VALUE #( lt_return_table[ 1 ]-fieldval OPTIONAL ).
+
+START-OF-SELECTION.
+  zcl_hdb_string_comparator=&gt;match(
+    EXPORTING
+      iv_sub         = CONV #( p_1 )
+      iv_val         = CONV #( p_2 )
+      iv_fuzzy_score = p_sc
+      iv_search_mode = CONV #( p_m )
+      iv_flex_conf   = CONV #( p_flex )
+    RECEIVING
+      rv_score       = DATA(rv_score) ).
+
+  WRITE: 'Оценка: ', rv_score.
+
+INITIALIZATION.
+  %_p_1_%_app_%-text    = 'Что ищем (строка А)'.
+  %_p_2_%_app_%-text    = 'Где ищем (строка Б)'.
+  %_p_m_%_app_%-text    = 'Режим сопоставления'.
+  %_p_sc_%_app_%-text   = 'Минимальный порог'.
+  %_p_flex_%_app_%-text = 'Доп. параметры к гибкому режиму'.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/hana/hana-fuzzy-search/">Оценка похожести строк через Fuzzy Search</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/hana/hana-fuzzy-search/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

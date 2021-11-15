@@ -1,0 +1,491 @@
+
+<!DOCTYPE html>
+<html data-ng-app="app" lang="ru-RU" data-ng-controller="GlobalController">
+<head>
+
+<meta charset="utf-8" />
+<meta name="author" content="bool team">
+<meta name="description" content="Статья описывающая базовые принципы ООП такие как SOLID и другие">
+<meta name="keywords" content="C# принципы ООП, SOLID, SRP, OCP, LSP, ISP, DIP, REP, CCP, CRP, ADP, SDP, SAP">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="all" />
+<meta name="document-state" content="Dynamic" />
+<meta name="google-site-verification" content="tK0_xwfq9qhdiR0pWCiqsYbAgh7mJZ6zxthqc9tqXws" />
+<meta name="wmail-verification" content="45a3c5352698c2237c19690d47985d86" />
+<meta name="msvalidate.01" content="A034DDDDFE34318054E6584E3EEC13CD" />
+<meta property="og:title" content="Принципы объектно-ориентированного проектирования" />
+<meta property="fb:page_id" content="1375105332756993" />
+<meta property="fb:app_id" content="1375105332756993" />
+
+    <meta property="og:url"
+          content="https://bool.dev/blog/detail/printsipy-obektno-orientirovannogo-proektirovaniya" />
+    <link rel="canonical" href="https://bool.dev/blog/detail/printsipy-obektno-orientirovannogo-proektirovaniya">
+<meta property="og:type" content="article" />
+<meta property="og:description" content="Статья описывающая базовые принципы ООП такие как SOLID и другие" />
+    <meta property="og:image" content="https://hsto.org/files/06e/20d/7b3/06e20d7b37544511b800687df9b2a63e.png" />
+    <meta name="og:image:alt" content="Принципы объектно-ориентированного проектирования" />
+    <meta name="twitter:image:src" content="https://hsto.org/files/06e/20d/7b3/06e20d7b37544511b800687df9b2a63e.png" />
+<meta property="twitter:creator" content="@wwwbooldev" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@wwwbooldev" />
+<meta name="twitter:title" content="Принципы объектно-ориентированного проектирования" />
+<meta name="twitter:description" content="Статья описывающая базовые принципы ООП такие как SOLID и другие" />
+<meta name="twitter:domain" content="bool.dev" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="msapplication-TileColor" content="#75a503">
+    <meta name="theme-color" content="#ffffff">
+    <title>Принципы объектно-ориентированного проектирования — bool.dev</title>
+    <script src="/Scripts/lazysizes.min.js" async></script>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=cyrillic" rel="preconnect" crossorigin>
+
+    <link href="https://jopr-site.azureedge.net/bundles/detailBlogStyles?v=3HaA4Ossb9hEr7uGsQGgKellubYWWDMlhTItoCwQ8Iw1" rel="stylesheet" />
+
+</head>
+<body>
+    <div id="wrapper" class="noselect">
+<div id="header">
+    <div class="mobile-logo" style="display: none">
+        <a href="/">
+            <img src="/Content/global/img/logov2.png" alt="bool.dev — от dev'a для dev'ов" />
+        </a>
+    </div>
+    <div class="burger-btn"><i id="menu-icon" class="icon sidebar"></i></div>
+    <nav id="menu-container" itemscope itemtype="http://schema.org/SiteNavigationElement">
+        <ul id="top-menu">
+            <li class="logo">
+                <a href="/">
+                    <img src="/Content/global/img/logov2.png" alt="bool.dev — от dev'a для dev'ов" />
+                    <meta itemprop="name" content="bool.dev — от dev'a для dev'ов" />
+                    <meta itemprop="description" content="Самые актуальные новости из мира IT. Технологии, гаджеты, бизнес, google, apple, мобильные приложения, краудфандинг, новые технологии и новости о крупных компаниях." />
+                </a>
+
+            </li>
+            <li>
+                <a itemprop="url" class="" href="/">
+                    <span>Новости</span>
+                    <meta itemprop="name" content="Новости IT — от dev'a для dev'ов" />
+                    <meta itemprop="description" content="Самые актуальные новости из мира IT. Технологии, гаджеты, бизнес, google, apple, мобильные приложения, краудфандинг, новые технологии и новости о крупных компаниях." />
+                </a>
+            </li>
+            <li>
+                <a itemprop="url" class="selected" href="/blog">
+                    <span>Статьи</span>
+                    <meta itemprop="name" content="Статьи для программистов" />
+                    <meta itemprop="description" content="Обучающие статьи по программированию для улучшения ваших знаний в сфере IT" />
+                </a>
+            </li>
+            <li>
+                <a itemprop="url" class="" href="/fun">
+                    <span>Юмор</span>
+                    <meta itemprop="name" content="IT Юмор" />
+                    <meta itemprop="description" content="Страница юмора айтишников для развлечений и поднятия настроения" />
+                </a>
+            </li>
+            <li>
+                <a itemprop="url" class="" href="/users">
+                    <span>Пользователи</span>
+                    <meta itemprop="name" content="Список IT специалистов" />
+                    <meta itemprop="description" content="Список специалистов IT зарегистрированных в системе" />
+                </a>
+            </li>
+                <li>
+                    <a class="" itemprop="url" href="/account/login">
+                        <span itemprop="name">Войти в аккаунт</span>
+                    </a>
+                </li>
+                <li>
+                    <a itemprop="url" class="" href="/register">
+                        <span itemprop="name">Создать аккаунт</span>
+                    </a>
+                </li>
+                    </ul>
+    </nav>
+</div>
+        <div id="middle" role="main" class="blog-details">
+            
+
+
+
+
+<input id="blog-slug" name="blog-slug" type="hidden" value="printsipy-obektno-orientirovannogo-proektirovaniya" />
+
+    <ol class="breadcrumb-wrap" itemscope itemtype="http://schema.org/BreadcrumbList">
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"> 
+                <a itemprop="item" href="https://bool.dev/">
+                    <span itemprop="name">Главная</span>
+                </a>
+                <span class="sep"></span>
+                <meta itemprop="position" content="1" />
+
+
+            
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"> 
+                <a itemprop="item" href="https://bool.dev/blog">
+                    <span itemprop="name">Статьи</span>
+                </a>
+                <span class="sep"></span>
+                <meta itemprop="position" content="2" />
+
+
+            
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"> 
+                <a itemprop="item" href="https://bool.dev/blog/detail/printsipy-obektno-orientirovannogo-proektirovaniya">
+                    <span itemprop="name">Принципы объектно-ориентированного проектирования</span>
+                </a>
+                <span class="sep"></span>
+                <meta itemprop="position" content="3" />
+
+
+            
+            </li>
+    </ol>
+
+<div id="details-view">
+    <div class="blog-container">
+        <div id="navigator" class="border">
+            <div class="border-title"><span>Навигация по статье:</span></div>
+            <div id="navigator-container">
+                <div id="navigator-items">
+
+                </div>
+                <button class="go-top btn-home" onclick="scrollToTop()"> <i class="hand point up outline icon"></i>Вверх</button>
+            </div>
+        </div>
+        <article class="blog-item border" id="c52d8358-b93f-4f88-a83b-dc3ed4a135e2" itemscope itemtype="http://schema.org/Article">
+            <link data-rel="url" itemprop="mainEntityOfPage" href="/blog" />
+            <div class="left-side">
+                <h1 class="title" itemprop="headline">Принципы объектно-ориентированного проектирования</h1>
+                    <div class="category-link">
+                        <i title="Категории" class="browser icon"></i>
+                        <span>Категории:</span>
+                            <a href="/blog/category/programmirovanie">Программирование</a>
+                            <a href="/blog/category/tipichnye-voprosy-na-sobesedovanii">Типичные вопросы на собеседовании</a>
+                            <a href="/blog/category/shpargalki">Шпаргалки</a>
+                    </div>
+                <div class="content font-16 global-margin">
+                        <div class="margin-bottom-20" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+                            <img class="main-image lazyload" data-src="https://hsto.org/files/06e/20d/7b3/06e20d7b37544511b800687df9b2a63e.png" alt="Принципы объектно-ориентированного проектирования" itemprop="contentUrl"/>
+                            <link data-rel="url" href="https://hsto.org/files/06e/20d/7b3/06e20d7b37544511b800687df9b2a63e.png" itemprop="url"/>
+
+                        </div>
+                    <div itemprop="articleBody"><h2>SOLID принципы:</h2>
+
+<h3>The Single Responsibility Principle​ (SRP) &mdash;&nbsp;Принцип единственной обязанности У класса должна быть только одна причина для изменения.</h3>
+
+<p>Под обязанностью здесь понимается набор функций, которые выполняют единую задачу. Главная парадигма этого принципа заключается в том, что класс должен выполнять одну единственную функцию. Весь функционал класса должен быть целостным, обладать высокой связностью (high cohesion).</p>
+
+<h3>The Open Closed Principle​&nbsp;(OCP) &mdash;&nbsp;​Принцип открытости/закрытости Программные сущности (классы, модули, функции и т. п.) должны быть открыты для расширения, но закрыты для модификации.</h3>
+
+<p>У модулей, согласованных с принципом OCP, есть две основных характеристики:</p>
+
+<ol>
+	<li>Они открыты для расширения. Это означает, что поведение модуля можно расширить. Когда требования к приложению изменяются, мы добавляем в модуль новое поведение, отвечающее изменившимся требованиям. Иными словами, мы можем изменить состав функций модуля.</li>
+	<li>Они закрыты для модификации. Расширение поведения модуля не сопряжено с изменениями в исходном или двоичном коде модуля. Двоичное исполняемое представление модуля, будь то компонуемая библиотека, DLL или EXE-файл, остается неизменным.​</li>
+</ol>
+
+<h3>The Liskov Substitution Principle​&nbsp;(LSP) &mdash;&nbsp;​Принцип подстановки Лисков Должна быть возможность вместо базового типа подставить любой его подтип.</h3>
+
+<p>То есть иными словами класс S может наследоваться от T, если замена объектов T на объекты S не приведет к изменению работы программы.</p>
+
+<h3>The Interface Segregation Principle​&nbsp;(ISP)<strong> </strong>&mdash;&nbsp;​Принцип разделения интерфейсов Клиенты не должны вынужденно зависеть от методов, которыми не пользуются. Интерфейсы принадлежат клиентам, а не иерархиям​</h3>
+
+<p>Клиенты не должны вынужденно зависеть от методов, которыми не пользуются.</p>
+
+<p>При нарушении этого принципа клиент, использующий некоторый интерфейс со всеми его методами, зависит от методов, которыми не пользуется, и поэтому оказывается восприимчив к изменениям в этих методах. В итоге мы приходим к жесткой зависимости между различными частями интерфейса, которые могут быть не связаны при его реализации.</p>
+
+<p>В этом случае интерфейс класса разделяется на отдельные части, которые составляют раздельные интерфейсы. Затем эти интерфейсы независимо друг от друга могут применяться и изменяться. В итоге применение принципа разделения интерфейсов делает систему слабосвязанной, и тем самым ее легче модифицировать и обновлять.</p>
+
+<h3>The Dependency Inversion Principle​&nbsp;(DIP) &mdash;&nbsp;​Принцип инверсии зависимости Абстракции не должны зависеть от деталей. Детали должны зависеть от абстракций.</h3>
+
+<h2>Другие принципы:</h2>
+
+<h3>Don&rsquo;t Repeat Youself (DRY)</h3>
+
+<p>расшифровывается как Don&rsquo;t Repeat Youself &mdash; не повторяйся, также известен как&nbsp;<strong>DIE</strong>&nbsp;&mdash; Duplication Is Evil. Этот принцип заключается в том, что нужно избегать повторений одного и того же кода. Лучше использовать универсальные свойства и функции.</p>
+
+<h3>Keep It Simple, Stupid!&nbsp;(KISS)&nbsp;</h3>
+
+<p>KISS <strong>-&nbsp;</strong>не усложняй! Смысл этого принципа программирования заключается в том, что стоит делать максимально простую и понятную архитектуру, применять шаблоны проектирования и не изобретать велосипед.​</p>
+
+<h3>You Ain&rsquo;t Gonna Need It YAGNI&nbsp;</h3>
+
+<p>Не добавляйте функциональность пока она вам не нужна. Вы только потратите время на реализацию, отладку, тестирование и поддержку кода который может и не использоваться.</p>
+
+<h3>Release Equivalence Principle (REP) &mdash;&nbsp;​Принцип эквивалентности повторного использования и выпуска Единица повторного использования равна единице выпуска.​</h3>
+
+<p>принцип REP гласит, что единица повторного использования, компонент, не может быть меньше единицы выпуска. Все, что предназначено для повторного использования, должно управляться какой-то системой учета выпусков. Не может быть так, чтобы разработчик просто написал какой-то класс и объявил его повторно используемым. О возможности повторного использования можно говорить только тогда, когда внедрена некая система учета выпусков и обеспечены га- рантии извещения, надежности и поддержки, в которых так нуждаются потенциальные пользователи.</p>
+
+<h3>Сommon Closure Principle (CCP) &mdash;&nbsp;​Принцип общей закрытости Все классы внутри пакета должны быть закрыты относительно изменений одного и того же вида. Изменение, затрагивающее пакет, должно затрагивать все классы в этом пакете и только в нем.​</h3>
+
+<p>Принцип CCP рекомендует собирать в одном месте классы, которые могут изменяться по одним и тем же причинам. Если два класса настолько тесно связаны, физически или концептуально, что всегда изменяются вместе, то их естественно поместить в один компонент. Это уменьшит трудозатраты на повторный выпуск, проверку и распространение ПО. Этот принцип неотъемлем от принципа открытости/закрытости (OCP). Ибо именно о &laquo;закрытости&raquo; в смысле OCP и идет речь в CCP. OCP гласит, что классы должны быть закрыты для модификации, но открыты для расширения. Но, как мы узнали, достичь стопроцентной закрытости невозможно. Закрытость должна быть стратегической целью. Мы проектируем систему так, чтобы она была закрыта относительно ти- пичных изменений, с которыми нам приходилось ранее сталкиваться</p>
+
+<h3>Сommon Reuse Principle&nbsp;(CRP) &mdash;&nbsp;Принцип совместного повторного использования Все классы внутри компонента используются совместно. Если вы можете повторно использовать один класс, то можете использовать и все остальные.</h3>
+
+<p>Классы редко используются изолированно. Обычно повторно исполь- зуемые классы кооперируются с другими классами, являющимися частями одной и той же абстракции. CRP утверждает, что такие классы должны входить в один компонент. Естественно ожидать, что между классами в этом компоненте будет много взаимных зависимостей. Простой пример &ndash; класс контейнера и сопутствующие ему итераторы. Эти классы используются совместно, потому что они тесно связаны. И, значит, должны принадлежать одному компоненту.</p>
+
+<h3>Acyclic Dependencies Principle (ADP) &mdash;&nbsp;​Принцип ацикличности зависимостей В графе зависимостей между пакетами не должно быть циклов.​</h3>
+
+<h3>Stable Dependencies Principle (SDP) &mdash;&nbsp;​Принцип устойчивых зависимостей Зависимости должны быть направлены в сторону устойчивости.</h3>
+
+<p>&nbsp;<strong>SDP</strong>&nbsp;говорит, что от модулей, которые изначально спроектированы так, чтобы их легко можно было изменять, не должны зависеть модули, изменение которых затруднено. Это так называемые&nbsp;<em>устойчивые</em>&nbsp;модули.</p>
+
+<h3>Stable Abstractions Principle (SAP) &mdash;&nbsp;​Принцип устойчивых абстракций Пакет должен быть столь же абстрактным, сколь и устойчивым​</h3>
+
+<p>Этот принцип устанавливает соотношение между устойчивостью и абстрактностью. Он говорит, что устойчивый компонент должен быть также и абстрактным, чтобы устойчивость не препятствовала его расширению. Если компонент предполагается сделать устойчивым, то он должен состоять из абстрактных классов, допускающих расширение. Расширяемые устойчивые компоненты оказываются гибкими и не налагают чрезмерных ограничений на дизайн. В сочетании принципы SAP и SDP дают аналог принципа DIP для ком- понентов. Действительно, SDP говорит, что зависимости должны быть направлены в сторону устойчивости, а SAP &ndash; что из устойчивости вытекает абстрактность. Следовательно, зависимости направлены в сторону абстрактности.</p>
+</div>
+                    <div class="tags margin-top-10">
+                        <i title="Теги" class="tags icon"></i>
+                        <span>Теги:</span>
+                            <a class="tag-item" href="/blog/tags/csharp"><span>C#</span></a>
+                            <a class="tag-item" href="/blog/tags/java"><span>Java</span></a>
+                            <a class="tag-item" href="/blog/tags/solid"><span>SOLID</span></a>
+                            <a class="tag-item" href="/blog/tags/design-patterns"><span>Паттерны</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom">
+                <div class="info-block">
+    <span class="favorite" title="Только зарегистрированные пользователи могут добавлять посты в избранное" style="cursor: not-allowed;">
+        <i class="bookmark icon"></i>
+    </span>
+
+                    <span title="Количество комментариев к статье"><i class="comment outline icon"></i>0</span>
+                    <span title="Количество просмотров статьи"><i class="unhide icon"></i>4.7K</span>
+                    <div class="hidden" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                        <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                            <link data-rel="url" type="image/png" itemprop="url contentUrl" href="https://jopr-site.azureedge.net/content/global/img/jopr_link_background.png" />
+                        </span>
+                        <meta itemprop="name" content="bool.dev">
+                        <meta itemprop="address" content="Киев" />
+                        <meta itemprop="email" content="q@jopr.org" />
+                    </div>
+                    <span title="Автор статьи" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                        <i class="user icon"></i>
+                        <a class="user-link" href="/user/polishchuk" itemprop="url">
+                            <span itemprop="name">polishchuk</span>
+                        </a>
+                    </span>
+                    <span title="Дата размещения статьи">
+                        <i class="calendar icon"></i>
+                        <span class="post-time" itemprop="datePublished dateModified" content="2018-01-21">21.01.2018 18:18</span>
+                    </span>
+                </div>
+            </div>
+        </article>
+
+    </div>
+    <aside class="topic-block detail-page border">
+        <h4 class="title-topic">Список всех категорий и тегов:</h4>
+        <div class="topic-container">
+
+<div id="tags-page">
+        <section class="margin-bottom-20">
+                <h5>
+                        <a href="/blog/category/design">Дизайн</a>
+                </h5>
+
+            <div class="tags">
+                    <a class="tag-item" href="/blog/tags/ui"><span>UI</span></a>
+                    <a class="tag-item" href="/blog/tags/ux"><span>UX</span></a>
+            </div>
+        </section>
+        <section class="margin-bottom-20">
+                <h5>
+                        <a href="/blog/category/management">Менеджмент</a>
+                </h5>
+
+            <div class="tags">
+                    <a class="tag-item" href="/blog/tags/hr"><span>HR</span></a>
+            </div>
+        </section>
+        <section class="margin-bottom-20">
+                <h5>
+                        <a href="/blog/category/shpargalki">Шпаргалки</a>
+                </h5>
+
+            <div class="tags">
+            </div>
+        </section>
+        <section class="margin-bottom-20">
+                <h5>
+                        <a href="/blog/category/programmirovanie">Программирование</a>
+                </h5>
+
+            <div class="tags">
+                    <a class="tag-item" href="/blog/tags/net-core"><span>.NET Core</span></a>
+                    <a class="tag-item" href="/blog/tags/amazon"><span>Amazon</span></a>
+                    <a class="tag-item" href="/blog/tags/angularjs"><span>Angular.js</span></a>
+                    <a class="tag-item" href="/blog/tags/aspnet"><span>ASP.NET</span></a>
+                    <a class="tag-item" href="/blog/tags/aspnet-core"><span>ASP.NET Core</span></a>
+                    <a class="tag-item" href="/blog/tags/aws"><span>AWS</span></a>
+                    <a class="tag-item" href="/blog/tags/azure"><span>Azure</span></a>
+                    <a class="tag-item" href="/blog/tags/csharp"><span>C#</span></a>
+                    <a class="tag-item" href="/blog/tags/c-plus-plus"><span>C++</span></a>
+                    <a class="tag-item" href="/blog/tags/ci-cd"><span>CI/CD</span></a>
+                    <a class="tag-item" href="/blog/tags/cli"><span>CLI</span></a>
+                    <a class="tag-item" href="/blog/tags/cloud"><span>Cloud</span></a>
+                    <a class="tag-item" href="/blog/tags/css"><span>CSS</span></a>
+                    <a class="tag-item" href="/blog/tags/dapper"><span>Dapper</span></a>
+                    <a class="tag-item" href="/blog/tags/data-structures"><span>Data structures</span></a>
+                    <a class="tag-item" href="/blog/tags/devops"><span>DevOps</span></a>
+                    <a class="tag-item" href="/blog/tags/docker"><span>Docker</span></a>
+                    <a class="tag-item" href="/blog/tags/git"><span>Git</span></a>
+                    <a class="tag-item" href="/blog/tags/gof"><span>GoF</span></a>
+                    <a class="tag-item" href="/blog/tags/graphql"><span>GraphQL</span></a>
+                    <a class="tag-item" href="/blog/tags/html"><span>HTML</span></a>
+                    <a class="tag-item" href="/blog/tags/ide"><span>IDE</span></a>
+                    <a class="tag-item" href="/blog/tags/integration-tests"><span>Integration tests</span></a>
+                    <a class="tag-item" href="/blog/tags/java"><span>Java</span></a>
+                    <a class="tag-item" href="/blog/tags/javascript"><span>Javascript</span></a>
+                    <a class="tag-item" href="/blog/tags/k8s"><span>Kubernetes</span></a>
+                    <a class="tag-item" href="/blog/tags/linq"><span>LINQ</span></a>
+                    <a class="tag-item" href="/blog/tags/mongodb"><span>MongoDB</span></a>
+                    <a class="tag-item" href="/blog/tags/nodejs"><span>Node.js</span></a>
+                    <a class="tag-item" href="/blog/tags/nosql"><span>NoSQL</span></a>
+                    <a class="tag-item" href="/blog/tags/perforce"><span>Perforce</span></a>
+                    <a class="tag-item" href="/blog/tags/performance"><span>Performance</span></a>
+                    <a class="tag-item" href="/blog/tags/php"><span>PHP</span></a>
+                    <a class="tag-item" href="/blog/tags/poeaa"><span>PoEAA</span></a>
+                    <a class="tag-item" href="/blog/tags/powershell"><span>PowerShell</span></a>
+                    <a class="tag-item" href="/blog/tags/python"><span>Python</span></a>
+                    <a class="tag-item" href="/blog/tags/react"><span>React</span></a>
+                    <a class="tag-item" href="/blog/tags/rest"><span>REST</span></a>
+                    <a class="tag-item" href="/blog/tags/roadmap"><span>Roadmap</span></a>
+                    <a class="tag-item" href="/blog/tags/sass"><span>Sass</span></a>
+                    <a class="tag-item" href="/blog/tags/solid"><span>SOLID</span></a>
+                    <a class="tag-item" href="/blog/tags/sql"><span>SQL</span></a>
+                    <a class="tag-item" href="/blog/tags/teamcity"><span>TeamCity</span></a>
+                    <a class="tag-item" href="/blog/tags/uml"><span>UML</span></a>
+                    <a class="tag-item" href="/blog/tags/unit-tests"><span>Unit tests</span></a>
+                    <a class="tag-item" href="/blog/tags/vcs"><span>vcs</span></a>
+                    <a class="tag-item" href="/blog/tags/vuejs"><span>Vue.js</span></a>
+                    <a class="tag-item" href="/blog/tags/webpack"><span>Webpack</span></a>
+                    <a class="tag-item" href="/blog/tags/websockets"><span>WebSockets</span></a>
+                    <a class="tag-item" href="/blog/tags/wpf"><span>WPF</span></a>
+                    <a class="tag-item" href="/blog/tags/xunit"><span>xunit</span></a>
+                    <a class="tag-item" href="/blog/tags/antipatterny"><span>Антипаттерны</span></a>
+                    <a class="tag-item" href="/blog/tags/arkhitektura-po"><span>Архитектура ПО</span></a>
+                    <a class="tag-item" href="/blog/tags/bazy-dannykh"><span>Базы данных</span></a>
+                    <a class="tag-item" href="/blog/tags/bezopasnost"><span>Безопасность</span></a>
+                    <a class="tag-item" href="/blog/tags/microservices"><span>Микросервисы</span></a>
+                    <a class="tag-item" href="/blog/tags/design-patterns"><span>Паттерны</span></a>
+                    <a class="tag-item" href="/blog/tags/testirovanie"><span>Тестирование</span></a>
+            </div>
+        </section>
+        <section class="margin-bottom-20">
+                <h5>
+                        <a href="/blog/category/marketing">Маркетинг</a>
+                </h5>
+
+            <div class="tags">
+                    <a class="tag-item" href="/blog/tags/seo"><span>SEO</span></a>
+                    <a class="tag-item" href="/blog/tags/byudzhet"><span>Бюджет</span></a>
+                    <a class="tag-item" href="/blog/tags/raskrutka"><span>Раскрутка</span></a>
+                    <a class="tag-item" href="/blog/tags/tselevaya-auditoriya"><span>Целевая аудитория</span></a>
+            </div>
+        </section>
+        <section class="margin-bottom-20">
+                <h5>
+                        <a href="/blog/category/tipichnye-voprosy-na-sobesedovanii">Типичные вопросы на собеседовании</a>
+                </h5>
+
+            <div class="tags">
+            </div>
+        </section>
+        <section class="margin-bottom-20">
+                <h5>
+                        <span class="cat">Другое</span>
+                </h5>
+
+            <div class="tags">
+                    <a class="tag-item" href="/blog/tags/kreativ"><span>Креатив</span></a>
+                    <a class="tag-item" href="/blog/tags/checklist"><span>Checklist</span></a>
+                    <a class="tag-item" href="/blog/tags/knigi"><span>Книги</span></a>
+                    <a class="tag-item" href="/blog/tags/tools"><span>Tools</span></a>
+                    <a class="tag-item" href="/blog/tags/perevody"><span>Переводы</span></a>
+            </div>
+        </section>
+</div>
+
+        </div>
+    </aside>
+    <div class="clear"></div>
+<h2 class="page-sub-title"><span>Комментарии:</span></h2>
+<div class="comment-container detail-page">
+        <div class="ui info message">
+            Пожалуйста <a href="/account/login?ReturnUrl=%2Fblog%2Fdetail%2Fprintsipy-obektno-orientirovannogo-proektirovaniya" rel="nofollow noopener noreferrer">авторизируйтесь</a>, чтобы получить возможность оставлять комментарии
+        </div>
+
+</div>
+</div>
+        </div>
+    </div>
+    <div class="telega">
+        <p>Узнавай первым о новинках в нашем Telegram-канале</p>
+        <i class="close icon" id="close-tg"></i>
+        <i class="telegram plane icon"></i>
+        <a href="https://bit.ly/2oLtbx2" rel="nofollow noopener noreferrer" target="_blank">ПОДПИСАТЬСЯ</a>
+    </div>
+    <footer>
+<div class="footer-container">
+    <div class="footer-content">
+        <div class="bottom-menu">
+            <a href="/about">О проекте</a>
+            <a href="/about/feedback">Обратная связь</a>
+        </div>
+        <div class="copyright">
+            <div class="social-block">
+                <a href="https://t.me/booldev" target="_blank" rel="nofollow noreferrer noopener">
+                    <i class="telegram plane icon"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/booldev" target="_blank" rel="nofollow noreferrer noopener">
+                    <i class="linkedin icon"></i>
+                </a>
+                <a href="https://www.youtube.com/channel/UCDzFUrVE_O_cmP9ww5Cvo5g" target="_blank" rel="nofollow noreferrer noopener">
+                    <i class="youtube square icon"></i>
+                </a>
+                <a href="https://www.facebook.com/www.bool.dev" target="_blank" rel="nofollow noreferrer noopener">
+                    <i class="facebook outline icon"></i>
+                </a>
+                <a href="https://twitter.com/wwwbooldev" target="_blank" rel="nofollow noreferrer noopener">
+                    <i class="twitter outline icon"></i>
+                </a>
+                <a href="https://www.instagram.com/bool.dev/" target="_blank" rel="nofollow noreferrer noopener">
+                    <i class="instagram icon"></i>
+                </a>
+            </div>
+            <small>Copyright © 2021 bool.dev</small>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+    </footer>
+    <script>
+        var CKEDITOR_BASEPATH = "/Content/ckeditor/";
+    </script>
+    
+    <script src="https://jopr-site.azureedge.net/bundles/detailBlogScripts?v=H5oq3RWCM0z6NjOQs3eO59BomR5AgqByq01Tiliyj6s1"></script>
+
+    <script src="/Content/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+        $.ajax({
+            type: "POST",
+            url: "/blog/ReadPost?slug=printsipy-obektno-orientirovannogo-proektirovaniya",
+            async: true
+        });
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-38069144-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-38069144-3');
+    </script>
+</body>
+</html>

@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+
+<!--[if gte IE 9]>
+<html class="ie" lang="en-US">
+<![endif]-->
+
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar" content="black"/>
+    <title>Secure Execution of OS Commands by ABAP programs | SAP Blogs</title>
+    <link rel="profile" href="http://gmpg.org/xfn/11"/>
+
+    
+    
+    <!--[if lt IE 9]>
+    <script src="https://blogs.sap.com/wp-content/themes/sap-v3-neo/js/html5.min.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link rel="icon" type="image"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.png" /><link rel="shortcut icon" type="image/x-icon"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.ico" /><link rel="apple-touch-icon" href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/apple-touch-icon.png" /><meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//static.community.services.sap' />
+<link rel='dns-prefetch' href='//assets.adobedtm.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Feed" href="https://blogs.sap.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Comments Feed" href="https://blogs.sap.com/comments/feed/" />
+<meta name="type" content="Blog" /><meta name="description" content="Often it is required to execute commands on the operating system level from within an ABAP programs. Reasons may be eventing mechanisms, for instance start/stop of a printer, the necessity to (de-)compress/encrypt" /><meta name="sm_tech_ids" content="833755570260738661924709785639136"/><meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" /><link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Secure Execution of OS Commands by ABAP programs Comments Feed" href="https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/blogs.sap.com\/res1dx-135\/wp-includes\/js\/wp-emoji-release.min.js"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/style.min.css' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/css/ie.css' type='text/css' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='designmate_styles-css'  href='https://static.community.services.sap/designmate/v3/136/latest/designmate.css' type='text/css' media='all' />
+<link rel='stylesheet' id='designsystem_styles-css'  href='https://static.community.services.sap/community-ds/v1/188/main.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dist/block-library/style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='prism-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/js/tinymce/plugins/codesample/css/prism.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_custom_link_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom//include/css/sap-core-custom.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_lightbox_gallery_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='pt_style_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-primary-tag/css/pt_style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-popular-posts-css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/css/wpp.css' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery.min.js' id='jquery-core-js'></script>
+<script type='text/javascript' id='jquery-core-js-after'>
+if (jQuery !== undefined) {
+                jQuery(window).on("load", function(){
+                    var _wpWindowLoaded = document.createElement("div");
+                    _wpWindowLoaded.setAttribute("class", "hidden");
+                    _wpWindowLoaded.setAttribute("id", "wp_window_loaded");
+                    document.body.appendChild(_wpWindowLoaded);
+                });
+            }
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery-migrate.min.js' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='//assets.adobedtm.com/ccc66c06b30b/d266848b2882/launch-f095fbc32a96.min.js' id='scn_adobe_dtm-js'></script>
+<script type='text/javascript' id='wpp-js-js-extra'>
+/* <![CDATA[ */
+var wpp_params = {"sampling_active":"","sampling_rate":"100","ajax_url":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php","action":"update_views_ajax","ID":"95869","token":"938e4875d9"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/js/wpp.js' id='wpp-js-js'></script>
+<link rel="https://api.w.org/" href="https://blogs.sap.com/wp-json/" /><link rel="alternate" type="application/json" href="https://blogs.sap.com/wp-json/wp/v2/posts/95869" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.sap.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.sap.com/wp-includes/wlwmanifest.xml" /> 
+
+<link rel="canonical" href="https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/" />
+<link rel='shortlink' href='https://blogs.sap.com/?p=95869' />
+<script type="text/javascript">var ajaxurl = "https://blogs.sap.com/wp-admin/admin-ajax.php";var likePostLabel = "Like";var unLikePostLabel = "Liked";var likeCommentLabel = "Like";var unLikeCommentLabel = "Liked";</script>    <!--[if IE ]>
+    <link rel="stylesheet" id="scn-ie-styles" href="https://blogs.sap.com/wp-content/themes/sap-v3-neo/css/ie.css"
+          type="text/css" media="all">
+    <link id="ids-popup-css" href="https://accounts.sap.com/universalui/shared/stylesheets/idsPopup.css"
+          rel="stylesheet"
+          type="text/css">
+    <![endif]-->
+
+
+</head>
+
+<body class="post-template-default single single-post postid-95869 single-format-standard custom-font-enabled">
+
+
+<div class="page-wrapper">
+<b class="cn-accessibility"><a href="#main" tabindex="0" accesskey="S">Skip to Content</a></b>
+<div id="page" class="hfeed site">
+
+<header id="masthead" class="blogs-nav sap-header">
+    <header id="comm-hdr-Header" role="masthead"><div class="dm-header"><div class="dm-header__inner"><div class="dm-header__logo-wrapper"><a class="dm-logo--header" href="http://www.sap.com/" title="SAP"></a></div><nav id="comm-hdr-Navigation" class="dm-mainNav"><div class="dm-mobileSearch"><form class="dm-header__search-form" action=""><div class="dm-search-container dm-input dm-search__input"><label class="dm-input__box" aria-label="search SAP Community"><input class="dm-input__control" placeholder="Search SAP Community" name="filter-search" type="search" required="" aria-label="type here to search"><button class="dm-search__button dm-search__button-clear" type="reset" role="button" title="Reset Search"><span class="dm-search__buttonIcon dm-icon-encoded--close" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" role="button" title="Search SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form></div><ul class="dm-mainNav__menu dm-mainNav__menu--withGroups" role="menubar"><li class="dm-header__homeItem" role="none"><a class="dm-header__homeItem-link" role="menuitem" aria-label="Community Home" target="_self" href="https://community.sap.com">Community</a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/topics" aria-label="" aria-haspopup="false" role="menuitem">Topics<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://groups.sap.com" aria-label="Groups. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Groups<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://answers.sap.com/index.html" aria-label="Answers. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Answers<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://blogs.sap.com" aria-label="Blogs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Blogs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/events" aria-label="Events. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Events<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/programs" aria-label="Programs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Programs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources" aria-label="Resources. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Resources<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources/what-is-new" aria-label="" aria-haspopup="false" role="menuitem">What's New<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li></ul></nav><ul class="dm-header__actions"><li id="comm-hdr-Search" class="dm-header__actions-item dm-headerSearch"><a class="dm-search-action dm-icon-encoded dm-header__search-icon" aria-label="Search the SAP Community" href="#" role="button" aria-expanded="false" title="Search"></a><div class="dm-headerSearch__wrapper"><form class="dm-searchdropdown dm-align-center" action=""><div class="dm-search__input dm-input" role="search"><label class="dm-input__box" aria-label="search the SAP community"><input class="dm-input__control" placeholder="Search the SAP Community" name="filter-search" aria-label="type here to search" type="input"><button class="dm-search__button dm-search__button-clear" type="reset" title="Reset"><span class="dm-search__buttonIcon dm-icon-encoded--clear" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" title="Search the SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form><a class="dm-headerSearch__closeButton" type="submit" role="button" title="Close search input" href="javascript:void(0);"><span class="dm-icon-encoded dm-icon-encoded--close" role="img" aria-label="Close search input"></span></a></div></li><li id="comm-hdr-Authentication" class="dm-header__actions-item dm-header__account"><a id="comm-hdr-SignIn" class="dm-user__login-button--wrapper" aria-haspopup="true" aria-expanded="false" role="button" href="#" title="Log In" rel="IDS_login"><div id="comm-hdr-AnonymousIcon" class="dm-icon-encoded dm-icon-encoded--account dm-hidden" aria-label="click here to login"></div><div id="comm-hdr-Avatar" class="dm-user dm-header__avatar"><img class="dm-header__avatar-image dm-hidden" data-src="" src="" width="24px" height="24px"><span class="dm-header__notifications dm-hidden js-notification-indicator"></span></div></a><ul id="comm-hdr-UserProfileMenu" class="dm-header__actionsSubMenu dm-profileFlyoutMenu dm-profileMenuDropdown" role="menu" aria-label="drop down menu of people profile"><li class="dm-profileMenu__userData"><div id="comm-hdr-Username" class="dm-profileMenu__userName"></div><div id="comm-hdr-Email" class="dm-profileMenu__userEmail"></div><a id="comm-hdr-SubMenuTitleLink" class="dm-link" href="#">Manage my Account</a></li><li id="comm-hdr-ProfileMenuTopSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li id="comm-hdr-ProfileMenuMiddleSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li class="dm-profileMenu__section"><ul class="dm-profileMenu__list dm-profileMenu__logout"><li class="dm-profileMenu__item"><a id="comm-hdr-LogOut" class="dm-button dm-button--secondary" href="#" role="button"><span class="dm-button-text">Logout</span></a></li></ul></li></ul></li><li class="dm-header__actions-item dm-header__mobileMenu"><a id="comm-hdr-MobileMenuBtn" class="dm-mobileMenuButton" aria-label="Search SAP community"><span class="dm-icon-encoded dm-icon-encoded--mobile-menu"></span><span style="display:none;">Search</span></a></li></ul></div></div></header><div class="announcements" role="menubar"></div><div class="dm-wrapper dm-subheader dm-subheader--wrapper  dm-user--unauthenticated "><div class="dm-grid"><div class="dm-breadcrumb dm-user--unauthenticated" role="menubar">
+    <ul class="dm-breadcrumb-nav" role="navigation" aria-label="breadcrumb navigation to trace the path back to original landing point">
+        
+        <li><a id="comm-shdr-breadcrumb-home" href="https://www.sap.com" title="Home">Home</a></li>
+        
+        <li><a id="comm-shdr-breadcrumb-community" href="https://community.sap.com" title="Community">Community</a></li>
+        
+    </ul>
+    <ul class="dm-breadcrumb-actions" role="menu">
+        
+        <li><a id="comm-shdr-AskQuestion" href="https://answers.sap.com/questions/ask.html" title="Ask a Question">Ask a Question</a></li>
+        
+        <li><a id="comm-shdr-WriteBlogPost" href="https://blogs.sap.com/wp-admin/post-new.php" title="Write a Blog Post">Write a Blog Post</a></li>
+        
+        <li class="dm-user__login-button--wrapper"><a class="dm-button-small dm-button--primary" role="button" rel="IDS_login" aria-label="Login or Sign up. Click here to log in or sign up"><span class="dm-button-text">Login / Sign-up</span></a></li>
+        <li class="dm-breadcrumb-actions__dropdown">
+            <span id="comm-shdr-actions-opener" class="dm-breadcrumb-actions__dropdown-toggle" title="Community actions">
+                 <span class="dm-icon-encoded dm-icon-encoded--3dots"></span>
+            </span>
+            <ul id="comm-shdr-user-actions-ul" class="dm-breadcrumb-actions__dropdown-menu" role="menu">
+            </ul>
+        </li>
+    </ul>
+</div>
+</div></div>    <!-- #site-navigation -->
+
+</header>
+
+<!-- #masthead -->
+<div id="main" tabindex="0" class="wrapper">
+
+
+
+
+<div class="ds-blog-post-detail">
+<div class="ds-flexGrid">
+  <div class="ds-flexRow">
+    <div class="ds-flexCol">
+            <div class="ds-content-wrapper ds-blog-post__content-wrapper">
+        <h6 class="ds-heading ds-heading--xs ds-blog-post__sub-title"></h6>
+        <div class="ds-flexRow">
+          <div class="ds-flexCol-sm-12 ds-flexCol-md-9">
+            
+<div class="ds-blog-post__body-wrapper">
+  <div class="ds-blog-post__content">
+    <div class="ds-blog-post__header-wrapper">
+      <a target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member" class="ds-blog-post__avatar disabled" aria-disabled='true' >
+        <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />      </a>
+      <div class="ds-blog-post__author-info-wrapper">
+        <div class="ds-user ds-blog-post__author">
+          <a class="ds-link ds-user__name disabled" href="https://people.sap.com/former.member" target="_blank" title="Former Member" aria-label="" rel="noopener noreferrer">Former Member</a>
+          <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i></div>        </div>
+        <div class="ds-blog-post__meta-info">
+          <span class="ds-blog-post__date">October 29, 2013</span>
+          <span class="ds-blog-post__read-duration">7 minute read</span>
+        </div>
+      </div>
+    </div>
+    <h1 class="ds-heading ds-heading--m ds-blog-post__title">Secure Execution of OS Commands by ABAP programs</h1>
+    <div class="ds-blog-post__social-stats-wrapper">
+      <div class="ds-social-stats ">
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--comments"></i>24        </span>
+        <span id="post-likes-counter" class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--likes-outline"></i>9        </span>
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--views"></i>17,472        </span>
+      </div>
+          </div>
+    <div class="ds-blog-post__body ds-editor-content">
+      <div class="jive-rendered-content">
+<p>Often it is required to execute commands on the operating system level from within an ABAP programs. Reasons may be eventing mechanisms, for instance start/stop of a printer, the necessity to (de-)compress/encrypt files or others. Sometimes these commands may even require user input. Although this should be avoided where possible, there are cases where you need to even supply user input to OS commands. Once this is the case, you are in trouble. You can see this by this rather simple example below. This code will just allow the user to ping a host and enables him to specify the target and the number of packets to send. The task seems to be pretty easy at a first glance however a solution like the one shown below can be pretty dangerous.</p>
+</p>
+<h2>Doing it wrong</h2>
+<p>Let&#8217;s start with some example application, allowing us to ping some remote host.</p>
+<blockquote class="jive-quote">
+<p><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">REPORT </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">Z_TEST_PING</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br /><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPES </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">char255 </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE c </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">LENGTH </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">255</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br /><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">DATA </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lt_result </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE TABLE OF </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">char255 </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">WITH </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">EMPTY </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">KEY</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">DATA </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lv_line </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">char255</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">DATA </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lv_cmd </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">char255</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br /><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">PARAMETERS</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">: </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">pv_count </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE i DEFAULT </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">5</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">,</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pv_targt </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE c </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">LENGTH </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">80 </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">LOWER CASE</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br /><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">INITIALIZATION</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">CALL </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;C_SAPGPARAM&#8217; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ID </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;NAME&#8217;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">FIELD </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;SAPDBHOST&#8217;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ID </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;VALUE&#8217; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">FIELD&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lv_cmd</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; pv_targt </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lv_cmd</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">. </span><em><span lang="EN-US" style="font-family: 'Courier New';background: white;color: gray;font-size: 10pt">&#8221; get the db server as default target</span></em><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br /><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">AT SELECTION-SCREEN</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">if </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">pv_count &lt; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">1 </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">OR</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp;&nbsp; pv_count &gt; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">10</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">MESSAGE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;pv_count: The number of packets to send must be between 1 and 10.&#8217; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;E&#8217;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ENDIF</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">if </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">pv_targt </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8221;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">MESSAGE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;pv_target: You need to specify a destination to ping.&#8217; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;E&#8217;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ENDIF</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"></p>
+<p><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">START-OF-SELECTION</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />lv_cmd </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">|ping </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: gray;font-size: 10pt">&#8211;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">c{ pv_count } { pv_targt }|</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">. </span><em><span lang="EN-US" style="font-family: 'Courier New';background: white;color: gray;font-size: 10pt">&#8221; this only works on UNIX like ping this way</span></em><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">Write </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">:</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">/ </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;now executing: &#8216; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">&amp;&amp; lv_cmd</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">Write </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">:</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">/ </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">CALL </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;SYSTEM&#8217; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ID </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;COMMAND&#8217; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">field </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lv_cmd<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ID </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;TAB&#8217; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">field </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lt_result</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">IF </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">SY</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: gray;font-size: 10pt">&#8211;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">SUBRC </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">0</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">LOOP at </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lt_result </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">into </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lv_line</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">Write </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">:</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">/ lv_line</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ENDLOOP</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ELSE</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">MESSAGE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;Error, return code &#8216; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">&amp;&amp; sy</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: gray;font-size: 10pt">&#8211;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">subrc </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;E&#8217;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ENDIF</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span> </span></span></span></span></span></span></span></span></span></span></span></span></span></span></p>
+</blockquote>
+<p>If you just enter some data for the hostname like ve74Hmst in my example, the output should look similar to the screen shown here:</p>
+<p><a href="/wp-content/uploads/2013/10/z_test_ping_ok_310511.jpg" ><img class="jive-image jive-image-thumbnail ds-lightbox__img" alt="/wp-content/uploads/2013/10/z_test_ping_ok_310511.jpg" src="/wp-content/uploads/2013/10/z_test_ping_ok_310511.jpg" width="620" data-index="1" data-id="plbox-95869" /></a></p>
+</p>
+<p>However let&#8217;s see what happens if we try to enter ve74Hmst; ls &#8211;l /etc</p>
+<p><a href="/wp-content/uploads/2013/10/z_test_ping_bad_310438.jpg" ><img class="jive-image jive-image-thumbnail ds-lightbox__img" alt="/wp-content/uploads/2013/10/z_test_ping_bad_310438.jpg" src="/wp-content/uploads/2013/10/z_test_ping_bad_310438.jpg" width="620" data-index="2" data-id="plbox-95869" /></a></p>
+<p>We still get the output of the ping command, but in addition, we also get listed the contents of the directory /etc. As you may have detected, the system I used was linux based. For this OS, the command separator is the semicolon. Thus what actually happened, was that the OS first executed the ping command and afterwards the &lsquo;ls&#8217; command, which actually is an OS command injection.</p>
+</p>
+<p>To counter this risk, you can now try to validate the input, which for the given example here would even be feasible. However how to do this for all OS, taking in consideration Unicode encodings and other fancy stuff? Well, there is no need to do this yourself.&nbsp; SAP has created a framework to be used for execution of commands which already does most of the work for you. Especially it takes care of command separators, pipe symbols and other stuff, which may be used for command injections. It also allows the specification of commands in a way, allowing programs to be less dependent on the OS.</p>
+</p>
+<h2>The SXPT function group</h2>
+<p>If you have read my blog on <a class="jive-link-blog-small" href="/?p=90209" >countering directory traversal attacks</a>, you have already learned about SFIL and its functions. The SXPT framework is somewhat similar, as it also consists of a transaction to administrate the command definitions (SM69) and function modules to make use of these definitions. However in addition, there is also transaction SM49 to directly execute commands defined in SM69.</p>
+<p>If you open SM69, you will find a lot of definitions from SAP already being listed there. You can identify them by the type, which is SAP. Entries in the list will always in addition contain a logical command name, the operating system, for which they were defined and the command itself. For further information on SM69, please check the <a class="jive-link-external-small" href="http://help.sap.com/saphelp_nw74/helpdata/en/4b/2b3e958eb51780e10000000a42189c/frameset.htm"  target="_blank" >documentation</a>.</p>
+<p><a href="/wp-content/uploads/2013/10/sm69_310512.jpg" ><img class="jive-image jive-image-thumbnail ds-lightbox__img" alt="/wp-content/uploads/2013/10/sm69_310512.jpg" src="/wp-content/uploads/2013/10/sm69_310512.jpg" width="620" data-index="3" data-id="plbox-95869" /></a></p>
+<p>Just allow me one remark which is more targeted at administrators here. For sure, you can define programs like ping as shown in the above figure for Z_PING by just specifying the command name. However from a security point of view, it may be better to specify the complete path like for Z_MYPING. The reason here is, that an attacker might not be able to replace the command (like /bin/ping on a linux system) but might be able to place another command named ping in a directory listed in the PATH environment variable ahead of the real ping command. From a programmer&#8217;s point of view, this is not relevant, as you can have one definition of a logical program name per OS. A programmer will still be able to just use one and the same logical name, although it will point to different places, depending on the operating system.</p>
+</p>
+<p>To make use of the commands defined in SM69, there is number of function modules available in function group SXPT. Besides modules to check if the user is permitted to execute the command, get a list of available commands and other utility functions, there are three modules available to execute commands:</p>
+<p style="text-indent: -18pt"><span lang="EN-US" style="font-family: Symbol"><span class="pasted-list-info">&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>SXPG_CALL_SYSTEM: runs the command on the locally</p>
+<p style="text-indent: -18pt"><span lang="EN-US" style="font-family: Symbol"><span class="pasted-list-info">&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>SXPG_COMMAND_EXECUTE: runs the command on a target host</p>
+<p style="text-indent: -18pt"><span lang="EN-US" style="font-family: Symbol"><span class="pasted-list-info">&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>SXPG_COMMAND_EXECUTE_LONG: like SXPG_COMMAND_EXECUTE but allows to specify a longer list of parameters</p>
+<p>For a more detailed explanation, please check the <a class="jive-link-external-small" href="http://help.sap.com/saphelp_nw74/helpdata/en/4d/93cd35439d497fe10000000a15822b/content.htm?frameset=/en/4d/93907648846e73e10000000a15822b/frameset.htm"  target="_blank" >documentation.</a></p>
+</p>
+<h2>Doing it right</h2>
+<p>For the purpose of this example, I will use SXPG_CALL_SYSTEM, as it is best matching to the CALL &lsquo;SYSTEM&#8217; command. Using this function module, the code could look similar to the one below.</p>
+<blockquote class="jive-quote">
+<p><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">REPORT </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">Z_TEST_PING_XPG</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br /><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPES </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">char255 </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE c </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">LENGTH </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">255</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br /><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">PARAMETERS</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">: </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">pv_count </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE i DEFAULT </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">5</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">,</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pv_targt </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">char255 </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">LOWER CASE</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br /><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">DATA </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lt_result </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE TABLE OF </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">btcxpm </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">WITH </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">EMPTY </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">KEY</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">DATA </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lv_line </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">btcxpm</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">DATA </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lv_param </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">char255</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br /><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">INITIALIZATION</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">CALL </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;C_SAPGPARAM&#8217; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ID </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;NAME&#8217;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">FIELD </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;SAPDBHOST&#8217;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ID </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;VALUE&#8217; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">FIELD&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lv_param</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; pv_targt </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lv_param</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">. </span><em><span lang="EN-US" style="font-family: 'Courier New';background: white;color: gray;font-size: 10pt">&#8221; get the db server as default target</span></em><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br /><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">AT SELECTION-SCREEN</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">if </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">pv_count &lt; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">1 </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">OR</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp;&nbsp; pv_count &gt; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">10</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">MESSAGE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;Please enter a number between 1 and 10.&#8217; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;E&#8217;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ENDIF</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">if </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">pv_targt </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8221;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">MESSAGE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;pv_target: You need to specify a destination to ping.&#8217; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;E&#8217;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ENDIF</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br /><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">START-OF-SELECTION</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />lv_param </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">|</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: gray;font-size: 10pt">&#8211;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">c{ pv_count } { pv_targt }|</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">. </span><em><span lang="EN-US" style="font-family: 'Courier New';background: white;color: gray;font-size: 10pt">&#8221; this only works on UNIX like ping this way</span></em><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">Write </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">:</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">/ </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;now executing: Z_MyPing with parameters: &#8216; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">&amp;&amp; lv_param</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">Write </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">:</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">/ </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">CALL FUNCTION </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;SXPG_CALL_SYSTEM&#8217;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">EXPORTING</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; commandname&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;z_MyPING&#8217;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; additional_parameters </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lv_param<br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TABLES</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; exec_protocol&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lt_result<br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">EXCEPTIONS</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; no_permission&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">1</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; command_not_found&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">2</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; security_risk&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">3</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">OTHERS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">4</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">IF </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">SY</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: gray;font-size: 10pt">&#8211;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">SUBRC </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">= </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #3399ff;font-size: 10pt">0</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">LOOP at </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lt_result </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">into </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">lv_line</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">Write </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">:</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">/ lv_line</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: gray;font-size: 10pt">&#8211;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">message</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ENDLOOP</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ELSE</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">MESSAGE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;Error, return code &#8216; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">&amp;&amp; sy</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: gray;font-size: 10pt">&#8211;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt">subrc </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">TYPE </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: #4da619;font-size: 10pt">&#8216;E&#8217;</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: black;font-size: 10pt"><br />&nbsp; </span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: blue;font-size: 10pt">ENDIF</span><span lang="EN-US" style="font-family: 'Courier New';background: white;color: purple;font-size: 10pt">.</span></span></span></span></span></span></span></span></span></span></span></span></p>
+</blockquote>
+<p>If I now enter the hostname as in the very first example &lsquo;ve74Hmst&#8217;, the output will look similar to the result of the first example:</p>
+<p><a href="/wp-content/uploads/2013/10/z_test_ping_xpg_ok_310437.jpg" ><img class="jive-image jive-image-thumbnail jiveImage ds-lightbox__img" alt="/wp-content/uploads/2013/10/z_test_ping_xpg_ok_310437.jpg" src="/wp-content/uploads/2013/10/z_test_ping_xpg_ok_310437.jpg" width="620" data-index="4" data-id="plbox-95869" /></a></p>
+<p>However if I now try to enter ve74Hmst; ls &#8211;l /etc again, the output is very different:</p>
+<p><a href="/wp-content/uploads/2013/10/z_test_ping_xpg_bad_310513.jpg" ><img class="jive-image jive-image-thumbnail ds-lightbox__img" alt="/wp-content/uploads/2013/10/z_test_ping_xpg_bad_310513.jpg" src="/wp-content/uploads/2013/10/z_test_ping_xpg_bad_310513.jpg" width="620" data-index="5" data-id="plbox-95869" /></a></p>
+</p>
+<h1>Authorizations checks when using SAPXPG</h1>
+<p>There are some not so obvious differences when switching from CALL &lsquo;SYSTEM&#8217; to the SAPXPG framework. The most notable is the different authorization checks done by both tools. In case CALL &lsquo;system&#8217; is being used, the authorization object S_C_FUNCT will be checked. Using this check you can however only allow or disallow the usage of CALL &lsquo;SYSTEM&#8217; as a whole not restrict the usage to certain programs. For more information, check the documentation of S_C_FUNCT in SU21.&nbsp; </p>
+<p>In case of using the SAPXPG framework, the checked authorization object is S_LOG_COM.<br />S_LOG_COM contains the fields</p>
+<p style="text-indent: -18pt"><span lang="EN-US" style="font-family: Symbol"><span class="pasted-list-info">&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>&#8216;COMMAND&#8217; where you specify a logical command name as defined in SM69</p>
+<p style="text-indent: -18pt"><span lang="EN-US" style="font-family: Symbol"><span class="pasted-list-info">&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>&#8216;OPSYSTEM&#8217; to specify permitted operating systems for the user, and</p>
+<p style="text-indent: -18pt"><span lang="EN-US" style="font-family: Symbol"><span class="pasted-list-info">&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>&#8216;HOST&#8217; to even limit execution rights to single hosts</p>
+<h1> </h1>
+<h1>Last Remarks</h1>
+<p>It is not only a good idea to use the SXPT framework because of the improved security but also because the admin may be able to disable the CALL &lsquo;SYSTEM&#8217; command setting the profile parameter &lsquo;<span lang="EN-US" style="font-family: 'Arial','sans-serif';color: black;font-size: 9.5pt">rdisp/call_system&#8217; to &lsquo;0&#8217;. However some SAP programs still make use of CALL &lsquo;SYSTEM&#8217;. For this reason you need to check first, whether it is feasible in your environment.</span></p>
+</p>
+<p>Finding such issues in ABAP coding is made easy using static code check tools. Most of them will report such code as dangerous.</p>
+<p>If you are interested in additional details, maybe have a look at the <a class="jive-link-blog-small" href="/?p=89883" >blogpost from Horst Keller </a>for some more info.</p>
+</p>
+<h4>Relevant Notes:</h4>
+<p><a class="jive-link-external-small" href="https://service.sap.com/sap/support/notes/1336776"  target="_blank" >https://service.sap.com/sap/support/notes/1336776</a></p>
+<p><a class="jive-link-external-small" href="https://service.sap.com/sap/support/notes/1530983"  target="_blank" >https://service.sap.com/sap/support/notes/1530983</a></p>
+</div>
+    </div>
+  </div>
+  <div class="ds-blog-post__social-side-bar">
+    <div class="ds-sticky-on-scroll ">
+      <div class="ds-sticky-on-scroll__wrapper  ">
+        <div class="ds-sticky-on-scroll__content">
+          <div class="ds-blog-post__social-actions">
+            <button class="sap-button-follow ds-button ds-button--primary ds-blog-post__social-action ds-blog-post__social-action--follow" id="sap-button-follow-hdr-id" onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2013%2F10%2F29%2Fsecure-execution-of-os-commands-by-abap-programs%2F%3Fs_action%3Dss_change_follow_status%26nonce%3D705a693f83'" rel="IDS_login"  type="button" data-content-type="blogpost" data-content-id="95869" data-nonce="705a693f83" title="Please log into the system to use follow/unfollow functionality."><span class="ds-button-text">Follow</span></button>            <button type='button' class='ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action likes-post-link dolike ' rel='IDS_login' onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2013%2F10%2F29%2Fsecure-execution-of-os-commands-by-abap-programs%2F%3Fs_action%3Dss_change_like_status%26nonce%3D580b46d63f'" title='Like' data-nonce='580b46d63f' data-post-id='95869'><i class='ds-icon ds-icon--likes-outline ds-icon--regular ds-m-r-xs' tabindex='-1'></i><span class='ds-button-text'>Like</span></button>            <button type="button" class="ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action" title="RSS Feed" onclick="location.href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/feed/'">
+              <i class="ds-icon ds-icon--rss-feed ds-icon--regular ds-m-r-xs" tabindex="-1"></i>RSS Feed
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+            <div class="ds-blog-post__social-row">
+              <div class="ds-blog-post__social-icons">
+                <a href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.sap.com%2F2013%2F10%2F29%2Fsecure-execution-of-os-commands-by-abap-programs%2F' title='Share on Facebook' target='_blank'><span class='ds-social-icon ds-social-icon--dark-facebook'></span></a><a href='https://twitter.com/share?url=https%3A%2F%2Fblogs.sap.com%2F2013%2F10%2F29%2Fsecure-execution-of-os-commands-by-abap-programs%2F&text=Secure+Execution+of+OS+Commands+by+ABAP+programs' title='Share on Twitter' target='_blank'><span class='ds-social-icon ds-social-icon--dark-twitter'></span></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.sap.com%2F2013%2F10%2F29%2Fsecure-execution-of-os-commands-by-abap-programs%2F&title=Secure+Execution+of+OS+Commands+by+ABAP+programs' title='Share on LinkedIn' target='_blank'><span class='ds-social-icon ds-social-icon--dark-linkedin'></span></a>              </div>
+              <div class='ds-tooltip__wrapper'>
+    <div class='ds-tooltip__anchor'>
+    <button
+      type="button"
+      class="ds-button ds-button--secondary ds-blog-post__alert-moderator-button ds-button--disabled"
+      aria-label="Alert Moderator"
+      data-toggle="collapse"
+      data-hide-class="ds-collapse"
+      data-triggers=".alertModerator"
+      aria-expanded="false">Alert Moderator
+    </button>
+    </div>
+    <div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Alerting is not available for unauthorized users</div>
+</div>
+            </div>
+            
+  <div class="wprc-content-v3">
+    <div class="ds-blog-post-form ds-blog-post__alert-moderator-form ds-collapse alertModerator wprc-form-v3" data-toggle="collapseComponent" data-name="alertModerator">
+          </div>
+  </div>
+          </div>
+          <div class="ds-blog-post__right-side-bar ds-flexCol-sm-12 ds-flexCol-md-3">
+            <div id="sapassignedtagswidget-v3-2" class="ds-side-bar-widget ds-assigned-tags ds-m-b-l"><h3 class="ds-side-bar-widget__heading">Assigned Tags</h3></div><div id="sap-relatedcontent-widget-v3-2" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Similar Blog Posts<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="blogpost" data-limit="3"></ul></div></div><div id="sap-relatedcontent-widget-v3-3" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Related Questions<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="question" data-limit="3"></ul></div></div>          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="content-lightbox-modal"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="plbox-95869"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="plbox-95869" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2013/10/z_test_ping_ok_310511.jpg" alt="/wp-content/uploads/2013/10/z_test_ping_ok_310511.jpg"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2013/10/z_test_ping_bad_310438.jpg" alt="/wp-content/uploads/2013/10/z_test_ping_bad_310438.jpg"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2013/10/sm69_310512.jpg" alt="/wp-content/uploads/2013/10/sm69_310512.jpg"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2013/10/z_test_ping_xpg_ok_310437.jpg" alt="/wp-content/uploads/2013/10/z_test_ping_xpg_ok_310437.jpg"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2013/10/z_test_ping_xpg_bad_310513.jpg" alt="/wp-content/uploads/2013/10/z_test_ping_xpg_bad_310513.jpg"/></div><a class="lightbox-gallery-button--prev ds-lightbox__gallery-button ds-icon ds-icon--arrow-left" href="javascript:void(0);" aria-label="Show previous image"></a><a class="ds-lightbox__gallery-button lightbox-gallery-button--next ds-icon ds-icon--arrow-right" href="javascript:void(0);" aria-label="Show next image"></a></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>
+  <div class="ds-blog-post__comment-section">
+    <div class="ds-flexGrid">
+      <div class="ds-flexRow">
+        <div class="ds-flexCol-12 ds-flexCol-md-10 ds-flexCol-lg-10">
+          
+<div id="comments" class="ds-blog-post-comments">
+  
+      <div class="ds-blog-post-comments__counter" title="Number of Comments">
+      24 Comments      </div>
+              <div class="dm-section dm-align-center dm-section-header__title" title="Please log on to comment" aria-role="alert">
+                You must be <a href="https://blogs.sap.com/wp-login.php?redirect_to=2013/10/29/secure-execution-of-os-commands-by-abap-programs" class="opener js-idspopup" rel="IDS_login" title="Log On">Logged on</a> to comment or reply to a post.
+        </div>
+      
+    <div class="ds-blog-post-comments__list">
+              <div class="comment byuser comment-author-rainerhbenthal even thread-even depth-1 ds-blog-post-comment" id="li-comment-342634">
+        <div id="comment-342634" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/rainer.hbenthal">
+                <img alt='Author&#039;s profile photo Rainer Hübenthal' src='https://avatars.services.sap.com/images/rainer.hbenthal_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Rainer Hübenthal' href='https://people.sap.com/rainer.hbenthal' rel='external nofollow' class='ds-link ds-user__name ' >Rainer Hübenthal</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-10-29T12:35:01+00:00"
+                >October 29, 2013 at 12:35 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi,</p>
+</p>
+<p>very interesting blog. Do i understand this rigtht: setting the parameter </p>
+<p> &lsquo;<span lang="EN-US" style="color: black; font-family: &amp;quot;Arial&amp;quot;,&amp;quot;sans-serif&amp;quot;; font-size: 9.5pt;">rdisp/call_system&#8217; to &lsquo;0&#8217; still enable you to execute system commands via the sxpg framewaork?</span></p>
+<p><span lang="EN-US" style="color: black; font-family: &amp;quot;Arial&amp;quot;,&amp;quot;sans-serif&amp;quot;; font-size: 9.5pt;"></span></p>
+<p><span lang="EN-US" style="color: black; font-family: &amp;quot;Arial&amp;quot;,&amp;quot;sans-serif&amp;quot;; font-size: 9.5pt;">//Rainer</span></p>
+</div>
+              </div>
+
+            <div id="comment-actions-342634" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342634" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342634'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-342635">
+        <div id="comment-342635" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-10-29T13:40:36+00:00"
+                >October 29, 2013 at 1:40 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>correct, rdisp/call_system will only disable the CALL 'SYSTEM' but not affect the execution of commands via SAPXPG.</p>
+</p>
+<p>Regards, </p>
+</p>
+<p>Patrick</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342635" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342635" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342635'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember even depth-3 ds-blog-post-comment" id="li-comment-342638">
+        <div id="comment-342638" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-11-06T18:41:08+00:00"
+                >November 6, 2013 at 6:41 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Patrick,</p>
+</p>
+<p>Thank you for confirming that!</p>
+</p>
+<p>Cheers,</p>
+<p>Julius</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342638" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342638" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342638'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember odd alt thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-342636">
+        <div id="comment-342636" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-10-29T14:37:10+00:00"
+                >October 29, 2013 at 2:37 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>My 2 cents ... </p>
+</p>
+<p>It's common sense not to use the Kernel calls directly; but i have seen people suggesting using them in the ABAP forums so many times.</p>
+</p>
+<p>We had strict QA procedures in place &amp; so i have never used Kernel calls ever. It has been one or the other FMs of the FuGr SXPT.</p>
+</p>
+<p>Thanks for publishing this blog &amp; i wish that members reading it find some sense not to use the C-calls.</p>
+</p>
+<p>BR,</p>
+<p>Suhas</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342636" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342636" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342636'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-rainerhbenthal even depth-2 ds-blog-post-comment" id="li-comment-342637">
+        <div id="comment-342637" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/rainer.hbenthal">
+                <img alt='Author&#039;s profile photo Rainer Hübenthal' src='https://avatars.services.sap.com/images/rainer.hbenthal_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Rainer Hübenthal' href='https://people.sap.com/rainer.hbenthal' rel='external nofollow' class='ds-link ds-user__name ' >Rainer Hübenthal</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-10-30T07:02:44+00:00"
+                >October 30, 2013 at 7:02 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>How many SAP Reports are using this? Are there any experiences setting the parameter to '0'? </p>
+</div>
+              </div>
+
+            <div id="comment-actions-342637" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342637" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342637'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember bypostauthor odd alt depth-3 ds-blog-post-comment" id="li-comment-342652">
+        <div id="comment-342652" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-10-30T07:24:15+00:00"
+                >October 30, 2013 at 7:24 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Depends on what you refer to by 'SAP reports'. </p>
+</p>
+<p>If this is reports provided by SAP in the standard, I'm pretty sure the number is 0, unless you are on a very old release / service pack. SAP uses it's own code scanner for development of standard SAP coding, CALL 'SYSTEM' is forbidden there since years already.</p>
+</p>
+<p>If you are refer to customer SAP programs, this is the reason, why I created this blog.</p>
+</p>
+<p>Regards, </p>
+<p>Patrick</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342652" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342652" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342652'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-rainerhbenthal even depth-4 ds-blog-post-comment" id="li-comment-342653">
+        <div id="comment-342653" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/rainer.hbenthal">
+                <img alt='Author&#039;s profile photo Rainer Hübenthal' src='https://avatars.services.sap.com/images/rainer.hbenthal_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Rainer Hübenthal' href='https://people.sap.com/rainer.hbenthal' rel='external nofollow' class='ds-link ds-user__name ' >Rainer Hübenthal</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-10-30T07:39:16+00:00"
+                >October 30, 2013 at 7:39 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Of course i'm not referring to Z-Reports 🙂 I know that SAP is using the Code Profiler which can detect the usage of this (if enabled). Good to know that there are other possibilities to close this backdoor. At least i need to do a complete check where this is used in our environment. We are using system commands pretty sure but i dont have an overview how they are used.</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342653" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342653" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342653'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember bypostauthor odd alt depth-5 ds-blog-post-comment" id="li-comment-342654">
+        <div id="comment-342654" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-11-04T07:46:55+00:00"
+                >November 4, 2013 at 7:46 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Rainer, </p>
+</p>
+<p>SAP development is not using the codeprofiler but the <a class="jive-link-external-small" href="http://wiki.scn.sap.com/wiki/display/ABAP/SAP+NetWeaver+Application+Server%2C+add-on+for+code+vulnerability+analysis" rel="nofollow"  target="_blank">SAP NetWeaver AS, add-on for code vulnerability analysis</a>. As OS commands are different on the different OS'es, SAP uses the SAPXPG framework to achieve portablity on the different platforms supported. You can trace the execution of all external commands on a particular host system by setting the environment variable <strong style="font-family: 'Courier New';">sapxpg_trace</strong> in the host system in which the external job is to be started. Format and values:</p>
+<p style="padding-left: 45px;"><strong style="font-family: 'Courier New';">sapxpg_trace=&lt;Trace-Level&gt;</strong>. The trace level can be <strong style="font-family: 'Courier New';">1</strong>, <strong style="font-family: 'Courier New';">2</strong>, or <strong style="font-family: 'Courier New';">3</strong> where <strong style="font-family: 'Courier New';">3</strong> is the most detailed, and <strong style="font-family: 'Courier New';">0</strong>deactivates the trace. </p>
+<p>For more info, please have a look at the <a class="jive-link-external-small" href="http://help.sap.com/saphelp_nw04/helpdata/en/c4/3a80c4505211d189550000e829fbbd/frameset.htm" rel="nofollow"  target="_blank">docs</a>.</p>
+</p>
+<p>Regards, </p>
+</p>
+<p>Patrick</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342654" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342654" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342654'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember bypostauthor even depth-5 ds-blog-post-comment" id="li-comment-342655">
+        <div id="comment-342655" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-11-06T12:04:19+00:00"
+                >November 6, 2013 at 12:04 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>well, seams I have to correct myself on the number of usages of CALL 'SYSTEM' in SAP code, there are some still, although the functions may be used only rarely. So please check first before you enable rdisp/call_system. I will update the blog accordingly.</p>
+</p>
+<p>Regards, </p>
+</p>
+<p>Patrick</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342655" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342655" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342655'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember odd alt depth-5 ds-blog-post-comment" id="li-comment-342657">
+        <div id="comment-342657" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-11-06T19:05:19+00:00"
+                >November 6, 2013 at 7:05 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Patrick,&nbsp; I reported some but was told when setting rdisp/call_system = 0&nbsp; initially that I will have to forfeit functionality if I do not want to leave it open...&nbsp; I guess all the developers need to do is to pass through SAP's code scans and then if their code is legitimate and for some reason should not use the APIs of SXPT, then their calling program must be added to the protected call stack list.&nbsp;&nbsp; Sounds simple, but in reality it was an uphill battle (back in 2005 or so) which we at the time gave up on it as the CALL 'SYSTEM' was not officially remote enabled itself. We were told to move on to more important things so started investigating remote calls to kernel functions.&nbsp; Nice to see this topic being raised again by SAP this time!&nbsp;&nbsp; ps: In a related way, it would be nice if SAP removed the activity values A6 and A7 of object S_DATASET from the example role SAP_BC_ENDUSER(Non critical end user common functions). I would class that as a more likely security risk to occur than aprogram making pings. Would it be possible to use some internal pings for that as well while following up on CALL ' SYSTEM'? It seems the role does not have an owner so attempts to have it changed got no where but you have some attention there. S_PROGRAM as well while you are about it.&nbsp; Sorry for asking a lot but you hit a nail here!&nbsp; 🙂&nbsp; Cheers, Julius</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342657" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342657" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342657'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember even thread-even depth-1 ds-blog-post-comment" id="li-comment-342639">
+        <div id="comment-342639" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-11-06T20:11:44+00:00"
+                >November 6, 2013 at 8:11 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>The examples you listed at the top, file compression &amp; spool control, can be controlled by APIs which do not require the developer to interact with the OS.&nbsp; I'm not familiar with eventing.</p>
+</p>
+<p>Is there ever a situation where it is justified for a customer to call a kernel method?&nbsp; I have never done it, but if it is sometimes permissible, I am interested to hear your thoughts.</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342639" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342639" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342639'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember odd alt depth-2 ds-blog-post-comment" id="li-comment-342656">
+        <div id="comment-342656" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-11-06T20:39:13+00:00"
+                >November 6, 2013 at 8:39 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>One of them with thousands of scan hits is 'C_SAPGPARAM' which Patrick also uses even in his code WITH the API call to the 'SYSTEM' function.</p>
+</p>
+<p>There is no API to read the instance and system parameters. You can only call TH_CHANGE_PARMETER to change them dynamically, but you don't need to change it. You could read table PAHI but if the param was changed on the OS instead of from the RZ10 at application layer then there are no change docs.</p>
+</p>
+<p>You are left with little choise other than calling the Kernel function. But with so many source code locations, you can feel cumfy with the fact that changing the IDs or a call stack validation is unlikely to happen in our life time anymore... 😉</p>
+</p>
+<p>But those tolerable calls can be counted on one hand IMO and 'SYSTEM' does not need to belong to them.</p>
+</p>
+<p>Cheers,</p>
+<p>Julius</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342656" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342656" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342656'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember bypostauthor even depth-2 ds-blog-post-comment" id="li-comment-342640">
+        <div id="comment-342640" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-11-07T15:27:06+00:00"
+                >November 7, 2013 at 3:27 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Eric, </p>
+</p>
+<p>in the past we used to trigger external programs to do something because of a state change in an ABAP application. This could be to have the app process some files, start some actions, you name it. Often it was a trigger to upload/download data from an external system, which was only capable to operate on files and that needs a trigger to look for the files. These are some examples for eventing. With regards to spool control, this was about starting/stopping printers that required the execution of external commands. This still occurs sometimes today for very big printers but you are right, that this is less common today. For the compression, ABAP only supports some few algorythms, if you have other algorythms or even crypto involved, like PGP or similiar, you will be required to start an external command even today.</p>
+</p>
+<p>Regards, </p>
+</p>
+<p>Patrick</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342640" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342640" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342640'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember odd alt depth-3 ds-blog-post-comment" id="li-comment-342641">
+        <div id="comment-342641" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-11-07T22:07:32+00:00"
+                >November 7, 2013 at 10:07 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>It is also popular amongst file conversion softwares to monitor the batch processes, spools and progress of registered external programs via such external programs which are called by software on external hosts.</p>
+</p>
+<p>Perhaps at the time they did not have APIs to do it or did not want to have to create / maintain their own ABAP APIs for it. Even today with APIs there is still resistence, as they need to adher to API interface definitions (they need someone who understands ABAP) and they need an authenticated user and provide roles for it. Some who at least use APIs since gw/monitor is defaulted = 1 now) then hardcode the logon credentials and in the documentation recommend to give the user SAP_ALL. Some docs I have seen even claim that this is a problem caused by SAP.</p>
+</p>
+<p>Which of those two are worse is a matter of preference.</p>
+</p>
+<p>That is why this blog is very useful - you can use the APIs and object S_LOG_COM without any functionality restrictions and do it in a safe way. It must just be designed correctly to enable a safe way.</p>
+</p>
+<p>Cheers and thanks again for this blog! Great refrence for how to do it correctly!</p>
+</p>
+<p>Cheers,</p>
+<p>Julius</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342641" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342641" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342641'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-342642">
+        <div id="comment-342642" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-12-02T15:24:02+00:00"
+                >December 2, 2013 at 3:24 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p><span style="font-size: 11.0pt; font-family: 'Calibri','sans-serif'; color: #1f497d;"><strong>OS Commands in ABAP - Postscriptum by a security researcher</strong></span></p>
+</p>
+<p><span style="font-size: 11.0pt; font-family: 'Calibri','sans-serif'; color: #1f497d;">Hi Patrick,</span></p>
+</p>
+<p><span style="font-size: 11.0pt; font-family: 'Calibri','sans-serif'; color: #1f497d;">nice introduction to the topic. I am happy to see that the key risks described in Virtual Forge's 2009 book on ABAP security and earlier publications are now made available to a broader audience by SAP, too.</span></p>
+</p>
+<p><span style="font-size: 11.0pt; font-family: 'Calibri','sans-serif'; color: #1f497d;">Having read the above, I conclude that there are some additional things worth mentioning.</span></p>
+</p>
+<p><span style="font-size: 11.0pt; font-family: 'Calibri','sans-serif'; color: #1f497d;">First of all, when asked by Rainer H&uuml;benthal about the number of SAP reports that use CALL 'SYSTEM', you initially stated "I'm pretty sure the number is 0". You later correct this to "there are some still". In order to answer the question, I did a simple scan on a current SAP ECC 6 stack and found more than 110 occurrences of CALL 'SYSTEM' in the SAP standard. Some have SAP Security Notes related to them, some are related to current security advisories by Virtual Forge.</span></p>
+</p>
+<p><span style="font-size: 11.0pt; font-family: 'Calibri','sans-serif'; color: #1f497d;">Second, there is definitely more than one "evil" way to execute OS commands. This is relevant for testing. I have taken the liberty of sharing my knowledge and research in a <a class="jive-link-external-small" href="https://www.virtualforge.com/en/blog/post/os-command-injection-risks-en.html" rel="nofollow"  target="_blank">blog post</a>. It gives an overview over the different ways to execute OS Commands and also discusses some risks related to the SXPG_* family of function modules.</span></p>
+</p>
+<p><span style="font-size: 11.0pt; font-family: 'Calibri','sans-serif'; color: #1f497d;">Finally, you state that "SAP development is not using the codeprofiler". I believe it would be fair to put this statement in the right light. SAP (development) has been using CodeProfiler for a couple of years. SAP has its own code scanning tool now as you say, but the role CodeProfiler and Virtual Forge play(ed) are worth mentioning IMHO.</span></p>
+</div>
+              </div>
+
+            <div id="comment-actions-342642" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342642" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342642'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember odd alt depth-2 ds-blog-post-comment" id="li-comment-342643">
+        <div id="comment-342643" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-12-02T21:56:11+00:00"
+                >December 2, 2013 at 9:56 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Andreas,</p>
+</p>
+<p>I have been using code scans for many years (the old RSEC scanner, the new SCI with it's hidden coding blocks..., your tools, other tools, the new tools from SAP) but when confronted with a customer system you still need to look at the code and think about it and understand which options the system configuration and ABAP constructs offer for misuse.</p>
+</p>
+<p>That means you need to know what you are looking for anyway and with report RS_ABAP_SOURCE_SCAN I have had the best results (bar constructor methods and other things you can only see at runtime).</p>
+</p>
+<p>On our consulting projects we scan the coding for various things but also have to live with some of them (at least for a while). What customers need is content information about how to correct it any migrate from CALL 'SYSTEM' to SM69 or better even is SAP triggers the processing.</p>
+</p>
+<p>That needs content and understanding for the design. Just hacking SAP based on assumptions is not enough. That is why I was very happy with Patrick's statement about 'SYSTEM'.. -&gt; I assume that he is using a tool which considers 'SYSTEM's own call stack validation. SXPG also calls 'SYSTEM'. If the input validation on SAP side is OK and call stack list is ok (110 is a bit long for an API..) then I don't see a problem with a few hits...</p>
+</p>
+<p>Important is APIs. Then there is consistency but customers still have freedom to implement without dark horses in the stable.</p>
+</p>
+<p>Cheers,</p>
+<p>Julius</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342643" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342643" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342643'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember even depth-3 ds-blog-post-comment" id="li-comment-342644">
+        <div id="comment-342644" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-12-03T09:56:49+00:00"
+                >December 3, 2013 at 9:56 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Julius,</p>
+</p>
+<p>I am not entirely sure where you're getting at with your reply to my comment.</p>
+</p>
+<p>First, RS_ABAP_SOURCE_SCAN is a nice helper. For people like you that know what they are looking for. But such helpers are of limited use, when you need to analyze a couple of million lines of code. Our business application benchmark shows that customers have 1.8 Million lines of custom ABAPs per system on average. There are simply not enough ABAP security experts to cover the vast amount of ABAP code out there. Therefore, you need static code analyzers that pre-process the coding, so the experts can focus their efforts on relevant parts of the code.</p>
+</p>
+<p>The content for migrating from risky OS command execution to SM49/SM69 was published by SAP Press back in 2009. Unfortunately only in German 😉</p>
+</p>
+<p>But what do you mean with "I assume that he is using a tool which considers 'SYSTEM's own call stack validation"?</p>
+<p>What is your understanding of a call stack validation? That the kernel checks, if 'SYSTEM' is called from a defined list of ABAP programs?</p>
+<p>Actually, there is no such mechanism for 'SYSTEM'.</p>
+</p>
+<p>You further state that "SXPG also calls 'SYSTEM'". Well, that's not the case. When Virtual Forge researched the various ways to execute OS commands from ABAP back in 2010, we investigated which of those are used by the SXPG function modules (SXPG_CALL_SYSTEM and SXPG_COMMAND_EXECUTE). This is how we found the 0-day in SXPG's mechanism. It turns out, SXPG is using its own executable on the gateway.</p>
+</p>
+<p>Regarding the 110 occurrences of CALL 'SYSTEM'. One can argue if this a high or low number of results.</p>
+<p>But two things should be considered:</p>
+<p>- Even a single flaw related to the usage of CALL 'SYSTEM' can result in total compromise of the SAP server.</p>
+<p>- Customers can't disable execution of CALL 'SYSTEM' in their Z code (by means of profile parameter 'rdisp/call_system') as long as the SAP standard uses CALL 'SYSTEM'</p>
+</p>
+<p>Cheers,</p>
+<p>Andreas</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342644" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342644" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342644'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember odd alt depth-4 ds-blog-post-comment" id="li-comment-342645">
+        <div id="comment-342645" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-12-03T10:25:25+00:00"
+                >December 3, 2013 at 10:25 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Andreas,</p>
+</p>
+<p>100% agree with you that if SAP uses CALL 'SYSTEM' then customers cannot turn it off without forfeiting functionality. That SXPG functions and some others themselves use 'SYSTEM' in some cases lead to my conclusion that there is a list of whitelisted programs (= call stack validation) exempted from rdisp/call_system. I don't see any other way how they could be there. Are you sure there is no validation within 'SYSTEM'? How could we ever know except by trial and error?&nbsp; 🙂</p>
+</p>
+<p>Regarding use of analyzers: if the company has 1.8 million lines of ABAP then if it fair to assume that there is going to be at least one ABAP expert around who can hit F8 on the key board and understand a customizing variant for SCI and a screen variant for RS_ABAP_SOURCE_SCAN and be given some consulting content to help fix it.</p>
+</p>
+<p>Making it faster than that to find problems still does not help the ABAP expert to maintain code of an ABAPer who long ago also left the system though. That (responsibility and bravery to touch old code) is often the biggest problem in the wild...&nbsp; 🙂</p>
+</p>
+<p>Cheers,</p>
+<p>Julius</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342645" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342645" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342645'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember bypostauthor even depth-4 ds-blog-post-comment" id="li-comment-342646">
+        <div id="comment-342646" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-12-03T13:34:34+00:00"
+                >December 3, 2013 at 1:34 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Andreas,</p>
+</p>
+<p>thanks for your valuable comments. Maybe allow me some additional words from my side.</p>
+</p>
+<p>I limited this blog also to cover CALL 'SYSTEM', as this is by far the most common used way to execute OS commands in ABAP. It was not meant to discuss other possiblities, like the usage of ThPwInfo (which is fixed as you also stated in your blog) or the OPEN DATASET ... FILTER ... approach (which still can be abused for this). However the FILTER addtion is also mentioned <a class="jive-link-external-small" href="http://help.sap.com/abapdocu_740/en/abensys_comm_injections_scrty.htm" rel="nofollow"  target="_blank">in the ABAP docs</a> covering the topic.</p>
+<p>I also explicitly used SXPG_CALL_SYSTEM as it allows to execute the commands only locally and does therfor not have the disadvantages of SXPG_COMMAND_EXECUTE.</p>
+</p>
+<p>You are also correct, that SAP did use the SAP Codeprofiler and SAP IT even does it until today for some projects. However the SAP development organization started to migrate to SAP's own solution already in 2011 and also SAP IT has a first project making use of our own tool. However I'm not sure, why this would be relevant here. Rainer said:</p>
+</p>
+<blockquote class="jive-quote"><p>I know that SAP is using the Code Profiler which can detect the usage of this (if enabled).</p></blockquote>
+<p>and I was referring to this statement, when I mentioned that SAP is using the <a class="jive-link-external-small" href="http://wiki.scn.sap.com/wiki/display/ABAP/SAP+NetWeaver+Application+Server%2C+add-on+for+code+vulnerability+analysis" rel="nofollow"  target="_blank">SAP NetWeaver AS, add-on for code vulnerability analysis</a>.</p>
+</p>
+<p>I'm fully aware, that an active program from SAP in the system doing a 'CALL SYSTEM' will make it impossible to the admin to set rdisp/call_system. However it is somewhat hard to convince ppl to change their coding if it just contains a hard-coded command, as this not only affects the code but also would be an incompatible change to the customer, as they need to adapt their roles accordingly as well. Sometimes compatibilty is considered higher than other attributes, especailly for SAP code and sometimes it is even customer pressure. One example for instance being the SXPT framework, where we had added a validation function to avoid OS injections in case the command referenced was a shell. We had to remove the function again based on customer feedback, as it broke the customers programs.</p>
+</p>
+<p>With regards to not mention prior discussions of this topic, I have to admit, for me this is just some old topic, which sometimes was not taken serious enough. SAP talked about the risks of call system much before 2009. The oldest ppt I could find on my system was a presentation from 2004. Actually somehow there is still some odd version of this <a class="jive-link-external-small" href="http://www.erpdb.info/wp-content/uploads/2008/10/secure-development-in-abap.pdf" rel="nofollow"  target="_blank">ppt available on erpdb</a>. Call System is mentioned on slide 6, although the notes are somewhat incomplete in this version. The SXPT function group is even way older. The info on CALL SYSTEM for quite some time was not mentioned <a class="jive-link-external-small" href="http://help.sap.com/abapdocu_740/en/abensys_comm_injections_scrty.htm" rel="nofollow"  target="_blank">in the docs</a>, as the CALL keyword was <a class="jive-link-external-small" href="http://help.sap.com/abapdocu_70/en/ABAPCALL-.htm" rel="nofollow"  target="_blank">flagged as SAP internal</a>. So this blog was more intended to be a heads-up than to talk about something new.</p>
+</p>
+<p>Sorry if the intention of this blog or my comments were not clear enough. Hopefully this explanation helps to clarify this.</p>
+</p>
+<p>Kind regards,</p>
+</p>
+<p>Patrick</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342646" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342646" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342646'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember odd alt depth-5 ds-blog-post-comment" id="li-comment-342647">
+        <div id="comment-342647" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-12-04T07:31:19+00:00"
+                >December 4, 2013 at 7:31 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Patrick,</p>
+</p>
+<p>thank you for all the clarifications (like!).</p>
+</p>
+<p>From the title of your blog I was indeed under the impression that it was about OS commands <em>in general</em>.</p>
+</p>
+<p>That in mind, I wanted to provide some missing details and answer open questions.</p>
+</p>
+<p>Cheers,</p>
+<p>Andreas</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342647" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342647" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342647'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember even depth-4 ds-blog-post-comment" id="li-comment-342648">
+        <div id="comment-342648" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-12-04T11:22:28+00:00"
+                >December 4, 2013 at 11:22 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Andreas,</p>
+</p>
+<p>Yes, you are correct. I could find 85 function modules with CALL 'SYSTEM' in them but not in the SXPG functions. So that either changed or I confused it with one of the others. </p>
+</p>
+<p>Thanks for pointing that correction out!</p>
+</p>
+<p>Cheers,</p>
+<p>Julius</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342648" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342648" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342648'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-342649">
+        <div id="comment-342649" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-10T11:25:42+00:00"
+                >June 10, 2015 at 11:25 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Patrick,</p>
+</p>
+<p>I have a question. We have automated tools for code remediation and the customer does not want to create a new commandname in sm69 for using it in the function module&nbsp;&nbsp;&nbsp;&nbsp; "<span lang="EN-US" style="font-size: 10pt; font-family: 'Courier New'; color: blue; background: white;">CALL FUNCTION </span><span lang="EN-US" style="font-size: 10pt; font-family: 'Courier New'; color: #4da619; background: white;">'SXPG_CALL_SYSTEM'</span><span lang="EN-US" style="font-size: 10pt; font-family: 'Courier New'; color: black; background: white;"><br />&nbsp; </span><span lang="EN-US" style="font-size: 10pt; font-family: 'Courier New'; color: blue; background: white;">EXPORTING</span><span lang="EN-US" style="font-size: 10pt; font-family: 'Courier New'; color: black; background: white;"><br />&nbsp;&nbsp;&nbsp; commandname&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-US" style="font-size: 10pt; font-family: 'Courier New'; color: purple; background: white;">= newcommandname</span></p>
+<p><span lang="EN-US" style="font-size: 10pt; font-family: 'Courier New'; color: purple; background: white;"></span>&nbsp; .... "</p>
+</p>
+<p>And we are not supposed to use CALL 'SYSTEM' for security reasons.</p>
+<p>Please guide if it is possible to execute a command using this function module without creating any new command name.</p>
+<p>Is there any other way to achieve this.</p>
+</p>
+<p>Thanks,</p>
+<p>Sri</p>
+<p><span lang="EN-US" style="font-size: 10pt; font-family: 'Courier New'; color: purple; background: white;"></span></p>
+</div>
+              </div>
+
+            <div id="comment-actions-342649" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342649" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342649'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember even depth-2 ds-blog-post-comment" id="li-comment-342650">
+        <div id="comment-342650" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-11T06:30:07+00:00"
+                >June 11, 2015 at 6:30 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Sri,</p>
+</p>
+<p>the SAP standard provides the SXPG* function modules in order to execute OS commands in a way that can be controlled by an admin and limited by roles &amp; authorizations.</p>
+</p>
+<p>If you bypass this mechanism, you have a compliance issue.</p>
+<p>On top of the significant security risk.</p>
+</p>
+<p>The technical alternatives to SXPG* are described in my blob post (see my first comment above), but they all leads to the dark side...</p>
+</p>
+<p>Cheers,</p>
+<p>Andreas</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342650" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342650" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342650'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-342651">
+        <div id="comment-342651" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-12T12:15:39+00:00"
+                >June 12, 2015 at 12:15 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Sri,</p>
+</p>
+<p>there is nothing to add from my side to what Andreas already said. If the customer does not want to create these commands, then he might not want to allow the execution of these commands. More generic abililties just would lead to an increased risk for system operation.</p>
+</p>
+<p>Kind regards,</p>
+<p>Patrick</p>
+</div>
+              </div>
+
+            <div id="comment-actions-342651" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_342651" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2013/10/29/secure-execution-of-os-commands-by-abap-programs/#comment-342651'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+
+      
+        </div> <!-- main comments content area -->
+
+    
+            
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+                </div> <!-- #main -->
+                <div id="shared_footer" class="dm-container dm-wrapper">
+                    <footer class="dm-footer">
+    <div class="dm-footer__inner-wrapper">
+        <div class="dm-socialmedia">
+            <h5 class="dm-socialmedia__headline" id="hl-sharefollow">Find us on</h5>
+            <ul class="dm-socialmedia__links" aria-labelledby="hl-sharefollow">
+                <li><a href="https://www.facebook.com/sapcommunity" title="Facebook"><span class="dm-icon-encoded--facebook"></span></a></li>
+                <li><a href="https://twitter.com/SAPCommunity" title="Twitter"><span class="dm-icon-encoded--twitter"></span></a></li>
+                <li><a href="https://www.youtube.com/c/SAPCommunities" title="YouTube"><span class="dm-icon-encoded--youtube"></span></a></li>
+                <li><a href="https://www.linkedin.com/company/sap" title="LinkedIn"><span class="dm-icon-encoded--linkedin"></span></a></li>
+                <li><a href="https://instagram.com/sap/" title="Instagram"><span class="dm-icon-encoded--instagram"></span></a></li>
+                <li><a href="http://www.slideshare.net/SAP" title="Slideshare"><span class="dm-icon-encoded--slideshare"></span></a></li>
+                <li><a href="mailto:?subject='SAP Community'" title="Email Share"><span class="dm-icon-encoded--email"></span></a></li>
+            </ul>
+        </div>
+        <nav role="navigation" class="dm-footer__navigation">
+            <ul class="dm-footer__navigation__list" aria-label="footer navigation">
+                <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+                <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+                <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+                <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+                <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+                <li id="teconsent"></li>
+                <li><a href="https://www.sap.com/cmp/nl/sap-community-voice/index.html" target="_blank">Newsletter</a></li>
+                <li><a href="mailto:sapnetwork@sap.com" target="_blank">Support</a></li>
+            </ul>
+        </nav>
+    </div>
+</footer>                </div>
+            </div> <!-- #page -->
+            <script type="application/ld+json" data-schema="95869-post-Default">{"@context":"https:\/\/schema.org\/","@type":"BlogPosting","@id":"https:\/\/blogs.sap.com\/2013\/10\/29\/secure-execution-of-os-commands-by-abap-programs\/#BlogPosting","mainEntityOfPage":"https:\/\/blogs.sap.com\/2013\/10\/29\/secure-execution-of-os-commands-by-abap-programs\/","headline":"Secure Execution of OS Commands by ABAP programs","name":"Secure Execution of OS Commands by ABAP programs","description":"Often it is required to execute commands on the operating system level from within an ABAP programs. Reasons may be eventing mechanisms, for instance start\/stop of a printer, the necessity to (de-)compress\/encrypt files or others.","datePublished":"2013-10-29","dateModified":"2013-10-29","author":{"@type":"Person","@id":"https:\/\/blogs.sap.com\/author\/former.member\/#Person","name":"Former Member","url":"https:\/\/blogs.sap.com\/author\/former.member\/","image":{"@type":"ImageObject","@id":"https:\/\/avatars.services.sap.com\/images\/former.member_small.png","url":"https:\/\/avatars.services.sap.com\/images\/former.member_small.png","height":96,"width":96}},"publisher":{"@type":"Organization","name":"SAP Community Blogs","logo":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","width":600,"height":60}},"image":{"@type":"ImageObject","@id":"\/wp-content\/uploads\/2013\/10\/z_test_ping_ok_310511.jpg","url":"\/wp-content\/uploads\/2013\/10\/z_test_ping_ok_310511.jpg","height":"","width":"620"},"url":"https:\/\/blogs.sap.com\/2013\/10\/29\/secure-execution-of-os-commands-by-abap-programs\/","about":["Uncategorized"],"wordCount":7335}</script>
+<script type="application/ld+json" data-schema="Breadcrumb">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"2013","item":"https:\/\/blogs.sap.com\/2013\/#breadcrumbitem"},{"@type":"ListItem","position":2,"name":"10","item":"https:\/\/blogs.sap.com\/2013\/\/10\/#breadcrumbitem"},{"@type":"ListItem","position":3,"name":"29","item":"https:\/\/blogs.sap.com\/2013\/\/10\/\/29\/#breadcrumbitem"},{"@type":"ListItem","position":4,"name":"Secure Execution of OS Commands by ABAP programs","item":"https:\/\/blogs.sap.com\/2013\/10\/29\/secure-execution-of-os-commands-by-abap-programs\/#breadcrumbitem"}]}</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/action-tooltip-handler.js' id='tooltip-handler-js'></script>
+<script type='text/javascript' id='unified_header-js-extra'>
+/* <![CDATA[ */
+var headerInitArgs = {"system":"blogs","wrapperID":"page","breadcrumbItems":[{"text":"Blogs","href":"https:\/\/blogs.sap.com"}]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/js/scn-header.min.js' id='unified_header-js'></script>
+<script type='text/javascript' id='unified_header-js-after'>
+            scnHeader.init(headerInitArgs);
+            setCookie("userArgs", headerInitArgs.user ? JSON.stringify(headerInitArgs.user) : "", { path : "/" });
+    
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/header.js' id='designmate_header_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/subheader.js' id='designmate_subheader_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/designmate.js' id='designmate_script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/comment-reply.min.js' id='comment-reply-js'></script>
+<script type='text/javascript' id='satm_handler-js-extra'>
+/* <![CDATA[ */
+var satmContentSelectors = ["div.dm-contentDetail__body-content","div.dm-list-comments__item-content","div.ds-blog-post__body","div.ds-blog-post-comment__content"];
+var satmProfileBaseUrl = "people.sap.com\/";
+var satmChangeableElementsSelectors = ["div.dm-list-comments__item-content","div.ds-blog-post-comment__content"];
+var satmPluginEnabled = "1";
+var satmApiUrl = "https:\/\/uss.api.community.sap.com";
+var satmApiCallWithCredentials = "1";
+var satmRequestDelayMs = "100";
+/* ]]> */
+</script>
+<script type='text/javascript' defer src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-at-mention/js/sap-at-mention.min.js' id='satm_handler-js'></script>
+<script type='text/javascript' id='sap-comment-validation-js-extra'>
+/* <![CDATA[ */
+var commentValidation = {"validateMaxLinks":"1","max_links_number":"7","BLOGS_PAGE":"single"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/sap-comment-validation.min.js' id='sap-comment-validation-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-post-status.min.js' id='scn_post_status_check-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/jquery-plugins.min.js' id='sap_jquery_plugins-js'></script>
+<script type='text/javascript' id='sap-login-csrf-cookie-js-extra'>
+/* <![CDATA[ */
+var sapLoginCookieConfig = {"cookieName":"SAP_BLOGS_ANONYMOUS_NONCE","sapActionName":"s_action"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-login-csrf-cookie.min.js' id='sap-login-csrf-cookie-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.js' id='sap_lightbox_gallery_js-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/choices.min.js' id='choices.js-js'></script>
+<script type='text/javascript' id='wprc-script-js-extra'>
+/* <![CDATA[ */
+var wprcajaxhandler = {"ajaxurl":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-report-content/static/js/v3/scripts.min.js' id='wprc-script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/single.min.js' id='sap_single_v3-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/onscroll-sticky.min.js' id='onscroll_sticky-js'></script>
+<script type='text/javascript' id='blog-detail-page-js-extra'>
+/* <![CDATA[ */
+var alertReasonsSelectArgs = {"selectId":"sap-blog-alert-reasons","reasons":["Incorrect Tag\/Category\r","Cross-Posting\r","Private Information\r","Unprofessional Conduct\r","Spam"]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/dist/blog-detail.min.js' id='blog-detail-page-js'></script>
+<script type='text/javascript' id='sap_assignedtags_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var assignedTagsWidgetSettings = {"maxItemsBeforeHide":"7","data":{"ABAP Development":"https:\/\/blogs.sap.com\/tags\/833755570260738661924709785639136\/"},"widgetClassname":".ds-assigned-tags"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/assigned-tags/js/sap-assigned-tags-widget.min.js' id='sap_assignedtags_widget_js_v3-js'></script>
+<script type='text/javascript' id='sap_relatedcontent_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var relatedContentWidgetSettings = {"widgetSelector":".widget_sap-relatedcontent-widget-v3","contentServiceUrl":"https:\/\/content.services.sap.com\/cse\/search\/topic","profileUrl":"https:\/\/people.sap.com","targetContentItem":{"id":95869,"type":"blogpost","title":"Secure Execution of OS Commands by ABAP programs","primary_tag":"833755570260738661924709785639136"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/related-content/js/sap-related-content-widget.min.js' id='sap_relatedcontent_widget_js_v3-js'></script>
+<div id="wp-load_tinymce-wrap" class="wp-core-ui wp-editor-wrap html-active"><link rel='stylesheet' id='dashicons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dashicons.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='editor-buttons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/editor.min.css' type='text/css' media='all' />
+<style>#wp-load_tinymce-wrap {display:none;}</style>
+<div id="wp-load_tinymce-editor-container" class="wp-editor-container"><div id="qt_load_tinymce_toolbar" class="quicktags-toolbar"></div><textarea class="wp-editor-area" rows="20" cols="40" name="load_tinymce" id="load_tinymce"></textarea></div>
+</div>
+
+<link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/skin.min.css?wp-mce-49110-20201110' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/plugins/codesample/css/prism.css' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/content.min.css?wp-mce-49110-20201110' as='style'>
+		<script type="text/javascript">
+		tinyMCEPreInit = {
+			baseURL: "https://blogs.sap.com/wp-includes/js/tinymce",
+			suffix: ".min",
+						mceInit: {},
+			qtInit: {'load_tinymce':{id:"load_tinymce",buttons:"strong,em,link,block,del,ins,img,ul,ol,li,code,more,close"}},
+			ref: {plugins:"",theme:"modern",language:""},
+			load_ext: function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
+		};
+		</script>
+				<script type="text/javascript">
+		var ajaxurl = "/wp-admin/admin-ajax.php";
+		( function() {
+			var init, id, $wrap;
+
+			if ( typeof tinymce !== 'undefined' ) {
+				if ( tinymce.Env.ie && tinymce.Env.ie < 11 ) {
+					tinymce.$( '.wp-editor-wrap ' ).removeClass( 'tmce-active' ).addClass( 'html-active' );
+					return;
+				}
+
+				for ( id in tinyMCEPreInit.mceInit ) {
+					init = tinyMCEPreInit.mceInit[id];
+					$wrap = tinymce.$( '#wp-' + id + '-wrap' );
+
+					if ( ( $wrap.hasClass( 'tmce-active' ) || ! tinyMCEPreInit.qtInit.hasOwnProperty( id ) ) && ! init.wp_skip_init ) {
+						tinymce.init( init );
+
+						if ( ! window.wpActiveEditor ) {
+							window.wpActiveEditor = id;
+						}
+					}
+				}
+			}
+
+			if ( typeof quicktags !== 'undefined' ) {
+				for ( id in tinyMCEPreInit.qtInit ) {
+					quicktags( tinyMCEPreInit.qtInit[id] );
+
+					if ( ! window.wpActiveEditor ) {
+						window.wpActiveEditor = id;
+					}
+				}
+			}
+		}());
+		</script>
+				<div id="wp-link-backdrop" style="display: none"></div>
+		<div id="wp-link-wrap" class="wp-core-ui" style="display: none" role="dialog" aria-labelledby="link-modal-title">
+		<form id="wp-link" tabindex="-1">
+		<input type="hidden" id="_ajax_linking_nonce" name="_ajax_linking_nonce" value="d98c848450" />		<h3 id="link-modal-title">Insert/edit link</h3>
+		<button type="button" id="wp-link-close"><span class="screen-reader-text">Close</span></button>
+		<div id="link-selector">
+			<div id="link-options">
+				<p class="howto" id="wplink-enter-url">Enter the destination URL</p>
+				<div>
+					<label><span>URL</span>
+					<input id="wp-link-url" type="text" aria-describedby="wplink-enter-url" /></label>
+				</div>
+				<div class="wp-link-text-field">
+					<label><span>Link Text</span>
+					<input id="wp-link-text" type="text" /></label>
+				</div>
+				<div class="link-target">
+					<label><span></span>
+					<input type="checkbox" id="wp-link-target" /> Open link in a new tab</label>
+				</div>
+			</div>
+			<p class="howto" id="wplink-link-existing-content">Or link to existing content</p>
+			<div id="search-panel">
+				<div class="link-search-wrapper">
+					<label>
+						<span class="search-label">Search</span>
+						<input type="search" id="wp-link-search" class="link-search-field" autocomplete="off" aria-describedby="wplink-link-existing-content" />
+						<span class="spinner"></span>
+					</label>
+				</div>
+				<div id="search-results" class="query-results" tabindex="0">
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+				<div id="most-recent-results" class="query-results" tabindex="0">
+					<div class="query-notice" id="query-notice-message">
+						<em class="query-notice-default">No search term specified. Showing recent items.</em>
+						<em class="query-notice-hint screen-reader-text">Search or use up and down arrow keys to select an item.</em>
+					</div>
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="submitbox">
+			<div id="wp-link-cancel">
+				<button type="button" class="button">Cancel</button>
+			</div>
+			<div id="wp-link-update">
+				<input type="submit" value="Add Link" class="button button-primary" id="wp-link-submit" name="wp-link-submit">
+			</div>
+		</div>
+		</form>
+		</div>
+		<script type="text/javascript">jQuery(window).on("load", function() {tinymce.codesampleplugin.Prism.highlightAll();});</script><script type='text/javascript'>_satellite.pageBottom();</script>        </div> <!-- .page-wrapper -->
+    </body>
+</html>

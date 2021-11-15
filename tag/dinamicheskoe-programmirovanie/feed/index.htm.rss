@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>динамическое программирование | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/dinamicheskoe-programmirovanie/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Wed, 24 Mar 2021 04:54:37 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Динамическое программирование в ABAP</title>
+		<link>https://abap-blog.ru/osnovy-abap/dinamicheskoe-programmirovanie/dinamicheskoe-programmirovanie-v-abap/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/dinamicheskoe-programmirovanie/dinamicheskoe-programmirovanie-v-abap/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 17 Sep 2015 18:52:34 +0000</pubDate>
+				<category><![CDATA[Динамическое программирование]]></category>
+		<category><![CDATA[RTTS]]></category>
+		<category><![CDATA[динамическое программирование]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2593</guid>
+
+					<description><![CDATA[<p>На днях довелось прослушать курс BC402 в рамках программы «Вечерний ABAP», хочется выразить благодарность компании SAP за такую возможность, а также отметить профессионализм преподавателя, в роли которого выступал Василий Ковальский. Сам курс посвящен обзору довольно обширных тем, которые, так или иначе, пригодятся всем ABAP программистам в их повседневной деятельности. Одной из рассматриваемых тем данного курса [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/dinamicheskoe-programmirovanie/dinamicheskoe-programmirovanie-v-abap/">Динамическое программирование в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2015/09/dynamic.jpg"><img loading="lazy" class="alignleft wp-image-2604 size-thumbnail" src="http://abap-blog.ru/wp-content/uploads/2015/09/dynamic-150x150.jpg" alt="" width="150" height="150" srcset="https://abap-blog.ru/wp-content/uploads/2015/09/dynamic-150x150.jpg 150w, https://abap-blog.ru/wp-content/uploads/2015/09/dynamic-300x300.jpg 300w, https://abap-blog.ru/wp-content/uploads/2015/09/dynamic-1024x1024.jpg 1024w, https://abap-blog.ru/wp-content/uploads/2015/09/dynamic.jpg 1600w" sizes="(max-width: 150px) 100vw, 150px" /></a></p>
+<p>На днях довелось прослушать курс BC402 в рамках программы «Вечерний ABAP», хочется выразить благодарность компании SAP за такую возможность, а также отметить профессионализм преподавателя, в роли которого выступал Василий Ковальский. Сам курс посвящен обзору довольно обширных тем, которые, так или иначе, пригодятся всем ABAP программистам в их повседневной деятельности. Одной из рассматриваемых тем данного курса была возможность динамического программирования в ABAP, о которой и хотелось бы поговорить далее.</p>
+<p><span id="more-2593"></span></p>
+<p>Ключевой особенностью программного обеспечения является его способность к изменению и приспособлению к меняющимся условиям. Одним из инструментов обеспечивающих такое приспособление является динамическое программирование.</p>
+<p>В ABAP под динамическим программированием могут пониматься следующие вещи:</p>
+<ul>
+<li>Динамические дополнения к операторам, когда вместо констант, подставляются переменные: CALL FUNCTION gv_function, go_some=&gt;(gv_method), SORT lt_tab BY (gv_column, SELECT (lv_fieldlist) FROM (gv_table) &#8230; WHERE (lv_where) и т.д.</li>
+<li>Генерация программ с помощью специальных операторов: INSERT REPORT, GENERATE SUBROUTINE POOL.</li>
+<li>Динамика с использованием field-symbols.</li>
+<li>Динамика с использованием ссылочных переменных, в т.ч. с помощью runtime type services.</li>
+</ul>
+<p>В данной статье будут рассмотрены последние 2 способа, информацию по остальным можно получить из официальной справки, а также из курса BC402.</p>
+<p>Для динамического программирования необходимо понять, что такое ссылочные переменные и указатели на поля (field symbols) и в чем их отличия.</p>
+<p>Для разработчиков, только начинающих изучение ABAP термин field-symbols часто может вызывать путаницу. Те из них, кто работал с языками C/C++, зачастую путают их с типом указателя (Pointer). Но field-symbols не являются указателями на область памяти, они лишь являются указателями на переменную или объект данных которые являются видимыми в текущем блоке кода (можно использовать термин alias).</p>
+<p>На следующем рисунке хорошо видны основные отличия.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/09/p_1.png"><img loading="lazy" class="alignnone size-full wp-image-2594" src="http://abap-blog.ru/wp-content/uploads/2015/09/p_1.png" alt="p_1" width="429" height="268" srcset="https://abap-blog.ru/wp-content/uploads/2015/09/p_1.png 429w, https://abap-blog.ru/wp-content/uploads/2015/09/p_1-300x187.png 300w" sizes="(max-width: 429px) 100vw, 429px" /></a></p>
+<p>У нас есть три объекта:</p>
+<ol>
+<li>lv_char &#8212; переменная которая имеет символьный тип, хранится в блоке памяти 103 и имеет значение «С».</li>
+<li>&lt;fs_char&gt; &#8212; field-symbol являющаяся псевдонимом для lv_char.  Если изменить одну переменную, это изменение так же отразится на значении другой и наоборот.</li>
+<li>lr_pointer – ссылочная переменная, которая содержит указатель на адрес в памяти &#8212; 103, где хранится значение переменной lv_char. Изменение значения переменной lv_char никак не отражается на переменной lr_pointer т.к. она хранит лишь адрес на блок памяти. Однако можно с помощью операции разыменования изменить переменную lv_char через lr_pointer. Об этом будет написано далее.</li>
+</ol>
+<h2>Обобщенные типы</h2>
+<p>&nbsp;</p>
+<p>В дополнение к стандартным типам данных, в ABAP существует так же ряд обобщенных типов, использование которых возможно только в случае: формальных параметров методов (функций, процедур), field-symbols и ссылочных переменных. Часто используя динамическое программирование, приходится иметь дело с заранее не известными типами данных, для этого нужно знать каким образом их можно представить в виде обобщенных типов.</p>
+<p>Перечень таких типов определен ниже:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>Тип</strong></td>
+<td><strong>Описание</strong></td>
+</tr>
+<tr>
+<td><strong>any</strong></td>
+<td>Любой тип данных</td>
+</tr>
+<tr>
+<td><strong>any table</strong></td>
+<td>Любая внутренняя таблица</td>
+</tr>
+<tr>
+<td><strong>clike</strong></td>
+<td>Обобщенный символьный тип (<strong>c</strong>, <strong>d</strong>, <strong>n</strong>, <strong>t</strong>, <strong>string</strong>, а так же плоские структуры, состоящие из элементов символьных типов)</td>
+</tr>
+<tr>
+<td><strong>csequence</strong></td>
+<td>Текстовая последовательность (<strong>c</strong>, <strong>string</strong>)</td>
+</tr>
+<tr>
+<td><strong>data</strong></td>
+<td>Любой тип данных (аналогично any в случае объявления TYPE data, если объявлять TYPE REF TO DATA, будут подразумеваться ссылки на данные, но не объектные ссылки). Данный тип может быть использован в ссылочных переменных (рассмотрено ниже).</td>
+</tr>
+<tr>
+<td><strong>decfloat</strong></td>
+<td>Числовой тип с плавающей запятой, один из следующих: <strong>decfloat</strong><strong>16</strong>, <strong>decfloat</strong><strong>34.</strong></td>
+</tr>
+<tr>
+<td><strong>hashed table</strong></td>
+<td>Любая хеш таблица</td>
+</tr>
+<tr>
+<td><strong>index table</strong></td>
+<td>Любая стандартная или сортированная внутренняя таблица.</td>
+</tr>
+<tr>
+<td><strong>numeric</strong></td>
+<td>Числовой тип (<strong>i</strong> (<strong>b</strong>, <strong>s</strong>), <strong>p</strong>, <strong>decfloat16</strong>, <strong>decfloat34</strong>, <strong>f</strong>)</td>
+</tr>
+<tr>
+<td><strong>object</strong></td>
+<td>Любой объектный тип</td>
+</tr>
+<tr>
+<td><strong>simple</strong></td>
+<td>Любой элементарный тип данных включая плоские структуры состоящие из символьных элементов.</td>
+</tr>
+<tr>
+<td><strong>sorted table</strong></td>
+<td>Любая сортированная таблица</td>
+</tr>
+<tr>
+<td><strong>standard table</strong></td>
+<td>Любая стандартная таблица</td>
+</tr>
+<tr>
+<td><strong>table</strong></td>
+<td>Аналогично предыдущему</td>
+</tr>
+<tr>
+<td><strong>xsequence</strong></td>
+<td>Байтовая последовательность (<strong>x</strong>, <strong>xstring</strong>)</td>
+</tr>
+</tbody>
+</table>
+<p>Предположим мы пишем некую процедуру, в параметрах которой хотели бы видеть любую сортированную или стандартную таблицу, сделать это можно с помощью обобщенного типа index table:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lt_stan TYPE STANDARD TABLE OF i,
+      lt_sort TYPE SORTED TABLE OF i WITH NON-UNIQUE DEFAULT KEY,
+      lt_hash TYPE HASHED TABLE OF i WITH UNIQUE DEFAULT KEY.
+
+PERFORM some_proc USING lt_stan.
+PERFORM some_proc USING lt_sort.
+PERFORM some_proc USING lt_hash.
+
+FORM some_proc USING it_some_tab TYPE index table.
+ENDFORM.</pre><p>Попробовав активировать данный код, мы увидим следующее предупреждение:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/09/p_2.png"><img loading="lazy" class="alignnone size-full wp-image-2595" src="http://abap-blog.ru/wp-content/uploads/2015/09/p_2.png" alt="p_2" width="589" height="95" srcset="https://abap-blog.ru/wp-content/uploads/2015/09/p_2.png 589w, https://abap-blog.ru/wp-content/uploads/2015/09/p_2-300x48.png 300w" sizes="(max-width: 589px) 100vw, 589px" /></a></p>
+<p>Таким образом передать хеш-таблицу у нас не выйдет.</p>
+<h2>Использование полей field-symbols</h2>
+<p>&nbsp;</p>
+<p>Объявление полей field-symbol похоже на объявление обычных переменных, только вместо ключевого слова DATA, используется ключевые слова FIELD-SYMBOLS, символы &lt;&gt; являются частью синтаксиса и обязательны при объявлении. Данный тип может быть объявлен как локально, так и глобально в программе, функциональном модуле или реализации метода, но не может использоваться в интерфейсах методов и функций или атрибутах класса.</p>
+<p>Одним из преимуществ field-symbols над обычными объектами данных является то, что их можно определять родовыми типами: any, data, csequence, simple, any table и т.д. Таким образом, к ним можно присвоить все что угодно.</p><pre class="urvanov-syntax-highlighter-plain-tag">FIELD-SYMBOLS &lt;fs_any_string&gt; TYPE CSEQUENCE.</pre><p>По умолчанию для field-symbols нет присвоения к какой-либо переменной и если мы обратимся к не присвоенному field-symbols, программа сразу же упадет в дамп c динамической ошибкой &#8212; GETWA_NOT_ASSIGNED, которая является не обрабатываемой.</p>
+<p>Однако из этого правило есть исключение, если объявить глобально field-symbol без указания типа, тип будет автоматически определен как символьный, а поле будет автоматически присвоено к константе <strong>space</strong>. Таким образом следующий код не вызовет динамической ошибки:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  ZTEST.
+
+FIELD-SYMBOLS: &lt;gv_trick&gt;.
+
+WRITE &lt;gv_trick&gt;.</pre><p>Проверить же присвоение можно с помощью оператора IS ASSIGNED или IS NOT ASSIGNED. Присвоение происходит с помощью оператора ASSIGN, пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">FIELD-SYMBOLS &lt;gfs_any_string&gt; TYPE CSEQUENCE.
+
+DATA: gv_string TYPE string VALUE 'TEST'.
+
+ASSIGN gv_string TO &lt;gfs_any_string&gt;.
+
+IF &lt;gfs_any_string&gt; IS ASSIGNED.
+  WRITE &lt;gfs_any_string&gt;.
+ELSE.
+  WRITE 'Ссылка на переменную не присвоена!!'.
+ENDIF.</pre><p>В данном примере будет выведен текст, при этом field-symbol имеет обобщенный тип, что позволяет нам присваивать любую символьную переменную ABAP без каких-либо возражений компилятора.</p>
+<p>В данном примере показано статическое присвоение, т.е. присвоение при котором мы знаем, на какую переменную мы хотим получить ссылку. Оператор ASSIGN позволяет использовать динамическое дополнение:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_vari TYPE string.
+
+START-OF-SELECTION.
+
+  FIELD-SYMBOLS &lt;gfs_any_string&gt; TYPE CSEQUENCE.
+
+  DATA: gv_string TYPE string VALUE 'TEST'.
+
+  ASSIGN (p_vari) TO &lt;gfs_any_string&gt;.
+
+  IF &lt;gfs_any_string&gt; IS ASSIGNED.
+    WRITE &lt;gfs_any_string&gt;.
+  ELSE.
+    WRITE 'Ссылка на переменную не присвоена!!'.
+  ENDIF.</pre><p>Допускается так же присвоение field-symbols к field-symbols:</p><pre class="urvanov-syntax-highlighter-plain-tag">ASSIGN &lt;gfs_any_string_1&gt; TO &lt;gv_any_string_2&gt;.</pre><p>Обратите внимание, что с помощью оператора «=» присвоение не может быть скопировано, т.е. такой вариант будет ошибочным, в случае если первое поле не было присвоено ранее:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;gfs_any_string_1&gt; = &lt;gfs_any_string_2&gt;.</pre><p>Оператор «=» в данном контексте означает <strong>копирование данных </strong>из области, на которую ссылается вторая переменная в область, на которую ссылается первая.</p>
+<p>Кроме прямого присвоения с помощью оператора ASSIGN, присвоение может быть выполнено в операторах обработки внутренних таблиц. Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">READ TABLE gt_tab INDEX 1 ASSIGNING &lt;gfs_any_struct&gt;.
+LOOP AT gt_tab ASSIGNING &lt;gfs_any_struct&gt;.
+ENDLOOP.</pre><p>При присвоении field-symbol из операторов обработки внутренних таблиц, мы получаем указатель на <strong>строку обрабатываемой таблицы</strong>, считанную через READ TABLE или текущую по итерации из цикла по таблице.</p>
+<p>При выходе из цикла по таблице, если таблица не пустая, поле field-symbol будет ссылаться на последнюю обработанную в рамках цикла запись.</p>
+<p>Применяя field-symbols при обработке больших таблиц (особенно в циклах), мы можем тем самым получить существенную оптимизацию в работе программы, т.к. если бы мы использовали для получения данных из таблицы переменную структурного типа, системе пришлось бы каждый раз копировать данные из таблицы в переменную.</p>
+<p>Если глобальное поле field-symbols будет присвоено в локальной процедуре к локальной переменной, то на выходе из неё присвоение <strong>пропадёт</strong>. Таким образом можно сделать вывод о том, что присвоение доступно ровно до того момента, как и сама переменная на которую сделано это присвоение.</p><pre class="urvanov-syntax-highlighter-plain-tag">FIELD-SYMBOLS:
+  &lt;gv_variable&gt; TYPE any.
+
+START-OF-SELECTION.
+
+  PERFORM assign_variable.
+
+  IF &lt;gv_variable&gt; IS NOT ASSIGNED.
+    WRITE: / 'Не присвоена'.
+  ENDIF.
+
+FORM assign_variable.
+  DATA: lv_variable TYPE i.
+
+  ASSIGN lv_variable TO &lt;gv_variable&gt;.
+
+  IF &lt;gv_variable&gt; IS ASSIGNED.
+    WRITE: 'Присвоена'.
+  ENDIF.
+ENDFORM.</pre><p>В том случае если поле field-symbol присваивается переменной с определенной структурой, и мы явно указываем какой тип у field-symbol, получение доступа к её компонентам аналогично работе с обычной структурой.</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: ls_flight TYPE sflight.
+
+FIELD-SYMBOLS: &lt;lfs_flight&gt; LIKE ls_flight.
+
+
+ls_flight-connid = '182S'.
+ls_flight-seatsocc = 60.
+
+
+ASSIGN ls_flight TO &lt;lfs_flight&gt;.
+WRITE: 'На рейс', &lt;lfs_flight&gt;-connid, 'забронировано мест:', &lt;lfs_flight&gt;-seatsocc.</pre><p>Когда структура для field-symbol является заранее неопределенной (обобщенного типа any), значение компонента можно получить, используя оператор – ASSIGN COMPONENT:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: ls_flight TYPE sflight.
+
+FIELD-SYMBOLS: &lt;lfs_flight&gt; TYPE ANY,
+               &lt;connid&gt;     TYPE sflight-connid,
+               &lt;seatsocc&gt;   TYPE sflight-seatsocc.
+
+ls_flight-connid = '182S'.
+ls_flight-seatsocc = 60.
+
+ASSIGN ls_flight TO &lt;lfs_flight&gt;.
+ASSIGN COMPONENT 'CONNID' OF STRUCTURE ls_flight TO &lt;connid&gt;.
+ASSIGN COMPONENT 'SEATSOCC' OF STRUCTURE ls_flight TO &lt;seatsocc&gt;.
+
+WRITE: 'На рейс',&lt;connid&gt;, 'забронировано мест:', &lt;seatsocc&gt;.</pre><p>В момент присвоения, с помощью дополнения CASTING, возможна адаптация значений, если типы данных не совпадают, но при этом они совместимы (нельзя присвоить таблицу обычной переменной и т.п.). Используя данный оператор, следует всегда обращать внимание на длину присваиваемых данных, иначе можно потерять часть данных. Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: BEGIN OF gs_test,
+        char1 VALUE '1',
+        char2 VALUE '2',
+      END OF gs_test.
+
+TYPES: ty_num_2 TYPE n LENGTH 2.
+
+FIELD-SYMBOLS: &lt;fs_int&gt; TYPE ty_num_2.
+
+ASSIGN gs_test TO &lt;fs_int&gt; CASTING.
+
+WRITE &lt;fs_int&gt;.</pre><p>Если добавить в структуру еще одно после, оно уже не будет перенесено в &lt;fs_int&gt;.</p>
+<p>Начиная с версии ABAP 7.40 field-symbols на переменные можно объявлять непосредственно в месте, где они будут использованы:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lt_tab TYPE STANDARD TABLE OF i WITH DEFAULT KEY.
+
+lt_tab = VALUE #( ( 1 ) ( 2 ) ( 3 ) ).
+
+READ TABLE lt_tab INDEX 1 ASSIGNING FIELD-SYMBOL(&lt;ls_one&gt;).
+WRITE &lt;ls_one&gt;.
+
+LOOP AT lt_tab FROM 2 ASSIGNING FIELD-SYMBOL(&lt;ls_two&gt;).
+  WRITE &lt;ls_two&gt;.
+ENDLOOP.</pre><p>В качестве примера динамического программирования с помощью field-symbols рассмотрим программу способную вывести в отчёте любую простую таблицу, состоящую из элементарных типов:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  lt_spfli TYPE STANDARD TABLE OF spfli.
+
+START-OF-SELECTION.
+  SELECT * FROM spfli UP TO 100 ROWS
+    INTO CORRESPONDING FIELDS OF TABLE lt_spfli.
+
+  PERFORM write_table USING lt_spfli.
+
+FORM write_table USING it_table TYPE ANY TABLE.
+  FIELD-SYMBOLS:
+    &lt;lt_table&gt; TYPE ANY TABLE,
+    &lt;ls_line&gt;  TYPE any,
+    &lt;lv_val&gt;   TYPE any.
+
+  ASSIGN it_table TO &lt;lt_table&gt;.
+
+  LOOP AT &lt;lt_table&gt; ASSIGNING &lt;ls_line&gt;.
+    WRITE: /.
+    DO.
+      ASSIGN COMPONENT sy-index OF STRUCTURE &lt;ls_line&gt; TO &lt;lv_val&gt;.
+      IF sy-subrc NE 0.
+        EXIT.
+      ENDIF.
+
+      IF sy-index EQ 1.
+        WRITE: &lt;lv_val&gt;.
+      ELSE.
+        WRITE: `,`, &lt;lv_val&gt;.
+      ENDIF.
+    ENDDO.
+  ENDLOOP.
+ENDFORM.</pre><p>Результат:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/09/p_3.png"><img loading="lazy" class="alignnone size-full wp-image-2596" src="http://abap-blog.ru/wp-content/uploads/2015/09/p_3.png" alt="p_3" width="1054" height="303" srcset="https://abap-blog.ru/wp-content/uploads/2015/09/p_3.png 1054w, https://abap-blog.ru/wp-content/uploads/2015/09/p_3-300x86.png 300w, https://abap-blog.ru/wp-content/uploads/2015/09/p_3-1024x294.png 1024w" sizes="(max-width: 1054px) 100vw, 1054px" /></a></p>
+<h2>Ссылочные переменные</h2>
+<p>&nbsp;</p>
+<p>Как говорилось ранее, ссылочные переменные указывают не на конкретную переменную, а на область памяти и содержат внутри себя указатель. При этом объект в памяти может быть, как явно связан с какой-либо переменной, так и создан анонимно и привязан только к ссылочной переменной.</p>
+<p>Объявление ссылочных переменных выглядит следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: gr_data TYPE REF TO data.</pre><p>Единственным обобщенным типом для ссылочных переменных может быть тип – data.</p>
+<p>Как было сказано выше, ссылочные переменные содержат внутри себя адрес в памяти, до тех пор, пока существует объект данных, для которого она выделена. Чтобы получить адрес относительно переменной, необходимо воспользоваться оператором GET REFERENCE:</p><pre class="urvanov-syntax-highlighter-plain-tag">GET REFERENCE OF gv_data INTO gr_data.</pre><p>Что касается проверки присвоения, то её необходимо выполнять с помощью ключевого слова IS BOUND. IS INITIAL в данном контексте может привести к неправильной оценке:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  gr_dref TYPE REF TO data.
+
+FIELD-SYMBOLS:
+ &lt;lfs_counter&gt; TYPE any.
+
+START-OF-SELECTION.
+
+  IF gr_dref IS INITIAL.
+    WRITE: / 'Ссылка пустая'.
+  ENDIF.
+
+  PERFORM some_procedure.
+
+  IF gr_dref IS INITIAL.
+    WRITE: / 'Ссылка пустая'.
+  ELSE.
+    WRITE: / 'Ссылка не пустая'.
+    IF gr_dref IS BOUND.
+      WRITE: / 'Объект для ссылки существует'.
+    ELSE.
+      WRITE: / 'Объект для ссылки не существует'.
+    ENDIF.
+  ENDIF.
+
+FORM some_procedure.
+  DATA: lv_counter TYPE i VALUE 5.
+  " Получим указатель на локальную переменную
+  GET REFERENCE OF lv_counter INTO gr_dref.
+  " После выхода из подпрограммы указатель все еще будет иметь некий адрес,
+  " но по нему уже не сможем получить значение переменной
+ENDFORM.                    "some_procedure</pre><p>Так как значение ссылочной переменной является адресом в памяти, где хранятся данные, то для получения самого значения из памяти или его изменения, необходимо выполнить специальную процедуру (de-referencing) разыменования, для этого существует оператор -&gt;*. Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: gr_data  TYPE REF TO string,
+      gv_data  TYPE string VALUE 'TEST'.
+
+
+GET REFERENCE OF gv_data INTO gr_data.
+gr_data-&gt;* = 'NEW VALUE'.
+
+WRITE gr_data-&gt;*.</pre><p>Между ссылочными переменными допускается копирование (через MOVE или «=»), при этом копируется не область памяти или значение, а адрес на область памяти.</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: gr_data TYPE REF TO string,
+      gv_data  TYPE string VALUE 'TEST',
+      gr_new_data TYPE REF TO string.
+
+
+GET REFERENCE OF gv_data INTO gr_data.
+gr_data-&gt;* = 'NEW VALUE'.
+gr_new_data = gr_data.
+gr_new_data-&gt;* = 'NEXT VALUE'.
+
+WRITE gr_data-&gt;*.
+WRITE: / gr_new_data-&gt;*.</pre><p>В приведенном примере обе ссылочные переменные ссылаются на область памяти для переменной gv_data, в которой лежит значение «NEXT VALUE».</p>
+<p>В случае, когда мы используем не типизированную ссылочную переменную, для копирования её значения можно использовать знакомые нам уже поля field-symbols, на которые можно «натянуть» все что угодно:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: gr_data   TYPE REF TO DATA,
+      gv_int_a  TYPE i,
+      gv_int_b  TYPE i.
+
+FIELD-SYMBOLS: &lt;gfs_int_b&gt; TYPE ANY.
+
+gv_int_a = 5.
+GET REFERENCE OF gv_int_a INTO gr_data.
+
+ASSIGN gr_data-&gt;* TO &lt;gfs_int_b&gt; CASTING TYPE i.
+gv_int_b = &lt;gfs_int_b&gt;.
+
+WRITE: gv_int_b.</pre><p>В том случае, когда ссылочная переменная ссылается на структуру, доступ к её компонентам осуществляется следующим образом: «-&gt;ИмяКомпонента»:</p><pre class="urvanov-syntax-highlighter-plain-tag">TYPES:
+  BEGIN OF ty_struct,
+    char1,
+    char2,
+  END OF ty_struct.
+
+DATA: gs_struct TYPE ty_struct.
+
+DATA: gr_struct TYPE REF TO ty_struct.
+
+gs_struct-char1 = 'A'.
+gs_struct-char2 = 'B'.
+
+GET REFERENCE OF gs_struct INTO gr_struct.
+
+WRITE: / gr_struct-&gt;char1, gr_struct-&gt;char2.</pre><p>С помощью оператора CREATE DATA мы можем создать анонимный объект в памяти, привязав его к ссылочной переменной, время жизни такого объекта равносильно времени жизни ссылочной переменной:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lr_string TYPE REF TO string.
+
+CREATE DATA lr_string.
+
+lr_string-&gt;* = 'Test'.</pre><p>У оператора CREATE DATA есть возможность указать тип динамически:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  lr_int TYPE REF TO DATA,
+  lv_type TYPE string VALUE 'i'.
+
+FIELD-SYMBOLS: &lt;lv_int&gt; TYPE any.
+
+CREATE DATA lr_int TYPE (lv_type).
+ASSIGN lr_int-&gt;* TO &lt;lv_int&gt;.
+
+&lt;lv_int&gt; = 10.
+
+WRITE &lt;lv_int&gt;.</pre><p>В версии ABAP 7.40 появился удобный оператор для получения ссылочных переменных вместо GET REFERENCE:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lt_tab TYPE STANDARD TABLE OF i WITH DEFAULT KEY.
+
+lt_tab = VALUE #( ( 1 ) ( 2 ) ( 3 ) ).
+
+DATA(lr_tab) = REF #( lt_tab ).</pre><p></p>
+<h2>Runtime type services</h2>
+<p>&nbsp;</p>
+<p>Ранее рассмотренные примеры показывали, каким образом можно использовать field-symbols и ссылочные переменные, однако в итоге мы работали с типами данных, которые так или иначе уже где-то описаны. А что если к нам на вход пришел тип данных, созданный во время выполнения? Для получения его описания мы можем воспользоваться инструментом, который называется RTTS. По сути это определенная иерархия (набор) классов, вызывая методы которых мы можем получить полное описание типа данных. Кроме описательной возможности, данный инструмент позволяет динамически создавать типы данных во время выполнения программы.</p>
+<p>Иерархия классов RTTS выглядит следующим образом:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/09/p_4.png"><img loading="lazy" class="alignnone size-full wp-image-2597" src="http://abap-blog.ru/wp-content/uploads/2015/09/p_4.png" alt="p_4" width="963" height="437" srcset="https://abap-blog.ru/wp-content/uploads/2015/09/p_4.png 963w, https://abap-blog.ru/wp-content/uploads/2015/09/p_4-300x136.png 300w" sizes="(max-width: 963px) 100vw, 963px" /></a></p>
+<p>В верху иерархии стоит класс CL_ABAP_TYPEDESCR который имеет абстрактный тип, т.о. вы не сможете создать его инстанцию, однако важность этого класса в другом, он содержит фабричные методы которые позволят вам получить инстанцию нижестоящих классов в зависимости от переданных параметров и методов. К примеру можно получить описание относительно имени типа данных:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lo_str_descr TYPE REF TO cl_abap_structdescr.
+
+lo_str_descr ?= cl_abap_typedescr=&gt;describe_by_name( 'SPFLI' ).</pre><p>Кроме получения по имени, описание можно так же получать по объекту данных (переменной), по ссылке на объект данных, по объектной ссылке.</p>
+<p>Так же данный класс содержит ряд вспомогательных методов, например, проверка является ли тип типом из словаря и т.п.</p>
+<p>Создавая ранее анонимную ссылочную переменную с указанием типа через дополнение TYPE можно было обратить внимание, что данное дополнение может быть расширено на еще одно – HANDLE.  Данная конструкция используется при передаче описания типа через RTTS класс, пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lo_str_descr TYPE REF TO cl_abap_structdescr,
+      lr_struct    TYPE REF TO data.
+
+FIELD-SYMBOLS: &lt;ls_spfli&gt; TYPE spfli.
+
+lo_str_descr ?= cl_abap_typedescr=&gt;describe_by_name( 'SPFLI' ).
+" Создадим объект данных относительно описания из словаря
+CREATE DATA lr_struct TYPE HANDLE lo_str_descr.
+ASSIGN lr_struct-&gt;* TO &lt;ls_spfli&gt;.
+
+&lt;ls_spfli&gt;-carrid = '11'.
+WRITE &lt;ls_spfli&gt;-carrid.</pre><p>RTTS позволяет создавать произвольные типы динамически во время выполнения, простой пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: 
+  lr_ref  TYPE REF TO DATA,
+  lo_type TYPE REF TO cl_abap_elemdescr.
+
+" Получаем описание типа С длинной 40 символов
+lo_type = cl_abap_elemdescr=&gt;get_c( 40 ).
+" Создаем объект данных по описательному объекту
+CREATE DATA lr_ref TYPE HANDLE lo_type.</pre><p>Более интересный пример был рассмотрен мной ранее, когда речь шла о динамическом создании <a href="http://abap-blog.ru/osnovy-abap/dinamicheskie-tablicy-v-abap/" target="_blank" rel="noopener">таблицы</a>.</p>
+<h2>В качестве заключения</h2>
+<p>&nbsp;</p>
+<p>Несмотря на свою привлекательность, динамическое программирование имеет и существенный минус, который следует учитывать при проектировании ПО – сложность сопровождения. Бизнес требования, как правило, не стоят на месте и всегда появляются некоторые исключения из общей логики, внедрение подобных исключений в общую логику может сопровождаться с трудностями их определения, кроме того в итоге получается код содержащий не изящный метод с общей логикой, а совокупность затычек для разных случаев.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/dinamicheskoe-programmirovanie/dinamicheskoe-programmirovanie-v-abap/">Динамическое программирование в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/dinamicheskoe-programmirovanie/dinamicheskoe-programmirovanie-v-abap/feed/</wfw:commentRss>
+			<slash:comments>14</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Динамические таблицы в ABAP</title>
+		<link>https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/dinamicheskie-tablicy-v-abap/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/dinamicheskie-tablicy-v-abap/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 19 Jan 2012 03:17:21 +0000</pubDate>
+				<category><![CDATA[Внутренние таблицы]]></category>
+		<category><![CDATA[Динамическое программирование]]></category>
+		<category><![CDATA[CL_ALV_TABLE_CREATE]]></category>
+		<category><![CDATA[create_dynamic_table]]></category>
+		<category><![CDATA[RTTS]]></category>
+		<category><![CDATA[динамические таблицы]]></category>
+		<category><![CDATA[динамическое программирование]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=256</guid>
+
+					<description><![CDATA[<p>Существует как минимум 3 способа создания динамических таблиц: Используется в старых системах, через генерацию программы (GENERATE SUBROUTINE POOL). Используя класс CL_ALV_TABLE_CREATE. Используя RTTS (Run Time Type Services). В данной статье будут рассмотрены все три, примеры максимально упрощены для понимания. GENERATE SUBROUTINE POOL В старых системах (до версии ABAP 6.40) для генерации динамической таблицы (или структуры) использовался метод [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/dinamicheskie-tablicy-v-abap/">Динамические таблицы в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Существует как минимум 3 способа создания динамических таблиц:</p>
+<ol start="1">
+<li>Используется в старых системах, через генерацию программы (<strong>GENERATE SUBROUTINE POOL</strong>).</li>
+<li>Используя класс <strong>CL_ALV_TABLE_CREATE</strong>.</li>
+<li>Используя <strong>RTTS</strong> (Run Time Type Services).</li>
+</ol>
+<p>В данной статье будут рассмотрены все три, примеры максимально упрощены для понимания.</p>
+<p><span id="more-256"></span></p>
+<h4>GENERATE SUBROUTINE POOL</h4>
+<p>В старых системах (до версии ABAP 6.40) для генерации динамической таблицы (или структуры) использовался метод динамического создания подпрограммы с использованием оператора <strong>GENERATE</strong><strong>SUBROUTINE</strong><strong>POOL</strong><strong>. </strong>Пример реализации:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  zdyn_itab_old.
+*
+DATA: dy_table TYPE REF TO DATA,
+      dy_line  TYPE REF TO DATA.
+*
+FIELD-SYMBOLS: &lt;dyn_table&gt; TYPE STANDARD TABLE,
+               &lt;dyn_wa&gt;.
+*
+FIELD-SYMBOLS: &lt;fs&gt; TYPE ANY.
+*
+DATA: ls_source TYPE STRING.
+DATA: lt_source LIKE STANDARD TABLE OF ls_source WITH HEADER LINE.
+*
+DATA: l_name LIKE sy-repid.
+DATA: l_message(240) TYPE C,
+      l_line TYPE I,
+      l_word(72) TYPE C.
+*
+DATA: l_form(30) TYPE C VALUE 'TABLE_CREATE'.
+*
+*.....................................................................
+START-OF-SELECTION.
+  lt_source = 'REPORT ZTEST_SUBROUTINE_POOL.'.
+  APPEND lt_source.
+  lt_source = 'FORM TABLE_CREATE USING I_FS TYPE ANY.'.
+  APPEND lt_source.
+* Определяем динамическую структуру таблицы
+  lt_source = 'DATA: BEGIN OF LT_GENTAB OCCURS 0.'.
+  APPEND lt_source.
+  lt_source = 'DATA: BUKRS TYPE BUKRS. '.
+  APPEND lt_source.
+  lt_source = 'DATA: BKTXT TYPE BKTXT. '.
+  APPEND lt_source.
+  lt_source = 'DATA: END OF LT_GENTAB.'.
+  APPEND lt_source.
+  lt_source = 'DATA: POINTER TYPE REF TO DATA.'.
+  APPEND lt_source.
+  lt_source = 'CREATE DATA POINTER LIKE STANDARD TABLE OF LT_GENTAB.'.
+  APPEND lt_source.
+  lt_source = 'I_FS = POINTER.'.
+  APPEND lt_source.
+  lt_source = 'ENDFORM. '.
+  APPEND lt_source.
+
+  l_name = 'ZTEST_SUBROUTINE_POOL'.
+
+  CATCH SYSTEM-EXCEPTIONS generate_subpool_dir_full = 9.
+    GENERATE SUBROUTINE POOL lt_source NAME l_name
+             MESSAGE l_message LINE l_line WORD l_word. "#EC CI_GENERATE
+  ENDCATCH.
+* В случае ошибки выведем сообщение
+  IF NOT l_message IS INITIAL.
+    MESSAGE e000(0k) WITH l_message l_line l_word.
+  ENDIF.
+
+  ASSIGN dy_table TO &lt;fs&gt;.
+* Вызываем подпрограмму из сгенерированной программы
+  PERFORM (l_form) IN PROGRAM (l_name) USING &lt;fs&gt;.
+* Получаем определение типа данных и присваиваем динамической переменной
+  ASSIGN dy_table-&gt;* TO &lt;dyn_table&gt;.
+*
+* Создаем тип данных, как строку сформированной таблицы
+  CREATE DATA dy_line LIKE LINE OF &lt;dyn_table&gt;.
+* Получем определение строки таблицы и присваеваем дин. переменной
+  ASSIGN dy_line-&gt;* TO &lt;dyn_wa&gt;.</pre><p><strong>CL_ALV_TABLE_CREATE</strong></p>
+<p>Второй способ подразумевает использование класса CL_ALV_TABLE_CREATE и его статического метода create_dynamic_table. На вход мы должны передать каталог полей (внутреняя таблица определенной структуры, описывающая из каких полей будет состоять таблица), на выходе получим  ссылочную переменную на созданный тип данных. Данный способ является по сути ООП обёрткой над предыдущим. Пример реализации:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  ztest_np_dyn.
+
+DATA:
+  lv_table   TYPE REF TO DATA,
+  lv_line    TYPE REF TO DATA,
+  ls_lvc_cat TYPE lvc_s_fcat,
+  lt_lvc_cat TYPE lvc_t_fcat.
+
+FIELD-SYMBOLS:
+  &lt;fs_table&gt;      TYPE TABLE,
+  &lt;fs_line&gt;       TYPE ANY.     
+
+DEFINE append_catalog.
+  ls_lvc_cat-fieldname = &amp;1.  " Имя поля
+  ls_lvc_cat-ref_field = &amp;2.  " Ссылочное поле
+  ls_lvc_cat-ref_table = &amp;3.  " Ссылочная таблица
+  ls_lvc_cat-domname = &amp;4. " Домен из ABAP словаря
+  APPEND ls_lvc_cat TO lt_lvc_cat.
+END-OF-DEFINITION.
+
+append_catalog 'ABMNG' 'ABMNG' 'PLAF' ''.
+append_catalog 'ISHOD' 'ABMNG' 'PLAF' ''.
+append_catalog 'MEINS' 'MEINS' 'PLAF' ''.
+append_catalog 'PSTTR' 'PSTTR' 'PLAF' ''.
+append_catalog 'PEDTR' 'PEDTR' 'PLAF' ''.
+
+CALL METHOD cl_alv_table_create=&gt;create_dynamic_table
+  EXPORTING
+    it_fieldcatalog = lt_lvc_cat
+  IMPORTING
+    ep_table        = lv_table.
+
+ASSIGN lv_table-&gt;* TO &lt;fs_table&gt;.
+CREATE DATA lv_line LIKE LINE OF &lt;fs_table&gt;.
+ASSIGN lv_line-&gt;* TO &lt;fs_line&gt;.</pre><p></p>
+<h4>RTTS</h4>
+<p>RTTS появился начиная с версии ABAP 6.40. С помощью набора классов, который предоставляет RTTS, мы можем получать информацию о типах и создавать новые динамически во время выполнения.  Пример реализации:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lo_struct   TYPE REF TO cl_abap_structdescr,
+      lo_element  TYPE REF TO cl_abap_elemdescr,
+      lo_new_type TYPE REF TO cl_abap_structdescr,
+      lo_new_tab  TYPE REF TO cl_abap_tabledescr,
+      lo_data     TYPE REF TO DATA,
+      lt_comp     TYPE cl_abap_structdescr=&gt;component_table.
+
+FIELD-SYMBOLS: &lt;fs_tab&gt;   TYPE ANY TABLE,
+               &lt;fs_line&gt;  TYPE ANY.
+
+* Получаем описание структуры из ABAP словаря
+  lo_struct ?= cl_abap_typedescr=&gt;describe_by_name( 'PLAF' ).
+  lt_comp  = lo_struct-&gt;get_components( ).
+
+* Создаем новый тип структуры по каталогу полей.
+  lo_new_type = cl_abap_structdescr=&gt;create( lt_comp ).
+
+* Создаем новую таблицу по структуре
+  lo_new_tab = cl_abap_tabledescr=&gt;create(
+                  p_line_type  = lo_new_type
+                  p_table_kind = cl_abap_tabledescr=&gt;tablekind_std
+                  p_unique     = abap_false ).
+
+* Создаем ссылочные переменные присываеваем значения
+  CREATE DATA lo_data TYPE HANDLE lo_new_type.
+  ASSIGN lo_data-&gt;* TO &lt;fs_line&gt;.
+
+  CREATE DATA lo_data TYPE HANDLE lo_new_tab.
+  ASSIGN lo_data-&gt;* TO &lt;fs_tab&gt;.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/dinamicheskie-tablicy-v-abap/">Динамические таблицы в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/dinamicheskie-tablicy-v-abap/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

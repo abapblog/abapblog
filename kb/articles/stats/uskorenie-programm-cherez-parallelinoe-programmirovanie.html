@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><script>document.getElementsByTagName('html')[0].classList.add('js')</script>
+	<title>Сапёр / Статьи / База знаний / SAPLAND / SAPLand — Мир решений SAP</title>
+<meta name="keywords" content="Разработка, Development , Basis, Информационные технологии, IT, Basis, ABAP, SAP Консультант, Consultant" />
+<meta name="description" content="Возникают задачи, в которых требуется выполнить большое количество однотипных операций. При этом, тело операций инкапсулировано, а порядок их выполнения не влияет на конечный результат. Суммарное время выполнения операций может достигать нескольких часов. Примерами таких действий может быть: массовое выполнение BAPI или пакетного ввода. Ускорить такие программы можно через параллельное программирование (pRFC)." />
+		    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700,800&display=swap&subset=cyrillic"
+          rel="stylesheet">
+	<link rel="stylesheet" href="/build/attention-block/login-article.cb663f57.css" />
+<link rel="stylesheet" href="/build/attention-block/attention-blue.23524ae8.css" />
+<link rel="stylesheet" href="/build/login.c6183aa5.css" />
+<link rel="stylesheet" href="/build/main-menu.83fc82c5.css" />
+<link rel="stylesheet" href="/build/header.fc38405f.css" />
+<link rel="stylesheet" href="/build/breadcrumbs.ff1969dd.css" />
+<link rel="stylesheet" href="/build/short-info.94d9a3a3.css" />
+<link rel="stylesheet" href="/build/short-info/author-statistic.53b83cff.css" />
+<link rel="stylesheet" href="/build/hovered-info.ea33fb03.css" />
+<link rel="stylesheet" href="/build/article/layout.8f67d1fe.css" />
+<link rel="stylesheet" href="/build/article-page/block-title.82fbb182.css" />
+<link rel="stylesheet" href="/build/article-page/share.321c2ae2.css" />
+<link rel="stylesheet" href="/build/parent-comment.1ea1934d.css" />
+<link rel="stylesheet" href="/build/comment.67a31886.css" />
+<link rel="stylesheet" href="/build/article-page/comment-article.881f89af.css" />
+<link rel="stylesheet" href="/build/article-page/note-gray.d9a735de.css" />
+<link rel="stylesheet" href="/build/page-container.0347724b.css" />
+<link rel="stylesheet" href="/build/arrow-up.bfddcdb1.css" />
+<link rel="stylesheet" href="/build/footer.953024a7.css" />
+<link rel="stylesheet" href="/build/article-page.c568a741.css" />
+<link rel="stylesheet" href="/build/article-page/article-close.3d00c05a.css" />
+<link rel="stylesheet" href="/build/global.3974230d.css" />
+</head>
+<body>
+		
+			<header>
+	<div class="header-wrap container">
+		<div class="menu-icon"><img src="/build/images/icons/menu.svg" alt=""></div><div class="logo">
+				<a href="/publications">
+					<img src="/os/modules/material/images/logo.svg" alt="">
+				</a>
+			</div><nav class="burger-menu">
+				<ul>
+					<li><a href="/publications">Публикации</a></li>
+					<li><a href="/comments">Обсуждения</a></li>
+					<li><a href="/authors">Авторы</a></li>
+					<li><a href="/authors-columns">Колонки</a></li>
+				</ul>
+				<div class="loop"><img src="/build/images/icons/search.svg" alt=""></div>
+				<form action="/publications" method="get">
+					<div class="search"><input type="text" placeholder="Искать" name="filter[search][full-search-criterion][]"><button type="submit"><img src="/build/images/icons/search-bl.svg" alt=""></button></div>
+				</form>
+			</nav>
+<div class="person-wrap">
+	<a href="//sappro.sapland.ru/subscription" class="btn-subscribe">Подписка</a>
+			<a href="/login/" class="btn-reg">Войти</a>
+	</div>
+
+		<div class="login-wrap">
+	<div class="enter">
+		<form class="enter-box" name="login-form" method="post">
+			<input type="hidden" name="auth[csrf]" value="ijIO2jwGg1UYp79rxK3wZlSd2XxtAkjpwlBBf441TDE" />
+			<p>Добро пожаловать</p>
+			<div class="input-box">
+				<span>Адрес электронной почты</span>
+				<input type="text" placeholder="E-mail" name="auth[login]" required>
+				<span>Пароль</span>
+				<input type="password" placeholder="Password" name="auth[password]" required>
+			</div>
+			<div class="btn-box">
+				<button class="enter-btn" type="submit">Войти</button>
+				<a href="?auth[reset_password]">Забыли пароль?</a>
+			</div>
+		</form>
+	</div>
+	<div class="registration">
+		<p>Станьте участником SAPLAND и получите доступ к самым интересным публикациям SAPPRO</p>
+		<a  style="background-color: #ff9920;" href="//sapland.ru/register/">Зарегистрироваться</a>
+	</div>
+</div>
+	</div>
+	<div class="main-menu-wrap">
+	<div class="main-menu-box container">
+		<div class="logo-menu">
+			<a href="/">
+				<img src="/build/images/logo-menu.svg" alt="">
+			</a>
+			<p>Развитие в экосистеме SAP</p>
+		</div>
+		<div class="main-menu-list">
+			<div class="main-menu-item">
+			<img src="/build/images/icons/project.svg" alt="">
+			<span class="menu-click">О проекте</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="//sapland.ru/about">Концепция</a>
+					</li>
+									<li>
+						<a href="/policy">Политики</a>
+					</li>
+									<li>
+						<a href="/contacts/">Контакты</a>
+					</li>
+									<li>
+						<a href="//sapland.ru/authors/to-author">Авторам</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/SAPPRO.svg" alt="">
+			<span class="menu-click">Журнал SAPPRO</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/publications">Публикации</a>
+					</li>
+									<li>
+						<a href="/comments">Обсуждения</a>
+					</li>
+									<li>
+						<a href="/authors">Авторы</a>
+					</li>
+									<li>
+						<a href="/authors-columns">Колонки</a>
+					</li>
+									<li>
+						<a href="/compilations">Антологии</a>
+					</li>
+									<li>
+						<a href="/subscription">Подписка</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/education.svg" alt="">
+			<span class="menu-click">Учебный центр</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="//edu.sapland.ru/courses/">Курсы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/master-classes/">Мастер-классы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/webinars/?materials_filter%5Bmaterial__by-format%5D%5B%5D=935&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bfrom%5D=&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bto%5D=&filter%5Bsearch%5D%5Bfull-search-criterion%5D%5B%5D=">Вебинары</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/SAPPRO1.svg" alt="">
+			<span class="menu-click">Книги SAP Press</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/books/novelty/">Книги на английском</a>
+					</li>
+									<li>
+						<a href="/books/Knigi_na_russkom/">Книги на русском</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/lib.svg" alt="">
+			<span class="menu-click">Библиотека презентаций</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/event">Мероприятия</a>
+					</li>
+									<li>
+						<a href="/presentations/">Презентации</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/eco.svg" alt="">
+			<span class="menu-click">Экосистема SAP СНГ</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/p-events/news/">Новости</a>
+					</li>
+									<li>
+						<a href="/a-list">Анонсы</a>
+					</li>
+							</ul>
+		</div>
+	</div>
+
+		<div class="social-menu">
+			<ul>
+	<li><a target="_blank" href="#" style=" pointer-events: none;" ><img src="/build/images/icons/sn/telegram-plane.svg" alt=""></a></li><li><a target="_blank" href="https://www.facebook.com/pages/SAPLand/127114854020362"><img src="/build/images/icons/sn/facebook.svg" alt=""></a></li><li><a target="_blank" href="https://vk.com/club4419971"><img src="/build/images/icons/sn/vk.svg" alt=""></a></li><li><a target="_blank" href="https://twitter.com/SAPLand"><img src="/build/images/icons/sn/twitter.svg" alt=""></a></li><li><a target="_blank" href="https://www.linkedin.com/groups/6797279/"><img src="/build/images/icons/sn/linkedin-in.svg" alt=""></a></li></ul>
+		</div>
+		<div class="close"></div>
+	</div>
+</div>
+</header>
+			<div class="container breadcrumbs">
+						<span><a href="//sapland.ru">SAPLAND</a></span>
+								<span><a href="/">SAPPRO</a></span>
+								<span><a href="/publications">Публикации</a></span>
+								<span>Статья</span>
+			</div>
+
+	
+		<div class="container page article-closed "><div class="sidebar">
+			</div>
+	<div class="content">				
+<div class="block-title">
+	
+			<div class="article">
+		<div class="info">
+						<p class="cat">
+							</p>
+
+			<h1>Ускорение программ через параллельное программирование</h1><div class="bottom">
+				
+				
+
+
+
+								
+																			<div class="author">
+													<a href="/profile/32237/publications">Носов Александр</a>
+												<div class="hovered-info">
+										<div class="avatar">
+		<img src="https://sappro.sapland.ru/images/cache/avatar64/userfiles/user/32237-3088.JPG" alt="">
+	</div>
+<div class="information">
+			<h3 title="Носов Александр">				<a href="/profile/32237/publications">Носов Александр</a>
+			</h3>
+							<p>ведущий разработчик</p>
+	</div>
+
+			<div class="stat stat_author">
+											<span class="rating">605</span>
+									
+				<a href="/profile/32237/publications"
+				><span class="pubs">2</span></a>
+
+												
+				<span class="comments" >13</span>
+								</div>
+	<div class="rhombus"></div>
+
+		
+
+	
+							</div>
+
+					</div>
+
+																																
+				
+				
+				<p class="date">31 августа 2020</p>
+							</div>
+		</div>
+	</div>
+</div>
+
+	 
+	 
+
+	<div class="article-body">
+		<div class="note-wrap gray-note pd">
+			<p>Возникают задачи, в которых требуется выполнить большое количество однотипных операций. При этом, тело операций инкапсулировано, а порядок их выполнения не влияет на конечный результат. Суммарное время выполнения операций может достигать нескольких часов. Примерами таких действий может быть: массовое выполнение BAPI или пакетного ввода. Ускорить такие программы можно через параллельное программирование (pRFC).</p>
+		</div>
+<h1 style="text-align:justify">Оглавление</h1>
+
+<p style="text-align:justify"><a href="#_Toc47558046">Введение</a></p>
+
+<p style="text-align:justify"><a href="#_Toc47558047">Концепция</a></p>
+
+<p style="text-align:justify"><a href="#_Toc47558048">Демонстрационный пример</a></p>
+
+<p style="text-align:justify"><a href="#_Toc47558049">Код демонстрационной программы Z_PRFC_EXAMPLE</a></p>
+
+<p style="text-align:justify"><a href="#_Toc47558050">Код функционального модуля Z_TEST_RFC</a></p>
+
+<p style="text-align:justify"><a href="#_Toc47558051">Практическое применение</a></p>
+
+<h2 style="text-align:justify"><a name="_Toc47558046">Введение</a></h2>
+
+<p style="text-align:justify">Возникают задачи, в которых требуется выполнить большое количество однотипных операций. При этом, тело операций инкапсулировано, а порядок их выполнения не влияет на конечный результат. Суммарное время выполнения операций может достигать нескольких часов. Примерами таких действий может быть: массовое выполнение BAPI или пакетного ввода. Ускорить такие программы можно через параллельное программирование (pRFC).</p>
+
+<p style="text-align:justify">Данная статья предназначена для тех, кто понимает принципы работы RFC, умеет работать с синхронными (sRFC), асинхронными (aRFC) и транзакционными RFC (tRFC) и хочет научиться работать с параллельными RFC (pRFC).</p>
+
+<p style="text-align:justify">Если вы сталкиваетесь с RFC впервые или хотите освежить знания, рекомендую предварительно ознакомиться с материалами:</p>
+
+<ul>
+	<li style="text-align:justify"><a href="http://abap4.ru/rfc-and-parallel-processing.html">Статья о видах RFC с примерами их работы</a></li>
+	<li style="text-align:justify"><a href="https://help.sap.com/doc/saphelp_nwpi711/7.1.1/en-US/48/99b3f3ee2b73e7e10000000a42189b/content.htm?">Справка SAP по синхронным RFC (sRFC)</a></li>
+	<li style="text-align:justify"><a href="https://help.sap.com/doc/saphelp_nwpi711/7.1.1/en-US/48/89673284b84e6fe10000000a421937/content.htm">Справка SAP по асинхронным RFC (aRFC)</a></li>
+	<li style="text-align:justify"><a href="https://help.sap.com/doc/saphelp_nwpi711/7.1.1/en-US/48/99b963ee2b73e7e10000000a42189b/content.htm" target="_blank">Справка SAP по транзакционным RFC (tRFC)</a></li>
+</ul>
+
+<h2 style="text-align:justify"><a name="_Toc47558047">Концепция</a></h2>
+
+<p style="text-align:justify">Параллельный RFC работает схожим с aRFC образом, и вызывается с помощью дополнения DESTINATION IN GROUP &lt;имя_группы_серверов&gt;. Группы серверов pRFC определяют максимально возможные ресурсы для выполнения параллельных задач. Группы настраиваются в RZ12 <strong>(Рис. 1). </strong>Если в качестве имени группы указать DEFAULT или SPACE, то вызов будет происходить на любой из определенных групп, в зависимости от их загруженности.</p>
+
+<p style="text-align:justify"><img alt="" src="/files/0-a/no-pic1.jpg" style="height:442px; width:390px"></p>
+
+<p style="text-align:justify"><strong>Рис. 1 </strong>– Интерфейс настройки группы серверов в RZ12</p>
+
+<p style="text-align:justify">Для параллельной обработки в SAP реализован набор функциональных моделей, определенных в группе функций SPBT.</p>
+
+<p style="text-align:justify">Перед распараллеливанием задач необходимо инициализировать группу серверов, в которой будет выполняться параллельная обработка. Группу можно инициализировать через SPBT_INITIALIZE и только один раз. При повторном вызове SPBT_INITIALIZE будет исключение PBT_ENV_ALREADY_INITIALIZED, если группа уже была инициализирована, или CANT_INIT_DIFFERENT_PBT_GROUPS, если ранее была инициализирована другая группа.</p>
+
+<p style="text-align:justify">Для определения доступности ресурсов определенной группы можно воспользоваться SPBT_INITIALIZE или SPBT_UPDATE_SRV_RESOURCE_INFO. При успешном выполнении ФМ вернут значения MAX_PBT_WPS и FREE_PBT_WPS, в которых содержатся число максимально доступных и свободных процессов на сервере.</p>
+
+<p style="text-align:justify">Для определения сервера, на котором будет выполняться задача pRFC, необходимо вызывать SPBT_GET_PP_DESTINATION сразу же после запуска pRFC.</p>
+
+<p style="text-align:justify">Чтобы исключить конкретный сервер из дальнейшего использования для задач параллельной обработки (например, при исключении COMMUNICATION_FAILURE), необходимо использовать ФМ SPBT_DO_NOT_USE_SERVER.</p>
+
+<p style="text-align:justify"><strong>На Рис.2.</strong> представлена диаграмма активности pRFC.</p>
+
+<p style="text-align:justify"><img alt="" src="/files/0-a/no-pic2.jpg" style="height:650px; width:555px"></p>
+
+<p style="text-align:justify"><strong>Рис 2. </strong>UML диаграмма активности pRFC</p>
+
+<h2 style="text-align:justify"><a name="_Toc47558048">Демонстрационный пример</a></h2>
+
+<p style="text-align:justify">Для демонстрации сделаем тестовую программу и функциональный модуль Z_TEST_RFC. Функциональный модуль будет выполнять какую-нибудь длительную задачу, которую мы будем запускать в параллельном режиме. Пусть это будет возведение числа в квадрат, а для имитации длительной работы сделаем задержку от 3 до 5 секунд.</p>
+
+<p style="text-align:justify">Допустим, нам нужно выполнить 20 раз данную операцию и возвести первых 20 натуральных чисел в квадрат. На <strong>Рис. 3. </strong>представлен результат выполнения данной операции при 9-ти свободных процессах. При последовательной обработке на эту же операцию потребовалось бы 80 секунд.</p>
+
+<p style="text-align:justify"><img alt="" src="/files/0-a/no-pic3.jpg" style="height:423px; width:390px"></p>
+
+<p style="text-align:justify"><strong>Рис. 3</strong> – Результат работы параллельной обработки</p>
+
+<h3 style="text-align:justify"><a name="_Toc47558049">Код демонстрационной программы Z_PRFC_EXAMPLE</a></h3>
+
+<h3 style="text-align:justify"> </h3>
+
+<pre>
+REPORT z_prfc_example.
+TYPES:
+  BEGIN OF gts_task,
+    task   TYPE c LENGTH 5,
+    input  TYPE i,
+    result TYPE i,
+  END OF gts_task.
+DATA gv_tasks TYPE i.
+DATA gt_tasks TYPE TABLE OF gts_task.
+
+START-OF-SELECTION.
+  PERFORM main.
+
+FORM main.
+  DATA lv_time_start TYPE i.
+  DATA lv_time_end TYPE i.
+  DATA lv_time TYPE i.
+  DATA lv_total TYPE i.
+  DATA lv_free TYPE i.
+  FIELD-SYMBOLS &lt;ls_tasks&gt; TYPE gts_task.
+
+  CALL FUNCTION</pre>
+<div class="attention blue">
+		<p class="heading">Если хотите прочитать статью полностью и оставить свои комментарии присоединяйтесь к <span>sapland</span>
+	</p>
+	<a href="//sapland.ru/register/" class="btn-login">Зарегистрироваться</a>
+	<div>
+		<p class="text">У вас уже есть учетная запись?</p>
+		<a href="#" class = "btn-reg">Войти</a>
+	</div>
+	
+</div>
+
+	
+</div>
+
+	<div class="share-wrap">
+			<a class="btn-print" onclick="window.print();" type="button"><span>Распечатать</span></a>
+</div>
+	<div class="comment-article-wrap comments-h">
+	<h2 class="ifp-h">Обсуждения <span class="count"><img src="/build/images/icons/speak.svg"
+														  alt="Количество комментариев">11</span>
+		<a class="btn rpl rpl-h inactive" href="javascript:void(0)">Написать комментарий</a>
+	</h2>
+			<div class="show-comment">
+										<div class="comment-wrap comment-h" id="comment-3054" data-comment-id="3054">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/1830">Олег Точенюк</a>
+								<span class="data-container"><span class="data">31 августа 2020, 14:28</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userss/image1/img1830.jpg" alt="">
+							</div>
+			<div class="comment-item">
+								<div class="answer">
+					Чего-то у меня цифры не бьются. Например на установку статуса пусть уходит 1 секунда, и время закрытия 5 часов итого за это время при последовательном закрытии у тебя закрывается 5 * 3600 = 18 000 заказов. После распараллеливания, заказ как зарывался за 1 секунду так и будет закрываться, что его параллельно, что последовательно грузить (бапишке фиолетово она в своем процессе отработает необходимое ей время как ты ее не крути). По твоим словам, теперь это все стало отрабатывать за пару минут, ну пусть это будет 5 минут для ровности. Итого у тебя каждую минуту закрывается сколько? Правильно 3600 / 5 = 720 заказов. Короче я в своей жизни систему с 720 свободными процессами не видел еще, твоя видимо первая будет, ну это чтобы оно таки за пару, точнее 5 минут отработало. В общем если бы была реальная статистика с рабочей системы приведена, было бы чуть интереснее. В свое время когда такое делал я просто привел цифры, чтение 120 000 документов:
+<br />&nbsp;<br />
+Паралельно 3 процесса: 11 520 002 милисекунд<br />
+Последовательно : 20 632 688 милисекунд
+<br />&nbsp;<br />
+А ну и сейчас перформы уже не модно Василий К. придет будет говорить, что это не правильное программирование :-), на классах параллельность выглядит чуток интереснее и красивее в реализации, программа обработки выглядит типа так:<br />
+LOOP AT &lt;по каким-то объектам которые надо обработать&gt;.<br />
+ lcl-&gt;read( ).&nbsp;&nbsp;&nbsp;&nbsp;"Прочитали что надо обработать в процесе<br />
+ lcl-&gt;process( ). "Запустили процесс обработки<br />
+ lcl-&gt;wait( ).&nbsp;&nbsp;&nbsp;&nbsp;"Ждем если нет свободных процессов, иначе идем на следующий шаг.<br />
+ENDLOOP.
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">2</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-3055" data-comment-id="3055">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/32237">Александр Носов</a>
+								<span class="data-container"><span class="data">31 августа 2020, 16:47</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userfiles/user/32237-3088.JPG" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='3054'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/1830">Олег Точенюк </a>
+								<span class="data-container"><a href="#comment-3054" class="data">31 августа 2020, 14:28</a></span>
+			</p>
+		</div>
+		<p>
+			Чего-то у меня цифры не бьются. Например на установку статуса пусть уходит 1 секунда, и время закрытия 5 часов итого за это время при последовательном закрытии у тебя закрывается 5 * 3600 = 18 000 заказов. После распараллеливания, заказ как зарывался за 1 секунду так и будет закрываться, что его параллельно, что последовательно грузить (бапишке фиолетово она в своем процессе отработает необходимое ей время как ты ее не крути). По твоим словам, теперь это все стало отрабатывать за пару минут, ну пусть это будет 5 минут для ровности. Итого у тебя каждую минуту закрывается сколько? Правильно 3600 / 5 = 720 заказов. Короче я в своей жизни систему с 720 свободными процессами не видел еще, твоя видимо первая будет, ну это чтобы оно таки за пару, точнее 5 минут отработало. В общем если бы была реальная статистика с рабочей системы приведена, было бы чуть интереснее. В свое время когда такое делал я просто привел цифры, чтение 120 000 документов:
+<br />&nbsp;<br />
+Паралельно 3 процесса: 11 520 002 милисекунд<br />
+Последовательно : 20 632 688 милисекунд
+<br />&nbsp;<br />
+А ну и сейчас перформы уже не модно Василий К. придет будет говорить, что это не правильное программирование :-), на классах параллельность выглядит чуток интереснее и красивее в реализации, программа обработки выглядит типа так:<br />
+LOOP AT &lt;по каким-то объектам которые надо обработать&gt;.<br />
+ lcl-&gt;read( ).&nbsp;&nbsp;&nbsp;&nbsp;"Прочитали что надо обработать в процесе<br />
+ lcl-&gt;process( ). "Запустили процесс обработки<br />
+ lcl-&gt;wait( ).&nbsp;&nbsp;&nbsp;&nbsp;"Ждем если нет свободных процессов, иначе идем на следующий шаг.<br />
+ENDLOOP.
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Если 5-8 часов разделить на 30-40 свободных процессов, получится 7-16 минут.
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-3056" data-comment-id="3056">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/1830">Олег Точенюк</a>
+								<span class="data-container"><span class="data">01 сентября 2020, 07:47</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userss/image1/img1830.jpg" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='3055'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/32237">Александр Носов </a>
+								<span class="data-container"><a href="#comment-3055" class="data">31 августа 2020, 16:47</a></span>
+			</p>
+		</div>
+		<p>
+			Если 5-8 часов разделить на 30-40 свободных процессов, получится 7-16 минут.
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Хорошая у вас система, с сорока свободными процессами и еще наверное плюс десятком дополнительных, на других пользователей, пока программа выполняется :-)
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-3057" data-comment-id="3057">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/32237">Александр Носов</a>
+								<span class="data-container"><span class="data">01 сентября 2020, 08:18</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userfiles/user/32237-3088.JPG" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='3056'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/1830">Олег Точенюк </a>
+								<span class="data-container"><a href="#comment-3056" class="data">01 сентября 2020, 07:47</a></span>
+			</p>
+		</div>
+		<p>
+			Хорошая у вас система, с сорока свободными процессами и еще наверное плюс десятком дополнительных, на других пользователей, пока программа выполняется :-)
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Ограничение группы серверов не более 25% от общего количества процессов. Всего более 100 процессов. Это разве много?
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-3059" data-comment-id="3059">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/1830">Олег Точенюк</a>
+								<span class="data-container"><span class="data">01 сентября 2020, 09:42</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userss/image1/img1830.jpg" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='3057'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/32237">Александр Носов </a>
+								<span class="data-container"><a href="#comment-3057" class="data">01 сентября 2020, 08:18</a></span>
+			</p>
+		</div>
+		<p>
+			Ограничение группы серверов не более 25% от общего количества процессов. Всего более 100 процессов. Это разве много?
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Диалогов? 100 процессов не попадалось если честно, обычно гораздо скромнее. Кстати это какое количество пользователей у вас в системе, если не секрет, что более 100 диалогов открыто?
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-3060" data-comment-id="3060">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/32237">Александр Носов</a>
+								<span class="data-container"><span class="data">01 сентября 2020, 10:09</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userfiles/user/32237-3088.JPG" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='3059'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/1830">Олег Точенюк </a>
+								<span class="data-container"><a href="#comment-3059" class="data">01 сентября 2020, 09:42</a></span>
+			</p>
+		</div>
+		<p>
+			Диалогов? 100 процессов не попадалось если честно, обычно гораздо скромнее. Кстати это какое количество пользователей у вас в системе, если не секрет, что более 100 диалогов открыто?
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Да, диалогов. А у вас какие значения вернет SPBT_INITIALIZE в продуктиве?<br />
+Насчет пользователей не располагаю достоверной информацией.
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-3062" data-comment-id="3062">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/1830">Олег Точенюк</a>
+								<span class="data-container"><span class="data">02 сентября 2020, 12:19</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userss/image1/img1830.jpg" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='3060'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/32237">Александр Носов </a>
+								<span class="data-container"><a href="#comment-3060" class="data">01 сентября 2020, 10:09</a></span>
+			</p>
+		</div>
+		<p>
+			Да, диалогов. А у вас какие значения вернет SPBT_INITIALIZE в продуктиве?<br />
+Насчет пользователей не располагаю достоверной информацией.
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Ну например так:<br />
+MAX_PBT_WPS = 24<br />
+FREE_PBT_WPS = 22 (на момент запуска)
+<br />&nbsp;<br />
+Пользователей скажем так где-то 1100-1200, понятно что активных гораздо меньше. Система S/4
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-3063" data-comment-id="3063">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/32237">Александр Носов</a>
+								<span class="data-container"><span class="data">03 сентября 2020, 07:30</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userfiles/user/32237-3088.JPG" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='3062'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/1830">Олег Точенюк </a>
+								<span class="data-container"><a href="#comment-3062" class="data">02 сентября 2020, 12:19</a></span>
+			</p>
+		</div>
+		<p>
+			Ну например так:<br />
+MAX_PBT_WPS = 24<br />
+FREE_PBT_WPS = 22 (на момент запуска)
+<br />&nbsp;<br />
+Пользователей скажем так где-то 1100-1200, понятно что активных гораздо меньше. Система S/4
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Даже если использовать треть диалогов для параллельных задач, можно в 8 раз ускорить некоторые процессы. Для некоторых операций это будет серьезным увеличением.
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-3064" data-comment-id="3064">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/1830">Олег Точенюк</a>
+								<span class="data-container"><span class="data">03 сентября 2020, 08:04</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userss/image1/img1830.jpg" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='3063'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/32237">Александр Носов </a>
+								<span class="data-container"><a href="#comment-3063" class="data">03 сентября 2020, 07:30</a></span>
+			</p>
+		</div>
+		<p>
+			Даже если использовать треть диалогов для параллельных задач, можно в 8 раз ускорить некоторые процессы. Для некоторых операций это будет серьезным увеличением.
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Та я не возражаю, конечно параллельное выполнение ускоряет работу программы, просто меня заинтересовали приведенные цифры и количество свободных процессов которые были в системе для достижения данного результата.
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-3068" data-comment-id="3068">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/24050">Виталий Глущенко</a>
+								<span class="data-container"><span class="data">01 октября 2020, 00:16</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/images/users/male.jpg" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='3054'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/1830">Олег Точенюк </a>
+								<span class="data-container"><a href="#comment-3054" class="data">31 августа 2020, 14:28</a></span>
+			</p>
+		</div>
+		<p>
+			Чего-то у меня цифры не бьются. Например на установку статуса пусть уходит 1 секунда, и время закрытия 5 часов итого за это время при последовательном закрытии у тебя закрывается 5 * 3600 = 18 000 заказов. После распараллеливания, заказ как зарывался за 1 секунду так и будет закрываться, что его параллельно, что последовательно грузить (бапишке фиолетово она в своем процессе отработает необходимое ей время как ты ее не крути). По твоим словам, теперь это все стало отрабатывать за пару минут, ну пусть это будет 5 минут для ровности. Итого у тебя каждую минуту закрывается сколько? Правильно 3600 / 5 = 720 заказов. Короче я в своей жизни систему с 720 свободными процессами не видел еще, твоя видимо первая будет, ну это чтобы оно таки за пару, точнее 5 минут отработало. В общем если бы была реальная статистика с рабочей системы приведена, было бы чуть интереснее. В свое время когда такое делал я просто привел цифры, чтение 120 000 документов:
+<br />&nbsp;<br />
+Паралельно 3 процесса: 11 520 002 милисекунд<br />
+Последовательно : 20 632 688 милисекунд
+<br />&nbsp;<br />
+А ну и сейчас перформы уже не модно Василий К. придет будет говорить, что это не правильное программирование :-), на классах параллельность выглядит чуток интереснее и красивее в реализации, программа обработки выглядит типа так:<br />
+LOOP AT &lt;по каким-то объектам которые надо обработать&gt;.<br />
+ lcl-&gt;read( ).&nbsp;&nbsp;&nbsp;&nbsp;"Прочитали что надо обработать в процесе<br />
+ lcl-&gt;process( ). "Запустили процесс обработки<br />
+ lcl-&gt;wait( ).&nbsp;&nbsp;&nbsp;&nbsp;"Ждем если нет свободных процессов, иначе идем на следующий шаг.<br />
+ENDLOOP.
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					все ж было б неплохо указать в статье, что не стоит параллелить пока не выжали все из последовательной обработки. А то находятся последователи индуских талмудов, так напараллелят, что другие процессы стоят.
+<br />&nbsp;<br />
+Пример в статье идеальный, 20 задач, 9 параллельных процессов, задача грузит только CPU, поэтому отлично подходит для параллезации. Получили шикарный прирост производительности 80/12 ~= 6,7 раз. Реальный пример, от Олега дает всего лишь 20 632 688/11 520 002 ~1,79 увеличение, при 3-х кратной парализации. <br />
+Лучше вначале разобраться, где у вас узкое место и почему оно именно настолько узкое. Иначе есть риск наткнуться на "бо-бо" в продуктивной системе, после "новаторской" оптимизации.
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-3069" data-comment-id="3069">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/1830">Олег Точенюк</a>
+								<span class="data-container"><span class="data">01 октября 2020, 09:30</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userss/image1/img1830.jpg" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='3068'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/24050">Виталий Глущенко </a>
+								<span class="data-container"><a href="#comment-3068" class="data">01 октября 2020, 00:16</a></span>
+			</p>
+		</div>
+		<p>
+			все ж было б неплохо указать в статье, что не стоит параллелить пока не выжали все из последовательной обработки. А то находятся последователи индуских талмудов, так напараллелят, что другие процессы стоят.
+<br />&nbsp;<br />
+Пример в статье идеальный, 20 задач, 9 параллельных процессов, задача грузит только CPU, поэтому отлично подходит для параллезации. Получили шикарный прирост производительности 80/12 ~= 6,7 раз. Реальный пример, от Олега дает всего лишь 20 632 688/11 520 002 ~1,79 увеличение, при 3-х кратной парализации. <br />
+Лучше вначале разобраться, где у вас узкое место и почему оно именно настолько узкое. Иначе есть риск наткнуться на "бо-бо" в продуктивной системе, после "новаторской" оптимизации.
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					По поводу последующей параллельности, при таком подходе когда сначала сделали как сделали, а через год пришли к тому, что нужно параллелить, есть одна проблема, потом это сделать практически невозможно, точнее это значит полностью переписать программу, т.е. если есть мысль последующей параллелизации программы, то я бы сразу ее делал с параллельным выполнением, но ставил бы 1 процесс и на год бы забывал о проблеме :-)
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+			
+	</div>
+</div>
+
+
+
+	
+			</div></div>
+	<div id="arrowUp"></div>
+
+
+		<div class="footer-wrapper">
+				<footer>
+	<div class="footer-wrap container">
+		<div class="logo-wrap">
+			<a href="/">
+				<img src="/build/images/logo-footer.svg" alt="">
+			</a>
+			<ul>
+	<li><a target="_blank" href="#" style=" pointer-events: none;" ><img src="/build/images/icons/sn/telegram-plane.svg" alt=""></a></li><li><a target="_blank" href="https://www.facebook.com/pages/SAPLand/127114854020362"><img src="/build/images/icons/sn/facebook.svg" alt=""></a></li><li><a target="_blank" href="https://vk.com/club4419971"><img src="/build/images/icons/sn/vk.svg" alt=""></a></li><li><a target="_blank" href="https://twitter.com/SAPLand"><img src="/build/images/icons/sn/twitter.svg" alt=""></a></li><li><a target="_blank" href="https://www.linkedin.com/groups/6797279/"><img src="/build/images/icons/sn/linkedin-in.svg" alt=""></a></li></ul>
+		</div>
+		<div class="menu-wrap">
+			<div class="menu-item">
+			<span>О проекте</span>
+			<ul>
+									<li>
+						<a href="//sapland.ru/about">Концепция</a>
+					</li>
+									<li>
+						<a href="/policy">Политики</a>
+					</li>
+									<li>
+						<a href="/contacts/">Контакты</a>
+					</li>
+									<li>
+						<a href="//sapland.ru/authors/to-author">Авторам</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Журнал SAPPRO</span>
+			<ul>
+									<li>
+						<a href="/publications">Публикации</a>
+					</li>
+									<li>
+						<a href="/comments">Обсуждения</a>
+					</li>
+									<li>
+						<a href="/authors">Авторы</a>
+					</li>
+									<li>
+						<a href="/authors-columns">Колонки</a>
+					</li>
+									<li>
+						<a href="/compilations">Антологии</a>
+					</li>
+									<li>
+						<a href="/subscription">Подписка</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Учебный центр</span>
+			<ul>
+									<li>
+						<a href="//edu.sapland.ru/courses/">Курсы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/master-classes/">Мастер-классы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/webinars/?materials_filter%5Bmaterial__by-format%5D%5B%5D=935&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bfrom%5D=&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bto%5D=&filter%5Bsearch%5D%5Bfull-search-criterion%5D%5B%5D=">Вебинары</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Книги SAP Press</span>
+			<ul>
+									<li>
+						<a href="/books/novelty/">Книги на английском</a>
+					</li>
+									<li>
+						<a href="/books/Knigi_na_russkom/">Книги на русском</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Библиотека презентаций</span>
+			<ul>
+									<li>
+						<a href="/event">Мероприятия</a>
+					</li>
+									<li>
+						<a href="/presentations/">Презентации</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Экосистема SAP СНГ</span>
+			<ul>
+									<li>
+						<a href="/p-events/news/">Новости</a>
+					</li>
+									<li>
+						<a href="/a-list">Анонсы</a>
+					</li>
+							</ul>
+		</div>
+	</div>
+		<span class="text-info">Републикация материалов — только со ссылкой на SAPLAND.RU, с разрешения редакции сайта.
+								Редакция не несет ответственности за высказывания пользователей на сайте.</span>
+		<span class	= "writeUs">Связаться с нами:&nbsp;<a href="mailto:support@sapland.ru" class="text-mail"> support@sapland.ru</a></span>
+		<span class="text-right">18+ &copy; 2009 - 2021, Учредитель ООО «Эксперт РП». Все права защищены</span>
+	</div>
+</footer>
+	
+	</div>
+
+			
+	
+			
+	
+		<script src="/build/runtime.f011bcb1.js"></script>
+<script src="/build/5.faf5a91c.js"></script>
+<script src="/build/global.648d4089.js"></script>
+	<script src="/build/attention-block/login-article.69d7841a.js"></script>
+<script src="/build/attention-block/attention-blue.3ff74d37.js"></script>
+<script src="/build/0.1fec29ad.js"></script>
+<script src="/build/blocks/user.f97fe11c.js"></script>
+<script src="/build/login.b895675d.js"></script>
+<script src="/build/main-menu.31eac860.js"></script>
+<script src="/build/header.7fd84952.js"></script>
+<script src="/build/breadcrumbs.e36f86c3.js"></script>
+<script src="/build/short-info.76413a3a.js"></script>
+<script src="/build/short-info/author-statistic.d460c927.js"></script>
+<script src="/build/hovered-info.16280c01.js"></script>
+<script src="/build/1.32feafaf.js"></script>
+<script src="/build/article/layout.a7a2b8ff.js"></script>
+<script src="/build/article-page/block-title.a6d5d176.js"></script>
+<script src="/build/article-page/share.f5b6dade.js"></script>
+<script src="/build/parent-comment.fa26b620.js"></script>
+<script src="/build/comment.139721f4.js"></script>
+<script src="/build/article-page/comment-article.38d7be87.js"></script>
+<script src="/build/article-page/note-gray.e6c6d3bb.js"></script>
+<script src="/build/page-container.ef05586f.js"></script>
+<script src="/build/arrow-up.cb27db9e.js"></script>
+<script src="/build/footer.b018aec7.js"></script>
+<script src="/build/article-page.2915c0e5.js"></script>
+<script src="/build/article-page/article-close.68bb7c2e.js"></script>
+	<style>
+        @media print {
+            header {
+                display: none !important;
+            }
+			.breadcrumbs {
+                display: none; !important;
+			}
+			.comment-article-wrap {
+                display: none; !important;
+			}
+			.books-wrap-sl {
+                display: none; !important;
+			}
+			.share-wrap {
+                display: none; !important;
+			}
+			#arrowUp {
+                display: none; !important;
+			}
+            footer {
+                display: none; !important;
+            }
+        }
+	</style>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(1375405, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        trackHash:true
+    });
+    ym(1375405,'reachGoal','NEW_DESIGN');
+
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/1375405" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-28264801-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-28264801-1');
+</script>
+</body>
+</html>

@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>streaming | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/streaming/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:05:19 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Потоки и локаторы</title>
+		<link>https://abap-blog.ru/database-work/potoki-i-lokatory/</link>
+					<comments>https://abap-blog.ru/database-work/potoki-i-lokatory/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 18 Apr 2013 14:40:56 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<category><![CDATA[locator]]></category>
+		<category><![CDATA[OpenSQL]]></category>
+		<category><![CDATA[stream]]></category>
+		<category><![CDATA[streaming]]></category>
+		<category><![CDATA[локаторы]]></category>
+		<category><![CDATA[потоки]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1518</guid>
+
+					<description><![CDATA[<p>Начиная с версии 7.0, EhP2 в ABAP была введена новая концепция обработки внутренних (внешних) данных &#8212; потоковая обработка данных. Поток – ссылка на последовательный набор записей данных, чей конец может быть не известен. Потоки разделяются по виду: потоки данных и фильтрующие потоки. Фильтрующие потоки в настоящее время не реализованы и не рассматриваются в данной статье. Потоки [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/potoki-i-lokatory/">Потоки и локаторы</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2013/04/database-219x218.png"><img loading="lazy" class="size-full wp-image-1526 alignleft" style="margin: 10px;" src="http://abap-blog.ru/wp-content/uploads/2013/04/database-219x218.png" alt="database-219x218" width="219" height="218" /></a></p>
+<p>Начиная с версии 7.0, EhP2 в ABAP была введена новая концепция обработки внутренних (внешних) данных &#8212; потоковая обработка данных.</p>
+<p>Поток – ссылка на последовательный набор записей данных, чей конец может быть не известен. Потоки разделяются по виду: потоки данных и фильтрующие потоки.</p>
+<p>Фильтрующие потоки в настоящее время не реализованы и не рассматриваются в данной статье.</p>
+<p>Потоки данных – такие потоки, которые напрямую соединены как читающий поток к источнику данных или как записывающий поток к приемнику данных.</p>
+<p><b>Читающий поток</b> (входящий поток) – любой поток данных, присоединенный к источнику данных. В качестве читающего потока может выступать фильтрующий поток, присоединенный к читающему потоку. Направление читающего потока всегда исходит от источника данных (например, от поля таблицы базы данных к объекту представляющему поток), через читающий поток нельзя записывать данные.</p>
+<p>Источник данных – хранилище, из которого происходит получение данных читающим потоком. Источником может быть LOB поле в базе данных, файл, строка или внутренняя таблица. В настоящее время чтение доступно для полей из таблиц баз данных (LOB поля), строк и внутренних таблиц.</p>
+<p><span id="more-1518"></span></p>
+<p>LOB – Large object, может быть двух видов: BLOB или CLOB. BLOB – Binary large object. Поле в таблице базы данных с типом данных RAWSTRING. CLOB – Character large object. Поле в таблице базы данных с типом данных STRING.</p>
+<p><b>Записывающий поток</b>  (исходящий поток) – любой поток данных, присоединенный к приемнику данных. В качестве записывающего потока может выступать фильтрующий поток, присоединенный к записывающему потоку. Направление записывающего потока всегда направлено к приемнику данных, т.о. записывающий поток используется только для записи.</p>
+<p>Приемник данных – хранилище, в котором записывающий поток сохраняет свои данные. В качестве приемника может быть LOB поле в базе данных, файл, строка или внутренняя таблица. В настоящее время запись реализована для полей таблиц БД, строк и внутренних таблиц.</p>
+<p>Потоки данных всегда имеют одно направление – на чтение или на запись.</p>
+<p>Кроме направления потоки данных могут иметь следующие типы: бинарный поток, символьный поток. Бинарный поток содержит данные с байтовым типом данных (x, xstring), родовой тип xsequence (для полей таблиц RAWSTRING). Символьный поток содержит данные с символьным типом данных (с, string).</p>
+<p>В ABAP, потоки представлены в виде инстанций специального набора классов, передача (получение) данных осуществляется с помощью вызова соответствующих методов.</p>
+<p>Свойства потоков:</p>
+<ul>
+<li><b>Вид потока </b>– поток данных или фильтрующий поток</li>
+<li><b>Направление потока</b> – на чтение или на запись</li>
+<li><b>Тип потока</b> – символьный поток или бинарный поток.</li>
+</ul>
+<p>Классы и интерфейсы, реализующие в ABAP концепцию потоков, лежат в пакете SABP_STREAMS_AND_LOCATORS. Следующая диаграмма демонстрирует основные классы и интерфейсы:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/04/streams.png"><img loading="lazy" class="alignnone size-full wp-image-1519" src="http://abap-blog.ru/wp-content/uploads/2013/04/streams.png" alt="Управление потоками" width="654" height="503" /></a></p>
+<p>&nbsp;</p>
+<p>Классы для работы с потоками данных начинаются с «CL_ABAP_» и содержат следующие идентификаторы:</p>
+<ul>
+<li>Resource – источник для чтения или приемник для записи, в настоящее время поддерживаются: строки (STRING), LOB поля в БД (DB), внутренние таблицы (ITAB).</li>
+<li>Type – тип потока, бинарный (X) и строковый (C).</li>
+<li>Direction – направление потока, запись (WRITER) и чтение (READER).</li>
+</ul>
+<p>Имена классов для фильтрующих потоков начинаются с «CL_ABAP_FILTER_» и именуются по тем же правилам. В настоящее время фильтрующие потоки не реализованы (Версия 7.02-7.31).</p>
+<p>Основные методы, используемые для работы с потоками, описаны в интерфейсах и суперклассах как методы ядра (для просмотра можно воспользоваться программой RSKMETH), следовательно, их реализация обеспечивается средой выполнения ABAP. Основные методы при работе с потоками:</p>
+<ul>
+<li>DATA_AVAILABLE возвращает X если еще есть несчитанные данные.</li>
+<li>IS_X_READER возвращает X если является бинарным потоком.</li>
+<li>READ возвращает строку с заданным числом байтов или символов из потока.</li>
+<li>SKIP пропускает заданное количество байт или символов в потоке.</li>
+<li>WRITE запись данных потока в приемник.</li>
+<li>CLOSE закрывает поток (после чего читать или писать уже нельзя).</li>
+<li>IS_CLOSED возвращает X если поток закрыт.</li>
+<li>SET_MARK установить метку, к которой можно будет возвратиться позже.</li>
+<li>IS_MARK_SUPPORTED возвращает X если метки поддерживаются.</li>
+<li>RESET_TO_MARK возврат к метке.</li>
+</ul>
+<h3>Потоки к строкам</h3>
+<p>Для создания потоков, источником или приемником которых служат строки, используется следующий набор классов:</p>
+<ul>
+<li>CL_ABAP_STRING_C_READER</li>
+<li>CL_ABAP_STRING_C_WRITER</li>
+<li>CL_ABAP_STRING_X_READER</li>
+<li>CL_ABAP_STRING_X_WRITER</li>
+</ul>
+<p>Данные классы являются потомками от абстрактных классов потоков внутренних данных &#8212; CL_ABAP_MEMORY_&#8230;.</p>
+<p>Пример программы с потоками для строк:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: string_writer TYPE REF TO cl_abap_string_c_writer,
+      string_reader TYPE REF TO if_abap_c_reader.
+
+DATA snippet TYPE c LENGTH 1.
+
+CREATE OBJECT string_writer TYPE cl_abap_string_c_writer.
+
+DO 10 TIMES.
+  string_writer-&gt;write( |{ sy-index - 1 }| ).
+ENDDO.
+
+string_writer-&gt;close( ).
+
+CREATE OBJECT string_reader TYPE cl_abap_string_c_reader
+  EXPORTING
+    str = string_writer-&gt;get_result_string( ).
+
+string_reader-&gt;skip( 3 ).
+WHILE string_reader-&gt;data_available( ) = 'X'.
+  snippet = string_reader-&gt;read( 1 ).
+  WRITE / snippet.
+ENDWHILE.
+string_reader-&gt;close( ).</pre><p></p>
+<h3>Потоки к внутренним таблицам</h3>
+<p>Для создания потоков, источником или приемником данных для которых служат внутренние таблицы, используется следующий набор классов:</p>
+<ul>
+<li>CL_ABAP_ITAB_C_READER</li>
+<li>CL_ABAP_ITAB_C_WRITER</li>
+<li>CL_ABAP_ITAB_X_READER</li>
+<li>CL_ABAP_ITAB_X_WRITER</li>
+</ul>
+<p>Данные классы являются потомками от абстрактных классов потоков внутренних данных &#8212; CL_ABAP_MEMORY_&#8230;.</p>
+<p>Пример программы с потоками для внутренних таблиц:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:  itab TYPE TABLE OF string,
+       text TYPE string.
+
+DATA itab_reader TYPE REF TO if_abap_c_reader.
+
+APPEND `abc` TO itab.
+APPEND `def` TO itab.
+APPEND `ghi` TO itab.
+
+CREATE OBJECT itab_reader TYPE cl_abap_itab_c_reader
+  EXPORTING
+    itab = itab.
+
+WHILE itab_reader-&gt;data_available( ) = 'X'.
+  text = itab_reader-&gt;read( 3 ).
+  WRITE / text.
+ENDWHILE.
+itab_reader-&gt;close( ).</pre><p></p>
+<h3>Обработка LOB полей базы данных</h3>
+<p>Обработка LOB полей БД возможна с помощью потоков и локаторов, при этом есть следующие особенности их использования:</p>
+<p>Локаторы:</p>
+<ul>
+<li>Связываются с LOB полями для чтения или записи через LOB дескрипторы, запись подразумевает копирование данных из других локаторов, возможности прямой записи из переменных ABAP программы через локатор в базу данных не существует (для этого используются записывающие потоки).</li>
+<li>Имеют доступ к вложенным последовательностям в LOB полях и их свойствам</li>
+<li>Позволяют копировать LOB поля, без переноса данных на сервер приложений</li>
+<li>За счёт обработки на стороне СУБД повышается и нагрузка на неё</li>
+<li>Для тех СУБД, где нет поддержки локаторов, она эмулируется на сервере приложений.</li>
+</ul>
+<p>Потоки:</p>
+<ul>
+<li>Связываются, как и локаторы через LOB дескрипторы</li>
+<li>Данные LOB полей обрабатываются последовательно, используя методы потоков</li>
+<li>Не нагружают дополнительно СУБД.</li>
+</ul>
+<p>Количество LOB дескрипторов на один DB LUW ограничено 1000. Открытых потоков может быть не более 16.</p>
+<p>Пример копирования через локатор LOB поля, без переноса его содержимого на сервер приложений:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: 
+  locator TYPE REF TO cl_abap_db_c_locator.    
+
+SELECT SINGLE longtext FROM lob_table                           
+  INTO locator     " &lt;- Получить дескриптор (указатель) на LOB поле
+    WHERE key = key1.    
+
+UPDATE lob_table       
+  SET longtext = locator  " &lt;- Скопировать LOB поле с помощью локатора в другую таблицу
+    WHERE key    = key2.    
+
+locator-&gt;close( ).  " Необходимо позаботиться о закрытии локатора</pre><p>Пример считывания из БД с помощью потока:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  reader TYPE REF TO cl_abap_db_x_reader.
+
+SELECT SINGLE picture FROM demo_blob_table
+  INTO reader " &lt;- Получение LOB дескриптора для потока
+    WHERE name = pic_name.
+
+...
+
+WHILE reader-&gt;data_available( ) = 'X'.  " &lt;- Чтение данных из потока в файл
+  TRANSFER reader-&gt;read( len ) TO pict_file.
+ENDWHILE.
+
+reader-&gt;close( ).</pre><p>Под LOB дескрипторами понимаются интерфейсы IF_ABAP_DB_LOB_HANDLE (*_BLOB_HANDLE, *_CLOB_HANDLE) и классы которые их внедряют. В примерах описанных выше используются классы, которые создаются и привязываются к LOB полю через дополнение INTO. Кроме того вместе классов можно использовать интерфейсы и дополнение CREATING в SQL операторе SELECT, для того чтобы создавать объекты в зависимости от типов полей, пример использования:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  locator TYPE REF TO if_abap_db_lob_handle.
+
+SELECT SINGLE description
+  FROM zhd_tasks
+    INTO locator     " &lt;- Получить дескриптор (указатель) на LOB поле
+      CREATING LOCATOR FOR COLUMNS description
+        WHERE task = 761.</pre><p>В данном случае создается локатор для поля description. В зависимости от вида поля (BLOB или CLOB) создается экземпляр определенного класса (CL_ABAP_DB_C_LOCATOR или CL_ABAP_DB_X_LOCATOR). Данное дополнение можно использовать и динамически, по тем же правилам что и в других ABAP командах: CREATING… (текст команды создания). Ключевое слово LOCATOR (READER) определяет, какой объект мы создаем. Дополнение [ALL [OTHER] [BLOB|CLOB]] COLUMNS [blob1 blob2 &#8230; clob1 clob2 &#8230;] используется тогда, когда выбор происходит в структуру (таблицу).</p>
+<p>В случае считывания структуры (таблицы), а не единичного поля, необходимо объявлять специальную LOB структуру. LOB структура представляет собой специальную рабочую область с теми же полями что и внутри таблицы БД, однако должен быть объявлен хотя бы один компонент с привязкой к LOB полю. Компонент представляет из себя ссылочную переменную, указывающую на LOB дескриптор (интерфейс или класс). Когда объявляется LOB структура, компоненты связанные с LOB полем, заменяются на соответствующий интерфейс (класс).</p>
+<p>Объявление LOB структуры происходит следующим способом:</p>
+<p>TYPES dtype TYPE dbtab <a>lob_handle_type</a> FOR <a>lob_handle_columns</a> <b><br />
+[<a>lob_handle_type</a> FOR <a>lob_handle_columns</a><br />
+&#8230;                                   ].</b></p>
+<p>В <b>dbtab</b> должна быть указана база данных или ракурс из словаря. Поле lob_handle_type определяет тип LOB дескриптора:</p>
+<p>&#8230; { READER|LOCATOR|{LOB HANDLE} } <b><br />
+| { WRITER|LOCATOR } &#8230;</b></p>
+<p>READER определяет поля с типами:</p>
+<ul>
+<li>CL_ABAP_DB_X_READER для BLOB</li>
+<li>CL_ABAP_DB_C_READER для CLOB</li>
+</ul>
+<p>WRITER определяет поля с типами:</p>
+<ul>
+<li>CL_ABAP_DB_X_WRITER для BLOB</li>
+<li>CL_ABAP_DB_C_WRITER для CLOB</li>
+</ul>
+<p>LOCATOR определяет поля с типами:</p>
+<ul>
+<li>CL_ABAP_DB_X_LOCATOR для BLOB</li>
+<li>CL_ABAP_DB_C_LOCATOR для CLOB</li>
+</ul>
+<p>LOB HANDLE определяет поля с типами:</p>
+<ul>
+<li>IF_ABAP_DB_BLOB_HANDLE для BLOB</li>
+<li>IF_ABAP_DB_CLOB_HANDLE для CLOB</li>
+</ul>
+<p>Дополнения READER и WRITER нельзя указывать вместе. Дополнение WRITER так же не может быть использовано с дополнением LOB HANDLE.</p>
+<p>Дополнение lob_handle_columns определяет, какие поля из таблицы БД мы будем использовать как LOB поля.</p>
+<p>Синтаксис следующий:</p>
+<p>&#8230; { COLUMNS blob1 blob2 &#8230; clob1 clob2 &#8230; } <b><br />
+</b>    | { ALL [OTHER] [BLOB|CLOB] COLUMNS } &#8230;</p>
+<ul>
+<li>COLUMNS – определяет индивидуальный перечень полей</li>
+<li>ALL OTHER BLOB|CLOB COLUMNS – включает остальные BLOB|CLOB поля не перечисленные при индивидуальном определении</li>
+<li>ALL BLOB|CLOB COLUMNS – включает все BLOB|CLOB поля таблицы</li>
+<li>ALL OTHER COLUMNS – включает все поля (BLOB и CLOB) не перечисленные в индивидуальном определении</li>
+<li>ALL COLUMNS – включает все CLOB и BLOB поля из таблицы</li>
+</ul>
+<p>Программа, демонстрирующая объявление LOB структур:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS demo_lob_handles DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS main.
+
+    TYPES:
+
+      lob_handle_structure_1 TYPE demo_lob_table
+                             READER      FOR COLUMNS clob1 blob1,
+
+      lob_handle_structure_2 TYPE demo_lob_table
+                             LOB HANDLE  FOR ALL COLUMNS,
+
+      lob_handle_structure_3 TYPE demo_lob_table
+                             LOCATOR     FOR ALL BLOB COLUMNS
+                             WRITER      FOR ALL CLOB COLUMNS,
+
+      lob_handle_structure_4 TYPE demo_lob_table
+                             READER      FOR COLUMNS clob1 clob2
+                             LOB HANDLE  FOR ALL BLOB COLUMNS
+                             LOCATOR     FOR ALL OTHER CLOB COLUMNS,
+
+      lob_handle_structure_5 TYPE demo_lob_table
+                             READER      FOR COLUMNS blob1 blob2 blob3
+                             LOCATOR     FOR COLUMNS clob1 clob2 clob3
+                             LOB HANDLE  FOR ALL OTHER COLUMNS,
+
+      lob_handle_structure_6 TYPE demo_lob_table
+                             READER      FOR COLUMNS blob1
+                             LOCATOR     FOR COLUMNS blob2
+                             LOB HANDLE  FOR COLUMNS blob3
+                             LOB HANDLE  FOR ALL CLOB COLUMNS.
+
+  PRIVATE SECTION.
+    CLASS-METHODS type_output IMPORTING struct TYPE string.
+ENDCLASS.
+
+CLASS demo_lob_handles IMPLEMENTATION.
+  METHOD main.
+    type_output( 'LOB_HANDLE_STRUCTURE_1' ).
+    type_output( 'LOB_HANDLE_STRUCTURE_2' ).
+    type_output( 'LOB_HANDLE_STRUCTURE_3' ).
+    type_output( 'LOB_HANDLE_STRUCTURE_4' ).
+    type_output( 'LOB_HANDLE_STRUCTURE_5' ).
+    type_output( 'LOB_HANDLE_STRUCTURE_6' ).
+  ENDMETHOD.
+  METHOD type_output.
+    DATA structdescr TYPE REF TO cl_abap_structdescr.
+    DATA components TYPE abap_compdescr_tab.
+    DATA component  LIKE LINE OF components.
+    DATA typedescr   TYPE REF TO cl_abap_typedescr.
+    DATA refdescr    TYPE REF TO cl_abap_refdescr.
+    DATA name       TYPE string.
+    structdescr ?= cl_abap_structdescr=&gt;describe_by_name( struct ).
+    components = structdescr-&gt;components.
+    WRITE (47) struct COLOR 1 INTENSIFIED OFF.
+    LOOP AT components INTO component.
+      TRY.
+          name = struct &amp;&amp; '-' &amp;&amp; component-name.
+          refdescr ?= cl_abap_typedescr=&gt;describe_by_name( name ).
+          typedescr = refdescr-&gt;get_referenced_type( ).
+          WRITE: /(6)  component-name
+                       COLOR 1 INTENSIFIED OFF,
+                  (40) typedescr-&gt;absolute_name
+                       COLOR 2 INTENSIFIED OFF.
+        CATCH cx_sy_move_cast_error.
+      ENDTRY.
+    ENDLOOP.
+    SKIP.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  demo_lob_handles=&gt;main( ).</pre><p>Кроме выше указанного способа LOB структуры могут быть объявлены в словаре или через BEGIN OF…END OF. Для более подробной информации рекомендую ознакомиться с документацией в ABAP (ссылки ниже).</p>
+<h3>Использование потоков в OpenSQL командах</h3>
+<p>Потоки могут быть следующих видов:</p>
+<ul>
+<li>CL_ABAP_DB_C_READER – для чтения данных из СLOB полей</li>
+<li>CL_ABAP_DB_X_READER – для чтения данных из BLOB полей</li>
+<li>CL_ABAP_DB_C_WRITER – для записи данных в СLOB поля</li>
+<li>CL_ABAP_DB_X_WRITER – для записи данных в BLOB поля</li>
+</ul>
+<p>Основные методы при работе с потоками обработки LOB полей такие же, как и для других потоков (см. выше). В зависимости от направления потока различается и их процесс создания. Как было видно в примере выше, потоки для чтения LOB полей создаются автоматически через атрибут INTO оператора SELECT или через дополнение CREATING.</p>
+<p>Создание записывающих потоков происходит с помощью операторов: INSERT, UPDATE, MODIFY. В зависимости от СУБД, обработка записывающих потоков может отличаться:</p>
+<ul>
+<li>В MaxDB или Oracle компоненты, которые не являются LOB дескрипторами, записываются сразу после выполнения команд обновления. Если обновление не может быть выполнено, в соответствующие поля (sy-subrc, sy-dbcnt) записываются коды ошибок и число обработанных записей, при этом записывающие потоки не создаются. Если обновление может быть выполнено, создаются записывающие потоки, при этом перенос данных из них происходит в момент, когда последний из них будет закрыт.</li>
+<li>В других СУБД компоненты, не являющиеся LOB дескрипторами, не переносятся в БД сразу же после операторов обновления. При этом записывающие потоки всегда создаются. Данные переносятся в БД только тогда, когда будет закрыт последний записывающий поток, открытый для этого оператора. Соответственно между выполнением оператора и закрытием последнего записывающего потока, статус операции является неопределенным. В поле sy-subrc после оператора будет записан код ошибки 2, а в sy-dbcnt значение -1. Перед закрытием потока необходимо получить указатель на объект класса CL_ABAP_SQL_CHANGING_STMNT, через интерфейс IF_ABAP_DB_WRITER используя метод GET_STATEMENT_HANDLE. С помощью метода GET_STATE данного класса можно получить статус OSQL операции, а с помощью метода GET_DB_COUNT количество обработанных записей. Кроме того с помощью данного объекта можно закрыть все открытые для записи потоки. Если операция не может быть выполнена (например, есть дубликаты в ключевых полях), система выдаст исключения CX_STREAM_IO_EXCEPTION или CX_CLOSE_RESOURCE_ERROR.</li>
+</ul>
+<p>Записывающий поток будет открытым до тех пор, пока не будет выполнена отмена изменений через ROLLBACK, либо закрыт явным образом через метод CLOSE. В случае выполнения COMMIT WORK при открытых записывающих потоках, система вызовет динамическую ошибку &#8212; COMMIT_STREAM_ERROR.</p>
+<p>Читающие потоки закрываются неявным способом в циклическом операторе SELECT после оператора ENDSELECT, а так же после окончания DB LUW.</p>
+<p>Пример программы, заполняющей LOB поле через записывающий поток:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS name TYPE c LENGTH 255 LOWER CASE
+           DEFAULT '/SAP/PUBLIC/BC/ABAP/Sources/ABAP_Docu_Logo.gif'.
+
+CLASS demo DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS:  class_constructor,
+                    main.
+  PRIVATE SECTION.
+    TYPES: pict_line(1022) TYPE x,
+           pict_tab TYPE STANDARD TABLE OF pict_line .
+    CLASS-DATA pict TYPE pict_tab.
+    CLASS-METHODS get_pict_tab
+     IMPORTING
+       mime_url TYPE csequence
+     EXPORTING
+       pict_tab TYPE STANDARD TABLE.
+ENDCLASS.
+
+CLASS demo IMPLEMENTATION.
+
+  METHOD main.
+
+    DATA: xline TYPE xstring,
+          " Объявляем LOB структуру с потоком на запись к полю picture
+          wa    TYPE demo_blob_table WRITER FOR COLUMNS picture,
+          stmnt TYPE REF TO cl_abap_sql_changing_stmnt,
+          subrc TYPE sy-subrc.
+
+    TRY.
+        wa-name = name.
+        " Вставляем новую запись в таблицу, при этом создается записывающий поток
+        INSERT demo_blob_table FROM wa.
+        IF sy-subrc = 4.
+          subrc = 4.
+        ELSE.
+          " Получаем ссылку на CL_ABAP_SQL_CHANGING_STMNT,
+          " с помощью данного класса мы можем определить корректность обработки потока
+          stmnt = wa-picture-&gt;get_statement_handle( ).
+          " Записываем построчно считанные с MIME репозитария данные
+          LOOP AT pict INTO xline.
+            wa-picture-&gt;write( xline ).
+          ENDLOOP.
+          " Обязательно закрываем поток
+          wa-picture-&gt;close( ).
+          " Проверяем кол-во обработанных записей в таблице
+          IF stmnt-&gt;get_db_count( ) &lt;&gt; 1.
+            subrc = 4.
+          ENDIF.
+
+        ENDIF.
+      CATCH cx_stream_io_exception cx_close_resource_error.
+        subrc = 4.
+    ENDTRY.
+
+    IF subrc = 0.
+      MESSAGE 'One line inserted, you can run DEMO_DB_READER now'
+              TYPE 'S'.
+    ELSE.
+      MESSAGE 'Error during insertion' TYPE 'S' DISPLAY LIKE 'E'.
+    ENDIF.
+
+  ENDMETHOD.
+
+  METHOD class_constructor.
+    get_pict_tab(
+     EXPORTING
+       mime_url = name
+     IMPORTING
+       pict_tab = pict ).
+
+     " Удалим запись с таким же именем.
+     DELETE FROM demo_blob_table WHERE name = name.
+  ENDMETHOD.
+
+  METHOD get_pict_tab.
+    DATA pict_wa   TYPE xstring.
+    DATA length   TYPE i.
+    DATA mime_api TYPE REF TO if_mr_api.
+    mime_api = cl_mime_repository_api=&gt;get_api( ).
+    mime_api-&gt;get( EXPORTING i_url = mime_url
+                   IMPORTING e_content = pict_wa
+                   EXCEPTIONS OTHERS = 4 ).
+    IF sy-subrc = 4.
+      RETURN.
+    ENDIF.
+    CLEAR pict_tab.
+    length = xstrlen( pict_wa ).
+    WHILE length &gt;= 1022.
+      APPEND pict_wa(1022) TO pict_tab.
+      SHIFT pict_wa BY 1022 PLACES LEFT IN BYTE MODE.
+      length = xstrlen( pict_wa ).
+    ENDWHILE.
+    IF length &gt; 0.
+      APPEND pict_wa TO pict_tab.
+    ENDIF.
+  ENDMETHOD.
+
+ENDCLASS.
+
+START-OF-SELECTION.
+  demo=&gt;main( ).</pre><p>Программа, считывающая записанные выше данные:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT demo_db_reader.
+
+PARAMETERS name TYPE c LENGTH 255 LOWER CASE
+           DEFAULT '/SAP/PUBLIC/BC/ABAP/Sources/ABAP_Docu_Logo.gif'.
+
+CLASS demo DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS main.
+  PRIVATE SECTION.
+    TYPES: pict_line(1022) TYPE x,
+           pict_tab TYPE STANDARD TABLE OF pict_line .
+    CLASS-DATA pict TYPE pict_tab.
+    CLASS-METHODS show_picture.
+ENDCLASS.
+
+CLASS demo IMPLEMENTATION.
+  METHOD main.
+
+    DATA reader TYPE REF TO cl_abap_db_x_reader.
+
+    SELECT SINGLE picture
+           FROM demo_blob_table
+           INTO reader
+           WHERE name = name.
+
+    IF sy-subrc &lt;&gt; 0.
+      MESSAGE 'Nothing found, run DEMO_DB_WRITER first!'
+              TYPE 'S' DISPLAY LIKE 'E'.
+      RETURN.
+    ENDIF.
+
+    WHILE reader-&gt;data_available( ) = 'X'.
+      APPEND reader-&gt;read( 1022 ) TO pict.
+    ENDWHILE.
+
+    reader-&gt;close( ).
+
+    show_picture( ).
+
+  ENDMETHOD.
+  METHOD show_picture.
+    DATA html_str TYPE string.
+    DATA ext_data   TYPE cl_abap_browser=&gt;load_tab.
+    DATA ext_line   TYPE cl_abap_browser=&gt;load_tab_line.
+    html_str = '&lt;html&gt;&lt;body&gt;&lt;img src="PICT.GIF" &gt;&lt;/body&gt;&lt;/html&gt;'.
+    ext_line-name = 'PICT.GIF'.
+    ext_line-type = 'image'.
+    GET REFERENCE OF pict INTO ext_line-dref.
+    APPEND ext_line TO ext_data.
+    cl_abap_browser=&gt;show_html(
+      EXPORTING
+        html_string = html_str
+        format      = cl_abap_browser=&gt;landscape
+        size        = cl_abap_browser=&gt;small
+        data_table  = ext_data
+        check_html  = ' ' ).
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  demo=&gt;main( ).</pre><p></p>
+<h3>Использование локаторов в OpenSQL</h3>
+<p>В настоящее время локаторы бывают двух видов:</p>
+<ul>
+<li>CL_ABAP_DB_C_LOCATOR – для CLOB полей</li>
+<li>CL_ABAP_DB_X_LOCATOR – для BLOB полей</li>
+</ul>
+<p>Важные методы локаторов:</p>
+<ul>
+<li>GET_LENGTH – получает размер LOB поля подключенного к локатору</li>
+<li>FIND – поиск последовательности данных относительно смещения, возвращает позицию в LOB где встречается указанный для поиска шаблон. В Unicode системах размер символьного шаблона ограничен 1333 символами, в не Unicode системах 2666. Для байтового шаблона размер ограничен 2666 байтами.</li>
+<li>CLOSE – закрытие локатора и освобождение занятых им ресурсов</li>
+<li>IS_CLOSED – возвращает X если локатор закрыт</li>
+<li>GET_SUBSTRING – используется для CLOB полей, получает последовательность символов с указанным смещением и длинной</li>
+<li>GET_BYTES – тоже самое но для BLOB полей.</li>
+</ul>
+<p>Локаторы могут создаваться только через оператор SELECT и его атрибут INTO, как это было показано выше. Создание локаторов не может быть инициировано при изменении данных таблиц. После создания, локаторы могут быть использованы для копирования LOB полей между записями таблицы.</p>
+<p>Из-за нагрузки на СУБД закрытие локаторов должно происходить как можно скорее, причем в отличие от потоков, локаторы не закрываются автоматически при использовании циклического оператора SELECT, после команды ENDSELECT. Неявное закрытие локаторов происходит только после окончания LUW БД.</p>
+<p>Программа копирующее LOB поле через локатор:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT demo_db_copy.
+
+PARAMETERS: source TYPE c LENGTH 255 LOWER CASE
+            DEFAULT '/SAP/PUBLIC/BC/ABAP/Sources/ABAP_Docu_Logo.gif',
+            target TYPE c LENGTH 255 LOWER CASE
+            DEFAULT 'picture_copy'.
+
+CLASS demo DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS main.
+ENDCLASS.
+
+CLASS demo IMPLEMENTATION.
+  METHOD main.
+
+    DATA wa TYPE demo_blob_table LOCATOR FOR ALL COLUMNS.
+
+    SELECT SINGLE picture
+           FROM demo_blob_table
+           INTO wa-picture
+           WHERE name = source.
+
+    IF sy-subrc &lt;&gt; 0.
+      MESSAGE 'Nothing found, run DEMO_DB_WRITER first!'
+              TYPE 'S' DISPLAY LIKE 'E'.
+      RETURN.
+    ENDIF.
+
+    wa-name = target.
+    INSERT demo_blob_table FROM wa.
+
+    IF sy-subrc = 0.
+      MESSAGE 'You can run DEMO_DB_READER with new name now' TYPE 'S'.
+    ELSE.
+      MESSAGE 'Target already exists' TYPE 'S' DISPLAY LIKE 'E'.
+    ENDIF.
+
+    wa-picture-&gt;close( ).
+
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  demo=&gt;main( ).</pre><p>Чтение данных, используя локатор:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT demo_db_locator.
+
+PARAMETERS: pattern  TYPE c LENGTH 20 DEFAULT 'ABAP' LOWER CASE,
+            language TYPE sy-langu DEFAULT sy-langu.
+
+CLASS demo DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS main.
+ENDCLASS.
+
+CLASS demo IMPLEMENTATION.
+  METHOD main.
+    DATA: otr_text_locator TYPE REF TO cl_abap_db_c_locator,
+          search_pattern   TYPE string,
+          length           TYPE i,
+          hits             TYPE i,
+          avg              TYPE p DECIMALS 2,
+          msg              TYPE string.
+
+    search_pattern = pattern.
+
+    TRY.
+        SELECT text
+               FROM sotr_textu
+               INTO otr_text_locator
+               WHERE langu = language.
+
+          length = length + otr_text_locator-&gt;get_length( ).
+
+          IF otr_text_locator-&gt;find( start_offset = 0
+                                     pattern = search_pattern ) &lt;&gt; -1.
+            hits = hits + 1.
+          ENDIF.
+
+          otr_text_locator-&gt;close( ).
+        ENDSELECT.
+      CATCH cx_lob_sql_error.
+        WRITE 'Exception in locator' COLOR = 6.
+        RETURN.
+    ENDTRY.
+
+    avg = length / sy-dbcnt.
+
+    msg = |Average length of strings in database table: { avg }|.
+    WRITE: / msg.
+    msg = |Occurrences of "{ pattern WIDTH = strlen( pattern ) }" | &amp;&amp;
+          |in strings of database table: { hits }|.
+    WRITE: / msg.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  demo=&gt;main( ).</pre><p>Справка на тему использования LOB и потоков: <a href="http://help.sap.com/abapdocu_731/en/abenstreams_locators.htm">Потоки и локаторы в OSQL</a>, <a href="http://help.sap.com/abapdocu_731/en/abenstreaming.htm">Потоки в обработке внутренних данных</a>. Видео <a href="http://scn.sap.com/docs/DOC-10235">обзор</a>.</p><p>The post <a href="https://abap-blog.ru/database-work/potoki-i-lokatory/">Потоки и локаторы</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/potoki-i-lokatory/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>CL_BP_JOB | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_bp_job/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:53:22 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Фоновые задания используя ABAP Objects (Часть 1)</title>
+		<link>https://abap-blog.ru/osnovy-abap/fonovye-zadaniya-ispolzuya-abap-objects/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/fonovye-zadaniya-ispolzuya-abap-objects/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 14 Jan 2012 14:00:39 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[CL_BP_ABAP_JOB]]></category>
+		<category><![CDATA[CL_BP_JOB]]></category>
+		<category><![CDATA[CL_BP_JOB_FACTORY]]></category>
+		<category><![CDATA[фоновые задания]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=198</guid>
+
+					<description><![CDATA[<p>В статье будут рассмотрены примеры создания фоновых заданий в ABAP используя классы из пакета SBTJOBAPI (CL_BP_ABAP_JOB,  CL_BP_JOB_FACTORY и др.). Как управлять фоновыми заданиями используя &#171;старое&#187; API вы можете посмотреть тут. Старое в кавычках потому что новое лишь обертка над ним. Стандартный пример по работе через классы с фоновыми заданиями программа: BP_JOBAPI_TUTORIAL. К сожалению в нем не рассмотрено как создавать фоновые [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/fonovye-zadaniya-ispolzuya-abap-objects/">Фоновые задания используя ABAP Objects (Часть 1)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>В статье будут рассмотрены примеры создания фоновых заданий в ABAP используя классы из пакета <strong>SBTJOBAPI </strong>(CL_BP_ABAP_JOB,  CL_BP_JOB_FACTORY и др.). Как управлять фоновыми заданиями используя &#171;старое&#187; API вы можете посмотреть <a href="http://help.sap.com/saphelp_45b/helpdata/EN/fa/096d40543b11d1898e0000e8322d00/frameset.htm">тут</a>. Старое в кавычках потому что новое лишь обертка над ним.</p>
+<p><span id="more-198"></span></p>
+<p>Стандартный пример по работе через классы с фоновыми заданиями программа: <strong>BP_JOBAPI_TUTORIAL.</strong> К сожалению в нем не рассмотрено как создавать фоновые задания с несколькими шагами, об этом я расскажу во второй части статьи.</p>
+<p>И так, в стандартной транзакции по определению фоновых заданий в окне создания шага мы можем создать 1 из 3 видов шагов:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/bj_job1.png"><img loading="lazy" class="alignnone size-full wp-image-201" title="bj_job1" src="http://abap-blog.ru/wp-content/uploads/2012/01/bj_job1.png" alt="" width="583" height="633" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/bj_job1.png 583w, https://abap-blog.ru/wp-content/uploads/2012/01/bj_job1-276x300.png 276w" sizes="(max-width: 583px) 100vw, 583px" /></a></p>
+<h5><strong>Типы шагов</strong></h5>
+<p>На уровне классов за определение каждого из типа шагов отвечают классы:</p>
+<ul>
+<li>Запуск ABAP программ &#8212; <strong>CL_BP_ABAP_JOB</strong></li>
+<li>Запуск команд &#8212; <strong>CL_BP_EXTCMD_JOB</strong></li>
+<li>Запуск внешних программ &#8212; <strong>CL_BP_EXTPRG_JOB</strong></li>
+</ul>
+<div><span style="line-height: 18px;">Для создания экземпляров каждого из них рекомендую воспользоваться классом  <strong>cl_bp_job_factor</strong>y и его статическими методами:</span></div>
+<div></div>
+<div>
+<ul>
+<li><span style="line-height: 19px;"><strong> MAKE_ABAP_JOB</strong>( ) для создания объекта CL_BP_ABAP_JOB</span></li>
+<li><span style="line-height: 19px;"><strong>MAKE_EXTCMD_JOB</strong>( ) для создания объекта CL_BP_EXTCMD_JOB</span></li>
+<li><span style="line-height: 19px;"><strong>MAKE_EXTPRG_JOB</strong>( ) для создания объекта  CL_BP_EXTPRG_JOB</span></li>
+</ul>
+</div>
+<p>Разница между ними и простым CREATE OBJECT в том что они задают тип для задачи и устанавливают состояние в редактируемое.</p>
+<p>Последовательность действий для создания фонового задания состоящего из одного шага и выполняемого немедленно:</p>
+<ol>
+<li>Определиться с видом выполняемой задачи</li>
+<li>Создать экземпляр класса определяющего ее вид</li>
+<li>Задать основные параметры для задачи (Тип, Имя, Пользователь, Язык)</li>
+<li>Задать специфичные от вида задачи параметры (Отчёт, вариант, и т.п.)</li>
+<li>Запустить задачу на выполнение.</li>
+</ol>
+<div><span style="line-height: 18px;">Пример простого запуска одно шаговой задачи с выполнением ABAP программы:</span></div>
+<div></div>
+<div>
+<pre class="urvanov-syntax-highlighter-plain-tag">DATA: lo_abapjob TYPE REF TO CL_BP_ABAP_JOB.
+
+lo_abapjob = cl_bp_job_factory=&gt;MAKE_ABAP_JOB( ).
+
+" Устанавливаем имя для фонового задания
+lo_abapjob-&gt;set_name( i_name = 'ZTESTJOB' ).
+" Определяем шаг запуска ABAP отчёта
+lo_abapjob-&gt;set_report( i_report = 'ZMMTEST' ).
+" Вариант с которым он будет запущен
+lo_abapjob-&gt;set_variant( i_variant = 'TEST' ).
+" Под каким пользователем он будет выполнен
+lo_abapjob-&gt;set_effective_user( i_authcknam = sy-uname ).
+" Под каким языком
+lo_abapjob-&gt;set_language( i_language = sy-langu ).
+" Запускаем к немедленному выполнению
+lo_abapjob-&gt;start( ).</pre>
+</div>
+<p>После запуска если параметры шага указаны верно будет создана и запущена на выполнение фоновая задача. Для других типов задач код будет аналогичным за исключением заполнения специфичных для них параметров. В случае когда необходимо не запускать, а оставить задание в состоянии &#171;запланировано&#187; можно воспользоваться методом plan_job( ).</p>
+<h5><strong>Триггеры</strong></h5>
+<p>Под триггерами понимаются условия запуска, в стандартном определении задания это выглядит следующим образом:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/2.png"><img loading="lazy" class="alignnone size-full wp-image-210" title="bp_triggers" src="http://abap-blog.ru/wp-content/uploads/2012/01/2.png" alt="" width="576" height="508" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/2.png 576w, https://abap-blog.ru/wp-content/uploads/2012/01/2-300x264.png 300w" sizes="(max-width: 576px) 100vw, 576px" /></a></p>
+<p>На уровне классов за определение каждого из типа триггера отвечают следующие классы:</p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>После события &#8212;  <strong>cl_tc_evt_trigger</strong></li>
+<li>Дата/время &#8212;  <strong>cl_tc_date_trigger</strong></li>
+<li>При режиме работы &#8212;  <strong>cl_tc_opmode_trigger</strong></li>
+<li>Для запуска немедленно триггера нет (см. пример выше)</li>
+<li>Для запуска по рабочему календарю &#8212; <strong>cl_tc_onworkday_trigger</strong></li>
+<li>После задания &#8212; <strong>cl_tc_afterjob_trigger</strong></li>
+<li>Для запуска с периодичностью триггера нет (Пример создания такого задания будет рассмотрен во второй части статьи)</li>
+</ul>
+</li>
+</ul>
+<p>По аналогии с классами определяющими типы задач рекомендуется для создания триггеров использовать класс  <strong>cl_tc_trigger_factory </strong>и его статические методы:</p>
+<ul>
+<li><strong>MAKE_OPMODE_TRIGGER &#8212; </strong>триггер для режима работы</li>
+<li><strong>MAKE_EVENT_TRIGGER </strong>&#8212; триггер после события</li>
+<li><strong>MAKE_DATE_TRIGGER &#8212; </strong>триггер даты/времени</li>
+<li><strong>MAKE_ONWORKDAY_TRIGGER &#8212; </strong>триггер по рабочему календарю</li>
+<li>для триггера запускающегося после задания нет подходящего метода (первый привет индусам), его необходимо создавать с помощью CREATE OBJECT.</li>
+</ul>
+<p>Далее простой пример как прицепить к предыдущему заданию триггер на дату и запустить его:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lo_abapjob TYPE REF TO CL_BP_ABAP_JOB,
+      lo_date_tr TYPE REF TO CL_TC_DATE_TRIGGER,
+      lv_time    TYPE TIMS.
+
+lo_abapjob = cl_bp_job_factory=&gt;MAKE_ABAP_JOB( ).
+
+" Устанавливаем имя для фонового задания
+lo_abapjob-&gt;set_name( i_name = 'ZTESTJOB' ).
+" Определяем шаг запуска ABAP отчёта
+lo_abapjob-&gt;set_report( i_report = 'ZMM_QM_TRANS' ).
+" Вариант с которым он будет запущен
+lo_abapjob-&gt;set_variant( i_variant = 'TEST' ).
+" Под каким пользователем он будет выполнен
+lo_abapjob-&gt;set_effective_user( i_authcknam = sy-uname ).
+" Под каким языком
+lo_abapjob-&gt;set_language( i_language = sy-langu ).
+
+" Создаем триггер даты/времени
+lo_date_tr = cl_tc_trigger_factory=&gt;make_date_trigger( ).
+" Дата запуска текущая дата
+lo_date_tr-&gt;SET_SDLSTRTDT( sy-datum ).
+" Время запуска установим на минуту позже текущего
+lv_time = sy-uzeit + 60.
+lo_date_tr-&gt;SET_SDLSTRTTM( lv_time ).
+" Подключим триггер к теущей задаче
+lo_abapjob-&gt;attach_trigger( i_trigger = lo_date_tr ).
+" Запускаем с триггером
+lo_abapjob-&gt;release_job( i_trg_obj = lo_date_tr ).</pre><p>Остальные триггеры прицепляются аналогично, за исключением заполняемых параметров.</p>
+<p><strong>Получатели спула</strong></p>
+<p>Определить получателя спула можно только для заданий выполняемых вместе с триггером (Второй привет индусам). Выглядит это примерно так:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lv_recipient TYPE SWOTOBJID.
+" Определяем в качестве получателя спула текущего пользователя
+CALL FUNCTION 'CREATE_SENDER_OBJECT_PPF'
+  EXPORTING
+    ip_sender      = sy-uname
+  IMPORTING
+    ep_sender_id   = lv_recipient
+  EXCEPTIONS
+    invalid_sender = 1
+    OTHERS         = 2.
+" Определяем получателя спула.
+lo_abapjob-&gt;SET_SPOLIST_RECIPIENT( i_recipient = lv_recipient ).
+" Запускаем с триггером
+lo_abapjob-&gt;RELEASE_JOB( i_trg_obj = lo_date_tr ).</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/fonovye-zadaniya-ispolzuya-abap-objects/">Фоновые задания используя ABAP Objects (Часть 1)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/fonovye-zadaniya-ispolzuya-abap-objects/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

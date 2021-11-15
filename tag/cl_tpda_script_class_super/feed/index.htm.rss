@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>CL_TPDA_SCRIPT_CLASS_SUPER | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_tpda_script_class_super/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:02:16 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Введение в Debugger Scripting</title>
+		<link>https://abap-blog.ru/osnovy-abap/vvedenie-v-debugger-scripting/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/vvedenie-v-debugger-scripting/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 29 May 2012 14:36:14 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[CL_TPDA_SCRIPT_CLASS_SUPER]]></category>
+		<category><![CDATA[CL_TPDA_SCRIPT_DEBUGGER_CTRL]]></category>
+		<category><![CDATA[Debugger Scripting]]></category>
+		<category><![CDATA[отладка]]></category>
+		<category><![CDATA[скрипты]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=850</guid>
+
+					<description><![CDATA[<p>Скрипты необходимы чтобы автоматизировать действия, производимые в отладчике вручную. К примеру, можно совершить 1000 шагов в цикле, изменять и получать значения переменных. Кроме того данный механизм позволит вам выполнять следующие действия: Изменять ход выполнения программы (путем изменения переменных) Анализировать значения переменных и ход выполнения программы Создавать журналы выполнения программы (трассировки) Создавать точки наблюдения и остановок, [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/vvedenie-v-debugger-scripting/">Введение в Debugger Scripting</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Скрипты необходимы чтобы автоматизировать действия, производимые в отладчике вручную. К примеру, можно совершить 1000 шагов в цикле, изменять и получать значения переменных. Кроме того данный механизм позволит вам выполнять следующие действия:</p>
+<ul>
+<li>Изменять ход выполнения программы (путем изменения переменных)</li>
+<li>Анализировать значения переменных и ход выполнения программы</li>
+<li>Создавать журналы выполнения программы (трассировки)</li>
+<li>Создавать точки наблюдения и остановок, в зависимости от условий</li>
+</ul>
+<div><span id="more-850"></span></div>
+<p>Скрипты используют интерфейс отладчика и запускаются на его стороне. Они не могу непосредственно изменять код программы, но могут повлиять на ход его выполнения. Окно скриптов в отладчике:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/05/src1.png"><img loading="lazy" class="alignnone size-full wp-image-851" title="src1" src="http://abap-blog.ru/wp-content/uploads/2012/05/src1.png" alt="" width="1254" height="723" srcset="https://abap-blog.ru/wp-content/uploads/2012/05/src1.png 1254w, https://abap-blog.ru/wp-content/uploads/2012/05/src1-300x172.png 300w, https://abap-blog.ru/wp-content/uploads/2012/05/src1-1024x590.png 1024w" sizes="(max-width: 1254px) 100vw, 1254px" /></a></p>
+<ol>
+<li>Редактор скрипта, как видно скрипт представляет собой класс с методами, через которые получает доступ к отладчику.</li>
+<li>Триггер – определяет событие, при котором будет вызван скрипт. Скрипт может быть вызван напрямую (Debugger Simple Step – execute directly), либо из точки наблюдения или остановки.</li>
+<li>В этой области как не трудно догадаться скрипт можно сохранить (как Z программу, либо отдельным файлом)</li>
+<li>С помощью кнопки Start Script происходит выполнение скрипта</li>
+<li>Script Wizard предоставляет доступ к заранее подготовленным шаблонам – использующим возможности интерфейса отладчика, например с его помощью можно вставить метод чтения значений переменной.</li>
+<li>Если вы создаете трассировки, то их список можно увидеть на вкладке – Traces Files. Список трассировок можно так же посмотреть отдельно в транзакции SAS, из нее можно редактировать и сохранять скрипты. Трассировки могут быть следующих видов: Statement Trace (Записывает информацию о текущей строке исходного кода, которая обрабатывается в скрипте), Trace of the Call Hierarchy (Запись иерархии вызовов), User Specific Trace (Определенный пользователем вид).</li>
+</ol>
+<p>Далее рассмотрим созданный локальный класс скрипта. Скрипт наследуется от глобального класса &#8212; <strong>CL_TPDA_SCRIPT_CLASS_SUPER</strong>. По умолчанию для него создаются следующие методы:</p>
+<ol start="1">
+<li><strong>Prologue</strong> – техническая инициализация скрипта. Когда скрипт запускается, отладчик сначала выполняет данный метод. В реализации супер класса данного метода происходит обновление информации об исходном коде программы (super-&gt;abap_source), если вам не нужна данная информация, вы можете ускорить выполнение скрипта, закомментировав вызов метода prologue супер класса.</li>
+<li><strong>Init</strong> – инициализация скрипта. Вызов происходит после prologue только один раз, Вы можете использовать его для инициализации внутренних данных либо для запроса у пользователя информации необходимой для скрипта.</li>
+<li><strong>Script</strong> – метод вызывающийся при каждом срабатывании триггера, или прямом выполнении скрипта. В данный метод передается параметр p_trigger – обозначающий тип триггера, который его запустил. Кроме того у него есть два исключения, <strong>cx_tpda_stop_scripting_request</strong> – вызвав данное исключение вы прекратите срабатывание скрипта по данному триггеру, <strong>cx_tpda_script_continue</strong> – продолжает выполнение работы скрипта. Для того чтобы позволить пользователю выбрать хочет он продолжать работу скрипта далее или нет используйте метод &#8212;  me-&gt;break( ).</li>
+<li>End – конец выполнения скрипта. Срабатывает когда пользователь отменяет работу скрипта, либо когда он сам ее завершает.</li>
+</ol>
+<p>Супер класс поддерживает следующие сервисы:</p>
+<ul>
+<li><strong>abap_</strong><strong>source</strong> – данные об исходном коде программы, например получить имя программы можно следующим образом &#8212; currr_prog = abap_source-&gt;program( )</li>
+<li><strong>bp</strong> – работа с точками остановок</li>
+<li><strong>wp</strong> – работа с точками наблюдения</li>
+<li><strong>debugger_</strong><strong>control</strong> – позволяет управлять отладчиком на уровне шага, перейти на шаг вперед (назад)</li>
+<li><strong>dynpro</strong> – информация о экранах</li>
+<li><strong>specials</strong> – прочая системная информация (Работа с памятью, вызов commit work и пр.)</li>
+</ul>
+<div></div>
+<div>
+<h3>Автоматизация рутинных действий</h3>
+<p>Допустим, есть следующая программа:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zscripting_control.
+
+DATA: gv_rc TYPE char1.
+
+DO 1000 TIMES.
+  PERFORM test USING gv_rc.
+  IF gv_rc = abap_true.
+    MESSAGE 'Error' TYPE 'E'.
+  ENDIF.
+ENDDO.
+
+WRITE 'Все в порядке'.
+
+FORM test USING lv_rc TYPE char1.
+  lv_rc = abap_true.
+ENDFORM.</pre><p>Как видно из кода, переменной <strong>gv_</strong><strong>rc</strong> всегда будет присваиваться значение true, таким образом, чтобы пройти весь цикл нам необходимо в каждой итерации цикла подменять значение переменной, что само по себе накладно (для 1000 итераций J). Воспользуемся скриптами. Запустите программу в отладке и перейдите на закладку Scripts. В качестве триггера выберите Breakboint Reached, создайте точку остановки для процедуры Test.</p>
+</div>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/05/src2.png"><img loading="lazy" class="alignnone size-full wp-image-852" title="src2" src="http://abap-blog.ru/wp-content/uploads/2012/05/src2.png" alt="" width="405" height="126" srcset="https://abap-blog.ru/wp-content/uploads/2012/05/src2.png 405w, https://abap-blog.ru/wp-content/uploads/2012/05/src2-300x93.png 300w" sizes="(max-width: 405px) 100vw, 405px" /></a></p>
+<p>В момент, когда процедура будет запущена, сработает метод <strong>Script</strong>. Нам необходимо чтобы при этом отладчик вышел из процедуры и подменил значение переменной gv_rc. Как уже упоминалось выше для контроля над процессом отладки в классе super, есть подкласс – <strong>debugger_</strong><strong>controller</strong>. С помощью его метода – <strong>debug_</strong><strong>step</strong> мы можем выполнить нужный нам шаг, в качестве команды задать &#8212; <strong>CL_TPDA_SCRIPT_DEBUGGER_CTRL</strong>=&gt;<strong>debug_step_over</strong>. Далее с помощью помощника выберем изменение значений переменной. В итоге получиться следующий код:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD script.
+    me-&gt;debugger_controller-&gt;debug_step( CL_TPDA_SCRIPT_DEBUGGER_CTRL=&gt;debug_step_over ).
+    TRY.
+        cl_tpda_script_data_descr=&gt;change_value(
+            p_new_value = ''
+            p_varname   = 'gv_rc' ).
+      CATCH cx_tpda_varname .
+      CATCH cx_tpda_scr_auth .
+    ENDTRY.
+  ENDMETHOD.                    "script</pre><p>Далее нажмите кнопку запуска скрипта, если все сделано правильно программа пройдет весь цикл, не выдав ошибочного сообщения, написав «Все в порядке».</p>
+<p><strong>Интерактивные скрипты</strong></p>
+<p>Допустим, необходимо чтобы при смене ABAP стека каждый раз, когда мы переходим в определенную программу, вызывался скрипт, но при этом мы хотим сделать скрипт более универсальным, т.е. имя программы необходимо задавать при его инициализации. Для запроса имени программы в методе init используем ФМ POPUP_GET_VALUES, имя программы будем хранить в глобальной переменной нашего класса. Поставим триггер на точку прерывания при смене ABAP стека.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/05/src3.png"><img loading="lazy" class="alignnone size-full wp-image-853" title="src3" src="http://abap-blog.ru/wp-content/uploads/2012/05/src3.png" alt="" width="403" height="136" srcset="https://abap-blog.ru/wp-content/uploads/2012/05/src3.png 403w, https://abap-blog.ru/wp-content/uploads/2012/05/src3-300x101.png 300w" sizes="(max-width: 403px) 100vw, 403px" /></a></p>
+<p>В методе script сравним имя программы в текущем контексте отладчика с именем указанным при инициализации, если оно совпало, вызовем прерывание скрипта. Изменим предыдущую программу (создадим дополнительно новую – ZTMP3 с такой же процедурой, которая описана выше):</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zscripting_control.
+
+DATA: gv_rc TYPE char1.
+
+DO 1000 TIMES.
+  PERFORM test(ZTMP3) USING gv_rc.
+  IF gv_rc = abap_true.
+    MESSAGE 'Error' TYPE 'E'.
+  ENDIF.
+ENDDO.
+
+WRITE 'Все в порядке'.</pre><p>Исходный код скрипта будет выглядеть следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_debugger_script DEFINITION INHERITING FROM  cl_tpda_script_class_super  .
+  PUBLIC SECTION.
+    METHODS: prologue REDEFINITION,
+             init     REDEFINITION,
+             script   REDEFINITION,
+             end      REDEFINITION.
+  PRIVATE SECTION.
+    DATA PROGRAM TYPE sy-repid.
+ENDCLASS.                    "lcl_debugger_script DEFINITION
+
+CLASS lcl_debugger_script IMPLEMENTATION.
+  METHOD prologue.
+    super-&gt;prologue( ).
+  ENDMETHOD.                    "prologue
+
+  METHOD init.
+   DATA: l_dd03p_tab TYPE TABLE OF dd03p,
+         l_key       TYPE abap_keydescr,
+         l_fields    TYPE TABLE OF sval,
+         l_field     TYPE sval,
+         l_rc(1)     TYPE C.
+
+    l_field-tabname   = 'TPDA_DYNP_SRC_INFO'.
+    l_field-fieldname = 'PROGRAM'.
+    l_field-fieldtext = 'Programm'(prg).
+    l_field-VALUE     = SPACE.
+    l_field-field_obl = abap_true.
+    APPEND l_field TO l_fields.
+
+    CALL FUNCTION 'POPUP_GET_VALUES'
+      EXPORTING
+        popup_title     = 'Укажите имя программы'(hd1)
+      IMPORTING
+        RETURNCODE      = l_rc
+      TABLES
+        FIELDS          = l_fields
+      EXCEPTIONS
+        error_in_fields = 1
+        OTHERS          = 2.
+
+    READ TABLE l_fields INTO l_field INDEX 1.
+    PROGRAM = l_field-VALUE.
+
+  ENDMETHOD.                    "init
+
+  METHOD script.
+    IF PROGRAM = abap_source-&gt;program( ).
+       me-&gt;break( ).
+    ENDIF.
+  ENDMETHOD.                    "script
+
+  METHOD end.
+  ENDMETHOD.                    "end
+ENDCLASS.                    "lcl_debugger_script IMPLEMENTATION</pre><p>После запуска скрипта, его остановка произойдет, как только мы изменим ABAP стек, вызвав процедуру из другой программы.</p>
+<h3>Динамическое создание точек прерывания и наблюдения</h3>
+<p>Допустим необходимо вызвать прерывание в момент, когда программа читает внутреннюю таблицу. Сделаем это используя встроенный механизм сканирования исходного кода. Исходный код программы:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zscripting_control.
+
+DATA:
+  gt_mara TYPE STANDARD TABLE OF mara WITH HEADER LINE.
+
+SELECT matnr FROM mara INTO CORRESPONDING FIELDS OF TABLE gt_mara UP TO 10 ROWS.
+DELETE gt_mara INDEX 5.
+READ TABLE gt_mara INDEX 3.</pre><p>Исходный код скрипта для прерывания в момент чтения внутренней таблицы можно загрузить из стандартного подготовленного SAP скрипта &#8212; RSTPDA_SCRIPT_BP_READ_TAB. Его исходный код:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_debugger_script DEFINITION INHERITING FROM  cl_tpda_script_class_super  .
+
+  PUBLIC SECTION.
+    METHODS: prologue  REDEFINITION,
+             init    REDEFINITION,
+             script  REDEFINITION,
+             end     REDEFINITION.
+  PRIVATE SECTION.
+
+    DATA range_it TYPE tpda_range_it.
+ENDCLASS.                    "lcl_debugger_script DEFINITION
+
+CLASS lcl_debugger_script IMPLEMENTATION.
+  METHOD prologue.
+*** generate abap_source (source handler for ABAP)
+    super-&gt;prologue( ).
+  ENDMETHOD.                    "prolog
+
+  METHOD init.
+
+    DATA l_cancel TYPE flag.
+
+    CALL FUNCTION 'TPDA_SCRIPT_CALL_SEL_SCREEN'
+      EXPORTING
+        p_screen   = if_tpda_sel_screens=&gt;c_scr_itab
+      IMPORTING
+        p_range_it = range_it
+        p_cancel   = l_cancel.
+
+    IF l_cancel = abap_true.
+      MESSAGE s144(tpda) .
+      RAISE EXCEPTION TYPE cx_tpda_stop_scripting_request.
+    ELSEIF range_it IS INITIAL.
+      MESSAGE s144(tpda) .
+      RAISE EXCEPTION TYPE cx_tpda_stop_scripting_request.
+    ENDIF.
+
+  ENDMETHOD.                    "init
+  METHOD script.
+    DATA:  l_itabs_it     TYPE         cl_tpda_script_scan_itab_read=&gt;TY_IT_TABLES,
+           l_itab         LIKE LINE OF l_itabs_it,
+           l_scan_object  TYPE REF TO  cl_tpda_script_scan_itab_read,
+           l_curr_itab    TYPE         STRING.
+    TRY.
+
+        l_scan_object ?= cl_tpda_script_scan=&gt;scan(
+            p_program     = abap_source-&gt;program( )
+            p_include     = abap_source-&gt;include( )
+            p_line        = abap_source-&gt;line( )
+               ).
+
+        l_itabs_it = l_scan_object-&gt;IT_TABLES( ).
+
+        LOOP AT l_itabs_it INTO l_itab.
+          IF l_itab IN range_it.
+            me-&gt;break( ).
+          ENDIF.
+        ENDLOOP.
+
+      CATCH cx_sy_move_cast_error.
+        MESSAGE s049(tpda_script).
+        me-&gt;break( ).
+      CATCH cx_tpda_script_scan_macro.
+        MESSAGE s048(tpda_script).
+        me-&gt;break( ).
+      CATCH cx_tpda_script_scan.
+        MESSAGE s049(tpda_script).
+        me-&gt;break( ).
+      CATCH cx_tpda_varname .
+        MESSAGE s049(tpda_script).
+        me-&gt;break( ).
+      CATCH cx_tpda_script_no_simple_type .
+        MESSAGE s049(tpda_script).
+        me-&gt;break( ).
+      CATCH CX_ROOT.
+        MESSAGE s049(tpda_script).
+        me-&gt;break( ).
+    ENDTRY.
+
+  ENDMETHOD.                    "script
+
+  METHOD end.
+  ENDMETHOD.                    "end
+ENDCLASS.                    "lcl_debugger_script IMPLEMENTATION</pre><p>Данный скрипт по умолчанию загружает точку остановки на моменте вызова READ TABLE для внутренних таблиц.</p>
+<h3>Использование трассировок</h3>
+<p>Как говорилось выше можно использовать разные виды трассировок. Следующий пример покажет, как использовать &#8212; Statement Trace. Задача: найти все вызовы проверки полномочий в стандартной транзакции – ME23N (во время запуска).</p>
+<p>&nbsp;</p>
+<ul>
+<li>Заходим в SE93, указываем ME23n, жмем – отладку (Тест – отладка).</li>
+<li>Переходим на вкладку скрипт, используя заранее подготовленный скрипт загрузим &#8212; RSTPDA_SCRIPT_STATEMENT_TRACE</li>
+<li>В качестве триггера создадим точку на вызов &#8212; AUTHORITY-CHECK</li>
+<li>Запускаем скрипт, жмем – Continue</li>
+<li>После запуска транзакции (нас интересовал только запуск) в командной строке набираем /h и жмем F3 – вылетит отладчик в котором необходимо завершить работу скрипта – EXIT SCRIPT.</li>
+<li>Запускаем транзакцию SAS (либо прямо в отладчике через закладку трассировок) – смотрим трассировку.</li>
+</ul>
+<p>В итоге получится что-то вроде:<br />
+<span style="color: #808080; font-style: italic;"><a href="http://abap-blog.ru/wp-content/uploads/2012/05/src4.png"><img loading="lazy" class="alignnone size-full wp-image-854" title="src4" src="http://abap-blog.ru/wp-content/uploads/2012/05/src4.png" alt="" width="1203" height="740" srcset="https://abap-blog.ru/wp-content/uploads/2012/05/src4.png 1203w, https://abap-blog.ru/wp-content/uploads/2012/05/src4-300x184.png 300w, https://abap-blog.ru/wp-content/uploads/2012/05/src4-1024x629.png 1024w" sizes="(max-width: 1203px) 100vw, 1203px" /></a></span></p>
+<h3>Добавление в журнал трассировок своих данных (User Specific Trace).</h3>
+<p>Задача: есть таблица с данными ОЗМ необходимо в журнал затащить все записи, у которых БЕИ отличается от M3. В журнале должен быть номер материала и его ЕИ. Пример программы:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zscripting_control.
+
+DATA:
+  gt_mara TYPE STANDARD TABLE OF mara WITH HEADER LINE,
+  p_dummy TYPE C.
+
+FIELD-SYMBOLS: &lt;fs_mara_line&gt; TYPE mara.
+
+SELECT * FROM mara INTO CORRESPONDING FIELDS OF TABLE gt_mara UP TO 10 ROWS.
+
+LOOP AT gt_mara.
+ENDLOOP.
+
+WRITE 'TEST'.</pre><p></p>
+<ol start="1">
+<li>Создаем точку наблюдения для переменной gt_mara-meins &lt;&gt; ‘M3’</li>
+<li style="display: inline !important;"></li>
+<li>С помощью метода подкласса trace – add_custom_info добавляем свои данные.</li>
+<li>Метод script будет иметь следующий вид:</li>
+</ol>
+<p></p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD script.
+    DATA: cust_matnr  TYPE tpda_var_value,
+          cust_meins  TYPE tpda_var_value,
+          trace_entry TYPE tpda_trace_custom.
+
+    trace-&gt;add_event_info( ).
+
+    cust_matnr = cl_tpda_script_data_descr=&gt;get_simple_value(
+       p_var_name  = 'GT_MARA-MATNR' ).
+
+    cust_meins = cl_tpda_script_data_descr=&gt;get_simple_value(
+       p_var_name  = 'GT_MARA-MEINS' ).
+
+    IF cust_meins &lt;&gt; 'M3'.
+      trace_entry-VALUE = 'Материал:' &amp;&amp; SPACE &amp;&amp; cust_matnr &amp;&amp; ' ЕИ:' &amp;&amp; SPACE &amp;&amp; cust_meins.
+      trace-&gt;add_custom_info( p_trace_entry = trace_entry ).
+    ENDIF.
+  ENDMETHOD.</pre><p>После этого если у вас были такие материалы, они отобразятся в трассировке:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/05/src5.png"><img loading="lazy" class="alignnone size-full wp-image-855" title="src5" src="http://abap-blog.ru/wp-content/uploads/2012/05/src5.png" alt="" width="467" height="342" srcset="https://abap-blog.ru/wp-content/uploads/2012/05/src5.png 467w, https://abap-blog.ru/wp-content/uploads/2012/05/src5-300x219.png 300w" sizes="(max-width: 467px) 100vw, 467px" /></a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/vvedenie-v-debugger-scripting/">Введение в Debugger Scripting</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/vvedenie-v-debugger-scripting/feed/</wfw:commentRss>
+			<slash:comments>4</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

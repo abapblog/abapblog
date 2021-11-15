@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>упакованные компоненты | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/upakovannye-komponenty/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Wed, 17 Mar 2021 20:57:15 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Упакованные компоненты</title>
+		<link>https://abap-blog.ru/osnovy-abap/upakovannye-komponenty/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/upakovannye-komponenty/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 24 Mar 2013 12:26:45 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[boxed components]]></category>
+		<category><![CDATA[производительность]]></category>
+		<category><![CDATA[упакованные компоненты]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1252</guid>
+
+					<description><![CDATA[<p>Начиная с версии Ehp2 7.0 (ABAP Kernel 7.20) в ABAP появилась возможность использования так называемых упакованных компонентов. Объявить структуру с использованием упакованных компонентов мы можем как локально, с помощью ключевого слова BOXED, так и в словаре, выбрав тип типизации: В роли упакованных компонентов могут выступать как простые структуры, так и глубокие структуры (содержащие набор компонентов или [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/upakovannye-komponenty/">Упакованные компоненты</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Начиная с версии Ehp2 7.0 (ABAP Kernel 7.20) в ABAP появилась возможность использования так называемых <a href="http://help.sap.com/abapdocu_702/en/abennews-71-boxed_components.htm" target="_blank" rel="noopener">упакованных компонентов</a>. Объявить структуру с использованием упакованных компонентов мы можем как локально, с помощью ключевого слова <a href="http://help.sap.com/abapdocu_702/en/abaptypes_boxed.htm" target="_blank" rel="noopener"><b>BOXED</b></a>, так и в словаре, выбрав тип типизации:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/03/123.png"><img loading="lazy" class="alignnone size-full wp-image-1255" src="http://abap-blog.ru/wp-content/uploads/2013/03/123.png" alt="Boxed in dictionary" width="958" height="241" /></a></p>
+<p><span id="more-1252"></span></p>
+<p>В роли упакованных компонентов могут выступать как простые структуры, так и глубокие структуры (содержащие набор компонентов или другие вложенные структуры), а так же структурные атрибуты классов и интерфейсов. При копировании структур с помощью оператора INCLUDE TYPE|STRUCTURE атрибут <strong>BOXED</strong> копируется.</p>
+<p>Упакованные компоненты позволяют сократить объем выделенной памяти в программе. Достигается это за счёт того что под упакованные компоненты память выделяется только при их реальном использовании (см. ниже). Для обычных же компонентов объявленных через оператор <b>TYPE</b> (не TYPE REF TO), память выделяется автоматически при их инициализации.</p>
+<p>Согласно <a href="http://help.sap.com/abapdocu_702/en/abenstatic_boxes.htm" target="_blank" rel="noopener">документации</a>, выделение памяти под упакованные компоненты происходит в следующих случаях:</p>
+<ul>
+<li>Во время записи</li>
+<li>Во время присвоения ссылочному полю (Field Symbols)</li>
+<li>Когда компонент передается в любую из подпрограмм (процедуры и т.п.)</li>
+<li>Когда мы получаем доступ через ссылочную переменною (GET REFERENCE OF)</li>
+</ul>
+<p>Операторы CLEAR и FREE не возвращают упакованные компоненты в первоначальное состояние (не сбрасывают выделенную память), а только приводят их компоненты в исходное (initial) состояние.</p>
+<p>Пример выделения памяти для структур с разными типами и ссылочной переменной:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  zboxed_components.
+
+TYPES:
+  BEGIN OF ty_mara,
+    mara TYPE mara,
+  END OF ty_mara,
+
+  BEGIN OF ty_mara_boxed,
+    mara TYPE mara BOXED,
+  END OF ty_mara_boxed.
+
+DATA:
+  ls_mara        TYPE ty_mara,
+  ls_mara_boxed  TYPE ty_mara_boxed,
+  ls_ref_to_mara TYPE REF TO ty_mara.
+
+BREAK-POINT.</pre><p>В результате система выделит память следующим образом:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/03/3212.png"><img loading="lazy" class="alignnone size-full wp-image-1259" src="http://abap-blog.ru/wp-content/uploads/2013/03/3212.png" alt="Выделение памяти" width="477" height="103" /></a></p>
+<p>&nbsp;</p>
+<p>Для упакованного компонента система выделяет 8 байт для хранения ссылки на оригинальную структуру.</p>
+<p>В качестве еще одного примера рассмотрим небольшую программу для получения данных о поставщиках и их телефонных номерах:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  zboxed_components.
+
+TABLES: lfa1.
+
+TYPES:
+  " Структура с телефонными данными поставщиков
+  BEGIN OF ty_data,
+    telf1 TYPE lfa1-telf1,
+    telf2 TYPE lfa1-telf2,
+  END OF ty_data,
+
+  " Структура без упакованного компонента
+  BEGIN OF ty_customer,
+    lifnr TYPE lifnr,
+    telef TYPE ty_data,
+  END OF ty_customer,
+
+  " Структура с упакованным компонентом
+  BEGIN OF ty_customer_boxed,
+    lifnr TYPE lifnr,
+    telef TYPE ty_data BOXED,
+  END OF ty_customer_boxed.
+
+DATA:
+  lt_tab    TYPE TABLE OF ty_customer,
+  lt_tab_b  TYPE TABLE OF ty_customer_boxed.
+
+FIELD-SYMBOLS:
+  &lt;fs_boxed_line&gt; TYPE ty_customer_boxed.
+
+SELECT lifnr telf1 telf2 FROM lfa1 UP TO 100 ROWS INTO TABLE lt_tab.
+
+" Не сработает т.к. OPEN SQL поддерживает только плоские структуры, 
+" ссылочные переменные или внутренние таблицы не поддерживаются
+* SELECT lifnr telf1 telf2 FROM lfa1 UP TO 100 ROWS INTO TABLE lt_tab_b.
+" Заполним другим способом:
+SELECT lifnr telf1 telf2 FROM lfa1 UP TO 100 ROWS INTO lfa1.
+  APPEND INITIAL LINE TO lt_tab_b ASSIGNING &lt;fs_boxed_line&gt;.
+  MOVE-CORRESPONDING lfa1 TO &lt;fs_boxed_line&gt;.
+ENDSELECT.
+
+BREAK-POINT.</pre><p>В тестовых данных моей системы существуют такие поставщики, у которых нет информации о телефонных номерах, соответственно выделение памяти под эти данные не имеет смысла. После заполнения внутренних таблиц мы имеем следующий результат по выделению памяти:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/03/111.png"><img loading="lazy" class="alignnone size-full wp-image-1260" src="http://abap-blog.ru/wp-content/uploads/2013/03/111.png" alt="Выделенная память" width="832" height="136" /></a></p>
+<p>&nbsp;</p>
+<p>Как видно из рисунка, после выполнения выборки, под вторую таблицу выделено гораздо меньше памяти, за счёт использования упакованных компонентов. Кроме того что использование упакованных компонентов может снизить объем выделенной памяти (в тяжелых случаях избавить от дампов при выделении памяти <img src="https://s.w.org/images/core/emoji/13.1.0/72x72/1f642.png" alt="🙂" class="wp-smiley" style="height: 1em; max-height: 1em;" /> ), их использование так же может ускорить время выполнения программы, за счёт копирования только внутренней ссылки, без копирования дополнительных данных, при операциях над структурными переменными.</p>
+<p>Пример того как упакованные компоненты могут быть использованы в классах:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_order DEFINITION.
+       PUBLIC SECTION.
+       ...
+       DATA: post_addr     TYPE address,
+             alt_post_addr TYPE address BOXED.
+ENDCLASS.</pre><p>Видео на тему:</p>
+<div class="arve" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-2nfa_tk8hba618a246ad862d588584331" style="max-width:720px;" itemscope itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/2nfA_tK8HbA?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="arve-iframe fitvidsignore" data-arve="arve-youtube-2nfa_tk8hba618a246ad862d588584331" data-src-no-ap="https://www.youtube-nocookie.com/embed/2nfA_tK8HbA?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="405" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="https://www.youtube-nocookie.com/embed/2nfA_tK8HbA?feature=oembed&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="720"></iframe>
+
+</span>
+
+</span>
+
+</div><p>The post <a href="https://abap-blog.ru/osnovy-abap/upakovannye-komponenty/">Упакованные компоненты</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/upakovannye-komponenty/feed/</wfw:commentRss>
+			<slash:comments>4</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

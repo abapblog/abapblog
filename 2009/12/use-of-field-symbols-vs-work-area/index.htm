@@ -1,0 +1,1380 @@
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title> Use of Field-symbols vs Work area - ABAP Help Blog</title>
+<meta name="google-site-verification" content="Q2CNRPqLzecuqITw2LR_UDyF0nv6mNAU5wcUV_mTCLc" />
+<link rel="stylesheet" href="http://zevolving.com/wp-content/themes/new_wp/style.css" type="text/css" />
+<link href="http://zevolving.com/images/icon48.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="http://zevolving.com/images/icon48.png" rel="icon" type="image/vnd.microsoft.icon">
+<link rel="pingback" href="http://zevolving.com/xmlrpc.php" />
+<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />
+<style>
+#cse .gsc-search-box {
+display: none;
+}
+</style>
+<script>
+	var g_expand_20 = "http://zevolving.com/images/expand_20.png";
+	var g_collapse_20 = "http://zevolving.com/images/collapse2_20.png";
+	var g_select_20 = "http://zevolving.com/images/select2_20.png";
+	var g_theme_folder = "http://zevolving.com/wp-content/themes/new_wp";
+</script>
+<script type="text/javascript" src="http://zevolving.com/wp-content/themes/new_wp/js/syntaxer.js"></script>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25819257-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v16.8 - https://yoast.com/wordpress/plugins/seo/ -->
+	<meta name="description" content="To use the Field-symbols against the Work Area for Internal table processing. We&#039;ll also measure the difference between both of the techniques. Basics" />
+	<link rel="canonical" href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Use of Field-symbols vs Work area - ABAP Help Blog" />
+	<meta property="og:description" content="To use the Field-symbols against the Work Area for Internal table processing. We&#039;ll also measure the difference between both of the techniques. Basics" />
+	<meta property="og:url" content="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/" />
+	<meta property="og:site_name" content="ABAP Help Blog" />
+	<meta property="article:published_time" content="2009-12-15T23:54:00+00:00" />
+	<meta property="article:modified_time" content="2014-02-05T04:29:32+00:00" />
+	<meta property="og:image" content="http://3.bp.blogspot.com/_Pj9z40ys5GI/SygnlAt4YKI/AAAAAAAAA5o/5ug3m2I18m4/s400/FS_vs_WA_data.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:creator" content="@zevolving" />
+	<meta name="twitter:site" content="@zevolving" />
+	<meta name="twitter:label1" content="Written by" />
+	<meta name="twitter:data1" content="Naimesh Patel" />
+	<meta name="twitter:label2" content="Est. reading time" />
+	<meta name="twitter:data2" content="3 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"http://zevolving.com/#website","url":"http://zevolving.com/","name":"ABAP Help Blog","description":"Great Insight with Tips &amp; Tricks for ABAP","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"http://zevolving.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#primaryimage","inLanguage":"en-US","url":"http://3.bp.blogspot.com/_Pj9z40ys5GI/SygnlAt4YKI/AAAAAAAAA5o/5ug3m2I18m4/s400/FS_vs_WA_data.png","contentUrl":"http://3.bp.blogspot.com/_Pj9z40ys5GI/SygnlAt4YKI/AAAAAAAAA5o/5ug3m2I18m4/s400/FS_vs_WA_data.png"},{"@type":"WebPage","@id":"http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#webpage","url":"http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/","name":"Use of Field-symbols vs Work area - ABAP Help Blog","isPartOf":{"@id":"http://zevolving.com/#website"},"primaryImageOfPage":{"@id":"http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#primaryimage"},"datePublished":"2009-12-15T23:54:00+00:00","dateModified":"2014-02-05T04:29:32+00:00","author":{"@id":"http://zevolving.com/#/schema/person/a31f438f139d8897ad087c0cbd2e5e8a"},"description":"To use the Field-symbols against the Work Area for Internal table processing. We'll also measure the difference between both of the techniques. Basics","breadcrumb":{"@id":"http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/"]}]},{"@type":"BreadcrumbList","@id":"http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"http://zevolving.com/"},{"@type":"ListItem","position":2,"name":"Performance","item":"http://zevolving.com/category/performance/"},{"@type":"ListItem","position":3,"name":"Use of Field-symbols vs Work area"}]},{"@type":"Person","@id":"http://zevolving.com/#/schema/person/a31f438f139d8897ad087c0cbd2e5e8a","name":"Naimesh Patel","image":{"@type":"ImageObject","@id":"http://zevolving.com/#personlogo","inLanguage":"en-US","url":"http://0.gravatar.com/avatar/fe97645d09e2ab21b288ea4adf01115b?s=96&d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&r=g","contentUrl":"http://0.gravatar.com/avatar/fe97645d09e2ab21b288ea4adf01115b?s=96&d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&r=g","caption":"Naimesh Patel"},"description":"I'm SAP ABAP Consultant for more than a decade. I like to experiment with ABAP especially OO. I have been SDN Top Contributor.","sameAs":["http://zevolving.com/"],"url":"http://zevolving.com/author/naimesh-patel/"}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="ABAP Help Blog &raquo; Use of Field-symbols vs Work area Comments Feed" href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/zevolving.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.7.3"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='http://zevolving.com/wp-includes/css/dist/block-library/style.min.css?ver=5.7.3' type='text/css' media='all' />
+<link rel='stylesheet' id='contact-form-7-css'  href='http://zevolving.com/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.4' type='text/css' media='all' />
+<link rel='stylesheet' id='toc-screen-css'  href='http://zevolving.com/wp-content/plugins/table-of-contents-plus/screen.min.css?ver=2002' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-polls-css'  href='http://zevolving.com/wp-content/plugins/wp-polls/polls-css.css?ver=2.75.6' type='text/css' media='all' />
+<style id='wp-polls-inline-css' type='text/css'>
+.wp-polls .pollbar {
+	margin: 1px;
+	font-size: 9px;
+	line-height: 11px;
+	height: 11px;
+	background: #dd4b39;
+	border: 1px solid #c53727;
+}
+
+</style>
+<link rel='stylesheet' id='wordpress-popular-posts-css-css'  href='http://zevolving.com/wp-content/plugins/wordpress-popular-posts/assets/css/wpp.css?ver=5.2.4' type='text/css' media='all' />
+<link rel='stylesheet' id='zabap_code-css'  href='http://zevolving.com/wp-content/plugins/zabap-code/abap_code.css?ver=5.7.3' type='text/css' media='all' />
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/jquery/jquery.min.js?ver=3.5.1' id='jquery-core-js'></script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='application/json' id='wpp-json'>
+{"sampling_active":0,"sampling_rate":100,"ajax_url":"http:\/\/zevolving.com\/wp-json\/wordpress-popular-posts\/v1\/popular-posts","ID":21,"token":"63aae473a0","lang":0,"debug":0}
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-content/plugins/wordpress-popular-posts/assets/js/wpp.min.js?ver=5.2.4' id='wpp-js-js'></script>
+<script type='text/javascript' src='http://zevolving.com/wp-content/plugins/zabap-code/ash_main.js?ver=5.7.3' id='zashjs-js'></script>
+<link rel="https://api.w.org/" href="http://zevolving.com/wp-json/" /><link rel="alternate" type="application/json" href="http://zevolving.com/wp-json/wp/v2/posts/21" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://zevolving.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://zevolving.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.7.3" />
+<link rel='shortlink' href='http://zevolving.com/?p=21' />
+<link rel="alternate" type="application/json+oembed" href="http://zevolving.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fzevolving.com%2F2009%2F12%2Fuse-of-field-symbols-vs-work-area%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://zevolving.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fzevolving.com%2F2009%2F12%2Fuse-of-field-symbols-vs-work-area%2F&#038;format=xml" />
+<style type="text/css">div#toc_container {width: 50%;}</style><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><script type="text/javascript" src="http://zevolving.com/wp-content/themes/new_wp/js/footer_hover.js"></script>
+<script type="text/javascript"  src="http://zevolving.com/wp-content/themes/new_wp/js/gacookies.js"></script>
+<script type="text/javascript"  src="http://zevolving.com/wp-content/themes/new_wp/js/ad_loading.js"></script>
+<script type="text/javascript">
+window.___gcfg = {lang: 'en'};
+(function() 
+{var po = document.createElement("script");
+po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(po, s);
+})();</script>
+<link rel="author" href="https://plus.google.com/+NaimeshPatel/posts">
+<meta name="twitter:creator" content="@naimeshpatel">
+</head>
+<body onload='ieonload(event);'> 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+			<script type="text/javascript">
+			fixedtoolactive = true;
+		        fixedSideAdsactive = false;
+		</script>
+		<script type="text/javascript">
+		fixedmegamenuactive = true;
+	</script>
+
+	
+	<div id="page-wrap">
+
+
+		<div id="main-header">
+			<header>
+  
+				<div id="header-wrapper">
+
+					<div class="header-text">
+						<div class="header-bg-wrap">
+							<div class="header-name">
+								<a href="http://zevolving.com">Zevolving</a>
+							</div>
+							<span class="hs1"></span>
+							<span class="hs2"></span>
+							<span class="hs3"></span>
+							<span class="hs4"></span>
+							<span class="hs5"></span>
+						</div>
+					</div>
+					<div class="header-ad">
+					<div class="head-search-wrap">
+					<form accept-charset="utf-8" method="get" id="searchform" action="http://zevolving.com/search">
+						<label style="display:none;" for="s">Search:</label>
+						<span class="search-form-glass"><input type="submit" id="searchsubmit" value="SEARCH"></span>
+						<input autocomplete="off" id="s" name="q" type="text" class="search-form-input" placeholder="e.g. ABAP Objects" title="search" onkeydown="if (event.keyCode == 13) document.getElementById('searchsubmit').click()">
+					</form>
+					</div>
+					</div>
+
+
+				</div>
+
+			</header>
+
+		</div>
+
+		<div class="menu-main-wrapper">
+			<div id="mmenu-wrapper" class="menu-wrapper">
+				<ul id="mega-menu">
+					<li class="icon-dis"><a href="http://zevolving.com" class="lsf-icon" title="home"></a>
+						<div class="dropdown_2columns">
+							<div class="col_2">
+								<h2>Welcome !</h2>
+							</div>
+							<div class="col_2">
+								<p>Welcome to Zevolving - place where you find one of the best articles, tutorials for ABAP</p>             
+							</div>
+						</div>
+					</li>
+					
+
+					<li ><a href="http://zevolving.com/archives/">Recent Posts</a>
+						<div class="dropdown_3columns">
+							<div class="col_3">
+							<div><h3><a href="http://zevolving.com/2020/01/write-green-programs/" title="Permanent link to Write Green Programs" >Write Green Programs</a> </h3><p> It’s not about setting the background green of your code editor or setting up all the code lines t...</p></div><div><h3><a href="http://zevolving.com/2017/01/display-alv-grid-on-list-generated-by-write/" title="Permanent link to Display ALV Grid on List Generated by WRITE " >Display ALV Grid on List Generated by WRITE </a> </h3><p> Ever wondered how to generate the ALV Grid on the list generated by WRITE statement. Lets see today ...</p></div><div><h3><a href="http://zevolving.com/2016/11/why-not-to-have-a-wrapper-around-exception-raise/" title="Permanent link to Why NOT to have a wrapper around Exception (RAISE) ?" >Why NOT to have a wrapper around Exception (RAISE) ?</a> </h3><p> Class based exception are more powerful compared to the "legacy" exceptions. But you don't want to c...</p></div>							<ul><li><a href="http://zevolving.com/archives/">More Post &#8594;</a></li></ul>
+							</div>
+						</div>
+					</li>
+
+
+					<li ><a href="http://zevolving.com/category/abapobjects/">OO Concepts</a>
+						<div class="dropdown_2columns">
+							<div class="col_2">
+							<ul>
+								<li><a href="http://zevolving.com/2012/01/abstract-class-vs-interface/">Abstract class vs Interface</a></li>
+								<li><a href="http://zevolving.com/2012/05/abap-objects-achieve-multiple-inheritance-using-interfaces/">Multiple Inheritance</a></li>
+								<li><a href="http://zevolving.com/2012/01/when-to-use-local-class-and-when-not-to/">When to use Local Class</a></li>
+								<li><a href="http://zevolving.com/2011/12/class-based-exception/">Class Based Exceptions</a></li>
+								<li><a href="http://zevolving.com/2011/02/class_constructor-and-constructor-who-comes-before-whom/">Constructors</a></li>
+							</ul>					
+							<ul><li><a href="http://zevolving.com/category/abapobjects/oo-concepts/">More &#187;</a></li></ul>
+							</div>
+						</div>
+					</li>
+					<li ><a href="http://zevolving.com/category/abapobjects/oo-design-patterns/">Design Patterns</a>
+						<div class="dropdown_2columns">
+							<div class="col_2">
+							<ul>
+								<li><a href="http://zevolving.com/2008/09/abap-object-design-patterns-singleton/">Singleton</a></li>
+								<li><a href="http://zevolving.com/2008/10/abap-objects-design-patterns-model-view-controller-mvc-part-1/">Model View Controller</a></li>
+								<li><a href="http://zevolving.com/2012/02/abap-objects-design-patterns-singleton-factory/">Singleton Factory</a></li>
+								<li><a href="http://zevolving.com/2011/10/abap-objects-design-patterns-decorator/">Decorator</a></li>
+								<li><a href="http://zevolving.com/2011/11/case-study-observer-design-pattern-usage/">Observer</a></li>
+							</ul>
+							<ul><li><a href="http://zevolving.com/category/abapobjects/oo-design-patterns/">More &#187;</a></li></ul>
+							</div>
+						</div>
+					</li>
+
+					<li ><a href="http://zevolving.com/category/performance/">Performance</a>
+						<div class="dropdown_2columns">
+							<div class="col_2">
+							<ul>
+								<li><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/">FieldSymobls vs WA</a></li>
+								<li><a href="http://zevolving.com/2009/12/parallel-cursor-to-speed-up-performance-of-nested-loop/">Parallel Cursor</a></li>
+								<li><a href="http://zevolving.com/2011/06/performance-of-itab-copy/">ITAB Copy</a></li>
+								<li><a href="http://zevolving.com/2012/05/performance-of-using-keys-in-select-with-for-all-entries/">FOR ALL Entries </a></li>
+								<li><a href="http://zevolving.com/2009/12/measure-the-performance-between-break-points-using-se30/">Between breakpoints</a></li>
+							</ul>					
+							<ul><li><a href="http://zevolving.com/category/performance/">More &#187;</a></li></ul>							
+							</div>
+						</div>
+					</li>
+					<li ><a href="http://zevolving.com/category/concepts/">Concepts</a>
+						<div class="dropdown_2columns">
+							<div class="col_2">
+							<ul>
+								<li><a href="http://zevolving.com/2013/02/what-is-new-type-category-type-boxed-in-abap/">New TYPE Category BOXED</a></li>
+								<li><a href="http://zevolving.com/2013/02/pragmas-in-abap-replacing-pseudo-comments/">Pragmas replacing Pseudo Comments</a></li>
+								<li><a href="http://zevolving.com/2013/02/abap-method-chaining-new-feature-in-abap-7-0-ehp2/">Method Chaining</a></li>
+								<li><a href="http://zevolving.com/2013/03/abap-internal-table-secondary-keys-new-in-abap-7-0-ehp2/">ITAB Secondary Keys</a></li>
+							</ul>
+							<ul><li><a href="http://zevolving.com/category/concepts/">More &#187;</a></li></ul>					
+						</div>
+					</li>
+
+					<li ><a href="http://zevolving.com/category/tutorials/">Tutorials</a>
+						<div class="dropdown_2columns align_right">
+							<div class="col_1">
+								<ul class="simple">
+									<li><a href="http://zevolving.com/category/salv-tutorial/salv-table/">SALV Table Display</a></li>
+									<li><a href="http://zevolving.com/category/salv-tutorial/salv-hs/">SALV HS Table Display</a></li>
+									<li><a href="http://zevolving.com/category/classical-alv/">Classic</a></li>									
+								</ul>   
+							</div>
+							<div class="col_1">
+								<ul class="simple">
+									<li><a href="http://zevolving.com/category/generic-object-services-gos/">Generic Object Services (GOS)</a></li>
+									<li><a href="http://zevolving.com/category/dynamic-itab/">Dynamic ITAB</a></li>
+									<li><a href="http://zevolving.com/category/case-study/">Case Studies</a></li>
+								</ul>   
+							</div>
+						</div>
+					</li>
+					<li class="icon-dis"><a href="/search" class="lsf-icon" title="search"></a>
+						<div class="dropdown_2columns align_right">
+							<div style="padding: 5px;">
+							<form accept-charset="utf-8" method="get" id="searchform" action="http://zevolving.com/search" >
+		<label style="display:none;" for="s">Search:</label>
+		<span class="search-form-glass">
+		<input type="submit" id="searchsubmit" value="SEARCH">
+		</span>
+		<input autocomplete="off" 
+			id="s"
+			name="q"
+			type="text" 
+			class="search-form-input" 
+			value="Search in Zevolving" title="search"
+			onfocus="if(this.value==this.defaultValue)this.value=''" 
+			onblur="if(this.value=='') this.value=this.defaultValue" 
+			onkeydown="if (event.keyCode == 13) document.getElementById('searchsubmit').click()">
+</form>							<ul><li><a href="http://zevolving.com/archives">Or Explore Archives</a></li></ul>
+							</div>
+						</div>
+					</li>
+					<li class="menu_right menu_hl"><a href="http://zevolving.com/category/code-snippets/">Code Snippets</a>
+					</li>
+					<!--
+					<li class="menu_right menu_hl"><a href="http://zevolving.com/category/runtime-errors/">RunTime Errors</a>
+					</li>
+					-->
+				</ul>
+			</div>
+			<div id="mmenu-wrapper-small" class="menu-wrapper">
+				<a class="mmenu-show-hide">Show / Hide Menu</a>
+				<ul id="mega-menu">
+					<li ><a href="http://zevolving.com">Home</a>
+					</li>
+					<li ><a href="http://zevolving.com/archives/">Recent Posts</a>
+					</li>
+					<li ><a href="http://zevolving.com/category/abapobjects/">OO Concepts</a>
+					</li>
+					<li ><a href="http://zevolving.com/category/abapobjects/oo-design-patterns/">Design Patterns</a>
+					</li>
+					<li ><a href="http://zevolving.com/category/performance/">Performance</a>
+					</li>
+					<li ><a href="http://zevolving.com/category/concepts/">Concepts</a>
+					</li>
+					<li ><a href="http://zevolving.com/category/tutorials/">Tutorials</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="adheaderstart"></div>
+<div id="adb_header" style="height: 130px; display: box; padding: 10px;">
+    <script type="text/javascript">adb_header_ad();</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Header_ad -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-0913661839762106"
+     data-ad-slot="1298570732"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<div id="cext-head-wrap_1"></div>
+		<div id="msg-board-wrap" class="msg-board-wrap" style="display:none;">  
+			<div id="msg-board" class="msg-board">
+				<a href="http://zevolving.com/2013/09/celebrating-5-years/">
+				<div class="m5-year-msg">
+					<span class="msg-main-text">5</span>
+					<div>
+						<p class="msg-sub-text">Celebrating 5 years - 2008 to 2013</p>
+					</div>
+				</div>
+				</a>
+			</div>
+		</div>
+	<div id="main-wrapper" class="blog-sing-page">	
+
+		<div id="main-content" >	
+	
+			<!-- Main Section Begin -->
+			<div class="main section" id="main">
+
+
+						
+													
+
+								<div class="post-header">
+									<ul class="breadcrumb"><li><span><span><a href="http://zevolving.com/">Home</a> </li><li> <span><a href="http://zevolving.com/category/performance/">Performance</a> </li><li> <span class="breadcrumb_last" aria-current="page">Use of Field-symbols vs Work area</span></span></span></span></li></ul>									<div class="post-title">
+										<h2><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/" rel="bookmark" title="Permanent Link to Use of Field-symbols vs Work area" class="entry-title">Use of Field-symbols vs Work area</a></h2>
+									</div>
+									<div class="post-aut-line">
+									<p><span class="post-aut-line-span">
+										By <span class="vcard author"><span class="author fn"><a href="http://zevolving.com/author/naimesh-patel/" title="Posts by Naimesh Patel" rel="author">Naimesh Patel</a><a href="mailto:naimeshvpatel@gmail.com" title="Email the Author"></a></span></span>
+										<span> | <span class="updated">December 15, 2009</span></span> 
+										<span class="post-cat"> | <a href="http://zevolving.com/category/performance/" rel="category tag">Performance</a></span>
+<span> | <span class="lsf-icon" title="view">99,553 </span></span><span> | <a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comments"><span class="lsf-icon" title="comment">13</span></a></span>
+									</span></p>
+									</div>
+								</div>
+
+				<!-- Blog Begin -->
+				<div class="blog1" id="Blog1">
+
+					<!-- Blogs LOOP Begin -->
+					<div class="blog-posts hfeed">
+							
+							<!-- Entire Post Begin -->
+							<div class="post hentry">
+						
+								<!-- Post Body Begin -->
+								<div class="post-body entry-content">
+
+										<!-- Blog content -->
+									
+									<p>To use the Field-symbols against the Work Area for Internal table processing. We&#8217;ll also measure the difference between both of the techniques.</p>
+<h3>Basics</h3>
+<p>Internal table processing is essential part of any ABAP program. Generally, we use the explicit work area to process the internal table like appending &#038; modifying records. We can reduce the time and improve the performance of the program by using the field-symbols. </p><div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- InArticle -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-0913661839762106"
+     data-ad-slot="7055940664"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+									
+<p>Check out Code Snippet <a href="http://zevolving.com/2013/04/abap-field-symbols-usage/" title="ABAP Field Symbols usage" rel="bookmark">ABAP Field Symbols usage</a> to know basics from usage from declaration, append, insert, read, modify to check using IS ASSIGNED. Also check out <a href="http://zevolving.com/2013/04/abap-field-symbols-usage-advanced-use/" title="ABAP Field Symbols usage &#8211; Advanced use" rel="bookmark">ABAP Field Symbols usage – Advanced use</a> to know bit more advanced usage of Field-Symbols.</p>
+<p>When we use the LOOP construct with the explicit work area, system need to engage the resources to put the required record in the work area, process it and move it back to the table if the needed. This additional processing time could be saved by using the field-symbol. By using the field-symbols we can save this additional time and improve the performance. Field-symbols are similar to de-referenced pointers in C. While using the field-symbol, system uses the same memory allocated to that particular field in the record instead of moving it to work area and processing. More on field-symbols can be found at: <a class="ahover" href="http://help.sap.com/saphelp_nw04/helpdata/en/fc/eb3860358411d1829f0000e829fbfe/content.htm" rel="nofollow">Field-Symbols on SAP Help</a>.</p>
+<p>This code snippet shows how to use the field-symbols to process the loop with time measurement.</p>
+<h3>Demo to measure performance</h3>
+<p>Check out this demo application to measure the performance while using Field-Symbols and workares.</p>									
+<div class="zabap_main">
+<h4></h4>
+<pre class="abap">&nbsp;
+<span class="co2">*&amp;---------------------------------------------------------------------*</span>
+<span class="co2">*&amp;  Illustrate the performance gain by using the field-symbols</span>
+<span class="co2">*&amp;  over header areas</span>
+<span class="co2">*&amp;---------------------------------------------------------------------*</span>
+<span class="co2">*</span>
+<span class="kw3">REPORT</span>  ztest_np_loop_fs<span class="sy0">.</span>
+<span class="co2">*</span>
+<span class="kw2">DATA</span><span class="sy0">:</span> i_bseg <span class="kw4">TYPE</span> <span class="kw9">STANDARD <span class="kw4">TABLE</span> OF</span> bseg<span class="sy0">,</span>
+      wa_bseg <span class="kw4">LIKE</span> <span class="kw9"><span class="kw4">LINE</span> OF</span> i_bseg<span class="sy0">.</span>
+<span class="co2">*</span>
+<span class="kw2">DATA</span><span class="sy0">:</span> lv_flag <span class="kw4">TYPE</span> flag<span class="sy0">,</span>
+      lv_sta_time <span class="kw4">TYPE</span> timestampl<span class="sy0">,</span>
+      lv_end_time <span class="kw4">TYPE</span> timestampl<span class="sy0">,</span>
+      lv_diff_w   <span class="kw4">TYPE</span> p <span class="kw4">DECIMALS</span> <span class="nu0">5</span><span class="sy0">,</span>
+      lv_diff_f   <span class="kw4">LIKE</span> lv_diff_w<span class="sy0">,</span>
+      lv_save     <span class="kw4">LIKE</span> lv_diff_w<span class="sy0">.</span>
+<span class="co2">*</span>
+<span class="kw2">FIELD-SYMBOLS</span><span class="sy0">:</span> <span class="sy1">&lt;</span>fs_bseg<span class="sy1">&gt;</span> <span class="kw4">LIKE</span> <span class="kw9"><span class="kw4">LINE</span> OF</span> i_bseg<span class="sy0">.</span>
+<span class="co2">*</span>
+<span class="co2">* data selection = 10,000 records</span>
+<span class="kw3">SELECT</span> <span class="co2">* FROM bseg INTO TABLE i_bseg UP TO 100 ROWS.</span>
+<span class="co2">*</span>
+<span class="co2">* Begin - Processing with Work area</span>
+<span class="kw8"><span class="kw3">GET</span> <span class="kw4">TIME</span> STAMP</span> <span class="kw4">FIELD</span> lv_sta_time<span class="sy0">.</span>
+<span class="kw7"><span class="kw1">LOOP</span> AT</span> i_bseg <span class="kw4">INTO</span> wa_bseg<span class="sy0">.</span>
+  <span class="kw1">IF</span> lv_flag <span class="sy1">=</span> <span class="st0">'X'</span><span class="sy0">.</span>
+    wa_bseg<span class="sy0">-</span>sgtxt <span class="sy1">=</span> <span class="st0">'TEST'</span><span class="sy0">.</span>
+    <span class="kw3">MODIFY</span> i_bseg <span class="kw4">FROM</span> wa_bseg<span class="sy0">.</span>
+  <span class="kw1">ENDIF</span><span class="sy0">.</span>
+  <span class="kw3">CLEAR</span> wa_bseg<span class="sy0">.</span>
+  <span class="kw1">IF</span> lv_flag <span class="kw4">IS</span> <span class="kw4">INITIAL</span><span class="sy0">.</span>
+    lv_flag <span class="sy1">=</span> <span class="st0">'X'</span><span class="sy0">.</span>
+  <span class="kw1">ENDIF</span><span class="sy0">.</span>
+<span class="kw1">ENDLOOP</span><span class="sy0">.</span>
+<span class="kw8"><span class="kw3">GET</span> <span class="kw4">TIME</span> STAMP</span> <span class="kw4">FIELD</span> lv_end_time<span class="sy0">.</span>
+lv_diff_w <span class="sy1">=</span> lv_end_time <span class="sy0">-</span> lv_sta_time<span class="sy0">.</span>
+<span class="kw3">WRITE</span><span class="sy0">:</span> <span class="sy0">/</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="br0">&#41;</span> <span class="st0">'Work area'</span><span class="sy0">,</span> lv_diff_w<span class="sy0">.</span>
+<span class="co2">* End   - Processing with Work Area</span>
+<span class="co2">*</span>
+<span class="kw3">CLEAR</span><span class="sy0">:</span> lv_flag<span class="sy0">,</span>
+       lv_sta_time<span class="sy0">,</span>
+       lv_end_time<span class="sy0">.</span>
+<span class="co2">* Begin - Processing with Field-Symbols</span>
+<span class="kw8"><span class="kw3">GET</span> <span class="kw4">TIME</span> STAMP</span> <span class="kw4">FIELD</span> lv_sta_time<span class="sy0">.</span>
+<span class="kw7"><span class="kw1">LOOP</span> AT</span> i_bseg <span class="kw4">ASSIGNING</span> <span class="sy1">&lt;</span>fs_bseg<span class="sy1">&gt;</span><span class="sy0">.</span>
+  <span class="kw1">IF</span> lv_flag <span class="sy1">=</span> <span class="st0">'X'</span><span class="sy0">.</span>
+    <span class="sy1">&lt;</span>fs_bseg<span class="sy1">&gt;</span><span class="sy0">-</span>sgtxt <span class="sy1">=</span> <span class="st0">'TEST'</span><span class="sy0">.</span>
+  <span class="kw1">ENDIF</span><span class="sy0">.</span>
+  <span class="kw1">IF</span> lv_flag <span class="kw4">IS</span> <span class="kw4">INITIAL</span><span class="sy0">.</span>
+    lv_flag <span class="sy1">=</span> <span class="st0">'X'</span><span class="sy0">.</span>
+  <span class="kw1">ENDIF</span><span class="sy0">.</span>
+<span class="kw1">ENDLOOP</span><span class="sy0">.</span>
+<span class="kw8"><span class="kw3">GET</span> <span class="kw4">TIME</span> STAMP</span> <span class="kw4">FIELD</span> lv_end_time<span class="sy0">.</span>
+lv_diff_f <span class="sy1">=</span> lv_end_time <span class="sy0">-</span> lv_sta_time<span class="sy0">.</span>
+<span class="kw3">WRITE</span><span class="sy0">:</span> <span class="sy0">/</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="br0">&#41;</span> <span class="st0">'Field-Symbol'</span><span class="sy0">,</span> lv_diff_f<span class="sy0">.</span>
+<span class="co2">* End   - Processing with Work Area</span>
+<span class="co2">*</span>
+<span class="co2">* Net time saving</span>
+lv_save <span class="sy1">=</span> lv_diff_w <span class="sy0">-</span> lv_diff_f<span class="sy0">.</span>
+<span class="kw3">WRITE</span><span class="sy0">:</span> <span class="sy0">/</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="br0">&#41;</span> <span class="st0">'Total Save'</span><span class="sy0">,</span> lv_save<span class="sy0">.</span>
+<span class="kw3">WRITE</span><span class="sy0">:</span> <span class="sy0">/</span> <span class="st0">'Done'</span><span class="sy0">.</span>
+&nbsp;</pre>
+</div>
+<p></p>
+<h3>Some statistics:</h3>
+<p>In this performance measurement, time taken by the work area to process is considered as the 100%. By using the field-symbols, we can definitely improve the performance.</p>
+<div class="post-image"><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://3.bp.blogspot.com/_Pj9z40ys5GI/SygnlAt4YKI/AAAAAAAAA5o/5ug3m2I18m4/s1600-h/FS_vs_WA_data.png"><img style="cursor:pointer; cursor:hand;width: 244px; height: 107px;" src="http://3.bp.blogspot.com/_Pj9z40ys5GI/SygnlAt4YKI/AAAAAAAAA5o/5ug3m2I18m4/s400/FS_vs_WA_data.png" border="0" alt="" id="BLOGGER_PHOTO_ID_5415622068714102946" /></a></p>
+<p><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://1.bp.blogspot.com/_Pj9z40ys5GI/SygnznDEsPI/AAAAAAAAA5w/iNu8YZv5xR0/s1600-h/FS_vs_WA_stat.png"><img style="cursor:pointer; cursor:hand;width: 400px; height: 235px;" src="http://1.bp.blogspot.com/_Pj9z40ys5GI/SygnznDEsPI/AAAAAAAAA5w/iNu8YZv5xR0/s400/FS_vs_WA_stat.png" border="0" alt="" id="BLOGGER_PHOTO_ID_5415622319521706226" /></a>
+</div>
+<h3>More Field-Symbol articles</h3>
+<p>Here are few more Field-symbol articles:</p>
+<ul>
+<li>Code Snippet <a href="http://zevolving.com/2013/04/abap-field-symbols-usage/" title="ABAP Field Symbols usage" rel="bookmark">ABAP Field Symbols usage</a></li>
+<li>Code Snippet <a href="http://zevolving.com/2013/04/abap-field-symbols-usage-advanced-use/" title="ABAP Field Symbols usage &#8211; Advanced use" rel="bookmark">ABAP Field Symbols usage – Advanced use</a></li>
+</ul>
+<h3>More Performance Tuning tips in ABAP</h3>
+<p>Check out the other threads to learn more Performance Tuning in ABAP:</p>
+<ul class="lcp_catlist" id="lcp_instance_0">
+<li ><a href="http://zevolving.com/2020/01/write-green-programs/" title="Write Green Programs">Write Green Programs</a></li>
+<li ><a href="http://zevolving.com/2015/07/abap-performance-for-delete-on-itab/" title="ABAP Performance for DELETE on ITAB">ABAP Performance for DELETE on ITAB</a></li>
+<li ><a href="http://zevolving.com/2014/03/abap-for-all-entries-why-you-need-to-include-key-fields/" title="FOR ALL ENTRIES – Why you need to include KEY fields">FOR ALL ENTRIES – Why you need to include KEY fields</a></li>
+<li ><a href="http://zevolving.com/2014/03/use-of-reference-variable-vs-workarea-vs-field-symbols/" title="Use of REFERENCE variable vs Workarea vs Field-Symbols">Use of REFERENCE variable vs Workarea vs Field-Symbols</a></li>
+<li ><a href="http://zevolving.com/2014/03/abap-parallel-cursor-things-to-remember/" title="ABAP Parallel Cursor &#8211; Things to Remember">ABAP Parallel Cursor &#8211; Things to Remember</a></li>
+<li ><a href="http://zevolving.com/2013/04/abap-build-a-table-with-unique-keys-performance-comparison/" title="ABAP build a table with Unique Keys &#8211; Performance Comparison">ABAP build a table with Unique Keys &#8211; Performance Comparison</a></li>
+<li ><a href="http://zevolving.com/2013/03/abap-internal-table-secondary-key-performance-comparison/" title="ABAP Internal Table Secondary Key Performance comparison">ABAP Internal Table Secondary Key Performance comparison</a></li>
+<li ><a href="http://zevolving.com/2013/02/abap-internal-table-performance-for-standard-sorted-and-hashed-table/" title="ABAP Internal Table Performance for STANDARD, SORTED and HASHED Table">ABAP Internal Table Performance for STANDARD, SORTED and HASHED Table</a></li>
+<li ><a href="http://zevolving.com/2012/05/performance-of-using-keys-in-select-with-for-all-entries/" title="Performance of Using Keys in SELECT with FOR ALL ENTRIES">Performance of Using Keys in SELECT with FOR ALL ENTRIES</a></li>
+<li ><a href="http://zevolving.com/2011/06/performance-of-itab-copy/" title="Performance of ITAB Copy">Performance of ITAB Copy</a></li>
+<li ><a href="http://zevolving.com/2011/02/read-only-attribute-vs-getter-methods/" title="READ-ONLY attribute vs GETTER methods">READ-ONLY attribute vs GETTER methods</a></li>
+<li ><a href="http://zevolving.com/2009/12/measure-the-performance-between-break-points-using-se30/" title="Measure the Performance between Break-Points using SE30">Measure the Performance between Break-Points using SE30</a></li>
+<li class="current"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/" title="Use of Field-symbols vs Work area">Use of Field-symbols vs Work area</a></li>
+<li ><a href="http://zevolving.com/2009/12/parallel-cursor-2-without-using-read/" title="Parallel Cursor &#8211; 2: without using READ">Parallel Cursor &#8211; 2: without using READ</a></li>
+<li ><a href="http://zevolving.com/2009/12/parallel-cursor-to-speed-up-performance-of-nested-loop/" title="Parallel Cursor &#8211; To speed up performance of Nested LOOP">Parallel Cursor &#8211; To speed up performance of Nested LOOP</a></li>
+</ul>
+</p>								</div>
+								<!-- Post Body End -->
+								<div style="margin-left:2%;margin-right: 2%">
+
+									<div class="singpostsep"></div>
+									
+									<div id="mposttags" class="mytags">
+										<h3>Tags</h3><p><a href="http://zevolving.com/tag/field-symbol/" rel="tag">Field-Symbol</a> <a href="http://zevolving.com/tag/itab-performance/" rel="tag">ITAB Performance</a> <a href="http://zevolving.com/tag/performance/" rel="tag">Performance</a> <a href="http://zevolving.com/tag/workarea/" rel="tag">Workarea</a></p>									</div>
+
+									<div class="sharingbox">
+										<div class="postshare">
+											<h3>Like It? Share!!</h3>
+											<div class="sharing justify-divs" id="newsharing">
+												<div class="share-button">
+													<a href="https://twitter.com/share" class="twitter-share-button" 
+														data-via="zevolving" 
+														data-related="zevolving" 
+														data-hashtags="SAP,ABAP"
+													   data-text="Use of Field-symbols vs Work area"
+													   data-url="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/"											   
+													   data-count="vertical"												
+														>Tweet</a>
+													<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>										
+												</div>
+												<div class="share-button">
+													<g:plusone size="tall" href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/"></g:plusone>																		
+												</div>
+												<div class="share-button">
+													<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
+													<script type="IN/Share" data-url="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/" data-counter="top"></script>
+												</div>
+												<div class="share-button">
+													<fb:like href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/" send="false" layout="box_count" width="60" show_faces="false" action="like" font="segoe ui"></fb:like>											
+												</div>
+											</div>
+										</div>
+										<div class="siteshare">
+											<h3>Don't miss an Update</h3>
+<div class="siteshare-img justify-divs">
+													<a target="_blank" title="Like on Facebook" href="http://www.facebook.com/pages/SAP-ABAP-Help/269923279701872" class="styled-button">fb/zevolving</a>
+													<a target="_blank" title="Follow on Twitter" href="http://twitter.com/#!/zevolving" class="styled-button">@zevolving</a>
+</div>
+<div class="siteshare-sub">
+			<form style="padding:3px;" 
+				  action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" 
+				  onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=SapAbapHelp', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+				<p>Get notified of the new post, right into your inbox</p>
+				<input type="text" class="styled-inputbox" name="email" placeholder="your email"/>
+				<input type="hidden" value="SapAbapHelp" name="uri"/>
+				<input type="hidden" name="loc" value="en_US"/>
+				<input type="submit" class="submitbutton styled-button" value="Subscribe" />
+			</form>
+</div>
+
+										</div>																			
+									</div>
+								
+								</div>
+							
+							</div>
+							<!-- Entire Post End -->
+
+							<div class="mabtauthor-wrap">
+								<div class="mabtauthor"><div class="mabtauthor-image"><img alt='' src='http://0.gravatar.com/avatar/fe97645d09e2ab21b288ea4adf01115b?s=100&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://0.gravatar.com/avatar/fe97645d09e2ab21b288ea4adf01115b?s=200&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-100 photo' height='100' width='100' loading='lazy'/></div><div style=""><h2 style="margin:0;margin-bottom:5px"><a href="http://zevolving.com/author/naimesh-patel/" title="Posts by Naimesh Patel">Naimesh Patel</a><span style="font-size: 60%; letter-spacing: -1pt; padding-left: 20px;"><a href="http://zevolving.com/author/naimesh-patel/">{274 articles}</a></span></h2>I'm SAP ABAP Consultant for more than a decade. I like to experiment with ABAP especially OO. I have been <a href="https://wiki.sdn.sap.com/wiki/display/Community/2007-2008"> SDN Top Contributor</a>.<br /><div class="aauth_share_buttons"> Follow : <span style="padding: 5px;"><a href="http://twitter.com/#!/naimeshpatel" title="Follow on twitter" target="_blank" class="conn-s-Twitter_24"></a></span><span style="padding: 5px;"><a href="http://www.facebook.com/naimesh45" title="Add to Facebook" target="_blank" class="conn-s-FaceBook_24"></a></span><span style="padding: 5px;"><a href="https://plus.google.com/+NaimeshPatel?rel=author" title="Add to Google +" target="_blank" class="conn-s-gplus_24"></a></span></div><p>Explore all of his <a href="http://zevolving.com/author/naimesh-patel/" title="Posts by Naimesh Patel">274</a> articles. </p></div></div>							</div>
+
+							<div class='yarpp-related'>
+<!--<h3>Related Posts</h3>-->
+<ul class="yarpp-ul">
+		<li>
+	<div id="mtdiv">Related Post</div>
+	<div id="mwdiv">
+	<a id="mlink" href="http://zevolving.com/2014/03/use-of-reference-variable-vs-workarea-vs-field-symbols/" rel="bookmark">Use of REFERENCE variable vs Workarea vs Field-Symbols</a><!-- (4)--><br>
+<p>Along with ASSIGNING addition for the itab processing, we have REFERENCE INTO. Let’s take a deep dive into its usage.</p>
+	<a href="http://zevolving.com/2014/03/use-of-reference-variable-vs-workarea-vs-field-symbols/" class="read-more">Read Post &raquo;</a>
+	</div>
+	</li>
+		<li>
+	<div id="mtdiv">Related Post</div>
+	<div id="mwdiv">
+	<a id="mlink" href="http://zevolving.com/2013/02/abap-internal-table-performance-for-standard-sorted-and-hashed-table/" rel="bookmark">ABAP Internal Table Performance for STANDARD, SORTED and HASHED Table</a><!-- (3)--><br>
+<p>Standard Table is the most widely used table Type. It has performance drawbacks if not used properly.</p>
+	<a href="http://zevolving.com/2013/02/abap-internal-table-performance-for-standard-sorted-and-hashed-table/" class="read-more">Read Post &raquo;</a>
+	</div>
+	</li>
+	</ul>
+</div>
+
+							
+<!-- You can start editing here. -->
+
+<div class="show-hide-comments">
+<div class="show-hide-comm-a">Load comments</div>
+</div>
+
+<div class="comment-wrapper">
+	<!-- <div class="singpostsep"></div> -->
+
+	<h2 id="comments">13 Comments			</h2>
+
+	<ul class="commentlist">
+
+					<li class="alt" id="comment-41">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comment-41" class="comm-link" title="Link to Comment"> # </a>December 16th, 2009 at 5:25 am</div>
+					</div>
+				</div>
+				<p>Hi Naimesh,<br />thank&#39;s for your work. Great benchmark<br />serge</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-40">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name"><a href='http://www.blogger.com/profile/17534181345277748677' rel='external nofollow ugc' class='url'>Steve Oldner</a></div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comment-40" class="comm-link" title="Link to Comment"> # </a>December 16th, 2009 at 6:22 am</div>
+					</div>
+				</div>
+				<p>I have enjoyed both of the loop posts.  Although I use your techiques, these posts are an excellent way to show the newer ABAPPERs.</p>
+<p>Thanks!</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-39">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">christian</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comment-39" class="comm-link" title="Link to Comment"> # </a>January 13th, 2010 at 1:06 am</div>
+					</div>
+				</div>
+				<p>Nice Test!<br />Thank you for the hint!</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-38">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comment-38" class="comm-link" title="Link to Comment"> # </a>March 2nd, 2010 at 4:32 am</div>
+					</div>
+				</div>
+				<p>This is a good one for new comers&#8230;..<br />Ultimate results&#8230;.<br />Hoping for other readings &#8230;&#8230;.</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-37">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comment-37" class="comm-link" title="Link to Comment"> # </a>April 29th, 2011 at 6:59 am</div>
+					</div>
+				</div>
+				<p>Thanks a ton!!!!</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-2176">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://0.gravatar.com/avatar/99aa3639340c68e953c39a60cf60e14a?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://0.gravatar.com/avatar/99aa3639340c68e953c39a60cf60e14a?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Sriram Murthy</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comment-2176" class="comm-link" title="Link to Comment"> # </a>December 27th, 2011 at 6:29 am</div>
+					</div>
+				</div>
+				<p>hai ,,,</p>
+<p>    i copied the whole code what u have given in abap editor but it is showing all the values as zeros&#8230;.</p>
+			</div>
+					</li>
+		
+					<li class="alt auth_comm" id="comment-2181">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://0.gravatar.com/avatar/fe97645d09e2ab21b288ea4adf01115b?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://0.gravatar.com/avatar/fe97645d09e2ab21b288ea4adf01115b?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Naimesh Patel</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comment-2181" class="comm-link" title="Link to Comment"> # </a>December 27th, 2011 at 8:29 am</div>
+					</div>
+				</div>
+				<p>Hello Sriram,</p>
+<p>Probably, you don’t have data in the table BSEG. If you don’t have data, you can replace the select query with DO… ENDDO.</p>
+<pre>
+Do 100 times.
+  append wa_bseg to i_bseg.
+enddo.
+</pre>
+<p>Regards,<br />
+Naimesh Patel</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-2183">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://0.gravatar.com/avatar/99aa3639340c68e953c39a60cf60e14a?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://0.gravatar.com/avatar/99aa3639340c68e953c39a60cf60e14a?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Sriram Murthy</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comment-2183" class="comm-link" title="Link to Comment"> # </a>December 27th, 2011 at 11:32 am</div>
+					</div>
+				</div>
+				<p>thanks buddy for u quick reply. i tried to open the contents of the bseg table but it is showing the run time error that storage error. like sap r/3 has requested os ****bytes of memory with malloc but it is not there . at the time of installtion blablabla&#8230;.</p>
+<p>what can i do now to check the contents of bseg.</p>
+			</div>
+					</li>
+		
+					<li class="alt auth_comm" id="comment-2186">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://0.gravatar.com/avatar/fe97645d09e2ab21b288ea4adf01115b?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://0.gravatar.com/avatar/fe97645d09e2ab21b288ea4adf01115b?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Naimesh Patel</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comment-2186" class="comm-link" title="Link to Comment"> # </a>December 27th, 2011 at 1:20 pm</div>
+					</div>
+				</div>
+				<p>I am not much familiar with that problem. Looks like you need help from BASIS / DBA.</p>
+<p>If you want to test the program, you can replace I_BSEG with any other internal table. Replace the SELECT query and also make sure you change other references accordingly.</p>
+<p>Regards,<br />
+Naimesh Patel</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-2217">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://0.gravatar.com/avatar/99aa3639340c68e953c39a60cf60e14a?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://0.gravatar.com/avatar/99aa3639340c68e953c39a60cf60e14a?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Sriram Murthy</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comment-2217" class="comm-link" title="Link to Comment"> # </a>December 29th, 2011 at 10:09 pm</div>
+					</div>
+				</div>
+				<p>thanks dude&#8230;.</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-6284">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://2.gravatar.com/avatar/854d271938e5745db660d0bdbe434323?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://2.gravatar.com/avatar/854d271938e5745db660d0bdbe434323?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Suresh</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comment-6284" class="comm-link" title="Link to Comment"> # </a>May 30th, 2012 at 6:46 am</div>
+					</div>
+				</div>
+				<p>Need simple way of understanding the concept behind Radio Button , Radio button group by index and Radio button group by key in Web Dynpro with simple example please. Define their differences and also when to use what?</p>
+<p>regards<br />
+suresh</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-10113">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://2.gravatar.com/avatar/272a059f3e128ed8dfb11bed72483c70?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://2.gravatar.com/avatar/272a059f3e128ed8dfb11bed72483c70?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Ffposts</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comment-10113" class="comm-link" title="Link to Comment"> # </a>September 14th, 2012 at 2:54 am</div>
+					</div>
+				</div>
+				<p>Great article and well written ABAP code snippet.</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-10257">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://0.gravatar.com/avatar/020d5ea4d21843357a1c0fec2fd450b7?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://0.gravatar.com/avatar/020d5ea4d21843357a1c0fec2fd450b7?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">rahul</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/#comment-10257" class="comm-link" title="Link to Comment"> # </a>September 23rd, 2012 at 4:57 am</div>
+					</div>
+				</div>
+				<p>when i created report the header and footer is displayed but when the report is ended before the line count as mentioned in the program the footer is not displayed then how to display the footer in the program when the report is ended before the line count.</p>
+			</div>
+					</li>
+		
+	
+	</ul>
+</div>
+ 
+
+<div class="comments-closed"><blockquote><p>Comments on this Post are now closed. If you have something important to share, you can always <a href="/suggestions">contact me</a>.</p></blockquote></div>
+
+							<div class="mprevnextpost-wrapper">
+															<a href="http://zevolving.com/2009/12/measure-the-performance-between-break-points-using-se30/" class="mprevpost">
+								<div class="mdiva">&#8249;</div>
+								<div class="mdivt">Measure the Performance between Break-Points using SE30<p></p> </div>
+								</a>
+																							<a href="http://zevolving.com/2009/12/parallel-cursor-2-without-using-read/" class="mnextpost"  >
+								<div class="mdiva">&#8250;</div>																				
+								<div class="mdivt">Parallel Cursor - 2: without using READ</div>
+								</a>
+															</div>
+
+
+							
+					</div>
+					<!-- Blogs LOOP End -->
+					
+				</div>
+				<!-- Blog End -->
+			
+			
+			
+			<!-- Sidebar Section Begin -->
+	<div class="sidebar1 section" id="sidebar1">
+
+		<!--NewHere-->
+		<div class="sidehorisep"></div>
+		<div id="mgreetwrapper" class="mgreetwrapper" >
+		<div id="mgreetbox" class="mgreetbox">
+			<span class="mgtext">You seem to be new here. <a href="#sidesubscribe">Subscribe</a> to stay connected.</span>
+		</div>	
+		</div>
+		
+		<!-- subscribe -->
+		<div class="sidebox" id="sidesubscribe">
+			<h2>Subscribe</h2>
+			<h3>Keep in touch. We would do great working together.</h3>
+			<ul  class="conn-side">
+					<li><a href="http://feedburner.google.com/fb/a/mailverify?uri=SapAbapHelp"><div>1400</div><span>Subscribe to Email</span> </a></li>
+					<li><div style="padding: 20px;">
+<a href="https://twitter.com/zevolving" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @zevolving</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+</li>
+			</ul>
+			<div style=" padding: 5px; margin-bottom: 10px; text-align: center; ">
+			<form style="padding:3px;" 
+				  action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" 
+				  onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=SapAbapHelp', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+				<input type="text" style="width:50%; line-height: 20px;" 
+						class="styled-inputbox"
+						name="email"
+						placeholder="your email"/>
+				<input type="hidden" value="SapAbapHelp" name="uri"/>
+				<input type="hidden" name="loc" value="en_US"/>
+				<input type="submit" class="submitbutton styled-button" value="Subscribe" />
+			</form>
+			</div>
+		</div>			
+	
+		<div id="sidebar">
+										</div>
+
+		<div class="sidebox">
+			<h2>Current Poll</h2>
+			<div id="polls-10" class="wp-polls">
+	<form id="polls_form_10" class="wp-polls-form" action="/index.php" method="post">
+		<p style="display: none;"><input type="hidden" id="poll_10_nonce" name="wp-polls-nonce" value="1dbded33ca" /></p>
+		<p style="display: none;"><input type="hidden" name="poll_id" value="10" /></p>
+		<p class="wp-polls-m-header">Do you like Quality Assurance of your Build/Design?</p><div id="polls-10-ans" class="wp-polls-ans"><ul class="wp-polls-ul">
+		<li><input type="radio" id="poll-answer-39" name="poll_10" value="39" /> <label for="poll-answer-39"><span></span>YES. I live for it!</label></li>
+		<li><input type="radio" id="poll-answer-40" name="poll_10" value="40" /> <label for="poll-answer-40"><span></span>I don't mind</label></li>
+		<li><input type="radio" id="poll-answer-41" name="poll_10" value="41" /> <label for="poll-answer-41"><span></span>NO. I hate it</label></li>
+		</ul><p style="text-align: center;"><input type="button" name="vote" value="   Vote   " class="Buttons" onclick="poll_vote(10);" /></p><p style="text-align: center;"><a href="#ViewPollResults" class="view-results" onclick="poll_result(10); return false;" title="View Results Of This Poll">View Results</a></p></div><div></div>
+	</form>
+</div>
+<div id="polls-10-loading" class="wp-polls-loading"><img src="http://zevolving.com/wp-content/plugins/wp-polls/images/loading.gif" width="16" height="16" alt="Loading ..." title="Loading ..." class="wp-polls-image" />&nbsp;Loading ...</div>
+		</div>
+
+
+		<div class="sidebox">
+			<h2>Search</h2>
+			<div class="side-search">
+				<form accept-charset="utf-8" method="get" id="searchform" action="http://zevolving.com/search" >
+		<label style="display:none;" for="s">Search:</label>
+		<span class="search-form-glass">
+		<input type="submit" id="searchsubmit" value="SEARCH">
+		</span>
+		<input autocomplete="off" 
+			id="s"
+			name="q"
+			type="text" 
+			class="search-form-input" 
+			value="Search in Zevolving" title="search"
+			onfocus="if(this.value==this.defaultValue)this.value=''" 
+			onblur="if(this.value=='') this.value=this.defaultValue" 
+			onkeydown="if (event.keyCode == 13) document.getElementById('searchsubmit').click()">
+</form>			</div>
+		</div>
+
+		
+	</div>
+	<!-- Sidebar Section End -->				
+							
+						
+
+
+			</div>
+			<!-- Main Section End -->
+
+		</div>
+
+	</div>
+	
+<div>
+</div>
+	<div id="adb_post_banner" style="height: 130px; display: box;">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- banner_footer -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-0913661839762106"
+     data-ad-slot="6127602309"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+	
+<div id="main-footer">
+
+	<footer>
+		<div class="clines">
+			<span class="f1"></span>
+			<span class="f2"></span>
+			<span class="f3"></span>
+			<span class="f4"></span>	
+			<span class="f5"></span>	
+		</div>		
+		<div class="footer-box-wrap">
+			<div class="footer-box-wrapper">
+				<div class="footer-wtd">
+					<h4 >what to do now?</h4>
+					<p>You reached here. Now, here are few more ideas!</p>
+				</div>
+				<div class="footer-box">
+					<h2>Keep in Touch</h2>
+					<p>Zevolving is on <a href="https://twitter.com/zevolving">Twitter</a>, <a href="http://www.facebook.com/pages/ABAP-Help-Blog/269923279701872">Facebook</a>, <a href="https://plus.google.com/110326532287922805782/posts">Google+</a>.</p>
+					<a href="https://twitter.com/zevolving" class="styled-button">@zevolving</a>
+					<a href="http://www.facebook.com/pages/ABAP-Help-Blog/269923279701872" class="styled-button">fb/zevolving</a>
+					<p>I'm also on <a href="https://twitter.com/naimeshpatel">@naimeshpatel</a>, <a href="https://plus.google.com/+NaimeshPatel/posts">+NaimeshPatel</a>, <a href="http://www.linkedin.com/in/naimeshpatel">LinkedIn: Naimesh Patel</a> and <a href="http://scn.sap.com/people/naimesh.patel">SCN: Naimesh Patel</a>. 
+					</p>					
+					<p>We will do better working together!</p>					
+				</div>
+				<div class="footer-box"><h2>Looking for more?</h2>
+					<p>There are tons article here. Explore.</p>				
+					<ul>
+						<li><a href="/archives/">All articles aka Archives</a></li>
+						<li><a href="/category/">Categories</a></li>
+						<li><a href="/tag/">Tags</a></li>
+						<li><a href="/recent-activities/">Recent Activities</a></li>
+					</ul>
+					<p>or Search</p>
+					<div>
+					<form accept-charset="utf-8" method="get" id="searchform" action="http://zevolving.com/search">
+						<label style="display:none;" for="s">Search:</label>
+						<span class="search-form-glass"><input type="submit" id="searchsubmit" value="SEARCH"></span>
+						<input autocomplete="off" id="s" name="q" type="text" class="search-form-input" placeholder="Search..." title="search" onkeydown="if (event.keyCode == 13) document.getElementById('searchsubmit').click()">
+					</form>
+					</div>
+				</div>	
+				<div class="footer-box">
+					<h2>Etc.</h2>
+					<p>All other goodies are here</p>
+					<ul>
+						<li><a href="/authors/">Authors</a></li>
+						<li><a href="/feed/">RSS</a> or <a href="http://feeds.feedburner.com/SapAbapHelp">Feed</a></</li>
+						<li><a href="/html-sitemap/">HTML Sitemap</a></li>
+						<li><a href="/suggestions/">Contact Me</a></li>
+						<li><a href="/write-a-post/">Write a Post</a></li>
+						<li><a href="/advertise/">Advertising</a></li>						
+					</ul>
+				</div>	
+			</div>
+		</div>
+		<div class="footer-conn-box" style="display:none;">
+			<div class="footer-conn-box-wrapper">
+<div class="footer-box-highlight">
+<a href="https://plus.google.com/+NaimeshPatel/posts">I'm on Google+. Add me to Circles</a>
+</div>
+
+			<div class="footer-conn-box-np-img-wrap">
+				<div class="footer-conn-box-np-img">
+				</div>
+			</div>
+			<ul class="footer-link-list left-links">
+				<li><a href="/suggestions/">Contact: zevolving<span></span></a></li>
+				<li class="space"><a href="/advertise/">Advertising<span></span></a></li>
+
+				<li><a href="https://twitter.com/zevolving">Twitter: zevolving<span></span></a></li>
+				<li><a href="http://www.facebook.com/pages/ABAP-Help-Blog/269923279701872">Facebook: ABAP Help Blog (zevolving)<span></span></a></li>
+				<li class="space"><a href="https://plus.google.com/110326532287922805782/posts">Google+: ABAP Help Blog (zevolving)<span></span></a></li>
+
+				<li><a href="https://twitter.com/naimeshpatel">Twitter: naimeshpatel<span></span></a></li>
+				<li><a href="https://plus.google.com/+NaimeshPatel/posts">Google+: Naimesh Patel<span></span></a></li>
+				<li><a href="http://scn.sap.com/people/naimesh.patel">SCN: Naimesh Patel<span></span></a></li>
+				<li><a href="http://www.linkedin.com/in/naimeshpatel">LinkedIn: Naimesh Patel<span></span></a></li>
+			</ul>
+
+			<ul class="footer-link-list right-links">
+				<li><a href="/archives/">Archives<span></span></a></li>
+				<li><a href="/category/polls/">Poll Archives<span></span></a></li>
+				<li><a href="/authors/">Authors<span></span></a></li>
+				<li class="space"><a href="http://zevolving.com/category/code-snippets/">Code Snippets<span></span></a></li>
+
+				<li><a href="/write-a-post/">Write A Post<span></span></a></li>
+				<li><a href="/suggestions/">Suggestion<span></span></a></li>
+
+				<li><a href="/feed/">RSS<span></span></a></li>
+				<li><a href="http://feeds.feedburner.com/SapAbapHelp">Feedburner Feed<span></span></a></li>
+				<li><a href="/html-sitemap/">HTML Sitemap<span></span></a></li>
+				<li><a id="rec-act-a" href="/recent-activities/">Recent Activity<span></span></a></li>
+			</ul>
+
+
+			</div>
+		</div>
+		<div class="footer-strip-box">
+			<div class="footer-strip">
+				<p><a href="/">zevolving.com</a> is founded by and maintained by <a href="http://www.linkedin.com/in/naimeshpatel">Naimesh Patel</a>. You can help by submitting your articles via <a href="/write-a-post/">Write a Post</a>. The site is built on <a href="http://wordpress.org/">Wordpress</a>.</p>
+				<p>Happy Designing!</p>
+				<p class="footer-strip-links">
+					<a href="/about/">About</a>
+					<a href="/subscribe/">Subscribe</a>
+					<a href="/advertise/">Advertise</a>
+					<a href="/licence/">Licence</a>
+				</p>
+				<p style="color: #888;"> All product names are trademarks of their respective companies. zevolving.com is not affiliated with SAP AG.</p>
+				<p id="back-top"><a href="#main-header"><span></span><em>TOP</em> </a></p>
+			</div>
+		</div>
+	</footer>
+</div>
+<script type="text/javascript">
+jQuery(document).ready(function($){
+
+
+$(window).scroll(function() {
+    var y_scroll_pos = window.pageYOffset;
+    var scroll_pos_test = 300;             // set to whatever you want it to be
+
+    if(y_scroll_pos > scroll_pos_test) {
+        //$("#overlay").show().delay( 3000 );
+    }
+});
+	
+
+    var gac = new gaCookies();
+
+var lvprevvisittime = new Date(gac.getPreviousVisitTime() * 1000);
+var mydate = lvprevvisittime.getFullYear() + "-" + ('0' + lvprevvisittime.getMonth()).slice(-2) + "-" + ('0' + lvprevvisittime.getDate()).slice(-2);
+	var recacta = document.getElementById('rec-act-a');
+	recacta.href = recacta.href + "?lad=" + mydate;
+
+    var lvsessioncount = gac.getSessionCounter();
+    if (lvsessioncount == null  || lvsessioncount < 2){ 
+	//$("#mgreetwrapper").show();
+	$("#mgreetwrapper").slideDown(700);
+	//$('#mgreetbox').slideDown(500);
+	//$('#mgreetbox').addClass("mfixedclass");
+	$("#mgreetclose").click(function(){
+		$("#mgreetwrapper").slideUp(1000);
+		$("#mgreetbox").slideUp(1000);
+	});
+    }
+
+    $('.mmenu-show-hide').click(function(){
+    	$("#mmenu-wrapper-small #mega-menu").slideToggle();
+    });
+
+    $('.show-hide-comm-a').click(function(){
+    	$(".comment-wrapper").show();
+    	$(".comm-form-wrap-main").show();
+	$(this).hide();
+    });
+
+
+/*	
+ 
+		var langArr = [
+						["en", "English", 	"0",	"Help",], 
+						["gu", "Gujarati",	"0",	"&#2734;&#2726;&#2726;"],
+						["de", "German", 	"0",	"Hilfe"],
+						["te", "Telugu",	"50",	"&#3128;&#3129;&#3134;&#3119;&#3074;"],
+						["ta", "Tamil",		"0",	"&#2953;&#2980;&#2997;&#3007;"],
+						["hi", "Hindi",		"0",	"&#2350;&#2342;&#2342;"],
+						["es", "Spanish", 	"0",	"ayudar"],
+						["bn", "Bengali",	"50",	"&#2488;&#2494;&#2489;&#2494;&#2479;&#2509;&#2479;"],
+						["pl", "Polish",	"50",	"pomocy"],
+						["ru", "Russian",	"50",	"&#1055;&#1086;&#1084;&#1086;&#1075;&#1080;&#1090;&#1077;"],
+						["fr", "French",	"0",	"aider"],
+					   ];
+		var langmin = 0;
+		var langmax = langArr.length - 1;
+		// and the formula is:
+		var langrandom = Math.floor(Math.random() * (langmax - langmin + 1)) + langmin;		
+		
+		var lv_curr_lang = langArr[langrandom];
+		$('.t1').html("ABAP ");
+		$('.t2').html(lv_curr_lang[3]);		
+		document.getElementById('head-title-text-a').title = 'ABAP Help - "Help" translated in ' + lv_curr_lang[1];
+		
+		if (lv_curr_lang[2] == 0){ lv_font_size = "70px" }
+		else { lv_font_size = lv_curr_lang[2] + "px" 
+		lv_font_size = '80%';
+		$('#head-title-text').css("font-size", lv_font_size);
+		};
+		
+		
+		if (lv_curr_lang[0] != 'en'){
+		var lv_a_tr_link = '<a class="link-translate" href="http://translate.google.com/#en/' + lv_curr_lang[0] + '/Help" target="_blank" ' +
+						   'title="See Translation from English to ' + lv_curr_lang[1] +' at Google Translate"></a>';
+		$("#head-title-text").append(lv_a_tr_link);
+		}
+*/
+	
+
+
+/*
+	var lvsidemoved = '';
+	var oadinpoststart = document.getElementById("adinpoststart");
+	var oadside = document.getElementById("adside");
+	if (oadinpoststart !== null){
+	    var lvadinpoststart = $("#adinpoststart").position();		
+	    var lvaiptop = lvadinpoststart.top + 10;
+	    $(".adside").offset({ top: lvaiptop, left: lvadinpoststart.left});
+	    $("#adinpoststart").addClass("adinpostfull");
+	    $("#adinpoststart").slideDown(500);
+	    $(".adside").height(0);
+	    lvsidemoved = 'X';
+	}
+
+        var lvadheader = $(".adheaderstart").position();
+        var lvtop = 0;
+*/
+	var blogdiv = document.getElementById('Blog1');
+	if (blogdiv != null){
+		var children = blogdiv.getElementsByTagName('div');
+		var vlen = children.length;
+		var tempcodedivs = new Array();;
+		var j = 0;
+		for(var i=0;i < vlen;i++){
+		if (children[i].id.substr(0,4) == "mdiv"){
+			tempcodedivs[j] = children[i].id;
+			j++;
+		}
+		}
+		vlen = tempcodedivs.length;
+		for(var i=0;i < vlen;i++)
+		{
+			addDiv(tempcodedivs[i]);
+		}
+	}
+/*
+	if (lvsidemoved === '' && oadside !== null){
+	    lvtop = lvadheader.top - 340;
+	} else {
+	    lvtop = lvadheader.top - 80;
+	}
+	$(".adforheader").offset({ top: lvtop, left: lvadheader.left});
+	$(".adheaderstart").addClass("adheader");
+	$(".adheaderstart").slideDown(500);
+
+	var lvfootermoved = '';
+	var oad2inpoststart = document.getElementById("ad2inpoststart");
+	var oadfooter = document.getElementById("adfooter");
+	if (oad2inpoststart !== null){
+	    var lvad2inpoststart = $("#ad2inpoststart").position();		
+	    var lvaip2top = lvad2inpoststart.top + 10;
+	    var lvaip2left = lvad2inpoststart.left - 20;
+	    $(".adfooter").offset({ top: lvaip2top, left: lvaip2left});
+	    $("#ad2inpoststart").addClass("ad2inpostfull");
+	    $("#ad2inpoststart").slideDown(500);
+	    $(".adfooter").height(0);
+	    lvfootermoved = 'X';
+	}
+*/
+	
+
+});
+</script>		
+</div>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	//doloading();
+	$('.scrollTop').click(function() {
+	   var elementClicked = $(this).attr("href");
+	   var destination = $(elementClicked).offset().top;
+	   $("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-30}, 500 );
+	   return false;
+	});
+	$('.mscomimg').click(function() {
+	   var elementClicked = $(this).attr("href");
+	   console.log(elementClicked);
+	   var destination = $(elementClicked).offset().top;
+	   $("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-40}, 500 );
+	   return false;
+	});
+
+	/* auto populate email id for comment subscribe */
+	$('#commentform #email').change(function(){
+     		var commemail = $('#commentform #email').val();
+		$('#comm-form-sub-form #email').val(commemail);
+	});
+
+	/*
+	$(window).scroll(function(){
+		onscroll();
+	});
+	*/
+
+	$(window).resize(function() {
+	  $('#log').append('<div>Handler for .resize() called.</div>');
+	});
+	
+	generateCaptaCode();
+
+
+	
+/*
+	var soa = $('#startofad').position();
+	$(".adwrapper").offset({ top: soa.top, left: soa.left});
+
+	var lvactaddiv = document.getElementById("actualaddiv");
+	if (lvactaddiv !== null){
+		var lvadcode = $('#adrenderer').html();
+		$('#actualaddiv').html( lvadcode );
+		$('#adrenderer').remove();
+		$('#adrenderer').hide();
+		$('#actualaddiv').addClass('addiv');
+	}
+*/	
+
+
+
+
+
+});
+
+
+
+function validateForm(){
+	var vcode = document.getElementById("expcapcode").innerHTML;
+	var expval = eval(vcode);
+	var actval = document.forms["commentform"]["capcode"].value;
+	if (expval != actval){
+		alert("Incorrect Code");
+		return false;
+	}
+	return true;
+}
+function generateCaptaCode(){
+	// randomize
+	for (var idx=0; idx<2; idx++){
+		var num1 = Math.floor(Math.random()*9);
+		var num2 = Math.floor(Math.random()*9);
+	}
+	if (num1 == 0)
+		num1 = Math.floor(Math.random()*9);
+	if (num2 == 0)
+		num2 = Math.floor(Math.random()*9);
+		
+	var op = "+";
+	var vcode = num1 + " " + op + " " +num2;
+	var vspan = document.getElementById("expcapcode");
+	if (vspan !== null){
+		vspan.innerHTML = vcode;
+	}
+}
+</script>	
+<link rel='stylesheet' id='yarppRelatedCss-css'  href='http://zevolving.com/wp-content/plugins/yet-another-related-posts-plugin/style/related.css?ver=5.7.3' type='text/css' media='all' />
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/comment-reply.min.js?ver=5.7.3' id='comment-reply-js'></script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=7.4.4' id='wp-polyfill-js'></script>
+<script type='text/javascript' id='wp-polyfill-js-after'>
+( 'fetch' in window ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?ver=2.0.2"></scr' + 'ipt>' );( 'objectFit' in document.documentElement.style ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-object-fit.min.js?ver=2.3.4"></scr' + 'ipt>' );
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/dist/hooks.min.js?ver=d0188aa6c336f8bb426fe5318b7f5b72' id='wp-hooks-js'></script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/dist/i18n.min.js?ver=6ae7d829c963a7d8856558f3f9b32b43' id='wp-i18n-js'></script>
+<script type='text/javascript' id='wp-i18n-js-after'>
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/dist/vendor/lodash.min.js?ver=4.17.21' id='lodash-js'></script>
+<script type='text/javascript' id='lodash-js-after'>
+window.lodash = _.noConflict();
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/dist/url.min.js?ver=b2a17503b1ff42b789ce34b159a311cf' id='wp-url-js'></script>
+<script type='text/javascript' id='wp-api-fetch-js-translations'>
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "default", { "locale_data": { "messages": { "": {} } } } );
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/dist/api-fetch.min.js?ver=25cbf3644d200bdc5cab50e7966b5b03' id='wp-api-fetch-js'></script>
+<script type='text/javascript' id='wp-api-fetch-js-after'>
+wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( "http://zevolving.com/wp-json/" ) );
+wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( "63aae473a0" );
+wp.apiFetch.use( wp.apiFetch.nonceMiddleware );
+wp.apiFetch.use( wp.apiFetch.mediaUploadMiddleware );
+wp.apiFetch.nonceEndpoint = "http://zevolving.com/wp-admin/admin-ajax.php?action=rest-nonce";
+</script>
+<script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"cached":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.4' id='contact-form-7-js'></script>
+<script type='text/javascript' id='toc-front-js-extra'>
+/* <![CDATA[ */
+var tocplus = {"smooth_scroll":"1","visibility_show":"show","visibility_hide":"hide","width":"50%"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-content/plugins/table-of-contents-plus/front.min.js?ver=2002' id='toc-front-js'></script>
+<script type='text/javascript' id='wp-polls-js-extra'>
+/* <![CDATA[ */
+var pollsL10n = {"ajax_url":"http:\/\/zevolving.com\/wp-admin\/admin-ajax.php","text_wait":"Your last request is still being processed. Please wait a while ...","text_valid":"Please choose a valid poll answer.","text_multiple":"Maximum number of choices allowed: ","show_loading":"1","show_fading":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-content/plugins/wp-polls/polls-js.js?ver=2.75.6' id='wp-polls-js'></script>
+<script type='text/javascript' id='wp-postviews-cache-js-extra'>
+/* <![CDATA[ */
+var viewsCacheL10n = {"admin_ajax_url":"http:\/\/zevolving.com\/wp-admin\/admin-ajax.php","post_id":"21"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-content/plugins/wp-postviews/postviews-cache.js?ver=1.68' id='wp-postviews-cache-js'></script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/wp-embed.min.js?ver=5.7.3' id='wp-embed-js'></script>
+</body>
+</html>

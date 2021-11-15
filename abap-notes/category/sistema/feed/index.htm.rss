@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Система | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/sistema/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 04 May 2021 09:56:17 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Анализ зависимостей в ABAP программе</title>
+		<link>https://abap-blog.ru/abap-notes/analiz-zavisimostej-v-abap-programme/</link>
+					<comments>https://abap-blog.ru/abap-notes/analiz-zavisimostej-v-abap-programme/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 15 Mar 2021 18:58:54 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=6690</guid>
+
+					<description><![CDATA[<p>Иногда бывает полезно узнать, какие зависимости есть в программе. Проверить это можно через анализ зависимостей в отчёте RSDEPEND:</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/analiz-zavisimostej-v-abap-programme/">Анализ зависимостей в ABAP программе</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Иногда бывает полезно узнать, какие зависимости есть в программе. Проверить это можно через анализ зависимостей в отчёте RSDEPEND:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/RSDEPEND1.png"><img loading="lazy" class="alignnone size-full wp-image-6691" src="https://abap-blog.ru/wp-content/uploads/2021/03/RSDEPEND1.png" alt="" width="1070" height="629" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/RSDEPEND1.png 1070w, https://abap-blog.ru/wp-content/uploads/2021/03/RSDEPEND1-300x176.png 300w, https://abap-blog.ru/wp-content/uploads/2021/03/RSDEPEND1-1024x602.png 1024w, https://abap-blog.ru/wp-content/uploads/2021/03/RSDEPEND1-768x451.png 768w" sizes="(max-width: 1070px) 100vw, 1070px" /></a></p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/RSDEPEND2.png"><img loading="lazy" class="alignnone size-full wp-image-6692" src="https://abap-blog.ru/wp-content/uploads/2021/03/RSDEPEND2.png" alt="" width="1081" height="275" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/RSDEPEND2.png 1081w, https://abap-blog.ru/wp-content/uploads/2021/03/RSDEPEND2-300x76.png 300w, https://abap-blog.ru/wp-content/uploads/2021/03/RSDEPEND2-1024x260.png 1024w, https://abap-blog.ru/wp-content/uploads/2021/03/RSDEPEND2-768x195.png 768w" sizes="(max-width: 1081px) 100vw, 1081px" /></a></p><p>The post <a href="https://abap-blog.ru/abap-notes/analiz-zavisimostej-v-abap-programme/">Анализ зависимостей в ABAP программе</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/analiz-zavisimostej-v-abap-programme/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Проверить статус пароля у пользователя</title>
+		<link>https://abap-blog.ru/abap-notes/proverit-status-parolya-u-polzovatelya/</link>
+					<comments>https://abap-blog.ru/abap-notes/proverit-status-parolya-u-polzovatelya/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 28 Nov 2020 12:30:12 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5741</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e47350a3044266145/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/proverit-status-parolya-u-polzovatelya/">Проверить статус пароля у пользователя</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_usr TYPE sy-uname DEFAULT sy-uname.
+PARAMETERS: p_pwd TYPE rsyst-bcode.
+
+AT SELECTION-SCREEN OUTPUT.
+  LOOP AT screen INTO DATA(screen_wa).
+    IF screen_wa-name = 'P_PWD'.
+      screen_wa-invisible = 1.
+      MODIFY screen FROM screen_wa.
+    ENDIF.
+  ENDLOOP.
+
+START-OF-SELECTION.
+  CALL FUNCTION 'SUSR_LOGIN_CHECK_RFC'
+    EXPORTING
+      bname                  = p_usr
+      password               = p_pwd
+    EXCEPTIONS
+      wait                   = 1
+      user_locked            = 2
+      user_not_active        = 3
+      password_expired       = 4
+      wrong_password         = 5
+      no_check_for_this_user = 6
+      internal_error         = 7.
+
+  CASE sy-subrc.
+    WHEN 0.
+      WRITE: / 'Password OK'.
+    WHEN 1.
+      WRITE: / 'wait'.
+    WHEN 2.
+      WRITE: / 'user_locked '.
+    WHEN 3.
+      WRITE: / 'user_not_active'.
+    WHEN 4.
+      WRITE: / 'password_expired'.
+    WHEN 5.
+      WRITE: / 'wrong_password '.
+    WHEN 6.
+      WRITE: / 'no_check_for_this_user'.
+    WHEN 7.
+      WRITE: / 'internal_error'.
+    WHEN OTHERS.
+      WRITE: / 'Other error.'.
+  ENDCASE.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/proverit-status-parolya-u-polzovatelya/">Проверить статус пароля у пользователя</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/proverit-status-parolya-u-polzovatelya/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Закрыть сессию пользователя</title>
+		<link>https://abap-blog.ru/abap-notes/zakryt-sessiyu-polzovatelya/</link>
+					<comments>https://abap-blog.ru/abap-notes/zakryt-sessiyu-polzovatelya/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 28 Nov 2020 11:46:29 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5733</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e4735ea5317872566/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/zakryt-sessiyu-polzovatelya/">Закрыть сессию пользователя</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">CALL 'SYST_LOGOFF'.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/zakryt-sessiyu-polzovatelya/">Закрыть сессию пользователя</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/zakryt-sessiyu-polzovatelya/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Получить параметры пользователя</title>
+		<link>https://abap-blog.ru/abap-notes/poluchit-parametry-polzovatelya/</link>
+					<comments>https://abap-blog.ru/abap-notes/poluchit-parametry-polzovatelya/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 16:49:53 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5672</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e4736077920658704/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-parametry-polzovatelya/">Получить параметры пользователя</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2020/11/parameters.png"><img loading="lazy" class="alignnone size-full wp-image-5673" src="https://abap-blog.ru/wp-content/uploads/2020/11/parameters.png" alt="" width="855" height="249" srcset="https://abap-blog.ru/wp-content/uploads/2020/11/parameters.png 855w, https://abap-blog.ru/wp-content/uploads/2020/11/parameters-300x87.png 300w, https://abap-blog.ru/wp-content/uploads/2020/11/parameters-768x224.png 768w" sizes="(max-width: 855px) 100vw, 855px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: it_user_params TYPE ustyp_t_parameters.
+
+CALL FUNCTION 'SUSR_USER_PARAMETERS_GET'
+  EXPORTING
+    user_name           = sy-uname
+    with_text           = abap_true
+  TABLES
+    user_parameters     = it_user_params
+  EXCEPTIONS
+    user_name_not_exist = 1
+    OTHERS              = 2.
+
+IF sy-subrc = 0.
+  cl_demo_output=&gt;display( it_user_params ).
+ENDIF.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-parametry-polzovatelya/">Получить параметры пользователя</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/poluchit-parametry-polzovatelya/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Получить текущую кодировку</title>
+		<link>https://abap-blog.ru/abap-notes/poluchit-tekushhuyu-kodirovku/</link>
+					<comments>https://abap-blog.ru/abap-notes/poluchit-tekushhuyu-kodirovku/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 16:21:37 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5668</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e4736321607756261/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-tekushhuyu-kodirovku/">Получить текущую кодировку</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">TRY.
+    DATA(lv_logon_charset) = ||.
+
+
+    cl_http_utility=&gt;get_logon_charset( IMPORTING id = lv_logon_charset ).
+    WRITE: / lv_logon_charset.
+
+
+  CATCH cx_root INTO DATA(e_txt).
+    WRITE: / e_txt-&gt;get_text( ).
+ENDTRY.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-tekushhuyu-kodirovku/">Получить текущую кодировку</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/poluchit-tekushhuyu-kodirovku/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Генерация UUID</title>
+		<link>https://abap-blog.ru/abap-notes/generaciya-guid-ov/</link>
+					<comments>https://abap-blog.ru/abap-notes/generaciya-guid-ov/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 27 Sep 2020 16:31:16 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4968</guid>
+
+					<description><![CDATA[<p>GUID (Globally Unique Identifier) — статистически уникальный 128-битный идентификатор. Его главная особенность — уникальность, которая позволяет создавать расширяемые сервисы и приложения без опасения конфликтов, вызванных совпадением идентификаторов. Хотя уникальность каждого отдельного GUID не гарантируется, общее количество уникальных ключей настолько велико (2128 или 3,4028×1038), что вероятность того, что в мире будут независимо сгенерированы два совпадающих ключа, крайне мала. «GUID» называют некоторые реализации стандарта, [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/generaciya-guid-ov/">Генерация UUID</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><b>GUID (Globally Unique Identifier)</b> — <a title="Статистика" href="https://ru.wikipedia.org/wiki/%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0">статистически</a> уникальный 128-<a title="Бит" href="https://ru.wikipedia.org/wiki/%D0%91%D0%B8%D1%82">битный</a> <a title="Идентификатор" href="https://ru.wikipedia.org/wiki/%D0%98%D0%B4%D0%B5%D0%BD%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%BE%D1%80">идентификатор</a>. Его главная особенность — <a title="Уникальность" href="https://ru.wikipedia.org/wiki/%D0%A3%D0%BD%D0%B8%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D1%8C">уникальность</a>, которая позволяет создавать расширяемые сервисы и приложения без опасения конфликтов, вызванных совпадением идентификаторов. Хотя уникальность каждого отдельного GUID не гарантируется, общее количество уникальных ключей настолько велико (2<sup>128</sup> или 3,4028×10<sup>38</sup>), что вероятность того, что в мире будут независимо сгенерированы два совпадающих ключа, крайне мала.</p>
+<p>«GUID» называют некоторые реализации стандарта, имеющего название <b>Universally Unique Identifier</b> (<b><a title="UUID" href="https://ru.wikipedia.org/wiki/UUID">UUID</a></b>).</p>
+<p>Получить UUID в ABAP можно следующими способами:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: l_uuid_x16 TYPE sysuuid_x16.
+DATA: l_uuid_c22 TYPE sysuuid_c22.
+DATA: l_uuid_c26 TYPE sysuuid_c26.
+DATA: l_uuid_c32 TYPE sysuuid_c32.
+
+TRY.
+    l_uuid_x16 = cl_system_uuid=&gt;create_uuid_x16_static( ).
+    l_uuid_c22 = cl_system_uuid=&gt;create_uuid_c22_static( ).
+    l_uuid_c26 = cl_system_uuid=&gt;create_uuid_c26_static( ).
+    l_uuid_c32 = cl_system_uuid=&gt;create_uuid_c32_static( ).
+
+  CATCH cx_uuid_error INTO DATA(e_text).
+    MESSAGE e_text-&gt;get_text( ) TYPE 'I'.
+ENDTRY.
+
+WRITE: / | uuid_x16: { l_uuid_x16 } |.
+WRITE: / | uuid_c22: { l_uuid_c22 } |.
+WRITE: / | uuid_c26: { l_uuid_c26 } |.
+WRITE: / | uuid_c32: { l_uuid_c32 } |.</pre><p>&nbsp;</p>
+<p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/generaciya-guid-ov/">Генерация UUID</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/generaciya-guid-ov/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Переключение языка</title>
+		<link>https://abap-blog.ru/abap-notes/pereklyuchenie-yazyka/</link>
+					<comments>https://abap-blog.ru/abap-notes/pereklyuchenie-yazyka/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 03 May 2020 13:16:07 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4194</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e47366ba270701627/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/pereklyuchenie-yazyka/">Переключение языка</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS:
+  p_langu LIKE sy-langu OBLIGATORY MATCHCODE OBJECT h_t002.
+
+DATA:
+  gt_servers TYPE STANDARD TABLE OF msxxlist WITH DEFAULT KEY.
+
+START-OF-SELECTION.
+
+  CALL FUNCTION 'TH_SERVER_LIST'
+    TABLES
+      list = gt_servers.
+
+  READ TABLE gt_servers ASSIGNING FIELD-SYMBOL(&lt;server&gt;) WITH KEY host = sy-host.
+
+  SET LOCALE LANGUAGE p_langu.
+
+  CALL FUNCTION 'TH_REMOTE_TRANSACTION'
+    EXPORTING
+      tcode = space
+      dest  = &lt;server&gt;-name.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/pereklyuchenie-yazyka/">Переключение языка</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/pereklyuchenie-yazyka/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Сброс счётчика времени выполнения</title>
+		<link>https://abap-blog.ru/abap-notes/sbros-schyotchika-vremeni-vypolneniya/</link>
+					<comments>https://abap-blog.ru/abap-notes/sbros-schyotchika-vremeni-vypolneniya/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 06 Apr 2020 17:44:43 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=3994</guid>
+
+					<description><![CDATA[<p>Если отчёт падает по TIME OUT, но очень хочется чтобы этого не происходило, можно периодически вызывать сброс счётчика времени выполнения через вызов ФМ-а TH_REDISPATCH. Более подробно в ноте 25528. Причины падения по TIME_OUT подробно разобраны в статье.</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/sbros-schyotchika-vremeni-vypolneniya/">Сброс счётчика времени выполнения</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Если отчёт падает по TIME OUT, но очень хочется чтобы этого не происходило, можно периодически вызывать сброс счётчика времени выполнения через вызов ФМ-а <strong>TH_REDISPATCH</strong>. Более подробно в ноте <a href="https://launchpad.support.sap.com/#/notes/25528">25528</a>.</p>
+<p>Причины падения по TIME_OUT подробно разобраны в <a href="https://sapland.ru/kb/blogs/kogda-voznikaet-sistemnii-damp-time-out.html">статье</a>.</p><p>The post <a href="https://abap-blog.ru/abap-notes/sbros-schyotchika-vremeni-vypolneniya/">Сброс счётчика времени выполнения</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/sbros-schyotchika-vremeni-vypolneniya/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Отчёт по входам в систему и смене паролей</title>
+		<link>https://abap-blog.ru/abap-notes/otchyot-po-vxodam-v-sistemu-i-smene-parolej/</link>
+					<comments>https://abap-blog.ru/abap-notes/otchyot-po-vxodam-v-sistemu-i-smene-parolej/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 05 Apr 2020 13:51:02 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=3983</guid>
+
+					<description><![CDATA[<p>Транзакция RSUSR200 позволяет увидеть кто и когда входил в систему и менял ли пароли:</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/otchyot-po-vxodam-v-sistemu-i-smene-parolej/">Отчёт по входам в систему и смене паролей</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Транзакция <strong>RSUSR200</strong> позволяет увидеть кто и когда входил в систему и менял ли пароли:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/04/last_logon.png"><img loading="lazy" class="alignnone size-full wp-image-3984" src="https://abap-blog.ru/wp-content/uploads/2020/04/last_logon.png" alt="" width="980" height="211" srcset="https://abap-blog.ru/wp-content/uploads/2020/04/last_logon.png 980w, https://abap-blog.ru/wp-content/uploads/2020/04/last_logon-300x65.png 300w, https://abap-blog.ru/wp-content/uploads/2020/04/last_logon-768x165.png 768w" sizes="(max-width: 980px) 100vw, 980px" /></a></p><p>The post <a href="https://abap-blog.ru/abap-notes/otchyot-po-vxodam-v-sistemu-i-smene-parolej/">Отчёт по входам в систему и смене паролей</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/otchyot-po-vxodam-v-sistemu-i-smene-parolej/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Получить данные о сессии пользователя</title>
+		<link>https://abap-blog.ru/abap-notes/poluchit-dannye-o-sessii-polzovatelya/</link>
+					<comments>https://abap-blog.ru/abap-notes/poluchit-dannye-o-sessii-polzovatelya/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 05 Apr 2020 10:01:47 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=3955</guid>
+
+					<description><![CDATA[<p>Такую информацию о текущей сессии пользователя как: IP адрес Имя компьютера Количество активных сессий Можно получить с помощью ФМ TH_USER_INFO либо через ФМTH_LONG_USR_INFO: Получить информацию обо всех пользователях по аналогии с транзакцией SM04 (либо AL08), можно с помощью ФМ TH_USER_LIST.</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-dannye-o-sessii-polzovatelya/">Получить данные о сессии пользователя</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Такую информацию о текущей сессии пользователя как:</p>
+<ul>
+<li>IP адрес</li>
+<li>Имя компьютера</li>
+<li>Количество активных сессий</li>
+</ul>
+<p>Можно получить с помощью ФМ <strong>TH_USER_INFO </strong>либо через ФМ<strong>TH_LONG_USR_INFO</strong>:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/04/sessioninfo.png"><img loading="lazy" class="alignnone size-full wp-image-3956" src="https://abap-blog.ru/wp-content/uploads/2020/04/sessioninfo.png" alt="" width="413" height="386" srcset="https://abap-blog.ru/wp-content/uploads/2020/04/sessioninfo.png 413w, https://abap-blog.ru/wp-content/uploads/2020/04/sessioninfo-300x280.png 300w" sizes="(max-width: 413px) 100vw, 413px" /></a></p>
+<p>Получить информацию обо всех пользователях по аналогии с транзакцией <strong>SM04 </strong>(либо <strong>AL08</strong>), можно с помощью ФМ <strong>TH_USER_LIST.</strong></p><p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-dannye-o-sessii-polzovatelya/">Получить данные о сессии пользователя</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/poluchit-dannye-o-sessii-polzovatelya/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

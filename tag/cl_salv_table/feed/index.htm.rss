@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>cl_salv_table | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_salv_table/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:57:27 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>SALV Table &#8212; Обработка системных команд</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-obrabotka-sistemnyx-komand-v-polnom-ekrane/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-obrabotka-sistemnyx-komand-v-polnom-ekrane/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 19 Feb 2012 10:16:32 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[&F03]]></category>
+		<category><![CDATA[cl_salv_table]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=519</guid>
+
+					<description><![CDATA[<p>Недавно столкнулся с проблемой невозможности отловить нажатие &#38;F03 (BACK) при использовании полно-экранного режима SALV таблицы. Выход оказался весьма простым: в скопированном GUI статусе вместо стандартного кода &#38;F03 поставить EXIT. Все, при этом в событии ADDED_FUNCTION стало возможно обработать данную команду. Как альтернативу можно использовать получение экземпляра класса cl_gui_alv_greed через ФМ: [crayon-618a238bc4a8e368552612/] И назначение обработчика событию [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-obrabotka-sistemnyx-komand-v-polnom-ekrane/">SALV Table — Обработка системных команд</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Недавно столкнулся с проблемой невозможности отловить нажатие &amp;F03 (BACK) при использовании полно-экранного режима SALV таблицы. Выход оказался весьма простым: в скопированном GUI статусе вместо стандартного кода &amp;F03 поставить EXIT. Все, при этом в событии ADDED_FUNCTION стало возможно обработать данную команду. Как альтернативу можно использовать получение экземпляра класса cl_gui_alv_greed через ФМ:</p><pre class="urvanov-syntax-highlighter-plain-tag">CALL FUNCTION 'GET_GLOBALS_FROM_SLVC_FULLSCR'
+      IMPORTING
+        e_grid = go_grid.</pre><p>И назначение обработчика событию BEFORE_USER_COMMAND.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-obrabotka-sistemnyx-komand-v-polnom-ekrane/">SALV Table — Обработка системных команд</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-obrabotka-sistemnyx-komand-v-polnom-ekrane/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>SALV Table &#8212; Настройка PF-STATUS</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-pf-status/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-pf-status/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 09 Feb 2012 03:52:48 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[cl_salv_functions]]></category>
+		<category><![CDATA[cl_salv_table]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=436</guid>
+
+					<description><![CDATA[<p>На этапе создания экземпляра объекта (фабричным методом) мы определяем, как мы хотим использовать объект ALV таблицы, будет ли это полноэкранный режим, либо мы хотим поместить объект в подготовленный заранее контейнер. Данный выбор влияет на способ установки GUI статуса для ALV таблицы. В полноэкранном режиме для установки GUI статуса необходимо использовать метод SET_SCREEN_STATUS, параметр REPORT отвечает [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-pf-status/">SALV Table — Настройка PF-STATUS</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>На этапе создания экземпляра объекта (фабричным методом) мы определяем, как мы хотим использовать объект ALV таблицы, будет ли это полноэкранный режим, либо мы хотим поместить объект в подготовленный заранее контейнер. Данный выбор влияет на способ установки GUI статуса для ALV таблицы.</p>
+<p><span id="more-436"></span></p>
+<p><strong>В полноэкранном режиме</strong> для установки GUI статуса необходимо использовать метод SET_SCREEN_STATUS, параметр REPORT отвечает за то из какой программы будет взят GUI статус, PFSTATUS – имя GUI статуса, SET_FUNCTIONS – определяет какие стандартные функции будут использованы в программе. Может принимать значения: C_FUNCTIONS_DEFAULT – сортировки, фильтры, выбор формата. C_FUNCTIONS_ALL – все функции ALV, C_FUNCTIONS_NONE – по умолчанию, только пользовательские функции. Константы определены в классе: CL_SALV_MODEL_BASE</p>
+<p>Стандартный GUI статус можно взять в группе функций: <strong>SALV_METADATA_STATUS</strong> – статус: SALV_TABLE_STANDARD или  SALV_TABLE_STDPOPUP, скопировать в свою программу и расширить необходимыми функциями.</p>
+<p>Для того чтобы динамически исключить какую либо функцию можно применить класс <strong>cl_salv_functions</strong>, но вместо метода <strong>remove_function</strong> использовать метод <strong>set_function</strong>, параметр <strong>name</strong> определяет какую функцию будем скрывать, <strong>boolean</strong> &#8212; определяет скрыта она или нет, если скрываем ставим в abap_true. Метод <strong>remove_function</strong> не работает для полно-экранного грида.</p>
+<p>Пример измененного GUI статуса (функции начинающиеся с &amp; являются стандартными):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/02/salv_gui.png"><img loading="lazy" class="alignright size-full wp-image-437" title="salv_gui" src="http://abap-blog.ru/wp-content/uploads/2012/02/salv_gui.png" alt="" width="718" height="197" srcset="https://abap-blog.ru/wp-content/uploads/2012/02/salv_gui.png 718w, https://abap-blog.ru/wp-content/uploads/2012/02/salv_gui-300x82.png 300w" sizes="(max-width: 718px) 100vw, 718px" /></a></p>
+<p>Когда ALV объект создается <strong>в контейнере</strong>, для настройки функций используется класс: <strong>cl_salv_functions.</strong>  Получить экземпляр этого класса можно используя метод &#8212; get_functions( ) главного объекта ALV. Для установки функций по умолчанию можно воспользоваться методом set_default( ) или set_all( ) – для установки всех функций ALV объекта. Чтобы добавить свою функцию существует метод add_function. Ниже пример того как это сделать:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zalv_simple.
+
+PARAMETERS p_dummy.
+DATA:
+      gt_data      TYPE spfli_tab,  " Таблица с данными
+      go_functions TYPE REF TO cl_salv_functions,
+      go_alv       TYPE REF TO cl_salv_table.
+
+INITIALIZATION.
+
+  SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_data.
+  " Фабричный метод возвращяет экзмепляр ALV объекта
+  TRY.
+      cl_salv_table=&gt;factory(
+         EXPORTING
+           r_container = cl_gui_container=&gt;screen0
+         IMPORTING
+           r_salv_table = go_alv
+         CHANGING
+           t_table = gt_data ).
+    CATCH cx_salv_msg .
+      MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+  ENDTRY.
+
+  " Установка функций (кнопок)
+  go_functions = go_alv-&gt;get_functions( ).
+
+  IF go_functions IS BOUND.
+    go_functions-&gt;set_all( abap_true ).
+    go_functions-&gt;add_function(
+      EXPORTING
+        NAME      = 'ADDFUNC'
+        icon      = '@01@'
+        text      = 'ДопКнопка'
+        tooltip   = 'Всплывающая подсказка'
+        POSITION  = if_salv_c_function_position=&gt;right_of_salv_functions ).
+  ENDIF.
+
+  " показать alv
+  go_alv-&gt;display( ).</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-pf-status/">SALV Table — Настройка PF-STATUS</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-pf-status/feed/</wfw:commentRss>
+			<slash:comments>10</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>SALV Table &#8212; Введение</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-vvedenie/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-vvedenie/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 06 Feb 2012 17:25:08 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[alv object model]]></category>
+		<category><![CDATA[cl_salv_table]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=428</guid>
+
+					<description><![CDATA[<p>Начиная с версии Netweaver 04 SAP предоставляет разработчикам новую модель для построения ALV таблиц. Новая модель описывается классами семейства CL_SALV*. Основные преимущества новой модели: Благодаря проработанной объектно-ориентированной модели обеспечивается легкость программирования Данная модель позволяет с помощью одного единственного класса управлять всем макетом отчёта (настраивать фильтры, сортировки, форматы и пр.) Главный недостаток данной модели: невозможность использования для ввода [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-vvedenie/">SALV Table — Введение</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Начиная с версии<strong> Netweaver 04</strong> SAP предоставляет разработчикам новую модель для построения ALV таблиц. Новая модель описывается классами семейства <strong>CL_SALV</strong>*.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/02/salv1.png"><img loading="lazy" class="alignright size-full wp-image-430" title="salv1" src="http://abap-blog.ru/wp-content/uploads/2012/02/salv1.png" alt="" width="822" height="167" srcset="https://abap-blog.ru/wp-content/uploads/2012/02/salv1.png 822w, https://abap-blog.ru/wp-content/uploads/2012/02/salv1-300x60.png 300w" sizes="(max-width: 822px) 100vw, 822px" /></a></p>
+<p><span id="more-428"></span></p>
+<p>Основные преимущества новой модели:</p>
+<ul>
+<li>Благодаря проработанной объектно-ориентированной модели обеспечивается легкость программирования</li>
+<li>Данная модель позволяет с помощью одного единственного класса управлять всем макетом отчёта (настраивать фильтры, сортировки, форматы и пр.)</li>
+</ul>
+<div>Главный недостаток данной модели:</div>
+<div></div>
+<div>
+<ul>
+<li><span style="line-height: 19px;">невозможность использования для ввода данных (скорее всего данное ограничение будет снято в будущем)</span></li>
+</ul>
+</div>
+<div><span style="line-height: 18px;"> </span></div>
+<p>Основные классы используемые в новой модели:</p>
+<ul>
+<li>Обычная ALV таблица &#8212; <strong>CL_SALV_TABLE</strong></li>
+<li>Таблица с иерархическим представлением &#8212; <strong>CL_SALV_HIERSEQU_TABLE</strong></li>
+<li>Древовидное представление &#8212; <strong>CL_SALV_TREE</strong></li>
+</ul>
+<p>Все классы имеют статический (фабричный) метод, который по входящим данным создает экземпляр ALV объекта. Как правило в качестве входящих данных используется внутренняя таблица, по которой автоматически, без создания каталога полей (в старой модели и функциональной модели) строится ALV таблица.</p>
+<p>Простейший пример создания ALV отчёта:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZALV_SIMPLE.
+
+DATA:
+      gt_data      TYPE spfli_tab,  " Таблица с данными
+      go_alv       TYPE REF TO cl_salv_table.
+
+START-OF-SELECTION.
+  SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_data.
+  " Фабричный метод возвращяет экзмепляр ALV объекта
+  TRY.
+      cl_salv_table=&gt;factory(
+         IMPORTING
+           r_salv_table = go_alv
+         CHANGING
+           t_table = gt_data ).
+    CATCH cx_salv_msg .
+      MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+  ENDTRY.
+  " Отобразить ALV представление
+  go_alv-&gt;display( ).</pre><p><a title="SAP ALV Help" href="http://help.sap.com/saphelp_nw73ehp1/helpdata/en/4e/c38f8788d22b90e10000000a42189d/frameset.htm">SAP Help</a></p>
+<p>Дерево SALV классов:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/02/ppt_img1.gif"><img loading="lazy" class="alignnone size-full wp-image-500" title="ppt_img[1]" src="http://abap-blog.ru/wp-content/uploads/2012/02/ppt_img1.gif" alt="" width="708" height="850" srcset="https://abap-blog.ru/wp-content/uploads/2012/02/ppt_img1.gif 708w, https://abap-blog.ru/wp-content/uploads/2012/02/ppt_img1-249x300.gif 249w" sizes="(max-width: 708px) 100vw, 708px" /></a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-vvedenie/">SALV Table — Введение</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-vvedenie/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

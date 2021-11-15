@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>ООП | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/oop/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sun, 22 Nov 2020 13:14:47 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Получение информации о структуре класса/интерфейса</title>
+		<link>https://abap-blog.ru/abap-notes/poluchenie-informacii-o-strukture-klassa-interfejsa/</link>
+					<comments>https://abap-blog.ru/abap-notes/poluchenie-informacii-o-strukture-klassa-interfejsa/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 13:14:47 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5654</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e33cf81b910413602/] [crayon-618a1e33cf828033408818/] [crayon-618a1e33cf82c964110349/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/poluchenie-informacii-o-strukture-klassa-interfejsa/">Получение информации о структуре класса/интерфейса</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_cls TYPE seoclsname DEFAULT 'CL_GUI_ALV_GRID'.
+
+TRY.
+    DATA(o_cls) = NEW cl_oo_class( clsname                   = p_cls
+                                   with_inherited_components = abap_true
+                                   with_interface_components = abap_true
+                                 ).
+
+    WRITE: / 'Public:', o_cls-&gt;is_public( ).
+    WRITE: / 'Final:', o_cls-&gt;is_final( ).
+    WRITE: / 'Abstract:', o_cls-&gt;is_abstract( ).
+
+    WRITE: / 'Super:', o_cls-&gt;get_superclass( ).
+
+    LOOP AT o_cls-&gt;get_methods( ) ASSIGNING FIELD-SYMBOL(&lt;m&gt;).
+      WRITE: / 'Method:', &lt;m&gt;-cmpname.
+    ENDLOOP.
+
+    LOOP AT o_cls-&gt;get_events( ) ASSIGNING FIELD-SYMBOL(&lt;e&gt;).
+      WRITE: / 'Event:', &lt;e&gt;-cmpname.
+    ENDLOOP.
+  CATCH cx_root INTO DATA(e_txt).
+    WRITE: / e_txt-&gt;get_text( ).
+ENDTRY.</pre><p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_cls TYPE seoclsname DEFAULT 'CL_GUI_ALV_GRID'.
+
+TRY.
+    DATA(o_cls) = cl_oo_object=&gt;get_instance( p_cls ).
+
+    LOOP AT o_cls-&gt;get_methods( ) ASSIGNING FIELD-SYMBOL(&lt;m&gt;).
+      WRITE: / 'Method:', &lt;m&gt;-cmpname.
+    ENDLOOP.
+
+    LOOP AT o_cls-&gt;get_events( ) ASSIGNING FIELD-SYMBOL(&lt;e&gt;).
+      WRITE: / 'Event:', &lt;e&gt;-cmpname.
+    ENDLOOP.
+
+  CATCH cx_root INTO DATA(e_txt).
+    WRITE: / e_txt-&gt;get_text( ).
+ENDTRY.</pre><p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_cls TYPE seoclsname DEFAULT 'CL_GUI_ALV_GRID'.
+
+TRY.
+    LOOP AT cl_oo_classname_service=&gt;get_all_class_includes( p_cls ) ASSIGNING FIELD-SYMBOL(&lt;ci&gt;).
+      WRITE: / 'Include:', &lt;ci&gt;.
+    ENDLOOP.
+
+  CATCH cx_root INTO DATA(e_txt).
+    WRITE: / e_txt-&gt;get_text( ).
+ENDTRY.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/poluchenie-informacii-o-strukture-klassa-interfejsa/">Получение информации о структуре класса/интерфейса</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/poluchenie-informacii-o-strukture-klassa-interfejsa/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Рефакторинг (видеокурс)</title>
+		<link>https://abap-blog.ru/abap-notes/refaktoring-videokurs/</link>
+					<comments>https://abap-blog.ru/abap-notes/refaktoring-videokurs/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 04 May 2020 10:38:36 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4205</guid>
+
+					<description><![CDATA[]]></description>
+										<content:encoded><![CDATA[<div class="arve aligncenter" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-j38-zsyoavc618a1e33d983c033186450" style="max-width:400px;" itemscope itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/j38-ZSyOAvc?list=PLmqFxxywkatR5zj5M4WdUyyKyLoJSZZrQ&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="arve-iframe fitvidsignore" data-arve="arve-youtube-j38-zsyoavc618a1e33d983c033186450" data-src-no-ap="https://www.youtube-nocookie.com/embed/j38-ZSyOAvc?list=PLmqFxxywkatR5zj5M4WdUyyKyLoJSZZrQ&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="225" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="https://www.youtube-nocookie.com/embed/j38-ZSyOAvc?list=PLmqFxxywkatR5zj5M4WdUyyKyLoJSZZrQ&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="400"></iframe>
+
+</span>
+
+</span>
+
+</div><p>The post <a href="https://abap-blog.ru/abap-notes/refaktoring-videokurs/">Рефакторинг (видеокурс)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/refaktoring-videokurs/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Шаблоны разработки (видеокурс)</title>
+		<link>https://abap-blog.ru/abap-notes/shablony-razrabotki-videokurs/</link>
+					<comments>https://abap-blog.ru/abap-notes/shablony-razrabotki-videokurs/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 04 May 2020 10:30:21 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4200</guid>
+
+					<description><![CDATA[]]></description>
+										<content:encoded><![CDATA[<div class="arve aligncenter" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-s-rjimaxhio618a1e33dbcbd532349567" style="max-width:400px;" itemscope itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio">
+<span class="arve-ar" style="padding-top:75.000000%"></span>
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/S-RjiMAxHio?list=PLmqFxxywkatStbd9hdzVOS1hZa9dc56k4&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="arve-iframe fitvidsignore" data-arve="arve-youtube-s-rjimaxhio618a1e33dbcbd532349567" data-src-no-ap="https://www.youtube-nocookie.com/embed/S-RjiMAxHio?list=PLmqFxxywkatStbd9hdzVOS1hZa9dc56k4&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="300" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="https://www.youtube-nocookie.com/embed/S-RjiMAxHio?list=PLmqFxxywkatStbd9hdzVOS1hZa9dc56k4&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="400"></iframe>
+<meta itemprop="thumbnailUrl" content="https://abap-blog.ru/wp-content/uploads/2012/01/Facade1.gif">
+<meta itemprop="name" content="Шаблоны разработки (Сергей Немчинский)">
+<meta itemprop="description" content="Шаблоны разработки - видеокурс">
+
+</span>
+
+</span>
+
+</div><p>The post <a href="https://abap-blog.ru/abap-notes/shablony-razrabotki-videokurs/">Шаблоны разработки (видеокурс)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/shablony-razrabotki-videokurs/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Получить список подклассов</title>
+		<link>https://abap-blog.ru/abap-notes/podklassy/</link>
+					<comments>https://abap-blog.ru/abap-notes/podklassy/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 04 Apr 2020 12:41:34 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=3911</guid>
+
+					<description><![CDATA[<p>Получить перечень подклассов можно следующим образом: [crayon-618a1e33d004f910108859/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/podklassy/">Получить список подклассов</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Получить перечень подклассов можно следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">START-OF-SELECTION.
+  cl_demo_output=&gt;display( CAST cl_oo_class( cl_oo_class=&gt;get_instance( 'CL_HTTP_SERVER' ) )-&gt;get_subclasses( ) ).</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/podklassy/">Получить список подклассов</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/podklassy/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Классы реализующие интерфейс</title>
+		<link>https://abap-blog.ru/abap-notes/klassy-realizuyushhie-interfejs/</link>
+					<comments>https://abap-blog.ru/abap-notes/klassy-realizuyushhie-interfejs/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 04 Apr 2020 12:39:42 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=3909</guid>
+
+					<description><![CDATA[<p>Получить классы реализующие интерфейс можно следующим способом: [crayon-618a1e33d0208614555822/]</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/klassy-realizuyushhie-interfejs/">Классы реализующие интерфейс</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Получить классы реализующие интерфейс можно следующим способом:</p><pre class="urvanov-syntax-highlighter-plain-tag">START-OF-SELECTION.
+  cl_demo_output=&gt;display( 
+    CAST cl_oo_interface( cl_oo_interface=&gt;get_instance( 'IF_HTTP_SERVER' ) )-&gt;get_implementing_classes( ) ).</pre><p></p><p>The post <a href="https://abap-blog.ru/abap-notes/klassy-realizuyushhie-interfejs/">Классы реализующие интерфейс</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/klassy-realizuyushhie-interfejs/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

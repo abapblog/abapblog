@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>webdynpro | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/webdynpro-2/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:03:21 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Получение URL для Web Dynpro приложения</title>
+		<link>https://abap-blog.ru/network/poluchenie-url-dlya-web-dynpro-prilozheniya/</link>
+					<comments>https://abap-blog.ru/network/poluchenie-url-dlya-web-dynpro-prilozheniya/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 04 Oct 2012 04:06:14 +0000</pubDate>
+				<category><![CDATA[Сетевые технологии]]></category>
+		<category><![CDATA[webdynpro]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=997</guid>
+
+					<description><![CDATA[<p>[crayon-618a222b36076288233348/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/network/poluchenie-url-dlya-web-dynpro-prilozheniya/">Получение URL для Web Dynpro приложения</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2012/10/Безымянный.png"><img loading="lazy" class="size-full wp-image-1003 alignleft" title="URL" src="http://abap-blog.ru/wp-content/uploads/2012/10/Безымянный.png" alt="" width="728" height="31" srcset="https://abap-blog.ru/wp-content/uploads/2012/10/Безымянный.png 728w, https://abap-blog.ru/wp-content/uploads/2012/10/Безымянный-300x12.png 300w" sizes="(max-width: 728px) 100vw, 728px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: gt_param TYPE tihttpnvp,
+      gs_param TYPE ihttpnvp,
+      gv_url   TYPE STRING,
+      gv_url_c TYPE char255.
+
+"Заполнение параметров URL
+gs_param-NAME = 'param1'.
+gs_param-VALUE = 'value1'.
+APPEND gs_param TO gt_param.
+
+gs_param-NAME = 'param2'.
+gs_param-VALUE = 'value2'.
+APPEND gs_param TO gt_param.
+
+"Получаем URL с необходимыми параметрами
+cl_wd_utilities=&gt;construct_wd_url( EXPORTING
+                                     application_name           = 'ИмяПриложения'
+                                     in_parameters              = gt_param
+                                   IMPORTING
+                                     out_absolute_url = gv_url ).
+gv_url_c = gv_url.
+
+"Вызов браузера с полученным URL
+CALL FUNCTION 'CALL_BROWSER'
+  EXPORTING
+    url = gv_url_c.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/network/poluchenie-url-dlya-web-dynpro-prilozheniya/">Получение URL для Web Dynpro приложения</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/network/poluchenie-url-dlya-web-dynpro-prilozheniya/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

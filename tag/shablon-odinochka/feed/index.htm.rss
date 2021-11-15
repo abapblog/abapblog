@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>шаблон одиночка | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/shablon-odinochka/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:54:15 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Шаблон одиночка</title>
+		<link>https://abap-blog.ru/osnovy-abap/shablon-odinochka/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/shablon-odinochka/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 16 Jan 2012 10:15:01 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[abap objects]]></category>
+		<category><![CDATA[singleton]]></category>
+		<category><![CDATA[шаблон одиночка]]></category>
+		<category><![CDATA[шаблоны проектирования]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=240</guid>
+
+					<description><![CDATA[<p>Гарантирует, что у класса есть только один экземпляр, и предоставляет к нему глобальную точку доступа. Существенно то, что можно пользоваться именно экземпляром класса, так как при этом во многих случаях становится доступной более широкая функциональность. Например, к описанным компонентам класса можно обращаться через интерфейс, если такая возможность поддерживается языком. Плюсы контролируемый доступ к единственному экземпляру; уменьшение числа имён; допускает уточнение [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-odinochka/">Шаблон одиночка</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Гарантирует, что у класса есть только один экземпляр, и предоставляет к нему глобальную точку доступа. Существенно то, что можно пользоваться именно <em>экземпляром </em>класса, так как при этом во многих случаях становится доступной более широкая функциональность. Например, к описанным компонентам класса можно обращаться через интерфейс, если такая возможность поддерживается языком.</p>
+<p><span id="more-240"></span></p>
+<h2>Плюсы</h2>
+<ul>
+<li>контролируемый доступ к единственному экземпляру;</li>
+<li>уменьшение числа имён;</li>
+<li>допускает уточнение операций и представления;</li>
+<li>допускает переменное число экземпляров;</li>
+<li>бо?льшая гибкость, чем у операций класса.</li>
+</ul>
+<h2>Минусы</h2>
+<ul>
+<li>Глобальные объекты могут быть вредны для объектного программирования, в некоторых случаях приводя к созданию немасштабируемого проекта.</li>
+<li>Усложняет написание модульных тестов и следованию TDD</li>
+</ul>
+<h2>Применение</h2>
+<ul>
+<li>должен быть ровно один экземпляр некоторого класса, легко доступный всем клиентам;</li>
+<li>единственный экземпляр должен расширяться путем порождения подклассов, и клиентам нужно иметь возможность работать с расширенным экземпляром без модификации своего кода.</li>
+</ul>
+<p>Пример реализации на ABAP:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  ztest_singleton_pattern.
+*
+*----------------------------------------------------------------------*
+* CLASS lcl_application DEFINITION
+*----------------------------------------------------------------------*
+CLASS lcl_application DEFINITION CREATE PRIVATE.*
+  PUBLIC SECTION.
+* Cтатический метод возвращающий ссылку на объект одиночку
+    CLASS-METHODS:
+      get_apps_instance
+        RETURNING
+          VALUE(ro_apps) TYPE REF TO lcl_application.*
+    METHODS:
+      set_v_name
+        IMPORTING
+          iv_name TYPE char30,
+      get_v_name
+        RETURNING
+          VALUE(rv_name) TYPE char30.*
+  PRIVATE SECTION.
+* Статическая переменная будет хранить экземпляр класса одиночки
+    CLASS-DATA: lo_apps TYPE REF TO lcl_application.
+    DATA: v_name TYPE char30.
+ENDCLASS.                    "lcl_application DEFINITION
+*
+*
+*----------------------------------------------------------------------*
+* CLASS lcl_application IMPLEMENTATION
+*----------------------------------------------------------------------*
+CLASS lcl_application IMPLEMENTATION.
+*
+* Метод возвращает экземпляр объекта одиночки
+  METHOD get_apps_instance.
+    IF lo_apps IS INITIAL.
+* Создание объекта
+      CREATE OBJECT lo_apps.
+    ENDIF.
+    ro_apps = lo_apps.
+  ENDMETHOD.                    "get_apps_instance
+*
+  METHOD set_v_name.
+    me-&gt;v_name = iv_name.
+  ENDMETHOD.                    "set_v_name
+*
+  METHOD get_v_name.
+    rv_name = me-&gt;v_name.
+  ENDMETHOD.                    "get_v_name
+*
+ENDCLASS.                    "lcl_application IMPLEMENTATION
+*
+*
+START-OF-SELECTION.
+*
+*.Создаем 1-й экземпляр объекта
+  DATA: lo_application TYPE REF TO lcl_application.
+  DATA: lv_result TYPE char30.
+*
+  WRITE: / 'Приложение 1: '.
+* CREATE OBJECT запрещен т.к. создание объекта объявлено как CREATE PRIVATE
+  lo_application = lcl_application=&gt;get_apps_instance( ).
+* Установим имя объекту 
+  lo_application-&gt;set_v_name( 'This is first Object' ).
+  lv_result = lo_application-&gt;get_v_name( ).
+  WRITE: / lv_result.
+  CLEAR lv_result.
+*
+*.Создадим вторую ссылку на объект
+  DATA: lo_2nd_apps TYPE REF TO lcl_application.
+  SKIP 2.
+  WRITE: / 'Второе приложение : '.
+* Вызывая метод получаем ранее созданный объект
+  lo_2nd_apps = lcl_application=&gt;get_apps_instance( ).
+  lv_result = lo_2nd_apps-&gt;get_v_name( ).
+  WRITE: / lv_result.
+  CLEAR lv_result.</pre><p>Оригинальный пример был взят <a href="http://help-abap.zevolving.com/2008/09/abap-object-design-patterns-singleton/">отсюда.</a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-odinochka/">Шаблон одиночка</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/shablon-odinochka/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,2200 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Работа с БД | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/category/database-work/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sun, 18 Apr 2021 14:36:33 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Внутренние таблицы как источник в SQL запросах</title>
+		<link>https://abap-blog.ru/osnovy-abap/internal-table-as-data-source-select/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/internal-table-as-data-source-select/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 13 Apr 2021 17:58:58 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[Работа с БД]]></category>
+		<guid isPermaLink="false">https://abap-blog.ru/?p=7127</guid>
+
+					<description><![CDATA[<p>В релизе ABAP 7.52 стало возможным использование внутренних таблиц как источника данных в ABAP SQL: [crayon-618a0554e9e2d527362433/] Существует два сценария выполнения таких запросов: Для выполнения SQL запроса не требуется переноса содержимого внутренней таблицы на уровень СУБД. В таком случае обработка запроса осуществляется непосредственно на сервере приложений, по аналогии с табличным буфером. Для выполнения SQL запроса требуется [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/internal-table-as-data-source-select/">Внутренние таблицы как источник в SQL запросах</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>В релизе ABAP 7.52 стало возможным использование внутренних таблиц как <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abapselect_itab.htm" target="_blank" rel="noopener">источника данных</a> в ABAP SQL:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT FROM ...@itab AS table_alias...</pre><p>Существует два сценария выполнения таких запросов:</p>
+<ul>
+<li>Для выполнения SQL запроса не требуется переноса содержимого внутренней таблицы на уровень СУБД. В таком случае обработка запроса осуществляется непосредственно на сервере приложений, по аналогии с табличным буфером.</li>
+<li>Для выполнения SQL запроса требуется перенести содержимое внутренней таблицы во временную таблицу на уровень СУБД. Этот сценарий поддерживается не всеми СУБД и чтобы статический анализ кода не ругался, следует использовать прагму: <strong>##itab_db_select</strong>. При отсутствии поддержки система выдаст исключение в runtime &#8212; CX_SY_SQL_UNSUPPORTED_FEATURE.</li>
+</ul>
+<p>Разберём текущие особенности использования этих сценариев.</p>
+<p><span id="more-7127"></span></p>
+<p>Основным предназначением данного синтаксиса безусловно является использование внутренней таблицы и JOIN её данных с данными в СУБД. По сути это еще одна альтернатива<strong> FOR ALL ENTRIES</strong>, но без тех ограничений что есть в <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abenwhere_all_entries.htm" target="_blank" rel="noopener">FAE</a>.</p>
+<p>Использовать этот синтаксис как замену операций READ TABLE и LOOP в первом сценарии допустимо, но как правило выполняться это будет медленнее. Говоря о первом сценарии следует упомянуть что <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abenbuffer_restrictions.htm" target="_blank" rel="noopener">условия</a>, по которым система решает следует ли переносить таблицу на уровень СУБД аналогичны тем условиям, что используются для определения необходимости обращения к СУБД при использовании буферизированных таблиц. Таким образом таблица будет переносится на уровень СУБД если:</p>
+<ul>
+<li>Используются агрегатные функции,</li>
+<li>Используется DISTINCT,</li>
+<li>Используются JOIN-ы,</li>
+<li>Используется WITH,</li>
+<li>Используются SQL выражения не из <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abenbuffer_expressions.htm" target="_blank" rel="noopener">списка совместимых</a>,</li>
+<li>Множество других ограничений&#8230;</li>
+</ul>
+<p>Убедиться в том что таблица переносится в СУБД можно посмотрев трассировку запроса, выглядеть это будет примерно следующим образом:<a href="https://abap-blog.ru/wp-content/uploads/2021/04/fda_write.png"><img loading="lazy" class="alignnone size-full wp-image-7131" src="https://abap-blog.ru/wp-content/uploads/2021/04/fda_write.png" alt="" width="1114" height="445" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/fda_write.png 1114w, https://abap-blog.ru/wp-content/uploads/2021/04/fda_write-300x120.png 300w, https://abap-blog.ru/wp-content/uploads/2021/04/fda_write-1024x409.png 1024w, https://abap-blog.ru/wp-content/uploads/2021/04/fda_write-768x307.png 768w" sizes="(max-width: 1114px) 100vw, 1114px" /></a></p>
+<p>Есть ряд особенностей SQL запросов с внутренней таблицей как источником данных:</p>
+<ul>
+<li>Нельзя указать более одной таблицы в SQL запросе, JOIN двух внутренних таблиц сделать не выйдет. Нельзя использовать одну и ту же таблицу в запросе несколько раз, например с дополнением WITH.</li>
+<li>Обязательно требуется указание псевдонима для внутренней таблицы через дополнение AS.</li>
+<li>Тип строки таблицы может быть как элементарным, так и структурным:
+<ul>
+<li>Если строка элементарного типа, обращаться к столбцу этой таблицы можно через <strong>table_line</strong>. В списке полей для table_line можно задать псевдоним через AS. Тип таблицы в данном случае не может быть строкой (допустимо использование строк ссылающихся на словарный тип SSTRING) или ссылочным типом.</li>
+<li>Если строка структурного типа, недопустимо обращение в SQL запросе к полям являющимися вложенными структурами, строками или таблицами.</li>
+</ul>
+</li>
+<li>Если используется дополнение <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abaporderby_clause.htm#!ABAP_ALTERNATIVE_1@1@" target="_blank" rel="noopener">ORDER BY PRIMARY KEY</a> во внутренней таблице обязательно должен быть указан <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abenprimary_table_key_glosry.htm" target="_blank" rel="noopener">primary key</a>.</li>
+<li>Нельзя при статическом указании таблицы во FROM использовать обобщённые типы таблиц (вроде INDEX TABLE). Обобщённые типы могут быть использованы при динамическом FROM. Пример:<br />
+<pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_test DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS:
+      start,
+      test IMPORTING it_table TYPE INDEX TABLE.
+ENDCLASS.
+
+CLASS lcl_test IMPLEMENTATION.
+
+  METHOD test.
+    DATA:
+      lt_keys TYPE STANDARD TABLE OF sflight.
+
+    SELECT connid, price, carrid
+      FROM ('@it_table') AS sflight_tab
+        INTO CORRESPONDING FIELDS OF TABLE @lt_keys.
+
+    cl_demo_output=&gt;display( lt_keys ).
+  ENDMETHOD.
+
+ENDCLASS.</pre>
+</li>
+<li>Внутренняя таблица не может содержать столбцов со ссылкой на устаревшие типы данных: DF16_SCL и DF34_SCL.</li>
+<li>Если внутренняя таблица имеет элементарный тип, при использовании <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abencommon_table_expression_glosry.htm" target="_blank" rel="noopener">CTE</a>, после WITH нельзя указывать поля через * или data_source~*.</li>
+<li>Для внутренней таблицы необходимо указывать primary key явным образом, при использовании стандартного ключа (with default key) система выдаст предупреждение.</li>
+</ul>
+<p>Даже если таблица не будет перенесена на уровень СУБД, данные в ней обрабатываются так как же как и в СУБД:</p>
+<ul>
+<li>Строки со ссылкой на SSTRING обрабатываются как строки с фиксированной длинной и игнорированием завершающих пробелов.</li>
+<li>SQL выражения работают таким же образом, как если бы они работали на уровне СУБД:
+<ul>
+<li>DIV и MOD могут выдавать отличные от аналогичных в ABAP результаты</li>
+<li>Обработка NULL значений аналогична тому как это работает в SQL запросах.</li>
+</ul>
+</li>
+<li>Таблица всегда рассматривается как независимая от манданта.</li>
+</ul>
+<h3>Примеры</h3>
+<p>Следующий пример демонстрирует типичный случай использования внутренних таблиц как источника данных, а именно перенос таблицы на уровень СУБД и выполнение JOIN:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA lt_itab TYPE HASHED TABLE OF scarr
+                 WITH UNIQUE KEY mandt carrid.
+
+    IF NOT cl_abap_dbfeatures=&gt;use_features(
+             EXPORTING
+               requested_features =
+                 VALUE #( ( cl_abap_dbfeatures=&gt;itabs_in_from_clause ) ) ).
+      cl_demo_output=&gt;display(
+        `Система не поддерживает внутренние таблицы как источник данных` ).
+      RETURN.
+    ENDIF.
+
+    lt_itab =  VALUE #( ( carrid = 'LH' carrname = 'L.H.' )
+                        ( carrid = 'UA' carrname = 'U.A.' ) ).
+
+    SELECT scarr~carrid, scarr~carrname, spfli~connid
+           FROM @lt_itab AS scarr
+             INNER JOIN spfli ON scarr~carrid = spfli~carrid
+           INTO TABLE @DATA(lt_result)
+           ##db_feature_mode[itabs_in_from_clause] ##itab_db_select.</pre><p>Пример в котором не происходит обращения к СУБД:</p><pre class="urvanov-syntax-highlighter-plain-tag">TYPES:
+      BEGIN OF ts_line,
+        id     TYPE c LENGTH 1,
+        number TYPE i,
+      END OF ts_line.
+
+    DATA lt_itab TYPE HASHED TABLE OF ts_line
+                 WITH UNIQUE KEY id.
+
+    DATA(lo_rnd) = cl_abap_random_int=&gt;create( seed = CONV i( sy-uzeit ) min = 1 max = 100 ).
+
+    lt_itab = VALUE #(
+      FOR i = 1 UNTIL i &gt; 25
+      ( id = substring( val = sy-abcde off = i len = 1 )
+        number = lo_rnd-&gt;get_next( ) ) ).
+
+    SELECT *
+      FROM @lt_itab AS numbers
+      WHERE number &gt; 50
+      ORDER BY id
+      INTO TABLE @DATA(lt_result)
+      ##db_feature_mode[itabs_in_from_clause] ##itab_db_select.
+
+    cl_demo_output=&gt;display( lt_result ).</pre><p>Формирование результата элементарного типа (lt_result1) и структурного (lt_result2):</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA lt_itab TYPE SORTED TABLE OF i WITH UNIQUE KEY table_line.
+lt_itab =  VALUE #( ( 1 )
+                    ( 2 )
+                    ( 3 ) ).
+
+DATA lt_result1 LIKE lt_itab.
+
+SELECT table_line
+       FROM @lt_itab AS numbers
+       INTO TABLE @lt_result1.
+
+cl_demo_output=&gt;write( lt_result1 ).
+
+SELECT table_line AS number
+       FROM @lt_itab AS numbers
+       INTO TABLE @DATA(lt_result2).
+
+cl_demo_output=&gt;display( lt_result2 ).</pre><p></p>
+<h3>Производительность</h3>
+<p>Если сравнивать скорость выполнения FAE с FDA и JOIN с внутренней таблицей, скорость работы <a href="https://blogs.sap.com/2019/03/31/compare-performance-between-select-for-all-entries-and-amdp/" target="_blank" rel="noopener">практически не отличается</a>, оба сценария выигрывают у сценария переноса внутренней таблицы через AMDP.</p>
+<h3>Итого</h3>
+<p>Подводя итоги, данный механизм выглядит вполне привлекательной заменой использования запросов с FOR ALL ENTRIES, если сравнивать с точки зрения накладываемых в обоих случаях ограничений и безопасности в части необходимости доп. проверок в коде при использовании FAE.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/internal-table-as-data-source-select/">Внутренние таблицы как источник в SQL запросах</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/internal-table-as-data-source-select/feed/</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>AMDP Функции</title>
+		<link>https://abap-blog.ru/osnovy-abap/amdp-funkcii/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/amdp-funkcii/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 03 Apr 2021 16:46:08 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[Работа с БД]]></category>
+		<guid isPermaLink="false">https://abap-blog.ru/?p=7028</guid>
+
+					<description><![CDATA[<p>Начиная с релиза ABAP 7.50 у нас появилась возможность создания не только AMDP процедур, но и AMDP функций. В зависимости от типа AMDP функции они могут быть вызваны: непосредственно из ABAP кода, из других AMDP методов, как источник данных для специальной ABAP CDS сущности называемой табличной функцией CDS. Далее рассмотрим все варианты использования AMDP функций. [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/amdp-funkcii/">AMDP Функции</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Начиная с релиза ABAP 7.50 у нас появилась возможность создания не только AMDP процедур, но и <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abenamdp_function_methods.htm" target="_blank" rel="noopener">AMDP функций</a>. В зависимости от типа AMDP функции они могут быть вызваны:</p>
+<ul>
+<li>непосредственно из ABAP кода,</li>
+<li>из других AMDP методов,</li>
+<li>как источник данных для специальной ABAP CDS сущности называемой <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abencds_table_functions.htm" target="_blank" rel="noopener">табличной функцией CDS</a>.</li>
+</ul>
+<p>Далее рассмотрим все варианты использования AMDP функций.</p>
+<p><span id="more-7028"></span></p>
+<p>В отличие от AMDP процедур, AMDP функция реализуется как AMDP метод, но с указанием дополнения BY DATABASE FUNCTION:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD meth BY DATABASE FUNCTION
+            FOR db
+            LANGUAGE db_lang
+            [OPTIONS db_options]
+            [USING   db_entities]
+            [USING   SCHEMA schema1 OBJECTS db_entities]
+            [USING   SCHEMA schema2 OBJECTS db_entities]
+            ... .
+  ...
+ENDMETHOD.</pre><p>Существует следующие виды AMDP функций:</p>
+<ul>
+<li><strong>AMDP табличная функция</strong> &#8212; в контексте HANA это функция БД, которая в качестве результата возвращает табличный результат. В SQLScript табличные функции могут быть использованы как источник данных вместо таблиц или ракурсов.
+<ul>
+<li>AMDP табличная функция для AMDP методов.</li>
+<li>AMDP табличная функция для табличной функции ABAP CDS.</li>
+</ul>
+</li>
+<li><strong>AMDP скалярная функция</strong> &#8212; функция в БД, которая в качестве результата возвращает результат <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abenelementary_data_type_glosry.htm" target="_blank" rel="noopener">элементарного типа</a>.</li>
+</ul>
+<p>Несмотря на возможность вызова AMDP функций из объектов HANA Native разработки, таких как хранимые процедуры или calculation view, SAP <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abendatabase_access_recomm.htm" target="_blank" rel="noopener">не рекомендует</a> так делать.</p>
+<h2>Скалярные AMDP функции</h2>
+<p>Особенности:</p>
+<ul>
+<li>Должна иметь RETURNING параметр элементарного типа.</li>
+<li>IMPORING параметры должны быть элементарного типа.</li>
+<li>Не допускается объявление исключений в определении через дополнение RAISING.</li>
+<li>Допускается использование дополнения <a href="https://help.sap.com/doc/abapdocu_753_index_htm/7.53/en-US/abapmethod_by_db_proc.htm#!ABAP_ADDITION_3@3@" rel="nofollow "><strong>DETERMINISTIC</strong></a> после <strong>OPTIONS</strong> &#8212; чтобы обеспечить кеширование результата функции в рамках запроса, если входные параметры вызова функции будут идентичными. <a href="https://help.sap.com/viewer/de2486ee947e43e684d39702027f8a94/2.0.02/en-US/67c9b0f0b18c487b95f54a4a95e6b88f.html" target="_blank" rel="noopener">Более подробно.</a></li>
+</ul>
+<p>Допускается вызов скалярных AMDP функций непосредственно из ABAP, в т.ч. как функциональных методов.</p>
+<p>Рассмотрим простой пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS zcl_amdp_scalar_function_demo DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES: if_amdp_marker_hdb.
+    CLASS-METHODS:
+      get_max_payment_sum IMPORTING VALUE(iv_mandt)           TYPE mandt
+                                    VALUE(iv_carrid)          TYPE s_carr_id
+                                    VALUE(iv_connid)          TYPE s_conn_id
+                          RETURNING VALUE(rv_max_payment_sum) TYPE s_sum,
+      get_flight_with_max_sum IMPORTING VALUE(iv_carrid)  TYPE s_carr_id
+                                        VALUE(iv_connid)  TYPE s_conn_id
+                              EXPORTING VALUE(et_flights) TYPE ty_flights.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS zcl_amdp_scalar_function_demo IMPLEMENTATION.
+  METHOD get_max_payment_sum BY DATABASE FUNCTION
+                             FOR HDB LANGUAGE SQLSCRIPT
+                             OPTIONS READ-ONLY DETERMINISTIC
+                             USING sflight.
+    SELECT MAX( paymentsum ) INTO rv_max_payment_sum
+        FROM sflight WHERE mandt  = :iv_mandt AND
+                           carrid = :iv_carrid AND
+                           connid = :iv_connid;
+  ENDMETHOD.
+
+  METHOD get_flight_with_max_sum BY DATABASE PROCEDURE
+                                 FOR HDB LANGUAGE SQLSCRIPT
+                                 OPTIONS READ-ONLY
+                                 USING sflight
+                                 zcl_amdp_scalar_function_demo=&gt;get_max_payment_sum.
+
+    et_flights = SELECT * FROM sflight WHERE mandt = SESSION_CONTEXT('CLIENT') AND
+                                             paymentsum = "ZCL_AMDP_SCALAR_FUNCTION_DEMO=&gt;GET_MAX_PAYMENT_SUM" ( iv_mandt =&gt; SESSION_CONTEXT('CLIENT'),
+                                                                                                                 iv_carrid =&gt; :iv_carrid,
+                                                                                                                 iv_connid =&gt; :iv_connid );
+  ENDMETHOD.
+ENDCLASS.</pre><p>В данном примере мы создали скалярную функцию get_max_payment_sum, которая возвращает максимальную сумму платежей по авиакомпании и рейсу вне зависимости от даты. А внутри AMDP процедуры get_flight_with_max_sum получили записи, где paymentsum равна максимальной в разрезе авиакомпании и рейса.</p>
+<p>Обратите внимание на опцию <strong>DETERMINISTIC</strong>, если вы её используете, вы не можете получить мандант из функции SESSION_CONTEXT( &#8216;CLIENT&#8217; ).</p>
+<p>Как уже было упомянуто ранее, такие функции могут быть вызваны из ABAP кода:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_carrid TYPE s_carr_id,
+            p_connid TYPE s_conn_id.
+
+START-OF-SELECTION.
+  cl_demo_output=&gt;display( |{ zcl_amdp_scalar_function_demo=&gt;get_max_payment_sum( iv_mandt = sy-mandt
+                                                                                  iv_carrid = p_carrid
+                                                                                  iv_connid = p_connid ) DECIMALS = 2 }| ).</pre><p></p>
+<h2>Табличные AMDP функции</h2>
+<h3>Табличная функция для AMDP методов</h3>
+<p>Особенности:</p>
+<ul>
+<li>Функция должна иметь RETURNING параметр табличного типа, все компоненты структуры которого должны иметь <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abenelementary_data_type_glosry.htm" target="_blank" rel="noopener">элементарный тип</a>.</li>
+<li>Не допускается использование CHANGING или EXPORTING параметров.</li>
+<li>Не допускается объявление исключений в определении через дополнение RAISING.</li>
+<li>Обязательно должно быть указание READ-ONLY.</li>
+<li>Нельзя вызвать непосредственно из ABAP кода.</li>
+</ul>
+<p>Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS zcl_amdp_function_demo DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+    INTERFACES: if_amdp_marker_hdb.
+    CLASS-METHODS:
+      get_flight_with_max_sum IMPORTING VALUE(iv_carrid)  TYPE s_carr_id
+                                        VALUE(iv_connid)  TYPE s_conn_id
+                              RETURNING VALUE(rt_flights) TYPE ty_flights.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS zcl_amdp_function_demo IMPLEMENTATION.
+  METHOD get_flight_with_max_sum BY DATABASE FUNCTION
+                                 FOR HDB LANGUAGE SQLSCRIPT
+                                 OPTIONS READ-ONLY
+                                 USING sflight
+                                 zcl_amdp_scalar_function_demo=&gt;get_max_payment_sum.
+
+    RETURN SELECT * FROM sflight WHERE mandt = session_context('CLIENT') AND
+                                       paymentsum = "ZCL_AMDP_SCALAR_FUNCTION_DEMO=&gt;GET_MAX_PAYMENT_SUM" ( iv_mandt =&gt; SESSION_CONTEXT('CLIENT'),
+                                                                                                           iv_carrid =&gt; :iv_carrid,
+                                                                                                           iv_connid =&gt; :iv_connid );
+  ENDMETHOD.
+ENDCLASS.</pre><p>Обратите внимание на использование ключевого слова RETURN для передачи результата функции.</p>
+<p>В примере мы вновь использовали ранее определённую скалярную функцию для формирования табличного результата новой табличной функции.</p>
+<p>При вызове из ABAP на этапе компиляции не будет предупреждения, но в момент запуска возникнет дамп &#8212; <strong>CALL_METHOD_AMDP_FUNC_ILLEGAL</strong>:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_carrid TYPE s_carr_id,
+            p_connid TYPE s_conn_id.
+
+START-OF-SELECTION.
+    DATA(lt_flights) = zcl_amdp_function_demo=&gt;get_flight_with_max_sum( iv_carrid = p_carrid
+                                                                        iv_connid = p_connid ).</pre><p></p>
+<h3>Табличная функция для ABAP CDS Table Functions</h3>
+<p>В ABAP CDS можно объявить так называемую табличную функцию, основное предназначение которой &#8212; предоставить некоторый набор данных сформированный внутри AMDP функции. Сделан такой функционал прежде всего для возможностей использования HANA Native функционала, который пока по той или иной причине не доступен в ABAP CDS.</p>
+<p>Особенности:</p>
+<ul>
+<li>Функция может быть объявлена только как статический метод с публичной областью видимости. Не допускается объявление через интерфейсы.</li>
+<li>В определении метода должно использоваться ключевое дополнение <strong>FOR TABLE FUNCTION</strong> имяABAPCDSфункции. Соответственно одна и та же функция может быть использована только для одной ABAP CDS Table function.</li>
+<li>Параметры AMDP табличной функции не объявляются в описании метода, они должны быть описаны как параметры ABAP CDS. Параметры всегда имеют элементарный тип, не допускается опциональных параметров.</li>
+<li>Возвращаемый табличный тип определяется относительно структуры ABAP CDS, для зависимых от манданта CDS в структуре компонентов будет так же поле мандант. Тип таблицы &#8212; стандартная, ключ по умолчанию с именем <strong>result</strong> включает в себя все поля таблицы.</li>
+<li>Не могут быть напрямую вызваны из ABAP.</li>
+<li>Сначала создаётcя ABAP CDS с описанием входных параметров и структуры, а уже затем создаётся AMDP функция.</li>
+</ul>
+<p>Созданный таким образом ABAP CDS мы можем использовать в других CDS или непосредственно для вызова из ABAP кода.</p>
+<p>Рассмотрим пример ABAP CDS:</p><pre class="urvanov-syntax-highlighter-plain-tag">@ClientHandling.type: #CLIENT_DEPENDENT
+define table function ZDEMO_CDS_GET_SCARR_SPFLI
+  with parameters
+    @Environment.systemField: #CLIENT
+    clnt   :abap.clnt,
+    carrid :s_carr_id
+returns
+{
+  client   :s_mandt;
+  carrname :s_carrname;
+  connid   :s_conn_id;
+  cityfrom :s_from_cit;
+  cityto   :s_to_city;
+}
+implemented by method
+  zcl_amdp_cds_function_demo=&gt;get_scarr_spfli_for_cds;</pre><p>Код AMDP функции:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS zcl_amdp_cds_function_demo DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+    INTERFACES: if_amdp_marker_hdb.
+    CLASS-METHODS get_scarr_spfli_for_cds
+        FOR TABLE FUNCTION zdemo_cds_get_scarr_spfli.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS zcl_amdp_cds_function_demo IMPLEMENTATION.
+  METHOD get_scarr_spfli_for_cds
+         BY DATABASE FUNCTION FOR HDB
+         LANGUAGE SQLSCRIPT
+         OPTIONS READ-ONLY
+         USING scarr spfli.
+    RETURN SELECT sc.mandt as client,
+                  sc.carrname, sp.connid, sp.cityfrom, sp.cityto
+                  from scarr as sc
+                    inner join spfli as sp on sc.mandt = sp.mandt and
+                                              sc.carrid = sp.carrid
+                    where sp.mandt = :clnt AND
+                          sp.carrid = :carrid
+                    ORDER BY sc.mandt, sc.carrname, sp.connid;
+
+  endmethod.
+ENDCLASS.</pre><p>Вызов из ABAP кода:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_carrid TYPE s_carr_id,
+            p_connid TYPE s_conn_id.
+
+START-OF-SELECTION.
+  SELECT * FROM zdemo_cds_get_scarr_spfli( carrid = @p_carrid )
+    WHERE connid = @p_connid
+      INTO TABLE @DATA(lt_flights).</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/amdp-funkcii/">AMDP Функции</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/amdp-funkcii/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>SELECT SINGLE и UP TO 1 ROWS</title>
+		<link>https://abap-blog.ru/osnovy-abap/select-single-i-up-to-1-rows/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/select-single-i-up-to-1-rows/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 28 Mar 2021 11:07:25 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[Работа с БД]]></category>
+		<guid isPermaLink="false">https://abap-blog.ru/?p=6909</guid>
+
+					<description><![CDATA[<p>Казалось бы, выборка единственной записи из таблицы довольно простая и логически понятная операция, однако все еще частой ошибкой находимой на code-review является следующее предупреждение Code Inspector&#8217;a: Syntax check warning In &#171;SELECT SINGLE &#8230;&#187;, the WHERE condition for a key field does not test for equality or the FROM clause contains a join. This means the [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/select-single-i-up-to-1-rows/">SELECT SINGLE и UP TO 1 ROWS</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Казалось бы, выборка единственной записи из таблицы довольно простая и логически понятная операция, однако все еще частой ошибкой находимой на code-review является следующее предупреждение Code Inspector&#8217;a:</p>
+<blockquote><p><strong>Syntax check warning</strong></p>
+<p>In &#171;SELECT SINGLE &#8230;&#187;, the WHERE condition for a key field does not test for equality or the FROM clause contains a join. This means the result is possibly not unique. Internal message code: MESSAGE GSB</p>
+<p>Deactivatable using pragma ##WARN_OK. Message Code WRN 1305</p></blockquote>
+<p>Далее рассмотрим что это такое и почему это не нужно игнорировать.</p>
+<p><span id="more-6909"></span></p>
+<h3>Выборка с указанием полного ключа</h3>
+<p>Однозначное определение записи в таблице может быть выполнено только при передаче полного ключа таблицы.</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT *
+  FROM dbtab
+    INTO TABLE @DATA(lt_itab)
+      WHERE full_key.</pre><p>Либо через цикл:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT *
+  FROM dbtab
+    INTO  @DATA(ls_result)
+      WHERE full_key.
+ENDSELECT.</pre><p>Но чтобы более точно передать намерение в коде <strong>о выборке единственной записи из таблицы</strong>, следует использовать либо SELECT SINGLE и тогда результат формируется в виде структуры:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT SINGLE *
+  FROM dbtab 
+    INTO @DATA(ls_result)
+      WHERE full_key.</pre><p>Либо использовать дополнение <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abapselect_up_to_offset.htm" target="_blank" rel="noopener">UP TO 1 ROWS</a> в цикле:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT * UP TO 1 ROWS
+  FROM dbtab
+    INTO @DATA(ls_result)
+      WHERE full_key.
+ENDSELECT.</pre><p>Либо тоже дополнение без цикла и тогда получаем табличный результат, но с одной единственной строкой:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT * UP TO 1 ROWS
+  FROM dbtab
+    INTO TABLE @DATA(lt_itab)
+      WHERE full_key.</pre><p>Не следует использовать FAE и UP TO 1 ROWS:</p>
+<blockquote>
+<ul class="disc">
+<li>If the addition <a class="blue"><span class="qtext">FOR ALL ENTRIES</span></a> is also specified, all selected rows are initially read into a system table and the addition <span class="qtext">UP TO n ROWS</span> only takes effect during the passing from the system table to the actual target area. This can produce unexpected memory bottlenecks.</li>
+</ul>
+</blockquote>
+<h3>Выборка с указанием частичного ключа</h3>
+<p>Возвращаясь к рассматриваемой ошибке в Code Inspector-е, одна возникает в случае использования SELECT SINGLE с указанием не всех полей первичного ключа таблицы.</p>
+<p>Подобный код может быть логичен с точки зрения разработчика если он точно знает что структура таблицы и содержащихся в ней данных позволяет выбрать уникальную запись по неполному ключу. Однако разработчик не всегда может быть уверенным на 100% что структура хранимых в таблице данных не поменяется (особенно для custom таблиц) и его код не перестанет работать в будущем.</p>
+<p>Кроме того, с точки зрения СУБД такая операция позволяет выбрать абсолютно <strong>любую </strong>запись из таблицы удовлетворяющей указанному неполному ключу, что может приводить к плавающим ошибкам в одной системе и отсутствию таких же на другой, просто потому что записались они в в таблице в разном порядке и данные анализируемые после выборки отличаются в этих записях.</p>
+<p>Кроме того тут следует быть внимательным в случае использования конструкции UP TO 1 ROWS, несмотря на семантику выбора единственной записи, никакого предупреждения мы не увидим в случае указания неполного ключа.</p>
+<p>Относительно безопасным решением в данном случае является выборка с использованием UP TO 1 ROWS и указанием порядка сортировки в дополнении <strong>ORDER BY </strong>по первичному ключу:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT * UP TO 1 ROWS
+  FROM dbtab 
+    INTO TABLE @DATA(lt_result)
+      WHERE partly_specified_key
+        ORDER BY PRIMARY KEY.
+" Или...
+SELECT * UP TO 1 ROWS
+  FROM dbtab 
+    INTO @DATA(ls_result)
+      WHERE partly_specified_key
+        ORDER BY PRIMARY KEY.
+ENDSELECT.</pre><p>Однако дополнение не может быть использовано в случае JOIN или при использовании PATH EXPRESSIONS. Кроме того там еще много <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abaporderby_clause.htm#!ABAP_ALTERNATIVE_1@1@" target="_blank" rel="noopener">других ограничений</a>. Соответственно ключевые поля лучше указывать вручную:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT dbtab~* UP TO 1 ROWS
+  FROM dbtab INNER JOIN another_dbtab ON ...
+    INTO TABLE @DATA(lt_result)
+      WHERE partly_specified_key
+        ORDER BY key_fields.
+" Или...
+SELECT dbtab~* UP TO 1 ROWS
+  FROM dbtab INNER JOIN another_dbtab ON ...
+    INTO @DATA(ls_result)
+      WHERE partly_specified_key
+        ORDER BY key_fields.
+ENDSELECT.</pre><p>Еще менее безопасным является указание сортировки без указания всех полей первичного ключа, т.к. есть вероятность наличия дубликатов относительно отсортированного массива, среди которых та запись которую мы выбираем опять будет неоднозначной.</p>
+<p>Указать ORDER BY в SELECT SINGLE не позволит синтаксис, просто потому что это противоречит назначению данной конструкции.</p>
+<h3>Проверка существования записи в таблице</h3>
+<p>Если же конструкция SELECT SINGLE используется для анализа существования записи в таблице, без необходимости анализа самих данных, вы вполне можете использовать данную конструкцию без указания полного ключа. Но если оставить конструкцию просто в следующем виде:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT SINGLE *
+  FROM dbtab
+    INTO @DATA(ls_result)
+      WHERE partly_specified_key.</pre><p>Code-Inspector продолжит ругаться. Соответственно чтобы QA-менеджер (ревьювер) не обратил внимание на данную ошибку, мы либо можем воспользоваться следующей конструкцией (ABAP 7.40 SP5+):</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT SINGLE @abap_true
+  FROM dbtab
+    INTO @DATA(lv_exists)
+      WHERE partly_specified_key.</pre><p>И тогда Code-Inspector не покажет ошибку (кажется эта проверка была исправлена только в 7.50, в ABAP Platform 1909 она точно исчезла).</p>
+<p>Либо воспользоваться прагмой для сокрытия предупреждения (желательно с комментарием почему применили прагму):</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT SINGLE *
+  FROM dbtab ##WARN_OK
+    INTO @DATA(ls_result)
+      WHERE partly_specified_key.</pre><p>Либо если такие прагмы запрещены, должны переделать запрос на использование дополнения UP TO 1 ROWS.</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT * UP TO 1 ROWS
+  FROM dbtab 
+    INTO TABLE @DATA(lt_result)
+      WHERE partly_specified_key.
+" Или...
+SELECT * UP TO 1 ROWS
+  FROM dbtab 
+    INTO @DATA(ls_result)
+      WHERE partly_specified_key.
+ENDSELECT.
+
+IF sy-subrc = 0...</pre><p></p>
+<h3>Экзотические варианты</h3>
+<p>Еще одним вариантом без использования дополнительных переменных может быть использование агрегата COUNT( * ), однако производительность такого варианта может быть ниже, т.к. СУБД будет вынуждена не просто взять запись, а еще выполнить подсчёт записей.</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT COUNT( * ) FROM dbtab
+  WHERE partly_specified_key.
+
+IF sy-dbcnt &gt; 0...</pre><p>Можно еще так, но с точки зрения семантики выглядит странно:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT COUNT( * ) UP TO 1 ROWS FROM dbtab
+  WHERE partly_specified_key.</pre><p>Будет преобразовано в NativeSQL:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT COUNT( * ) FROM 
+ ( SELECT 1 FROM dbtab WHERE partly_specified_key LIMIT 1 )</pre><p>Еще экзотические варианты:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT * PACKAGE SIZE 1
+  FROM dbtab 
+    INTO TABLE @DATA(lt_result)
+      WHERE partly_specified_key
+        ORDER BY key_fields.
+  EXIT.
+ENDSELECT.
+
+" Либо
+OPEN CURSOR с PACKAGE SIZE 1...</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/select-single-i-up-to-1-rows/">SELECT SINGLE и UP TO 1 ROWS</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/select-single-i-up-to-1-rows/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Оконные функции в ABAP</title>
+		<link>https://abap-blog.ru/database-work/window-functions-abap/</link>
+					<comments>https://abap-blog.ru/database-work/window-functions-abap/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 28 Feb 2021 10:41:22 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<guid isPermaLink="false">https://abap-blog.ru/?p=6331</guid>
+
+					<description><![CDATA[<p>Начиная с версии ABAP 7.54 в ABAP SQL появились так называемые оконные выражения. Оконные выражения &#8212; SQL выражения определяемые с помощью дополнения OVER в запросе, позволяют определить окна, как подмножества итогового результата запроса и выполнять над ним оконные функции. Оконные функции можно сравнить с агрегатными функциями, но, в отличие от обычной агрегатной функции, при использовании [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/window-functions-abap/">Оконные функции в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/img_5eb70b2cd8ccb-1.png"><img loading="lazy" class="alignleft wp-image-6338" title="Оконная функция в SQL" src="https://abap-blog.ru/wp-content/uploads/2021/02/img_5eb70b2cd8ccb-1.png" alt="Оконная функция в SQL" width="402" height="224" srcset="https://abap-blog.ru/wp-content/uploads/2021/02/img_5eb70b2cd8ccb-1.png 495w, https://abap-blog.ru/wp-content/uploads/2021/02/img_5eb70b2cd8ccb-1-300x167.png 300w" sizes="(max-width: 402px) 100vw, 402px" /></a></p>
+<p>Начиная с версии ABAP 7.54 в ABAP SQL появились так называемые оконные выражения. Оконные выражения &#8212; <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abapsql_expr.htm" target="_blank" rel="noopener">SQL выражения</a> определяемые с помощью дополнения <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abapselect_over.htm" target="_blank" rel="noopener"><strong>OVER</strong> </a>в запросе, позволяют определить окна, как подмножества итогового результата запроса и выполнять над ним оконные функции.</p>
+<p>Оконные функции можно сравнить с агрегатными функциями, но, в отличие от обычной агрегатной функции, при использовании оконной функции несколько строк не группируются в одну, а продолжают существовать отдельно. При этом результаты работы оконных функций просто добавляются к результирующей выборке как еще одно поле.</p>
+<p>Оконные функции являются частью стандарта SQL и даже если версия языка не позволит вам использовать их непосредственно в ABAP, всегда можно воспользоваться Native SQL (Так, по одной из задач, применение оконной функции внутри AMDP позволило ускорить работу запроса в десятки раз).</p>
+<p>Далее на небольших примерах рассмотрим основные оконные функции и то, как с ними работать.</p>
+<p><span id="more-6331"></span></p>
+<h2>Синтаксис</h2>
+<blockquote><p>Описание синтаксиса тут и далее взято из последней доступной версии ABAP &#8212; 7.55</p></blockquote>
+<p>Общий синтаксис оконного выражения выглядит следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">... win_func OVER( [PARTITION sql_exp1, sql_exp2 ...]
+                   [ORDER BY col1 [ASCENDING|DESCENDING],
+                             col2 [ASCENDING|DESCENDING]
+                         [ROWS BETWEEN {UNBOUNDED PRECEDING}
+                                      |{CURRENT ROW}
+                                      |{(n) PRECEDING}
+                                      |{(n) FOLLOWING}
+                               AND     {UNBOUNDED FOLLOWING}
+                                      |{CURRENT ROW}
+                                      |{(n) PRECEDING}
+                                      |{(n) FOLLOWING}]] ) ...</pre><p>Оконное выражение состоит из оконной функции, за которой следует дополнение <strong>OVER</strong>, в круглых скобках которого определяется окно в общем наборе результатов (или подмножество), для которого отрабатывает оконная функция. Внутри окна опционально можно указать:</p>
+<ul>
+<li><span class="qtext"><strong>PARTITION BY </strong><a class="blue">sql_exp1</a>, <a class="blue">sql_exp2</a> &#8230; Определяет перечень столбцов для группировки. Можно использовать все SQL выражения доступные в ABAP SQL за исключением оконных и агрегатных функций. Если оставить данный раздел пустым, будет обработан весь набор данных запроса.</span></li>
+<li><span class="qtext"><strong>ORDER BY</strong>. Определяет как порядок сортировки, так и ограничения над набором данных в окне. Является обязательным для некоторых оконных функций ранжирования/смещения.</span></li>
+</ul>
+<p>Если оконное выражение используется как поле выбора в запросе с группировкой <strong>GROUP BY</strong>, окна вычисляются над объединённым набором результатов, а результаты агрегатных функций этого запроса могут быть аргументами оконной функции.</p>
+<p>Как и с <a href="https://abap-blog.ru/database-work/common-table-expressions-cte/" target="_blank" rel="noopener">общими табличными выражениями</a>, они поддерживаются не на всех СУБД, проверку можно выполнить через класс CL_ABAP_DBFEATURES:</p><pre class="urvanov-syntax-highlighter-plain-tag">IF cl_abap_dbfeatures=&gt;use_features(
+      EXPORTING
+        requested_features =
+          VALUE #( ( cl_abap_dbfeatures=&gt;windowing ) ) ).
+  ...
+ELSE.
+  ...
+ENDIF.</pre><p>Win_func определяет оконную функцию:</p><pre class="urvanov-syntax-highlighter-plain-tag">... AVG( col [AS dtype] )
+  | MEDIAN( sql_exp )
+  | MAX( sql_exp )
+  | MIN( sql_exp )
+  | SUM( sql_exp )
+  | STDDEV( sql_exp )
+  | VAR( sql_exp )
+  | CORR( sql_exp1,sql_exp2 )
+  | CORR_SPEARMAN( sql_exp,sql_exp2 )
+  | COUNT( sql_exp )
+  | COUNT( * )
+  | COUNT(*)
+  | ROW_NUMBER( )
+  | RANK( )
+  | DENSE_RANK( )
+  | NTILE( n )
+  | LEAD|LAG( sql_exp1[, diff[, sql_exp2]] )
+  | FIRST_VALUE|LAST_VALUE( col ) ...</pre><p>Оконные функции могут быть трёх видов:</p>
+<ul>
+<li><strong>Агрегатные</strong>: AVG, MIN, MAX, SUM и др.,</li>
+<li><strong>Функции ранжирования</strong>: ROW_NUMBER, RANK и др.,</li>
+<li><strong>Функции смещения или функции значений (value functions)</strong>: LEAD, LAG и др,</li>
+<li><strong>Аналитические функции</strong>: PERCENT_RANK, CUME_DIST и др., пока не представлены в ABAP.</li>
+</ul>
+<h2>Данные для тестирования</h2>
+<p>В качестве тестовых данных будем рассматривать стандартную таблицу SFLIGHT и следующий набор данных:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/data.png"><img loading="lazy" class="alignnone size-full wp-image-6548" src="https://abap-blog.ru/wp-content/uploads/2021/02/data.png" alt="" width="400" height="654" srcset="https://abap-blog.ru/wp-content/uploads/2021/02/data.png 400w, https://abap-blog.ru/wp-content/uploads/2021/02/data-183x300.png 183w" sizes="(max-width: 400px) 100vw, 400px" /></a></p>
+<h2>Агрегатные функции</h2>
+<p>В следующем примере посчитаем максимальную сумму оплаты PAYMENTSUM в разрезе авиакомпаний и рейсов:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT DISTINCT carrid,
+                connid,
+                MAX( paymentsum ) OVER( PARTITION BY carrid,
+                                                     connid ) AS max_sum
+  FROM sflight
+    ORDER BY carrid,
+             connid INTO TABLE @DATA(lt_sflight).</pre><p>Результат:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/max_1.png"><img loading="lazy" class="alignnone size-full wp-image-6354" src="https://abap-blog.ru/wp-content/uploads/2021/02/max_1.png" alt="" width="197" height="120" /></a></p>
+<p>Тут следует еще раз обратить внимание на то, что оконные функции не занимаются группировкой набора данных основного запроса, а формируют значение поля max_sum для каждой строки и чтобы взять только уникальные значения, мы задействовали в основном запросе <strong>DISTINCT</strong>.</p>
+<p>В противном случае получили мы максимальную сумму по всем строкам основного запроса:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/without_distinct.png"><img loading="lazy" class="alignnone size-full wp-image-6544" src="https://abap-blog.ru/wp-content/uploads/2021/02/without_distinct.png" alt="" width="193" height="493" srcset="https://abap-blog.ru/wp-content/uploads/2021/02/without_distinct.png 193w, https://abap-blog.ru/wp-content/uploads/2021/02/without_distinct-117x300.png 117w" sizes="(max-width: 193px) 100vw, 193px" /></a></p>
+<p>При выполнении оконной функции с помощью дополнения <strong>PARTITION BY</strong> мы определили группу, в рамках которой формируются окна, в рамках каждого из окна идёт расчёт максимального значения.</p>
+<p>Аналогичным образом мы можем посчитать суммы по всем рейсам:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT DISTINCT
+       carrid,
+       connid,
+       sum( paymentsum ) OVER( PARTITION BY carrid,
+                                            connid ) AS total_sum
+  FROM sflight
+    ORDER BY carrid,
+             connid
+      INTO TABLE @DATA(lt_sflight).</pre><p>Результат:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/total_sum.png"><img loading="lazy" class="alignnone size-full wp-image-6358" src="https://abap-blog.ru/wp-content/uploads/2021/02/total_sum.png" alt="" width="206" height="119" /></a></p>
+<p>Используя <strong>агрегатные оконные функции</strong>, без указания <strong>ORDER BY</strong> подсчёт идёт один раз для всего окна (в функциях ранжирования выполняется расчёт для каждой строки, несмотря на пустой <strong>ORDER BY</strong>).  Однако, если указать <strong>ORDER BY</strong> подсчёт в каждой строке будет осуществляться c учётом сортировки по каждой уникальной записи. Таким образом мы можем рассчитывать например какой-нибудь нарастающий итог.</p>
+<p>Исходный набор данных по авиакомпании AZ:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/data_fldate.png"><img loading="lazy" class="alignnone size-full wp-image-6549" src="https://abap-blog.ru/wp-content/uploads/2021/02/data_fldate.png" alt="" width="311" height="405" srcset="https://abap-blog.ru/wp-content/uploads/2021/02/data_fldate.png 311w, https://abap-blog.ru/wp-content/uploads/2021/02/data_fldate-230x300.png 230w" sizes="(max-width: 311px) 100vw, 311px" /></a></p>
+<p>Выполним по этой авиакомпании следующий запрос:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT carrid,
+       fldate,
+       sum( paymentsum ) OVER( PARTITION BY carrid
+                               ORDER BY carrid,
+                                        fldate ) AS balance
+  FROM sflight
+    WHERE carrid = 'AZ'
+    ORDER BY carrid,
+             fldate
+      INTO TABLE @DATA(lt_sflight).</pre><p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/fldate_balance.png"><img loading="lazy" class="alignnone size-full wp-image-6552" src="https://abap-blog.ru/wp-content/uploads/2021/02/fldate_balance.png" alt="" width="230" height="150" /></a></p>
+<p>В данном примере мы сделали окно по авиакомпании, где для каждой новой даты рассчитали баланс по сумме &#8212; PAYMENTSUM, т.е. для каждой строки с уникальной датой посчитали итог от начала окна до текущей в обработке строки. Получили нарастающий итог по каждой дате.</p>
+<p>Кстати, оконные функции можно использовать сразу по несколько штук и они не мешают выполнению друг друга:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT DISTINCT
+       carrid,
+       fldate,
+       sum( paymentsum ) OVER( PARTITION BY carrid
+                               ORDER BY carrid,
+                                        fldate ) AS balance,
+       sum( paymentsum ) OVER( PARTITION BY carrid ) AS total
+  FROM sflight
+    ORDER BY carrid,
+             fldate
+      INTO TABLE @DATA(lt_sflight).</pre><p>В результате получим:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/sum_balance_total.png"><img loading="lazy" class="alignnone size-full wp-image-6366" src="https://abap-blog.ru/wp-content/uploads/2021/02/sum_balance_total.png" alt="" width="309" height="382" srcset="https://abap-blog.ru/wp-content/uploads/2021/02/sum_balance_total.png 309w, https://abap-blog.ru/wp-content/uploads/2021/02/sum_balance_total-243x300.png 243w" sizes="(max-width: 309px) 100vw, 309px" /></a></p>
+<h2>Ранжирующие функции</h2>
+<p>Ранжирующие функции – это функции, которые ранжируют значение для каждой строки в окне. Например, их можно использовать для того, чтобы присвоить порядковый номер строке или составить рейтинг.</p>
+<ul>
+<li><strong>ROW_NUMBER</strong> – функция возвращает номер строки и используется для нумерации;</li>
+<li><strong>RANK</strong> — функция возвращает ранг каждой строки. В данном случае значения уже анализируются и, в случае нахождения одинаковых, возвращает одинаковый ранг с пропуском следующего значения;</li>
+<li><strong>DENSE_RANK</strong> — функция возвращает ранг каждой строки. Но в отличие от функции RANK, она для одинаковых значений возвращает ранг, не пропуская следующий;</li>
+</ul>
+<p>В качестве самой простой задачи, мы можем выбрать все уникальные коды авиакомпаний и пронумеровать их по порядку:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT carrid,
+       ROW_NUMBER( ) OVER( ORDER BY carrid ) AS row_number
+  FROM sflight
+    GROUP BY carrid
+    ORDER BY row_number
+      INTO TABLE @DATA(lt_sflight).</pre><p>Результат:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/row_number_1.png"><img loading="lazy" class="alignnone size-full wp-image-6346" src="https://abap-blog.ru/wp-content/uploads/2021/02/row_number_1.png" alt="" width="170" height="108" /></a></p>
+<p>Порядок нумерации может быть изменён как внутри окна, так и относительно результата оконной функции:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT carrid,
+       ROW_NUMBER( ) OVER( ORDER BY carrid DESCENDING ) AS row_number
+  FROM sflight
+    GROUP BY carrid
+    ORDER BY carrid
+      INTO TABLE @DATA(lt_sflight).
+
+" Тоже самое что и:
+
+*  SELECT carrid,
+*       ROW_NUMBER( ) OVER( ORDER BY carrid ) AS row_number
+*  FROM sflight
+*    GROUP BY carrid
+*    ORDER BY row_number DESCENDING
+*      INTO TABLE @DATA(lt_sflight).</pre><p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/row_number_2.png"><img loading="lazy" class="alignnone size-full wp-image-6348" src="https://abap-blog.ru/wp-content/uploads/2021/02/row_number_2.png" alt="" width="165" height="102" /></a></p>
+<p>Усложним пример, добавив в оконную функцию ограничение по коду авиакомпании:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT carrid,
+       connid,
+       ROW_NUMBER( ) OVER( PARTITION BY carrid ) AS row_number
+  FROM sflight
+    GROUP BY carrid,
+             connid
+    ORDER BY carrid,
+             row_number
+      INTO TABLE @DATA(lt_sflight).</pre><p>Результат:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/row_number_3.png"><img loading="lazy" class="alignnone size-full wp-image-6350" src="https://abap-blog.ru/wp-content/uploads/2021/02/row_number_3.png" alt="" width="215" height="114" /></a></p>
+<p>В данном примере мы добавили ограничение окна на поле CARRID, таким образом оконная функция подсчёта строк работает уже над тремя подмножествами запроса по трём имеющимся авиакомпаниям, где для каждой авиакомпании ведёт нумерацию рейсов.</p>
+<p>Результат работы оконной функции невозможно отфильтровать в запросе с помощью WHERE, потому что оконные функции выполняются после всей фильтрации и группировки, т.е. с тем, что получилось. Соответственно нельзя добавить в WHERE row_number = 2 и выбрать только вторые строки. Но можно воспользоваться <a href="https://abap-blog.ru/database-work/common-table-expressions-cte/" target="_blank" rel="noopener">общими табличными выражениями</a>:</p><pre class="urvanov-syntax-highlighter-plain-tag">WITH
++window_result AS (
+  SELECT carrid,
+         connid,
+         ROW_NUMBER( ) OVER( PARTITION BY carrid
+                             ORDER BY carrid,
+                                      connid ) AS row_number
+    FROM sflight
+      GROUP BY carrid,
+               connid
+      ORDER BY carrid,
+               connid )
+ SELECT * FROM +window_result WHERE row_number = 2
+  INTO TABLE @DATA(lt_sflight).</pre><p>В результате получим только строку где row_number = 2.</p>
+<p>Прочие ранжирующие функции можно рассмотреть на примере:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT carrid,
+       fldate,
+       ROW_NUMBER( ) OVER( PARTITION BY carrid
+                           ORDER BY fldate ) AS row_number,
+       RANK( ) OVER( PARTITION BY carrid
+                         ORDER BY fldate ) AS rank,
+       DENSE_RANK( ) OVER( PARTITION BY carrid
+                           ORDER BY fldate ) AS dense_rank
+  FROM sflight
+    ORDER BY carrid,
+             fldate
+      INTO TABLE @DATA(lt_sflight).</pre><p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/ranks.png"><img loading="lazy" class="alignnone size-full wp-image-6389" src="https://abap-blog.ru/wp-content/uploads/2021/02/ranks.png" alt="" width="375" height="486" srcset="https://abap-blog.ru/wp-content/uploads/2021/02/ranks.png 375w, https://abap-blog.ru/wp-content/uploads/2021/02/ranks-231x300.png 231w" sizes="(max-width: 375px) 100vw, 375px" /></a></p>
+<p>row_number &#8212; в рамках каждой авиакомпании выставляет номер строки, rank &#8212; выставляет ранг строки (для повторяющихся fldate он одинаковый) с увеличением счётчика, dense_rank &#8212; аналогичен rank( ) но без увеличения счётчика.</p>
+<h2>Функции смещения (функции значений)</h2>
+<p>Функции смещения – это функции, которые позволяют перемещаться и обращаться к разным строкам в окне, относительно текущей строки, а также обращаться к значениям в начале или в конце окна.</p>
+<ul>
+<li><strong>LEAD</strong> – функция обращается к данным из следующей строки набора данных. Ее можно использовать, например, для того чтобы сравнить текущее значение строки со следующим.</li>
+<li><strong>LAG</strong> – функция обращается к данным из предыдущей строки набора данных. В данном случае функцию можно использовать для того, чтобы сравнить текущее значение строки с предыдущим.</li>
+</ul>
+<p>Рассмотрим простой пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT carrid,
+       fldate,
+       LAG( fldate ) OVER( PARTITION BY carrid
+                           ORDER BY fldate ) AS lag_date,
+       LEAD( fldate, 2 ) OVER( PARTITION BY carrid
+                               ORDER BY fldate ) AS lead_date
+  FROM sflight
+    ORDER BY carrid,
+             fldate
+      INTO TABLE @DATA(lt_sflight).</pre><p>В результате получим:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/lead_lag-1.png"><img loading="lazy" class="alignnone size-full wp-image-6396" src="https://abap-blog.ru/wp-content/uploads/2021/02/lead_lag-1.png" alt="" width="316" height="502" srcset="https://abap-blog.ru/wp-content/uploads/2021/02/lead_lag-1.png 316w, https://abap-blog.ru/wp-content/uploads/2021/02/lead_lag-1-189x300.png 189w" sizes="(max-width: 316px) 100vw, 316px" /></a></p>
+<p>Как видно из примера, для строк с функцией <strong>LAG</strong> предыдущая строка для первых строк в окне недоступна, значение будет NULL, по при преобразовании к ABAP типу вернётся начальное значение для даты.</p>
+<p>Для функции <strong>LEAD</strong> мы использовали дополнение, указывающее на число строк, которые необходимо пропустить после текущей для получения значения (по умолчанию 1). Соответственно для двух последних строк в каждом окне значение даты определить не удалось.</p>
+<h2>Ограничения строк</h2>
+<p>Начиная с версии ABAP 7.55 появилась дополнительная возможность ограничивать строки обрабатываемые в рамках окна, задавая так называемый фрейм (или рамку). Фрейм определяется относительно текущей строки окна, что позволяет ему перемещаться одновременно с расчётом строк внутри окна. Каждый фрейм имеет начальную и конечную границу, существует три варианта определения границ фрейма:</p>
+<ul class="disc">
+<li><strong><span class="qtext"><i class="bn">{</i>UNBOUNDED PRECEDING<i class="bn">}</i>/<i class="bn">{</i>UNBOUNDED FOLLOWING<i class="bn">}</i></span></strong></li>
+</ul>
+<dl>
+<dd><span class="qtext">UNBOUNDED PRECEDING</span> начальная граница фрейма определяется начальной строкой окна.</dd>
+</dl>
+<dl>
+<dd><span class="qtext">UNBOUNDED FOLLOWING</span> определяет конечную границу фрейма, как последнюю строку окна.</dd>
+</dl>
+<ul class="disc">
+<li><strong><span class="qtext">CURRENT ROW</span></strong> может определять как конечную, так и начальную границу фрейма (в зависимости от комбинации другими ключевыми словами). .</li>
+</ul>
+<ul class="disc">
+<li><strong><span class="qtext"><i class="bn">{</i>(n) PRECEDING<i class="bn">}</i>/<i class="bn">{</i>(n) FOLLOWING<i class="bn">}</i></span></strong></li>
+</ul>
+<dl>
+<dd><span class="qtext">(n) PRECEDING</span> может использоваться для определения начала и конца фрейма. Определяет что фрейм начинается или заканчивается до N строк относительно текущей строки.</dd>
+</dl>
+<dl>
+<dd><span class="qtext">(n) FOLLOWING </span>может использоваться для определения начала и конца фрейма. Определяет что фрейм начинается или заканчивается после N строк относительно текущей строки.</dd>
+</dl>
+<p>Т.к. версии 7.55 под рукой у меня нет (Docker образ ABAP Platform 2020 еще в работе :)), рассмотрим <a href="http://thisisdata.ru/blog/uchimsya-primenyat-okonnyye-funktsii/" target="_blank" rel="noopener">пример из сети</a>:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT Date,
+       Medium,
+       Conversions,
+       SUM(Conversions) OVER( PARTITION BY Date ORDER BY Conversions ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING ) AS 'Sum' 
+FROM Orders.</pre><p>Границы фрейма определены от текущей строки до следующей за ней.</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/frame_demo.png"><img loading="lazy" class="alignnone size-full wp-image-6386" src="https://abap-blog.ru/wp-content/uploads/2021/02/frame_demo.png" alt="" width="535" height="308" srcset="https://abap-blog.ru/wp-content/uploads/2021/02/frame_demo.png 535w, https://abap-blog.ru/wp-content/uploads/2021/02/frame_demo-300x173.png 300w" sizes="(max-width: 535px) 100vw, 535px" /></a></p>
+<p>В данном случае сумма рассчитывается по текущей и следующей ячейке в окне. А последняя строка в окне имеет то же значение, что и столбец «Conversions», потому что больше не с чем складывать. Комбинируя ключевые слова, вы можете подогнать диапазон работы оконной функции под вашу специфическую задачу.</p>
+<p>Благодаря таким ограничениям можно легко находить скользящие средние значения, определяя сколько следующих строк фрейма следует учитывать в агрегатной функции AVG.</p>
+<p>В стандарте SQL кроме выражения ROWS есть так же дополнение <strong>RANGE</strong> которое пока не представлено в ABAP. Предложение <strong>RANGE</strong> предназначено также для ограничения набора строк. В отличие от ROWS, оно работает не с физическими строками, а с диапазоном строк в предложении ORDER BY. Это означает, что одинаковые по рангу строки в контексте предложения <strong>ORDER </strong><strong>BY</strong> будут считаться как одна текущая строка для функции <strong>CURRENT </strong><strong>ROW. </strong>Более подробно можете ознакомиться <a href="https://www.fastreport.ru/ru/blog/251/show/" target="_blank" rel="noopener">в этом материале</a>.</p><p>The post <a href="https://abap-blog.ru/database-work/window-functions-abap/">Оконные функции в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/window-functions-abap/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Общие табличные выражения</title>
+		<link>https://abap-blog.ru/database-work/common-table-expressions-cte/</link>
+					<comments>https://abap-blog.ru/database-work/common-table-expressions-cte/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 22 Feb 2021 12:01:50 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<guid isPermaLink="false">https://abap-blog.ru/?p=6222</guid>
+
+					<description><![CDATA[<p>Развитие языка ABAP в последнее время тесно связано с таким понятием как Code-To-Data, когда все расчёты принято выполнять на СУБД, а результатами пользоваться уже на сервере приложений. Основная причина такого перехода &#8212; развитие собственной СУБД HANA и более глубокая интеграция с её возможностями непосредственно в языке. Соответственно OpenSQL (или как сейчас принято называть ABAP SQL) [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/common-table-expressions-cte/">Общие табличные выражения</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Развитие языка ABAP в последнее время тесно связано с таким понятием как <a href="https://blogs.sap.com/2014/02/03/abap-for-hana-code-push-down/" target="_blank" rel="noopener">Code-To-Data</a>, когда все расчёты принято выполнять на СУБД, а результатами пользоваться уже на сервере приложений. Основная причина такого перехода &#8212; развитие собственной СУБД HANA и более глубокая интеграция с её возможностями непосредственно в языке. Соответственно OpenSQL (или как сейчас принято называть ABAP SQL) постоянно расширяется новыми конструкциями языка, давая разработчикам все больше возможностей для переноса вычислений на СУБД.</p>
+<p>Начиная с релиза ABAP 7.51 в языке стала доступна конструкция <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abapwith.htm" target="_blank" rel="noopener"><strong>WITH</strong></a> позволяющая создавать подзапросы объединённые в рамках одного SQL выражения и использовать табличные результаты этих подзапросов для формирования общего результата. В какой-то степени конструкция WITH является более удобной альтернативой использованию глобальных временных таблиц и более быстрым вариантом нежели использование FOR ALL ENTRIES или нескольких последовательных запросов.</p>
+<p>Далее на простом примере разберём как это работает.</p>
+<p><span id="more-6222"></span></p>
+<h2>Синтаксис</h2>
+<p>Общий синтаксис <strong>WITH</strong> выглядит следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">WITH 
+  +cte1[( name1, name2, ... )] AS ( SELECT subquery_clauses [UNION ...] ), 
+    [hierarchy] 
+    [associations][, 
+  +cte2[( name1, name2, ... )] AS ( SELECT subquery_clauses [UNION ...] ), 
+    [hierarchy] 
+    [associations], 
+  ... ] 
+  SELECT mainquery_clauses 
+         [UNION ...] 
+         INTO|APPENDING target 
+         [UP TO ...] [OFFSET ...] 
+         [abap_options]. 
+  ... 
+[ENDWITH].</pre><p>Выражение состоит из одного или более именнованного общего табличного выражения (Common table expression, далее CTE) и основного запроса, использующего одно или несколько общих выражений.</p>
+<p>Символ &#171;<strong>+</strong>&#187; в начале каждого имени CTE является ключевым символом по аналогии с <strong>@</strong> у ABAP переменных в SQL выражениях. После имени CTE опционально в скобках можно указать альтернативные имена для каждого выбранного в рамках CTE поля.</p>
+<p>Каждый оператор WITH должен завершаться основным запросом (SELECT..), который использует по крайней мере один из своих CTE, и каждый CTE должен использоваться по крайней мере в одном последующем запросе. CTE не может использовать сам себя себя в качестве источника данных. WITH может использоваться как отдельный оператор или как дополнение в OPEN CURSOR.</p>
+<p>ENDWITH &#8212; является аналогом ENDSELECT в случае если вы не выполняете запись во внутреннюю таблицу, а открываете цикл WITH, который необходимо закрыть с помощью ENDWITH. В отличие от SELECT..ENDSELECT нельзя использовать вложенные циклы.</p>
+<p>Конструкция WITH пропускает буферизацию таблиц.</p>
+<h2>Примеры</h2>
+<p>Рассмотрим первый пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA
+  lv_carrid TYPE spfli-carrid VALUE 'LH'.
+
+cl_demo_input=&gt;request( CHANGING field = lv_carrid ).
+lv_carrid = to_upper( lv_carrid ).
+
+WITH
+  +connections AS (
+    SELECT spfli~carrid, carrname, connid, cityfrom, cityto
+           FROM spfli
+           INNER JOIN scarr
+             ON scarr~carrid = spfli~carrid
+           WHERE spfli~carrid = @lv_carrid ),
+  +sum_seats AS (
+    SELECT carrid, connid, SUM( seatsocc ) AS sum_seats
+           FROM sflight
+           WHERE carrid = @lv_carrid
+           GROUP BY carrid, connid ),
+  +result( name, connection, departure, arrival, occupied ) AS (
+    SELECT carrname, c~connid, cityfrom, cityto, sum_seats
+           FROM +connections AS c
+             INNER JOIN +sum_seats AS s
+               ON c~carrid = s~carrid AND
+                  c~connid = s~connid )
+  SELECT *
+         FROM +result
+         ORDER BY name, connection
+         INTO TABLE @DATA(lt_result).
+
+cl_demo_output=&gt;display( lt_result ).</pre><p>С помощью <strong>WITH</strong> мы создаём три подзапроса:</p>
+<ul>
+<li>connections &#8212; где выбираем все записи из таблицы с рейсами SPFLI для выбранной авиакомпании;</li>
+<li>sum_seats &#8212; где для авиакомпании и рейса считаем сумму занятых в полёте мест;</li>
+<li>result &#8212; где создаём объединение двух предыдущих выборок и переименовываем поля для читаемости;</li>
+</ul>
+<p>Финальный SELECT содержит уже конечную выборку из результатов полученных в подзапросах.</p>
+<p>Для наглядности результаты промежуточных подзапросов и финального result:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/cte.png"><img loading="lazy" class="alignnone size-full wp-image-6224" src="https://abap-blog.ru/wp-content/uploads/2021/02/cte.png" alt="" width="420" height="388" srcset="https://abap-blog.ru/wp-content/uploads/2021/02/cte.png 420w, https://abap-blog.ru/wp-content/uploads/2021/02/cte-300x277.png 300w" sizes="(max-width: 420px) 100vw, 420px" /></a></p>
+<p>Рассмотрим еще один пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">WITH
+  +cities AS (
+    SELECT cityfrom AS city
+           FROM spfli
+           WHERE carrid = @carrid
+    UNION DISTINCT
+    SELECT cityto AS city
+           FROM spfli
+           WHERE carrid = @carrid )
+  SELECT *
+         FROM sgeocity
+         WHERE city IN ( SELECT city
+                                FROM +cities )
+         INTO TABLE @DATA(result).</pre><p>Тут мы создали CTE cities как объединение двух подзапросов для поиска уникальных городов в таблице с рейсами из полей &#171;город отправки&#187; и &#171;город прилёта&#187;.</p>
+<p>Как видно из кода, основной SELECT не обязательно должен использовать CTE в качестве основного источника данных, в данном примере он используется как подзапрос. Важно лишь то, что каждый объявленный CTE должен быть использован.</p>
+<p>Конструкцию WITH так же удобно использовать для формирования итоговых строк:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA carrid TYPE sflight-carrid VALUE 'AA'.
+cl_demo_input=&gt;request( CHANGING field = carrid ).
+
+WITH +total AS (
+  SELECT carrid,
+         connid,
+         CAST( '00000000' AS DATS ) AS fldate,
+         SUM( seatsocc ) AS seatsocc
+         FROM sflight
+         WHERE carrid = @( to_upper( carrid ) )
+         GROUP BY carrid, connid )
+  SELECT ' ' AS total, carrid, connid, fldate, seatsocc
+         FROM sflight
+         WHERE carrid = @( to_upper( carrid ) )
+         UNION SELECT 'X' AS total,
+                      carrid, connid, fldate, seatsocc
+                      FROM +total
+         ORDER BY carrid, connid, total, fldate, seatsocc
+         INTO TABLE @DATA(result).
+
+cl_demo_output=&gt;display( result ).</pre><p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/cte_total.png"><img loading="lazy" class="alignnone size-full wp-image-6239" src="https://abap-blog.ru/wp-content/uploads/2021/02/cte_total.png" alt="" width="335" height="188" srcset="https://abap-blog.ru/wp-content/uploads/2021/02/cte_total.png 335w, https://abap-blog.ru/wp-content/uploads/2021/02/cte_total-300x168.png 300w" sizes="(max-width: 335px) 100vw, 335px" /></a></p>
+<h2>Динамическое использование</h2>
+<p>Как и при использовании оператора SELECT, допускается использование динамических конструкций:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA carrid TYPE spfli-carrid VALUE 'LH'.
+cl_demo_input=&gt;request( CHANGING field = carrid ).
+
+DATA:
+  sel_sub1 TYPE string VALUE `cityfrom AS city`,
+  sel_sub2 TYPE string VALUE `cityto AS city`,
+  frm_sub  TYPE string VALUE `spfli`,
+  whr_sub  TYPE string VALUE `carrid = @carrid`,
+  sel_main TYPE string VALUE `*`,
+  frm_main TYPE string VALUE `sgeocity`,
+  whr_main TYPE string VALUE `city IN ( SELECT city FROM +cities )`.
+
+WITH
+  +cities AS (
+    SELECT (sel_sub1)
+           FROM (frm_sub)
+           WHERE (whr_sub)
+    UNION DISTINCT
+    SELECT (sel_sub1)
+           FROM (frm_sub)
+           WHERE (whr_sub) )
+  SELECT (sel_main)
+         FROM (frm_main)
+         WHERE (whr_main)
+         INTO TABLE NEW @DATA(result).
+
+ASSIGN result-&gt;* TO FIELD-SYMBOL(&lt;fs&gt;).
+cl_demo_output=&gt;display( &lt;fs&gt; ).</pre><p></p>
+<h2>Ограничения СУБД</h2>
+<p>При использовании конструкции WITH следует учитывать тот факт, что не все СУБД поддерживают полный перечень её возможностей. Так в <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abapwith_subquery.htm" target="_blank" rel="noopener">подзапросах</a> ограничение число записей и сортировка может быть недоступна на вашей СУБД, о чём вас предупредит расширенная проверка кода.</p>
+<h2>Производительность</h2>
+<p>Учитывая что выражение WITH целиком выполняется на уровне СУБД, скорость его работы будет выше нежели последовательное исполнение нескольких запросов или использование FOR ALL ENTRIES (даже на HANA с FDA), убедиться в этом можете запустив следующий пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">TABLES: spfli.
+
+SELECT-OPTIONS s_carrid FOR spfli-carrid.
+
+DATA: lv_start_time TYPE timestampl,
+      lv_end_time   TYPE timestampl,
+      lv_diff       TYPE timestampl.
+
+GET TIME STAMP FIELD lv_start_time.
+WITH
+  +connections AS (
+    SELECT spfli~carrid, carrname, connid, cityfrom, cityto
+           FROM spfli
+           INNER JOIN scarr
+             ON scarr~carrid = spfli~carrid
+           WHERE spfli~carrid IN @s_carrid )
+    SELECT * FROM sflight INNER JOIN +connections AS c ON c~carrid = sflight~carrid AND
+                                                          c~connid = sflight~connid
+    INTO TABLE @DATA(lt_result).
+
+GET TIME STAMP FIELD lv_end_time.
+
+lv_diff = lv_end_time - lv_start_time.
+WRITE: /(50) 'WITH Speed: ', lv_diff.
+
+GET TIME STAMP FIELD lv_start_time.
+
+SELECT spfli~carrid, carrname, connid, cityfrom, cityto
+       FROM spfli
+       INNER JOIN scarr
+         ON scarr~carrid = spfli~carrid
+       INTO TABLE @DATA(lt_connections)
+       WHERE spfli~carrid IN @s_carrid.
+
+SELECT * FROM sflight FOR ALL ENTRIES IN @lt_connections WHERE sflight~carrid = @lt_connections-carrid AND
+                                                               sflight~connid = @lt_connections-connid
+INTO TABLE @DATA(lt_result_2).
+GET TIME STAMP FIELD lv_end_time.
+
+lv_diff = lv_end_time - lv_start_time.
+WRITE: /(50) 'FAE Speed: ', lv_diff.</pre><p>Результат:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/02/cte_speed.png"><img loading="lazy" class="alignnone size-full wp-image-6249" src="https://abap-blog.ru/wp-content/uploads/2021/02/cte_speed.png" alt="" width="551" height="43" srcset="https://abap-blog.ru/wp-content/uploads/2021/02/cte_speed.png 551w, https://abap-blog.ru/wp-content/uploads/2021/02/cte_speed-300x23.png 300w" sizes="(max-width: 551px) 100vw, 551px" /></a></p><p>The post <a href="https://abap-blog.ru/database-work/common-table-expressions-cte/">Общие табличные выражения</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/common-table-expressions-cte/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>A First Step Towards SAP HANA Query Optimization</title>
+		<link>https://abap-blog.ru/database-work/a-first-step-towards-sap-hana-query-optimization/</link>
+					<comments>https://abap-blog.ru/database-work/a-first-step-towards-sap-hana-query-optimization/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 28 Nov 2020 11:14:00 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<guid isPermaLink="false">https://abap-blog.ru/?p=5730</guid>
+
+					<description><![CDATA[<p>На OpenSAP сейчас проходит весьма интересный курс посвящённый анализу выполнения SQL запросов и их оптимизации в СУБД HANA.</p>
+<p>The post <a href="https://abap-blog.ru/database-work/a-first-step-towards-sap-hana-query-optimization/">A First Step Towards SAP HANA Query Optimization</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>На OpenSAP сейчас проходит весьма интересный <a href="https://open.sap.com/courses/hanasql1/">курс</a> посвящённый анализу выполнения SQL запросов и их оптимизации в СУБД HANA.</p><p>The post <a href="https://abap-blog.ru/database-work/a-first-step-towards-sap-hana-query-optimization/">A First Step Towards SAP HANA Query Optimization</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/a-first-step-towards-sap-hana-query-optimization/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ABAP Managed Database Procedures (AMDP)</title>
+		<link>https://abap-blog.ru/database-work/abap-managed-database-procedures-amdp/</link>
+					<comments>https://abap-blog.ru/database-work/abap-managed-database-procedures-amdp/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 02 Jun 2016 20:03:15 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<category><![CDATA[AMDP]]></category>
+		<category><![CDATA[Native SQL]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=3050</guid>
+
+					<description><![CDATA[<p>Все больше в настоящее время SAP систем переходят на новую платформу (СУБД) – HANA (High-Performance Analytic Appliance), в основе которой лежит технология вычислений in-memory с использованием принципа поколоночного хранения данных. Вместе с новой платформой, появляются так же и новые возможности для обработки больших объемов данных и более высокопроизводительных вычислений. Для ускорения ABAP решений на базе HANA, [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/abap-managed-database-procedures-amdp/">ABAP Managed Database Procedures (AMDP)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2016/06/sqlcode1.jpg"><img loading="lazy" class=" wp-image-3079 alignleft" src="http://abap-blog.ru/wp-content/uploads/2016/06/sqlcode1.jpg" alt="sqlcode[1]" width="365" height="274" srcset="https://abap-blog.ru/wp-content/uploads/2016/06/sqlcode1.jpg 400w, https://abap-blog.ru/wp-content/uploads/2016/06/sqlcode1-300x225.jpg 300w" sizes="(max-width: 365px) 100vw, 365px" /></a>Все больше в настоящее время SAP систем переходят на новую платформу (СУБД) – HANA (High-Performance Analytic Appliance), в основе которой лежит технология вычислений in-memory с использованием принципа поколоночного хранения данных. Вместе с новой платформой, появляются так же и новые возможности для обработки больших объемов данных и более высокопроизводительных вычислений.</p>
+<p>Для ускорения ABAP решений на базе HANA, используется перенос вычислений с уровня сервера приложений (AS ABAP) на сервер СУБД (Code-to-Data). Данную задачу можно решить несколькими способами, одним из которых является использование Native SQL и AMDP как средства его вызова.</p>
+<p>В контексте ABAP разработки, под Native SQL понимается язык SQL запросов поддерживаемый текущей или дополнительной СУБД сервера приложений.</p>
+<p>В данной статье будут рассмотрены основные моменты использования AMDP.</p>
+<p><span id="more-3050"></span></p>
+<p>SAP <a href="http://help.sap.com/abapdocu_750/en/abendatabase_access_guidl.htm">рекомендует </a>использовать Native SQL в ABAP только тогда, когда задачу оптимизации не решить стандартными средствами <a href="http://scn.sap.com/community/abap/hana/blog/2014/09/26/code-push-down-for-hana-from-abap-starts-with-open-sql">OpenSQL</a>, в частности AMDP следует использовать только если будут задействованы какие-то специфичные для HANA вещи или объем данных слишком велик чтобы переносить его между СУБД и сервером приложений.</p>
+<p>Вызывать Native SQL в ABAP напрямую можно несколькими методами, среди которых:</p>
+<ul>
+<li><a href="http://abap-blog.ru/database-work/adbc-abap-database-connectivity/">ADBC </a>классы,</li>
+<li><a href="http://help.sap.com/abapdocu_750/en/abennativesql.htm">EXEC SQL</a> (без возможности использования динамики),</li>
+<li>AMDP.</li>
+</ul>
+<p>Косвенно через:</p>
+<ul>
+<li><a href="http://help.sap.com/abapdocu_750/en/abensql_script.htm">External Procedures </a>(proxies). Рекомендуется использовать только если невозможно тоже самое сделать через AMDP (например, когда HANA подключена как дополнительная СУБД),</li>
+<li><a href="http://help.sap.com/abapdocu_750/en/abenexternal_views.htm">External views</a> (если учесть что view будет к calculation view на базе SQL Script), так же не рекомендуется к использованию если возможно тоже самое реализовать через <a href="http://abap-blog.ru/slovar/abap-cds-core-data-services/">ABAP CDS</a> или AMDP.</li>
+</ul>
+<p>Наиболее удобным и современным способом вызова Native SQL является использование AMDP, преимущества заключаются в следующем:</p>
+<ul>
+<li>Проверка синтаксиса и подсветка команд,</li>
+<li>Стандартное для ABAP объектов управление жизненным циклом (В отличие от внешних процедур и ракурсов,  где необходимо использовать HANA артефакты для переноса объекта между системами),</li>
+<li>Автодополнение и навигация к используемым объектам,</li>
+<li>Простой вызов из ABAP.</li>
+</ul>
+<p>Технически AMDP это обёртка над <a href="https://ru.wikipedia.org/wiki/%D0%A5%D1%80%D0%B0%D0%BD%D0%B8%D0%BC%D0%B0%D1%8F_%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D0%B4%D1%83%D1%80%D0%B0">хранимыми процедурами</a> в СУБД. Обёртка заворачивает Native SQL код в методы ABAP класса (AMDP методы), которые Вы можете использовать в своих программах как обычные методы обычных классов. Во время первого доступа к такому методу, на сервере БД будет создана хранимая процедура, которая создаётся в основной схеме для сервера приложений с именем SAPSid, где Sid – идентификатор системы. Доступ из хранимой процедуры можно получить к объектам БД текущей схемы (SAPSid) и объектам других схем, явно указав их имена.</p>
+<p>В настоящее время AMDP поддерживается только для HANA, однако в будущем планируется поддержка других СУБД. Проверить поддержку AMDP можно через класс CL_ABAP_DBFEATURES и его метод CALL_AMDP_METHOD (ABAP 7.5).</p>
+<p>Под Native SQL в HANA подразумеваются языки SQL Script и L, однако L доступен только для разработчиков SAP.</p>
+<h2>AMDP классы</h2>
+<p>&nbsp;</p>
+<p>Как и большинство новых объектов разработки, AMDP классы доступны для редактирования только из ADT (ABAP Development Tools for Eclipse). Создаётся AMDP класс таким же образом, как и обычные глобальные классы, единственным отличаем, является реализация классом специального интерфейса <strong>&#8212; IF_AMDP_MARKER_HDB</strong>. Данный интерфейс является своего рода меткой для системы, чтобы она понимала, что в методах этого класса может быть встроен вызов AMDP. Кроме AMDP методов такой класс может содержать и обычные методы.</p>
+<h2>AMDP методы</h2>
+<p>&nbsp;</p>
+<p>Метод AMDP может быть как статическим, так и методом инстанции с любой видимостью. По своему описанию в заголовке класса он ничем не отличается от обычных методов. Понять, что это AMDP метод можно только заглянув в исходный код.</p>
+<p>На AMDP метод накладываются определенные ограничения.</p>
+<p>Ограничения в интерфейсе:</p>
+<ul>
+<li>Нельзя использовать обобщенные типы (TYPE DATA, TYPE CSEQUENCE и др.), доступны только элементарные типы данных и табличные, компоненты которых являются элементарными.</li>
+<li>Нельзя использовать для описания типа устаревшие словарные типы &#8212; DF16_SCL и DF34_SCL.</li>
+<li>Параметры всегда должны переноситься по значению, перенос по ссылке недоступен.</li>
+<li>RETURNING параметры запрещены.</li>
+<li>Только входные параметры могут быть помечены как необязательные и для всех необязательных параметров необходимо, чтобы было задано начальное значение.</li>
+<li>Параметры с типами f, decfloat16, decfloat34, string, и xstring не могут быть со значением по умолчанию, а значит, они не могут быть необязательными.</li>
+<li>Имена параметров:
+<ul>
+<li>Не могут начинаться с префикса «%_».</li>
+<li>Нельзя использовать параметры с именами: endmethod и client.</li>
+</ul>
+</li>
+<li>Если используется параметр с именем connection, он обязательно должен иметь тип &#8212; DBCON_NAME, используется он когда AMDP вызывается через <a href="http://help.sap.com/abapdocu_750/en/abenamdp_db_connections.htm">сервисное подключение</a>, в таком случае его адрес необходимо будет передать через параметр.</li>
+<li>При описании исключений можно использовать только заранее <a href="http://help.sap.com/abapdocu_740/en/abenamdp_exceptions.htm">определенные</a> классы исключений. Классические исключения недоступны.</li>
+<li>CHANGING параметры не могут иметь тип string или xstring.</li>
+<li>Длина параметров с типом C или N не может превышать 5000 символов.</li>
+</ul>
+<p>Ограничения в рамках реализации:</p>
+<ul>
+<li>Нельзя использовать DDL синтаксис.</li>
+<li>Локальные временные объекты БД не могут быть доступны из метода.</li>
+<li>Запрещено использование rollback или commit. Транзакции должны быть обработаны в рамках ABAP программ.</li>
+<li>Доступ на запись к словарным таблицам, для которых активна буферизация &#8212; запрещен.</li>
+<li>AMDP методы не могут содержать внутри себя неявных расширений.</li>
+<li>AMDP метод не может быть пустым.</li>
+<li>Конструктор нельзя реализовать как AMDP метод.</li>
+</ul>
+<p>В ABAP 7.4. можно реализовать только метод AMDP процедуры, в 7.5 добавилась так же возможность создания метода AMDP функции. AMDP функции можно использовать для получения данных в других AMDP процедурах и функциях, в ABAP CDS и даже в OpenSQL. Для функций параметр RETURNING является обязательным. В статье реализация функций не рассматривается, подробнее о функциях смотрите в <a href="http://help.sap.com/abapdocu_750/en/abenamdp_function_methods.htm#@@ITOC@@ABENAMDP_FUNCTION_METHODS_2">документации</a>.</p>
+<p>Для AMDP методов, как и для обычных методов доступна поддержка наследования, пример использования можно посмотреть в программе &#8212; demo_amdp_polymorphism. Таким образом, можно сделать разные реализации и в зависимости от поддержки AMDP, вызывать либо их, либо обычные методы с OpenSQL.</p>
+<p>Так как AMDP это Native SQL, поддержка клиента (манданта) должна быть реализована вручную, как правило клиент предаётся внутрь AMDP как параметр. Другим способом является возможность использования специальной функции – <a href="http://help.sap.com/abapdocu_750/en/abenamdp_client_handling.htm">SESSION_CONTEXT</a>, использовать которую следует, только если ваша AMDP процедура вызывается из ABAP.</p>
+<p>Как уже говорилось выше, понять, что это AMDP метод можно только по исходному коду. Меткой для системы в таком случае служит дополнение BY DATABASE PROCEDURE у выражения – METHOD.</p>
+<p>Синтаксис этого дополнения следующий:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD meth BY DATABASE PROCEDURE 
+            FOR db 
+            LANGUAGE db_lang 
+            [OPTIONS db_options] 
+            [USING   db_entities]. 
+  ... 
+ENDMETHOD.</pre><p>Дополнение FOR определяет, для какой СУБД создана текущая AMDP процедура. В настоящее время доступно только определение для HANA:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>db</strong></td>
+<td><strong>СУБД</strong></td>
+<td><strong>Интерфейс</strong></td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>SAP HANA</td>
+<td>IF_AMDP_MARKER_HDB</td>
+</tr>
+</tbody>
+</table>
+<p>В будущем, возможно, появится поддержка других СУБД, тогда можно будет использовать несколько маркеров (интерфейсов), чтобы реализовывать методы для разных СУБД.</p>
+<p>Дополнение LANGUAGE определяет то, на каком языке будет реализация AMDP процедуры. Доступны следующие варианты:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>db</strong></td>
+<td><strong>db_lang</strong></td>
+<td><strong>Язык</strong></td>
+<td><strong>Комментарий</strong></td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>SQLSCRIPT</td>
+<td>SQLScript</td>
+<td>Доступно для всех</td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>LLANG</td>
+<td>L</td>
+<td>Доступно только внутри SAP</td>
+</tr>
+</tbody>
+</table>
+<p>Дополнение OPTIONS описывает специфичные для СУБД параметры обработки AMDP. Доступные следующие варианты:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>db</strong></td>
+<td><strong>option</strong></td>
+<td><strong>Значение</strong></td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>READ-ONLY</td>
+<td>В рамках AMDP нельзя будет изменять значения таблиц.</td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>SUPPRESS SYNTAX ERRORS</td>
+<td>Для внутреннего использования SAP.</td>
+</tr>
+</tbody>
+</table>
+<p>Основным по значимости дополнением является дополнение USING. В рамках него указывается, какие объекты СУБД будут обработаны в текущей реализации AMDP. Указание объектов необходимо прежде всего для того, чтобы система могла выполнить соответствующие проверки синтаксиса.</p>
+<p>Необходимо указывать следующие объекты:</p>
+<ul>
+<li>Все таблицы и ракурсы из ABAP словаря.</li>
+<li>Все процедуры (или функции ABAP 7.5) AMDP, даже если они из одного класса.</li>
+</ul>
+<p>Все остальные объекты (не управляемые из ABAP) не могут присутствовать в дополнении USING. Указанные в USING объекты должны присутствовать в текущей схеме БД и могут использоваться без её указания. Объекты из других схем должны использоваться с указанием полного имени, в том числе имени схемы, исключением являются объекты из текущей схемы с префиксом &#8212; /1BCAMDP/.</p>
+<p>Объекты из USING должны обязательно быть использованы в реализации AMDP процедуры.</p>
+<p>Пример вызова одной AMDP процедуры из другой:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD increase_price BY DATABASE PROCEDURE 
+                      FOR HDB LANGUAGE SQLSCRIPT 
+                      USING cl_demo_amdp_call_amdp=&gt;increase_price_amdp. 
+  call "CL_DEMO_AMDP_CALL_AMDP=&gt;INCREASE_PRICE_AMDP"( 
+    CLNT =&gt; :CLNT, INCPRICE =&gt; :INCPRICE ); 
+ENDMETHOD.
+
+METHOD increase_price_amdp BY DATABASE PROCEDURE 
+                           FOR HDB LANGUAGE SQLSCRIPT 
+                           USING sflight. 
+  update sflight set price = price + incprice 
+               where mandt = clnt; 
+ENDMETHOD.</pre><p>Как видно из примера, в процедуре через дополнение USING была описана используемая в реализации другая AMDP процедура.</p>
+<p>Из-за ограничений HANA, рекурсивные и циклические вызовы в AMDP процедур запрещены.</p>
+<h2>AMDP BADI</h2>
+<p>&nbsp;</p>
+<p>AMDP классы могут быть использованы в расширениях через специальные AMDP BAdi, с определенными ограничениями в сравнении с обычными BAdi.</p>
+<p>Ограничения в определении и реализации:</p>
+<ul>
+<li>Нельзя использовать фильтры</li>
+<li>Fallback класс должен быть всегда определен (Реализация BAdi по умолчанию).</li>
+<li>Каждый метод BAdi должен быть реализован через AMDP процедуру.</li>
+</ul>
+<p>Вызываются такие AMDP BAdi так же как и стандартные Kernel BAdi через GET BADI, CALL BADI.</p>
+<p>В следующем видео подробно с примерами разобрано использование AMDP BAdi:</p>
+<div class="arve aligncenter" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-5f6elumavzm618a05553a2d0308242042" style="max-width:960px;" itemscope itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/5F6ELUmavzM?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="arve-iframe fitvidsignore" data-arve="arve-youtube-5f6elumavzm618a05553a2d0308242042" data-src-no-ap="https://www.youtube-nocookie.com/embed/5F6ELUmavzM?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="540" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="https://www.youtube-nocookie.com/embed/5F6ELUmavzM?feature=oembed&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="960"></iframe>
+
+</span>
+
+</span>
+
+</div>
+
+<h2>Отладка AMDP</h2>
+<p>&nbsp;</p>
+<p>Для отладки AMDP в ABAP 7.4. необходимо сделать предварительные настройки:</p>
+<ul>
+<li>Настроить внешнюю отладку и поставить точку останова в HANA Studio,</li>
+<li>Выдать соответствующие полномочия пользователю в HANA, под которым будет выполнена отладка.</li>
+</ul>
+<p>После чего можно использовать Procedure Debugger в HANA Studio, вызвав процедуру из ABAP.</p>
+<p>В ABAP 7.5. отладку процедур можно выполнять прямо в <a href="http://scn.sap.com/community/abap/eclipse/blog/2015/10/22/how-to-debug-abap-managed-database-procedures-using-adt--basics">ADT без HANA Studio</a>, используя новый для этой версии инструмент ADT &#8212; AMDP Debugger.</p>
+<p>На тему отладки AMDP процедур в ABAP 7.4 на SCN есть хорошая <a href="http://scn.sap.com/docs/DOC-51790">статья</a>.</p>
+<p>Так же доступно видео с полным разбором:</p>
+<div class="arve aligncenter" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-5oeuyl_s5me618a05553ba98330786697" style="max-width:960px;" itemscope itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/5OEuyl_s5ME?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="arve-iframe fitvidsignore" data-arve="arve-youtube-5oeuyl_s5me618a05553ba98330786697" data-src-no-ap="https://www.youtube-nocookie.com/embed/5OEuyl_s5ME?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="540" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="https://www.youtube-nocookie.com/embed/5OEuyl_s5ME?feature=oembed&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="960"></iframe>
+
+</span>
+
+</span>
+
+</div>
+
+<h2>SQL Script</h2>
+<p>&nbsp;</p>
+<p>Синтаксис языка SQL Script описан в  соответствующей <a href="http://help.sap.com/hana/sap_hana_sql_script_reference_en.pdf">документации</a> (обратите внимание на версию HANA в документе).  В AMDP могут быть использованы CE_* функции которые работают с любыми типами View (CE_COLUMN_TABLE не будет работать, так как эта функция работает только с column store). Однако по заявлениям некоторых представителей SAP, данные функции отживают свое и возможно скоро будут считаться устаревшими.</p>
+<p>Пример использования CE_UNION_ALL:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS zcl_amdp_test_case1 DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+  PUBLIC SECTION.
+    INTERFACES: if_amdp_marker_hdb.
+    CLASS-METHODS:
+      amdp_get_aa EXPORTING VALUE(et_aa) TYPE SPFLI_TAB RAISING cx_amdp_error,
+      amdp_get_ua EXPORTING VALUE(et_ua) TYPE SPFLI_TAB RAISING cx_amdp_error,
+      amdp_get_all EXPORTING VALUE(et_all) TYPE spfli_tab RAISING cx_amdp_error.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS zcl_amdp_test_case1 IMPLEMENTATION.
+  METHOD amdp_get_aa BY DATABASE PROCEDURE FOR HDB LANGUAGE SQLSCRIPT
+                            USING spfli.
+    et_aa = SELECT * FROM spfli WHERE carrid = 'AA';
+  ENDMETHOD.
+
+  METHOD amdp_get_ua BY DATABASE PROCEDURE FOR HDB LANGUAGE SQLSCRIPT
+                            USING spfli.
+    et_ua = SELECT * FROM spfli WHERE carrid = 'UA';
+  ENDMETHOD.
+
+  METHOD amdp_get_all BY DATABASE PROCEDURE
+                      FOR HDB LANGUAGE SQLSCRIPT
+                      USING zcl_amdp_test_case1=&gt;amdp_get_aa
+                            zcl_amdp_test_case1=&gt;amdp_get_ua.
+    call "ZCL_AMDP_TEST_CASE1=&gt;AMDP_GET_AA"(
+      ET_AA =&gt; :lt_aa );
+    call "ZCL_AMDP_TEST_CASE1=&gt;AMDP_GET_UA"(
+      ET_UA =&gt; :lt_ua );
+    et_all = CE_UNION_ALL(:lt_aa, :lt_ua );
+  ENDMETHOD.
+ENDCLASS.</pre><p>Одной из типичных проблем, с которыми сталкивается разработчик при использовании AMDP – передача RANGE с экрана выбора. Решается задача путём формирования WHERE условия с помощью класса &#8212; CL_SHDB_SELTAB и его применения к выбранным данным через SQL Script функцию APPLY_FILTER, пример можно посмотреть в <a href="http://scn.sap.com/community/abap/hana/blog/2015/03/30/handling-of-select-options-parameters-within-amdp">статье</a> на SCN.</p>
+<p>Если данного класса нет в Вашей системе, он может быть установлен <a href="https://websmp130.sap-ag.de/sap(bD1ydSZjPTAwMQ==)/bc/bsp/sno/ui_entry/entry.htm?param=69765F6D6F64653D3030312669765F7361706E6F7465735F6E756D6265723D3231323436373226">нотой</a>.</p>
+<p>При обработке данных получаемых из ABAP система сопоставляет типы ABAP и HANA по следующим правилам:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>ABAP Тип</strong></td>
+<td><strong>HANA Тип</strong></td>
+<td><strong>Комментарий</strong></td>
+</tr>
+<tr>
+<td><strong>b</strong></td>
+<td>SMALLINT</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>s</strong></td>
+<td>SMALLINT</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>i</strong></td>
+<td>INTEGER</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>p</strong>, длинна <strong>leng</strong> с <strong>dec</strong> знаками после запятой</td>
+<td>DECIMAL, длинна  <strong>2 </strong><strong>leng</strong><strong>-1</strong> c <strong>dec</strong> знаками после запятой</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>decfloat16</strong></td>
+<td>VARBINARY, длинна 8</td>
+<td>Вычисления как с числовыми типами система произвести не сможет</td>
+</tr>
+<tr>
+<td><strong>decfloat34</strong></td>
+<td>VARBINARY, длинна 16</td>
+<td>Вычисления как с числовыми типами система произвести не сможет</td>
+</tr>
+<tr>
+<td><strong>f</strong></td>
+<td>DOUBLE</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>c, </strong>длинна <strong>len</strong></td>
+<td>NVARCHAR, длинна  len</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>string</strong></td>
+<td>NCLOB</td>
+<td>Не разрешено для CHANGING параметров AMDP</td>
+</tr>
+<tr>
+<td><strong>n, </strong>длинна <strong>len</strong></td>
+<td>NVARCHAR, длинна len</td>
+<td>Для использования в арифметических выражениях следует использование преобразование типа к числовому типу HANA</td>
+</tr>
+<tr>
+<td><strong>d</strong></td>
+<td>NVARCHAR, длинна 8</td>
+<td>Для использования в расчётах с датой необходимо преобразование к типу даты в HANA</td>
+</tr>
+<tr>
+<td><strong>t</strong></td>
+<td>NVARCHAR, длинна 6</td>
+<td>Для использования в расчётах с временем необходимо преобразование к типу времени в HANA</td>
+</tr>
+<tr>
+<td><strong>x, </strong>длинна <strong>len</strong></td>
+<td>VARBINARY, длинна len</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>xstring</strong></td>
+<td>BLOB</td>
+<td>Не разрешено для CHANGING параметров AMDP</td>
+</tr>
+</tbody>
+</table>
+<p>Типы ABAP словаря сопоставляются так же как и <a href="http://help.sap.com/abapdocu_750/en/abenddic_builtin_types.htm">сопоставимые с ними ABAP типы</a>, за исключением:</p>
+<table>
+<tbody>
+<tr>
+<td width="199">DF16_DEC, длинна <strong>leng</strong> с <strong>dec</strong> знаками после запятой</td>
+<td width="210">DECIMAL, длинна <strong>2</strong><strong>len</strong><strong>-1</strong> с <strong>dec</strong> знаками после запятой</td>
+<td>Тип в HANA имеет меньший диапазон значений, чем в ABAP</td>
+</tr>
+<tr>
+<td width="199">DF34_DEC, длинна <strong>leng</strong> с <strong>dec</strong> знаками после запятой</td>
+<td width="210">DECIMAL, длинна <strong>2</strong><strong>len</strong><strong>-1</strong> с <strong>dec</strong> знаками после запятой</td>
+<td>Тип в HANA имеет меньший диапазон значений, чем в ABAP</td>
+</tr>
+<tr>
+<td width="199">DF16_SCL</td>
+<td width="210">&#8212;</td>
+<td>Устарело, не поддерживается</td>
+</tr>
+<tr>
+<td width="199">DF34_SCL</td>
+<td width="210">&#8212;</td>
+<td>Устарело, не поддерживается</td>
+</tr>
+<tr>
+<td width="199">SSTRING, длинна <strong>len</strong></td>
+<td width="210">NVARCHAR, длинна <strong>len</strong></td>
+<td>&#8212;</td>
+</tr>
+</tbody>
+</table>
+<h2>Источники</h2>
+<ul>
+<li><a href="http://help.sap.com/hana/sap_hana_sql_script_reference_en.pdf">SQL Script Reference</a>,</li>
+<li><a href="https://training.sap.com/shop/course/ha400-abap-programming-for-sap-hana-classroom-008-g-en/">HA400</a>,</li>
+<li><a href="http://help.sap.com/abapdocu_750/en/abenamdp.htm">ABAP Help</a>.</li>
+</ul><p>The post <a href="https://abap-blog.ru/database-work/abap-managed-database-procedures-amdp/">ABAP Managed Database Procedures (AMDP)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/abap-managed-database-procedures-amdp/feed/</wfw:commentRss>
+			<slash:comments>4</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ABAP Object Services &#8212; Интеграция с системой блокировок</title>
+		<link>https://abap-blog.ru/database-work/abap-object-services-integraciya-s-sistemoj-blokirovok/</link>
+					<comments>https://abap-blog.ru/database-work/abap-object-services-integraciya-s-sistemoj-blokirovok/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 28 Jun 2014 17:03:42 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<category><![CDATA[ABAP Object Services]]></category>
+		<category><![CDATA[lock concept]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2209</guid>
+
+					<description><![CDATA[<p>На сервере приложений одновременно может работать большое число пользователей, которые в свою очередь работают параллельно с одними и теми же программами, может случиться ситуация, когда они попытаются одновременно обработать один и тот же объект (например, изменить поставку, заказ на закупку и т.п.). Чтобы в системе не возникало противоречивости данных, были придуманы блокировки, более подробно о [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-integraciya-s-sistemoj-blokirovok/">ABAP Object Services — Интеграция с системой блокировок</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>На сервере приложений одновременно может работать большое число пользователей, которые в свою очередь работают параллельно с одними и теми же программами, может случиться ситуация, когда они попытаются одновременно обработать один и тот же объект (например, изменить поставку, заказ на закупку и т.п.). Чтобы в системе не возникало противоречивости данных, были придуманы блокировки, более подробно о концепции блокировок читайте в <a href="http://abap-blog.ru/abap/optimizaciya_integrazia/koncepciya-blokirovok-v-sap/">предыдущей статье</a>.</p>
+<p>К сожалению, в ABAP Object Services нет встроенного механизма поддержки блокировок, что может привести к ошибкам и противоречивости данных при одновременном изменении одинаковых объектов.</p>
+<p>Далее в ходе статьи мы разберем один из способов интеграции с системой блокировок.</p>
+<p><span id="more-2209"></span></p>
+<p>Но прежде чем рассматривать механизм интеграции, необходимо отметить следующее:</p>
+<ul>
+<li>При использовании системы блокировок, программисты должны позаботиться о том, чтобы заблокированный объект был, как можно быстрее разблокирован.</li>
+<li>За установку и снятие блокировок, прежде всего, отвечает разработчик, но снятие блокировок может происходить и автоматически, данный аспект следует учитывать при интеграции с хранимыми объектами. Так если при выставлении блокировки был указан параметр _SCOPE= 2, система может автоматически снимет все блокировки при завершении транзакции верхнего уровня через метод UNDO или при вызове ROLLBACK WORK в режиме совместимости.  Если транзакция верхнего уровня была завершена методом END, либо в режиме совместимости был вызван оператор COMMIT WORK, система снимет блокировки только в том случае, если был зарегистрирован хотя бы один модуль обновления (V1). Transaction Service регистрирует модуль обновления, если не было указано что обновления необходимо производить напрямую (direct update) и если хранимый объект был изменен (по умолчанию, касается только изменения хранимых атрибутов).  Если вы используете прямое обновление или хранимый объект не изменялся, при выставленном параметре _SCOPE = 2, блокировки снимаются при завершении SAP LUW, либо принудительно через модуль разблокирования DEQUEUE_*.</li>
+</ul>
+<h4>Пессимистичные и оптимистичные блокировки</h4>
+<p>Существует две основные стратегии блокирования: пессимистичная и оптимистичная. Стратегия, в данном случае, определяет порядок действий, выполняемых при блокировании и разблокировании объектов, а также поведение системы при обработке объектов блокировки.</p>
+<ul>
+<li>Оптимистичная стратегия подразумевает проверку на блокировку непосредственно перед записью в БД, т.е. множество пользователей в один момент времени могут изменять какой-либо объект (выставлена оптимистичная блокировка), но записывать эти изменения в БД можно только после преобразования оптимистичной блокировки в эксклюзивную. При этом после преобразования, все другие оптимистичные блокировки снимаются. Основное преимущество в такой стратегии, блокировка объекта происходит в достаточно короткие временные сроки.</li>
+<li>Пессимистичная стратегия подразумевает блокировку непосредственно до начала выполнения какого-либо действия над объектом, т.е. чтобы начать изменять объект выставляется блокировка и если она успешна, интерфейс из состояния чтения объекта переходит в состояние изменения. После сохранения данных объекта блокировка снимается.</li>
+</ul>
+<p>Для того чтобы иметь возможность редактировать объект и быть уверенными в том, что блокировка установлена в классе агенте мы реализуем следующий метод:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/lock_and_get_persistent.png"><img loading="lazy" class="alignnone size-full wp-image-2211" src="http://abap-blog.ru/wp-content/uploads/2014/06/lock_and_get_persistent.png" alt="lock_and_get_persistent" width="790" height="156" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/lock_and_get_persistent.png 790w, https://abap-blog.ru/wp-content/uploads/2014/06/lock_and_get_persistent-300x59.png 300w" sizes="(max-width: 790px) 100vw, 790px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD lock_and_get_persistent.
+
+  DATA:
+    lv_status TYPE string,
+    ls_key    TYPE typ_business_key,
+    lv_text   TYPE string.
+
+  ro_persistent =  me-&gt;get_persistent(
+      i_carrid = iv_carrid
+      i_connid = iv_connid
+      i_fldate = iv_fldate
+  ).
+
+  ls_key-carrid = ro_persistent-&gt;get_carrid( ).
+  ls_key-connid = ro_persistent-&gt;get_connid( ).
+  ls_key-fldate = ro_persistent-&gt;get_fldate( ).
+
+  CHECK iv_enqueue_mode IS NOT INITIAL.
+
+  READ TABLE gt_locks
+    WITH KEY carrid = ls_key-carrid
+             connid = ls_key-connid
+             fldate = ls_key-fldate
+      TRANSPORTING NO FIELDS.
+
+  CHECK sy-subrc NE 0.
+
+  CALL FUNCTION 'ENQUEUE_ESFLIGHT'
+    EXPORTING
+      mode_sflight   = iv_enqueue_mode
+      carrid         = ls_key-carrid
+      connid         = ls_key-connid
+      fldate         = ls_key-fldate
+      _scope         = '3'
+    EXCEPTIONS
+      foreign_lock   = 1
+      system_failure = 2
+      OTHERS         = 3.
+  IF sy-subrc &lt;&gt; 0.
+    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno INTO lv_text
+               WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+
+    RAISE EXCEPTION TYPE zcx_os_object_not_blocked
+      EXPORTING
+        text = lv_text.
+  ENDIF.
+
+  APPEND ls_key TO gt_locks.
+
+  " После установки блокировки, необходимо обновить хранимый объект
+  TRY.
+      me-&gt;if_os_factory~refresh_persistent( ro_persistent ).
+    CATCH cx_os_object_not_refreshable.
+  ENDTRY.
+
+ENDMETHOD.</pre><p>В методе присутствует входной параметр iv_enqueue_mode, внутри которого будем указывать стратегию блокировки, используемую для загружаемого объекта:</p>
+<ul>
+<li>«Е» &#8212; пессимистичная стратегия</li>
+<li>«О» &#8212; оптимистичная стратегия</li>
+</ul>
+<p>Внутри метода происходит повторная загрузка хранимого объекта из БД и вызов модуля установки блокировки.</p>
+<p>Благодаря параметру _scope = ‘3’ мы точно будем уверены в том, что блокировка не будет снята автоматически.</p>
+<p>Так же был добавлен свой класс исключения zcx_os_object_not_blocked, данный класс уведомляет нас о невозможности продолжения работы с объектом из-за ошибки при выставлении блокировки. Подробнее о классах исключений смотрите <a href="http://abap-blog.ru/abap/abap-osnovi/obrabotka-osobyx-situacij-v-abap/">тут</a>. В классе исключения определен текст внутри которого выводится переданный в параметрах исключения text:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked_text.png"><img loading="lazy" class="alignnone size-full wp-image-2212" src="http://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked_text.png" alt="zcx_os_object_not_blocked_text" width="507" height="153" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked_text.png 507w, https://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked_text-300x90.png 300w" sizes="(max-width: 507px) 100vw, 507px" /></a></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked2.png"><img loading="lazy" class="alignnone size-full wp-image-2213" src="http://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked2.png" alt="zcx_os_object_not_blocked2" width="928" height="288" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked2.png 928w, https://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked2-300x93.png 300w" sizes="(max-width: 928px) 100vw, 928px" /></a></p>
+<p>Все заблокированные нашей программой объекты будут храниться в атрибуте класса агента с табличным типом TYP_BUSINESS_KEY_TAB:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/gt_locks.png"><img loading="lazy" class="alignnone size-full wp-image-2214" src="http://abap-blog.ru/wp-content/uploads/2014/06/gt_locks.png" alt="gt_locks" width="847" height="23" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/gt_locks.png 847w, https://abap-blog.ru/wp-content/uploads/2014/06/gt_locks-300x8.png 300w" sizes="(max-width: 847px) 100vw, 847px" /></a></p>
+<p>При повторном вызове метода для уже заблокированного объекта, модуль блокировки запускаться не будет. <strong>Кроме того надо иметь в виду, что вызывать данный метод необходимо перед редактированием хранимого объекта. </strong></p>
+<p>Тестовая программа, выводящая ошибку, в случае невозможности блокирования объекта (объект уже заблокирован эксклюзивной блокировкой):</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_flight TYPE REF TO zcl_spfliht,
+  go_agent  TYPE REF TO zca_spfliht,
+  go_error  TYPE REF TO zcx_os_object_not_blocked,
+  gv_error  TYPE string.
+
+  go_agent = zca_spfliht=&gt;agent.
+
+  TRY.
+      go_flight = go_agent-&gt;lock_and_get_persistent(
+          iv_enqueue_mode = 'E'
+          iv_carrid = 'AA'
+          iv_connid = 17
+          iv_fldate = '20130206'
+      ).
+    CATCH zcx_os_object_not_blocked INTO go_error.
+      gv_error = go_error-&gt;get_text( ).
+      WRITE gv_error.
+      EXIT.
+  ENDTRY.</pre><p>Результат обработки исключения:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/TestProgram.png"><img loading="lazy" class="alignnone size-full wp-image-2215" src="http://abap-blog.ru/wp-content/uploads/2014/06/TestProgram.png" alt="TestProgram" width="443" height="58" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/TestProgram.png 443w, https://abap-blog.ru/wp-content/uploads/2014/06/TestProgram-300x39.png 300w" sizes="(max-width: 443px) 100vw, 443px" /></a></p>
+<p>Следующий шаг после изменения полученного объекта определяется в зависимости от стратегии блокировки, для пессимистичной стратегии необходимо чтобы после сохранения данных объекта в БД, выставленные ранее блокировки были сняты.</p>
+<p>Для этого в классе агенте создан специальный метод снятия блокировки:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/unlock_object1.png"><img loading="lazy" class="alignnone size-full wp-image-2217" src="http://abap-blog.ru/wp-content/uploads/2014/06/unlock_object1.png" alt="unlock_object" width="426" height="38" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/unlock_object1.png 426w, https://abap-blog.ru/wp-content/uploads/2014/06/unlock_object1-300x26.png 300w" sizes="(max-width: 426px) 100vw, 426px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">method UNLOCK_OBJECT.
+  DATA:
+    ls_key TYPE typ_business_key.
+
+  TRY.
+    ls_key-carrid = io_persistent-&gt;get_carrid( ).
+    ls_key-connid = io_persistent-&gt;get_connid( ).
+    ls_key-fldate = io_persistent-&gt;get_fldate( ).
+  CATCH cx_os_object_not_found.
+    RETURN.
+  ENDTRY.
+
+  DELETE TABLE gt_locks 
+    WITH TABLE KEY carrid = ls_key-carrid 
+                   connid = ls_key-connid 
+                   fldate = ls_key-fldate.
+
+  IF sy-subrc = 0.
+
+    CALL FUNCTION 'DEQUEUE_ESFLIGHT'
+      EXPORTING
+        mode_sflight = 'E'
+        carrid       = ls_key-carrid
+        connid       = ls_key-connid
+        fldate       = ls_key-fldate.
+
+    CALL FUNCTION 'DEQUEUE_ESFLIGHT'
+      EXPORTING
+        mode_sflight = 'O'
+        carrid       = ls_key-carrid
+        connid       = ls_key-connid
+        fldate       = ls_key-fldate.
+
+  ENDIF.
+
+endmethod.</pre><p>Так как мы не знаем, какого типа в настоящий момент установлена блокировка, модуль разблокировки вызывается дважды.</p>
+<p>Для оптимистичной стратегии блокирования необходимо до момента запроса на сохранение в БД, преобразовать выставленную ранее блокировку в эксклюзивную. Создадим в классе агенте следующий метод преобразования:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/convert_lock.png"><img loading="lazy" class="alignnone size-full wp-image-2218" src="http://abap-blog.ru/wp-content/uploads/2014/06/convert_lock.png" alt="convert_lock" width="696" height="62" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/convert_lock.png 696w, https://abap-blog.ru/wp-content/uploads/2014/06/convert_lock-300x26.png 300w" sizes="(max-width: 696px) 100vw, 696px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD convert_lock.
+  DATA:
+    ls_key  TYPE typ_business_key,
+    lv_key  TYPE eqegraarg,
+    lv_text TYPE string.
+
+  TRY.
+      ls_key-carrid = io_persistent-&gt;get_carrid( ).
+      ls_key-connid = io_persistent-&gt;get_connid( ).
+      ls_key-fldate = io_persistent-&gt;get_fldate( ).
+
+    CATCH cx_os_object_not_found.
+      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno INTO lv_text
+                 WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+
+      RAISE EXCEPTION TYPE zcx_os_object_not_blocked
+        EXPORTING
+          text = lv_text.
+  ENDTRY.
+
+  READ TABLE gt_locks
+    WITH TABLE KEY
+      carrid = ls_key-carrid
+      connid = ls_key-connid
+      fldate = ls_key-fldate
+    TRANSPORTING NO FIELDS.
+
+  IF sy-subrc NE 0.
+    RAISE EXCEPTION TYPE zcx_os_object_not_blocked
+      EXPORTING
+        text = 'Объект не блокирован, преобразование невозможно'.
+  ENDIF.
+
+  CALL FUNCTION 'ENQUEUE_ESFLIGHT'
+    EXPORTING
+      mode_sflight   = 'R'
+      carrid         = ls_key-carrid
+      connid         = ls_key-connid
+      fldate         = ls_key-fldate
+      _scope         = '3'
+    EXCEPTIONS
+      foreign_lock   = 1
+      system_failure = 2
+      OTHERS         = 3.
+
+  IF sy-subrc &lt;&gt; 0.
+    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno INTO lv_text
+               WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+
+    IF sy-subrc = 1.
+      " Блокировка уже преобразована, если блокировка установлена не
+      " нами, сбросим внутренние блокировки
+      lv_key = ls_key.
+      lv_key = sy-mandt &amp;&amp; lv_key.
+      IF zenqueue_tools=&gt;check_enqueue(
+          im_table_name    = 'SFLIGHT'
+          im_key           = lv_key
+          im_mode          = 'E'
+      ) = abap_false.
+        DELETE TABLE gt_locks WITH TABLE KEY
+            carrid = ls_key-carrid
+            connid = ls_key-connid
+            fldate = ls_key-fldate.
+      ELSE.
+        " Если блокировка была преобразована нами,
+        " выйдем
+        RETURN.
+      ENDIF.
+    ENDIF.
+
+    RAISE EXCEPTION TYPE zcx_os_object_not_blocked
+      EXPORTING
+        text = lv_text.
+  ENDIF.
+
+ENDMETHOD.</pre><p>Метод определения была ли блокировка выставлена нами выглядит следующим образом:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/check_enqueue.png"><img loading="lazy" class="alignnone size-full wp-image-2232" src="http://abap-blog.ru/wp-content/uploads/2014/06/check_enqueue.png" alt="check_enqueue" width="667" height="99" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/check_enqueue.png 667w, https://abap-blog.ru/wp-content/uploads/2014/06/check_enqueue-300x44.png 300w" sizes="(max-width: 667px) 100vw, 667px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD check_enqueue.
+  DATA:
+    lt_enqueues TYPE STANDARD TABLE OF seqg3,
+    lv_wpnum    TYPE wpinfo-wp_no.
+
+  CALL FUNCTION 'ENQUEUE_READ'
+    EXPORTING
+      gname                 = im_table_name
+      garg                  = im_key
+    TABLES
+      enq                   = lt_enqueues
+    EXCEPTIONS
+      communication_failure = 1
+      system_failure        = 2
+      OTHERS                = 3.
+  IF sy-subrc &lt;&gt; 0.
+    rv_ownwp_enqueue = abap_false.
+    RETURN.
+  ENDIF.
+
+  CALL FUNCTION 'TH_GET_OWN_WP_NO'
+    IMPORTING
+      wp_no = lv_wpnum.
+
+  READ TABLE lt_enqueues WITH KEY gtwp = lv_wpnum gmode = im_mode TRANSPORTING NO FIELDS.
+  IF sy-subrc = 0.
+    rv_ownwp_enqueue = abap_true.
+  ELSE.
+    rv_ownwp_enqueue = abap_false.
+  ENDIF.
+ENDMETHOD.</pre><p>После успешного преобразования может быть вызван COMMIT WORK или метод транзакции END. Закончив сохранения объекта в БД, можно вызвать снятие блокировок через метод рассмотренный ранее.</p>
+<p>Описанная в данной статье схема интеграции с системой блокировок является лишь одной из возможных, в качестве альтернативной можно использовать автоматическое выставление блокировок до момента загрузки хранимого объекта из БД, делается это через переопределение метода в классе агенте: MAP_LOAD_FROM_DATABASE_KEY &#8212; если бизнес ключ на основе ключевых полей таблицы, MAP_LOAD_FROM_DATABASE_GUID – если бизнес ключ на основе GUID.</p>
+<p>Можно так же автоматически снимать блокировки через агента проверки консистентности (класс реализующий интерфейс IF_OS_CHECK) хранимого объекта, но подобная автоматизация возможна только для ООП транзакций, т.к. исключения выдаваемые в агентах проверки невозможно обработать в транзакциях в режиме совместимости.</p>
+<p>Подробнее об альтернативной схеме интеграции с системой блокировок можете прочитать в книге: <a href="http://store.sapinsider.wispubs.com/products/Object-Services-in-ABAP.html">Object Services in ABAP</a>.</p><p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-integraciya-s-sistemoj-blokirovok/">ABAP Object Services — Интеграция с системой блокировок</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/abap-object-services-integraciya-s-sistemoj-blokirovok/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ABAP Object Services – Persistence Service – часть 2</title>
+		<link>https://abap-blog.ru/database-work/abap-object-services-persistence-service-chast-2/</link>
+					<comments>https://abap-blog.ru/database-work/abap-object-services-persistence-service-chast-2/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 04 Jun 2014 17:21:26 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<category><![CDATA[ABAP Object Services]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2187</guid>
+
+					<description><![CDATA[<p>Продолжаем знакомство с ABAP Object Services, в этой части будут рассмотрены темы: менеджеры инстанций и постоянства,  пользовательские проверки при манипуляции с атрибутами хранимых классов, преобразование объектов в структуры и таблицы, загрузка связанных объектов без использования ссылочных атрибутов. Менеджер инстанций и менеджер постоянства (Persistency Manager) Как мы уже знаем каждый агент класса, содержит методы для создания, [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-persistence-service-chast-2/">ABAP Object Services – Persistence Service – часть 2</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Продолжаем знакомство с ABAP Object Services, в этой части будут рассмотрены темы: менеджеры инстанций и постоянства,  пользовательские проверки при манипуляции с атрибутами хранимых классов, преобразование объектов в структуры и таблицы, загрузка связанных объектов без использования ссылочных атрибутов.</p>
+<p><span id="more-2187"></span></p>
+<h3>Менеджер инстанций и менеджер постоянства (Persistency Manager)</h3>
+<p>Как мы уже знаем каждый агент класса, содержит методы для создания, изменения, удаления хранимых объектов, получения хранимых объектов определенного статуса. Данные методы предназначены для хранимых объектов конкретного хранимого класса. Используя менеджер инстанций и менеджер постоянства, мы можем запускать аналогичные методы, не имея ссылки на агент конкретного хранимого класса.</p>
+<p>Для доступа к менеджеру инстанции (классу реализующему интерфейс <strong>IF_</strong><strong>OS_</strong><strong>INSTANCE_</strong><strong>MANEGER</strong>) нужно воспользоваться статическим методом <strong>get_</strong><strong>instance_</strong><strong>manager</strong>() класса <strong>CL_</strong><strong>OS_</strong><strong>SYSTEM</strong>. Данный класс реализует те же самые методы, что и <strong>IF_</strong><strong>OS_</strong><strong>CA_</strong><strong>INSTANCE</strong>, за исключением методов для временных хранимых объектов. Кроме того данный класс позволяет получить (изменить SET_STATUS()) статус любого объекта, метод <strong>GET_</strong><strong>STATUS</strong>().</p>
+<p>Пример использования менеджера инстанций:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_instance_manager TYPE REF TO IF_OS_INSTANCE_MANAGER,
+  gt_all_objects      TYPE osreftab.
+
+go_instance_manager = cl_os_system=&gt;get_instance_manager( ).
+gt_all_objects = go_instance_manager-&gt;get_loaded( ).</pre><p>Менеджер постоянства позволяет инициировать объекты с помощью QUERY или таблицы с ключевыми полями, но с обязательным указанием имени класса:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  gt_flights_keys TYPE STANDARD TABLE OF scol_flight_key,
+  go_pm TYPE REF TO if_os_persistency_manager,
+  gs_cn TYPE SEOCLSKEY,
+  gt_spflights TYPE osreftab.
+
+go_pm = cl_os_system=&gt;get_persistency_manager( ).
+
+" 1. Получаем ключевые поля для инициализации объектов
+SELECT * FROM sflight INTO CORRESPONDING FIELDS OF TABLE gt_flights_keys.
+
+" 2. Получаем список всех объектов
+TRY.
+  gs_cn-clsname = 'ZCL_SFLIGHT'.
+  gt_sflights = go_pm-&gt;get_persistent_by_key_tab(
+      i_class_name = gs_cn
+      i_key_tab    = gt_flights_keys
+  ).
+  CATCH cx_os_class_not_found.
+  CATCH cx_os_object_not_found.
+ENDTRY.</pre><p></p>
+<h3></h3>
+<h3>Преобразование объектов в структуры и обратно</h3>
+<p>Многие сервисы в R/3, как например ALV, не работают напрямую с объектами. Чтобы сформировать ALV, необходимо передать в качестве параметра внутреннюю таблицу. Допустим нам необходимо перенести все хранимые атрибуты объекта в произвольную структуру (имена полей и хранимых атрибутов должны совпадать), для этого напишем следующий код:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/methodheader.png"><img loading="lazy" class="alignnone size-full wp-image-2188" src="http://abap-blog.ru/wp-content/uploads/2014/06/methodheader.png" alt="methodheader" width="526" height="58" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/methodheader.png 526w, https://abap-blog.ru/wp-content/uploads/2014/06/methodheader-300x33.png 300w" sizes="(max-width: 526px) 100vw, 526px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD object_to_structure.
+  DATA:
+    lo_str_descr TYPE REF TO cl_abap_structdescr,
+    lv_method    TYPE string.
+
+  FIELD-SYMBOLS:
+    &lt;ls_component&gt; TYPE abap_compdescr,
+    &lt;lv_component&gt; TYPE any.
+
+  TRY.
+      lo_str_descr ?= cl_abap_structdescr=&gt;describe_by_data( ch_structure ).
+    CATCH cx_sy_move_cast_error.
+      RETURN.
+  ENDTRY.
+
+  LOOP AT lo_str_descr-&gt;components ASSIGNING &lt;ls_component&gt;.
+    ASSIGN COMPONENT &lt;ls_component&gt;-name OF STRUCTURE ch_structure TO &lt;lv_component&gt;.
+    CHECK sy-subrc = 0.
+
+    lv_method = 'GET_' &amp;&amp; &lt;ls_component&gt;-name.
+
+    TRY.
+        CALL METHOD im_object-&gt;(lv_method)
+          RECEIVING
+            result = &lt;lv_component&gt;.
+      CATCH cx_sy_dyn_call_illegal_method cx_os_object_not_found.
+        CONTINUE.
+    ENDTRY.
+  ENDLOOP.
+ENDMETHOD.</pre><p>В коде мы динамически формируем имя метода для получения хранимого атрибута, вызываем его и результат записываем в поле структуры. Получать структуру из объекта мы уже умеем, но для ALV нам нужна таблица, следующий код будет заполнять таблицу относительно таблицы ссылок:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/method_objects_to_table.png"><img loading="lazy" class="alignnone size-full wp-image-2189" src="http://abap-blog.ru/wp-content/uploads/2014/06/method_objects_to_table.png" alt="method_objects_to_table" width="513" height="62" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/method_objects_to_table.png 513w, https://abap-blog.ru/wp-content/uploads/2014/06/method_objects_to_table-300x36.png 300w" sizes="(max-width: 513px) 100vw, 513px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD objects_to_table.
+
+  DATA:
+    ls_structure    TYPE REF TO DATA,
+    lo_tab_descr    TYPE REF TO cl_abap_tabledescr,
+    lo_str_descr    TYPE REF TO cl_abap_structdescr,
+    lo_object       TYPE REF TO object.
+
+  FIELD-SYMBOLS: &lt;ls_line&gt; TYPE ANY.
+
+  IF im_objects_table IS INITIAL.
+    RETURN.
+  ENDIF.
+
+  CLEAR ch_table.
+  lo_tab_descr ?= cl_abap_tabledescr=&gt;describe_by_data( ch_table ).
+
+  TRY.
+    lo_str_descr ?= lo_tab_descr-&gt;get_table_line_type( ).
+  CATCH cx_sy_move_cast_error.
+    RETURN.
+  ENDTRY.
+
+  CREATE DATA ls_structure TYPE HANDLE lo_str_descr.
+  ASSIGN ls_structure-&gt;* TO &lt;ls_line&gt;.
+
+  LOOP AT im_objects_table INTO lo_object.
+    CLEAR &lt;ls_line&gt;.
+
+    zcl_po_utils=&gt;object_to_structure(
+      EXPORTING
+        im_object    = lo_object
+      CHANGING
+        ch_structure = &lt;ls_line&gt;
+    ).
+    APPEND &lt;ls_line&gt; TO ch_table.
+  ENDLOOP.
+ENDMETHOD.</pre><p>Ну и последний метод – заполнение таблицы относительно объектов класса (статус объекта заполняется опционально):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/agent_to_tab.png"><img loading="lazy" class="alignnone size-full wp-image-2190" src="http://abap-blog.ru/wp-content/uploads/2014/06/agent_to_tab.png" alt="agent_to_tab" width="780" height="174" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/agent_to_tab.png 780w, https://abap-blog.ru/wp-content/uploads/2014/06/agent_to_tab-300x66.png 300w" sizes="(max-width: 780px) 100vw, 780px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD agent_objects_to_table.
+  DATA:
+    lt_buffer       TYPE ostyp_ref_tab,
+    lt_all_objects  TYPE ostyp_ref_tab.
+
+  CHECK im_agent IS BOUND.
+
+  IF im_loaded = abap_true.
+    lt_buffer = im_agent-&gt;if_os_ca_instance~get_loaded( ).
+    APPEND LINES OF lt_buffer TO lt_all_objects.
+  ENDIF.
+
+  IF im_created = abap_true.
+    lt_buffer = im_agent-&gt;if_os_ca_instance~get_created( ).
+    APPEND LINES OF lt_buffer TO lt_all_objects.
+  ENDIF.
+
+  IF im_deleted = abap_true.
+    lt_buffer = im_agent-&gt;if_os_ca_instance~get_deleted( ).
+    APPEND LINES OF lt_buffer TO lt_all_objects.
+  ENDIF.
+
+  IF im_changed = abap_true.
+    lt_buffer = im_agent-&gt;if_os_ca_instance~get_changed( ).
+    APPEND LINES OF lt_buffer TO lt_all_objects.
+  ENDIF.
+
+  IF im_not_loaded = abap_true.
+    lt_buffer = im_agent-&gt;if_os_ca_instance~get_not_loaded( ).
+    APPEND LINES OF lt_buffer TO lt_all_objects.
+  ENDIF.
+
+  IF im_transient = abap_true.
+    lt_buffer = im_agent-&gt;if_os_ca_instance~get_transient( ).
+    APPEND LINES OF lt_buffer TO lt_all_objects.
+  ENDIF.
+
+  IF lt_all_objects IS INITIAL.
+    RETURN.
+  ENDIF.
+
+  zcl_po_utils=&gt;objects_to_table(
+    EXPORTING
+      im_objects_table = lt_all_objects
+    CHANGING
+      ch_table         = ch_table
+  ).
+
+ENDMETHOD.</pre><p>Пример отчета, выводящего данные запроса в ALV:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  gt_sflight        TYPE STANDARD TABLE OF sflight,
+  go_salv_table     TYPE REF TO cl_salv_table,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+
+go_query = go_query_manager-&gt;create_query(
+    i_filter     = 'FLDATE &lt;= ''' &amp;&amp; '20130306'''
+).
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+  RECEIVING
+    result          = gt_result
+).
+
+zcl_po_utils=&gt;objects_to_table(
+  EXPORTING
+    im_objects_table = gt_result
+  CHANGING
+    ch_table      = gt_sflight
+).
+
+cl_salv_table=&gt;factory(
+   IMPORTING
+     r_salv_table   = go_salv_table
+   CHANGING
+     t_table        = gt_sflight
+ ).
+
+go_salv_table-&gt;display( ).</pre><p>В некоторых случаях, удобно заполнять объект на основе структуры, реализация аналогична заполнению структуры, только используется вызов метода SET:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/str_to_obj.png"><img loading="lazy" class="alignnone size-full wp-image-2191" src="http://abap-blog.ru/wp-content/uploads/2014/06/str_to_obj.png" alt="str_to_obj" width="527" height="60" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/str_to_obj.png 527w, https://abap-blog.ru/wp-content/uploads/2014/06/str_to_obj-300x34.png 300w" sizes="(max-width: 527px) 100vw, 527px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD STRUCTURE_TO_OBJECT.
+  DATA:
+    lo_str_descr TYPE REF TO cl_abap_structdescr,
+    lt_params    TYPE abap_parmbind_tab,
+    ls_param     TYPE abap_parmbind,
+    lv_method    TYPE string.
+
+  FIELD-SYMBOLS:
+    &lt;ls_component&gt; TYPE abap_compdescr,
+    &lt;lv_component&gt; TYPE any.
+
+  TRY.
+      lo_str_descr ?= cl_abap_structdescr=&gt;describe_by_data( im_structure ).
+    CATCH cx_sy_move_cast_error.
+      RETURN.
+  ENDTRY.
+
+  LOOP AT lo_str_descr-&gt;components ASSIGNING &lt;ls_component&gt;.
+    CLEAR: lt_params, ls_param.
+    ASSIGN COMPONENT &lt;ls_component&gt;-name OF STRUCTURE im_structure TO &lt;lv_component&gt;.
+    CHECK sy-subrc = 0.
+
+    lv_method = 'SET_' &amp;&amp; &lt;ls_component&gt;-name.
+
+    ls_param-name = 'I_' &amp;&amp; &lt;ls_component&gt;-name.
+    ls_param-kind = cl_abap_objectdescr=&gt;exporting.
+    GET REFERENCE OF &lt;lv_component&gt; INTO ls_param-value.
+    INSERT ls_param INTO TABLE lt_params.
+
+    TRY.
+        CALL METHOD im_object-&gt;(lv_method)
+          PARAMETER-TABLE
+            lt_params.
+
+      CATCH cx_os_object_not_found cx_sy_dyn_call_error.
+        CONTINUE.
+    ENDTRY.
+  ENDLOOP.
+ENDMETHOD.</pre><p>&nbsp;</p>
+<h3>Пользовательская проверка при изменении атрибутов</h3>
+<p>В ходе использования хранимых объектов и их атрибутов перед разработчиком встает задача контроля входных, выходных данных в SET_ GET_ методах. Изменять методы напрямую нельзя, т.к. при повторной генерации хранимого класса они будут перезатерты стандартным кодом.</p>
+<p>Выйти из этой ситуации можно несколькими способами:</p>
+<ul>
+<li>Сделать атрибуты приватными, для доступа к хранимым атрибутам в таком случае придётся писать свои дополнительные методы, например: READ_ATTRNAME, WRITE_ATTRNAME. Из-за объема необходимого к написанию кода данный способ не является оптимальным.</li>
+<li>Создать дочерний хранимый класс, в котором надо будет переопределить методы доступа к атрибутам и добавить необходимые проверки. Настройки сопоставления наследуются от родительского класса. Нагромождение классов, исходя только из необходимости дополнительных проверок, так же не является самым лучшим решением.</li>
+<li>В качестве обертки над хранимым классом создать обычный класс с доп. проверками при доступе к хранимым атрибутам. По своей сложности сопоставим с предыдущим.</li>
+<li>Ну и наконец, самым лучшим с точки зрения оптимальности, является способ использования Enhancement Framework. Дополнительная проверка в таком случае вставляется через расширение метода перед началом выполнения основного кода (неявная точка расширения), при повторной генерации класса, затирается только сгенерированная часть, проверки в расширении остаются не тронутыми.</li>
+</ul>
+<p>&nbsp;</p>
+<h3>Загрузка вложенных объектов без хранимых атрибутов</h3>
+<p>Рассмотренные ранее ссылочные атрибуты, когда один объект, через свой атрибут, ссылается на другой и система его автоматически подгружает, не могут быть использованы для связи один ко многим.  Реализовать подобную схему можно следующим образом:</p>
+<ul>
+<li>Внутри класса создать временный атрибут содержащий таблицу ссылок на вложенные объекты и флаг, указывающий на то, что они были загружены. В качестве примера возьмем хранимый класс «факультет» включающий в себя внутреннюю таблицу со ссылками на объекты хранимого класса «студент» &#8212; gt_students (TYPE STANDART TABLE OF REF TO zcl_student). Флаг загруженности – students_loaded.</li>
+<li>Создать метод для получения внутренней таблицы со ссылками на студентов – get_students, метод должен содержать примерно следующий код (обработка исключений опущена):<br />
+<pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  lo_qm         TYPE REF TO if_os_query_manager,
+  lo_query      TYPE REF TO if_os_query,
+  lo_ca_student TYPE REF TO zca_student,
+  lo_students   TYPE osreftab,
+  lo_student    TYPE REF TO zcl_student.
+
+FIELD-SYMBOLS: &lt;lo_ref&gt; TYPE REF TO object.
+
+IF me-&gt;students_loaded = abap_false.
+  lo_qm = cl_os_system=&gt;get_query_manager( ).
+  
+  lo_query = lo_qm-&gt;create_query(
+      i_filter     = 'PROFID = PAR1'
+  ).
+  
+  lo_ca_student = zca_student=&gt;agent.
+  lo_students = lo_ca_student-&gt;if_os_ca_persistency~get_persistent_by_query(
+      i_query         = lo_query
+      i_par1          = me-&gt;get_id( )
+  ).
+  
+  LOOP AT lo_students ASSIGNING &lt;lo_ref&gt;.
+    lo_student ?= &lt;lo_ref&gt;.
+    APPEND lo_student TO me-&gt;gt_students.
+  ENDLOOP.
+  
+  me-&gt;students_loaded = abap_true.
+ENDIF.
+
+rv_students = me-&gt;gt_students.</pre><br />
+По аналогии можно написать метод для получения ссылки на конкретного студента из внутренней таблицы, относительно его идентификатора. Метод должен быть вызван на этапе инициализации объекта &#171;Факультет&#187;.</li>
+<li>Так как объект «факультет» может быть удален из памяти PS (через метод RELEASE), надо позаботиться о том, чтобы инициализировать временные атрибуты &#8212; таблицу со ссылками на студентов и флаг. Делается это через определение метода INVALIDATE:<br />
+<pre class="urvanov-syntax-highlighter-plain-tag">CLEAR me-&gt;gt_students.
+me-&gt;students_loaded = abap_false.</pre>
+</li>
+</ul>
+<p>В следующей части будут рассмотрены вопросы интеграции с системой блокировок SAP и переопределение методов доступа к данным.</p><p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-persistence-service-chast-2/">ABAP Object Services – Persistence Service – часть 2</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/abap-object-services-persistence-service-chast-2/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ABAP Object Services &#8212; Query Service</title>
+		<link>https://abap-blog.ru/database-work/abap-object-services-query-service/</link>
+					<comments>https://abap-blog.ru/database-work/abap-object-services-query-service/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 03 Jun 2014 08:37:58 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<category><![CDATA[Object Services]]></category>
+		<category><![CDATA[Query Service]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2074</guid>
+
+					<description><![CDATA[<p>Ранее было показано, каким образом можно загрузить хранимый объект из БД относительно ключевых полей и даже как массово их инициализировать (метод GET_PERSISTENT_BY_KEY_TAB). Альтернативой подобному методу служит &#8212; Query Service. QS &#8212; Инструмент позволяющий Вам делать поиск и загрузку хранимых объектов, относительно логических выражений (условий). Кроме фильтров относительно условий, QS позволяет задать параметры сортировки. Используя QS, вам [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-query-service/">ABAP Object Services — Query Service</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/1401801143_0331.png"><img loading="lazy" class="alignleft wp-image-2076 " src="http://abap-blog.ru/wp-content/uploads/2014/06/1401801143_0331.png" alt="1401801143_033" width="165" height="165" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/1401801143_0331.png 256w, https://abap-blog.ru/wp-content/uploads/2014/06/1401801143_0331-150x150.png 150w" sizes="(max-width: 165px) 100vw, 165px" /></a></p>
+<p>Ранее было показано, каким образом можно загрузить хранимый объект из БД относительно ключевых полей и даже как массово их инициализировать (метод GET_PERSISTENT_BY_KEY_TAB). Альтернативой подобному методу служит &#8212; Query Service. QS &#8212; Инструмент позволяющий Вам делать поиск и загрузку хранимых объектов, относительно логических выражений (условий). Кроме фильтров относительно условий, QS позволяет задать параметры сортировки. Используя QS, вам не надо будет выбирать отдельные ключевые поля, т.о. для массовой инициализации группы объектов, система выполнит только один SQL запрос.</p>
+<p><span id="more-2074"></span></p>
+<p>Пример использования QS с фильтром по дате полёта:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  gv_filter         TYPE string,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+gv_filter = 'FLDATE &lt;= ''' &amp;&amp; '20130306'''.
+
+go_query = go_query_manager-&gt;create_query(
+    i_filter     = gv_filter
+).
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+  RECEIVING
+    result          = gt_result
+).</pre><p>Для того чтобы иметь возможность получить объекты по запросу, необходимо сначала этот запрос создать. За создание запроса отвечает менеджер запросов, получить ссылку на который, можно через класс <strong>CL_</strong><strong>OS_</strong><strong>SYSTEM</strong>. Далее, используя метод CREATE_QUERY, создается экземпляр класса запроса (реализующего интерфейс &#8212; IF_OS_QUERY). В данный метод передан параметр, формирующий динамическое условие относительно даты полёта. Результатом запроса будет внутренняя таблица (gt_result), заполненная ссылочными переменными на хранимые объекты.</p>
+<p>&nbsp;</p>
+<h2>Компоненты Query Service</h2>
+<p>&nbsp;</p>
+<p>QS включает в себя следующие компоненты:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/gs_components.gif"><img loading="lazy" class="alignnone size-full wp-image-2077" src="http://abap-blog.ru/wp-content/uploads/2014/06/gs_components.gif" alt="gs_components" width="571" height="627" /></a></p>
+<p>&nbsp;</p>
+<h3>Методы менеджера запросов (IF_OS_QUERY_MANAGER)</h3>
+<p><strong>CREATE_</strong><strong>QUERY</strong>. Создание экземпляра класса запроса, на вход получает следующие параметры: I_FILTER,I_ORDERING,I_PARAMETERS. Условие фильтрации основано на динамическом вызове WHERE, с поддержкой некоторых условий относительно ссылочных переменных. Как и в условии WHERE, поддерживаются логические операторы AND, OR, NOT, а так же объединение условий через круглые скобки. При вызове запроса через агент класса, фильтрация привязана к атрибутам хранимого класса для этого агента, атрибуты должны быть публичными (public) хранимыми атрибутами, иначе произойдет исключение. Таким образом, созданный объект запроса может использоваться разными агентами, но с соблюдением условий наличия атрибутов.</p>
+<p>Условие фильтрации, как и его параметры обрабатываются каждый раз, когда выполняется запрос, для того чтобы не делать разбор выражения каждый раз, можно использовать методы интерфейса IF_OS_QUERY_EXPR_FACTORY чтобы сформировать условия фильтрации сразу во внутреннем представлении (пример ниже).</p>
+<p>Условия фильтрации поддерживают следующие операторы:</p>
+<ul>
+<li>=, &lt;&gt;, &lt;, &lt;=, &gt;, &gt;=</li>
+<li>attr [NOT] LIKE { pattern } [ESCAPE escape]</li>
+<li>attr IS [NOT] NULL</li>
+<li>attr EQUALSREF par – Сравнение двух ссылочных переменных. Когда выполняется запрос, параметр parдолжен быть привязан к ссылочной переменной хранимого класса.</li>
+<li>NOT expr</li>
+<li>expr AND expr</li>
+<li>expr OR expr</li>
+</ul>
+<p>Примеры фильтров:</p>
+<ul>
+<li>price &lt; &#8216;100&#8217; AND currency = &#8216;EUR&#8217;</li>
+<li>name LIKE PAR1 AND age &gt; &#8217;45&#8217; AND age &lt; &#8217;65&#8217;</li>
+<li>( department EQUALSREF DEP1 OR department EQUALSREF DEP2 ) AND NOT ( salary &gt; &#8216;50000&#8217; AND currency = &#8216;EUR&#8217; ) )</li>
+</ul>
+<p>I_FILTER позволяет использовать внутри себя параметры, заполнить которые можно в запросе агента:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  gv_filter         TYPE string,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+gv_filter = 'FLDATE &lt;= PAR1'.
+
+go_query = go_query_manager-&gt;create_query(
+    i_filter     = gv_filter
+).
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+    i_par1          = '20130406'
+  RECEIVING
+    result          = gt_result
+).</pre><p>Если параметров будет больше чем 3, необходимо использовать таблицу параметров (нельзя одновременно использовать i_par1-3 и таблицу параметров).  Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  gr_paramval       TYPE REF TO DATA,
+  gv_paramval       TYPE sy-datum VALUE '20130206',
+  gv_filter         TYPE string,
+  gt_parameters     TYPE osdreftab,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+gv_filter = 'FLDATE &lt;= CustomParameter'.
+
+go_query = go_query_manager-&gt;create_query(
+    i_filter     = gv_filter
+    i_parameters = 'CustomParameter'
+).
+
+GET REFERENCE OF gv_paramval INTO gr_paramval.
+APPEND gr_paramval TO gt_parameters.
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+    i_parameter_tab = gt_parameters
+  RECEIVING
+    result          = gt_result
+).</pre><p>I_PARAMETERS &#8212; определяет имена используемых в запросе параметров, имена должны быть разделены пробелом. В условии сортировки I_ORDERING может быть прописано два вида условия: сортировка по возрастанию и сортировка по убыванию, пример:</p>
+<p>price ASCENDING date DESCENDING</p>
+<p>&nbsp;</p>
+<h3>Методы интерфейса IF_OS_QUERY</h3>
+<p><strong>IF_OS_QUERY~GET_EXPR_FACTORY.</strong>Получает ссылку на фабрику условий, класс реализующий интерфейс IF_OS_QUERY_EXPR_FACTORY. С помощью фабрики условий можно формировать условия во внутреннем представлении QS.</p>
+<p><strong>IF_OS_QUERY~SET_FILTER_EXPR. </strong>Установка условия фильтрации, на вход принимает класс реализующий интерфейс <strong>IF_OS_QUERY_FILTER_EXPR</strong>. Ссылку на данный класс можно получить через фабрику условий:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_expr_factory   TYPE REF TO if_os_query_expr_factory,
+  go_filter_expr    TYPE REF TO if_os_query_filter_expr,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+
+go_query = go_query_manager-&gt;create_query( ).
+go_expr_factory = go_query-&gt;get_expr_factory( ).
+go_filter_expr = go_expr_factory-&gt;create_operator_expr(
+    i_attr1        = 'FLDATE'
+    i_operator     = '&lt;='
+    i_val          = '20130206'
+).
+
+go_query-&gt;set_filter_expr( go_filter_expr ).
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+  RECEIVING
+    result          = gt_result
+).</pre><p>В условии выражения с операторами можно указать индекс в таблице с параметрами:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_expr_factory   TYPE REF TO if_os_query_expr_factory,
+  go_filter_expr    TYPE REF TO if_os_query_filter_expr,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  go_sflight_agent TYPE REF TO zca_sflight,
+  gr_paramval       TYPE REF TO data,
+  gv_paramval       TYPE sflight-fldate VALUE '20130206',
+  gt_parameters     TYPE osdreftab.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+
+go_query = go_query_manager-&gt;create_query( ).
+go_expr_factory = go_query-&gt;get_expr_factory( ).
+go_filter_expr = go_expr_factory-&gt;create_operator_expr(
+    i_attr1        = 'FLDATE'
+    i_operator     = '&lt;='
+    i_idx          = 1
+).
+
+go_query-&gt;set_filter_expr( go_filter_expr ).
+
+GET REFERENCE OF gv_paramval INTO gr_paramval.
+APPEND gr_paramval TO gt_parameters.
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+    i_parameter_tab = gt_parameters
+  RECEIVING
+    result          = gt_result
+).</pre><p><strong>IF_OS_QUERY~SET_PARAMETERS_EXPR. </strong>Устанавливает список параметров для условия фильтрации:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_expr_factory   TYPE REF TO if_os_query_expr_factory,
+  go_params_expr    TYPE REF TO if_os_query_parameters_expr,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  go_sflight_agent TYPE REF TO zca_sflight,
+  gr_paramval       TYPE REF TO data,
+  gv_paramval       TYPE sflight-fldate VALUE '20130206',
+  gt_parameters     TYPE osdreftab.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+
+go_query = go_query_manager-&gt;create_query( i_filter = 'FLDATE &lt;= PARAM' ).
+go_expr_factory = go_query-&gt;get_expr_factory( ).
+
+go_params_expr = go_expr_factory-&gt;create_parameters_expr( ).
+go_params_expr-&gt;append('PARAM').
+go_query-&gt;set_parameters_expr( go_params_expr ).
+
+GET REFERENCE OF gv_paramval INTO gr_paramval.
+APPEND gr_paramval TO gt_parameters.
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+    i_parameter_tab = gt_parameters
+  RECEIVING
+    result          = gt_result
+).</pre><p><strong>IF_OS_QUERY~SET_ORDERING_EXPR</strong>. Устанавливает условия сортировки:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_expr_factory   TYPE REF TO if_os_query_expr_factory,
+  go_order_expr     TYPE REF TO if_os_query_ordering_expr,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+
+go_query = go_query_manager-&gt;create_query( i_filter = 'FLDATE &lt;= ''' &amp;&amp; '20130206'''  ).
+go_expr_factory = go_query-&gt;get_expr_factory( ).
+go_order_expr = go_expr_factory-&gt;create_ordering_expr( ).
+
+go_order_expr-&gt;append_ascending( 'FLDATE' ).
+go_query-&gt;set_ordering_expr( go_order_expr ).
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+  RECEIVING
+    result          = gt_result
+).</pre><p>Условия фильтрации, показанные ранее, включали в себя всего одно условие, QS позволяет создавать комплексные условия (OR,AND,NOT), пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_expr_factory   TYPE REF TO if_os_query_expr_factory,
+  go_filter_fldate  TYPE REF TO if_os_query_filter_expr,
+  go_filter_price   TYPE REF TO if_os_query_filter_expr,
+  go_filter_date_and_price TYPE REF TO if_os_query_filter_expr,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+
+go_query = go_query_manager-&gt;create_query( ).
+go_expr_factory = go_query-&gt;get_expr_factory( ).
+
+go_filter_fldate = go_expr_factory-&gt;create_operator_expr(
+    i_attr1        = 'FLDATE'
+    i_operator     = '&lt;='
+    i_val          = '20130206'
+).
+
+go_filter_price = go_expr_factory-&gt;create_operator_expr(
+    i_attr1        = 'PRICE'
+    i_operator     = '&gt;'
+    i_val          = '1000'
+).
+
+go_filter_date_and_price = go_expr_factory-&gt;create_and_expr(
+    i_expr1 = go_filter_fldate
+    i_expr2 = go_filter_price
+).
+
+go_query-&gt;set_filter_expr( go_filter_date_and_price ).
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+  RECEIVING
+    result          = gt_result
+).</pre><p>Инициировать объекты через QS можно как с помощью агента класса, так и с помощью менеджера постоянства, указав имя класса:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_query          TYPE REF TO if_os_query,
+  go_pers_manager   TYPE REF TO if_os_persistency_manager,
+  gs_cls_name       TYPE seoclskey,
+  gt_result         TYPE osreftab.
+
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+go_query = go_query_manager-&gt;create_query(
+    i_filter     = 'FLDATE &lt;= ''20130206'''
+).
+
+gs_cls_name-clsname = 'ZCL_SFLGIHT'.
+
+go_pers_manager = cl_os_system=&gt;get_persistency_manager( ).
+
+gt_result = go_pers_manager-&gt;get_persistent_by_query(
+    i_class_name    = gs_cls_name
+    i_query         = go_query
+).</pre><p></p><p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-query-service/">ABAP Object Services — Query Service</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/abap-object-services-query-service/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

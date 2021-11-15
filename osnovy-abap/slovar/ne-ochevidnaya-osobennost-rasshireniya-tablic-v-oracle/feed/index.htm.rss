@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	
+	>
+<channel>
+	<title>
+	Комментарии: Не очевидная особенность расширения таблиц в Oracle	</title>
+	<atom:link href="https://abap-blog.ru/osnovy-abap/slovar/ne-ochevidnaya-osobennost-rasshireniya-tablic-v-oracle/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru/osnovy-abap/slovar/ne-ochevidnaya-osobennost-rasshireniya-tablic-v-oracle/</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:55:42 +0000</lastBuildDate>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>
+		Автор: Аноним		</title>
+		<link>https://abap-blog.ru/osnovy-abap/slovar/ne-ochevidnaya-osobennost-rasshireniya-tablic-v-oracle/#comment-1346</link>
+
+		<dc:creator><![CDATA[Аноним]]></dc:creator>
+		<pubDate>Mon, 03 Dec 2012 12:38:46 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=405#comment-1346</guid>
+
+					<description><![CDATA[Галку поставить можно, для этого надо зайти в структуру через SE11 и выполнить нехитрую операцию в меню Доп.информация-&#062;Свойства БД-&#062;Флаг инициализации вкл./выкл.
+
+Также, если вы расширили какую либо таблицу(собственной Z-структурой), которая входит в стандартный ракурс БД, можно расширить и сам стандартный ракурс, не применяя ключ доступа. Для этого - зайти в стандартный ракурс(SE11), потом по меню Перейти к -&#062; Ракурс дополнения, потом выбрать свой Include и нажать кнопочку изменить. Как то так. :-)]]></description>
+			<content:encoded><![CDATA[<p>Галку поставить можно, для этого надо зайти в структуру через SE11 и выполнить нехитрую операцию в меню Доп.информация-&gt;Свойства БД-&gt;Флаг инициализации вкл./выкл.</p>
+<p>Также, если вы расширили какую либо таблицу(собственной Z-структурой), которая входит в стандартный ракурс БД, можно расширить и сам стандартный ракурс, не применяя ключ доступа. Для этого &#8212; зайти в стандартный ракурс(SE11), потом по меню Перейти к -&gt; Ракурс дополнения, потом выбрать свой Include и нажать кнопочку изменить. Как то так. 🙂</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Виталий		</title>
+		<link>https://abap-blog.ru/osnovy-abap/slovar/ne-ochevidnaya-osobennost-rasshireniya-tablic-v-oracle/#comment-212</link>
+
+		<dc:creator><![CDATA[Виталий]]></dc:creator>
+		<pubDate>Thu, 21 Jun 2012 14:43:51 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=405#comment-212</guid>
+
+					<description><![CDATA[Галку для поля включенной (include) структуры поставить нельзя.
+
+Можно так:
+update
+  {field}
+  set
+  {field} = &#039;&#039;
+  where
+    {field} is null.]]></description>
+			<content:encoded><![CDATA[<p>Галку для поля включенной (include) структуры поставить нельзя.</p>
+<p>Можно так:<br />
+update<br />
+  {field}<br />
+  set<br />
+  {field} = &#187;<br />
+  where<br />
+    {field} is null.</p>
+]]></content:encoded>
+		
+			</item>
+	</channel>
+</rss>

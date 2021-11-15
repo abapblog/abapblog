@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>adt | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/adt/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sun, 04 Apr 2021 15:18:34 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>ABAP CDS (Core Data Services)</title>
+		<link>https://abap-blog.ru/osnovy-abap/slovar/abap-cds-core-data-services/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/slovar/abap-cds-core-data-services/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 28 May 2016 09:05:16 +0000</pubDate>
+				<category><![CDATA[ABAP Словарь]]></category>
+		<category><![CDATA[adt]]></category>
+		<category><![CDATA[ALV]]></category>
+		<category><![CDATA[cds]]></category>
+		<category><![CDATA[ida]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2952</guid>
+
+					<description><![CDATA[<p>Начиная с версии ABAP 7.4. нам стала доступна новая технология описания моделей данных в словаре – ABAP CDS (CDS – Core Data Services). Данная технология позволяет описывать модели данных на более продвинутом уровне, нежели это можно было делать стандартными словарными вьюшками. Она так же позволяет оптимизировать работу с данными за счёт вынесения вычислений на уровень СУБД (Code-to-Data), что [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/slovar/abap-cds-core-data-services/">ABAP CDS (Core Data Services)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Начиная с версии ABAP 7.4. нам стала доступна новая технология описания моделей данных в словаре – ABAP CDS (CDS – Core Data Services). Данная технология позволяет описывать модели данных на более продвинутом уровне, нежели это можно было делать стандартными словарными вьюшками. Она так же позволяет оптимизировать работу с данными за счёт вынесения вычислений на уровень СУБД (Code-to-Data), что актуально для HANA.</p>
+<p>Кроме ABAP CDS, есть так же отдельная реализация для HANA – HANA CDS. Как понятно из названия, одна реализация используется в ABAP разработке, другая в HANA Native разработке. Horst Keller в своём <a href="http://scn.sap.com/community/abap/blog/2015/07/20/cds--one-model-two-flavors">блоге </a>более подробно рассматривает разницу в обоих реализациях.</p>
+<p>ABAP CDS поддерживается сервером приложений ABAP вне зависимости от того, какая СУБД будет им использована, однако некоторые специфические вещи могут и не поддерживаться (В ABAP 7.4. нет поддержки параметров у CDS для всех СУБД, она появилась только с ABAP 7.5. Кроме того, скорость работы  CDS на HANA и Oracle может быть <a href="http://scn.sap.com/community/abap/blog/2016/02/08/a-kill-to-an-abap-cds-view">различной</a>).</p>
+<p>В статье будет рассмотрена версия ABAP CDS для ABAP 7.4, с некоторыми комментариями относительно ABAP 7.5.</p>
+<p><span id="more-2952"></span></p>
+<p>Прежде чем приступать к примерам, рассмотрим основные понятия в контексте ABAP CDS:</p>
+<div id="attachment_2993" style="width: 513px" class="wp-caption aligncenter"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/Untitled-Diagram-1.png"><img aria-describedby="caption-attachment-2993" loading="lazy" class="wp-image-2993 size-full" src="http://abap-blog.ru/wp-content/uploads/2016/05/Untitled-Diagram-1.png" alt="ABAP CDS" width="503" height="283" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/Untitled-Diagram-1.png 503w, https://abap-blog.ru/wp-content/uploads/2016/05/Untitled-Diagram-1-300x169.png 300w" sizes="(max-width: 503px) 100vw, 503px" /></a><p id="caption-attachment-2993" class="wp-caption-text">ABAP CDS</p></div>
+<ul>
+<li><strong>CDS </strong><strong>Object</strong> – обобщенное понятие объекта репозитория, создаваемого через исходный код CDS.  К CDS Object относятся либо CDS Entity (DDL), либо CDS Role (DCL). Найти все DDL в системе можно через таблицу TADIR по следующим ключам: R3TR DDLS &lt;DDL SourceName&gt;. Все DCL можно найти в TADIR по ключам: R3TR DCLS &lt;DCL SourceName&gt;.</li>
+<li><strong>CDS </strong><strong>Entity</strong> – это CDS объект, управляемый ABAP словарём, создаваемый путём описания на специальном языке &#8212; Data Defenition Language (DDL). Объект не переносится транспортом, вместо этого он генерируется в системе во время активации исходного кода DDL с которым он связан. Хранится такой объект в TADIR с ключом: R3TR STOB &lt;EntityName&gt;, где STOB – Structured object. В ABAP 7.4. к CDS Entity относится лишь CDS View, в 7.5. добавили еще <a href="http://scn.sap.com/community/abap/blog/2016/02/24/how-to-use-amdp-function-implementation-for-a-cds-table-function-as-a-data-source-in-cds-views">CDS Table function</a> (по сути это AMDP, которая реализует CDS и позволяет использовать SQL Script для формирования данных CDS, в статье Table function не рассматриваются). <strong>CDS </strong><strong>View</strong> &#8212; это основной объект с которым мы имеем дело в ABAP при чтении данных из словаря. На CDS View можно ссылаться при объявлении ABAP переменных, однако этот объект нельзя использовать при описании словарных объектов. Каждая новая CDS View должна быть описана в отдельном DDL объекте.  Имя CDS View определяется сразу после ключевого слова DEFINE VIEW в DDL (пример ниже), рекомендуется использовать имя такое же как у DDL объекта. Создаются они на базе существующих источников данных из словаря – таблиц (поддерживаются только прозрачные таблицы, пул таблиц и кластерные таблицы не поддерживаются), классических словарных вьюшек и других CDS. CDS Entity не доступны из Native SQL, а OpenSQL поддерживает только операции чтения.</li>
+<li><strong>CDS </strong><strong>Role</strong> – объекты описывающие необходимые проверки полномочий для доступа к CDS View. CDS Role создаются путём их описания в DCL (Data control language) объекте.</li>
+<li><strong>CDS </strong><strong>Database </strong><strong>View</strong> – объект словаря, который как и CDS View генерируется во время активации DDL объекта. Объект в TADIR можно найти по ключу: R3TR VIEW. По сути, это классический read-only database view из словаря. Имя CDS DB View указывается через аннотацию &#8212; <strong>@AbapCatalog.sqlViewName</strong>, а текстовое описание через <strong>@EndUserText.label</strong>. Просмотреть данное view можно через SE11, но отредактировать только в ADT. В ABAP можно считать данные напрямую из CDS DB View, однако это не рекомендуется делать и данный способ уже считается устаревшим в ABAP 7.5. В отличие от CDS VIew, CDS DB View можно использовать при описании объектов словаря.</li>
+</ul>
+<p>Упомянутые выше аннотации это своего рода мета-информация об объекте CDS, которая может в себя включать как настройки (буферизация, ссылочные поля для валюты и т.п.), так и только описательные данные (текстовое описание поля, описание DB View и прочее).</p>
+<p>Подробная информация о существующих аннотациях есть в <a href="http://help.sap.com/abapdocu_740/en/abencds_annotations.htm">документации </a>(для <a href="http://help.sap.com/abapdocu_750/en/abencds_annotations_sap.htm">ABAP 7.5</a>).</p>
+<p>В ABAP 7.5 с помощью аннотаций можно даже <a href="http://help.sap.com/saphelp_nw75/helpdata/en/8d/ec506e13f949c2a82e8c775a94b73b/content.htm">опубликовать</a> OData сервис на базе CDS View, при этом используя описательные аннотации можно <a href="http://scn.sap.com/docs/DOC-69643">задавать</a> свойства UI элементов в UI5 (Fiori) приложениях (ABAP 7.5 SP01 и выше). <a href="http://scn.sap.com/community/abap/blog/2016/03/10/my-cds-view-self-study-tutorial--part-1-how-to-test-odata-service-generated-by-cds-view">Блог</a>, в котором рассматриваются эти и другие возможности аннотаций (ABAP 7.5).</p>
+<h2>Работа с CDS View</h2>
+<p>&nbsp;</p>
+<h3>Создание</h3>
+<p>&nbsp;</p>
+<p>Создать CDS View можно только из ABAP Development Tools (Eclipse plugin, скачать можно с сайта: <a href="https://tools.hana.ondemand.com/">https://tools.hana.ondemand.com</a>). Для этого необходимо сначала создать ABAP проект в системе, а затем добавить к нему новый объект:</p>
+<div id="attachment_2955" style="width: 922px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/CreateDDL.png"><img aria-describedby="caption-attachment-2955" loading="lazy" class="size-full wp-image-2955" src="http://abap-blog.ru/wp-content/uploads/2016/05/CreateDDL.png" alt="Создание CDS View" width="912" height="592" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/CreateDDL.png 912w, https://abap-blog.ru/wp-content/uploads/2016/05/CreateDDL-300x195.png 300w, https://abap-blog.ru/wp-content/uploads/2016/05/CreateDDL-768x499.png 768w" sizes="(max-width: 912px) 100vw, 912px" /></a><p id="caption-attachment-2955" class="wp-caption-text">Создание CDS View</p></div>
+<p>В 7.5 путь в мастере несколько отличается, CDS вынесены в отдельную папку.</p>
+<p>Далее указывается имя DDL объекта CDS:</p>
+<div id="attachment_2956" style="width: 922px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/DDLDefenition.png"><img aria-describedby="caption-attachment-2956" loading="lazy" class="size-full wp-image-2956" src="http://abap-blog.ru/wp-content/uploads/2016/05/DDLDefenition.png" alt="Параметры CDS" width="912" height="470" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/DDLDefenition.png 912w, https://abap-blog.ru/wp-content/uploads/2016/05/DDLDefenition-300x155.png 300w, https://abap-blog.ru/wp-content/uploads/2016/05/DDLDefenition-768x396.png 768w" sizes="(max-width: 912px) 100vw, 912px" /></a><p id="caption-attachment-2956" class="wp-caption-text">Параметры CDS</p></div>
+<p>На следующем шаге необходимо указать настройки транспорта, а после него выбрать шаблон CDS который будет вставлен в DDL по умолчанию:</p>
+<div id="attachment_2957" style="width: 946px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/CDSTemplate.png"><img aria-describedby="caption-attachment-2957" loading="lazy" class="size-full wp-image-2957" src="http://abap-blog.ru/wp-content/uploads/2016/05/CDSTemplate.png" alt="Шаблон DDL" width="936" height="602" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/CDSTemplate.png 936w, https://abap-blog.ru/wp-content/uploads/2016/05/CDSTemplate-300x193.png 300w, https://abap-blog.ru/wp-content/uploads/2016/05/CDSTemplate-768x494.png 768w" sizes="(max-width: 936px) 100vw, 936px" /></a><p id="caption-attachment-2957" class="wp-caption-text">Шаблон DDL</p></div>
+<p>Eclipse позволяет самим определять шаблоны DDL через настройки:</p>
+<div id="attachment_2958" style="width: 1300px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/DefineTemplate.png"><img aria-describedby="caption-attachment-2958" loading="lazy" class="size-full wp-image-2958" src="http://abap-blog.ru/wp-content/uploads/2016/05/DefineTemplate.png" alt="Настройка шаблонов" width="1290" height="504" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/DefineTemplate.png 1290w, https://abap-blog.ru/wp-content/uploads/2016/05/DefineTemplate-300x117.png 300w, https://abap-blog.ru/wp-content/uploads/2016/05/DefineTemplate-768x300.png 768w, https://abap-blog.ru/wp-content/uploads/2016/05/DefineTemplate-1024x400.png 1024w" sizes="(max-width: 1290px) 100vw, 1290px" /></a><p id="caption-attachment-2958" class="wp-caption-text">Настройка шаблонов</p></div>
+<p>После выбора шаблона по умолчанию, нажимаем на кнопку finish и имеем следующий результат:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'sql_view_name'
+@AbapCatalog.compiler.compareFilter: true
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'Описание DDL'
+define view Zddl_Sample as select from data_source_name {
+    
+}</pre><p>В итоге в объекте DDL мы создали CDS View zddl_sample, которая по сути является запросом SQL к источнику данных data_source_name. Кстати синтаксис DDL и DCL позволяет использовать комментарии // (&#8212;) &#8212; для однострочных и /* &#8230; */ &#8212; для многострочных. Более подробно о правилах синтаксиса можно почитать в <a href="http://help.sap.com/abapdocu_750/en/abencds_general_syntax_rules.htm">документации</a>.</p>
+<p>Начиная с ABAP 7.50 SP01 кроме текстового редактора, доступен <a href="http://scn.sap.com/community/abap/eclipse/blog/2015/10/28/representing-core-data-services-concepts-in-graphical-form">графический редактор CDS</a>:</p>
+<div id="attachment_2960" style="width: 662px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/GraphicalCDSEditor.png"><img aria-describedby="caption-attachment-2960" loading="lazy" class=" wp-image-2960" src="http://abap-blog.ru/wp-content/uploads/2016/05/GraphicalCDSEditor.png" alt="Графический редактор CDS" width="652" height="391" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/GraphicalCDSEditor.png 757w, https://abap-blog.ru/wp-content/uploads/2016/05/GraphicalCDSEditor-300x180.png 300w" sizes="(max-width: 652px) 100vw, 652px" /></a><p id="caption-attachment-2960" class="wp-caption-text">Графический редактор CDS</p></div>
+<p>Изменим наш DDL на следующий:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'zsql_view'
+@AbapCatalog.compiler.CompareFilter: true
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'Описание DDL'
+define view zstob_ddl_sample as select from spfli { * }</pre><p>В данном примере мы определили cds view zstob_ddl_sample, как запрос всех данных из таблицы spfli. Так как поля явным образом не заданы, будут выбраны все ( * ). С некоторыми используемыми аннотациями мы уже знакомы, остальные будут рассмотрены чуть позже.</p>
+<p>После активации DDL, в TADIR мы получим следующие объекты:</p>
+<div id="attachment_2961" style="width: 681px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/TADIRObjects.png"><img aria-describedby="caption-attachment-2961" loading="lazy" class="size-full wp-image-2961" src="http://abap-blog.ru/wp-content/uploads/2016/05/TADIRObjects.png" alt="Объекты TADIR" width="671" height="202" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/TADIRObjects.png 671w, https://abap-blog.ru/wp-content/uploads/2016/05/TADIRObjects-300x90.png 300w" sizes="(max-width: 671px) 100vw, 671px" /></a><p id="caption-attachment-2961" class="wp-caption-text">Объекты TADIR</p></div>
+<p>В словаре (SE11) можем посмотреть на DB View:</p>
+<div id="attachment_2962" style="width: 993px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/DBView.png"><img aria-describedby="caption-attachment-2962" loading="lazy" class="size-full wp-image-2962" src="http://abap-blog.ru/wp-content/uploads/2016/05/DBView.png" alt="CDS DB View" width="983" height="293" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/DBView.png 983w, https://abap-blog.ru/wp-content/uploads/2016/05/DBView-300x89.png 300w, https://abap-blog.ru/wp-content/uploads/2016/05/DBView-768x229.png 768w" sizes="(max-width: 983px) 100vw, 983px" /></a><p id="caption-attachment-2962" class="wp-caption-text">CDS DB View</p></div>
+<p>Однако просмотр DB View в SE11 не самая лучшая идея, так как в нём вы не увидите некоторых специфичных для CDS вещей, например: UNION ALL, LEFT OUTER JOIN и пр. Для того чтобы их увидеть, необходимо перейти по следующему меню:</p>
+<div id="attachment_2965" style="width: 972px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/MenuDBView.png"><img aria-describedby="caption-attachment-2965" loading="lazy" class="size-full wp-image-2965" src="http://abap-blog.ru/wp-content/uploads/2016/05/MenuDBView.png" alt="Просмотр объекта БД" width="962" height="265" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/MenuDBView.png 962w, https://abap-blog.ru/wp-content/uploads/2016/05/MenuDBView-300x83.png 300w, https://abap-blog.ru/wp-content/uploads/2016/05/MenuDBView-768x212.png 768w" sizes="(max-width: 962px) 100vw, 962px" /></a><p id="caption-attachment-2965" class="wp-caption-text">Просмотр объекта БД</p></div>
+<p>Тут вы получите описание на уровне СУБД, поле манданта (клиента) было вставлено автоматически:</p>
+<div id="attachment_2966" style="width: 637px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/ViewONDB.png"><img aria-describedby="caption-attachment-2966" loading="lazy" class="size-full wp-image-2966" src="http://abap-blog.ru/wp-content/uploads/2016/05/ViewONDB.png" alt="Объект БД" width="627" height="497" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/ViewONDB.png 627w, https://abap-blog.ru/wp-content/uploads/2016/05/ViewONDB-300x238.png 300w" sizes="(max-width: 627px) 100vw, 627px" /></a><p id="caption-attachment-2966" class="wp-caption-text">Объект БД</p></div>
+<h3>Просмотр данных</h3>
+<p>&nbsp;</p>
+<p>После того как DDL будет активирован, мы можем посмотреть содержимое CDS VIew. Для просмотра можно нажать F8 (ADT 2.31 / ABAP 7.40 SP08) прямо в редакторе DDL, так выглядит интерфейс просмотра:</p>
+<div id="attachment_2967" style="width: 1072px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/DataView.png"><img aria-describedby="caption-attachment-2967" loading="lazy" class="size-full wp-image-2967" src="http://abap-blog.ru/wp-content/uploads/2016/05/DataView.png" alt="Просмотр данных" width="1062" height="339" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/DataView.png 1062w, https://abap-blog.ru/wp-content/uploads/2016/05/DataView-300x96.png 300w, https://abap-blog.ru/wp-content/uploads/2016/05/DataView-768x245.png 768w, https://abap-blog.ru/wp-content/uploads/2016/05/DataView-1024x327.png 1024w" sizes="(max-width: 1062px) 100vw, 1062px" /></a><p id="caption-attachment-2967" class="wp-caption-text">Просмотр данных</p></div>
+<p>Инструмент Data Preview так же позволяет проходить по ассоциациям (о которых будем говорить чуть позже):</p>
+<div id="attachment_2968" style="width: 775px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/AssosiationsView.png"><img aria-describedby="caption-attachment-2968" loading="lazy" class="size-full wp-image-2968" src="http://abap-blog.ru/wp-content/uploads/2016/05/AssosiationsView.png" alt="Переход по ассоциациям" width="765" height="365" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/AssosiationsView.png 765w, https://abap-blog.ru/wp-content/uploads/2016/05/AssosiationsView-300x143.png 300w" sizes="(max-width: 765px) 100vw, 765px" /></a><p id="caption-attachment-2968" class="wp-caption-text">Переход по ассоциациям</p></div>
+<p>Просмотреть данные мы можем и из SQL консоли ADT, оценив одновременно скорость выборки:</p>
+<div id="attachment_2969" style="width: 1191px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/ViewFromConsole.png"><img aria-describedby="caption-attachment-2969" loading="lazy" class="size-full wp-image-2969" src="http://abap-blog.ru/wp-content/uploads/2016/05/ViewFromConsole.png" alt="Просмотр данных из консоли" width="1181" height="416" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/ViewFromConsole.png 1181w, https://abap-blog.ru/wp-content/uploads/2016/05/ViewFromConsole-300x106.png 300w, https://abap-blog.ru/wp-content/uploads/2016/05/ViewFromConsole-768x271.png 768w, https://abap-blog.ru/wp-content/uploads/2016/05/ViewFromConsole-1024x361.png 1024w" sizes="(max-width: 1181px) 100vw, 1181px" /></a><p id="caption-attachment-2969" class="wp-caption-text">Просмотр данных из консоли</p></div>
+<h3>Буферизация</h3>
+<p>&nbsp;</p>
+<p>Буферизация для CDS View работает по тем же <a href="http://help.sap.com/abapdocu_750/en/abenddic_database_views.htm#@@ITOC@@ABENDDIC_DATABASE_VIEWS_5">правилам</a>, что и для DB View. Буферизация CDS View возможна только в том случае, если среди источников данных нет других view (DB View или CDS View).</p>
+<p>Настройка буферизации осуществляется через следующие аннотации:</p>
+<p><strong>AbapCatalog.buffering.status</strong> – определяет, активна или нет буферизация, возможные значения:</p>
+<ul>
+<li>#ACTIVE: Буферизация активна.</li>
+<li>#SWITCHED_OFF: Буферизация возможна, но неактивна (по умолчанию).</li>
+<li>#NOT_ALLOWED: Буферизация запрещена.</li>
+</ul>
+<p><strong>AbapCatalog.buffering.type</strong> – определяет тип буферизации, возможные значения:</p>
+<ul>
+<li>#SINGLE: Отдельная запись</li>
+<li>#GENERIC: Родовая область</li>
+<li>#FULL: Полная буферизация</li>
+<li>#NONE: Буферизация отключена (По умолчанию)</li>
+</ul>
+<p><strong>AbapCatalog.buffering.numberOfKeyFields</strong> – количество ключевых полей, относительно которых происходит буферизация, только для буферизации по родовой области (Generic). Может принимать значения от 0 до k-1, где k – количество ключевых полей.</p>
+<p>CDS View содержат два типа определения ключей:</p>
+<ul>
+<li>Для CDS Entity, ключевое слово <a href="http://help.sap.com/abapdocu_750/en/abencds_f1_select_list_entry.htm#!ABAP_ADDITION_2@2@">KEY </a>может задать <strong>семантический ключ</strong>. Который используется при неявных проверках полномочий определенных в DCL (ABAP 7.5).</li>
+<li>Ключ для CDS DB View задаётся автоматически по тем же <a href="http://help.sap.com/abapdocu_750/en/abenddic_classical_views.htm">правилам </a>что и для обычных словарных View, данный ключ является <strong>техническим</strong>.</li>
+</ul>
+<p>Для буферизации всегда будет актуальным <strong>технический ключ</strong> (который можно посмотреть в SE11 к DB View).</p>
+<p>В OpenSQL ключевые поля используемые в запросе с ORDER BY PRIMARY KEY будут определены в зависимости от источника, к которому вы обращаетесь, как уже говорилось это может быть DB VIew (не следует использовать) или CDS View.</p>
+<p>SAP рекомендует всегда указывать семантический ключ для CDS View, т.к. его наличие необходимо для ABAP фреймворков использующих CDS, например &#8212; IDA ALV.</p>
+<h3>Joins</h3>
+<p>&nbsp;</p>
+<p>Одним из отличий CDS View от обычных DB View,  является поддержка двух дополнительных типов JOIN’ов, LEFT OUTER JOIN и RIGHT OUTER JOIN.</p>
+<p>Применяя эти типы JOIN’oв мы можем столкнуться с ситуацией, когда данные из левой/правой таблицы будут содержать NULL значения. Для обработки NULL значений можно в DDL использовать условие IS [NOT] NULL и функцию COALESCE. Так как в ABAP нет типа обозначающего NULL, это значение будет автоматически преобразовано к INITIAL значению типа столбца.</p>
+<p>Пример LEFT OUTER JOIN CDS View:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'zddl_join'
+@AbapCatalog.compiler.CompareFilter: true
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'LEFT OUTER SAMPLE'
+define view Zddl_Join_Sample as select distinct from spfli
+left outer join sgeocity
+    on spfli.countryfr = sgeocity.country and
+       spfli.cityfrom = sgeocity.city {
+    spfli.cityfrom,
+    spfli.countryfr,
+    sgeocity.latitude
+} where spfli.carrid = 'AZ';</pre><p>На выходе получаем:</p>
+<div id="attachment_2972" style="width: 606px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/JoinWithNull.png"><img aria-describedby="caption-attachment-2972" loading="lazy" class="size-full wp-image-2972" src="http://abap-blog.ru/wp-content/uploads/2016/05/JoinWithNull.png" alt="NULL значения" width="596" height="183" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/JoinWithNull.png 596w, https://abap-blog.ru/wp-content/uploads/2016/05/JoinWithNull-300x92.png 300w" sizes="(max-width: 596px) 100vw, 596px" /></a><p id="caption-attachment-2972" class="wp-caption-text">NULL значения</p></div>
+<p>На своей системе я специально удалил запись с городом ROME из таблицы sgeocity чтобы показать каким образом будет обработан запрос. В данном случае NULL значение было заменено на начальное для типа столбца latitude.</p>
+<h3>Обработка клиента</h3>
+<p>&nbsp;</p>
+<p>Одним из отличий ABAP CDS от HANA CDS является автоматическая поддержка клиента, то есть Вам не нужно объявлять поле клиента (манданта) при создании View, система сделает это неявным образом (В CDS DB View поле клиента будет вставлено автоматически). Есть возможность отключения автоматической обработки клиента, для этого необходимо использовать аннотацию:</p>
+<p><strong>@ClientDependent: false</strong></p>
+<p>Вставить её необходимо до определения view (define view). При этом после активации DDL, CDS DB View уже не будет содержать поле клиента по умолчанию.</p>
+<p>Еще один способ отключить обработку клиента использовать дополнение CLIENT SPECIFIED в ABAP:</p><pre class="urvanov-syntax-highlighter-plain-tag">TYPES: ty_result TYPE zstob_ddl_sample CLIENT SPECIFIED clnt.
+DATA: lt_data TYPE STANDARD TABLE OF ty_result WITH EMPTY KEY.
+
+SELECT * FROM zstob_ddl_sample
+  CLIENT SPECIFIED zstob_ddl_sample~clnt
+    INTO CORRESPONDING FIELDS OF TABLE @lt_data WHERE clnt = '001'.</pre><p>Следует отметить так же важную особенность, если одна CDS View будет использовать в качестве источника данных другую CDS View с зависимостью от клиента, тогда она так же будет зависима от клиента.</p>
+<h3>Ассоциации</h3>
+<p>&nbsp;</p>
+<p>Для упрощения понимания CDS View были введены так называемые ассоциации, которые по своей сути являются теми же JOIN, но в более простой для восприятия форме и с более широкими возможностями.</p>
+<p>Рассмотрим пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'zsql_view'
+@AbapCatalog.compiler.CompareFilter: true
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'Описание DDL'
+define view zstob_ddl_sample 
+    as select from spfli
+    association [1..1] to scarr as airline on spfli.carrid = airline.carrid
+{  spfli.airpfrom,
+   spfli.airpto,
+   spfli.carrid,
+   
+   airline.carrname,
+   spfli.arrtime,
+   spfli.connid
+};</pre><p>В примере мы создали CDS View на основе данных о расписании авиарейсов (SPFLI) и ассоциации их с данными о компании через соединение по carrid. При активации DDL, ассоциация будет преобразована в JOIN. В примере мы задали имя для ассоциации airline, однако этого можно было и не делать, тогда имя будет неявным образом тем же самым что у привязанного источника данных, в нашем случае это таблица scarr. SAP рекомендует использовать подчёркивание перед именем ассоциации, это необходимо чтобы избежать возможных конфликтов с именами полей таблиц.</p>
+<p>В примере ассоциация используется для получения поля CARRNAME, то есть сама не видна извне. Однако CDS View позволяют вынести ассоциацию наверх, чтобы можно её было использовать в других CDS View, пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'zsql_view'
+@AbapCatalog.compiler.CompareFilter: true
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'Описание DDL'
+define view zstob_ddl_sample 
+    as select from spfli
+    association [1..1] to scarr as airline on spfli.carrid = airline.carrid
+{  spfli.airpfrom,
+   spfli.airpto,
+   spfli.carrid,
+   
+   airline, // Ассоциация будет доступна извне
+   spfli.arrtime,
+   spfli.connid
+};</pre><p>Используем ассоциацию в другом CDS View:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'zstob_ex'
+@AbapCatalog.compiler.CompareFilter: true
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'zddl_external_as'
+define view Zddl_External_As as select from zstob_ddl_sample {
+    zstob_ddl_sample.airline.carrid,
+    zstob_ddl_sample.airline.carrname,
+    zstob_ddl_sample.airline.currcode
+}</pre><p>Начиная с ABAP 7.5, OpenSQL позволяет использовать ассоциации и выбирать из них данные, пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT cityfrom, 
+       countryfr, 
+       \geoinfo-latitude as latitude
+       FROM Zddl_assoc_Sample.</pre><p><strong>Кардинальность</strong><strong> ассоциаций</strong></p>
+<p>В квадратных скобках ассоциации указывается кардинальность, которая помогает пользователям понять каким образом связаны данные и произвести оптимизацию при создании JOIN&#8217;ов для HANA. Синтаксис следующий [&lt;min&gt;..&lt;max&gt;], &lt;min&gt; &#8212; может быть опущено, по умолчанию 0. При описании кардинальности может быть использована *, которая означает – любое число записей. Максимальное число не может быть нулевым, а минимальное не может быть &#8212; *. Кардинальность не обязательно к указанию, тогда будет выставлена по умолчанию [0..1].</p>
+<p><strong>Типы </strong><strong>JOIN’ов в описании ассоциаций</strong></p>
+<p>По умолчанию тип JOIN определяется от того где в DDL прописана ассоциация: в SELECT, FROM, WHERE, GROUP BY. Если ассоциация указана в FROM по умолчанию будет использован INNER JOIN, в остальных случаях LEFT OUTER JOIN.</p>
+<p>Пример в SELECT:</p><pre class="urvanov-syntax-highlighter-plain-tag">define view Zddl_assoc_cds as select cityfrom, countryfr, geoinfo.latitude from Zddl_assoc_Sample;</pre><p>JOIN:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2016/05/JOINSelect.png"><img loading="lazy" class="alignnone size-full wp-image-2973" src="http://abap-blog.ru/wp-content/uploads/2016/05/JOINSelect.png" alt="JOINSelect" width="487" height="288" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/JOINSelect.png 487w, https://abap-blog.ru/wp-content/uploads/2016/05/JOINSelect-300x177.png 300w" sizes="(max-width: 487px) 100vw, 487px" /></a></p>
+<p>Пример в FROM:</p><pre class="urvanov-syntax-highlighter-plain-tag">define view Zddl_assoc_cds as select latitude from Zddl_assoc_Sample.geoinfo;</pre><p>JOIN:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2016/05/JOINFrom.png"><img loading="lazy" class="alignnone size-full wp-image-2974" src="http://abap-blog.ru/wp-content/uploads/2016/05/JOINFrom.png" alt="JOINFrom" width="611" height="283" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/JOINFrom.png 611w, https://abap-blog.ru/wp-content/uploads/2016/05/JOINFrom-300x139.png 300w" sizes="(max-width: 611px) 100vw, 611px" /></a></p>
+<p>Кроме того тип JOIN’a может быть переопределен когда мы получаем доступ к ассоциации через path expression:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'zddl_assoc_ex'
+@AbapCatalog.compiler.CompareFilter: tue
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'association sample'
+define view Zddl_assoc_cds as select from Zddl_assoc_Sample {
+  cityfrom,
+  countryfr,
+  geoinfo[inner].latitude
+};</pre><p><a href="http://help.sap.com/abapdocu_740/en/abencds_path_expression_attr.htm">Правила </a>переопределения.</p>
+<p>Ключевое слово $projection может быть использовано для доступа к полю в ассоциации для которого задан alias:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'Ztest_Ddl7_sql'
+@AbapCatalog.compiler.CompareFilter: true
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'test'
+define view zstob_ddl_sample7 
+    as select from spfli
+    association [1..1] to sgeocity as _geocity on $projection.city = _geocity.city and
+                                                  spfli.countryfr  = _geocity.country
+{ 
+    key spfli.carrid, 
+    key spfli.connid,
+    spfli.cityfrom as city
+};</pre><p><strong>Фильтрация в ассоциации</strong></p>
+<p>Используя ассоциации, Вы так же можете добавлять свои критерии фильтрации, указывая их в WHERE условии:</p><pre class="urvanov-syntax-highlighter-plain-tag">define view Zddl_assoc_cds as select from Zddl_assoc_Sample {
+  cityfrom,
+  countryfr,
+  geoinfo[1: inner where country = 'UA'].latitude
+};</pre><p><a href="http://abap-blog.ru/wp-content/uploads/2016/05/filterCDS.png"><img loading="lazy" class="alignnone size-full wp-image-2975" src="http://abap-blog.ru/wp-content/uploads/2016/05/filterCDS.png" alt="filterCDS" width="610" height="497" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/filterCDS.png 610w, https://abap-blog.ru/wp-content/uploads/2016/05/filterCDS-300x244.png 300w" sizes="(max-width: 610px) 100vw, 610px" /></a></p>
+<p>Как видно из картинки, фильтр переходит в условие JOIN.</p>
+<p>При использовании ассоциации с одним и тем же фильтром или без фильтра, если не указана аннотация CompareFilter со значением true, то для каждого поля из ассоциации генерируется отдельный JOIN:</p><pre class="urvanov-syntax-highlighter-plain-tag">define view Zddl_assoc_cds as select from Zddl_assoc_Sample {
+  cityfrom,
+  geoinfo[country = 'UA'].country,
+  geoinfo[country = 'UA'].latitude
+};</pre><p><div id="attachment_2976" style="width: 740px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/CompareFilter.png"><img aria-describedby="caption-attachment-2976" loading="lazy" class="size-full wp-image-2976" src="http://abap-blog.ru/wp-content/uploads/2016/05/CompareFilter.png" alt="Отключенный CompareFilter" width="730" height="497" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/CompareFilter.png 730w, https://abap-blog.ru/wp-content/uploads/2016/05/CompareFilter-300x204.png 300w" sizes="(max-width: 730px) 100vw, 730px" /></a><p id="caption-attachment-2976" class="wp-caption-text">Отключенный CompareFilter</p></div></p>
+<p>Если же мы поставим CompareFilter в true, результат будет уже иным:</p>
+<div id="attachment_2977" style="width: 620px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/CompareFilterOn.png"><img aria-describedby="caption-attachment-2977" loading="lazy" class="size-full wp-image-2977" src="http://abap-blog.ru/wp-content/uploads/2016/05/CompareFilterOn.png" alt="Включенный CompareFilter" width="610" height="497" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/CompareFilterOn.png 610w, https://abap-blog.ru/wp-content/uploads/2016/05/CompareFilterOn-300x244.png 300w" sizes="(max-width: 610px) 100vw, 610px" /></a><p id="caption-attachment-2977" class="wp-caption-text">Включенный CompareFilter</p></div>
+<p>Это важно с точки зрения оптимизации и лучше чтобы оптимизация всегда была включена.</p>
+<h3>CDS View с параметрами</h3>
+<p>&nbsp;</p>
+<p>Внутрь CDS view можно передавать параметры, основное предназначение которых сделать наши CDS более гибкими с возможностью передача их значений внутрь условий where, внутрь функций и выражений, а так же в условия JOIN.</p>
+<p>Определяются параметры с помощью ключевого слова WITH PARAMETERS до ключевого слова SELECT. При определении параметра указывается его имя и тип данных. При указании типа можно ссылаться как на элементы данных, так и на DDIC типы, указав префикс abap (abap.int4). Более подробное описание типов смотрите в <a href="http://help.sap.com/abapdocu_750/en/abencds_typing.htm">документации</a>.</p>
+<p>Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">define view Zddl_assoc_cds with parameters p_carrid: s_carr_id
+as select from spfli { * } where carrid = $parameters.p_carrid;</pre><p>SQL запрос к CDS View с параметром:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECT * FROM zddl_assoc_cds( p_carrid = 'UA' ) INTO TABLE @DATA(lt_data).</pre><p>При выборке данных с передачей параметров в ABAP 7.4. будет показано предупреждение о том, что нужно проверить поддерживает ли СУБД передачу параметров в CDS View:</p>
+<div id="attachment_2978" style="width: 956px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/WarningParameter.png"><img aria-describedby="caption-attachment-2978" loading="lazy" class="size-full wp-image-2978" src="http://abap-blog.ru/wp-content/uploads/2016/05/WarningParameter.png" alt="Предупреждение о параметрах" width="946" height="146" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/WarningParameter.png 946w, https://abap-blog.ru/wp-content/uploads/2016/05/WarningParameter-300x46.png 300w, https://abap-blog.ru/wp-content/uploads/2016/05/WarningParameter-768x119.png 768w" sizes="(max-width: 946px) 100vw, 946px" /></a><p id="caption-attachment-2978" class="wp-caption-text">Предупреждение о параметрах</p></div>
+<p>Можно спрятать предупреждение и выполнить проверку:</p><pre class="urvanov-syntax-highlighter-plain-tag">IF cl_abap_dbfeatures=&gt;use_features( VALUE #( ( cl_abap_dbfeatures=&gt;views_with_parameters ) ) ).
+  SELECT * FROM zddl_assoc_cds( p_carrid = 'UA' ) ##DB_FEATURE_MODE[VIEWS_WITH_PARAMETERS]
+    INTO TABLE @DATA(lt_data).
+ENDIF.</pre><p>Если СУБД не поддерживает передачу параметров, при выполнении SQL запроса будет вызвано исключение &#8212; CX_SY_SQL_UNSUPPORTED_FEATURE. Напомню что в ABAP 7.5 параметры стали доступны для всех СУБД.</p>
+<p>В ABAP 7.5 добавилась возможность использования переменных сессии, например $session.user будет содержать внутри себя sy-uname. Подробнее в <a href="http://help.sap.com/abapdocu_750/en/abencds_f1_session_variable.htm">документации</a>.</p>
+<p>Параметры могут быть использованы как элементы в перечне полей для выбора:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'SPFLI_PROJECTION' 
+define view spfli_proj 
+  with parameters p1 : abap.int4, 
+                  p2 : abap.int4 as 
+  select from scarr 
+         { key carrid, 
+               :p1 as para1, 
+               $parameters.p2 as para2 
+         };</pre><p><div class="arve aligncenter" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-i6wakd6_vsc618a16c4e9b4c945993612" style="max-width:960px;" itemscope itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/i6wAkD6_Vsc?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="arve-iframe fitvidsignore" data-arve="arve-youtube-i6wakd6_vsc618a16c4e9b4c945993612" data-src-no-ap="https://www.youtube-nocookie.com/embed/i6wAkD6_Vsc?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="540" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="https://www.youtube-nocookie.com/embed/i6wAkD6_Vsc?feature=oembed&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="960"></iframe>
+
+</span>
+
+</span>
+
+</div>
+</p>
+<h3>Code Pushdown</h3>
+<p>&nbsp;</p>
+<p>Code Pushdown подразумевает собой перенос логики расчёта на уровень СУБД, данный подход оправдывает себя (с точки зрения производительности) когда вы например используете SAP HANA или ваш сервер СУБД заметно мощнее чем сервер приложений.</p>
+<p>Сам перенос расчёта подразумевает широкое использование выражений SQL в CDS View, которые имеют больше возможностей, чем в OpenSQL (В планах развития OpenSQL поддержка всех функций CDS).</p>
+<p>Стандартный пример CDS View с SQL функциями:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'DEMO_CDS_SQLFUNC' 
+  define view demo_cds_sql_functions 
+   as select from demo_expressions
+   { abs(       num1                ) as abs_num1,
+     ceil(      fltp1               ) as ceil_fltp1,
+     floor(     dec1                ) as floor_dec1,
+     div(       num1, num2          ) as div_num1_num2,
+     mod(       num1, num2          ) as mod_num1_num2,
+     division(  dec2, dec3, 3       ) as dvision_dec2_dec3,
+     round(     dec3, 2             ) as round_dec3,
+     concat(    char1, char2        ) as concat_char1_char2,
+     lpad(      char1, 10, 'x'      ) as lpad_char1,
+     replace(   char2, 'GHI', 'XXX' ) as replace_char2,
+     substring( char2, 2, 3         ) as substring_char2 }</pre><p>Описание функций можно найти в официальной <a href="http://help.sap.com/abapdocu_740/en/abencds_f1_builtin_functions.htm">документации</a> или по F1.</p>
+<p>Пример использования функции <a href="http://help.sap.com/abapdocu_740/en/abencds_f1_conversion_functions.htm#!ABAP_VARIANT_1@1@">конвертации валюты</a>:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'DEMO_CDS_CRRCONV' 
+  define view demo_cds_currency_conversion 
+   with parameters to_currency:abap.cuky(5),
+                   exc_date:abap.dats
+   as select from demo_prices
+   { id,
+     currency_conversion( amount =&gt; amount,
+                          source_currency =&gt; currency, 
+                          round =&gt; 'X',
+                          target_currency =&gt; :to_currency, 
+                          exchange_rate_date =&gt; :exc_date,
+                          error_handling =&gt; 'SET_TO_NULL' ) as amount,
+     :to_currency as currency }</pre><p>Кроме непосредственно функций можно так же использовать литералы, арифметические выражения и условный оператор CASE. Пример с CASE:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'DEMO_CDS_SCASE' 
+define view demo_cds_searched_case as 
+  select from spfli
+    { key carrid,
+      key connid,
+      distance,
+      distid,
+      case 
+        when distance &gt;= 2000 then 'long-haul flight'
+        when distance &gt;= 1000 and 
+             distance &lt;  2000 then 'medium-haul flight'
+        when distance &lt;  1000 then 'short-haul flight'
+                              else 'error'
+      end as flight_type } 
+    where distid = 'MI'</pre><p>В ABAP 7.5. набор возможностей CDS <a href="http://help.sap.com/abapdocu_750/en/abencds_f1_builtin_functions.htm">еще шире</a>.</p>
+<h3>Просмотр в IDA ALV</h3>
+<p>&nbsp;</p>
+<p>IDA ALV (List Viewer with Integrated Data Access) – это расширение библиотеки SALV (Simple ALV), которое позволяет обрабатывать большие массивы данных, не передавая все данные разом на сервер приложений (представления). По сути, Вам не требуется заполнять внутреннюю таблицу для передачи её в salv класс, достаточно указать источник данных. IDA ALV используя функции агрегаций будет отображать результат их вычислений.</p>
+<p>Простейший пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">cl_salv_gui_table_ida=&gt;create( iv_table_name    = 'SBOOK' )-&gt;fullscreen( )-&gt;display( ).</pre><p>Во время прокрутки списка в IDA ALV, сервер приложений будет генерировать запросы похожие на следующий:</p>
+<div id="attachment_2979" style="width: 859px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/IDATrace.png"><img aria-describedby="caption-attachment-2979" loading="lazy" class="size-full wp-image-2979" src="http://abap-blog.ru/wp-content/uploads/2016/05/IDATrace.png" alt="IDA ALV Trace" width="849" height="459" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/IDATrace.png 849w, https://abap-blog.ru/wp-content/uploads/2016/05/IDATrace-300x162.png 300w, https://abap-blog.ru/wp-content/uploads/2016/05/IDATrace-768x415.png 768w" sizes="(max-width: 849px) 100vw, 849px" /></a><p id="caption-attachment-2979" class="wp-caption-text">IDA ALV Trace</p></div>
+<p>То есть вместо полной выборки будут использованы команды по смещению. Приведенный выше синтаксис использует СУБД HANA. Более подробные примеры использования IDA ALV можно найти в пакете: SALV_IDA_TEST.  Так же доступна <a href="http://help.sap.com/saphelp_banking450sp06/helpdata/en/ef/eb734c8e6f41939c39fa15ce51eb4e/frameset.htm">документация</a>.</p>
+<div class="arve aligncenter" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-pseyo4cate0618a16c4ec30e215781357" style="max-width:960px;" itemscope itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/pseyo4caTe0?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="arve-iframe fitvidsignore" data-arve="arve-youtube-pseyo4cate0618a16c4ec30e215781357" data-src-no-ap="https://www.youtube-nocookie.com/embed/pseyo4caTe0?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="540" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="https://www.youtube-nocookie.com/embed/pseyo4caTe0?feature=oembed&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="960"></iframe>
+
+</span>
+
+</span>
+
+</div>
+
+<h3>Расширение CDS</h3>
+<p>&nbsp;</p>
+<p>Вы можете расширять стандартные CDS View при этом без указания ключа разработчика. Синтаксис расширения является частью DDL и реализован ключевым словом Extend View. Расширение подразумевает создание дополнительных полей, аннотаций, расчётных полей и параметров к расширяемому CDS View.</p>
+<p>Технически расширение реализовано за счёт <a href="http://help.sap.com/abapdocu_750/en/abenappend_view_glosry.htm">Append View</a> к Database View исходного CDS View, в связи с чем, перед ключевым словом Extend View необходимо указать аннотацию @AbapCatalog.sqlViewAppendName: ‘&lt;ИмяAppendView&gt;’.</p>
+<p>На текущий момент нельзя расширять CDS View следующих типов:</p>
+<ul>
+<li>View у которых явно определены имена полей, пример:</li>
+</ul>
+<p></p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'BPA_VW' 
+define view business_partner 
+  (id, role, company_name, phone_number) as 
+  select from snwd_bpa 
+         { key snwd_bpa.bp_id, 
+               snwd_bpa.bp_role, 
+               snwd_bpa.company_name, 
+               snwd_bpa.phone_number }</pre><p></p>
+<ul>
+<li>View в которых используются агрегатные функции и выражение GROUP BY.</li>
+<li>View в которых используется объединение через UNION.</li>
+<li>View которые сами являются расширениями.</li>
+</ul>
+<p>Агрегатные функции так же нельзя использовать в ваших расширениях. Рекомендуется начинать добавляемые поля с префикса Z (Y), чтобы не возникало конфликтов имён. Добавляемые поля не могут быть помечены как семантический ключ через ключевое слово KEY. Так же нельзя переопределить свойства буферизации через соответствующие аннотации.</p>
+<p>После того как расширение будет перенесено через транспортную систему, комбинацию имени AppendView и имени расширенного CDS View уже нельзя будет переопределить.</p>
+<p>Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewAppendName: 'zddl_append_view'
+@EndUserText.label: 'Пример расширения CDS View'
+extend view demo_cds_spfli with zddl_extension {
+    spfli.distance, 
+    spfli.distid as unit 
+}</pre><p>В примере мы расширили CDS View demo_cds_spfli добавив новые поля, исходный код CDS:</p><pre class="urvanov-syntax-highlighter-plain-tag">@AbapCatalog.sqlViewName: 'DEMO_CDS_PRJCTN' 
+define view demo_cds_spfli 
+  as select from spfli 
+     { key spfli.mandt, 
+       key spfli.carrid, 
+       key spfli.connid, 
+       spfli.cityfrom,  
+       spfli.cityto }</pre><p>Результат расширения, два новых поля:</p>
+<div id="attachment_2980" style="width: 667px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/ExtensionResult.png"><img aria-describedby="caption-attachment-2980" loading="lazy" class="size-full wp-image-2980" src="http://abap-blog.ru/wp-content/uploads/2016/05/ExtensionResult.png" alt="Результат расширения" width="657" height="291" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/ExtensionResult.png 657w, https://abap-blog.ru/wp-content/uploads/2016/05/ExtensionResult-300x133.png 300w" sizes="(max-width: 657px) 100vw, 657px" /></a><p id="caption-attachment-2980" class="wp-caption-text">Результат расширения</p></div>
+<p>Если в качестве источника данных в Вашем CDS View прозрачная таблица или DB View, Вы можете указать специальное дополнение <a href="http://help.sap.com/abapdocu_750/en/abencds_f1_select_list_entry.htm#!ABAP_ALTERNATIVE_2@2@">$EXTENSION.*</a>, чтобы кроме указанных полей из таблицы выбирались так же те, которые будут добавлены в расширении к этому словарному объекту (Естественное если мы изначально не указали что будем выбирать все поля &#171;*&#187;). После активации расширения, все связанные таким образом CDS View будут автоматически адаптированы.</p>
+<p>Подробная документация по расширениям CDS доступна в <a href="http://help.sap.com/abapdocu_750/en/abencds_f1_extend_view.htm">справке</a>.</p>
+<div class="arve aligncenter" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-xbryyypnuba618a16c4eea35997841191" style="max-width:960px;" itemscope itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/XbRyYYpnuBA?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="arve-iframe fitvidsignore" data-arve="arve-youtube-xbryyypnuba618a16c4eea35997841191" data-src-no-ap="https://www.youtube-nocookie.com/embed/XbRyYYpnuBA?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="540" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="https://www.youtube-nocookie.com/embed/XbRyYYpnuBA?feature=oembed&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="960"></iframe>
+
+</span>
+
+</span>
+
+</div>
+
+<h3>Ошибки активации</h3>
+<p>&nbsp;</p>
+<p>При активации CDS у Вас могут возникать ошибки активации, для того чтобы их посмотреть нужно перейти по меню Navigate -&gt; Open activation log:</p>
+<div id="attachment_2981" style="width: 1113px" class="wp-caption alignnone"><a href="http://abap-blog.ru/wp-content/uploads/2016/05/Actiovation-Log.png"><img aria-describedby="caption-attachment-2981" loading="lazy" class="size-full wp-image-2981" src="http://abap-blog.ru/wp-content/uploads/2016/05/Actiovation-Log.png" alt="Журнал активации Eclipse" width="1103" height="262" srcset="https://abap-blog.ru/wp-content/uploads/2016/05/Actiovation-Log.png 1103w, https://abap-blog.ru/wp-content/uploads/2016/05/Actiovation-Log-300x71.png 300w, https://abap-blog.ru/wp-content/uploads/2016/05/Actiovation-Log-768x182.png 768w, https://abap-blog.ru/wp-content/uploads/2016/05/Actiovation-Log-1024x243.png 1024w" sizes="(max-width: 1103px) 100vw, 1103px" /></a><p id="caption-attachment-2981" class="wp-caption-text">Журнал активации Eclipse</p></div>
+<p>Далее зажав Ctrl щелкаете по журналу, где уже будет более развернутая информация, по которой Вы сможете понять суть ошибки.</p>
+<h2>Работа с CDS Role</h2>
+<p>&nbsp;</p>
+<p>Как уже было упомянуто ранее, CDS в ABAP 7.4 представлено двумя основными сущностями – CDS View и CDS Role. CDS View описывают модели данных, CDS Role определяют полномочия на доступ к этим моделям.</p>
+<p>Статья на тему того как <a href="http://scn.sap.com/community/abap/blog/2015/12/07/abap-news-for-release-750--abap-cds-access-control">работает</a> данный функционал. Обратите внимание, что в ABAP 7.4 оно работает только с определённой версии SP.</p>
+<h2>Источники</h2>
+<p>&nbsp;</p>
+<p>На SCN есть сборный <a href="http://scn.sap.com/docs/DOC-70385">документ</a>, включающий в себя подробное описание CDS. Кроме него есть еще очень <a href="http://scn.sap.com/community/abap/blog/2015/02/02/core-data-services-cds-abap-feature-matrix">любопытный документ</a>, где собраны все возможности CDS в рамках версий систем, позволяющий понять, что можно использовать на вашей версии.</p>
+<p>Курсы от SAP в которых рассматриваются ABAP CDS:</p>
+<ul>
+<li>HA400</li>
+<li>S4H410.</li>
+</ul><p>The post <a href="https://abap-blog.ru/osnovy-abap/slovar/abap-cds-core-data-services/">ABAP CDS (Core Data Services)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/slovar/abap-cds-core-data-services/feed/</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

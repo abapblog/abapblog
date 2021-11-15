@@ -1,0 +1,905 @@
+
+<!DOCTYPE HTML>
+
+
+<html lang="en">
+<head>
+
+    <title>Weird behaviour with VALUE and SWITCH | SAP Community</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    
+
+    <meta name="sm_tech_ids" content="833755570260738661924709785639136"/>
+    <link rel="alternate" type="application/rss+xml" title="Answers rss feed for Weird behaviour with VALUE and SWITCH question" href="/feed//answers.rss" />
+    <link rel="alternate" type="application/rss+xml" title="Answers and comments rss feed for Weird behaviour with VALUE and SWITCH question" href="/feed//comments-and-answers.rss" />
+        <meta name="description" content="Today I encountered a strange behaviour after I added a SWITCH statement in a VALUE assignment. Let&#39;s assume there is a simple table with two columns ID and TXT: TYPES: BEGIN OF _test, id TYPE cha"/>
+
+
+    <link rel="shortcut icon" type="image" href="/themes/sap-v3/images/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/themes/sap-v3/images/favicon.ico">
+    <link href="/themes/sap-v3/images/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <link as="style" rel="stylesheet" href="https://static.community.services.sap/community-ds/v1/188/main.css" type="text/css"
+          media="all">
+
+    <link rel="stylesheet" href="https://static.community.services.sap/designmate/v3/136/latest/header-subheader-footer.css" type="text/css" media="all">
+
+
+<script type="text/javascript">
+    /**
+     * mergeDeep equivalent of Object.assign
+     */
+    function _toConsumableArray(r){return _arrayWithoutHoles(r)||_iterableToArray(r)||_unsupportedIterableToArray(r)||_nonIterableSpread()}function _nonIterableSpread(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}function _unsupportedIterableToArray(r,t){if(r){if("string"==typeof r)return _arrayLikeToArray(r,t);var e=Object.prototype.toString.call(r).slice(8,-1);return"Object"===e&&r.constructor&&(e=r.constructor.name),"Map"===e||"Set"===e?Array.from(r):"Arguments"===e||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(e)?_arrayLikeToArray(r,t):void 0}}function _iterableToArray(r){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(r))return Array.from(r)}function _arrayWithoutHoles(r){if(Array.isArray(r))return _arrayLikeToArray(r)}function _arrayLikeToArray(r,t){(null==t||t>r.length)&&(t=r.length);for(var e=0,o=new Array(t);e<t;e++)o[e]=r[e];return o}function _typeof(r){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(r){return typeof r}:function(r){return r&&"function"==typeof Symbol&&r.constructor===Symbol&&r!==Symbol.prototype?"symbol":typeof r})(r)}function mergeDeep(){for(var r=function(r){return r&&"object"===_typeof(r)},t=arguments.length,e=new Array(t),o=0;o<t;o++)e[o]=arguments[o];return e.reduce(function(t,e){return Object.keys(e).forEach(function(o){var n=t[o],a=e[o];Array.isArray(n)&&Array.isArray(a)?t[o]=n.concat.apply(n,_toConsumableArray(a)):r(n)&&r(a)?t[o]=mergeDeep(n,a):t[o]=a}),t},{})}
+
+    var askFormURL = '/questions/ask.html';
+    var communitySearchUrl = 'https://community.sap.com/search/';
+    var logoutURL = '/users/logout.html';
+    var voteUpJsonURL = '/commands/0/voteup.json';
+    var voteDownJsonURL = '/commands/0/votedown.json';
+    var getVotesJsonUrl = '/%7Bnode%7D/getVotes.json';
+    var related_questions_url = '/search.json';
+    var emailCheckerURL = '/users/temporaryLogin/dupsUserEmailCheck.json';
+    var defaultPageSize = 15;
+    var topicLimit = 20;
+    var followedTagsLimit = 10;
+    var useExternalSearch = true;
+    var activateAsyncVotes = true;
+    var sapProfileLinkRegexp = "(http(s)?:\\/\\/)?people\\.sap\\.com\\/([a-z0-9\\.\\-_]+)";
+    var activateLinkValidation = true;
+
+    var authorizedFileTypes = 'txt,xml,gif,png,jpeg,jpg,jpe'.split(",");
+    var authorizedImageTypes = 'gif,png,jpg,jpeg'.split(",");
+
+    var flashMessages = [];
+    var pageContext = {
+        currentUser: {
+            id: 0,
+            username: 'Anonymous',
+            url: '#',
+            avatar: '',
+            reputation: '',
+            follows: null,
+            canCreateTopics: false,
+            canModerate: false
+        },
+        attachments: {
+            maxSizeBytes: 1048576,
+            maxSizeBytesTotal: 10485760
+        },
+        textarea: {
+            moderationAlertResolutionFormMinBodyLength: 10,
+            moderationAlertResolutionFormMaxBodyLength: 600
+        },
+        i18n: {
+            confirm: "Are you sure?",
+            searchPlaceholder: "Search Questions and Answers",
+            communitySearchPlaceholder: "Search SAP Community",
+            yes: "Yes",
+            no: "No",
+            save: "Submit",
+            cancel: "Cancel",
+            close: "Close",
+            edit: "Edit",
+            insert: "Insert",
+            upload: "Upload",
+            download: "Download",
+            choose: "Choose",
+            deleted: "Deleted",
+            ok: "Ok",
+            by: "by",
+            word: "word",
+            words: "words",
+            character: "character",
+            characters: "characters",
+            login: "Sign in",
+            loggedIn: "Logged in",
+            register: "Register",
+            timeAgo: "{0} ago",
+            timeAt: "at",
+            day: "day",
+            days: "days",
+            hour: "hour",
+            hours: "hours",
+            minute: "minute",
+            minutes: "minutes",
+            second: "sec",
+            seconds: "secs",
+            justNow: "just now",
+            retag: "retag",
+            comment: "Comment",
+            comments: "Comments",
+            commentEditorPlaceholder: "Comment on this Question",
+            discussionHeroComment: "comment",
+            discussionHeroComments: "comments",
+            discussionContainerComment: "Comment",
+            discussionContainerComments: "Comments",
+            showOneComment: "<i class='icon-comments'></i> Show 1",
+            hideOneComment: "<i class='icon-comments'></i> Hide 1",
+            showNComments: "<i class='icon-comments'></i> Show $n",
+            hideNComments: "<i class='icon-comments'></i> Hide $n",
+            question: "question",
+            questions: "Questions",
+            answer: "Answer",
+            answers: "Answers",
+            posts: "Posts",
+            wiki: "Wiki",
+            reputation: "Reputation",
+            unlike: "Unlike",
+            like: "Like",
+            likes: "Likes",
+            follow: "Follow",
+            unfollow: "Unfollow",
+            following: "Following",
+            followers: "label.followers",
+            awarded: "Awarded",
+            completedBy: "Recently completed by",
+            joined: "Joined",
+            authorizedTypes: "Allowed Upload Types",
+            uploadDialog: {
+                uploadFile: "Choose a file to upload",
+                doUpload: "Upload",
+                fileTooBig: "Your attachment must be $size or smaller.",
+                invalidAttachmentType: "Your attachment must be one of: txt,xml,gif,png,jpeg,jpg,jpe",
+                invalidImageType: "Your image must be one of: gif,png,jpg,jpeg"
+            },
+            previewAndCropDialog: {
+                previewAndResize: "Preview and resize",
+                accept: "Accept"
+            },
+
+            closeQuestionTitle: "Close",
+            lockPostModalTitle: "Lock",
+            reportQuestionModalTitle: "Alert Moderator",
+            confirmModalTitle: "Please confirm",
+            convertToAnswerText: "Are you sure you want to convert this comment to answer?",
+            unlockPostModalText: "Are you sure you want to allow comments on this post?",
+            cancelReportModalText: "You already have an active Alert for this content.",
+
+            reportSuccessText: "This post has been successfully reported.",
+            alertModeratorMinLength : "It should be given a proper explanation about why the content is inapproriate.",
+            alertModeratorMinLengthValue : "10",
+            closeModerationAlertHeadline: "Close Alert",
+            closeModerationAlertPlaceholder: "Please state the reason for closing the moderation alert here. A notification containing your message will be sent to the reporter of the moderation alert.",
+            deleteModerationAlertHeadline: "Delete Content",
+            deleteModerationAlertPlaceholder: "Please state the reason for deleting the content here. A notification containing your message will be sent to the reporter of the moderation alert and the content author.",
+            deletePreModeratedContentPlaceholder: "Please state the reason for deleting this content. A notification will be sent to the author of the content.",
+            reportCancelText: "Your report on this post has been sucessfully canceled.",
+            deleteModerationAlertTemplatePlaceholder: "Choose a deletion template or provide a reason",
+            closeModerationAlertTemplatePlaceholder: "Choose a closing template or provide a reason",
+
+            commandsMoveToSpace: "Move",
+            commandsGiveReputation: "Reward user",
+            commandsGiveReputationSuccess: "Points awarded successfully",
+            commandsConvertToCommentTitle: "Select comment location",
+            uploadProfilePictureSelectButton: "Select photo from your computer",
+            changeAvatarSelectButton: "Select photo from your computer",
+            changeAvatarSelectNoPhoto: "No photo selected",
+            postControlsRedirectTitle: "Redirect",
+
+            WMDImageDialogText: "Enter image url",
+            WMDLinkDialogText: "Enter url",
+            WMDUploadImage: "upload image",
+            WMDBold: "Strong <strong> Ctrl+B",
+            WMDItalic: "Emphasis <em> Ctrl+I",
+            WMDLink: "Hyperlink <a> Ctrl+L",
+            WMDQuote: "Blockquote <blockquote> Ctrl+Q",
+            WMDCode: "Code Sample <pre><code> Ctrl+K",
+            WMDImage: "Image <img> Ctrl+G",
+            WMDAttachment: "Attachment Ctrl+U",
+            WMDOrderedList: "Numbered List <ol> Ctrl+O",
+            WMDUnorderedList: "Bulleted List <ul> Ctrl+U",
+            WMDHeading: "Heading <h1>/<h2> Ctrl+H",
+            WMDHorizontalRule: "Horizontal Rule <hr> Ctrl+R",
+            WMDUndo: "Undo - Ctrl+Z",
+            WMDRedoWin: "Redo - Ctrl+Y",
+            WMDRedoOther: "Redo - Ctrl+Shift+Z",
+            WMDHelp: "Markdown Help",
+
+            draftMessage: "We noticed that you were previously working on TYPO. What would you like to do now?",
+            draftSaveMessage: "Saving Draft...",
+            draftLoadButton: "Load Draft",
+            draftDeleteButton: "Delete Draft",
+
+            linkMenuInsertLink: "Insert link",
+            linkMenuEditLink: "Edit link",
+            linkMenuUnlink: "Remove link",
+            linkMenuAnchor: "Anchor",
+            linkMenuMailto: "Email",
+            inputTextPrompt: "Text",
+            inputWebPrompt: "URL",
+            inputLinkNewTab: "Open link in a new tab",
+            inputImageForm: "Update Image",
+            inputImageTitle: "Title",
+            inputImagePosition: "Position",
+            inputImagePositionNone: "None",
+            inputImagePositionLeft: "Left",
+            inputImagePositionRight: "Right",
+
+            formattingLabel: "Formatting",
+            formattingParagraph: "Normal Text",
+            formattingQuote: "Quote",
+            formattingCode: "Code",
+            formattingHeader: "Header",
+            formattingBold: "Bold",
+            formattingItalic: "Italic",
+            formattingUnderline: "Underline",
+            formattingFontColor: "Font Color",
+            formattingBackColor: "Back Color",
+            formattingIndent: "Indent",
+            formattingOutdent: "Outdent",
+            formattingAlignment: "Alignment",
+            formattingAlignLeft: "Align text to the left",
+            formattingAlignCenter: "Center text",
+            formattingAlignRight: "Align text to the right",
+            formattingAlignJustify: "Justify text",
+            formattingHorizontalRule: "Insert Horizontal Rule",
+
+            toolTipsInsertImage: "Insert Image",
+            toolTipsInsertFile: "Insert File",
+            toolTipsInsertCode: "Insert Code",
+            toolTipsInsertVideo: "Insert Video",
+            toolTipsInsertTable: "Insert Table",
+            toolTipsorderedList: "Ordered List",
+            toolTipsunorderedList: "Unordered List",
+            toolTipLink: "Link",
+
+            tableInsert: "Insert Table",
+            tableRows: "Rows",
+            tableColumns: "Columns",
+            tableInsertRowAbove: "Add Row Above",
+            tableInsertRowBelow: "Add Row Below",
+            tableInsertColumnLeft: "Add Column Left",
+            tableInsertColumnRight: "Add Column Right",
+            tableDelete: "Delete Table",
+            tableDeleteColumn: "Delete Column",
+            tableDeleteRow: "Delete Row",
+            tableAddHead: "Add Header",
+            tableDeleteHead: "Delete Header",
+
+            uploadOrChoose: "Or Choose",
+            uploadDropFileHere: "Drop file here",
+            uploadFilenameOptional: "Name (optional)",
+
+            emailValidationPrompt: "Resend validation email",
+            emailValidationPromptBody: "Do you want to resend email validation?",
+            invalidReputation: "Error: You must enter a valid Integer without commas.",
+            revisionLoadedMessage: "Revision nrevisions has been loaded into the form below.",
+            processingRequestErrorText: "We were unable to process your request",
+            permissionDeniedErrorText: "You don't have permission to do this action.<br>Please login as another user",
+            commonErrorMessageText: "We were unable to process your response. Please try again.",
+            loginText: "Login",
+            registerText: "Register",
+
+            unableToVoteOwnPostMessage: "We're sorry, but you cannot vote on your own post.",
+            alreadyVotedMessage: "You already voted this post.",
+            unableToCancelVoteMessage: "You are unable to change your vote.",
+            unableToCancelLikeMessage: "You are unable to cancel your like.",
+            unableToVoteDeletedContentMessage: "You are unable to vote on deleted content.",
+
+            answer: {
+                deleted: "This answer has been deleted.",
+                inReview: "Answer is awaiting pre moderation",
+                alerted: "Answer has been alerted and is awaiting moderation",
+                share: "Know someone who can answer? Share a link to this",
+                shareTitle: "Share a link to this question",
+                shareQuestionPostfix: "Share a link to this question",
+                singleQuestion: "question",
+                toSubmit: "to submit an answer.",
+                tooltipTitle: "Add an answer for this question",
+                tooltipDescription: "Use this form for adding an answer for this question. If you wish to improve the original question or one of the other answers, then please select Comment on This Question or Add a Comment for the relevant answer.",
+                yourAnswer: "Your answer",
+                loginUrl: "/users/login.html?redirect_to=%2Fquestions%2F7581745%2Fmcsi-report.html%3Fs_action%3DanswerQuestion",
+                reported: "Alert for this answer has been successfully reported."
+            },
+            comment: {
+                inReview: "Comment is awaiting pre moderation",
+                alerted: "Comment has been alerted and is awaiting moderation",
+                reported: "Alert for this comment has been successfully reported."
+            },
+            questionDetails: {
+                redirectInputPlaceholder: "Start searching a question",
+                reopenModalTitle: "Are you sure that you want to reopen the question?",
+                discussionGoneTooFar: "Discussion has gone too far",
+                noMoreThankYou: "No more thank you or +1 comments",
+                other: "Other",
+                answerCommentTooltip: "Help to improve this answer by adding a comment. If you have a different answer for this question, then please use the Your Answer form at the bottom of the page instead.",
+                questionCommentTooltip: "Help to improve this question by adding a comment. If you have an answer for this question, then please use the Your Answer form at the bottom of the page instead.",
+                alertModeratorTooltip: "Report as offensive (i.e. containing spam, advertising, malicious text, etc.)",
+                answerShareLinkTooltip: "Share a link to this answer",
+                acceptAnswerLabel: "Accept this answer as correct",
+                unacceptAnswerLabel: "Remove this answers accepted status",
+                denyAcceptAnswerLabel: "We're sorry, but this question already has an accepted answer. Please remove the accepted status from the other answer first.",
+                answerFormInputPlaceholder: "Please provide a distinct answer and use the comment option for clarifying purposes.",
+                submitAnswerButtonLabel: "Submit your Answer"
+            },
+            sort: {
+                by: "Sort by:",
+                votes: "Votes",
+                newest:"Newest",
+                oldest:"Oldest"
+            },
+            questionMessages: {
+                moderation: "This question has been alerted and is awaiting moderation. If you believe this to be an error, contact a system administrator.",
+                premoderation: "Question is awaiting pre moderation.",
+                deleted: "This question has been deleted.",
+                cancelDelete: "This question has been undeleted.",
+                reported: "Alert for this question has been successfully reported.",
+                redirectLoop: "We are unable to create a redirect to the selected question as this will cause a loop."
+            },
+            tag: {
+                titlePrefix: "Questions tagged"
+            }
+        },
+        url: {
+            login: "/users/login.html?redirect_to=%2Fquestions%2F7581745%2Fmcsi-report.html%3F",
+            register: "/users/register.html",
+            getRevision: "/revisions/get-revision.json",
+            getComments: "/comments/%25ID%25/list.json",
+            authorizeAttachmentsUrl: "/authorizeAttachment.json",
+            uploadFile: "/uploadFile.html",
+            uploadProgress: "/uploadProgress.json",
+            uploadPreview: "/uploadPreview.html",
+            cropUpload: "/cropUpload.json",
+            cancelUpload: "/cancelUpload.json",
+            markdownHelp: "/static/markdown/help.html",
+            updateMarkdown: "/commands/updateMarkdown.json",
+            profile: "/users/{id}/{plug}.html",
+            extractKeywords: "/extract-keywords.json",
+            follow: "/follow/%7BobjId%7D/%7Btype%7D.json",
+            unfollow: "/unfollow/%7BobjId%7D/%7Btype%7D.json",
+            getUserFollows: "/%7Buser%7D/getUserFollows.json",
+            condensedProfileUrl: "/users/%7Buser%7D/condensedProfile.json",
+            viewTopicJSON: "/topics/%7Btopic%7D/view.json",
+            topicIcon: "/topics/%7Btopic%7D/icon.html",
+            topic: "/topics/%7Btopic%7D.html",
+            topicSearch: "/search/topics.json",
+            awardListUrl: "/badge/%7BawardType%7D/%7Bdesc%7D.json",
+            usersSearch: "/users/list.json",
+            usersLookup: "/users/lookup.json",
+            mentionsSearch: "/users/mentionsSearch.json",
+            searchJson: "/search.json",
+            trackJs: "/static/trackJs.json",
+            userAvatar: "/users/%7BuserId%7D/photo/view.html",
+            revisionView: "/revisions/{nodeId}.html",
+            registerMessageUrl: "https://accounts400.sap.com/ui/public/showRegisterForm?spName=profile.people.sap.com&targetUrl=&sourceUrl=",
+            share: {
+                comment: "https://answers.sap.com/comments/__contentId__/view.html",
+                answer: "https://answers.sap.com/answers/__contentId__/view.html",
+                question: "https://answers.sap.com/questions/__contentId__/__plug__.html"
+            },
+            authorizeAttachmentsUrl: "/authorizeAttachment.json"
+        },
+        extraScripts: {
+            jcrop: {
+                js: '/themes/thub/scripts/jcrop/js/jquery.Jcrop.js',
+                css: '/themes/thub/scripts/jcrop/css/jquery.Jcrop.css'
+            }
+        },
+        options: {
+        	maxTopics: '20'
+        },
+        editorClipboardUploadEnabled: false,
+        additional: {"TH_CSRF":"a-6235914915587905920"},
+        useRelativeTime: true,
+        userRealName: true
+    };
+    pageContext.i18n["delete"] = "Delete";
+    pageContext.url.login = "/users/login.html?redirect_to=%2Fquestions%2F13314582%2Fweird-behaviour-with-value-and-switch.html%3F";
+    var globalContext = {
+        profileUrl: ' https://people.sap.com/',
+        userAvatarUrl: 'https://avatars.services.sap.com/images/',
+        contentServiceUrl: 'https://content.services.sap.com',
+        comment: {
+            commentMinBodyLength: '10',
+            commentMaxBodyLength: '10,000'
+        }
+    }
+
+</script>
+
+<script type="text/javascript" src="/themes/sap-v3/pack/combined.js.h2063587399.pack" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="/themes/sap-v3/pack/combined.css.h874343707.pack" charset="utf-8"/>
+        
+                
+
+        
+
+    
+    <script type="text/javascript">
+      function csrfKeepAlive() {
+        var obj = readKeepAliveObject();
+        if ( !obj || (((new Date()) - obj.time)  >= sendKeepAliveRequestInterval) ) {
+          sendKeepAliveRequest( true );
+        } else {
+          setTimeout(csrfKeepAlive, checkKeepAliveInterval);
+          alertUserOnLostSession(obj.value, pageContext.additional.TH_CSRF);
+          if (obj.value && obj.value != pageContext.additional.TH_CSRF) {
+            updateCsrfToken(obj.value);
+          }
+        }
+      }
+
+      function sendKeepAliveRequest( resendIfDataMissed ) {
+        $.getJSON( "/heartbeat/keepAlive.json", function(data){
+          proceedKeepAlive(data);
+          setTimeout(csrfKeepAlive, checkKeepAliveInterval);
+        })
+          .fail(function(jqXHR, textStatus, errorThrown) {
+            if ( jqXHR.readyState == 0) {
+              setTimeout(csrfKeepAlive, checkKeepAliveInterval);
+            } else
+            if ( textStatus == "parsererror" && resendIfDataMissed) {
+              sendKeepAliveRequest( false );
+            } else {
+              storeKeepAliveObject(pageContext.additional.TH_CSRF)
+              setTimeout(csrfKeepAlive, checkKeepAliveInterval);
+            }
+          });
+      }
+
+      function alertUserOnLostSession(newValue, curValue) {
+        // We don't have a valid cookie at all...
+        if (!newValue) {
+          alert("Your SAP Answers session is invalid. Posting any data won't be possible! Please ensure that your browser accepts cookies from SAP Answers, copy any unsaved content to a safe place, reload the page and try posting again. Sorry for any inconvenience!");
+        } else
+        // Cookie is different from the CSRF token stored in the current page
+        if (curValue != newValue) {
+          // We became anonymous
+          if (newValue.substring(0,1) === "a") {
+            alert("You were logged out from SAP Answers. Posting any data won't be possible! Please copy any unsaved content to a safe place, reload the page and try posting again. Sorry for any inconvenience!");
+          }
+        }
+      }
+
+      function proceedKeepAlive( data ) {
+        if (data.success) {
+          var csrfToken = data.result.csrfCookie;
+          storeKeepAliveObject(csrfToken);
+          alertUserOnLostSession(csrfToken, pageContext.additional.TH_CSRF);
+          updateCsrfToken(csrfToken);
+        }
+      }
+
+      function storeKeepAliveObject( value ) {
+        var obj = {
+          value: value,
+          time: new Date()
+        };
+        localStorage.setItem("keepAliveObject", JSON.stringify(obj));
+      }
+
+      function readKeepAliveObject() {
+        var storedObj = localStorage.keepAliveObject;
+        if ( !storedObj ) {
+          return;
+        }
+
+        var obj = JSON.parse(storedObj);
+        obj.time = new Date(obj.time);
+
+        return obj;
+      }
+
+      function updateCsrfToken( csrfToken ) {
+        $('input[name="TH_CSRF"]').attr("value", csrfToken);
+        pageContext.additional.TH_CSRF = csrfToken;
+      }
+
+      if (pageContext && pageContext.additional && pageContext.additional.TH_CSRF) {
+        storeKeepAliveObject(pageContext.additional.TH_CSRF);
+        var sendKeepAliveRequestInterval = 1000 * 900;
+        var checkKeepAliveInterval = 10000;
+        setTimeout(csrfKeepAlive, checkKeepAliveInterval);
+      }
+    </script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta charset="utf-8">
+
+<link rel="canonical" href="/questions/13314582/weird-behaviour-with-value-and-switch.html" />
+
+    <script src="//assets.adobedtm.com/ccc66c06b30b/55fa318d7542/launch-02794e96912a.min.js"></script>
+</head>
+
+<body>
+    <b class="ds-redirect-accessibility"><a href="#middle" tabindex="0" accesskey="S" aria-label="Press to skip to main content">Skip to Content</a></b>
+<header id="comm-hdr-Header" role="masthead"><div class="dm-header"><div class="dm-header__inner"><div class="dm-header__logo-wrapper"><a class="dm-logo--header" href="http://www.sap.com/" title="SAP"></a></div><nav id="comm-hdr-Navigation" class="dm-mainNav"><div class="dm-mobileSearch"><form class="dm-header__search-form" action=""><div class="dm-search-container dm-input dm-search__input"><label class="dm-input__box" aria-label="search SAP Community"><input class="dm-input__control" placeholder="Search SAP Community" name="filter-search" type="search" required="" aria-label="type here to search"><button class="dm-search__button dm-search__button-clear" type="reset" role="button" title="Reset Search"><span class="dm-search__buttonIcon dm-icon-encoded--close" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" role="button" title="Search SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form></div><ul class="dm-mainNav__menu dm-mainNav__menu--withGroups" role="menubar"><li class="dm-header__homeItem" role="none"><a class="dm-header__homeItem-link" role="menuitem" aria-label="Community Home" target="_self" href="https://community.sap.com">Community</a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/topics" aria-label="" aria-haspopup="false" role="menuitem">Topics<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://groups.sap.com" aria-label="Groups. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Groups<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://answers.sap.com/index.html" aria-label="Answers. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Answers<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://blogs.sap.com" aria-label="Blogs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Blogs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/events" aria-label="Events. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Events<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/programs" aria-label="Programs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Programs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources" aria-label="Resources. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Resources<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources/what-is-new" aria-label="" aria-haspopup="false" role="menuitem">What's New<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li></ul></nav><ul class="dm-header__actions"><li id="comm-hdr-Search" class="dm-header__actions-item dm-headerSearch"><a class="dm-search-action dm-icon-encoded dm-header__search-icon" aria-label="Search the SAP Community" href="#" role="button" aria-expanded="false" title="Search"></a><div class="dm-headerSearch__wrapper"><form class="dm-searchdropdown dm-align-center" action=""><div class="dm-search__input dm-input" role="search"><label class="dm-input__box" aria-label="search the SAP community"><input class="dm-input__control" placeholder="Search the SAP Community" name="filter-search" aria-label="type here to search" type="input"><button class="dm-search__button dm-search__button-clear" type="reset" title="Reset"><span class="dm-search__buttonIcon dm-icon-encoded--clear" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" title="Search the SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form><a class="dm-headerSearch__closeButton" type="submit" role="button" title="Close search input" href="javascript:void(0);"><span class="dm-icon-encoded dm-icon-encoded--close" role="img" aria-label="Close search input"></span></a></div></li><li id="comm-hdr-Authentication" class="dm-header__actions-item dm-header__account"><a id="comm-hdr-SignIn" class="dm-user__login-button--wrapper" aria-haspopup="true" aria-expanded="false" role="button" href="#" title="Log In" rel="IDS_login"><div id="comm-hdr-AnonymousIcon" class="dm-icon-encoded dm-icon-encoded--account dm-hidden" aria-label="click here to login"></div><div id="comm-hdr-Avatar" class="dm-user dm-header__avatar"><img class="dm-header__avatar-image dm-hidden" data-src="" src="" width="24px" height="24px"><span class="dm-header__notifications dm-hidden js-notification-indicator"></span></div></a><ul id="comm-hdr-UserProfileMenu" class="dm-header__actionsSubMenu dm-profileFlyoutMenu dm-profileMenuDropdown" role="menu" aria-label="drop down menu of people profile"><li class="dm-profileMenu__userData"><div id="comm-hdr-Username" class="dm-profileMenu__userName"></div><div id="comm-hdr-Email" class="dm-profileMenu__userEmail"></div><a id="comm-hdr-SubMenuTitleLink" class="dm-link" href="#">Manage my Account</a></li><li id="comm-hdr-ProfileMenuTopSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li id="comm-hdr-ProfileMenuMiddleSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li class="dm-profileMenu__section"><ul class="dm-profileMenu__list dm-profileMenu__logout"><li class="dm-profileMenu__item"><a id="comm-hdr-LogOut" class="dm-button dm-button--secondary" href="#" role="button"><span class="dm-button-text">Logout</span></a></li></ul></li></ul></li><li class="dm-header__actions-item dm-header__mobileMenu"><a id="comm-hdr-MobileMenuBtn" class="dm-mobileMenuButton" aria-label="Search SAP community"><span class="dm-icon-encoded dm-icon-encoded--mobile-menu"></span><span style="display:none;">Search</span></a></li></ul></div></div></header>    
+
+
+<script>
+    const questionModel = JSON.parse("13314582")
+    const commentsMapJson = JSON.parse("{\"13314624\":{\"rootParentId\":13314624,\"commentsCount\":5,\"comments\":[{\"body\":\"<p>Thanks for your offer! ;) Still unsure if I will have to open a defect or if  <a href=\\\"https://people.sap.com/horst.keller\\\" target=\\\"_blank\\\">Horst Keller<\/a> will suddenly breach in... :]<\/p>\",\"author\":{\"username\":\"enno.wulff\",\"displayName\":\"Enno Wulff\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"parentAuthor\":{\"username\":\"jorgen_lindqvist41\",\"displayName\":\"Jörgen Lindqvist\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"id\":13314676,\"creationDate\":1615281603000,\"activeRevisionId\":13713793,\"lastActivity\":1615281603000,\"parentId\":13314624,\"originalParentId\":13314582,\"likeCount\":0,\"visibility\":\"full\",\"depth\":0,\"attachments\":[],\"canVoteUpOrCancel\":false,\"relations\":{\"canReport\":false,\"visibility\":\"full\",\"canEdit\":false,\"canUseDelete\":false,\"isLiked\":false,\"type\":\"comment\",\"canVoteUpOrCancel\":false,\"canConvertToAnswer\":false,\"canBeModerated\":false,\"canViewRevisions\":false,\"showInReply\":false,\"reported\":false,\"canCancelReport\":false,\"canDelete\":false,\"canVoteDownOrCancel\":false,\"canComment\":false,\"canViewReports\":false,\"isCurrentUserAuthor\":false},\"liked\":false,\"moderatorComment\":false}]},\"13312711\":{\"rootParentId\":13312711,\"commentsCount\":5,\"comments\":[{\"body\":\"<p><a href=\\\"https://answers.sap.com/users/2688/matthew.billingham.html\\\">Matthew Billingham<\/a> Not so complex ;-) (TAPP = table append, iclr = clear, mvqw = quick move, STCK = obscure stacking function / first code indicates a variant and next arguments are memory address references)<\/p><pre>iclr 04  0019            \\nSTCK 05  0000            \\nSTCK 07  001A            \\n\\niclr 03  001A            \\nMOVE FF  0229  001C  001B\\nTAPP 20  0352  0019  001A\\n\\nmvqw 04  0200  0010  00A4\\nMOVE FF  0229  001C  001F\\nTAPP 20  0352  0019  001A\\n\\niclr 00  0022            \\nMOVE FF  0229  001C  0021\\nTAPP 20  0352  0019  001A\\nSTCK 06  0000            <br><\/pre>\",\"author\":{\"username\":\"sandra.rossi\",\"displayName\":\"Sandra Rossi\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"parentAuthor\":{\"username\":\"sandra.rossi\",\"displayName\":\"Sandra Rossi\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"id\":13312793,\"creationDate\":1615307759000,\"activeRevisionId\":13711935,\"lastActivity\":1615307759000,\"parentId\":13312711,\"originalParentId\":13314582,\"likeCount\":5,\"visibility\":\"full\",\"depth\":0,\"attachments\":[],\"canVoteUpOrCancel\":false,\"relations\":{\"canReport\":false,\"visibility\":\"full\",\"canEdit\":false,\"canUseDelete\":false,\"isLiked\":false,\"type\":\"comment\",\"canVoteUpOrCancel\":false,\"canConvertToAnswer\":false,\"canBeModerated\":false,\"canViewRevisions\":false,\"score\":5,\"showInReply\":false,\"reported\":false,\"canCancelReport\":false,\"canDelete\":false,\"canVoteDownOrCancel\":false,\"canComment\":false,\"canViewReports\":false,\"isCurrentUserAuthor\":false},\"liked\":false,\"moderatorComment\":false}]},\"13310679\":{\"rootParentId\":13310679,\"commentsCount\":2,\"comments\":[{\"body\":\"<p>Thanks <a href=\\\"https://people.sap.com/thalesvb\\\" target=\\\"_blank\\\">Thales Batista<\/a> for also proving it is a bug.<\/p>\",\"author\":{\"username\":\"enno.wulff\",\"displayName\":\"Enno Wulff\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"parentAuthor\":{\"username\":\"thalesvb\",\"displayName\":\"Thales Batista\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"id\":13314662,\"creationDate\":1615278742000,\"activeRevisionId\":13713776,\"lastActivity\":1615278742000,\"parentId\":13310679,\"originalParentId\":13314582,\"likeCount\":1,\"visibility\":\"full\",\"depth\":0,\"attachments\":[],\"canVoteUpOrCancel\":false,\"relations\":{\"canReport\":false,\"visibility\":\"full\",\"canEdit\":false,\"canUseDelete\":false,\"isLiked\":false,\"type\":\"comment\",\"canVoteUpOrCancel\":false,\"canConvertToAnswer\":false,\"canBeModerated\":false,\"canViewRevisions\":false,\"score\":1,\"showInReply\":false,\"reported\":false,\"canCancelReport\":false,\"canDelete\":false,\"canVoteDownOrCancel\":false,\"canComment\":false,\"canViewReports\":false,\"isCurrentUserAuthor\":false},\"liked\":false,\"moderatorComment\":false}]},\"13310677\":{\"rootParentId\":13310677,\"commentsCount\":3,\"comments\":[{\"body\":\"<p>Hey  <a href=\\\"https://people.sap.com/michael.biber2\\\" target=\\\"_blank\\\">Michael Biber<\/a>! yes that's right. see example of  <a href=\\\"https://people.sap.com/jorgen_lindqvist41\\\" target=\\\"_blank\\\">J&ouml;rgen Lindqvist<\/a> <\/p>\",\"author\":{\"username\":\"enno.wulff\",\"displayName\":\"Enno Wulff\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"parentAuthor\":{\"username\":\"jacques.nomssi\",\"displayName\":\"Jacques Nomssi Nzali\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"id\":13314682,\"creationDate\":1615283382000,\"activeRevisionId\":13713800,\"lastActivity\":1615283382000,\"parentId\":13310677,\"originalParentId\":13314582,\"likeCount\":0,\"visibility\":\"full\",\"depth\":0,\"attachments\":[],\"canVoteUpOrCancel\":false,\"relations\":{\"canReport\":false,\"visibility\":\"full\",\"canEdit\":false,\"canUseDelete\":false,\"isLiked\":false,\"type\":\"comment\",\"canVoteUpOrCancel\":false,\"canConvertToAnswer\":false,\"canBeModerated\":false,\"canViewRevisions\":false,\"showInReply\":false,\"reported\":false,\"canCancelReport\":false,\"canDelete\":false,\"canVoteDownOrCancel\":false,\"canComment\":false,\"canViewReports\":false,\"isCurrentUserAuthor\":false},\"liked\":false,\"moderatorComment\":false}]}}");
+    const simplifiedQuestionView = JSON.parse("true");
+</script>
+
+<script>
+    (function() {
+    window.pageContext = mergeDeep(pageContext, {
+        question: {
+            id: 13314582,
+            plug: "weird-behaviour-with-value-and-switch",
+            votes: 10,
+            questionTitle: "Weird behaviour with VALUE and SWITCH",
+            isClosed: false,
+            isLocked: false,
+            
+            
+            isRedirected: false,
+            redirectedFromTitle: "",
+            redirectedFromId: "",
+            
+            closedStatusData: JSON.parse("{}"),
+            userVoted: false,
+            
+            relations: JSON.parse("{\"canClose\":false,\"canUnredirect\":false,\"canReport\":false,\"visibility\":\"full\",\"canEdit\":false,\"canUseDelete\":false,\"canReopen\":false,\"type\":\"question\",\"canVoteUpOrCancel\":false,\"canViewRevisions\":true,\"score\":10,\"canUnlock\":false,\"reported\":false,\"canVoteDownOrCancel\":false,\"canLock\":false,\"canCancelReport\":false,\"canComment\":true,\"isCurrentUserAuthor\":false,\"canViewReports\":false}"),
+            isQuestionAccepted: true
+        },
+        childToViewInfo: {
+                id: ""
+            },
+        comments: JSON.parse("{\"13314624\":{\"rootParentId\":13314624,\"commentsCount\":5,\"comments\":[{\"body\":\"<p>Thanks for your offer! ;) Still unsure if I will have to open a defect or if  <a href=\\\"https://people.sap.com/horst.keller\\\" target=\\\"_blank\\\">Horst Keller<\/a> will suddenly breach in... :]<\/p>\",\"author\":{\"username\":\"enno.wulff\",\"displayName\":\"Enno Wulff\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"parentAuthor\":{\"username\":\"jorgen_lindqvist41\",\"displayName\":\"Jörgen Lindqvist\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"id\":13314676,\"creationDate\":1615281603000,\"activeRevisionId\":13713793,\"lastActivity\":1615281603000,\"parentId\":13314624,\"originalParentId\":13314582,\"likeCount\":0,\"visibility\":\"full\",\"depth\":0,\"attachments\":[],\"canVoteUpOrCancel\":false,\"relations\":{\"canReport\":false,\"visibility\":\"full\",\"canEdit\":false,\"canUseDelete\":false,\"isLiked\":false,\"type\":\"comment\",\"canVoteUpOrCancel\":false,\"canConvertToAnswer\":false,\"canBeModerated\":false,\"canViewRevisions\":false,\"showInReply\":false,\"reported\":false,\"canCancelReport\":false,\"canDelete\":false,\"canVoteDownOrCancel\":false,\"canComment\":false,\"canViewReports\":false,\"isCurrentUserAuthor\":false},\"liked\":false,\"moderatorComment\":false}]},\"13312711\":{\"rootParentId\":13312711,\"commentsCount\":5,\"comments\":[{\"body\":\"<p><a href=\\\"https://answers.sap.com/users/2688/matthew.billingham.html\\\">Matthew Billingham<\/a> Not so complex ;-) (TAPP = table append, iclr = clear, mvqw = quick move, STCK = obscure stacking function / first code indicates a variant and next arguments are memory address references)<\/p><pre>iclr 04  0019            \\nSTCK 05  0000            \\nSTCK 07  001A            \\n\\niclr 03  001A            \\nMOVE FF  0229  001C  001B\\nTAPP 20  0352  0019  001A\\n\\nmvqw 04  0200  0010  00A4\\nMOVE FF  0229  001C  001F\\nTAPP 20  0352  0019  001A\\n\\niclr 00  0022            \\nMOVE FF  0229  001C  0021\\nTAPP 20  0352  0019  001A\\nSTCK 06  0000            <br><\/pre>\",\"author\":{\"username\":\"sandra.rossi\",\"displayName\":\"Sandra Rossi\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"parentAuthor\":{\"username\":\"sandra.rossi\",\"displayName\":\"Sandra Rossi\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"id\":13312793,\"creationDate\":1615307759000,\"activeRevisionId\":13711935,\"lastActivity\":1615307759000,\"parentId\":13312711,\"originalParentId\":13314582,\"likeCount\":5,\"visibility\":\"full\",\"depth\":0,\"attachments\":[],\"canVoteUpOrCancel\":false,\"relations\":{\"canReport\":false,\"visibility\":\"full\",\"canEdit\":false,\"canUseDelete\":false,\"isLiked\":false,\"type\":\"comment\",\"canVoteUpOrCancel\":false,\"canConvertToAnswer\":false,\"canBeModerated\":false,\"canViewRevisions\":false,\"score\":5,\"showInReply\":false,\"reported\":false,\"canCancelReport\":false,\"canDelete\":false,\"canVoteDownOrCancel\":false,\"canComment\":false,\"canViewReports\":false,\"isCurrentUserAuthor\":false},\"liked\":false,\"moderatorComment\":false}]},\"13310679\":{\"rootParentId\":13310679,\"commentsCount\":2,\"comments\":[{\"body\":\"<p>Thanks <a href=\\\"https://people.sap.com/thalesvb\\\" target=\\\"_blank\\\">Thales Batista<\/a> for also proving it is a bug.<\/p>\",\"author\":{\"username\":\"enno.wulff\",\"displayName\":\"Enno Wulff\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"parentAuthor\":{\"username\":\"thalesvb\",\"displayName\":\"Thales Batista\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"id\":13314662,\"creationDate\":1615278742000,\"activeRevisionId\":13713776,\"lastActivity\":1615278742000,\"parentId\":13310679,\"originalParentId\":13314582,\"likeCount\":1,\"visibility\":\"full\",\"depth\":0,\"attachments\":[],\"canVoteUpOrCancel\":false,\"relations\":{\"canReport\":false,\"visibility\":\"full\",\"canEdit\":false,\"canUseDelete\":false,\"isLiked\":false,\"type\":\"comment\",\"canVoteUpOrCancel\":false,\"canConvertToAnswer\":false,\"canBeModerated\":false,\"canViewRevisions\":false,\"score\":1,\"showInReply\":false,\"reported\":false,\"canCancelReport\":false,\"canDelete\":false,\"canVoteDownOrCancel\":false,\"canComment\":false,\"canViewReports\":false,\"isCurrentUserAuthor\":false},\"liked\":false,\"moderatorComment\":false}]},\"13310677\":{\"rootParentId\":13310677,\"commentsCount\":3,\"comments\":[{\"body\":\"<p>Hey  <a href=\\\"https://people.sap.com/michael.biber2\\\" target=\\\"_blank\\\">Michael Biber<\/a>! yes that's right. see example of  <a href=\\\"https://people.sap.com/jorgen_lindqvist41\\\" target=\\\"_blank\\\">J&ouml;rgen Lindqvist<\/a> <\/p>\",\"author\":{\"username\":\"enno.wulff\",\"displayName\":\"Enno Wulff\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"parentAuthor\":{\"username\":\"jacques.nomssi\",\"displayName\":\"Jacques Nomssi Nzali\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"id\":13314682,\"creationDate\":1615283382000,\"activeRevisionId\":13713800,\"lastActivity\":1615283382000,\"parentId\":13310677,\"originalParentId\":13314582,\"likeCount\":0,\"visibility\":\"full\",\"depth\":0,\"attachments\":[],\"canVoteUpOrCancel\":false,\"relations\":{\"canReport\":false,\"visibility\":\"full\",\"canEdit\":false,\"canUseDelete\":false,\"isLiked\":false,\"type\":\"comment\",\"canVoteUpOrCancel\":false,\"canConvertToAnswer\":false,\"canBeModerated\":false,\"canViewRevisions\":false,\"showInReply\":false,\"reported\":false,\"canCancelReport\":false,\"canDelete\":false,\"canVoteDownOrCancel\":false,\"canComment\":false,\"canViewReports\":false,\"isCurrentUserAuthor\":false},\"liked\":false,\"moderatorComment\":false}]}}"),
+        answerPager: {
+            answersCount: 5,
+            page: 1,
+            pageSize: 10,
+            pageCount: 1,
+            sort: "votes"
+        },
+        answers: JSON.parse("[{\"body\":\"<p>This is fun! :)<\/p><p>I don't think it has anything do to with SWITCH though. It's probably something with the VALUE operator itself, or nested VALUEs, or something... It's reproducible with this code:<\/p><pre>DATA(test) =  VALUE _test_t( (                     txt = 'AAA' )\\n                             ( VALUE #( id = 'BB'  txt = 'BBB' ) )\\n                             (                     txt = 'CCC' ) ).\\n<\/pre><pre>   AAA  \\nBB BBB  \\nBB CCC  \\n<\/pre><p>I guess the inner VALUE leaks it's id out to the outer?<\/p><p>Removing the inner VALUE, and it works as expected:<\/p><pre>DATA(test_line) = VALUE _test( id = 'BB'  txt = 'BBB' ).\\nDATA(test) = VALUE _test_t( ( txt = 'AAA' )\\n                            ( test_line )\\n                            ( txt = 'CCC' ) ).\\n<\/pre><pre>    AAA  \\nBB  BBB  \\n    CCC  \\n<\/pre><p>Oddly enough, as you also noted, setting the id on the first line or actually any line before the nested VALUE also works as expected:<\/p><pre>DATA(test) = VALUE _test_t( (                    txt = 'AAA' )\\n                            (          id = 'BB' txt = 'BBB' )\\n                            ( VALUE #( id = 'CC' txt = 'CCC' ) )\\n                            (                    txt = 'DDD' ) ).\\n<\/pre><pre>    AAA  \\nBB  BBB  \\nCC  CCC\\n    DDD  \\n<\/pre><p>Maybe it's affecting the superstructure? Because this is valid, and expected:<\/p><pre>DATA(test) = VALUE _test_t( (           txt = 'AAA' )\\n                            ( id = 'BB' txt = 'BBB' )\\n                              id = 'CC'\\n                            (           txt = 'DDD' )\\n                            (           txt = 'EEE' )\\n                              id = 'FF'\\n                            (           txt = 'GGG' ) ).\\n<\/pre><pre>    AAA  \\nBB  BBB  \\nCC  DDD  \\nCC  EEE  \\nFF  GGG  \\n<\/pre>\",\"author\":{\"username\":\"jorgen_lindqvist41\",\"displayName\":\"Jörgen Lindqvist\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"id\":13314624,\"posted\":1615265899000,\"votes\":9,\"isAccepted\":true,\"isLocked\":false,\"userVoted\":\"\",\"relations\":{\"score\":9,\"canCancelAccept\":false,\"canUnlock\":false,\"canUseDelete\":false,\"accepted\":true,\"canVoteDownOrCancel\":false,\"canLock\":false,\"canAccept\":false,\"type\":\"answer\",\"canVoteUpOrCancel\":false,\"isCurrentUserAuthor\":false},\"attachments\":[]},{\"body\":\"<p>I looked at the generated <strong>byte code<\/strong>. We can see that it uses one work area that it appends repeatedly to the table for each new line, and does automatically the CLEAR of each field that is to be reinitialized if a value was set in the previous line but not in the new line. But it forgets to do the CLEAR after the VALUE #( ... ) line (I took the simplified example of J&ouml;rgen).<\/p>\",\"author\":{\"username\":\"sandra.rossi\",\"displayName\":\"Sandra Rossi\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"id\":13312711,\"posted\":1615287150000,\"votes\":8,\"isAccepted\":false,\"isLocked\":false,\"userVoted\":\"\",\"relations\":{\"score\":8,\"canCancelAccept\":false,\"canUnlock\":false,\"canUseDelete\":false,\"canVoteDownOrCancel\":false,\"canLock\":false,\"canAccept\":false,\"type\":\"answer\",\"canVoteUpOrCancel\":false,\"isCurrentUserAuthor\":false},\"attachments\":[]},{\"body\":\"<p><em>Dear Customer,<\/em><\/p><p><em>you have found a bug in the ABAP compiler. The kernel patch will be made<br>available via note 3042453.<\/em><\/p><p>Thanks  @all for your participation!<\/p>\",\"author\":{\"username\":\"enno.wulff\",\"displayName\":\"Enno Wulff\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"id\":13329575,\"posted\":1617209523000,\"votes\":6,\"isAccepted\":false,\"isLocked\":false,\"userVoted\":\"\",\"relations\":{\"score\":6,\"canCancelAccept\":false,\"canUnlock\":false,\"canUseDelete\":false,\"canVoteDownOrCancel\":false,\"canLock\":false,\"canAccept\":false,\"type\":\"answer\",\"canVoteUpOrCancel\":false,\"isCurrentUserAuthor\":false},\"attachments\":[]},{\"body\":\"<p>I toyed with it (7.52 trial) and found something else. Code below, moving &quot;id = 'No' &quot; part between later lines and that tells a bit more.<\/p><pre>DATA(test) =  VALUE _test_t(\\n      ( txt = 'AAA' )              &quot;Value for ID deleted!\\n      ( SWITCH #( 'E'\\n         WHEN 'E' THEN VALUE #( id = 'BB'  txt = 'BBB' )\\n                  ELSE VALUE #( id = 'bb'  txt = 'bbb' ) ) )\\n      ( txt = 'CCC' )\\n      ( txt = 'DDD' )\\n      ( id = 'No' txt = 'EEE' )\\n      ( txt = 'FFF' ) ).\\n<\/pre><p><img src=\\\"/storage/temp/1899612-obey.png\\\"><\/p><p>Kernel had a hangover with that switch, it looks like a bug.<\/p>\",\"author\":{\"username\":\"thalesvb\",\"displayName\":\"Thales Batista\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"id\":13310679,\"posted\":1615243748000,\"votes\":2,\"isAccepted\":false,\"isLocked\":false,\"userVoted\":\"\",\"relations\":{\"score\":2,\"canCancelAccept\":false,\"canUnlock\":false,\"canUseDelete\":false,\"canVoteDownOrCancel\":false,\"canLock\":false,\"canAccept\":false,\"type\":\"answer\",\"canVoteUpOrCancel\":false,\"isCurrentUserAuthor\":false},\"attachments\":[{\"id\":1899612,\"fileName\":\"obey.png\",\"size\":\"3.0 kB\",\"url\":\"/storage/attachments/1899612-obey.png\",\"isImage\":true}]},{\"body\":\"<pre>DATA(test) =  VALUE _test_t(\\n      ( txt = 'AAA' )             \\n      ( id = 'BB'  txt = 'BBB' )        \\n                 ( txt = 'CCC' ) ).<\/pre><p>I guess you are using the short form described in this <a href=\\\"https://blogs.sap.com/2013/05/27/abap-news-for-release-740-constructor-operator-value/\\\">Horst Keller Post<\/a>, allowing you to fill columns with the same value in subsequent lines.<\/p>\",\"author\":{\"username\":\"jacques.nomssi\",\"displayName\":\"Jacques Nomssi Nzali\",\"groupIcons\":[],\"suspended\":false,\"isCurrentUser\":false},\"id\":13310677,\"posted\":1615241412000,\"votes\":0,\"isAccepted\":false,\"isLocked\":false,\"userVoted\":\"\",\"relations\":{\"canCancelAccept\":false,\"canUnlock\":false,\"canUseDelete\":false,\"canVoteDownOrCancel\":false,\"canLock\":false,\"canAccept\":false,\"type\":\"answer\",\"canVoteUpOrCancel\":false,\"isCurrentUserAuthor\":false},\"attachments\":[]}]"),
+        answerForm: {
+                formAction: "/answers/13314582/post.json",
+                textareaName: "body",
+                textareaErrors: "",
+                isAttachmentsEnabled: true,
+                answerEditorialGuideline: {
+                    title: "Before answering",
+                    content: "You should only submit an answer when you are proposing a solution to the poster\'s problem. If you want the poster to clarify the question or provide more information, please leave a comment instead, requesting additional details. When answering, please include specifics, such as step-by-step instructions, context for the solution, and links to useful resources. Also, please make sure that you answer complies with our Rules of Engagement.",
+                    links: [
+                        {title: "Rules of Engagement", href: "https://www.sap.com/community/resources/rules-of-engagement.html"},
+                    ]
+                },
+                answerMinBodyLength: '10',
+                answerMaxBodyLength: '20000'
+        },
+        currentUser: {
+            sapInternalId: '',
+            permissions: {
+                canVoteUpOrCancel: false,
+                canVoteDownOrCancel: false,
+                canModerate: false,
+            },
+            isVotedUp: false,
+            isVotedDown: false
+        },
+        alerts: {
+            alertModeratorMinLength : "It should be given a proper explanation about why the content is inapproriate.",
+            alertModeratorMinLengthValue : "10",
+            alreadyReportedMessage : "You already have an active moderator alert for this content."
+        },
+        url: {
+            profileApiBaseUrl: 'https://people-api.services.sap.com',
+            followUnfollowQuestion: '/sap/nodeSubscription.json',
+            isFollowingQuestion: '/sap/isFollowingNode.json',
+            vote: {
+                voteUp: '/commands/0/voteup.json',
+                voteDown: '/commands/0/votedown.json',
+                cancelVote: '/commands/0/cancelvote.json'
+            },
+            rss: {
+                answers: '/feed/13314582/answers.rss',
+                answersAndComments: '/feed/13314582/comments-and-answers.rss'
+            }
+        },
+        authorizeUploadContext: {
+            type: 'answer'
+        },
+        atMention: {
+            userSearchServiceUrl: 'https://uss.api.community.sap.com',
+            currentUserName: '',
+            useNewUSSCORS: true,
+            atMentionDelayMs: 100,
+            showMentionInRedactor: true
+        },
+        attachmentSettings: {
+            commentMaxAttachments: '2',
+            answerMaxAttachments: '10',
+            commentMaxAttachmentSizeBytes: '1048576',
+            answerMaxAttachmentSizeBytes: '1048576',
+            commentAttachmentsSizeBytesTotal: '2097152',
+            answerAttachmentsSizeBytesTotal: '10485760'
+        },
+        editor: {
+            editorClipboardUploadEnabled: false
+        }
+    })
+    })();
+</script>
+
+<div>
+    <div class="announcements" role="menubar"></div>
+</div>
+
+<div id="page" class="ds-question-detail">
+  <section id="middle">
+    <div class="ds-flexGrid">
+        <div class="ds-flexRow">
+            <div class="ds-flexCol">
+
+<div class="dm-wrapper">
+    <div class="dm-subheader dm-subheader--wrapper dm-subheader dm-user--unauthenticated">
+        <div class="dm-grid">
+<div class="dm-breadcrumb dm-user--unauthenticated" role="menubar">
+    <ul class="dm-breadcrumb-nav" role="navigation" aria-label="breadcrumb navigation to trace the path back to original landing point">
+        
+        <li><a id="comm-shdr-breadcrumb-home" href="https://www.sap.com" title="Home">Home</a></li>
+        
+        <li><a id="comm-shdr-breadcrumb-community" href="https://community.sap.com" title="Community">Community</a></li>
+        
+    </ul>
+    <ul class="dm-breadcrumb-actions" role="menu">
+        
+        <li><a id="comm-shdr-AskQuestion" href="https://answers.sap.com/questions/ask.html" title="Ask a Question">Ask a Question</a></li>
+        
+        <li><a id="comm-shdr-WriteBlogPost" href="https://blogs.sap.com/wp-admin/post-new.php" title="Write a Blog Post">Write a Blog Post</a></li>
+        
+        <li class="dm-user__login-button--wrapper"><a class="dm-button-small dm-button--primary" role="button" rel="IDS_login" aria-label="Login or Sign up. Click here to log in or sign up"><span class="dm-button-text">Login / Sign-up</span></a></li>
+        <li class="dm-breadcrumb-actions__dropdown">
+            <span id="comm-shdr-actions-opener" class="dm-breadcrumb-actions__dropdown-toggle" title="Community actions">
+                 <span class="dm-icon-encoded dm-icon-encoded--3dots"></span>
+            </span>
+            <ul id="comm-shdr-user-actions-ul" class="dm-breadcrumb-actions__dropdown-menu" role="menu">
+            </ul>
+        </li>
+    </ul>
+</div>
+        </div>
+        <div id="bookmark-container" class="ds-bookmark-container"></div>
+    </div>
+</div>            </div>
+        </div>
+        <div class="ds-flexRow ds-question-detail__search-container">
+            <div class="ds-flexCol-md-8 ds-flexCol-lg-9" id="search-input-wrapper">
+                <form action="'https://community.sap.com/search/'"
+                      class="ds-question-detail__search">
+                    <div class="ds-search">
+                        <label class="ds-input__box"><input type="hidden" name="ct" value="qa">
+                            <input class="ds-input__control" name="q" type="search" autocomplete="off" value="">
+                            <span class="ds-input__placeholder">
+Search Questions and Answers                            </span>
+                            <button class="ds-search__button ds-search__button-submit" type="submit" title="Search">
+                                <i class="ds-icon-encoded--search"></i>
+                            </button>
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="ds-flexRow">
+            <div class="ds-flexCol-12 ds-flexCol-md-8 ds-flexCol-lg-9" id="question-alert-wrapper"></div>
+            <div id="error-modal-wrapper"></div>
+        </div>
+        <div class="ds-flexRow ds-question-detail__question-container">
+<div class="ds-question__hero ds-flexCol-12 ds-flexCol-md-8 ds-flexCol-lg-9">
+
+<div class="ds-question__left-container">
+    <div class="ds-question__gravatar">
+        <a class="ds-user-gravatar__link" href=" https://people.sap.com/enno.wulff" rel="user">
+            <img class="ds-user__gravatar-img" src="https://avatars.services.sap.com/images/enno.wulff_small.png" alt="author&#x27;s profile photo Enno Wulff" title="Enno Wulff" />
+        </a>
+    </div>
+    <div class="ds-vote ds-question__vote">
+        <a href="#" class="ds-vote__btn ds-vote__btn--up"></a>
+        <span class="ds-vote__number">10</span>
+        <a href="#" class="ds-vote__btn ds-vote__btn--down"></a>
+    </div>
+</div><div class="ds-question__heading">
+    <div class="ds-question__author ds-user">
+        <a target="_blank" href=" https://people.sap.com/enno.wulff" aria-label="Author name Enno Wulff" class="ds-user__name">Enno Wulff</a>
+
+    </div>
+    <span class="ds-question__posted">Mar 08 at 07:46 PM</span>
+    <h1 class="ds-question__title">Weird behaviour with VALUE and SWITCH</h1>
+    <div class="ds-question__meta-list">
+        <span class="ds-question__meta">335 Views</span>
+            <span class="ds-question__meta">Last edit Mar 08 at 07:50 PM</span>
+            <a href="/revisions/13314582.html" class="ds-question__meta ds-question__meta-link">2 rev</a>
+    </div>
+</div>
+
+    <div id='follow-question-container' class="ds-question__follow-container">
+        <button type="button"
+                class="ds-button ds-button--action-secondary ds-button--icon-button ds-question__follow-btn">
+            <i class="ds-icon--checked ds-icon--regular ds-m-r-xs" tabindex="-1"></i>Follow
+        </button>
+        <div class="ds-rss-dropdown ds-question__follow-btn">
+            <button type="button"
+                    class="ds-button ds-button--secondary ds-button--icon-button ds-rss-dropdown__opener"
+                    aria-haspopup="true" aria-expanded="false" aria-controls="ds-rss-dropdown-popup"><i
+                        class="ds-icon-encoded--rss ds-icon--regular ds-m-r-xs" tabindex="-1"></i>RSS Feed
+            </button>
+        </div>
+    </div>
+
+    <div class="ds-question__right-container">
+        <div class="ds-question__content">
+            <p>
+ 
+ 
+  <p>Today I encountered a strange behaviour after I added a SWITCH statement in a VALUE assignment.</p>
+  <p>Let's assume there is a simple table with two columns ID and TXT:</p> 
+  <pre>  TYPES: BEGIN OF _test,
+           id   TYPE char02,
+           txt  TYPE string,
+         END OF _test,
+         _test_t TYPE STANDARD TABLE OF _test WITH DEFAULT KEY.
+</pre>
+  <p>Then there is a simple VALUE statement to fill the table:</p> 
+  <pre>  DATA(test) =  VALUE _test_t(
+      ( id = 'AA'   txt = 'AAA' )
+      ( id = 'bb'   txt = 'bbb' )
+      (             txt = 'CCC' )     ).
+</pre>
+  <p>Not a big deal and works as expected:</p> 
+  <pre>ID | TXT
+---+-----
+AA | AAA
+bb | bbb
+   | CCC</pre>
+  <p>Then I added the SWITCH statement because line #2 should have a different value depending on a variable:</p> 
+  <pre>  DATA(test) =  VALUE _test_t(
+      ( id = 'AA' txt = 'AAA' )
+      ( SWITCH #( sy-uname(1)
+         WHEN 'E' THEN VALUE #( id = 'BB'  txt = 'BBB' )
+                  ELSE VALUE #( id = 'bb'  txt = 'bbb' ) ) )
+      ( txt = 'CCC' ) ).</pre>
+  <p>As my username starts with E the result looks - also expected - like this:</p> 
+  <pre>ID | TXT
+---+-----
+AA | AAA
+BB | BBB
+   | CCC</pre>
+  <p>But then for any reason I didn't want to have the field ID filled in the first line and changed my code accordingly:</p> 
+  <pre>  DATA(test) =  VALUE _test_t(
+      ( txt = 'AAA' )              &quot;Value for ID deleted!
+      ( SWITCH #( sy-uname(1)
+         WHEN 'E' THEN VALUE #( id = 'BB'  txt = 'BBB' )
+                  ELSE VALUE #( id = 'bb'  txt = 'bbb' ) ) )
+      ( txt = 'CCC' ) ).</pre>
+  <p>The expected result would be, that line #2 is the only line where field ID is filled:</p> 
+  <pre>ID | TXT
+---+-----
+   | AAA
+BB | BBB
+   | CCC</pre>
+  <p>But the result is the following:</p> 
+  <pre>ID | TXT
+---+-----
+   | AAA
+BB | BBB
+BB | CCC</pre>
+  <p>Line #3 is filled with ID = &quot;BB&quot; although I do not tell the system to do so... </p>
+  <p>I tested on two different SAP-Systems:</p>
+  <ul> 
+   <li>SAP_ABA 750/ SAP_BASIS 750</li> 
+   <li>SAP_ABA 75E/ SAP_BASIS 754</li> 
+  </ul>
+  <p>Can anyone proof this behavior or tell me what I am doing wrong?</p>
+  <p>Thanks in advance<br> ~Enno</p>
+ 
+</p>
+        </div>
+        <div id="questionBottomContainer"></div>
+    </div>
+
+</div>
+<div class="ds-flexCol-12 ds-flexCol-md-4 ds-flexCol-lg-3">
+<div id="assigned-tags-container"></div>
+<div id="side-bar-widget-container"></div>
+
+<script>
+    const sidebarConstants =
+    {
+        questionTitle: "Weird behaviour with VALUE and SWITCH",
+        questionId: "13314582",
+        primaryTag: {
+            id: "833755570260738661924709785639136",
+            title: "ABAP Development",
+            url: "/tags/833755570260738661924709785639136"
+            },
+        additionalTags: [],
+        userTags: [
+                    {
+                        id: "value",
+                        title: "value",
+                        url: "/topics/value.html"
+                    },
+                
+                    {
+                        id: "switch",
+                        title: "switch",
+                        url: "/topics/switch.html"
+                    },
+                ]
+    }
+</script>
+</div>
+
+<script src="https://static.community.services.sap/designmate/v3/136/latest/designmate_light.js" type="text/javascript"></script>
+<script src="/themes/sap-v3/dist/509.min.525d797f62554c4b7b19.js"></script><script src="/themes/sap-v3/dist/229.min.9d5f729d77ee0fdeccf0.js"></script><script src="/themes/sap-v3/dist/858.min.6bc212c0c55299c487ab.js"></script><script src="/themes/sap-v3/dist/423.min.1a6e4852b1a00237e170.js"></script><script src="/themes/sap-v3/dist/594.min.a481c3f7a40e30e5bde3.js"></script><script src="/themes/sap-v3/dist/question-detail-page.min.017575fc6ce55f818d77.js"></script>        </div>
+    </div>
+
+    <div class="ds-question-detail__answer-container">
+        <div class="ds-flexGrid">
+            <div id="question-replies" class="question-replies ds-flexRow">
+                    <div class="ds-flexCol-12 ds-flexCol-md-10 ds-flexCol-lg-10">
+        <div id="answer-sorting-container"></div>
+
+    <div class="ds-answer__list" id="answers-list"></div>
+    <div class="ds-answer__pagination" id="answers-pagination"></div>
+                    </div>
+                    <div class="ds-flexCol-12 ds-flexCol-md-12 ds-flexCol-lg-12">
+        <div id="answer-form">
+        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+  </section>
+
+<div id="shared-footer" class="dm-wrapper shared-header">
+    <footer class="dm-footer">
+    <div class="dm-footer__inner-wrapper">
+        <div class="dm-socialmedia">
+            <h5 class="dm-socialmedia__headline" id="hl-sharefollow">Find us on</h5>
+            <ul class="dm-socialmedia__links" aria-labelledby="hl-sharefollow">
+                <li><a href="https://www.facebook.com/sapcommunity" title="Facebook"><span class="dm-icon-encoded--facebook"></span></a></li>
+                <li><a href="https://twitter.com/SAPCommunity" title="Twitter"><span class="dm-icon-encoded--twitter"></span></a></li>
+                <li><a href="https://www.youtube.com/c/SAPCommunities" title="YouTube"><span class="dm-icon-encoded--youtube"></span></a></li>
+                <li><a href="https://www.linkedin.com/company/sap" title="LinkedIn"><span class="dm-icon-encoded--linkedin"></span></a></li>
+                <li><a href="https://instagram.com/sap/" title="Instagram"><span class="dm-icon-encoded--instagram"></span></a></li>
+                <li><a href="http://www.slideshare.net/SAP" title="Slideshare"><span class="dm-icon-encoded--slideshare"></span></a></li>
+                <li><a href="mailto:?subject='SAP Community'" title="Email Share"><span class="dm-icon-encoded--email"></span></a></li>
+            </ul>
+        </div>
+        <nav role="navigation" class="dm-footer__navigation">
+            <ul class="dm-footer__navigation__list" aria-label="footer navigation">
+                <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+                <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+                <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+                <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+                <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+                <li id="teconsent"></li>
+                <li><a href="https://www.sap.com/cmp/nl/sap-community-voice/index.html" target="_blank">Newsletter</a></li>
+                <li><a href="mailto:sapnetwork@sap.com" target="_blank">Support</a></li>
+            </ul>
+        </nav>
+    </div>
+</footer></div>
+</div>
+
+<script type="text/javascript" src="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/js/scn-header.min.js"></script>
+<script type="text/javascript" src="https://static.community.services.sap/designmate/v3/136/latest/header.js"></script>
+<script type="text/javascript" src="https://static.community.services.sap/designmate/v3/136/latest/subheader.js"></script>
+
+<script type="text/javascript">
+    var headerInitArgs = {"system" : "answers"};
+    //breadcrumb section
+    headerInitArgs.breadcrumbItems = [
+        {
+            text : "Questions",
+            href : "/index.html"
+        }
+    ];
+    //end breadcrumb
+
+    scnHeader.init(window.headerInitArgs);
+    setCookie("userArgs", window.headerInitArgs.user ? JSON.stringify(window.headerInitArgs.user) : "", { path : "/" });
+</script>
+
+
+        <script type="text/javascript">_satellite.pageBottom();</script>
+</body>
+
+</html>

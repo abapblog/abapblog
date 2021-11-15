@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>SOLID | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/solid/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:11:31 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>SOLID в ABAP</title>
+		<link>https://abap-blog.ru/osnovy-abap/solid/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/solid/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 12 Nov 2014 19:26:54 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[SOLID]]></category>
+		<category><![CDATA[ООП]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2376</guid>
+
+					<description><![CDATA[<p>При проектировании объектно-ориентированных систем (классов), важно соблюдать основополагающие принципы проектирования. К ним можно отнести список правил, составленных Робертом Мартином, которые известны под именем SOLID. SOLID это аббревиатура, где каждая из букв обозначает отдельное правило: S &#8212; (Single responsibility principle &#8212; SRP), принцип единственной обязанности. На каждый класс должна быть возложена единственная обязанность. O – (Open/closed [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/solid/">SOLID в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>При проектировании объектно-ориентированных систем (классов), важно соблюдать основополагающие принципы проектирования. К ним можно отнести список правил, составленных Робертом Мартином, которые известны под именем <a href="https://ru.wikipedia.org/wiki/SOLID_(%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BD%D0%BE-%D0%BE%D1%80%D0%B8%D0%B5%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B5_%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5)">SOLID</a>. SOLID это аббревиатура, где каждая из букв обозначает отдельное правило:</p>
+<ul>
+<li>S &#8212; (Single responsibility principle &#8212; SRP), принцип единственной обязанности. На каждый класс должна быть возложена единственная обязанность.</li>
+<li>O – (Open/closed principle &#8212; OCP), принцип открытости-закрытости. Программные сущности должны быть открыты для расширения, но закрыты для изменения.</li>
+<li>L – (Liskov substitution principle &#8212; LSP), принцип подстановки Барбары Лисков. Объекты в программе могут быть заменены их наследниками без изменения свойств программы.</li>
+<li>I – (Interface segregation principle &#8212; ISP), принцип разделения интерфейса. Много специализированных интерфейсов лучше, чем один универсальный.</li>
+<li>D – (Dependency inversion principle &#8212; DIP), принцип инверсии зависимостей. Зависимости внутри системы строятся на основе абстракций. Модули верхнего уровня не зависят от модулей нижнего уровня. Абстракции не должны зависеть от деталей. Детали должны зависеть от абстракций.</li>
+</ul>
+<p>Далее мы рассмотрим каждый из принципов подробнее.<span id="more-2376"></span></p>
+<h2><a href="https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF_%D0%B5%D0%B4%D0%B8%D0%BD%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9_%D0%BE%D0%B1%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8">Принцип единственной обязанности</a></h2>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/11/godmode.jpg"><img loading="lazy" class="alignnone wp-image-2377" src="http://abap-blog.ru/wp-content/uploads/2014/11/godmode.jpg" alt="godmode" width="416" height="307" srcset="https://abap-blog.ru/wp-content/uploads/2014/11/godmode.jpg 782w, https://abap-blog.ru/wp-content/uploads/2014/11/godmode-300x221.jpg 300w" sizes="(max-width: 416px) 100vw, 416px" /></a></p>
+<p><strong>Формулировка</strong>: не должно быть более одной причины для изменения класса.</p>
+<p>Приведенная картинка очень хорошо помогает представить суть данного принципа и проблему, которую он решает. Имея некий класс, решающий одну поставленную на него задачу, мы вкладываем в него еще и действия для него не предназначенные, тем самым усложняя наш инструмент – класс, как для сопровождения, так и для понимания. Кроме того, велика вероятность того, что меняя одну из обязанностей такого класса, мы затронем и другие. Рассмотрим пример класса, отправляющего почтовое сообщение:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_mail_sender DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      mail_send IMPORTING iv_receiver   TYPE STRING
+                          iv_theme      TYPE STRING
+                          iv_attachment TYPE XSTRING.
+ENDCLASS.  
+  
+CLASS lcl_mail_sender IMPLEMENTATION.
+  METHOD mail_send.
+    DATA: lo_logger TYPE REF TO zcl_db_logger.
+    " Отправка e-mail сообщения...
+    " Формирование журнала
+    CREATE OBJECT lo_logger
+      EXPORTING
+        iv_tabname = 'ZLOG'
+        iv_logname = 'MYLOG'.
+    
+    lo_logger-&gt;write( 'Сообщение успешно отправлено' ).
+  ENDMETHOD.
+ENDCLASS.</pre><p>Как видно внутри метода по отправке сообщения используется некий класс для логирования и записи лога по отправке в таблицу, т.е. метод в итоге выполняет два действия, первое он отправляет сообщение, а вторым он решает каким способом будет вестись журнал.</p>
+<p>Если завтра нам потребуется изменить способ записи в журнал, нам будет нужно исправить класс отправки сообщений, хотя эти изменения не касаются исправления логики отправки сообщений.</p>
+<p>Для предотвращения подобных проблем нужно вынести определение класса для ведения журнала на уровень выше, чтобы наш класс не решал подобную задачу. Исправленный код будет выглядеть следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_mail_sender DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      constructor IMPORTING iv_logger TYPE REF TO zif_logger.
+      mail_send IMPORTING iv_receiver   TYPE STRING
+                          iv_theme      TYPE STRING
+                          iv_attachment TYPE XSTRING.
+  PRIVATE SECTION.
+    DATA:
+      mv_logger TYPE REF TO zif_logger.
+ENDCLASS.  
+  
+CLASS lcl_mail_sender IMPLEMENTATION.
+  METHOD constructor.
+    mv_logger = iv_logger.
+  ENDMETHOD.
+  
+  METHOD mail_send.
+    " Отправка e-mail сообщения...
+    " Формирование журнала    
+    mv_logger-&gt;write( 'Сообщение успешно отправлено' ).
+  ENDMETHOD.
+ENDCLASS.</pre><p>При создании экземпляра класса для отправки сообщений, мы будем передавать ему ссылку на класс поддерживающий интерфейс zif_logger, который содержит публичный метод write. Таким образом, класс отправки сообщений не будет знать каким способом ему нужно сделать запись в журнал, он просто её сделает.</p>
+<p>Еще одним классическим примером нарушения данного принципа является проектирования класса, который внутри себя делает все что угодно, так называемого GOD OBJECT который может все, загружать файл, отправлять почту, проводить валидацию данных и еще кучу всевозможной бизнес-логики.</p>
+<h2><a href="https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF_%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D1%82%D0%BE%D1%81%D1%82%D0%B8/%D0%B7%D0%B0%D0%BA%D1%80%D1%8B%D1%82%D0%BE%D1%81%D1%82%D0%B8">Принцип открытости/закрытости</a></h2>
+<p><strong>Формулировка</strong>: классы должны быть открытыми для расширения и закрытыми для изменения.</p>
+<p>При предъявлении новых требований к классам следует избегать их модификации, стараясь реализовывать возможность их расширения, код должен быть более гибким для расширения. Выгода в данном случае такова, что не потребуется пересматривать уже существующий код и тесты, написанные для него. Соответственно не потребуется тестировать заново всю функциональность.</p>
+<p>Рассмотренный ранее пример класса для отправки сообщения и решение проблемы единственной обязанности так же является хорошим примером для демонстрации принципа открытости/закрытости. В первом варианте класс определял конкретный способ ведения журнала внутри себя, во втором варианте мы сделали класс открытым для расширения в части ведения журнала, после чего мы сможем вести запись в журнал каким-либо угодно способом, не влияя на уже проверенную логику отправки сообщений.</p>
+<p>Рассмотрим другой пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_order DEFINITION ABSTRACT.
+ENDCLASS.
+
+CLASS lcl_sales_order DEFINITION INHERITING FROM lcl_order.
+ENDCLASS.
+
+CLASS lcl_purchase_order DEFINITION INHERITING FROM lcl_order.
+ENDCLASS.
+
+CLASS lcl_db_writer DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      save_order IMPORTING io_order TYPE REF TO lcl_order.
+ENDCLASS.
+
+CLASS lcl_sales_order IMPLEMENTATION.
+ENDCLASS.
+
+CLASS lcl_purchase_order IMPLEMENTATION.
+ENDCLASS.
+
+CLASS lcl_db_writer IMPLEMENTATION.
+  METHOD save_order.
+    DATA:
+      lo_sales_order TYPE REF TO lcl_sales_order,
+      lo_purchase_order TYPE REF TO lcl_purchase_order.
+
+    TRY.
+      lo_sales_order ?= io_order.
+      " Логика сохранения сбытового заказа
+    CATCH cx_sy_move_cast_error.
+    ENDTRY.
+
+    TRY.
+      lo_purchase_order ?= io_order.
+      " Логика сохранения закупочного заказа
+    CATCH cx_sy_move_cast_error.
+    ENDTRY.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA:
+    go_db_writer TYPE REF TO lcl_db_writer,
+    go_sales_order TYPE REF TO lcl_sales_order.
+
+  CREATE OBJECT go_db_writer.
+  CREATE OBJECT go_sales_order.
+
+  go_db_writer-&gt;save_order( go_sales_order ).</pre><p>В примере 4 класса: класс закупочного и сбытового заказа, унаследованные от базового абстрактного класса заказ и класс, сохраняющий все типы заказов в базу данных. Как видно из примера, при добавлении нового типа заказа нам потребуется вносить изменения в класс записи в БД, что является нарушением рассматриваемого принципа. Избежать подобной проблемы можно путем выноса логики сохранения в БД для каждого типа заказа:</p><pre class="urvanov-syntax-highlighter-plain-tag">INTERFACE lif_db_save.
+  METHODS:
+    save.
+ENDINTERFACE.
+
+CLASS lcl_order DEFINITION ABSTRACT.
+  PUBLIC SECTION.
+    INTERFACES: lif_db_save.
+    ALIASES save FOR lif_db_save~save.
+ENDCLASS.
+
+CLASS lcl_sales_order DEFINITION INHERITING FROM lcl_order.
+  PUBLIC SECTION.
+    METHODS:
+      save REDEFINITION.
+ENDCLASS.
+
+CLASS lcl_purchase_order DEFINITION INHERITING FROM lcl_order.
+  PUBLIC SECTION.
+    METHODS:
+      save REDEFINITION.
+ENDCLASS.
+
+CLASS lcl_sales_order IMPLEMENTATION.
+  METHOD save.
+    " Логика сохранения сбытового заказа
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS lcl_purchase_order IMPLEMENTATION.
+  METHOD save.
+    " Логика сохранения закупочного заказа
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS lcl_order IMPLEMENTATION.
+  METHOD lif_db_save~save.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA:
+    go_sales_order TYPE REF TO lcl_sales_order.
+
+  CREATE OBJECT go_sales_order.
+
+  go_sales_order-&gt;save( ).</pre><p></p>
+<h2><a href="https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF_%D0%BF%D0%BE%D0%B4%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B8_%D0%91%D0%B0%D1%80%D0%B1%D0%B0%D1%80%D1%8B_%D0%9B%D0%B8%D1%81%D0%BA%D0%BE%D0%B2">Принцип замещения Лисков</a></h2>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/11/liskov.jpg"><img loading="lazy" class="alignnone wp-image-2378" src="http://abap-blog.ru/wp-content/uploads/2014/11/liskov.jpg" alt="liskov" width="531" height="425" srcset="https://abap-blog.ru/wp-content/uploads/2014/11/liskov.jpg 750w, https://abap-blog.ru/wp-content/uploads/2014/11/liskov-300x240.jpg 300w" sizes="(max-width: 531px) 100vw, 531px" /></a></p>
+<p><strong>Формулировка</strong>: наследуемый класс должен дополнять, а не замещать поведение базового класса.</p>
+<p>Впервые этот принцип <a href="http://portal.acm.org/citation.cfm?id=62141">был упомянут</a> <a href="http://www.pmg.csail.mit.edu/~liskov/">Барбарой Лисков</a> в 1987 году на научной конференции, посвященной объектно-ориентированному программированию.</p>
+<p>Рассмотрим пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_rectangle DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      constructor IMPORTING iv_height TYPE i
+                            iv_width  TYPE i,
+      get_area RETURNING VALUE(rv_area) TYPE i,
+      get_height RETURNING VALUE(rv_height) TYPE i,
+      get_width  RETURNING VALUE(rv_width)  TYPE i.
+  PROTECTED SECTION.
+    DATA:
+      mv_height TYPE i,
+      mv_width  TYPE i.
+ENDCLASS.
+
+CLASS lcl_square DEFINITION INHERITING FROM lcl_rectangle.
+  PUBLIC SECTION.
+    METHODS:
+      get_width REDEFINITION.
+ENDCLASS.
+
+CLASS lcl_rectangle IMPLEMENTATION.
+  METHOD constructor.
+    mv_height = iv_height.
+    mv_width  = iv_width.
+  ENDMETHOD.
+
+  METHOD get_area.
+    rv_area = get_height( ) * get_width( ).
+  ENDMETHOD.
+
+  METHOD get_height.
+    rv_height = mv_height.
+  ENDMETHOD.
+
+  METHOD get_width.
+    rv_width = mv_width.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS lcl_square IMPLEMENTATION.
+  METHOD get_width.
+    rv_width = mv_height.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA:
+    go_rectangle TYPE REF TO lcl_rectangle,
+    gv_area TYPE i.
+
+  PERFORM get_shape CHANGING go_rectangle.
+  gv_area = go_rectangle-&gt;get_area( ).
+  WRITE gv_area.
+
+
+FORM get_shape CHANGING co_shape TYPE REF TO lcl_rectangle.
+  DATA:
+    lo_square TYPE REF TO lcl_square.
+
+  CREATE OBJECT lo_square
+    EXPORTING
+      iv_height = 10
+      iv_width  = 3.
+
+  co_shape ?= lo_square.
+ENDFORM.</pre><p>В результате расчёта площади прямоугольника мы увидим значение 100, а не 30.  В примере видно, что был создан квадрат, а не прямоугольник и площадь рассчитана верно, но представьте себе ситуацию, когда полученная ссылка на объект прямоугольника будет использована где-нибудь далеко от места создания квадрата, в лучшем случае нам потребуется отладка чтобы выяснить что работает не так.</p>
+<p>Решение проблемы:</p>
+<ul>
+<li>Классы прямоугольник и квадрат должны быть разных типов, квадрат не должен быть унаследован от прямоугольника</li>
+<li>Класс квадрат должен агрегировать класс прямоугольник.</li>
+</ul>
+<p>Отличный пример данного принципа рассмотрен <a href="http://habrahabr.ru/post/83269/">здесь</a>.</p>
+<h2><a href="https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF_%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0">Принцип разделения интерфейса</a></h2>
+<p><strong>Формулировка</strong>: много специализированных интерфейсов лучше, чем один универсальный.</p>
+<p>Принцип разделения интерфейсов говорит о том, что слишком «толстые» интерфейсы необходимо разделять на более маленькие и специфические, чтобы клиенты маленьких интерфейсов знали только о методах, которые необходимы им в работе. В итоге, при изменении метода интерфейса не должны меняться клиенты, которые этот метод не используют.</p>
+<p>Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_order DEFINITION ABSTRACT.
+  PUBLIC SECTION.
+    METHODS:
+      set_supplier, " Установить поставщика
+      set_customer. " Установить клиента.
+ENDCLASS.
+
+CLASS lcl_sales_order DEFINITION INHERITING FROM lcl_order.
+  PUBLIC SECTION.
+    METHODS:
+      set_supplier, " Установить поставщика
+      set_customer. " Установить клиента.
+ENDCLASS.
+
+CLASS lcl_purchase_order DEFINITION INHERITING FROM lcl_order.
+  PUBLIC SECTION.
+    METHODS:
+      set_supplier, " Установить поставщика
+      set_customer. " Установить клиента.
+ENDCLASS.
+
+CLASS lcl_sales_order IMPLEMENTATION.
+  METHOD set_customer.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS lcl_purchase_order IMPLEMENTATION.
+  METHOD set_supplier.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS lcl_order IMPLEMENTATION.
+  METHOD set_supplier.
+  ENDMETHOD.
+  
+  METHOD set_customer.
+  ENDMETHOD.
+ENDCLASS.</pre><p>Как видно из примера базовый абстрактный класс «заказ» имеет два метода: установить поставщика, установить клиента. Первый метод будет использоваться в интерфейсе класса закупочного заказа, а второй в сбытовом заказе. При этом оба класса будут наследовать совершенно не нужные для их работы методы. Выходом из этой ситуации будет создание в иерархии наследования еще двух базовых абстрактных классов, один для заказов по закупке, другой для заказов по продаже:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_order DEFINITION ABSTRACT.
+ENDCLASS.
+
+CLASS lcl_sales_abstract DEFINITION ABSTRACT INHERITING FROM lcl_order.
+  PUBLIC SECTION.
+    METHODS:
+      set_customer ABSTRACT. " Установить клиента.
+ENDCLASS.
+
+CLASS lcl_purchase_abstract DEFINITION ABSTRACT INHERITING FROM lcl_order.
+  PUBLIC SECTION.
+    METHODS:
+      set_supplier ABSTRACT. " Установить поставщика
+ENDCLASS.
+
+CLASS lcl_sales_order DEFINITION INHERITING FROM lcl_sales_abstract.
+  PUBLIC SECTION.
+    METHODS:
+      set_customer REDEFINITION. " Установить клиента.
+ENDCLASS.
+
+CLASS lcl_purchase_order DEFINITION INHERITING FROM lcl_purchase_abstract.
+  PUBLIC SECTION.
+    METHODS:
+      set_supplier REDEFINITION. " Установить поставщика
+ENDCLASS.
+
+CLASS lcl_sales_order IMPLEMENTATION.
+  METHOD set_customer.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS lcl_purchase_order IMPLEMENTATION.
+  METHOD set_supplier.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS lcl_order IMPLEMENTATION.
+ENDCLASS.</pre><p>В рассматриваемом примере, под интерфейсом понималось определение интерфейса класса (методов), но это так же справедливо и для отдельных интерфейсов.</p>
+<h2><a href="https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF_%D0%B8%D0%BD%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D0%B8_%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B5%D0%B9">Принцип инверсии зависимостей</a></h2>
+<p><strong>Формулировка</strong>: модули верхних уровней не должны зависеть от модулей нижних уровней. Оба типа модулей должны зависеть от абстракций. Абстракции не должны зависеть от деталей. Детали должны зависеть от абстракций.</p>
+<p>Робертом Мартином были определены показатели качества дизайна, которые устраняются с применением Принципа инверсии зависимости:</p>
+<ul>
+<li>Жесткость. Изменение одного модуля ведет к изменению других модулей.</li>
+<li>Хрупкость. Изменения в одном модуле приводят к неконтролируемым ошибкам в других частях программы.</li>
+<li>Неподвижность. Модуль сложно отделить от остальной части приложения для повторного использования.</li>
+</ul>
+<p>Рассмотрим пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_product DEFINITION.
+  PUBLIC SECTION.
+    DATA:
+      mv_cost   TYPE i,
+      mv_name   TYPE string,
+      mv_count  TYPE i.
+    METHODS:
+      constructor IMPORTING
+        iv_cost   TYPE i
+        iv_name   TYPE string
+        iv_count  TYPE i.
+ENDCLASS.                    "lcl_product DEFINITION
+
+CLASS lcl_warehouse DEFINITION.
+  PUBLIC SECTION.
+    TYPES:
+      ty_t_products TYPE STANDARD TABLE OF REF TO lcl_product WITH DEFAULT KEY.
+    METHODS:
+      constructor,
+      get_products RETURNING value(rt_products) TYPE ty_t_products.
+  PRIVATE SECTION.
+    DATA:
+      mt_products TYPE ty_t_products.
+ENDCLASS.                    "lcl_warehouse DEFINITION
+
+CLASS lcl_discount_scheme DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      get_discount IMPORTING io_product TYPE REF TO lcl_product
+                   RETURNING VALUE(rv_discount) TYPE i.
+ENDCLASS.
+
+CLASS lcl_product_service DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      get_all_discounts RETURNING VALUE(rv_all_discounts) TYPE i.
+ENDCLASS.
+
+CLASS lcl_product_service IMPLEMENTATION.
+  METHOD get_all_discounts.
+    DATA:
+      lo_warehouse TYPE REF TO lcl_warehouse,
+      lo_discount_scheme TYPE REF TO lcl_discount_scheme,
+      lt_products TYPE lcl_warehouse=&gt;ty_t_products,
+      lo_product TYPE REF TO lcl_product.
+
+    CREATE OBJECT lo_warehouse.
+    CREATE OBJECT lo_discount_scheme.
+
+    lt_products = lo_warehouse-&gt;get_products( ).
+    LOOP AT lt_products INTO lo_product.
+      rv_all_discounts = rv_all_discounts + lo_discount_scheme-&gt;get_discount( lo_product ).
+    ENDLOOP.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS lcl_discount_scheme IMPLEMENTATION.
+  METHOD get_discount.
+    CASE io_product-&gt;mv_name.
+      WHEN 'Мясо'.
+        rv_discount = 1.
+      WHEN 'Молоко'.
+        rv_discount = 2.
+      WHEN 'Творог'.
+        rv_discount = 3.
+    ENDCASE.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS lcl_warehouse IMPLEMENTATION.
+  METHOD get_products.
+    rt_products = mt_products.
+  ENDMETHOD.                    "get_products
+
+  METHOD constructor.
+    DATA:
+      lo_product TYPE REF TO lcl_product.
+
+    DEFINE add_product.
+      create object lo_product
+        exporting
+          iv_cost  = &amp;1
+          iv_name  = &amp;2
+          iv_count = &amp;3.
+
+      append lo_product to mt_products.
+    END-OF-DEFINITION.
+
+    add_product 10 'Мясо' 10.
+    add_product 20 'Молоко' 20.
+    add_product 30 'Творог' 30.
+  ENDMETHOD.                    "constructor
+ENDCLASS.                    "lcl_warehouse IMPLEMENTATION
+
+CLASS lcl_product IMPLEMENTATION.
+  METHOD constructor.
+    mv_cost = iv_cost.
+    mv_name = iv_name.
+    mv_count = iv_count.
+  ENDMETHOD.                    "constructor
+ENDCLASS.                    "lcl_product IMPLEMENTATION
+
+START-OF-SELECTION.
+  DATA:
+    lo_product_service TYPE REF TO lcl_product_service,
+    lv_all_discounts   TYPE i.
+
+  CREATE OBJECT lo_product_service.
+  lv_all_discounts = lo_product_service-&gt;get_all_discounts( ).
+
+  WRITE lv_all_discounts.</pre><p>Обратите внимание на класс lcl_product_service. Структура класса такова:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/11/INVER1.png"><img loading="lazy" class="alignnone size-full wp-image-2379" src="http://abap-blog.ru/wp-content/uploads/2014/11/INVER1.png" alt="INVER1" width="433" height="225" srcset="https://abap-blog.ru/wp-content/uploads/2014/11/INVER1.png 433w, https://abap-blog.ru/wp-content/uploads/2014/11/INVER1-300x155.png 300w" sizes="(max-width: 433px) 100vw, 433px" /></a></p>
+<p>Пунктирными линиями указаны вызовы. lcl_product_service зависит от реализации lcl_warehouse и lcl_discount_scheme.</p>
+<p>Такой дизайн не является гибким, т.к. по факту мы не можем без изменения lcl_product_service рассчитать скидку на товары, которые могут быть не только на складе. Так же нет возможности подсчитать скидку по другой карте скидок (с другим lcl_discount_scheme).</p>
+<p>Согласно OCP и LSP нужно выделить использование реализаций lcl_warehouse и lcl_discount_scheme из lcl_product_service при помощи абстракций:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_product DEFINITION.
+  PUBLIC SECTION.
+    DATA:
+      mv_cost   TYPE i,
+      mv_name   TYPE string,
+      mv_count  TYPE i.
+    METHODS:
+      constructor IMPORTING
+        iv_cost   TYPE i
+        iv_name   TYPE string
+        iv_count  TYPE i.
+ENDCLASS.                    "lcl_product DEFINITION
+
+INTERFACE lif_product_storage.
+  TYPES:
+    ty_t_products TYPE STANDARD TABLE OF REF TO lcl_product WITH DEFAULT KEY.
+  METHODS:
+    get_products RETURNING VALUE(rt_products) TYPE ty_t_products.
+ENDINTERFACE.
+
+CLASS lcl_warehouse DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_product_storage.
+    ALIASES: get_products FOR lif_product_storage~get_products.
+    METHODS:
+      constructor.
+  PRIVATE SECTION.
+    DATA:
+      mt_products TYPE lif_product_storage~ty_t_products.
+ENDCLASS.                    "lcl_warehouse DEFINITION
+
+INTERFACE lif_discount_scheme.
+  METHODS:
+    get_discount IMPORTING io_product TYPE REF TO lcl_product
+                       RETURNING VALUE(rv_discount) TYPE i.
+ENDINTERFACE.
+
+CLASS lcl_discount_scheme DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_discount_scheme.
+    ALIASES: get_discount FOR lif_discount_scheme~get_discount.
+ENDCLASS.
+
+CLASS lcl_product_service DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      get_all_discounts
+        IMPORTING
+          io_warehouse TYPE REF TO lif_product_storage
+          io_discount_scheme TYPE REF TO lif_discount_scheme
+        RETURNING VALUE(rv_all_discounts) TYPE i.
+ENDCLASS.
+
+CLASS lcl_product_service IMPLEMENTATION.
+  METHOD get_all_discounts.
+    DATA:
+      lt_products TYPE lif_product_storage=&gt;ty_t_products,
+      lo_product TYPE REF TO lcl_product.
+
+    lt_products = io_warehouse-&gt;get_products( ).
+    LOOP AT lt_products INTO lo_product.
+      rv_all_discounts = rv_all_discounts + io_discount_scheme-&gt;get_discount( lo_product ).
+    ENDLOOP.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS lcl_discount_scheme IMPLEMENTATION.
+  METHOD lif_discount_scheme~get_discount.
+    CASE io_product-&gt;mv_name.
+      WHEN 'Мясо'.
+        rv_discount = 1.
+      WHEN 'Молоко'.
+        rv_discount = 2.
+      WHEN 'Творог'.
+        rv_discount = 3.
+    ENDCASE.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS lcl_warehouse IMPLEMENTATION.
+  METHOD lif_product_storage~get_products.
+    rt_products = mt_products.
+  ENDMETHOD.                    "get_products
+
+  METHOD constructor.
+    DATA:
+      lo_product TYPE REF TO lcl_product.
+
+    DEFINE add_product.
+      create object lo_product
+        exporting
+          iv_cost  = &amp;1
+          iv_name  = &amp;2
+          iv_count = &amp;3.
+
+      append lo_product to mt_products.
+    END-OF-DEFINITION.
+
+    add_product 10 'Мясо' 10.
+    add_product 20 'Молоко' 20.
+    add_product 30 'Творог' 30.
+  ENDMETHOD.                    "constructor
+ENDCLASS.                    "lcl_warehouse IMPLEMENTATION
+
+CLASS lcl_product IMPLEMENTATION.
+  METHOD constructor.
+    mv_cost = iv_cost.
+    mv_name = iv_name.
+    mv_count = iv_count.
+  ENDMETHOD.                    "constructor
+ENDCLASS.                    "lcl_product IMPLEMENTATION
+
+START-OF-SELECTION.
+  DATA:
+    lo_product_service TYPE REF TO lcl_product_service,
+    lo_warehouse TYPE REF TO lcl_warehouse,
+    lo_discount_scheme TYPE REF TO lcl_discount_scheme,
+    lv_all_discounts   TYPE i.
+
+  CREATE OBJECT lo_product_service.
+  CREATE OBJECT lo_warehouse.
+  CREATE OBJECT lo_discount_scheme.
+
+  lv_all_discounts = lo_product_service-&gt;get_all_discounts( io_warehouse = lo_warehouse io_discount_scheme = lo_discount_scheme ).
+
+  WRITE lv_all_discounts.</pre><p>Представление кода в UML:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/11/inver2.png"><img loading="lazy" class="alignnone size-full wp-image-2380" src="http://abap-blog.ru/wp-content/uploads/2014/11/inver2.png" alt="inver2" width="560" height="320" srcset="https://abap-blog.ru/wp-content/uploads/2014/11/inver2.png 560w, https://abap-blog.ru/wp-content/uploads/2014/11/inver2-300x171.png 300w" sizes="(max-width: 560px) 100vw, 560px" /></a></p>
+<p>Сплошные стрелки означают наследование. Обратите внимание на стрелки от lcl_warehouse и lcl_discount_scheme &#8212; они поменяли направление. Теперь от lcl_warehouse и lcl_discount_scheme ничего не зависит. Наоборот &#8212; они зависят от абстракций. Поэтому принцип так и назван &#8212; инверсии зависимости. Теперь мы можем передавать любую схему расчёта скидок, как и любой склад.</p>
+<p>Список источников:</p>
+<ul>
+<li><a href="https://ru.wikipedia.org/wiki/SOLID_(%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BD%D0%BE-%D0%BE%D1%80%D0%B8%D0%B5%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B5_%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5)">Wiki</a></li>
+<li><a href="http://blog.byndyu.ru/2009/10/solid.html">http://blog.byndyu.ru/2009/10/solid.html</a></li>
+<li><a href="http://igor.quatrocode.com/2008/09/solid-top-5.html">http://igor.quatrocode.com/2008/09/solid-top-5.html</a></li>
+<li><a href="http://blog.muradovm.com/2012/03/solid.html">http://blog.muradovm.com/2012/03/solid.html</a></li>
+</ul><p>The post <a href="https://abap-blog.ru/osnovy-abap/solid/">SOLID в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/solid/feed/</wfw:commentRss>
+			<slash:comments>3</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

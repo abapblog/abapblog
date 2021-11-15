@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>bapi | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/bapi/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:59:12 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Remote Function Call</title>
+		<link>https://abap-blog.ru/network/remote-function-call/</link>
+					<comments>https://abap-blog.ru/network/remote-function-call/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 19 Mar 2012 11:41:39 +0000</pubDate>
+				<category><![CDATA[Сетевые технологии]]></category>
+		<category><![CDATA[aRFC]]></category>
+		<category><![CDATA[bapi]]></category>
+		<category><![CDATA[bgRFC]]></category>
+		<category><![CDATA[IN BACKGROUND TASK]]></category>
+		<category><![CDATA[IN UPDATE TASK]]></category>
+		<category><![CDATA[qRFC]]></category>
+		<category><![CDATA[Remote Function Call]]></category>
+		<category><![CDATA[RFC]]></category>
+		<category><![CDATA[STARTING NEW TASK]]></category>
+		<category><![CDATA[tRFC]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=621</guid>
+
+					<description><![CDATA[<p>Remote Function Call (RFC, удалённый вызов функций) – стандартный интерфейс для обмена данными между SAP и не SAP системами. Интерфейс передачи данных основан на CPI-C или TCP/IP. Стандартная справка по теме RFC или курс BC415. Особенности RFC функций Когда вы вызываете ФМ локально, он работает в том же рабочем процессе что и вызывающая программа. Если вы [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/network/remote-function-call/">Remote Function Call</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Remote Function Call (RFC, удалённый вызов функций) – стандартный интерфейс для обмена данными между SAP и не SAP системами. Интерфейс передачи данных основан на CPI-C или TCP/IP. Стандартная <a href="http://help.sap.com/saphelp_nw70/helpdata/en/6f/1bd5b6a85b11d6b28500508b5d5211/frameset.htm" target="_blank" rel="noopener">справка по теме RFC</a> или курс BC415.</p>
+<p><span id="more-621"></span></p>
+<h3>Особенности RFC функций</h3>
+<ul>
+<li>Когда вы вызываете ФМ локально, он работает в том же рабочем процессе что и вызывающая программа. Если вы вызываете ФМ удаленно, он запускается в отдельном рабочем процессе (ЛЕР – LUW, логическая единица работы) если удаленная система является R/3 системой.</li>
+<li>В качестве удаленной системы могут быть R/3 система, R/2 система или другая внешняя не SAP система, для не SAP систем существует специальная RFC-SDK библиотека, с помощью которой может быть реализован клиент-сервер для RFC.</li>
+<li>При вызове RFC модуля, в программе его вызывающий срабатывает неявный DB Commit (исключение tRFC, qRFC, bgRFC). Поэтому вызовы RFC не должны находиться между OpenSQL операторами.</li>
+<li>В интерфейсе ФМ RFC необходимо явно определять тип для каждого параметра, ссылки (LIKE) запрещены.</li>
+</ul>
+<p>Настроить назначение для RFC вызова можно через транзакцию SM59 (Таблица RFCDES). Подробнее о настройке RFC соединений можно посмотреть в курсе BC415.</p>
+<h3>Назначение RFC вызовов</h3>
+<p>Назначение RFC вызова определяется с помощью ключевого слова DESTINATION. В качестве параметра может принимать имя удаленной системы, SPACE, NONE, BACK.</p>
+<ul>
+<li>SPACE – локальный вызов ФМ (по умолчанию). В случае если не указать DESTINATION в параметрах вызова RFC, функция будет выполнена локально, как обычная без создания своего LUW.</li>
+</ul>
+<ul>
+<li>NONE – Запуск происходит так же локально, основное отличие в том, что вызов доходит до указанного в настройках шлюза и регистрируется в качестве удаленного вызова. Создается свой DB LUW.</li>
+<li>BACK – используется внутри синхронных RFC функций, для запуска RFC функций в той системе которая их вызвала.</li>
+</ul>
+<p><strong> </strong><strong> </strong></p>
+<h3>Обработка исключений при вызовах RFC</h3>
+<p>При вызове RFC модуля могут возникать следующие исключения:</p>
+<ul>
+<li>COMMUNICATION_FAILURE – возникает в том случае, когда не настроено соединение для указанной системы в поле DESTINATION, либо когда соединение не могло быть установлено.</li>
+<li>SYSTEM_FAILURE – возникает в случае, если на удаленной системе не существует вызываемого модуля, либо в случае других неполадок в RFC вызовах.</li>
+<li>RESOURCE_FAILURE – возникает при вызове асинхронных RFC, в случае если нет свободных ресурсов на сервере приложений группы.</li>
+</ul>
+<div></div>
+<h3>Типы RFC функций:</h3>
+<ol start="1">
+<li><strong>Синхронные </strong><strong>RFC (</strong><strong>sRFC)</strong> – при вызове sRFC рабочий процесс приостанавливает свою работу, до тех пор, пока не будет выполнен sRFC модуль. Модуль выполняется в отдельном DB LUW.</li>
+</ol>
+<p>В случае, когда вы вызываете несколько sRFC <strong>подряд</strong> из одной группы функций, глобальные данные группы функций будут доступны до тех пор, пока не будет вызвана последняя функция из данной группы.</p>
+<p>Если в sRFC внутри себя вызывает CALL SCREEN, CALL TRANSACTION или отображение списка, вызываемые экраны будут отображены в программе запустившей sRFC, но только если в SM59 указан диалоговый удаленный доступ, иначе система выдаст исключение SYSTEM_FAILURE.</p>
+<ol start="2">
+<li><strong>Асинхронные </strong><strong>RFC вызовы (</strong><strong>aRFC)</strong> – удаленная функция начинает работать параллельно сразу после её вызова, при этом рабочий процесс не приостанавливает свою работу. Асинхронный вызов срабатывает при вызове ФМ с ключевыми словами: STARTING NEW TASK &lt;ИмяЗадачи&gt;. Модуль выполняется в отдельном DB LUW. aRFC можно так же использовать в фоновом выполнении.</li>
+</ol>
+<p>Для получения результатов работы aRFC необходимо при вызове указать на процедуру обработки результатов, задается она с помощью ключевого слова: <strong>PERFORMING</strong> &lt;ИмяПроцедуры&gt; <strong>ON END OF TASK</strong>. Процедура в качестве первого параметра должна содержать переменную, в которую будет записано имя задачи (имя данной переменной не имеет значения). Для получения данных из aRFC, внутри данной процедуры, используется <strong>обязательная </strong>команда (если ее не задать в процедуре, система выдаст исключение &#8212; COMMUNICATION_FAILURE): <strong>RECEIVE RESULTS FROM FUNCTION</strong> &lt;ИмяARFC&gt;, c параметрами IMPORTING, TABLES, EXCEPTIONS которые будут переданы из aRFC.</p>
+<p>Процедура не должна иметь в своем теле операторы, прерывающие выполнение программы, такие как: CALL SCREEN, SUBMIT, COMMIT WORK, WAIT, RFC вызовы, сообщения с типами W и I.</p>
+<p>Для ожидания выполнения aRFC вызовов существует ключевое слово WAIT UNTIL &lt;Условие&gt;. Если после вызова aRFC условие выполняется, программа сразу же начинает свое выполнение после WAIT UNTIL. В случае если не выполняется, программа снова проверяет условие. Данный процесс повторяется до тех пор, пока условие не будет выполнено или не будут выполнены все aRFC вызовы.</p>
+<p>Пример программы запускающей 2 aRFC функции и ожидающей выполнение обоих:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zaRFC_demo.
+
+DATA:
+  lv_flag1, lv_flag2.
+
+CALL FUNCTION 'Z_PAR_TEST'
+  STARTING NEW TASK 'TASK1'
+  PERFORMING receive_results_from_rfc ON END OF TASK
+  EXPORTING
+    COUNT           = 2.
+
+CALL FUNCTION 'Z_PAR_TEST'
+  STARTING NEW TASK 'TASK2'
+  PERFORMING receive_results_from_rfc ON END OF TASK
+  EXPORTING
+    COUNT           = 2.
+
+WAIT UNTIL lv_flag1 = abap_true AND lv_flag2 = abap_true.
+IF sy-subrc = 0.
+  WRITE 'Все aRFC выполнены успешно'.
+ELSE.
+  WRITE 'Все aRFC закончены, однако условие не выполнено'.
+ENDIF.
+
+FORM receive_results_from_rfc USING taskname.
+  CASE taskname.
+    WHEN 'TASK1'. lv_flag1 = abap_true.
+    WHEN 'TASK2'. lv_flag2 = abap_true.
+  ENDCASE.
+  " Обязательно необходимо вызвать получение результата работы aRFC
+  RECEIVE RESULTS FROM FUNCTION 'Z_PAR_TEST'.
+ENDFORM.
+FUNCTION Z_PAR_TEST.
+*"----------------------------------------------------------------------
+*"*"Локальный интерфейс:
+*" IMPORTING
+*" VALUE(COUNT) TYPE I
+*" EXPORTING
+*" VALUE(INDEX) TYPE I
+*"----------------------------------------------------------------------
+
+  DATA: tmp TYPE float.
+
+  DO 5000000 TIMES.
+    tmp = tmp * 2.  " Умножение 0 на 2 очень длительная операция ;)
+  ENDDO.
+
+  INDEX = tmp.
+
+ENDFUNCTION.</pre><p>Если в качестве имени задачи в вызове aRFC указать TASK3, условия выполнены не будут.</p>
+<p>aRFC вызовы могут вызываться в одной SAP системе, но на разных серверах приложений, тем самым распределяя нагрузку между ними. Для распределения aRFC вызовов между серверами приложений служат так называемые RFC группы (тр. SM59). Для определения в какой именно группе вызывать aRFC служит ключевое слово – <strong>DESTINATION IN GROUP</strong> &lt;ИмяГруппы&gt;.  Если в качестве имени группы указать DEFAULT, вызов будет происходить на любой из определенных групп, в зависимости от их загруженности, если все группы будут заняты, система выдаст исключение – RESOURCE_FAILURE.</p>
+<p><a href="http://help.sap.com/saphelp_nwpi71/helpdata/en/fa/096e92543b11d1898e0000e8322d00/frameset.htm" target="_blank" rel="noopener">SAP Help на тему распараллеливания.</a></p>
+<p>Пример распараллеливания вычислений с помощью групп:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  ztst_call_async_rfc.
+
+PARAMETERS: p_para TYPE char1 DEFAULT 'X' AS CHECKBOX.
+
+TYPES: BEGIN OF t_tasklist,
+         taskname(4) TYPE C,        " Задача
+         RESULT      TYPE char50,   " Статус обработки
+      END OF t_tasklist.
+
+DATA:
+      lv_calls TYPE I VALUE 10,               " Количество запусков функции
+      lv_max_tasks TYPE I,                    " Переменная для хранения максимального числа задач
+      lv_free_tasks TYPE I,                   " Переменная для хранения числа свободных задач
+      lv_number_of_tasks_in_use TYPE I,       " Количество задач в работе
+      lv_started_rfc_calls TYPE I VALUE 0,    " Кол-во запущенных задач
+      lv_finished_rfc_calls TYPE I VALUE 0,   " Кол-во завершенных задач
+      lv_exception_flag(1) TYPE C,            " Флаг ошибки запуска задачи из-за нехватки ресурсов
+      lv_taskname(4) TYPE N VALUE '0001',     " Имя задачи
+      lt_tasklist TYPE TABLE OF t_tasklist.   " Журнал обработки RFC вызовов.
+
+DATA: " Для обработки времени работы
+      lv_start_time TYPE timestampl,
+      lv_end_time   TYPE timestampl,
+      lv_diff       TYPE timestampl.
+
+FIELD-SYMBOLS: &lt;fs_tasklist&gt; TYPE t_tasklist.
+
+START-OF-SELECTION.
+  IF p_para EQ 'X'.
+    GET TIME STAMP FIELD lv_start_time.
+* Получение максимального числа задач и кол-во свободных для использования задач.
+    CALL FUNCTION 'SPBT_INITIALIZE'
+      EXPORTING
+        group_name                     = ''
+      IMPORTING
+        max_pbt_wps                    = lv_max_tasks
+        free_pbt_wps                   = lv_free_tasks
+      EXCEPTIONS
+        invalid_group_name             = 1
+        internal_error                 = 2
+        pbt_env_already_initialized    = 3
+        currently_no_resources_avail   = 4
+        no_pbt_resources_found         = 5
+        cant_init_different_pbt_groups = 6
+        OTHERS                         = 7.
+
+    IF sy-subrc &lt;&gt; 0.
+      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+              WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+    ELSE.
+      WRITE : / 'Макисмальное число задач для выполнения параллельно обработки: ', 80 lv_max_tasks RIGHT-JUSTIFIED.
+      WRITE : / 'Доступное кол-во задач: ', 50 lv_free_tasks RIGHT-JUSTIFIED.
+      ULINE.
+
+      DO lv_calls TIMES.
+        PERFORM call_rfc. " Запуск RFC задачи
+        " call_rfc - запускает на выполнение RFC функцию в отдельном задаче (асинхронно),
+        " в случае если нет свободных задач, или произошла ошибка выделения задачи,
+        " ожидает пока не завершаться предыдущие задачи, после завершения продолжает данный цикл.
+      ENDDO.
+      " Последняя задержка пока не отработают все "последние" задачи.
+      WAIT UNTIL lv_finished_rfc_calls = lv_calls.
+
+      SKIP 2.
+      WRITE : / 'Журнал работы RFC функций:'.
+      ULINE.
+      LOOP AT lt_tasklist ASSIGNING &lt;fs_tasklist&gt;.
+        WRITE : / &lt;fs_tasklist&gt;-taskname,
+                  &lt;fs_tasklist&gt;-RESULT.
+      ENDLOOP.
+
+      SKIP.
+      GET TIME STAMP FIELD lv_end_time.
+      lv_diff = lv_end_time - lv_start_time.
+      WRITE: /(50) 'Время работы', lv_diff.
+    ENDIF.
+  ELSE.
+    GET TIME STAMP FIELD lv_start_time.
+    " Запуск функции в последовательной обработке
+    DO lv_calls TIMES.
+      CALL FUNCTION 'Z_PAR_TEST'
+        EXPORTING
+          COUNT  = 2
+        EXCEPTIONS
+          OTHERS = 99.
+    ENDDO.
+    GET TIME STAMP FIELD lv_end_time.
+    lv_diff = lv_end_time - lv_start_time.
+    WRITE: /(50) 'Время работы', lv_diff.
+
+  ENDIF.
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Form call_rfc
+*&amp;---------------------------------------------------------------------*
+* text
+*----------------------------------------------------------------------*
+FORM call_rfc.
+
+  ADD 1 TO lv_number_of_tasks_in_use.
+
+* Внимание: количество свободных задач для параллельной обработки делится между всеми
+* пользователями, крайне не желательно использовать все (lv_free_tasks) для расчётов,
+* их количество настраивается в тр. RZ12. В случае если все свободные задачи заняты кем
+* то, программа выдаст сообщение об ошибке (Нехватке ресурсов ПФЗ), после вызова SPBT_INITIALIZE
+
+  " Если количество процессов в работе будет превышать кол-во свободных задач,
+  " остановим программу на ожидание освобождения задач.
+  IF lv_number_of_tasks_in_use &gt; lv_free_tasks.
+    WRITE : / 'Ожидаем пока завершатся предыдущие задачи'.
+    WAIT UNTIL lv_number_of_tasks_in_use &lt; lv_free_tasks.
+  ENDIF.
+  CALL FUNCTION 'Z_PAR_TEST'
+    STARTING NEW TASK lv_taskname
+    "DESTINATION IN GROUP DEFAULT
+    PERFORMING receive_results_from_rfc ON END OF TASK
+    EXPORTING
+      COUNT           = 2
+* Так как используется асинхронный вызов RFC параметры импорта здесь не указываются,
+* результат работы будет получаен в форме receive...
+    EXCEPTIONS
+      communication_failure = 1
+      system_failure        = 2
+      resource_failure      = 3.
+
+* Чтобы узнать на каком сервере приложений будет запущена задача, необходимо сразу после запуска
+* воспользоваться ФМ - SPBT_GET_PP_DESTINATION
+* Чтобы исключить выполнение задачи на полученном сервере приложений используется ФМ: SPBT_DO_NOT_USE_SERVER
+*
+* Администрирование групп параллельной обработки выполняется через транзакцию - RZ12
+* Мануал по этому делу тут: http://help.sap.com/saphelp_nw04/helpdata/en/fa/096e92543b11d1898e0000e8322d00/frameset.htm
+* Пример обработки:
+** 1 - system crash occured on the receiving side
+** 2 - connection or communication problem with RFC-Destination
+* CALL FUNCTION 'SPBT_GET_PP_DESTINATION'
+* IMPORTING rfcdest = lf_rfcdest.
+*
+* CALL FUNCTION 'SPBT_DO_NOT_USE_SERVER'
+* EXPORTING server_name = lf_server
+* EXCEPTIONS
+* invalid_server_name = 1
+* no_more_resources_left = 2
+* pbt_env_not_initialized_yet = 3
+* OTHERS = 4.
+* IF sy-subrc &lt;&gt; 0.
+* cf_task_failure = chars. "e-message -&gt; missing log
+* EXIT.
+* ENDIF.
+
+  CASE sy-subrc.
+
+    WHEN 0.
+      WRITE : / 'Запущена новая задача с именем: ', lv_taskname.
+
+      APPEND INITIAL LINE TO lt_tasklist ASSIGNING &lt;fs_tasklist&gt;.
+      &lt;fs_tasklist&gt;-taskname = lv_taskname.
+
+      lv_started_rfc_calls = lv_started_rfc_calls + 1.
+      ADD 1 TO lv_taskname.
+
+    WHEN 1 OR 2.           "Communications failure
+* Означает что сервер приложений не доступен; нет необходимости обрабатывать данное исключение,
+    WHEN 3.                " Нет свободных задач, ожидаем.
+      IF lv_exception_flag = SPACE.
+        lv_exception_flag = 'X'.
+        WRITE : / 'Нет доступных задач ждем пока освободятся...'.
+        WAIT UNTIL lv_finished_rfc_calls &gt;= lv_started_rfc_calls.
+      ELSE.
+        WRITE : / 'Повторное ожидание освобождения задач...'.
+        WAIT UNTIL lv_finished_rfc_calls &gt;= lv_started_rfc_calls.
+
+        IF sy-subrc = 0.   " Ожидание было успешным
+          CLEAR lv_exception_flag.
+        ELSE.              " Ожидание прервано, сбой в RFC вызове, прерывание обработки
+          WRITE : / 'RFC вызов прерван'.
+          EXIT.
+        ENDIF.
+      ENDIF.
+  ENDCASE.
+
+ENDFORM.                    "call_rfc
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Form receive_results_from_rfc
+*&amp;---------------------------------------------------------------------*
+* text
+*----------------------------------------------------------------------*
+* --&gt;VALUE(P_TASKNAME) text
+*----------------------------------------------------------------------*
+FORM receive_results_from_rfc USING VALUE(p_taskname).
+  lv_number_of_tasks_in_use = lv_number_of_tasks_in_use - 1.
+
+* Обновить статус задачи
+  READ TABLE lt_tasklist WITH KEY taskname = p_taskname ASSIGNING &lt;fs_tasklist&gt;.
+  IF sy-subrc = 0.
+    &lt;fs_tasklist&gt;-RESULT = 'Задача успешно завершена'.
+  ELSE.
+    READ TABLE lt_tasklist WITH KEY taskname = lv_taskname ASSIGNING &lt;fs_tasklist&gt;.
+    IF sy-subrc = 0.
+      &lt;fs_tasklist&gt;-RESULT = 'Ошибка в обработке задачи'.
+    ENDIF.
+  ENDIF.
+
+* Получение результатов обработки функции, в данном случае ничего не получаем
+  RECEIVE RESULTS FROM FUNCTION 'Z_PAR_TEST'.
+
+  lv_finished_rfc_calls = lv_finished_rfc_calls + 1.
+ENDFORM.                    "RECEIVE_RESULTS_FROM_RFC</pre><p>aRFC вызовы так же как и sRFC могут вызывать внутри себя диалоги, но их использование в данном контексте выглядит сомнительно, более подробно рассмотрено в курсе (BC415).</p>
+<ol start="1">
+<li><strong>Транзакционные </strong><strong>RFC (</strong><strong>tRFC)</strong> – асинхронные и синхронные вызовы RFC отрабатывают каждый в своем DB LUW (ЛЕР), транзакционные RFC срабатывают в одном DB LUW, тем самым позволяют группировать их вызовы с возможностью отката в случае ошибок в одном из tRFC вызове. Запуск tRFC осуществляется с помощью ключевого слова IN BACKGROUND TASK. Программа, запустившая tRFC, не приостанавливает свою работу, вызов tRFC происходит тогда, когда программа вызовет COMMIT WORK. В момент вызова tRFC не происходит вызова неявного DB COMMIT. tRFC, так же как и aRFC вызываются асинхронно, однако получить результат работы этих функций как в aRFC невозможно. Для просмотра созданных tRFC-LUW служит транзакция SM58.</li>
+</ol>
+<p>Все tRFC вызовы сохраняются в таблицах: ARFCSSTATE и ARFCSDATA. Если вы не хотите вызывать tRFC немедленно после COMMIT WORK, вы можете вызвать ФМ START_OF_BACKGROUNDTASK (<strong>до </strong><strong>COMMIT</strong><strong>WORK</strong>) и задать время и дату запуска для накопленных tRFC вызовов.</p>
+<p>После выполнения COMMIT WORK в случае успешного локального обновления (в рамках LUW основной программы),  накопленные данные создают фоновую задачу, в случае успешного выполнения этой задачи все данные из таблиц tRFC удаляются. Если задача не была выполнена, срабатывает механизм повтора или отката.</p>
+<p>Так, например если связь с удаленной системой не была установлена, срабатывает автоматический повтор выполнения задания. По умолчанию количество повторов равно 30, интервал ожидания равен 15 минутам.</p>
+<p>В случае если во втором из двух tRFC вызовов произошел сбой, сообщение с типом A или X или вызов исключения через RAISE после успешного выполнения первого происходит следующее:</p>
+<ul>
+<li>Все изменения сделанные в текущем LUW (а он один на все tRFC) откатываются</li>
+<li>Происходит запись в журнал вызова tRFC (тр. SM58)</li>
+</ul>
+<p>Для принудительного отката всех изменений или отмены tRFC-LUW служит ФМ &#8212; RESTART_OF_BACKGROUNDTASK.</p>
+<p>В случае если вызовы tRFC происходят на разных системах (DESTINATION ‘A’, DESTIONATION ‘B’), для каждой из них создается свой tRFC-LUW, вызовы tRFC группируются в зависимости от назначения.</p>
+<p>Для вызова tRFC отдельно от остальных можно воспользоваться ключевым словом: AS SEPARATE UNIT.</p>
+<p>Каждый tRFC-LUW имеет свой уникальный ID, для его получения можно использовать ФМ: ID_OF_BACKGROUNDTASK (вызывать перед COMMIT WORK). Используя данный ID можно определить статус для tRFC-LUW через ФМ &#8212; STATUS_OF_BACKGROUNDTASK.</p>
+<ol start="2">
+<li><strong>qRFC – </strong><strong>RFC функции выполняемые в порядке очереди.</strong> При использовании tRFC мы не можем контролировать порядок запуска tRFC модулей, другими словами порядок их вызова может не соответствовать порядку их запуска. qRFC в отличие от tRFC, позволяют нам контролировать порядок их запуска.</li>
+</ol>
+<p>Для размещения tRFC вызовов в порядке FIFO (первый пришел, первый вышел) необходимо перед каждым tRFC вызовом указывать имя очереди, делается это с помощью ФМ: TRFC_SET_QUEUE_NAME:</p><pre class="urvanov-syntax-highlighter-plain-tag">CALL FUNCTION 'TRFC_SET_QUEUE_NAME' EXPORTING  qname = 'Q1'.
+CALL FUNCTION 'A1' IN BACKGROUND TASK.
+
+CALL FUNCTION 'TRFC_SET_QUEUE_NAME' EXPORTING  qname = 'Q1'.
+CALL FUNCTION 'A2' IN BACKGROUND TASK.
+
+COMMIT WORK.
+
+CALL FUNCTION 'TRFC_SET_QUEUE_NAME' EXPORTING  qname = 'Q1'.
+CALL FUNCTION 'B1' IN BACKGROUND TASK.
+
+CALL FUNCTION 'TRFC_SET_QUEUE_NAME' EXPORTING  qname = 'Q1'.
+CALL FUNCTION 'B2' IN BACKGROUND TASK.</pre><p>Имя очереди может содержать 24 символа, исключая % и *.</p>
+<p>Для администрирования qRFC вместо транзакции SM58 используется транзакция &#8212; SMQ1. Таблица, в которой хранятся данные qRFC &#8212; TRFCQOUT.</p>
+<ol start="1">
+<li><strong>Фоновые </strong><strong>RFC</strong><strong> (</strong><strong>bgRFC</strong><strong>). </strong>SAP рекомендует использовать их вместо tRFC и qRFC для лучшей производительности. bgRFC, в отличие от tRFC и qRFC, позволяют приложениям записывать данные полученные позже от вызванных программ. Кроме того можно организовывать зависимые последовательности вызовов, так например вызов создающий входящую поставку будет выполнен только после выполнения вызова создающего закупочный заказ. bgRFC вызываются с помощью ключевого слова IN BACKGROUND UNIT &lt;oref&gt;, где &lt;oref&gt; &#8212; ссылка на класс реализующий интерфейс IF_BGRFC_UNIT.</li>
+</ol>
+<p>Более подробная информация о bgRFC находится <a href="http://help.sap.com/saphelp_nw73ehp1/helpdata/EN/48/927c2caa6b17cee10000000a421937/frameset.htm" target="_blank" rel="noopener">тут</a>.</p>
+<h3>Транзакции, используемые при работе с RFC</h3>
+<ul>
+<li>ST22 – просмотр дампов, вызываемых RFC</li>
+<li>SMGW – монитор шлюза RFC подключений</li>
+<li>Журналы работы: на стороне вызовов – ST05, на стороне вызываемой системы SM59, на стороне шлюза – SMGW</li>
+</ul>
+<h3>BAPI функции</h3>
+<p>Для обмена бизнес данными, между SAP и не SAP системами, был создан так называемый Business Framework. Центральной его частью является хранилище бизнес объектов (BOR – Business Object Repository). Каждый бизнес объект обеспечивает объектно-ориентированный подход к хранению бизнес данных и работы с бизнес процессами. Например, вызывая методы бизнес объектов, мы тем самым манипулируем бизнес данными, за которые он отвечает, не заботясь о техническом вопросе (связях в таблицах и т.п.)</p>
+<p>Бизнес объект состоит из следующих частей:</p>
+<ul>
+<li>Технические данные – внутренний номер, номер релиза SAP системы, с которой он доступен и т.п.</li>
+<li>Список интерфейсов, которые поддерживает объект – интерфейс определяет поведенческую структуру объекта</li>
+<li>Ключевые поля – атрибуты, которые однозначно идентифицируют объект. (Номер закупочного заказа)</li>
+<li>Атрибуты – могут быть как поля из базы данных, так и рассчитываемые во время работы с объектом (виртуальные), ссылки на другие объекты (Бизнес объект «Заказ на закупку» например, может иметь ссылки на объекты входящих поставок)</li>
+<li>Методы – представляют собой вызовы R/3 транзакций, функциональных модулей или другого ABAP кода. BAPI как раз и представляют собой реализацию методов бизнес объектов.</li>
+<li>События – используются в основном в Workflow. Например, сделать рассылку поставщикам при создании закупочного заказа.</li>
+</ul>
+<p>BAPI – реализация метода бизнес объекта, представляет собой функциональный модуль RFC. BAPI могут вызываться как синхронно (COMMIT WORK <strong>AND </strong><strong>WAIT</strong>), так и асинхронно т.е. ожидая выполнения работы функции или нет.</p>
+<p>BAPI могут представлять различные действия над объектом:</p>
+<ul>
+<li>Создание объекта</li>
+<li>Запрос атрибутов объекта</li>
+<li>Изменение атрибутов объекта</li>
+</ul>
+<p>BAPI могут вызываться из различных приложений: офисных приложений (через VBA), JAVA и С++ программ и т.п.</p>
+<p>Все BAPI после своей работы возвращают результат в виде внутренней таблицы с одной из структур: BAPIRETURN, BAPIRETURN1, BAPIRET1, BAPIRET2, BAPIRET1_FIX. В связи с этим в BAPI нет обработки исключений как в стандартных ФМ. Все эти структуры содержат в себе следующие поля:</p>
+<ul>
+<li>TYPE – тип сообщения: S(uccess), E(rror), W(arning), I(nformation)</li>
+<li>ID (класс сообщений)</li>
+<li>NUMBER (номер сообщения в классе)</li>
+<li>MESSAGE (текст сообщения)</li>
+<li>MESSAGE_V1, MESSAGE_V2, MESSAGE_V3, MESSAGE_V4 (переменные сообщений)</li>
+</ul>
+<p>Если транзакция выполнена успешно, то в таблице RETURN не будет существовать записей с типом ошибки «Е». Должно присутствовать сообщение с типом ошибки «S».</p>
+<p>Обновление в BAPI всегда происходит в IN UPDATE TASK (см. документацию по ключевому слову IN UPDATE TASK или курс по обновлению БД – BC414). Внутри BAPI никогда не вызывается COMMIT WORK. Для подтверждения или отката LUW всегда должны использоваться ФМ: BAPI_TRANSCATION_COMMIT, BAPI_TRANSACTION_ROLLBACK, разница между данными ФМ и COMMIT WORK (ROLLBACK WORK) в том что они чистят внутренние переменные используемые при вызовах BAPI, если этого не делать могут возникать проблемы при повторном вызове BAPI. Все BAPI вызванные в программе до вызова BAPI_TRANSCATION_COMMIT (BAPI_TRANSCATION_ROLLBACK) вызываются в одном LUW. Для просмотра всех имеющихся в системе BAPI служит транзакция BAPI (запускает BAPI EXPLORER).</p>
+<p>Курс, в котором рассматривается создание собственных BAPI &#8212; BC417.</p><p>The post <a href="https://abap-blog.ru/network/remote-function-call/">Remote Function Call</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/network/remote-function-call/feed/</wfw:commentRss>
+			<slash:comments>6</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>LSMW &#8212; Инструкция</title>
+		<link>https://abap-blog.ru/others/legacy-system-migration-workbench/</link>
+					<comments>https://abap-blog.ru/others/legacy-system-migration-workbench/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 26 Jan 2012 10:51:34 +0000</pubDate>
+				<category><![CDATA[Прочее]]></category>
+		<category><![CDATA[bapi]]></category>
+		<category><![CDATA[Legacy System Migration Workbench]]></category>
+		<category><![CDATA[shdb]]></category>
+		<category><![CDATA[sm35]]></category>
+		<category><![CDATA[пакетный ввод]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=331</guid>
+
+					<description><![CDATA[<p>LSMW – инструмент для переноса данных из внешних систем в SAP систему.  Данные могут быть введены с помощью следующих технологий: Batch Input, Direct Input, BAPIs или IDocs. Далее инструкция как этим инструментом пользоваться. Принцип работы LSMW: Преимущества: LSMW – часть SAP системы не зависимая от платформы Большое количество возможностей по преобразованию данных Поддержка основных технологий [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/others/legacy-system-migration-workbench/">LSMW — Инструкция</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>LSMW – инструмент для переноса данных из внешних систем в SAP систему.  Данные могут быть введены с помощью следующих технологий: Batch Input, Direct Input, BAPIs или IDocs. Далее инструкция как этим инструментом пользоваться.</p>
+<p><span id="more-331"></span></p>
+<p>Принцип работы LSMW:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw1.png"><img loading="lazy" class="alignnone size-full wp-image-332" title="lw1" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw1.png" alt="" width="574" height="385" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw1.png 574w, https://abap-blog.ru/wp-content/uploads/2012/01/lw1-300x201.png 300w" sizes="(max-width: 574px) 100vw, 574px" /></a></p>
+<p>Преимущества:</p>
+<ul>
+<li>LSMW – часть SAP системы не зависимая от платформы</li>
+<li>Большое количество возможностей по преобразованию данных</li>
+<li>Поддержка основных технологий ввода: Bath Input, Direct Input, BAPIs, IDocs.</li>
+<li>Удобный путеводитель по миграции данных</li>
+<li>Является бесплатным инструментом для партнеров SAP</li>
+</ul>
+<p>Основные функции:</p>
+<ul>
+<li>Импорт данных (данные из файлов, электронных таблиц)</li>
+<li>Преобразование данных в необходимый формат</li>
+<li>Импорт данных в SAP систему.</li>
+</ul>
+<p>До того как применять LSMW необходимо убедиться в следующем:</p>
+<ul>
+<li>SAP система окончательно настроена и готова к вводу</li>
+<li>Решите, имеет ли смысл использовать инструмент, его использование оправдано на больших объемах данных. Скорость импорта для режима Direct Input и Bath Input примерно 10000 записей в час, величина может меняться в зависимости от аппаратной части сервера.</li>
+<li>Определитесь с транзакциями в SAP системе, через которые будете выполнять импорт данных.  Созданы ли стандартные объекты Direct Input, Batch Input, есть ли необходимые BAPI.</li>
+<li>Протестируйте выбранные транзакции вручную, определите, какие поля являются обязательными к заполнению.</li>
+<li>LSMW не извлекает данные из внешних систем, их необходимо предварительно подготовить. Формат файла должен соответствовать возможностям чтения файлов LSMW. Например: кодировка должна быть либо ASCII или IBM.</li>
+<li>Определитесь с методом импорта данных (BAPI, Direct Input и т.п.).</li>
+</ul>
+<h3>Предварительная настройка</h3>
+<p>Убедитесь что у пользователя, под которым будет происходить импорт, достаточные полномочия:</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="192"><strong>Уровень авторизации </strong></td>
+<td valign="top" width="192"><strong>Профиль</strong></td>
+<td valign="top" width="192"><strong>Функции</strong></td>
+</tr>
+<tr>
+<td valign="top" width="192">Просмотр</td>
+<td valign="top" width="192">B_LSMW_SHOW</td>
+<td valign="top" width="192">Пользователю разрешается просматривать все проекты LSMW</td>
+</tr>
+<tr>
+<td valign="top" width="192">Выполнение</td>
+<td valign="top" width="192">B_LSMW_EXEC</td>
+<td valign="top" width="192">Пользователь может выполнять и редактировать шаги проектов</td>
+</tr>
+<tr>
+<td valign="top" width="192">Изменение</td>
+<td valign="top" width="192">B_LSMW_CHG</td>
+<td valign="top" width="192">Пользователь обладает полномочиями на просмотр объекта LSMW, импорт и чтение данных.</td>
+</tr>
+<tr>
+<td valign="top" width="192">Администрирование</td>
+<td valign="top" width="192">B_LSMW_ALL</td>
+<td valign="top" width="192">Все полномочия на LSMW</td>
+</tr>
+</tbody>
+</table>
+<p>Внешний вид после запуска инструмента (транзакция LSMW):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw2.png"><img loading="lazy" class="alignnone size-full wp-image-333" title="lw2" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw2.png" alt="" width="816" height="285" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw2.png 816w, https://abap-blog.ru/wp-content/uploads/2012/01/lw2-300x104.png 300w" sizes="(max-width: 816px) 100vw, 816px" /></a></p>
+<p>Project – имя проекта, например «Логистика»</p>
+<p>Subproject – имя подпроекта, например «Закупки»</p>
+<p>Object – имя объекта LSMW который включает все операции по переносу данных, например «Заявка».</p>
+<p>С помощью кнопок на начальном экране можно:</p>
+<ul>
+<li>Запустить проект на выполнение</li>
+<li>Создать новый проект, объект</li>
+<li>Изменить проект</li>
+<li>Просмотреть все объекты LSMW в системе</li>
+<li>Просмотреть все свои объекты</li>
+<li>Просмотреть все объекты к проекту</li>
+<li>Изменить документацию к проекту</li>
+</ul>
+<h3>Администрирование</h3>
+<p>Для копирования, изменения, удаления объектов, проектов и подпроектов необходимо перейти в администрирование: Go to -&gt; Administration.</p>
+<h3>Импорт данных шаг за шагом</h3>
+<p>После выбора (создания) проекта, подпроекта и объекта LSMW нажмите ENTER, вы попадете на экран определения шагов для объекта:</p>
+<p><strong>ВНИМАНИЕ!</strong> При авторизации в SAP GUI на английском языке названия шагов отображаются на английском языке, при авторизации на русском языке, отображаются только номера шагов. Однако при работе на EN русские названия в считываемых файлах отображаются некорректно, поэтому загрузку следует осуществлять ТОЛЬКО с авторизацией на RU(русском) языке в SAP GUI.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw3.png"><img loading="lazy" class="alignnone size-full wp-image-334" title="lw3" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw3.png" alt="" width="908" height="662" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw3.png 908w, https://abap-blog.ru/wp-content/uploads/2012/01/lw3-300x218.png 300w" sizes="(max-width: 908px) 100vw, 908px" /></a></p>
+<p>С помощью кнопки Personal Menu вы определяете, какие шаги будут использоваться в объекте. Кнопка Object Overview позволяет посмотреть всю информацию по выбранному объекту.  Action Log – просмотр истории изменений, запусков. Execute – выполнить выбранный шаг. Для изменения шагов выберите Double Click = Change.</p>
+<h4>Определение атрибута объекта (Maintain Object Attributes)</h4>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw4.png"><img loading="lazy" class="alignnone size-full wp-image-335" title="lw4" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw4.png" alt="" width="576" height="689" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw4.png 576w, https://abap-blog.ru/wp-content/uploads/2012/01/lw4-250x300.png 250w" sizes="(max-width: 576px) 100vw, 576px" /></a></p>
+<ul>
+<li>Укажите, как будет происходить импорт данных однократно (once) или с периодичностью (periodic – в статье не рассмотрены).  При периодичном импорте необходимо настроить шаг (Frame Program for Periodic Data Transfer).</li>
+<li>Определите, какой тип импорта будете использовать: Standard Bath /Direct Input – заранее подготовленные программы, Batch Input Recording – ранее созданная запись пакетного ввода, (Для записи на начальном экране необходимо выбрать GoTo -&gt; Recordings) BAPI – использование методов бизнес объектов (BAPI), IDoc.</li>
+</ul>
+<h4>Определение пользовательских структур(Maintain Source Structures)</h4>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw5.png"><img loading="lazy" class="alignnone size-full wp-image-336" title="lw5" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw5.png" alt="" width="628" height="387" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw5.png 628w, https://abap-blog.ru/wp-content/uploads/2012/01/lw5-300x184.png 300w" sizes="(max-width: 628px) 100vw, 628px" /></a></p>
+<p>На данном шаге определяются имена пользовательских структур их описания и иерархия. Одна структура может включать несколько других, которые в свою очередь могут включать другие и т.д. Пользовательская структура заполняется из внешних данных, после чего используется для переноса данных в SAP систему.</p>
+<h4>Определение полей для структур(Maintain Source Structures)</h4>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw6.png"><img loading="lazy" class="alignnone size-full wp-image-337" title="lw6" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw6.png" alt="" width="748" height="603" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw6.png 748w, https://abap-blog.ru/wp-content/uploads/2012/01/lw6-300x241.png 300w" sizes="(max-width: 748px) 100vw, 748px" /></a></p>
+<p>Этот шаг определяет, из каких полей состоят пользовательские структуры. При создании поля можно определить ее тип, длину, имя, описание. Используя параметр «<strong>Selection Parameter for Import/Convert data</strong>» мы определяем, будет ли данное поле появляться на экране в шагах чтения, конвертации данных, если да то данные из файла будут считаны в соответствии с введенным значением в эти поля. Структуру можно скопировать из внешнего файла, репозитария, другого объекта.  При копировании из внешнего файла с разделением полей табуляцией можно воспользоваться Excel структура файла будет примерно такой:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw7.png"><img loading="lazy" class="alignnone size-full wp-image-338" title="lw7" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw7.png" alt="" width="708" height="459" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw7.png 708w, https://abap-blog.ru/wp-content/uploads/2012/01/lw7-300x194.png 300w" sizes="(max-width: 708px) 100vw, 708px" /></a></p>
+<h4>Определение связей структур (Maintain Structure Relations)</h4>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw8.png"><img loading="lazy" class="alignnone size-full wp-image-339" title="lw8" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw8.png" alt="" width="1024" height="768" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw8.png 1024w, https://abap-blog.ru/wp-content/uploads/2012/01/lw8-300x225.png 300w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></p>
+<p>На данном шаге определяется связь между структурами объекта импорта (Поля в структурах BAPI, поля для пакетного ввода и т.п.) и пользовательскими структурами. В приведенном выше примере структуры из пакетного ввода: BGR00, BKN00, BKNA1, BKNB1 будут заполнены из пользовательской структуры CUSTOMER_HEADER, структура BKNVK из CUSTOMER_CONTACTS. Обратите внимание на то, что многие программы пакетного ввода содержат структуры BGR00 и BI000, они должны быть заполнены всегда.</p>
+<h4>Определение связей и правил преобразования (Maintain Field Mapping and Conversion Rules)</h4>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw9.png"><img loading="lazy" class="alignnone size-full wp-image-340" title="lw9" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw9.png" alt="" width="794" height="567" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw9.png 794w, https://abap-blog.ru/wp-content/uploads/2012/01/lw9-300x214.png 300w" sizes="(max-width: 794px) 100vw, 794px" /></a></p>
+<p>На данном шаге определяется связь между полями пользовательских структур и полями структур назначения (Полями пакетного ввода, BAPI и др.), а так же правила преобразования. Все поля структур назначения, которые были заполнены на предыдущем шаге, будут отображены на этом экране. Поля содержат следующую информацию:</p>
+<ul>
+<li>Описание поля</li>
+<li>Присвоенное поле из структуры назначения</li>
+<li>Правило, по которому присваивается значение полю (Константа, пустое, присвоение и т.п.)</li>
+<li>Код программы преобразования</li>
+</ul>
+<p>Некоторые поля являются техническими и заполняются системой автоматически, правило для них присваивается как Default Settings (зеленые записи).  Изменение значений данных полей может повлиять на ход выполнения импорта.</p>
+<p>Система позволяет автоматически сделать присвоение полей, в случае если их имена совпадают: Extras -&gt; Auto-field Mapping.</p>
+<p>Правила присвоения полей:</p>
+<ul>
+<li><strong>Initial</strong>: Пустое значение для поля. Когда выбрано данное правило значение поля может принимать  следующие значения: для стандартного пакетного ввода – пустое символьное значение ‘’, для записи пакетного ввода ‘/’, для BAPI или IDoc для символьных полей ‘’, для полей числовых ‘0..00’.</li>
+<li><strong>Move</strong>: Работает так же, как и ABAP команда MOVE.</li>
+<li><strong>Constant:</strong> Значение по умолчанию.</li>
+<li><strong>Fixed value (reusable):</strong>  Присваивается значение переменной определенной на шаге <strong>Maintain Fixed Values, Translations, User-Defined Routine</strong>.</li>
+<li><strong>Translation (</strong><strong>reusable):</strong> Определяется порядок преобразования поля, само преобразование определяется в шаге <strong>Maintain Fixed Values, Translations, User-Defined Routine</strong>.</li>
+<li><strong>User-</strong><strong>written </strong><strong>routine (</strong><strong>reusable):</strong> Определяется имя кодировки для поля, сама кодировка так же определяется на шаге <strong>Maintain Fixed Values, Translations, User-Defined Routine</strong>.</li>
+<li><strong>Prefix</strong>: Задается значение, которое должно быть перед содержимым поля.</li>
+<li><strong>Suffix</strong>: Задается значение, которое должно быть после содержимого поля.</li>
+<li><strong>Concatenation</strong>: Вы можете задать объединение двух или нескольких исходных полей в одно поле назначения.</li>
+<li><strong>Transfer left-justified: </strong>записать содержимое с выравниванием по левому краю.</li>
+<li><strong>ABAP coding: </strong>задает кодировку ABAP для преобразования поля.  В кодировке можно использовать все поля исходной структуры, глобальные переменные, глобальные функции.</li>
+<li><strong>XField:</strong> специальная функция для IDocs и BAPI объектов. Функция заполняет так называемые X-структуры (структуры изменений для BAPI функций). В случае если поле было изменено, соответствующее поле X структуры должно иметь значение «Х». Следующий код генерируется автоматически:</li>
+</ul>
+<p>If not &lt;field in the data transfer structure&gt; is initial.<br />
+&lt;field in X-structure&gt; = ‘X’.<br />
+else.<br />
+&lt;field in X-structure&gt; = ‘’.<br />
+Endif.</p>
+<p>Нажав на кнопку выбора варианта и выбрав последние три галочки, вы можете определить дополнительную кодировку для событий до запуска транзакции, после запуска и т.п.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw10.png"><img loading="lazy" class="alignnone size-full wp-image-342" title="lw10" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw10.png" alt="" width="324" height="215" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw10.png 324w, https://abap-blog.ru/wp-content/uploads/2012/01/lw10-300x199.png 300w" sizes="(max-width: 324px) 100vw, 324px" /></a></p>
+<p>Например, кодировка <strong>__</strong><strong>BEGIN_</strong><strong>OF_</strong><strong>TRANSACTION__</strong>: ее выполнение начинается до момента обработки записи, в случае создание объекта в R3 на данном этапе можно проверить его существование в системе, в случае если он уже есть, пропустить текущую запись с помощью глобальной функции &#8212; <strong>skip_transaction</strong>. Таким образом, можно уберечься от падения в дамп сессии пакетного ввода при импорте данных.</p>
+<p>Кроме того кодировки позволяют динамически менять транзакции и записи пакетного ввода манипулируя полями bkn00-tcode и TABNAME. Например, в случае если объект присутствует в системе запустить пакетный ввод на его изменение.</p>
+<p>На шаге <strong>Maintain </strong><strong>Fixed </strong><strong>Values, </strong><strong>Translations, </strong><strong>User-</strong><strong>Defined </strong><strong>Routines </strong>с помощью правил преобразования (Translations) можно определить, чем будет заменены значения из исходных структур, определять правила как для конкретных значений, так и для диапазонов. Кроме того на этом шаге определяются константы используемые на предыдущем (Fixed Values) и кодировки которые вызываются не однократно (User-written routine).</p>
+<h4>Определение файлов(Specify Files)</h4>
+<p>На данном шаге определяются файлы:</p>
+<ul>
+<li>С вашими данными (Legacy Data)</li>
+<li>Файл с правилами чтения данных …lsmw.read ставится автоматически</li>
+<li>Файл с правилами преобразования данных …lsmw.conv ставится автоматически</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw11.png"><img loading="lazy" class="alignnone size-full wp-image-343" title="lw11" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw11.png" alt="" width="772" height="711" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw11.png 772w, https://abap-blog.ru/wp-content/uploads/2012/01/lw11-300x276.png 300w" sizes="(max-width: 772px) 100vw, 772px" /></a></p>
+<p>При присвоении файла с данными можно выбрать:</p>
+<ul>
+<li>Находится ли в файле содержимое одной структуры, либо файл содержит несколько структур (Data for one source structure или Data for multiple source structures)</li>
+<li>Определить разделители в файле между полями (; tab и др.)</li>
+<li>Содержит ли файл названия полей (Field names at start of file, необходимо чтобы имена совпадали с именами в пользовательской структуре)</li>
+<li>Совпадает ли порядок полей в файле с порядком в пользовательской структуре (Field Order Matches Source Structure Definition)</li>
+<li>Тип файла (Текстовый, бинарный) и кодовая страница по умолчанию (ASCII или IBM).</li>
+</ul>
+<p>На данном шаге можно определить шаблон для группы файлов, на рисунке ниже показано как это делается, в данном примере структура HEADER будет заполняться из набора файлов с именами файлов: PO HEADER * .txt, структура POSITION из файлов PO POSITION* .txt.  Обратите внимание что файлы с правилами чтения, преобразования так же создаются со значением «*» в имени файла, кроме того необходимо создать 2 набора (wildcards):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw12.png"><img loading="lazy" class="alignnone size-full wp-image-344" title="lw12" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw12.png" alt="" width="812" height="705" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw12.png 812w, https://abap-blog.ru/wp-content/uploads/2012/01/lw12-300x260.png 300w" sizes="(max-width: 812px) 100vw, 812px" /></a></p>
+<h4>Присвоение файлов структурам(Assign Files)</h4>
+<p>На данном этапе задается из какого файла будет читаться структура. Если структура одна данный шаг можно пропустить.</p>
+<h4>Генерация программы считывания (Generate Read Program)</h4>
+<p>На данном этапе генерируется программа чтения данных из файла. Можно пропустить.</p>
+<h4>Просмотр программы чтения (Generate Read Program)</h4>
+<p>Просмотр исходника программы чтения файлов. Можно пропустить.</p>
+<h4>Чтение данных (Read Data)</h4>
+<p>На данном шаге определяется количество записей, которые необходимо считать (Transaction Number).  Если при определении полей структуры было указано что поле должно показываться на экране выбора чтения/конвертации данных, так же его необходимо заполнить. Так же задаются правила для преобразования чисел и дат.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw13.png"><img loading="lazy" class="alignnone size-full wp-image-345" title="lw13" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw13.png" alt="" width="684" height="356" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw13.png 684w, https://abap-blog.ru/wp-content/uploads/2012/01/lw13-300x156.png 300w" sizes="(max-width: 684px) 100vw, 684px" /></a></p>
+<p>В данном случае при чтении файла проверяется поле CUSTOMERNUMBER.</p>
+<h4>Просмотр считанных данных (Display Read Data)</h4>
+<p>На данном шаге отображаются считанные из файлов данные.</p>
+<h4>Генерация программы преобразования (Generate Conversion Program)</h4>
+<p>На данном этапе генерируется программа по преобразованию считанных данных. Можно пропустить.</p>
+<h4>Конвертация данных (Convert Data)</h4>
+<p>На данном этапе производится преобразование считанных данных в поля объекта LSMW. (BAPI, поля Batch input и т.п.). Если в пользовательской структуре были поля указанные как поля ввода, необходимо их так же ввести.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw14.png"><img loading="lazy" class="alignnone size-full wp-image-346" title="lw14" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw14.png" alt="" width="684" height="356" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw14.png 684w, https://abap-blog.ru/wp-content/uploads/2012/01/lw14-300x156.png 300w" sizes="(max-width: 684px) 100vw, 684px" /></a></p>
+<h4>Просмотр присвоений после конвертации (Display Converted Data)</h4>
+<p>На данном шаге показываются все присвоения после конвертации данных.</p>
+<h4>Импорт данных</h4>
+<p>В зависимости от типа объекта LSMW далее будут отображены следующие шаги:</p>
+<ul>
+<li>Standard batch input or Recordings:   Generate batch input session – создание сессии пакетного ввода, Run batch input session – запуск сессии пакетного ввода.</li>
+<li>Standard direct input: start direct input session – запуск сессии direct input.</li>
+<li>BAPI или IDOCs: Start IDoc Creation, Start IDoc Processing, Create IDoc Overview, Start IDoc processing.</li>
+</ul>
+<p>После выполнения шагов по импорту данных, если все шаги были правильно определены, данные будут записаны в SAP систему.  При запуске в продуктивной системе, если расположение файлов не изменилось, выполнять пункты до определения файлов уже не нужно.</p>
+<h4>Перенос проектов LSMW.</h4>
+<p>Для переноса проекта LSMW в систему контроля качества (продуктивную систему) необходимо создать запрос на перенос. На главном экране LSMW Extras -&gt; Generate Change Request.  При переносе старый проект  удаляется и создается заново.</p>
+<h4>Экспорт/импорт проектов.</h4>
+<p>Для экспорта/импорта проектов в главном меню: Extras -&gt; Export (Import).</p>
+<h4>Запись пакетного ввода (Recordings)</h4>
+<p>Для создания записи пакетного ввода на начальном экране необходимо перейти по Go to -&gt; Recordings.  Обратите внимание, что при создании записи нет режима симуляции, т.е. все изменения которые совершите в системе, сохранятся в ней. Для объекта LSMW можно назначить несколько записей пакетного ввода.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw15.png"><img loading="lazy" class="alignnone size-full wp-image-347" title="lw15" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw15.png" alt="" width="816" height="643" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw15.png 816w, https://abap-blog.ru/wp-content/uploads/2012/01/lw15-300x236.png 300w" sizes="(max-width: 816px) 100vw, 816px" /></a></p>
+<p>Вы можете назначать полям пакетного ввода значения по умолчанию (столбец слева), поля которым присвоены имена (столбец справа &#8212; красные) на шаге «Maintain Field Mapping and Conversion Rules» будет возможно присваивать значения из пользовательской структуры (создавать привязку).</p><p>The post <a href="https://abap-blog.ru/others/legacy-system-migration-workbench/">LSMW — Инструкция</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/others/legacy-system-migration-workbench/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="hasSidebar hasPageActions hasBreadcrumb conceptual has-default-focus theme-light" lang="ru-ru" dir="ltr" data-css-variable-support="true" data-authenticated="false" data-auth-status-determined="false" data-target="docs" x-ms-format-detection="none">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta property="og:title" content="Установка WSL" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://docs.microsoft.com/ru-ru/windows/wsl/install" />
+			<meta property="og:description" content="Установите подсистему Windows для Linux с помощью команды wsl --install. Используйте терминал Bash на компьютере Windows под управлением следующих дистрибутивов Linux: Ubuntu, Debian, SUSE, Kali, Fedora, Pengwin, Alpine и пр." />
+		<meta property="og:image" content="https://docs.microsoft.com/en-us/media/logos/logo-ms-social.png" />
+		<meta property="og:image:alt" content="Microsoft Logo" />
+
+	<meta name="twitter:card" content="summary" />
+
+	<meta name="twitter:site" content="@docsmsft" />
+
+	<meta name="color-scheme" content="light dark">
+
+
+	<meta name="author" content="craigloewen-msft" />
+<meta name="breadcrumb_path" content="/windows/wsl/breadcrumb/toc.json" />
+<meta name="depot_name" content="WS.wsl" />
+<meta name="description" content="Установите подсистему Windows для Linux с помощью команды wsl --install. Используйте терминал Bash на компьютере Windows под управлением следующих дистрибутивов Linux: Ubuntu, Debian, SUSE, Kali, Fedora, Pengwin, Alpine и пр." />
+<meta name="document_id" content="0cc9a77f-e6a1-a719-c337-7ff7506a1ac8" />
+<meta name="document_version_independent_id" content="7ed8fb81-5b8f-4d56-7b89-bf600ce6080a" />
+<meta name="gitcommit" content="https://github.com/MicrosoftDocs/WSL.ru-RU/blob/b22121ff005d1fb347111ff8ade3c4f6d4cc0c8c/WSL/install.md" />
+<meta name="keywords" content="wsl, установка, bashonwindows, bash, подсистема windows для linux, установка ubuntu в windows, включение wsl2, linux в windows" />
+<meta name="locale" content="ru-ru" />
+<meta name="ms.author" content="crloewen" />
+<meta name="ms.contentlocale" content="ru-RU" />
+<meta name="ms.date" content="09/27/2021" />
+<meta name="ms.lasthandoff" content="09/28/2021" />
+<meta name="ms.localizationpriority" content="high" />
+<meta name="ms.locfileid" content="129147242" />
+<meta name="ms.openlocfilehash" content="467f623bf6eabef74dbcb5fa4f90fa471ef61299" />
+<meta name="ms.prod" content="dev-environment" />
+<meta name="ms.sourcegitcommit" content="fd39e8212a1d2fa55c5e0c5c3a775b59065886b7" />
+<meta name="ms.technology" content="windows-subsystem-for-linux" />
+<meta name="ms.topic" content="article" />
+<meta name="ms.translationtype" content="HT" />
+<meta name="original_content_git_url" content="https://github.com/MicrosoftDocs/WSL.ru-RU/blob/live/WSL/install.md" />
+<meta name="recommendations" content="true" />
+<meta name="schema" content="Conceptual" />
+<meta name="site_name" content="Docs" />
+<meta name="updated_at" content="2021-09-30 01:40 PM" />
+<meta name="page_type" content="conceptual" />
+<meta name="toc_rel" content="toc.json" />
+<meta name="word_count" content="517" />
+
+
+	<meta name="scope" content="WSL" />
+<link href="https://docs.microsoft.com/ru-ru/windows/wsl/install" rel="canonical">
+	<title>Установка WSL | Microsoft Docs</title>
+
+		<link rel="stylesheet" href="/_themes/docs.theme/master/ru-ru/_themes/styles/46dad2a9.site-ltr.css ">
+
+	
+
+	<script id="msdocs-script">
+	var msDocs = {
+		data: {
+			timeOrigin: Date.now(),
+			contentLocale: 'ru-ru',
+			contentDir: 'ltr',
+			userLocale: 'ru-ru',
+			userDir: 'ltr',
+			pageTemplate: 'Conceptual',
+			brand: '',
+			context: {
+
+			},
+			hasBinaryRating: true,
+			hasGithubIssues: false,
+			showFeedbackReport: false,
+			enableTutorialFeedback: false,
+			feedbackSystem: 'None',
+			feedbackGitHubRepo: '',
+			feedbackProductUrl: '',
+			contentGitUrl: 'https://github.com/MicrosoftDocs/WSL.ru-RU/blob/live/WSL/install.md',
+			extendBreadcrumb: true,
+			isEditDisplayable: false,
+			hideViewSource: false,
+			hasPageActions: true,
+			hasBookmark: true,
+			hasShare: true,
+			hasRecommendations: true,
+			contributors: [
+						{ name: "craigloewen-msft", url: "https://github.com/craigloewen-msft" },
+						{ name: "olprod", url: "https://github.com/olprod" }
+],
+		},
+		functions:{}
+	};
+	</script>
+	<script src="https://wcpstatic.microsoft.com/mscc/lib/v2/wcp-consent.js"></script>
+	<script src="https://js.monitor.azure.com/scripts/c/ms.jsll-3.min.js"></script>
+
+	<script src="/_themes/docs.theme/master/ru-ru/_themes/global/5cce29c0.deprecation.js"></script>
+		<script src="/_themes/docs.theme/master/ru-ru/_themes/scripts/f4cf38d2.index-docs.js"></script>
+</head>
+
+<body lang="ru-ru" dir="ltr">
+	<div class="header-holder has-default-focus">
+		<a href="#main" class="skip-to-main-link has-outline-color-text visually-hidden-until-focused position-fixed has-inner-focus focus-visible top-0 left-0 right-0 padding-xs has-text-centered has-body-background" tabindex="1">Пропустить и перейти к основному содержимому</a>
+
+		<div hidden id="cookie-consent-holder"></div>
+
+		<div id="unsupported-browser" style="
+			background-color: white;
+			color: black;
+			padding: 16px;
+			border-bottom: 1px solid grey;"
+			hidden
+		>
+			<div style="max-width: 800px; margin: 0 auto;">
+				<p style="font-size: 24px">Этот браузер больше не поддерживается.</p>
+				<p style="font-size: 16px; margin-top: 16px;">Выполните обновление до Microsoft Edge, чтобы воспользоваться новейшими функциями, обновлениями для системы безопасности и технической поддержкой.</p>
+				<div style="margin-top: 12px;">
+					<a href="https://go.microsoft.com/fwlink/p/?LinkID=2092881 "
+						style="
+						background-color: #0078d4;
+						border: 1px solid #0078d4;
+						color: white;
+						padding: 6px 12px;
+						border-radius: 2px;
+						display: inline-block;
+						">
+Скачать Microsoft Edge					</a>
+					<a href="https://docs.microsoft.com/en-US/lifecycle/faq/internet-explorer-microsoft-edge"
+						style="
+							background-color: white;
+							padding: 6px 12px;
+							border: 1px solid #505050;
+							color: #171717;
+							border-radius: 2px;
+							display: inline-block;
+							">
+Дополнительные сведения					</a>
+				</div>
+			</div>
+
+		</div>
+		<!-- liquid-tag banners global -->
+		<div id="headerAreaHolder" data-bi-name="header">
+<header role="banner" itemscope="itemscope" itemtype="http://schema.org/Organization">
+	<div class="nav-bar">
+		<div class="nav-bar-brand">
+			<a itemprop="url" href="https://www.microsoft.com" aria-label="Microsoft" class="nav-bar-button">
+				<div class="nav-bar-logo has-background-image theme-display is-light" role="presentation" aria-hidden="true" itemprop="logo" itemscope="itemscope"></div>
+				<div class="nav-bar-logo has-background-image theme-display is-dark is-high-contrast" role="presentation" aria-hidden="true" itemprop="logo" itemscope="itemscope"></div>
+			</a>
+		</div>
+	</div>
+	<div class="is-hidden"></div>
+</header>		</div>
+
+						<div class="content-header uhf-container has-padding has-default-focus border-bottom-none" data-bi-name="content-header">
+					<nav class="breadcrumb-holder has-padding-none has-padding-left-medium-tablet has-padding-right-medium-tablet has-padding-left-none-uhf-tablet has-padding-left-none-uhf-tablet has-padding-none-desktop flex-grow-1" data-bi-name="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList" role="navigation" aria-label="Навигатор">
+						<ul id="page-breadcrumbs" class="breadcrumbs">
+						</ul>
+					</nav>
+				<div class="content-header-controls">
+					<button type="button" class="contents-button button" data-bi-name="contents-expand" aria-haspopup="true">
+						<span class="icon"><span class="docon docon-menu" aria-hidden="true"></span></span>
+						<span class="contents-expand-title">Содержимое</span>
+					</button>
+					<button type="button" class="ap-collapse-behavior ap-expanded button" data-bi-name="ap-collapse" aria-controls="action-panel">
+						<span class="icon"><span class="docon docon-exit-mode" aria-hidden="true"></span></span>
+						<span>Выйти из режима фокусировки</span>
+					</button>
+				</div>
+				<div class="has-padding-none-tablet padding-xs font-size-sm display-flex justify-content-space-between flex-grow-1 page-action-holder">
+					<ul class="is-hidden-mobile action-list justify-content-flex-start has-flex-justify-content-end-tablet display-flex flex-wrap-wrap flex-grow-1 is-unstyled">
+						<li>
+							<a id="lang-link" class="button button button-clear button-sm" title="Прочитать на английском" data-bi-name="language-toggle">
+								<span id="lang-link-icon" class="icon docon docon-locale-globe" aria-hidden="true"></span>
+								<span id="lang-link-text" class="is-visually-hidden-touch is-hidden-portrait"></span>
+							</a>
+						</li>
+						<li>
+							<button type="button" class="collection button button-clear button-sm has-inner-focus" data-list-type="collection" data-bi-name="collection" title="Добавить в коллекцию">
+								<span class="icon" aria-hidden="true">
+									<span class="docon docon-circle-addition has-text-primary"></span>
+								</span>
+								<span class="collection-status is-visually-hidden-touch is-hidden-portrait">Сохранить</span>
+							</button>
+						</li>
+								<li id="contenteditbtn" hidden>
+									<a href="https://github.com/MicrosoftDocs/WSL.ru-RU/blob/live/WSL/install.md"  class=" button button-clear button-sm has-inner-focus" title="Редактировать этот документ" data-bi-name="edit">
+									<span class="icon" aria-hidden="true">
+										<span class="docon docon-edit-outline"></span>
+									</span>
+									<span class="is-visually-hidden-touch is-hidden-portrait">Изменить</span>
+								</a>
+							</li>
+						<li>
+<div class="sharing dropdown has-caret">
+	<button class="dropdown-trigger button button-clear button-sm button-block justify-content-flex-start has-inner-focus" aria-controls="sharing-menu" aria-expanded="false" title="Поделиться этим документом" data-bi-name="share">
+		<span class="icon" aria-hidden="true">
+			<span class="docon docon-sharing"></span>
+		</span>
+		<span class="is-visually-hidden-touch is-hidden-portrait">Поделиться</span>
+	</button>
+	<div class="dropdown-menu has-padding-small" id="sharing-menu">
+		<ul data-bi-name="share-links">
+			<li>
+				<a class="button button-clear button-sm button-block justify-content-flex-start has-inner-focus share-twitter" data-bi-name="twitter">
+					<span class="icon">
+						<span class="docon docon-brand-twitter has-text-primary" aria-hidden="true"></span>
+					</span>
+					<span>Twitter</span>
+				</a>
+			</li>
+			<li>
+				<a class="button button-clear button-sm button-block justify-content-flex-start has-inner-focus share-linkedin" data-bi-name="linkedin">
+					<span class="icon">
+						<span class="docon docon-brand-linkedin has-text-primary" aria-hidden="true"></span>
+					</span>
+					<span>LinkedIn</span>
+				</a>
+			</li>
+			<li>
+				<a class="button button-clear button-sm button-block justify-content-flex-start has-inner-focus share-facebook" data-bi-name="facebook">
+					<span class="icon">
+						<span class="docon docon-brand-facebook has-text-primary" aria-hidden="true"></span>
+					</span>
+					<span>Facebook</span>
+				</a>
+			</li>
+			<li>
+				<a class="button button-clear button-sm button-block justify-content-flex-start has-inner-focus share-email" data-bi-name="email">
+					<span class="icon">
+						<span class="docon docon-mail-message-fill has-text-primary" aria-hidden="true"></span>
+					</span>
+					<span>Адрес электронной почты</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>						</li>
+					</ul>
+					<button type="button" class="border contents-button  button button-clear button-sm is-hidden-tablet has-inner-focus" aria-label="Содержимое" data-bi-name="contents-expand">
+						<span class="icon">
+							<span class="docon docon-editor-list-bullet" aria-hidden="true"></span>
+						</span>
+						<span class="contents-expand-title">Оглавление</span>
+					</button>
+					<div class="is-invisible"></div>
+					<div class="is-hidden-tablet level-item is-flexible level-right">
+						<button type="button" class="page-actions-button  button button-clear button-sm is-hidden-tablet has-inner-focus border is-full-height  has-margin-left-small" aria-label="Действия страницы" data-bi-name="pageactions">
+							<span class="icon">
+								<span class="docon docon-more-vertical" aria-hidden="true"></span>
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
+
+
+
+		<div id="disclaimer-holder" class="has-overflow-hidden has-default-focus">
+			<!-- liquid-tag banners sectional -->
+		</div>
+	</div>
+
+	<div class="mainContainer  uhf-container has-top-padding  has-default-focus" data-bi-name="body">
+
+		<div class="columns has-large-gaps is-gapless-mobile ">
+
+			<div id="left-container" class="left-container is-hidden-mobile column is-one-third-tablet is-one-quarter-desktop">
+				<nav id="affixed-left-container" class="position-fixed display-flex flex-direction-column" role="navigation" aria-label="Основной"></nav>
+			</div>
+
+			<!-- .primary-holder -->
+			<section class="primary-holder column is-two-thirds-tablet is-three-quarters-desktop">
+				<!--div.columns -->
+				<div class="columns is-gapless-mobile has-large-gaps ">
+
+
+					<div id="main-column" class="column  is-full is-8-desktop">
+
+						<main id="main" role="main" class="content " data-bi-name="content" lang="ru-ru" dir="ltr">
+
+
+
+							<h1 id="install-wsl">Установка WSL</h1>
+
+								<ul class="metadata page-metadata" data-bi-name="page info" lang="ru-ru" dir="ltr">
+									<li>
+										<time class="is-invisible" data-article-date aria-label="Дата проверки статьи" datetime="2021-09-30T13:40:00Z" data-article-date-source="git">09/30/2021</time>
+									</li>
+											<li class="readingTime">Чтение занимает 2 мин</li>
+										<li class="contributors-holder">
+											<ul class="facepile has-margin-left-none is-small" data-bi-name="contributors">
+																<li class="facepile-item">
+																	<a href="https://github.com/craigloewen-msft" title="craigloewen-msft" aria-label="craigloewen-msftПрофиль GitHub" data-src="https://github.com/craigloewen-msft.png?size=32" data-contributor-name="craigloewen-msft" class="facepile-item-coin"
+																	>
+																		<img class="facepile-item-coin-image durable-image" aria-hidden="true" src="https://github.com/craigloewen-msft.png?size=32" role="presentation" onerror="this.className='facepile-item-coin-image durable-image has-error';"/>
+																		<span class="facepile-item-coin-text durable-image-fallback facepile-item-teal"aria-hidden="true">c</span>
+																	</a>
+																</li>
+																<li class="facepile-item">
+																	<a href="https://github.com/olprod" title="olprod" aria-label="olprodПрофиль GitHub" data-src="https://github.com/olprod.png?size=32" data-contributor-name="olprod" class="facepile-item-coin"
+																	>
+																		<img class="facepile-item-coin-image durable-image" aria-hidden="true" src="https://github.com/olprod.png?size=32" role="presentation" onerror="this.className='facepile-item-coin-image durable-image has-error';"/>
+																		<span class="facepile-item-coin-text durable-image-fallback facepile-item-red"aria-hidden="true">o</span>
+																	</a>
+																</li>
+											</ul>
+										</li>
+								</ul>
+
+								<nav id="center-doc-outline" class="doc-outline is-hidden-desktop" data-bi-name="intopic toc" role="navigation" aria-label="Структура статьи">
+									<h3>В этой статье</h3>
+								</nav>
+
+
+							<!-- <content> -->
+								<h2 id="prerequisites">Предварительные требования</h2>
+<p>Вам следует использовать Windows 10 версии 2004 и выше (сборка 19041 и выше) или Windows 11.</p>
+<div class="NOTE">
+<p>Примечание</p>
+<p>Чтобы проверить версию и номер сборки Windows, нажмите клавиши <strong>WINDOWS+R</strong>, введите <strong>winver</strong> и щелкните <strong>ОК</strong>. Вы можете <a href="ms-settings:windowsupdate" data-linktype="external">выполнить обновление до последней версии Windows</a> в меню параметров или с помощью <a href="https://www.microsoft.com/software-download/windows10" data-linktype="external">помощника по Центру обновления Windows</a>.</p>
+</div>
+<p>Если вы используете более раннюю сборку или не хотите использовать команду для установки и вам нужны пошаговые инструкции, см. статью <strong><a href="install-manual" data-linktype="relative-path">Действия по установке WSL вручную для старых версий</a></strong> .</p>
+<h2 id="install">Установка</h2>
+<p>Теперь вы можете установить все необходимое для запуска подсистемы Windows для Linux (WSL), введя эту команду в PowerShell или командной строке Windows, а затем перезапустив компьютер.</p>
+<pre><code class="lang-powershell">wsl --install
+</code></pre>
+<p>Эта команда позволяет включить необходимые дополнительные компоненты, скачать последнюю версию ядра Linux, установить WSL 2 в качестве компонента по умолчанию и установить дистрибутив Linux <em>(по умолчанию Ubuntu; инструкции по установке другого дистрибутива см. ниже)</em> .</p>
+<p>При первом запуске недавно установленного дистрибутива Linux откроется окно консоли. Вам будет предложено подождать, пока файлы будут распакованы и сохранены на компьютере. Все будущие запуски должны занимать меньше секунды.</p>
+<h2 id="change-the-default-linux-distribution-installed">Изменение установленного дистрибутива Linux по умолчанию</h2>
+<p>По умолчанию в качестве устанавливаемого дистрибутива Linux используется Ubuntu. Для этого используйте флаг <code>-d</code>.</p>
+<ul>
+<li>Чтобы изменить установленный дистрибутив, введите <code>wsl --install -d &lt;Distribution Name&gt;</code>. Замените <code>&lt;Distribution Name&gt;</code> именем дистрибутива, который хотите установить.</li>
+<li>Чтобы просмотреть список доступных дистрибутивов Linux, доступных для скачивания через Интернет-магазин, введите <code>wsl --list --online</code> или <code>wsl -l -o</code>.</li>
+<li>Чтобы установить дополнительные дистрибутивы Linux после исходной установки, можно также использовать команду <code>wsl --install -d &lt;Distribution Name&gt;</code>.</li>
+</ul>
+<div class="TIP">
+<p>Совет</p>
+<p>Если вы хотите установить дополнительные дистрибутивы из командной строки Linux или Bash (а не из PowerShell или командной строки), используйте .exe в команде <code>wsl.exe --install -d &lt;Distribution Name&gt;</code>. Чтобы получить список доступных дистрибутивов, используйте <code>wsl.exe -l -o</code>.</p>
+</div>
+<p>Если во время установки возникла проблема, см. раздел <a href="troubleshooting#installation-issues" data-linktype="relative-path">Установка</a> руководства по устранению неполадок.</p>
+<h2 id="set-up-your-linux-user-info">Настройка сведений о пользователе Linux</h2>
+<p>После установки WSL необходимо создать учетную запись пользователя и пароль для установленного дистрибутива Linux. Дополнительные сведения см. в статье <a href="setup/environment#set-up-your-linux-user-info" data-linktype="relative-path">Рекомендации по настройке среды разработки WSL</a>.</p>
+<h2 id="set-up-and-best-practices">Советы и рекомендации</h2>
+<p>Мы рекомендуем использовать наше пошаговое руководство <a href="setup/environment" data-linktype="relative-path">Рекомендации по настройке среды разработки WSL</a>. В нем описано, как настроить имя пользователя и пароль для установленных дистрибутивов Linux, использовать основные команды WSL, установить и настроить Терминал Windows, настроить управление версиями Git, отредактировать код и выполнить отладку с помощью удаленного сервера VS Code. Кроме того, в руководстве приведены рекомендации по хранению файлов, настройке базы данных, подключению внешнего диска, настройке ускорения GPU и пр.</p>
+<h2 id="want-to-try-the-latest-wsl-preview-features">Хотите испытать новейшие предварительные версии функций WSL?</h2>
+<p>Чтобы поработать с самыми последними функциями или обновлениями для WSL, присоединитесь к <a href="https://insider.windows.com/getting-started" data-linktype="external">Программе предварительной оценки Windows</a>. Когда вы присоединитесь к участникам Программы предварительной оценки Windows, вы сможете выбрать канал для получения предварительных сборок в меню параметров Windows и будете автоматически получать предварительные версии функций и обновления для WSL, связанные с этой сборкой. Можно выбрать одно из следующих значений.</p>
+<ul>
+<li>Канал разработчика: последние обновления, но низкая стабильность.</li>
+<li>Бета-канал: идеально подходит для ранних последователей; более надежные сборки, чем в канале разработки.</li>
+<li>Канал предварительного выпуска: предварительные версии исправлений и основных функций следующей версии Windows непосредственно перед предоставлением их общедоступной версии.</li>
+</ul>
+<h2 id="additional-resources">Дополнительные ресурсы</h2>
+<ul>
+<li><a href="https://devblogs.microsoft.com/commandline/install-wsl-with-a-single-command-now-available-in-windows-10-version-2004-and-higher/" data-linktype="external">Блог, посвященный командной строке Windows: установка WSL с помощью одной команды теперь поддерживается в Windows 10 версии 2004 и выше</a></li>
+</ul>
+
+							<!-- </content> -->
+
+						</main>
+
+						<!-- page rating section -->
+								<div class="is-hidden-desktop border-top has-margin-top-large has-padding-top-large binary-rating-holder">
+									
+	
+	
+
+	<div class="feedback-verbatim border-bottom has-padding-bottom-large has-margin-bottom-small" data-bi-name="rating">
+    <div class="binary-rating">
+        <div class="binary-rating-buttons">
+				<h3 class="font-weight-semibold has-margin-top-none font-size-h4 margin-bottom-xs">Были ли сведения на этой странице полезными?</h3>
+			<div>
+                <button class="thumb-rating like has-inner-focus" title="Да" data-bi-name="rating-yes" aria-expanded="false" data-bi-sat="1" aria-controls="rating-container-desktop">
+                    <span aria-hidden="true" class="icon docon docon-like"></span>
+                    <span>Да</span>
+                </button>
+                <button class="thumb-rating dislike has-inner-focus" title="Нет" data-bi-name="rating-no" data-bi-sat="0" aria-expanded="false" aria-controls="rating-container-desktop">
+                    <span aria-hidden="true" class="icon docon docon-dislike"></span>
+                    <span>Нет</span>
+                </button>
+            </div>
+        </div>
+        <form class="feedback-verbatim-form is-hidden" id="rating-container-desktop">
+            <div class="verbatim-textarea box position-relative box-shadow-none border has-margin-top-small has-padding-extra-small font-size-xs">
+                <label for="rating-textarea-desktop" class="visually-hidden">Хотите оставить дополнительный отзыв?</label>
+                <textarea id="rating-textarea-desktop" rows="4" maxlength="999" placeholder="Хотите оставить дополнительный отзыв?" required class="textarea border-none box-shadow-none has-inner-focus"></textarea>
+		    </div>
+			<p class="font-size-xs has-line-height-reset">Отзывы будут отправляться в корпорацию Майкрософт. Нажав кнопку "Отправить", вы разрешаете использовать свой отзыв для улучшения продуктов и служб Майкрософт. <a href="https://privacy.microsoft.com/en-us/privacystatement">Политика конфиденциальности.</a></p>
+            <div class="buttons buttons-right margin-top-xs has-margin-right-extra-small">
+                <button class="skip-rating button button-clear button-primary button-sm" type="button">Пропустить</button>
+                <button class="submit-rating button button-primary button-filled button-sm" data-bi-name="rating-verbatim" disabled type="submit">Отправить</button>
+            </div>
+        </form>
+    </div>
+    <div class="thankyou-rating is-hidden" tabindex="-1">
+        <p>Спасибо!</p>
+    </div>
+</div>								</div>
+						<!-- end page rating section -->
+
+
+
+						<!-- recommendations section -->
+							<section id="recommendations-section" data-bi-name="recommendations"></section>
+						<!-- end recommendations section -->
+
+						<!-- feedback section -->
+						<!-- end feedback section -->
+
+						<!-- feedback report section -->
+						<!-- end feedback report section -->
+
+						<div class="border-top is-visible-interactive has-default-focus has-margin-top-large ">
+
+
+
+	<footer id="footer-interactive" data-bi-name="footer" class="footer-layout">
+	<div class="display-flex is-full-height has-padding-right-extra-large-desktop">
+			<a
+				data-mscc-ic="false"
+				class="locale-selector-link button button-clear flex-shrink-0"
+				href="#"
+				data-bi-name="select-locale">
+					<span class="icon" aria-hidden="true">
+						<span class="docon docon-world"></span>
+					</span>
+					<span class="local-selector-link-text"></span></a>
+		<div class="margin-inline-xs flex-shrink-0">
+<div class="dropdown has-caret-up">
+	<button class="dropdown-trigger button button-clear button-sm has-inner-focus theme-dropdown-trigger"
+		aria-controls="theme-menu-interactive" aria-expanded="false" title="Тема" data-bi-name="theme">
+		<span class="icon">
+			<span class="docon docon-sun" aria-hidden="true"></span>
+		</span>
+		<span>Тема</span>
+	</button>
+	<div class="dropdown-menu" id="theme-menu-interactive" role="menu">
+		<ul class="theme-selector has-padding-small">
+			<li class="theme is-block">
+				<button class="button button-clear button-sm theme-control button-block justify-content-flex-start"
+					data-theme-to="light">
+					<span class="theme-light has-margin-right-small">
+						<span
+							class="theme-selector-icon css-variable-support border is-inline-block has-body-background"
+							aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background" />
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary" />
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary" />
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary" />
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary" />
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary" />
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary" />
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary" />
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+Светлая					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button button-clear button-sm theme-control button-block justify-content-flex-start"
+					data-theme-to="dark">
+					<span class="theme-dark has-margin-right-small">
+						<span
+							class="border theme-selector-icon css-variable-support is-inline-block has-body-background"
+							aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background" />
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary" />
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary" />
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary" />
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary" />
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary" />
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary" />
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary" />
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+Темная					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button button-clear button-sm theme-control button-block justify-content-flex-start"
+					data-theme-to="high-contrast">
+					<span class="theme-high-contrast has-margin-right-small">
+						<span
+							class="border theme-selector-icon css-variable-support is-inline-block has-body-background"
+							aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background" />
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary" />
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary" />
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary" />
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary" />
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary" />
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary" />
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary" />
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+Высокая контрастность					</span>
+				</button>
+			</li>
+		</ul>
+	</div>
+</div>		</div>
+	</div>
+	<ul class="links" data-bi-name="footerlinks">
+		<li class="manage-cookies-holder" hidden></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ru-ru/previous-versions/" data-bi-name="archivelink">Документация по предыдущей версии</a></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ru-ru/teamblog" data-bi-name="bloglink">Блог</a></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ru-ru/contribute" data-bi-name="contributorGuide">Участие в доработке</a></li>
+					<li><a data-mscc-ic="false" href="https://go.microsoft.com/fwlink/?LinkId=521839" data-bi-name="privacy">Конфиденциальность и файлы cookie</a></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ru-ru/legal/termsofuse" data-bi-name="termsofuse">Условия использования</a></li>
+				<li><a data-mscc-ic="false" href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx" data-bi-name="trademarks">Товарные знаки</a></li>
+		<li>&copy; Microsoft 2021</li>
+	</ul>
+</footer>
+						</div>
+					</div>
+
+						<div
+							class="font-size-sm right-container column is-4-desktop display-none display-block-desktop"
+							data-bi-name="pageactions"
+							role="complementary"
+							aria-label="Действия страницы">
+
+							<div id="affixed-right-container" class="doc-outline is-vertically-scrollable">
+									
+	
+	
+
+	<div class="feedback-verbatim border-bottom has-padding-bottom-small has-margin-bottom-small" data-bi-name="rating">
+    <div class="binary-rating">
+        <div class="binary-rating-buttons">
+				<h3 class="font-weight-semibold has-margin-top-none has-margin-bottom-small">Были ли сведения на этой странице полезными?</h3>
+			<div>
+                <button class="thumb-rating like has-inner-focus" title="Да" data-bi-name="rating-yes" aria-expanded="false" data-bi-sat="1" aria-controls="rating-container-mobile">
+                    <span aria-hidden="true" class="icon docon docon-like"></span>
+                    <span>Да</span>
+                </button>
+                <button class="thumb-rating dislike has-inner-focus" title="Нет" data-bi-name="rating-no" data-bi-sat="0" aria-expanded="false" aria-controls="rating-container-mobile">
+                    <span aria-hidden="true" class="icon docon docon-dislike"></span>
+                    <span>Нет</span>
+                </button>
+            </div>
+        </div>
+        <form class="feedback-verbatim-form is-hidden" id="rating-container-mobile">
+            <div class="verbatim-textarea box position-relative box-shadow-none border has-margin-top-small has-padding-extra-small font-size-xs">
+                <label for="rating-textarea-mobile" class="visually-hidden">Хотите оставить дополнительный отзыв?</label>
+                <textarea id="rating-textarea-mobile" rows="4" maxlength="999" placeholder="Хотите оставить дополнительный отзыв?" required class="textarea border-none box-shadow-none has-inner-focus"></textarea>
+		    </div>
+			<p class="font-size-xs has-line-height-reset">Отзывы будут отправляться в корпорацию Майкрософт. Нажав кнопку "Отправить", вы разрешаете использовать свой отзыв для улучшения продуктов и служб Майкрософт. <a href="https://privacy.microsoft.com/en-us/privacystatement">Политика конфиденциальности.</a></p>
+            <div class="buttons buttons-right margin-top-xs has-margin-right-extra-small">
+                <button class="skip-rating button button-clear button-primary button-sm" type="button">Пропустить</button>
+                <button class="submit-rating button button-primary button-filled button-sm" data-bi-name="rating-verbatim" disabled type="submit">Отправить</button>
+            </div>
+        </form>
+    </div>
+    <div class="thankyou-rating is-hidden" tabindex="-1">
+        <p>Спасибо!</p>
+    </div>
+</div>								<nav id="side-doc-outline" data-bi-name="intopic toc" role="navigation" aria-label="Структура статьи">
+									<h3>В этой статье</h3>
+								</nav>
+							</div>
+						</div>
+
+				</div>
+				<!--end of div.columns -->
+
+			</section>
+			<!--end of .primary-holder -->
+
+			<!-- interactive container -->
+			<aside id="interactive-container" class="interactive-container is-visible-interactive column has-body-background-dark ">
+			</aside>
+			<!-- end of interactive container -->
+		</div>
+
+	</div>
+	<!--end of .mainContainer -->
+
+	<section class="border-top has-default-focus is-hidden-interactive has-margin-top-large ">
+
+
+
+	<footer id="footer" data-bi-name="footer" class="footer-layout uhf-container has-padding" role="contentinfo">
+	<div class="display-flex is-full-height has-padding-right-extra-large-desktop">
+			<a
+				data-mscc-ic="false"
+				class="locale-selector-link button button-clear flex-shrink-0"
+				href="#"
+				data-bi-name="select-locale">
+					<span class="icon" aria-hidden="true">
+						<span class="docon docon-world"></span>
+					</span>
+					<span class="local-selector-link-text"></span></a>
+		<div class="margin-inline-xs flex-shrink-0">
+<div class="dropdown has-caret-up">
+	<button class="dropdown-trigger button button-clear button-sm has-inner-focus theme-dropdown-trigger"
+		aria-controls="theme-menu" aria-expanded="false" title="Тема" data-bi-name="theme">
+		<span class="icon">
+			<span class="docon docon-sun" aria-hidden="true"></span>
+		</span>
+		<span>Тема</span>
+	</button>
+	<div class="dropdown-menu" id="theme-menu" role="menu">
+		<ul class="theme-selector has-padding-small">
+			<li class="theme is-block">
+				<button class="button button-clear button-sm theme-control button-block justify-content-flex-start"
+					data-theme-to="light">
+					<span class="theme-light has-margin-right-small">
+						<span
+							class="theme-selector-icon css-variable-support border is-inline-block has-body-background"
+							aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background" />
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary" />
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary" />
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary" />
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary" />
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary" />
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary" />
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary" />
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+Светлая					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button button-clear button-sm theme-control button-block justify-content-flex-start"
+					data-theme-to="dark">
+					<span class="theme-dark has-margin-right-small">
+						<span
+							class="border theme-selector-icon css-variable-support is-inline-block has-body-background"
+							aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background" />
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary" />
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary" />
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary" />
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary" />
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary" />
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary" />
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary" />
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+Темная					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button button-clear button-sm theme-control button-block justify-content-flex-start"
+					data-theme-to="high-contrast">
+					<span class="theme-high-contrast has-margin-right-small">
+						<span
+							class="border theme-selector-icon css-variable-support is-inline-block has-body-background"
+							aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background" />
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary" />
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary" />
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary" />
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary" />
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary" />
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary" />
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary" />
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+Высокая контрастность					</span>
+				</button>
+			</li>
+		</ul>
+	</div>
+</div>		</div>
+	</div>
+	<ul class="links" data-bi-name="footerlinks">
+		<li class="manage-cookies-holder" hidden></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ru-ru/previous-versions/" data-bi-name="archivelink">Документация по предыдущей версии</a></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ru-ru/teamblog" data-bi-name="bloglink">Блог</a></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ru-ru/contribute" data-bi-name="contributorGuide">Участие в доработке</a></li>
+					<li><a data-mscc-ic="false" href="https://go.microsoft.com/fwlink/?LinkId=521839" data-bi-name="privacy">Конфиденциальность и файлы cookie</a></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ru-ru/legal/termsofuse" data-bi-name="termsofuse">Условия использования</a></li>
+				<li><a data-mscc-ic="false" href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx" data-bi-name="trademarks">Товарные знаки</a></li>
+		<li>&copy; Microsoft 2021</li>
+	</ul>
+</footer>
+	</section>
+
+	<div id="action-panel" role="region" aria-label="Панель действий" class="action-panel has-default-focus" tabindex="-1"></div>
+</body>
+</html>

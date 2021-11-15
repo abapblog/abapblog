@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+
+<!--[if gte IE 9]>
+<html class="ie" lang="en-US">
+<![endif]-->
+
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar" content="black"/>
+    <title>Installing SAP ABAP Platform 1909, Developer Edition in the Cloud | SAP Blogs</title>
+    <link rel="profile" href="http://gmpg.org/xfn/11"/>
+
+    
+    
+    <!--[if lt IE 9]>
+    <script src="https://blogs.sap.com/wp-content/themes/sap-v3-neo/js/html5.min.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link rel="icon" type="image"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.png" /><link rel="shortcut icon" type="image/x-icon"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.ico" /><link rel="apple-touch-icon" href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/apple-touch-icon.png" /><meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//static.community.services.sap' />
+<link rel='dns-prefetch' href='//assets.adobedtm.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Feed" href="https://blogs.sap.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Comments Feed" href="https://blogs.sap.com/comments/feed/" />
+<meta name="type" content="Blog" /><meta name="description" content="This Blog entry describes how to install the SAP ABAP Platform 1909, Developer Edition in the Cloud. Step 1: Obtain an account with a Cloud provider The authorised providers are listed in the EULA. I choose" /><meta name="sm_tech_ids" content="833755570260738661924709785639136"/><meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" /><link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Installing SAP ABAP Platform 1909, Developer Edition in the Cloud Comments Feed" href="https://blogs.sap.com/2021/02/22/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/blogs.sap.com\/res1dx-135\/wp-includes\/js\/wp-emoji-release.min.js"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/style.min.css' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/css/ie.css' type='text/css' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='designmate_styles-css'  href='https://static.community.services.sap/designmate/v3/136/latest/designmate.css' type='text/css' media='all' />
+<link rel='stylesheet' id='designsystem_styles-css'  href='https://static.community.services.sap/community-ds/v1/188/main.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dist/block-library/style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='prism-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/js/tinymce/plugins/codesample/css/prism.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_custom_link_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom//include/css/sap-core-custom.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_lightbox_gallery_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='pt_style_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-primary-tag/css/pt_style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-popular-posts-css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/css/wpp.css' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery.min.js' id='jquery-core-js'></script>
+<script type='text/javascript' id='jquery-core-js-after'>
+if (jQuery !== undefined) {
+                jQuery(window).on("load", function(){
+                    var _wpWindowLoaded = document.createElement("div");
+                    _wpWindowLoaded.setAttribute("class", "hidden");
+                    _wpWindowLoaded.setAttribute("id", "wp_window_loaded");
+                    document.body.appendChild(_wpWindowLoaded);
+                });
+            }
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery-migrate.min.js' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='//assets.adobedtm.com/ccc66c06b30b/d266848b2882/launch-f095fbc32a96.min.js' id='scn_adobe_dtm-js'></script>
+<script type='text/javascript' id='wpp-js-js-extra'>
+/* <![CDATA[ */
+var wpp_params = {"sampling_active":"","sampling_rate":"100","ajax_url":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php","action":"update_views_ajax","ID":"1280668","token":"938e4875d9"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/js/wpp.js' id='wpp-js-js'></script>
+<link rel="https://api.w.org/" href="https://blogs.sap.com/wp-json/" /><link rel="alternate" type="application/json" href="https://blogs.sap.com/wp-json/wp/v2/posts/1280668" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.sap.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.sap.com/wp-includes/wlwmanifest.xml" /> 
+
+<link rel="canonical" href="https://blogs.sap.com/2021/02/22/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options/" />
+<link rel='shortlink' href='https://blogs.sap.com/?p=1280668' />
+<script type="text/javascript">var ajaxurl = "https://blogs.sap.com/wp-admin/admin-ajax.php";var likePostLabel = "Like";var unLikePostLabel = "Liked";var likeCommentLabel = "Like";var unLikeCommentLabel = "Liked";</script>    <!--[if IE ]>
+    <link rel="stylesheet" id="scn-ie-styles" href="https://blogs.sap.com/wp-content/themes/sap-v3-neo/css/ie.css"
+          type="text/css" media="all">
+    <link id="ids-popup-css" href="https://accounts.sap.com/universalui/shared/stylesheets/idsPopup.css"
+          rel="stylesheet"
+          type="text/css">
+    <![endif]-->
+
+
+</head>
+
+<body class="post-template-default single single-post postid-1280668 single-format-standard custom-font-enabled">
+
+
+<div class="page-wrapper">
+<b class="cn-accessibility"><a href="#main" tabindex="0" accesskey="S">Skip to Content</a></b>
+<div id="page" class="hfeed site">
+
+<header id="masthead" class="blogs-nav sap-header">
+    <header id="comm-hdr-Header" role="masthead"><div class="dm-header"><div class="dm-header__inner"><div class="dm-header__logo-wrapper"><a class="dm-logo--header" href="http://www.sap.com/" title="SAP"></a></div><nav id="comm-hdr-Navigation" class="dm-mainNav"><div class="dm-mobileSearch"><form class="dm-header__search-form" action=""><div class="dm-search-container dm-input dm-search__input"><label class="dm-input__box" aria-label="search SAP Community"><input class="dm-input__control" placeholder="Search SAP Community" name="filter-search" type="search" required="" aria-label="type here to search"><button class="dm-search__button dm-search__button-clear" type="reset" role="button" title="Reset Search"><span class="dm-search__buttonIcon dm-icon-encoded--close" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" role="button" title="Search SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form></div><ul class="dm-mainNav__menu dm-mainNav__menu--withGroups" role="menubar"><li class="dm-header__homeItem" role="none"><a class="dm-header__homeItem-link" role="menuitem" aria-label="Community Home" target="_self" href="https://community.sap.com">Community</a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/topics" aria-label="" aria-haspopup="false" role="menuitem">Topics<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://groups.sap.com" aria-label="Groups. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Groups<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://answers.sap.com/index.html" aria-label="Answers. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Answers<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://blogs.sap.com" aria-label="Blogs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Blogs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/events" aria-label="Events. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Events<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/programs" aria-label="Programs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Programs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources" aria-label="Resources. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Resources<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources/what-is-new" aria-label="" aria-haspopup="false" role="menuitem">What's New<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li></ul></nav><ul class="dm-header__actions"><li id="comm-hdr-Search" class="dm-header__actions-item dm-headerSearch"><a class="dm-search-action dm-icon-encoded dm-header__search-icon" aria-label="Search the SAP Community" href="#" role="button" aria-expanded="false" title="Search"></a><div class="dm-headerSearch__wrapper"><form class="dm-searchdropdown dm-align-center" action=""><div class="dm-search__input dm-input" role="search"><label class="dm-input__box" aria-label="search the SAP community"><input class="dm-input__control" placeholder="Search the SAP Community" name="filter-search" aria-label="type here to search" type="input"><button class="dm-search__button dm-search__button-clear" type="reset" title="Reset"><span class="dm-search__buttonIcon dm-icon-encoded--clear" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" title="Search the SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form><a class="dm-headerSearch__closeButton" type="submit" role="button" title="Close search input" href="javascript:void(0);"><span class="dm-icon-encoded dm-icon-encoded--close" role="img" aria-label="Close search input"></span></a></div></li><li id="comm-hdr-Authentication" class="dm-header__actions-item dm-header__account"><a id="comm-hdr-SignIn" class="dm-user__login-button--wrapper" aria-haspopup="true" aria-expanded="false" role="button" href="#" title="Log In" rel="IDS_login"><div id="comm-hdr-AnonymousIcon" class="dm-icon-encoded dm-icon-encoded--account dm-hidden" aria-label="click here to login"></div><div id="comm-hdr-Avatar" class="dm-user dm-header__avatar"><img class="dm-header__avatar-image dm-hidden" data-src="" src="" width="24px" height="24px"><span class="dm-header__notifications dm-hidden js-notification-indicator"></span></div></a><ul id="comm-hdr-UserProfileMenu" class="dm-header__actionsSubMenu dm-profileFlyoutMenu dm-profileMenuDropdown" role="menu" aria-label="drop down menu of people profile"><li class="dm-profileMenu__userData"><div id="comm-hdr-Username" class="dm-profileMenu__userName"></div><div id="comm-hdr-Email" class="dm-profileMenu__userEmail"></div><a id="comm-hdr-SubMenuTitleLink" class="dm-link" href="#">Manage my Account</a></li><li id="comm-hdr-ProfileMenuTopSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li id="comm-hdr-ProfileMenuMiddleSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li class="dm-profileMenu__section"><ul class="dm-profileMenu__list dm-profileMenu__logout"><li class="dm-profileMenu__item"><a id="comm-hdr-LogOut" class="dm-button dm-button--secondary" href="#" role="button"><span class="dm-button-text">Logout</span></a></li></ul></li></ul></li><li class="dm-header__actions-item dm-header__mobileMenu"><a id="comm-hdr-MobileMenuBtn" class="dm-mobileMenuButton" aria-label="Search SAP community"><span class="dm-icon-encoded dm-icon-encoded--mobile-menu"></span><span style="display:none;">Search</span></a></li></ul></div></div></header><div class="announcements" role="menubar"></div><div class="dm-wrapper dm-subheader dm-subheader--wrapper  dm-user--unauthenticated "><div class="dm-grid"><div class="dm-breadcrumb dm-user--unauthenticated" role="menubar">
+    <ul class="dm-breadcrumb-nav" role="navigation" aria-label="breadcrumb navigation to trace the path back to original landing point">
+        
+        <li><a id="comm-shdr-breadcrumb-home" href="https://www.sap.com" title="Home">Home</a></li>
+        
+        <li><a id="comm-shdr-breadcrumb-community" href="https://community.sap.com" title="Community">Community</a></li>
+        
+    </ul>
+    <ul class="dm-breadcrumb-actions" role="menu">
+        
+        <li><a id="comm-shdr-AskQuestion" href="https://answers.sap.com/questions/ask.html" title="Ask a Question">Ask a Question</a></li>
+        
+        <li><a id="comm-shdr-WriteBlogPost" href="https://blogs.sap.com/wp-admin/post-new.php" title="Write a Blog Post">Write a Blog Post</a></li>
+        
+        <li class="dm-user__login-button--wrapper"><a class="dm-button-small dm-button--primary" role="button" rel="IDS_login" aria-label="Login or Sign up. Click here to log in or sign up"><span class="dm-button-text">Login / Sign-up</span></a></li>
+        <li class="dm-breadcrumb-actions__dropdown">
+            <span id="comm-shdr-actions-opener" class="dm-breadcrumb-actions__dropdown-toggle" title="Community actions">
+                 <span class="dm-icon-encoded dm-icon-encoded--3dots"></span>
+            </span>
+            <ul id="comm-shdr-user-actions-ul" class="dm-breadcrumb-actions__dropdown-menu" role="menu">
+            </ul>
+        </li>
+    </ul>
+</div>
+</div></div>    <!-- #site-navigation -->
+
+</header>
+
+<!-- #masthead -->
+<div id="main" tabindex="0" class="wrapper">
+
+
+
+
+<div class="ds-blog-post-detail">
+<div class="ds-flexGrid">
+  <div class="ds-flexRow">
+    <div class="ds-flexCol">
+            <div class="ds-content-wrapper ds-blog-post__content-wrapper">
+        <h6 class="ds-heading ds-heading--xs ds-blog-post__sub-title"><span>Technical Articles</span></h6>
+        <div class="ds-flexRow">
+          <div class="ds-flexCol-sm-12 ds-flexCol-md-9">
+            
+<div class="ds-blog-post__body-wrapper">
+  <div class="ds-blog-post__content">
+    <div class="ds-blog-post__header-wrapper">
+      <a target="_blank" rel="noopener noreferrer" href="https://people.sap.com/k1000" class="ds-blog-post__avatar "  >
+        <img alt='Author&#039;s profile photo Kamil Kovac' src='https://avatars.services.sap.com/images/k1000.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />      </a>
+      <div class="ds-blog-post__author-info-wrapper">
+        <div class="ds-user ds-blog-post__author">
+          <a class="ds-link ds-user__name " href="https://people.sap.com/k1000" target="_blank" title="Kamil Kovac" aria-label="" rel="noopener noreferrer">Kamil Kovac</a>
+                  </div>
+        <div class="ds-blog-post__meta-info">
+          <span class="ds-blog-post__date">February 22, 2021</span>
+          <span class="ds-blog-post__read-duration">2 minute read</span>
+        </div>
+      </div>
+    </div>
+    <h1 class="ds-heading ds-heading--m ds-blog-post__title">Installing SAP ABAP Platform 1909, Developer Edition in the Cloud</h1>
+    <div class="ds-blog-post__social-stats-wrapper">
+      <div class="ds-social-stats ">
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--comments"></i>7        </span>
+        <span id="post-likes-counter" class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--likes-outline"></i>22        </span>
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--views"></i>2,425        </span>
+      </div>
+          </div>
+    <div class="ds-blog-post__body ds-editor-content">
+      <p><span style="font-weight: 400">This Blog entry describes how to install the SAP ABAP Platform 1909, Developer Edition in the Cloud.</span></p>
+<h3><b>Step 1: Obtain an account with a Cloud provider</b></h3>
+<p><span style="font-weight: 400">The authorised providers are listed in the <a href="https://www.sap.com/documents/2016/03/ba61d283-667c-0010-82c7-eda71af511fa.html"  target="_blank" >EULA</a>. I choose Amazon Web Services.</span></p>
+<p style="overflow: hidden;margin-bottom: 0px"><img class="aligncenter ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2021/02/001-1.png" alt="" data-index="1" data-id="plbox-1280668" /></p>
+<h3></h3>
+<h3><b>Step 2: Create a Server</b></h3>
+<p><span style="font-weight: 400">Choose &#8220;Build using virtual servers&#8221;, then the following options:</span></p>
+<p style="overflow: hidden;margin-bottom: 0px"><img class="aligncenter ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2021/02/002-2.png" alt="" data-index="2" data-id="plbox-1280668" /></p>
+<p><span style="font-weight: 400">Next we have to choose a hosting Plan (size). I go for 4 vCPUs, 16 GB of RAM, 320 GB SSD, and 6 TB of network traffic per month. I also choose a geographical zone. Ready to create a Server Instance:</span></p>
+<p style="overflow: hidden;margin-bottom: 0px"><img class="aligncenter ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2021/02/004-blurred.png" alt="" data-index="3" data-id="plbox-1280668" /></p>
+<p><span style="font-weight: 400">Creation is quite quick, and in a few minutes the Instance is up and running:</span></p>
+<p style="overflow: hidden;margin-bottom: 0px"><img class="aligncenter ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2021/02/005-blurred.png" alt="" data-index="4" data-id="plbox-1280668" /></p>
+<p><span style="font-weight: 400">AWS provides a web-based SSH client to connect to the Server Instance:</span><span style="font-weight: 400"><br />
+</span></p>
+<p style="overflow: hidden;margin-bottom: 0px"><img class="aligncenter ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2021/02/009-blurred.png" alt="" data-index="5" data-id="plbox-1280668" /></p>
+<p><span style="font-weight: 400">From now on, we shall be working in the Command Line Interface of the Server.</span></p>
+<h3></h3>
+<h3><b>Step 3: Install the Docker Engine</b></h3>
+<p><span style="font-weight: 400">This is fairly straightforward and well documented here: <a href="https://docs.docker.com/engine/install/ubuntu/"  target="_blank" >https://docs.docker.com/engine/install/ubuntu/</a></span></p>
+<p><span style="font-weight: 400">There are several ways to install the Docker engine. I choose “Install using the repository”, which seems to be the default / easiest method.</span></p>
+<p><span style="font-weight: 400">Having an account with Docker is likely required at this point – I do not know for certain, as I had created it some time ago. This is something we’ll need to do anyway, then why not do it now.</span></p>
+<p>&nbsp;</p>
+<h3><b>Step 4: Pull the Docker image of SAP ABAP Platform 1909, Developer Edition</b></h3>
+<p><span style="font-weight: 400">We pull the required image from the Docker Hub:</span></p>
+<pre><span style="font-weight: 400"># docker login</span>
+
+<span style="font-weight: 400"># docker pull store/saplabs/abaptrial:1909</span></pre>
+<p>&nbsp;</p>
+<p><span style="font-weight: 400">The full download takes some 15 minutes, extraction about the same.</span></p>
+<p>&nbsp;</p>
+<h3>Step 5: Open the Ports</h3>
+<p>In the Networking section of the Lightsail Server admin console, it is necessary to open the Port 3200 (SAP Gui) and 3300 (RFC &#8211; Eclipse) by adding a Firewall rule:</p>
+<p style="overflow: hidden;margin-bottom: 0px"><img class="aligncenter ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2021/02/007-1.png" alt="" data-index="6" data-id="plbox-1280668" /></p>
+<p>&nbsp;</p>
+<h3><b>Step 6: Run the Docker image</b></h3>
+<p><span style="font-weight: 400">This is the final step. I used the following modified statement:</span></p>
+<pre><span style="font-weight: 400">docker run</span>
+
+<span style="font-weight: 400">--sysctl kernel.shmmni=24576</span>
+
+<span style="font-weight: 400">--stop-timeout 3600</span>
+
+<span style="font-weight: 400">-i --name a4h -h vhcala4hci</span>
+
+<span style="font-weight: 400">-p 3200:3200</span>
+
+<span style="font-weight: 400">-p 3300:3300</span>
+
+<span style="font-weight: 400">-p 8443:8443</span>
+
+<span style="font-weight: 400">-p 30213:30213</span>
+
+<span style="font-weight: 400">-p 50000:50000</span>
+
+<span style="font-weight: 400">-p 50001:50001</span>
+
+<span style="font-weight: 400">store/saplabs/abaptrial:1909</span>
+
+<span style="font-weight: 400">-skip-limits-check</span>
+
+<span style="font-weight: 400">-agree-to-sap-license</span></pre>
+<p><span style="font-weight: 400">The port mapping with -p is necessary.</span></p>
+<p><span style="font-weight: 400">Result:</span></p>
+<p style="overflow: hidden;margin-bottom: 0px"><img class="aligncenter ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2021/02/008-blurred.png" alt="" data-index="7" data-id="plbox-1280668" /></p>
+<p><span style="font-weight: 400">As a post-installation step, create a SAP Gui entry. On Windows:</span></p>
+<p style="overflow: hidden;margin-bottom: 0px"><img class="aligncenter ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2021/02/040-SAP-Gui-Windows-Hidden-1.png" alt="" data-index="8" data-id="plbox-1280668" /></p>
+<p><span style="font-weight: 400">On Linux / Mac OS:</span></p>
+<p style="overflow: hidden;margin-bottom: 0px"><img class="aligncenter ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2021/02/050-SAP-Gui-Linux-Hidden-1.png" alt="" data-index="9" data-id="plbox-1280668" /></p>
+<p><span style="font-weight: 400">(The blurred-out part is the Cloud Server Public IP as provided by AWS).</span></p>
+<p><span style="font-weight: 400">And we are good to go:</span></p>
+<p style="overflow: hidden;margin-bottom: 0px"><img class="aligncenter ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2021/02/140-SAP-Gui-connected-Hidden-2.png" alt="" data-index="10" data-id="plbox-1280668" /></p>
+<p style="overflow: hidden;margin-bottom: 0px"><img class="aligncenter ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2021/02/150-Eclipse-connected-Hidden-1.png" alt="" data-index="11" data-id="plbox-1280668" /></p>
+    </div>
+  </div>
+  <div class="ds-blog-post__social-side-bar">
+    <div class="ds-sticky-on-scroll ">
+      <div class="ds-sticky-on-scroll__wrapper  ">
+        <div class="ds-sticky-on-scroll__content">
+          <div class="ds-blog-post__social-actions">
+            <button class="sap-button-follow ds-button ds-button--primary ds-blog-post__social-action ds-blog-post__social-action--follow" id="sap-button-follow-hdr-id" onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2021%2F02%2F22%2Finstalling-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options%2F%3Fs_action%3Dss_change_follow_status%26nonce%3D705a693f83'" rel="IDS_login"  type="button" data-content-type="blogpost" data-content-id="1280668" data-nonce="705a693f83" title="Please log into the system to use follow/unfollow functionality."><span class="ds-button-text">Follow</span></button>            <button type='button' class='ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action likes-post-link dolike ' rel='IDS_login' onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2021%2F02%2F22%2Finstalling-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options%2F%3Fs_action%3Dss_change_like_status%26nonce%3D580b46d63f'" title='Like' data-nonce='580b46d63f' data-post-id='1280668'><i class='ds-icon ds-icon--likes-outline ds-icon--regular ds-m-r-xs' tabindex='-1'></i><span class='ds-button-text'>Like</span></button>            <button type="button" class="ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action" title="RSS Feed" onclick="location.href='https://blogs.sap.com/2021/02/22/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options/feed/'">
+              <i class="ds-icon ds-icon--rss-feed ds-icon--regular ds-m-r-xs" tabindex="-1"></i>RSS Feed
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+            <div class="ds-blog-post__social-row">
+              <div class="ds-blog-post__social-icons">
+                <a href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.sap.com%2F2021%2F02%2F22%2Finstalling-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options%2F' title='Share on Facebook' target='_blank'><span class='ds-social-icon ds-social-icon--dark-facebook'></span></a><a href='https://twitter.com/share?url=https%3A%2F%2Fblogs.sap.com%2F2021%2F02%2F22%2Finstalling-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options%2F&text=Installing+SAP+ABAP+Platform+1909%2C+Developer+Edition+in+the+Cloud' title='Share on Twitter' target='_blank'><span class='ds-social-icon ds-social-icon--dark-twitter'></span></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.sap.com%2F2021%2F02%2F22%2Finstalling-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options%2F&title=Installing+SAP+ABAP+Platform+1909%2C+Developer+Edition+in+the+Cloud' title='Share on LinkedIn' target='_blank'><span class='ds-social-icon ds-social-icon--dark-linkedin'></span></a>              </div>
+              <div class='ds-tooltip__wrapper'>
+    <div class='ds-tooltip__anchor'>
+    <button
+      type="button"
+      class="ds-button ds-button--secondary ds-blog-post__alert-moderator-button ds-button--disabled"
+      aria-label="Alert Moderator"
+      data-toggle="collapse"
+      data-hide-class="ds-collapse"
+      data-triggers=".alertModerator"
+      aria-expanded="false">Alert Moderator
+    </button>
+    </div>
+    <div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Alerting is not available for unauthorized users</div>
+</div>
+            </div>
+            
+  <div class="wprc-content-v3">
+    <div class="ds-blog-post-form ds-blog-post__alert-moderator-form ds-collapse alertModerator wprc-form-v3" data-toggle="collapseComponent" data-name="alertModerator">
+          </div>
+  </div>
+          </div>
+          <div class="ds-blog-post__right-side-bar ds-flexCol-sm-12 ds-flexCol-md-3">
+            <div id="sapassignedtagswidget-v3-2" class="ds-side-bar-widget ds-assigned-tags ds-m-b-l"><h3 class="ds-side-bar-widget__heading">Assigned Tags</h3></div><div id="sap-relatedcontent-widget-v3-2" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Similar Blog Posts<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="blogpost" data-limit="3"></ul></div></div><div id="sap-relatedcontent-widget-v3-3" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Related Questions<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="question" data-limit="3"></ul></div></div>          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="content-lightbox-modal"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="plbox-1280668"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="plbox-1280668" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2021/02/001-1.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2021/02/002-2.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2021/02/004-blurred.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2021/02/005-blurred.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2021/02/009-blurred.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2021/02/007-1.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2021/02/008-blurred.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2021/02/040-SAP-Gui-Windows-Hidden-1.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2021/02/050-SAP-Gui-Linux-Hidden-1.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2021/02/140-SAP-Gui-connected-Hidden-2.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2021/02/150-Eclipse-connected-Hidden-1.png" alt=""/></div><a class="lightbox-gallery-button--prev ds-lightbox__gallery-button ds-icon ds-icon--arrow-left" href="javascript:void(0);" aria-label="Show previous image"></a><a class="ds-lightbox__gallery-button lightbox-gallery-button--next ds-icon ds-icon--arrow-right" href="javascript:void(0);" aria-label="Show next image"></a></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>
+  <div class="ds-blog-post__comment-section">
+    <div class="ds-flexGrid">
+      <div class="ds-flexRow">
+        <div class="ds-flexCol-12 ds-flexCol-md-10 ds-flexCol-lg-10">
+          
+<div id="comments" class="ds-blog-post-comments">
+  
+      <div class="ds-blog-post-comments__counter" title="Number of Comments">
+      7 Comments      </div>
+              <div class="dm-section dm-align-center dm-section-header__title" title="Please log on to comment" aria-role="alert">
+                You must be <a href="https://blogs.sap.com/wp-login.php?redirect_to=2021/02/22/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options" class="opener js-idspopup" rel="IDS_login" title="Log On">Logged on</a> to comment or reply to a post.
+        </div>
+      
+    <div class="ds-blog-post-comments__list">
+              <div class="comment byuser comment-author-abishankar even thread-even depth-1 ds-blog-post-comment" id="li-comment-557479">
+        <div id="comment-557479" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/abishankar">
+                <img alt='Author&#039;s profile photo S Abinath' src='https://avatars.services.sap.com/images/abishankar_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name S Abinath' href='https://people.sap.com/abishankar' rel='external nofollow' class='ds-link ds-user__name ' >S Abinath</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2021-02-23T00:55:26+00:00"
+                >February 23, 2021 at 12:55 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thanks for sharing</p>
+              </div>
+
+            <div id="comment-actions-557479" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_557479" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2021/02/22/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options/#comment-557479'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-adityaw odd alt thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-557669">
+        <div id="comment-557669" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/adityaw">
+                <img alt='Author&#039;s profile photo Aditya Waghmare' src='https://avatars.services.sap.com/images/adityaw_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Aditya Waghmare' href='https://people.sap.com/adityaw' rel='external nofollow' class='ds-link ds-user__name ' >Aditya Waghmare</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2021-02-23T17:12:32+00:00"
+                >February 23, 2021 at 5:12 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thanks Kamil for writing this blog, as it is very useful for me and my colleagues who are looking for our own SAP server to use privately for practice. Just one thing, can you kindly tell how much would it cost, say per month, to go with either option 1 or option 2? Also, do you recommend if multiple users share the same server?</p>
+<p>Thanks in advance. </p>
+              </div>
+
+            <div id="comment-actions-557669" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_557669" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2021/02/22/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options/#comment-557669'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-k1000 bypostauthor even depth-2 ds-blog-post-comment" id="li-comment-557705">
+        <div id="comment-557705" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/k1000">
+                <img alt='Author&#039;s profile photo Kamil Kovac' src='https://avatars.services.sap.com/images/k1000_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Kamil Kovac' href='https://people.sap.com/k1000' rel='external nofollow' class='ds-link ds-user__name ' >Kamil Kovac</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2021-02-23T20:52:35+00:00"
+                >February 23, 2021 at 8:52 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p><span style="font-weight: 400">Thank you for your comment, Aditya. It has come to my attention that we are not quite free to choose the cloud provider. ABAP Developer Edition may only be hosted with SAP Authorized Cloud Computing Platform Web Hosting Service Providers listed in the <a href="https://www.sap.com/documents/2016/03/ba61d283-667c-0010-82c7-eda71af511fa.html" rel="nofollow ugc"  target="_blank">EULA</a>. I am in the process of moving to one of them. I shall update the blog entry when I’m done.</span></p>
+              </div>
+
+            <div id="comment-actions-557705" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_557705" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2021/02/22/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options/#comment-557705'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-k1000 bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-557849">
+        <div id="comment-557849" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/k1000">
+                <img alt='Author&#039;s profile photo Kamil Kovac' src='https://avatars.services.sap.com/images/k1000_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Kamil Kovac' href='https://people.sap.com/k1000' rel='external nofollow' class='ds-link ds-user__name ' >Kamil Kovac</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2021-02-24T11:11:22+00:00"
+                >February 24, 2021 at 11:11 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p><span style="font-weight: 400">Hello Aditya, I have updated the blog entry, this time using one of the authorised Providers. If you follow the steps, after Step 2 you will get information about the pricing in your region.</span></p>
+<p><span style="font-weight: 400">Regarding your question whether multiple Users can share the same Server: Technically certainly yes, </span><b>BUT</b><span style="font-weight: 400"> you'll want to check the License Agreement to see whether this is permitted.</span></p>
+              </div>
+
+            <div id="comment-actions-557849" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_557849" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2021/02/22/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options/#comment-557849'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-martinbschen even depth-2 ds-blog-post-comment" id="li-comment-558953">
+        <div id="comment-558953" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/martin.bschen">
+                <img alt='Author&#039;s profile photo Martin Böschen' src='https://avatars.services.sap.com/images/martin.bschen_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Martin Böschen' href='https://people.sap.com/martin.bschen' rel='external nofollow' class='ds-link ds-user__name ' >Martin Böschen</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2021-03-02T12:12:33+00:00"
+                >March 2, 2021 at 12:12 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Expect to pay around 80$ for the suggested configuration.</p>
+              </div>
+
+            <div id="comment-actions-558953" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_558953" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2021/02/22/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options/#comment-558953'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-k1000 bypostauthor odd alt depth-3 ds-blog-post-comment" id="li-comment-559028">
+        <div id="comment-559028" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/k1000">
+                <img alt='Author&#039;s profile photo Kamil Kovac' src='https://avatars.services.sap.com/images/k1000_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Kamil Kovac' href='https://people.sap.com/k1000' rel='external nofollow' class='ds-link ds-user__name ' >Kamil Kovac</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2021-03-02T15:43:42+00:00"
+                >March 2, 2021 at 3:43 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hello Martin, that is correct. Plus tax, per month.</p>
+<p>Microsoft Azure is even more expensive, and I find their offering frustratingly confusing.</p>
+<p>There are other Cloud server providers which are easier to use, cheaper and better, in my opinion. They offer:</p>
+<ul>
+<li>Beefy pre-configured Docker Instances that spin up in minutes. Docker pull + run, and you are good to go (AWS also has these, but they are the opposite of beefy. Ridiculously underpowered. Unusable.);</li>
+<li>Unlimited data transfer volumes on gigabit lines;</li>
+<li>Fast NVMa storage;</li>
+<li>Per-hour billing. You can literally rent a Server for a day, for the price of a beer;</li>
+<li>Drastically reduced rates for the time when the Server is off;</li>
+<li>Easy to navigate web sites with configuration options laid out in a way that a 4-year old would understand (just the opposite of Microsoft Azure).</li>
+</ul>
+<p>I had written this Blog entry originally using my favourite provider Scaleway (they offer almost all of the above, except the reduced rate when you turn off the Server). But then I re-read the EULA, and realised that we are limited to the 6 providers listed there. I moved to AWS. The only thing I like about AWS is their web-based SSH console - that is genius.</p>
+<p>It's not a long-term solution. You can buy a decent PC with 32 or 64 GB of RAM for the price of running an AWS Lightsail Server for just a few months. Short-term, however, it might make sense. If you want just to try something out, or learn something. You can have an AWS Lightsail with ABAP Platform up and running in under 60-90 minutes, half of that unattended. It will have a fixed IP address, to which you can connect from anywhere (yes, you can set this up at home too).</p>
+<p>I have been using this solution for about 2 weeks, and it is OK. Sometimes a little on the slow side, especially with Eclipse. The connection from my home PC breaks up from time to time, but it is rock-solid from a desktop-as-a-service I am running with ubiDesktop.</p>
+              </div>
+
+            <div id="comment-actions-559028" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_559028" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2021/02/22/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options/#comment-559028'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-aocheng even thread-even depth-1 ds-blog-post-comment" id="li-comment-570314">
+        <div id="comment-570314" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/aocheng">
+                <img alt='Author&#039;s profile photo Aocheng Yang' src='https://avatars.services.sap.com/images/aocheng_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Aocheng Yang' href='https://people.sap.com/aocheng' rel='external nofollow' class='ds-link ds-user__name ' >Aocheng Yang</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2021-05-07T10:33:43+00:00"
+                >May 7, 2021 at 10:33 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Appreciate the tutorial! Thanks to this, I got mine running now.</p>
+<p>Everything was smooth until the end where I faced a license issue when tried to login with DEVELOPER. The error message was "error in license check logon not possible".</p>
+<p>I will make a note how I resolved it for future reference in case others people might end up with the same error like me.</p>
+<p>There was apparently a step where you have to request a license via below link, with the right hardware key of yours.</p>
+<p>https://go.support.sap.com/minisap/#/minisap</p>
+<p>Then place the license file under /opt/sap/ASABAP_license on the container. I followed the below blog.</p>
+<p>https://blogs.sap.com/2021/04/22/how-to-install-a-new-license-in-your-sap-abap-platform-developer-edition/</p>
+<p>After successful update on the licese, I could finally login.</p>
+<p> </p>
+              </div>
+
+            <div id="comment-actions-570314" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_570314" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2021/02/22/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options/#comment-570314'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+
+      
+        </div> <!-- main comments content area -->
+
+    
+            
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+                </div> <!-- #main -->
+                <div id="shared_footer" class="dm-container dm-wrapper">
+                    <footer class="dm-footer">
+    <div class="dm-footer__inner-wrapper">
+        <div class="dm-socialmedia">
+            <h5 class="dm-socialmedia__headline" id="hl-sharefollow">Find us on</h5>
+            <ul class="dm-socialmedia__links" aria-labelledby="hl-sharefollow">
+                <li><a href="https://www.facebook.com/sapcommunity" title="Facebook"><span class="dm-icon-encoded--facebook"></span></a></li>
+                <li><a href="https://twitter.com/SAPCommunity" title="Twitter"><span class="dm-icon-encoded--twitter"></span></a></li>
+                <li><a href="https://www.youtube.com/c/SAPCommunities" title="YouTube"><span class="dm-icon-encoded--youtube"></span></a></li>
+                <li><a href="https://www.linkedin.com/company/sap" title="LinkedIn"><span class="dm-icon-encoded--linkedin"></span></a></li>
+                <li><a href="https://instagram.com/sap/" title="Instagram"><span class="dm-icon-encoded--instagram"></span></a></li>
+                <li><a href="http://www.slideshare.net/SAP" title="Slideshare"><span class="dm-icon-encoded--slideshare"></span></a></li>
+                <li><a href="mailto:?subject='SAP Community'" title="Email Share"><span class="dm-icon-encoded--email"></span></a></li>
+            </ul>
+        </div>
+        <nav role="navigation" class="dm-footer__navigation">
+            <ul class="dm-footer__navigation__list" aria-label="footer navigation">
+                <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+                <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+                <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+                <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+                <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+                <li id="teconsent"></li>
+                <li><a href="https://www.sap.com/cmp/nl/sap-community-voice/index.html" target="_blank">Newsletter</a></li>
+                <li><a href="mailto:sapnetwork@sap.com" target="_blank">Support</a></li>
+            </ul>
+        </nav>
+    </div>
+</footer>                </div>
+            </div> <!-- #page -->
+            <script type="application/ld+json" data-schema="1280668-post-Default">{"@context":"https:\/\/schema.org\/","@type":"BlogPosting","@id":"https:\/\/blogs.sap.com\/2021\/02\/22\/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options\/#BlogPosting","mainEntityOfPage":"https:\/\/blogs.sap.com\/2021\/02\/22\/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options\/","headline":"Installing SAP ABAP Platform 1909, Developer Edition in the Cloud","name":"Installing SAP ABAP Platform 1909, Developer Edition in the Cloud","description":"This Blog entry describes how to install the SAP ABAP Platform 1909, Developer Edition in the Cloud. Step 1: Obtain an account with a Cloud provider The authorised providers are listed in the EULA. I","datePublished":"2021-02-22","dateModified":"2021-02-24","author":{"@type":"Person","@id":"https:\/\/blogs.sap.com\/author\/k1000\/#Person","name":"Kamil Kovac","url":"https:\/\/blogs.sap.com\/author\/k1000\/","image":{"@type":"ImageObject","@id":"https:\/\/avatars.services.sap.com\/images\/k1000_small.png","url":"https:\/\/avatars.services.sap.com\/images\/k1000_small.png","height":96,"width":96}},"publisher":{"@type":"Organization","name":"SAP Community Blogs","logo":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","width":600,"height":60}},"image":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2021\/02\/001-1.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2021\/02\/001-1.png","height":"","width":""},"url":"https:\/\/blogs.sap.com\/2021\/02\/22\/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options\/","about":["Technical Articles"],"wordCount":785}</script>
+<script type="application/ld+json" data-schema="Breadcrumb">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"2021","item":"https:\/\/blogs.sap.com\/2021\/#breadcrumbitem"},{"@type":"ListItem","position":2,"name":"02","item":"https:\/\/blogs.sap.com\/2021\/\/02\/#breadcrumbitem"},{"@type":"ListItem","position":3,"name":"22","item":"https:\/\/blogs.sap.com\/2021\/\/02\/\/22\/#breadcrumbitem"},{"@type":"ListItem","position":4,"name":"Installing SAP ABAP Platform 1909, Developer Edition in the Cloud","item":"https:\/\/blogs.sap.com\/2021\/02\/22\/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options\/#breadcrumbitem"}]}</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/action-tooltip-handler.js' id='tooltip-handler-js'></script>
+<script type='text/javascript' id='unified_header-js-extra'>
+/* <![CDATA[ */
+var headerInitArgs = {"system":"blogs","wrapperID":"page","breadcrumbItems":[{"text":"Blogs","href":"https:\/\/blogs.sap.com"}]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/js/scn-header.min.js' id='unified_header-js'></script>
+<script type='text/javascript' id='unified_header-js-after'>
+            scnHeader.init(headerInitArgs);
+            setCookie("userArgs", headerInitArgs.user ? JSON.stringify(headerInitArgs.user) : "", { path : "/" });
+    
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/header.js' id='designmate_header_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/subheader.js' id='designmate_subheader_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/designmate.js' id='designmate_script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/comment-reply.min.js' id='comment-reply-js'></script>
+<script type='text/javascript' id='satm_handler-js-extra'>
+/* <![CDATA[ */
+var satmContentSelectors = ["div.dm-contentDetail__body-content","div.dm-list-comments__item-content","div.ds-blog-post__body","div.ds-blog-post-comment__content"];
+var satmProfileBaseUrl = "people.sap.com\/";
+var satmChangeableElementsSelectors = ["div.dm-list-comments__item-content","div.ds-blog-post-comment__content"];
+var satmPluginEnabled = "1";
+var satmApiUrl = "https:\/\/uss.api.community.sap.com";
+var satmApiCallWithCredentials = "1";
+var satmRequestDelayMs = "100";
+/* ]]> */
+</script>
+<script type='text/javascript' defer src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-at-mention/js/sap-at-mention.min.js' id='satm_handler-js'></script>
+<script type='text/javascript' id='sap-comment-validation-js-extra'>
+/* <![CDATA[ */
+var commentValidation = {"validateMaxLinks":"1","max_links_number":"7","BLOGS_PAGE":"single"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/sap-comment-validation.min.js' id='sap-comment-validation-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-post-status.min.js' id='scn_post_status_check-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/jquery-plugins.min.js' id='sap_jquery_plugins-js'></script>
+<script type='text/javascript' id='sap-login-csrf-cookie-js-extra'>
+/* <![CDATA[ */
+var sapLoginCookieConfig = {"cookieName":"SAP_BLOGS_ANONYMOUS_NONCE","sapActionName":"s_action"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-login-csrf-cookie.min.js' id='sap-login-csrf-cookie-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.js' id='sap_lightbox_gallery_js-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/choices.min.js' id='choices.js-js'></script>
+<script type='text/javascript' id='wprc-script-js-extra'>
+/* <![CDATA[ */
+var wprcajaxhandler = {"ajaxurl":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-report-content/static/js/v3/scripts.min.js' id='wprc-script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/single.min.js' id='sap_single_v3-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/onscroll-sticky.min.js' id='onscroll_sticky-js'></script>
+<script type='text/javascript' id='blog-detail-page-js-extra'>
+/* <![CDATA[ */
+var alertReasonsSelectArgs = {"selectId":"sap-blog-alert-reasons","reasons":["Incorrect Tag\/Category\r","Cross-Posting\r","Private Information\r","Unprofessional Conduct\r","Spam"]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/dist/blog-detail.min.js' id='blog-detail-page-js'></script>
+<script type='text/javascript' id='sap_assignedtags_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var assignedTagsWidgetSettings = {"maxItemsBeforeHide":"7","data":{"ABAP Development":"https:\/\/blogs.sap.com\/tags\/833755570260738661924709785639136\/"},"widgetClassname":".ds-assigned-tags"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/assigned-tags/js/sap-assigned-tags-widget.min.js' id='sap_assignedtags_widget_js_v3-js'></script>
+<script type='text/javascript' id='sap_relatedcontent_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var relatedContentWidgetSettings = {"widgetSelector":".widget_sap-relatedcontent-widget-v3","contentServiceUrl":"https:\/\/content.services.sap.com\/cse\/search\/topic","profileUrl":"https:\/\/people.sap.com","targetContentItem":{"id":1280668,"type":"blogpost","title":"Installing SAP ABAP Platform 1909, Developer Edition in the Cloud","primary_tag":"833755570260738661924709785639136"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/related-content/js/sap-related-content-widget.min.js' id='sap_relatedcontent_widget_js_v3-js'></script>
+<div id="wp-load_tinymce-wrap" class="wp-core-ui wp-editor-wrap html-active"><link rel='stylesheet' id='dashicons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dashicons.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='editor-buttons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/editor.min.css' type='text/css' media='all' />
+<style>#wp-load_tinymce-wrap {display:none;}</style>
+<div id="wp-load_tinymce-editor-container" class="wp-editor-container"><div id="qt_load_tinymce_toolbar" class="quicktags-toolbar"></div><textarea class="wp-editor-area" rows="20" cols="40" name="load_tinymce" id="load_tinymce"></textarea></div>
+</div>
+
+<link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/skin.min.css?wp-mce-49110-20201110' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/plugins/codesample/css/prism.css' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/content.min.css?wp-mce-49110-20201110' as='style'>
+		<script type="text/javascript">
+		tinyMCEPreInit = {
+			baseURL: "https://blogs.sap.com/wp-includes/js/tinymce",
+			suffix: ".min",
+						mceInit: {},
+			qtInit: {'load_tinymce':{id:"load_tinymce",buttons:"strong,em,link,block,del,ins,img,ul,ol,li,code,more,close"}},
+			ref: {plugins:"",theme:"modern",language:""},
+			load_ext: function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
+		};
+		</script>
+				<script type="text/javascript">
+		var ajaxurl = "/wp-admin/admin-ajax.php";
+		( function() {
+			var init, id, $wrap;
+
+			if ( typeof tinymce !== 'undefined' ) {
+				if ( tinymce.Env.ie && tinymce.Env.ie < 11 ) {
+					tinymce.$( '.wp-editor-wrap ' ).removeClass( 'tmce-active' ).addClass( 'html-active' );
+					return;
+				}
+
+				for ( id in tinyMCEPreInit.mceInit ) {
+					init = tinyMCEPreInit.mceInit[id];
+					$wrap = tinymce.$( '#wp-' + id + '-wrap' );
+
+					if ( ( $wrap.hasClass( 'tmce-active' ) || ! tinyMCEPreInit.qtInit.hasOwnProperty( id ) ) && ! init.wp_skip_init ) {
+						tinymce.init( init );
+
+						if ( ! window.wpActiveEditor ) {
+							window.wpActiveEditor = id;
+						}
+					}
+				}
+			}
+
+			if ( typeof quicktags !== 'undefined' ) {
+				for ( id in tinyMCEPreInit.qtInit ) {
+					quicktags( tinyMCEPreInit.qtInit[id] );
+
+					if ( ! window.wpActiveEditor ) {
+						window.wpActiveEditor = id;
+					}
+				}
+			}
+		}());
+		</script>
+				<div id="wp-link-backdrop" style="display: none"></div>
+		<div id="wp-link-wrap" class="wp-core-ui" style="display: none" role="dialog" aria-labelledby="link-modal-title">
+		<form id="wp-link" tabindex="-1">
+		<input type="hidden" id="_ajax_linking_nonce" name="_ajax_linking_nonce" value="d98c848450" />		<h3 id="link-modal-title">Insert/edit link</h3>
+		<button type="button" id="wp-link-close"><span class="screen-reader-text">Close</span></button>
+		<div id="link-selector">
+			<div id="link-options">
+				<p class="howto" id="wplink-enter-url">Enter the destination URL</p>
+				<div>
+					<label><span>URL</span>
+					<input id="wp-link-url" type="text" aria-describedby="wplink-enter-url" /></label>
+				</div>
+				<div class="wp-link-text-field">
+					<label><span>Link Text</span>
+					<input id="wp-link-text" type="text" /></label>
+				</div>
+				<div class="link-target">
+					<label><span></span>
+					<input type="checkbox" id="wp-link-target" /> Open link in a new tab</label>
+				</div>
+			</div>
+			<p class="howto" id="wplink-link-existing-content">Or link to existing content</p>
+			<div id="search-panel">
+				<div class="link-search-wrapper">
+					<label>
+						<span class="search-label">Search</span>
+						<input type="search" id="wp-link-search" class="link-search-field" autocomplete="off" aria-describedby="wplink-link-existing-content" />
+						<span class="spinner"></span>
+					</label>
+				</div>
+				<div id="search-results" class="query-results" tabindex="0">
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+				<div id="most-recent-results" class="query-results" tabindex="0">
+					<div class="query-notice" id="query-notice-message">
+						<em class="query-notice-default">No search term specified. Showing recent items.</em>
+						<em class="query-notice-hint screen-reader-text">Search or use up and down arrow keys to select an item.</em>
+					</div>
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="submitbox">
+			<div id="wp-link-cancel">
+				<button type="button" class="button">Cancel</button>
+			</div>
+			<div id="wp-link-update">
+				<input type="submit" value="Add Link" class="button button-primary" id="wp-link-submit" name="wp-link-submit">
+			</div>
+		</div>
+		</form>
+		</div>
+		<script type="text/javascript">jQuery(window).on("load", function() {tinymce.codesampleplugin.Prism.highlightAll();});</script><script type='text/javascript'>_satellite.pageBottom();</script>        </div> <!-- .page-wrapper -->
+    </body>
+</html>

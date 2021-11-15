@@ -1,0 +1,1075 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Dynpro | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/dynpro/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sun, 22 Nov 2020 16:53:32 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Полноэкранный контейнер на экране выбора</title>
+		<link>https://abap-blog.ru/abap-notes/polnoekrannyj-kontejner-na-ekrane-vybora/</link>
+					<comments>https://abap-blog.ru/abap-notes/polnoekrannyj-kontejner-na-ekrane-vybora/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 16:53:32 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5675</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dd17b5ca560340587/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/polnoekrannyj-kontejner-na-ekrane-vybora/">Полноэкранный контейнер на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: o_dock TYPE REF TO cl_gui_docking_container.
+DATA: o_salv_ida TYPE REF TO if_salv_gui_table_ida.
+
+PARAMETERS: p_name TYPE string.
+
+AT SELECTION-SCREEN OUTPUT.
+  IF NOT o_dock IS BOUND.
+    o_dock = NEW #( repid     = sy-repid
+                    dynnr     = sy-dynnr
+                    side      = cl_gui_docking_container=&gt;dock_at_bottom
+                    extension = cl_gui_docking_container=&gt;ws_maximizebox ).
+
+    o_salv_ida = cl_salv_gui_table_ida=&gt;create( iv_table_name    = 'T100'
+                                                io_gui_container = o_dock ).
+
+  ENDIF.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/polnoekrannyj-kontejner-na-ekrane-vybora/">Полноэкранный контейнер на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/polnoekrannyj-kontejner-na-ekrane-vybora/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Диалог ведения диапазонов</title>
+		<link>https://abap-blog.ru/abap-notes/dialog-vedeniya-diapazonov/</link>
+					<comments>https://abap-blog.ru/abap-notes/dialog-vedeniya-diapazonov/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 16:13:30 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5665</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dd17bdbe189383858/] Или так: [crayon-618a1dd17bdc8593155971/] Результат:</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/dialog-vedeniya-diapazonov/">Диалог ведения диапазонов</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lt_carrid TYPE RANGE OF s_carrid.
+
+CALL FUNCTION 'COMPLEX_SELECTIONS_DIALOG'
+  EXPORTING
+    title             = 'Заголовок'
+    text              = 'Номер материала'
+  TABLES
+    range             = lt_carrid
+  EXCEPTIONS
+    no_range_tab      = 1
+    cancelled         = 2
+    internal_error    = 3
+    invalid_fieldname = 4
+    OTHERS            = 5.
+
+IF sy-subrc = 0.
+  cl_demo_output=&gt;display( lt_carrid ).
+ENDIF.</pre><p>Или так:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA(lv_tab_field) = VALUE rstabfield( tablename = 'SCARR' fieldname = 'CARRID' ).
+
+DATA: rg_test TYPE RANGE OF scarr-carrid.
+
+CALL FUNCTION 'COMPLEX_SELECTIONS_DIALOG'
+  EXPORTING
+    title             = 'Заголовок'
+    text              = 'Номер авиакомпании'
+    tab_and_field     = lv_tab_field
+    help_field        = 'SCARR-CARRID'
+  TABLES
+    range             = rg_test
+  EXCEPTIONS
+    no_range_tab      = 1
+    cancelled         = 2
+    internal_error    = 3
+    invalid_fieldname = 4
+    OTHERS            = 5.
+
+IF sy-subrc = 0.
+  cl_demo_output=&gt;display( rg_test ).
+ENDIF.</pre><p>Результат:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/11/complexdialog.png"><img loading="lazy" class="alignnone size-full wp-image-5666" src="https://abap-blog.ru/wp-content/uploads/2020/11/complexdialog.png" alt="" width="656" height="382" srcset="https://abap-blog.ru/wp-content/uploads/2020/11/complexdialog.png 656w, https://abap-blog.ru/wp-content/uploads/2020/11/complexdialog-300x175.png 300w" sizes="(max-width: 656px) 100vw, 656px" /></a></p><p>The post <a href="https://abap-blog.ru/abap-notes/dialog-vedeniya-diapazonov/">Диалог ведения диапазонов</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/dialog-vedeniya-diapazonov/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Выбор значений из списка</title>
+		<link>https://abap-blog.ru/abap-notes/vybor-znachenij-iz-spiska/</link>
+					<comments>https://abap-blog.ru/abap-notes/vybor-znachenij-iz-spiska/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 14:11:47 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5662</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dd17bfc4315621035/] Результат:</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/vybor-znachenij-iz-spiska/">Выбор значений из списка</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">TYPES: BEGIN OF ty_sel_list,
+         l TYPE char100,
+       END OF ty_sel_list.
+ 
+TYPES: ty_it_sel_list TYPE STANDARD TABLE OF ty_sel_list WITH DEFAULT KEY.
+ 
+TYPES: ty_it_rsvbfidesc TYPE STANDARD TABLE OF rsvbfidesc WITH DEFAULT KEY.
+ 
+START-OF-SELECTION.
+ 
+  DATA(lv_ln) = 0.
+ 
+  DATA(it_sel_list) = VALUE ty_it_sel_list(
+                                            ( l = 'Feld 1' )
+                                            ( l = 'Feld 2' )
+                                            ( l = 'Feld 3' )
+                                            ( l = 'Feld 4' )
+                                            ( l = 'Feld 5' )
+                                          ).
+ 
+  DATA(it_rsvbfidesc) = VALUE ty_it_rsvbfidesc( ( fieldnum = 1 display = abap_true ) ).
+ 
+  CALL FUNCTION 'RS_VALUES_BOX'
+    EXPORTING
+      cursor_field         = 1
+      cursor_line          = 1
+      left_upper_col       = 10
+      left_upper_row       = 5
+      title                = 'Заголовок'
+    IMPORTING
+      linenumber           = lv_ln
+    TABLES
+      field_desc           = it_rsvbfidesc
+      value_tab            = it_sel_list
+    EXCEPTIONS
+      clear_contents       = 1
+      invalid_coordinates  = 2
+      invalid_field_number = 3
+      no_action            = 4
+      no_fields            = 5
+      no_markfield         = 6
+      process_user_action  = 7
+      value_tab_empty      = 8
+      value_tab_too_long   = 9
+      OTHERS               = 10.</pre><p>Результат:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/11/selectvalue.png"><img loading="lazy" class="alignnone size-full wp-image-5663" src="https://abap-blog.ru/wp-content/uploads/2020/11/selectvalue.png" alt="" width="756" height="289" srcset="https://abap-blog.ru/wp-content/uploads/2020/11/selectvalue.png 756w, https://abap-blog.ru/wp-content/uploads/2020/11/selectvalue-300x115.png 300w" sizes="(max-width: 756px) 100vw, 756px" /></a></p><p>The post <a href="https://abap-blog.ru/abap-notes/vybor-znachenij-iz-spiska/">Выбор значений из списка</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/vybor-znachenij-iz-spiska/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Работа с cl_gui_calendar</title>
+		<link>https://abap-blog.ru/abap-notes/rabota-s-cl_gui_calendar/</link>
+					<comments>https://abap-blog.ru/abap-notes/rabota-s-cl_gui_calendar/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 14:07:10 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5659</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dd17c198130801705/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/rabota-s-cl_gui_calendar/">Работа с cl_gui_calendar</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">* Стандартные примеры
+* SAPCALENDAR_DEMO1
+* SAPCALENDAR_DRAG_DROP
+* RSDEMO_CALENDAR_CONTROL
+DATA: o_cnt TYPE REF TO cl_gui_dialogbox_container.
+DATA: o_cal TYPE REF TO cl_gui_calendar.
+
+PARAMETERS: p_week TYPE string.
+PARAMETERS: p_date TYPE string.
+
+CLASS lcl_events DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS on_close FOR EVENT close OF cl_gui_dialogbox_container
+      IMPORTING
+          sender.
+    CLASS-METHODS on_date_selected FOR EVENT date_selected OF cl_gui_calendar
+      IMPORTING
+          date_begin
+          date_end
+          sender.
+ENDCLASS.
+
+CLASS lcl_events IMPLEMENTATION.
+  METHOD on_close.
+    sender-&gt;free( ).
+  ENDMETHOD.
+
+  METHOD on_date_selected.
+    DATA: lv_date_begin TYPE cnca_utc_date.
+
+    TRY.
+        sender-&gt;get_selection( IMPORTING date_begin = lv_date_begin ).
+
+        p_week = 10.
+        p_date = lv_date_begin.
+      CATCH cx_root INTO DATA(e_txt).
+    ENDTRY.
+
+  ENDMETHOD.
+
+ENDCLASS.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_week.
+  o_cnt = NEW #( no_autodef_progid_dynnr = abap_true
+                 caption = 'Kalender'
+                 top = 100
+                 left = 200
+                 width = 640
+                 height = 120 ).
+
+  SET HANDLER lcl_events=&gt;on_close FOR o_cnt.
+
+  o_cal = NEW #( parent          = o_cnt
+                 selection_style = cnca_sel_week
+                 view_style      = cnca_style_h_navigator ).
+
+  DATA: it_events TYPE cntl_simple_events.
+
+  it_events = VALUE #( ( eventid = cl_gui_calendar=&gt;m_id_date_selected
+                         appl_event = abap_true ) ).
+
+  o_cal-&gt;set_registered_events( events = it_events ).
+
+  SET HANDLER lcl_events=&gt;on_date_selected FOR o_cal.
+
+START-OF-SELECTION.
+  WRITE / p_week.
+  WRITE / p_date.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/rabota-s-cl_gui_calendar/">Работа с cl_gui_calendar</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/rabota-s-cl_gui_calendar/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Работа с CL_LIST_TREE_MODEL</title>
+		<link>https://abap-blog.ru/abap-notes/rabota-s-cl_list_tree_model/</link>
+					<comments>https://abap-blog.ru/abap-notes/rabota-s-cl_list_tree_model/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 13:01:33 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5649</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dd17c3d9529346121/] Результат:</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/rabota-s-cl_list_tree_model/">Работа с CL_LIST_TREE_MODEL</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">" http://saphelp.ucc.ovgu.de/NW750/EN/4d/88f020981740abe10000000a15822b/frameset.htm
+CLASS lcl_events DEFINITION.
+  PUBLIC SECTION.
+
+    TYPES: ty_it_events TYPE STANDARD TABLE OF cntl_simple_event WITH DEFAULT KEY.
+
+    CLASS-METHODS: on_button_click FOR EVENT button_click OF cl_list_tree_model
+      IMPORTING
+          node_key
+          item_name
+          sender.
+
+    CLASS-METHODS: on_link_click FOR EVENT link_click OF cl_list_tree_model
+      IMPORTING
+          node_key
+          item_name
+          sender.
+
+    CLASS-METHODS: on_checkbox_change FOR EVENT checkbox_change OF cl_list_tree_model
+      IMPORTING
+          node_key
+          item_name
+          checked
+          sender.
+
+    CLASS-METHODS: on_header_click FOR EVENT header_click OF cl_list_tree_model
+      IMPORTING
+          header_name
+          sender.
+
+ENDCLASS.
+
+CLASS lcl_events IMPLEMENTATION.
+
+  METHOD on_button_click.
+    MESSAGE node_key &amp;&amp; '_' &amp;&amp; item_name TYPE 'S'.
+  ENDMETHOD.
+
+  METHOD on_link_click.
+    MESSAGE node_key &amp;&amp; '_' &amp;&amp; item_name TYPE 'S'.
+  ENDMETHOD.
+
+  METHOD on_checkbox_change.
+    MESSAGE node_key &amp;&amp; '_' &amp;&amp; item_name &amp;&amp; '_' &amp;&amp; checked TYPE 'S'.
+  ENDMETHOD.
+
+  METHOD on_header_click.
+    MESSAGE header_name TYPE 'S'.
+  ENDMETHOD.
+
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA(o_tree) = NEW cl_list_tree_model( node_selection_mode = cl_list_tree_model=&gt;node_sel_mode_single
+                                         item_selection      = abap_true
+                                         with_headers        = abap_true
+                                         hierarchy_header      = VALUE #( t_image = icon_folder
+                                                                          heading = 'Заголовок'
+                                                                          tooltip = 'Tooltip'
+                                                                          width   = 80
+                                                                        )
+                                       ).
+
+  o_tree-&gt;create_tree_control( parent = cl_gui_container=&gt;default_screen ).
+
+  o_tree-&gt;add_node( EXPORTING
+                      isfolder          = abap_true
+                      node_key          = 'NODE1'
+                      relative_node_key = ''
+                      relationship      = cl_tree_model=&gt;relat_last_child
+                      expanded_image    = CONV tv_image( icon_folder )
+                      image             = CONV tv_image( icon_folder )
+                      item_table        = VALUE #( ( class     = cl_list_tree_model=&gt;item_class_checkbox
+                                                     item_name = '1'
+                                                     text      = 'Obj1'
+                                                     editable  = abap_true
+                                                     length    = 10
+                                                   )
+                                                 )
+                  ).
+
+  o_tree-&gt;add_node( EXPORTING
+                      isfolder          = abap_false
+                      node_key          = 'NODE1_1'
+                      relative_node_key = 'NODE1'
+                      relationship      = cl_tree_model=&gt;relat_last_child
+                      expanded_image    = CONV tv_image( icon_oo_object )
+                      image             = CONV tv_image( icon_oo_object )
+                      item_table        = VALUE #( ( class     = cl_list_tree_model=&gt;item_class_link
+                                                     item_name = '1'
+                                                     text      = 'Obj4'
+                                                     length    = 10
+                                                   )
+                                                   ( class     =  cl_list_tree_model=&gt;item_class_text
+                                                     item_name = '2'
+                                                     text      = 'Wert1'
+                                                     length    = 10
+                                                   )
+                                                   ( class     =  cl_list_tree_model=&gt;item_class_text
+                                                     item_name = '3'
+                                                     text      = 'Wert2'
+                                                     length    = 10
+                                                     alignment = cl_list_tree_model=&gt;align_auto
+                                                     font      = cl_list_tree_model=&gt;item_font_prop
+                                                   )
+                                                 )
+                  ).
+
+  o_tree-&gt;add_node( EXPORTING
+                      isfolder          = abap_true
+                      node_key          = 'NODE2'
+                      relative_node_key = ''
+                      relationship      = cl_tree_model=&gt;relat_last_child
+                      expanded_image    = CONV tv_image( icon_folder )
+                      image             = CONV tv_image( icon_folder )
+                      item_table        = VALUE #( ( class     = cl_list_tree_model=&gt;item_class_checkbox
+                                                     item_name = '1'
+                                                     text      = 'Obj2'
+                                                     editable  = abap_true
+                                                     length    = 10
+                                                   )
+                                                 )
+                  ).
+
+  o_tree-&gt;add_node( EXPORTING
+                      isfolder          = abap_false
+                      node_key          = 'NODE2_1'
+                      relative_node_key = 'NODE2'
+                      relationship      = cl_tree_model=&gt;relat_last_child
+                      expanded_image    = CONV tv_image( icon_oo_object )
+                      image             = CONV tv_image( icon_oo_object )
+                      item_table        = VALUE #( ( class     = cl_list_tree_model=&gt;item_class_button
+                                                     item_name = '1'
+                                                     text      = 'Obj3'
+                                                     length    = 10
+                                                   )
+                                                   ( class     =  cl_list_tree_model=&gt;item_class_text
+                                                     item_name = '2'
+                                                     text      = 'Wert1'
+                                                     length    = 10
+                                                   )
+                                                   ( class     =  cl_list_tree_model=&gt;item_class_text
+                                                     item_name = '3'
+                                                     text      = 'Wert2'
+                                                     length    = 10
+                                                     alignment = cl_list_tree_model=&gt;align_auto
+                                                     font      = cl_list_tree_model=&gt;item_font_prop
+                                                   )
+                                                 )
+                  ).
+
+  o_tree-&gt;expand_root_nodes( expand_subtree = abap_true
+                             level_count = 10 ).
+
+
+  SET HANDLER lcl_events=&gt;on_button_click FOR o_tree.
+  SET HANDLER lcl_events=&gt;on_checkbox_change FOR o_tree.
+  SET HANDLER lcl_events=&gt;on_header_click FOR o_tree.
+  SET HANDLER lcl_events=&gt;on_link_click FOR o_tree.
+
+
+  DATA(it_events) = VALUE lcl_events=&gt;ty_it_events(
+                                                    ( eventid = cl_list_tree_model=&gt;eventid_button_click
+                                                      appl_event = abap_true )
+                                                    ( eventid = cl_list_tree_model=&gt;eventid_checkbox_change
+                                                      appl_event = abap_true )
+                                                    ( eventid = cl_list_tree_model=&gt;eventid_header_click
+                                                      appl_event = abap_true )
+                                                    ( eventid = cl_list_tree_model=&gt;eventid_link_click
+                                                      appl_event = abap_true )
+                                                  ).
+
+  o_tree-&gt;set_registered_events( events = it_events ).
+
+  WRITE: space.</pre><p>Результат:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/11/CL_LIST_TREE_MODEL.png"><img loading="lazy" class="alignnone size-full wp-image-5650" src="https://abap-blog.ru/wp-content/uploads/2020/11/CL_LIST_TREE_MODEL.png" alt="" width="526" height="136" srcset="https://abap-blog.ru/wp-content/uploads/2020/11/CL_LIST_TREE_MODEL.png 526w, https://abap-blog.ru/wp-content/uploads/2020/11/CL_LIST_TREE_MODEL-300x78.png 300w" sizes="(max-width: 526px) 100vw, 526px" /></a></p><p>The post <a href="https://abap-blog.ru/abap-notes/rabota-s-cl_list_tree_model/">Работа с CL_LIST_TREE_MODEL</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/rabota-s-cl_list_tree_model/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Работа с CL_COLUMN_TREE_MODEL</title>
+		<link>https://abap-blog.ru/abap-notes/rabota-s-cl_column_tree_model/</link>
+					<comments>https://abap-blog.ru/abap-notes/rabota-s-cl_column_tree_model/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 12:58:05 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5646</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dd17c62b728973157/] Результат:</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/rabota-s-cl_column_tree_model/">Работа с CL_COLUMN_TREE_MODEL</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_events DEFINITION.
+  PUBLIC SECTION.
+
+    TYPES: ty_it_events TYPE STANDARD TABLE OF cntl_simple_event WITH DEFAULT KEY.
+
+    CLASS-METHODS: on_button_click FOR EVENT button_click OF cl_column_tree_model
+      IMPORTING
+          node_key
+          item_name
+          sender.
+
+    CLASS-METHODS: on_link_click FOR EVENT link_click OF cl_column_tree_model
+      IMPORTING
+          node_key
+          item_name
+          sender.
+
+    CLASS-METHODS: on_checkbox_change FOR EVENT checkbox_change OF cl_column_tree_model
+      IMPORTING
+          node_key
+          item_name
+          checked
+          sender.
+
+    CLASS-METHODS: on_header_click FOR EVENT header_click OF cl_column_tree_model
+      IMPORTING
+          header_name
+          sender.
+
+ENDCLASS.
+
+CLASS lcl_events IMPLEMENTATION.
+
+  METHOD on_button_click.
+    MESSAGE node_key &amp;&amp; '_' &amp;&amp; item_name TYPE 'S'.
+  ENDMETHOD.
+
+  METHOD on_link_click.
+    MESSAGE node_key &amp;&amp; '_' &amp;&amp; item_name TYPE 'S'.
+  ENDMETHOD.
+
+  METHOD on_checkbox_change.
+    MESSAGE node_key &amp;&amp; '_' &amp;&amp; item_name &amp;&amp; '_' &amp;&amp; checked TYPE 'S'.
+  ENDMETHOD.
+
+  METHOD on_header_click.
+    MESSAGE header_name TYPE 'S'.
+  ENDMETHOD.
+
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA(o_tree) = NEW cl_column_tree_model( node_selection_mode   = cl_column_tree_model=&gt;node_sel_mode_single
+                                           hierarchy_column_name = 'FOLDER'
+                                           hierarchy_header      = VALUE #( t_image = icon_folder
+                                                                            heading = 'Заголовок'
+                                                                            tooltip = 'Tooltip'
+                                                                            width   = 30
+                                                                          )
+                                           item_selection        = abap_true
+                                         ).
+  o_tree-&gt;add_column( EXPORTING
+                        name                = 'COL1'
+                        width               = 30
+                        header_text         = 'Column1' ).
+
+  o_tree-&gt;add_column( EXPORTING
+                        name                = 'COL2'
+                        width               = 30
+                        header_text         = 'Column2' ).
+
+  o_tree-&gt;create_tree_control( parent = cl_gui_container=&gt;default_screen ).
+
+  o_tree-&gt;add_node( EXPORTING
+                      isfolder          = abap_true
+                      node_key          = 'NODE1'
+                      relative_node_key = ''
+                      relationship      = cl_tree_model=&gt;relat_last_child
+                      expanded_image    = CONV tv_image( icon_folder )
+                      image             = CONV tv_image( icon_folder )
+                      item_table        = VALUE #( ( class     = cl_column_tree_model=&gt;item_class_checkbox
+                                                     item_name = 'FOLDER'
+                                                     text      = 'Obj1'
+                                                     editable  = abap_true
+                                                   )
+                                                 )
+                  ).
+
+  o_tree-&gt;add_node( EXPORTING
+                      isfolder          = abap_true
+                      node_key          = 'NODE1_1'
+                      relative_node_key = 'NODE1'
+                      relationship      = cl_tree_model=&gt;relat_last_child
+                      expanded_image    = CONV tv_image( icon_oo_object )
+                      image             = CONV tv_image( icon_oo_object )
+                      item_table        = VALUE #( ( class     = cl_column_tree_model=&gt;item_class_link
+                                                     item_name = 'FOLDER'
+                                                     text      = 'Obj4'
+                                                   )
+                                                   ( class     = cl_column_tree_model=&gt;item_class_text
+                                                     item_name = 'COL1'
+                                                     text      = 'Wert1'
+                                                     style     = cl_column_tree_model=&gt;style_intensified
+                                                     font      = cl_column_tree_model=&gt;item_font_prop
+                                                   )
+                                                   ( class     = cl_column_tree_model=&gt;item_class_text
+                                                     item_name = 'COL2'
+                                                     text      = 'Wert2'
+                                                   )
+                                                 )
+                  ).
+
+  o_tree-&gt;add_node( EXPORTING
+                      isfolder          = abap_true
+                      node_key          = 'NODE2'
+                      relative_node_key = ''
+                      relationship      = cl_tree_model=&gt;relat_last_child
+                      expanded_image    = CONV tv_image( icon_folder )
+                      image             = CONV tv_image( icon_folder )
+                      item_table        = VALUE #( ( class     = cl_column_tree_model=&gt;item_class_checkbox
+                                                     item_name = 'FOLDER'
+                                                     text      = 'Obj2'
+                                                     editable  = abap_true
+                                                   )
+                                                 )
+                  ).
+
+  o_tree-&gt;add_node( EXPORTING
+                      isfolder          = abap_true
+                      node_key          = 'NODE2_1'
+                      relative_node_key = 'NODE2'
+                      relationship      = cl_tree_model=&gt;relat_last_child
+                      expanded_image    = CONV tv_image( icon_oo_object )
+                      image             = CONV tv_image( icon_oo_object )
+                      item_table        = VALUE #( ( class     = cl_column_tree_model=&gt;item_class_button
+                                                     item_name = 'FOLDER'
+                                                     text      = 'Obj3'
+                                                   )
+                                                   ( class     = cl_column_tree_model=&gt;item_class_text
+                                                     item_name = 'COL1'
+                                                     text      = 'Wert1'
+                                                     style     = cl_column_tree_model=&gt;style_inactive
+                                                     font      = cl_column_tree_model=&gt;item_font_prop
+                                                   )
+                                                   ( class     = cl_column_tree_model=&gt;item_class_text
+                                                     item_name = 'COL2'
+                                                     text      = 'Wert2'
+                                                   )
+                                                 )
+                  ).
+
+  o_tree-&gt;expand_root_nodes( expand_subtree = abap_true
+                             level_count = 10 ).
+
+  SET HANDLER lcl_events=&gt;on_button_click FOR o_tree.
+  SET HANDLER lcl_events=&gt;on_checkbox_change FOR o_tree.
+  SET HANDLER lcl_events=&gt;on_header_click FOR o_tree.
+  SET HANDLER lcl_events=&gt;on_link_click FOR o_tree.
+
+* Eventtypten müssen gesondert registriert werden
+  DATA(it_events) = VALUE lcl_events=&gt;ty_it_events(
+                                                    ( eventid = cl_column_tree_model=&gt;eventid_button_click
+                                                      appl_event = abap_true )
+                                                    ( eventid = cl_column_tree_model=&gt;eventid_checkbox_change
+                                                      appl_event = abap_true )
+                                                    ( eventid = cl_column_tree_model=&gt;eventid_header_click
+                                                      appl_event = abap_true )
+                                                    ( eventid = cl_column_tree_model=&gt;eventid_link_click
+                                                      appl_event = abap_true )
+                                                  ).
+
+  o_tree-&gt;set_registered_events( events = it_events ).
+
+  WRITE: space.</pre><p>Результат:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/11/CL_COLUMN_TREE_MODEL.png"><img loading="lazy" class="alignnone size-full wp-image-5647" src="https://abap-blog.ru/wp-content/uploads/2020/11/CL_COLUMN_TREE_MODEL.png" alt="" width="487" height="136" srcset="https://abap-blog.ru/wp-content/uploads/2020/11/CL_COLUMN_TREE_MODEL.png 487w, https://abap-blog.ru/wp-content/uploads/2020/11/CL_COLUMN_TREE_MODEL-300x84.png 300w" sizes="(max-width: 487px) 100vw, 487px" /></a></p><p>The post <a href="https://abap-blog.ru/abap-notes/rabota-s-cl_column_tree_model/">Работа с CL_COLUMN_TREE_MODEL</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/rabota-s-cl_column_tree_model/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Диалог просмотра XML, HTML, JSON</title>
+		<link>https://abap-blog.ru/abap-notes/dialog-prosmotra-xml-html-json/</link>
+					<comments>https://abap-blog.ru/abap-notes/dialog-prosmotra-xml-html-json/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 27 Sep 2020 16:41:45 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4971</guid>
+
+					<description><![CDATA[<p>Иногда требуется отобразить какой-либо HTML или XML документ, для этого можно воспользоваться следующими классами: [crayon-618a1dd17c85e886304499/] Еще вариант для отображения XML: [crayon-618a1dd17c865762684108/]</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/dialog-prosmotra-xml-html-json/">Диалог просмотра XML, HTML, JSON</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Иногда требуется отобразить какой-либо HTML или XML документ, для этого можно воспользоваться следующими классами:</p><pre class="urvanov-syntax-highlighter-plain-tag">cl_abap_browser=&gt;show_html( html_string = '&lt;html&gt;&lt;b&gt;Some&lt;/b&gt;Text&lt;/html&gt;'
+                            title       = 'HTML'
+                            size        = cl_abap_browser=&gt;large ).
+
+cl_abap_browser=&gt;show_xml( xml_string = '&lt;tag&gt;&lt;child_tag&gt;1&lt;/child_tag&gt;&lt;/tag&gt;'
+                           title      = 'XML'
+                           size       = cl_abap_browser=&gt;large ).
+
+cl_demo_output=&gt;display_json( '{"name":"Иван","age":25}' ).</pre><p><a href="https://abap-blog.ru/wp-content/uploads/2020/09/html.png"><img loading="lazy" class="alignnone size-full wp-image-4972" src="https://abap-blog.ru/wp-content/uploads/2020/09/html.png" alt="" width="524" height="142" srcset="https://abap-blog.ru/wp-content/uploads/2020/09/html.png 524w, https://abap-blog.ru/wp-content/uploads/2020/09/html-300x81.png 300w" sizes="(max-width: 524px) 100vw, 524px" /></a></p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/09/xml.png"><img loading="lazy" class="alignnone size-full wp-image-4973" src="https://abap-blog.ru/wp-content/uploads/2020/09/xml.png" alt="" width="297" height="171" /></a></p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/09/json.png"><img loading="lazy" class="alignnone size-full wp-image-4974" src="https://abap-blog.ru/wp-content/uploads/2020/09/json.png" alt="" width="313" height="147" srcset="https://abap-blog.ru/wp-content/uploads/2020/09/json.png 313w, https://abap-blog.ru/wp-content/uploads/2020/09/json-300x141.png 300w" sizes="(max-width: 313px) 100vw, 313px" /></a></p>
+<p>Еще вариант для отображения XML:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA(lv_xml_string) = |&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;asx:abap version="1.0" xmlns:asx="http://www.sap.com/abapxml"&gt;&lt;asx:values&gt;&lt;TEXT&gt;Hello world!&lt;/TEXT&gt;&lt;/asx:values&gt;&lt;/asx:abap&gt;|.
+
+cl_soap_xml_helper=&gt;xml_show( sdoc = lv_xml_string  " XML as character string
+                              html = abap_false     " HTML or XML
+                              title = 'XML документ'  ).</pre><p><a href="https://abap-blog.ru/wp-content/uploads/2020/09/xmlshow.png"><img loading="lazy" class="alignnone size-full wp-image-5642" src="https://abap-blog.ru/wp-content/uploads/2020/09/xmlshow.png" alt="" width="589" height="180" srcset="https://abap-blog.ru/wp-content/uploads/2020/09/xmlshow.png 589w, https://abap-blog.ru/wp-content/uploads/2020/09/xmlshow-300x92.png 300w" sizes="(max-width: 589px) 100vw, 589px" /></a></p><p>The post <a href="https://abap-blog.ru/abap-notes/dialog-prosmotra-xml-html-json/">Диалог просмотра XML, HTML, JSON</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/dialog-prosmotra-xml-html-json/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Использование индикатора прогресса</title>
+		<link>https://abap-blog.ru/abap-notes/ispolzovanie-indikatora-progressa/</link>
+					<comments>https://abap-blog.ru/abap-notes/ispolzovanie-indikatora-progressa/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 27 Sep 2020 16:16:25 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4955</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dd17ca09112936053/] &#160; Не следует использовать ФМ SAPGUI_PROGRESS_INDICATOR, т.к. он устарел.</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/ispolzovanie-indikatora-progressa/">Использование индикатора прогресса</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_times1 TYPE i DEFAULT 15.
+
+DO p_times1 TIMES.
+  cl_progress_indicator=&gt;progress_indicate( i_text               = |Прогресс { sy-index } / { p_times1 }|
+                                            i_processed          = sy-index     " Текущее значение
+                                            i_total              = p_times1     " Максимальное значение
+                                            i_output_immediately = abap_true ). " true -&gt; вывод всех значений, false -&gt; вывод каждого 10-го
+
+  WAIT UP TO 1 SECONDS.
+ENDDO.</pre><p>&nbsp;</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/09/progress-4.gif"><img loading="lazy" class="alignnone size-full wp-image-4965" src="https://abap-blog.ru/wp-content/uploads/2020/09/progress-4.gif" alt="" width="152" height="84" /></a></p>
+<p>Не следует использовать ФМ SAPGUI_PROGRESS_INDICATOR, т.к. он устарел.</p><p>The post <a href="https://abap-blog.ru/abap-notes/ispolzovanie-indikatora-progressa/">Использование индикатора прогресса</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/ispolzovanie-indikatora-progressa/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Выпадающий список на экране выбора</title>
+		<link>https://abap-blog.ru/abap-notes/vypadayushhij-spisok-na-ekrane-vybora/</link>
+					<comments>https://abap-blog.ru/abap-notes/vypadayushhij-spisok-na-ekrane-vybora/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 08 Jul 2020 18:18:43 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4401</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dd17cb90153513606/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/vypadayushhij-spisok-na-ekrane-vybora/">Выпадающий список на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2020/07/listbox.png"><img loading="lazy" class="alignnone size-full wp-image-4402" src="https://abap-blog.ru/wp-content/uploads/2020/07/listbox.png" alt="" width="455" height="106" srcset="https://abap-blog.ru/wp-content/uploads/2020/07/listbox.png 455w, https://abap-blog.ru/wp-content/uploads/2020/07/listbox-300x70.png 300w" sizes="(max-width: 455px) 100vw, 455px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: it_cbval TYPE STANDARD TABLE OF vrm_value WITH DEFAULT KEY.
+
+PARAMETERS: p_l_lang TYPE char3 AS LISTBOX VISIBLE LENGTH 20 USER-COMMAND lb_cmd.
+
+INITIALIZATION.
+
+  it_cbval = VALUE #( ( key = 'A_1' text = 'Значение 1' )
+                      ( key = 'A_2' text = 'Значение 2' ) ).
+
+  CALL FUNCTION 'VRM_SET_VALUES'
+    EXPORTING
+      id              = 'P_L_LANG'
+      values          = it_cbval
+    EXCEPTIONS
+      id_illegal_name = 1
+      OTHERS          = 2.
+
+  IF sy-subrc = 0.
+    IF lines( it_cbval ) &gt; 0.
+      p_l_lang = 'A_1'.
+    ENDIF.
+  ENDIF.
+
+START-OF-SELECTION.
+  TRY.
+      DATA(s) = it_cbval[ key = p_l_lang ].
+
+      WRITE: / s-text.
+    CATCH cx_root.
+  ENDTRY.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/vypadayushhij-spisok-na-ekrane-vybora/">Выпадающий список на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/vypadayushhij-spisok-na-ekrane-vybora/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Вертикальный Toolbar</title>
+		<link>https://abap-blog.ru/abap-notes/vertikalnyj-toolbar/</link>
+					<comments>https://abap-blog.ru/abap-notes/vertikalnyj-toolbar/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 08 Jul 2020 18:10:51 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4394</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dd17ce26736118963/] Второй вариант: [crayon-618a1dd17ce30548841507/] Третий вариант: [crayon-618a1dd17ce34948310068/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/vertikalnyj-toolbar/">Вертикальный Toolbar</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR.png"><img loading="lazy" class="alignnone size-full wp-image-4395" src="https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR.png" alt="" width="1601" height="217" srcset="https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR.png 1601w, https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR-300x41.png 300w, https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR-1024x139.png 1024w, https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR-768x104.png 768w, https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR-1536x208.png 1536w" sizes="(max-width: 1601px) 100vw, 1601px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_events DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS:
+      on_clicked FOR EVENT clicked OF cl_gui_container_bar_xt
+        IMPORTING
+            id
+            container
+            sender.
+    CLASS-METHODS:
+      on_empty FOR EVENT empty OF cl_gui_container_bar_xt
+        IMPORTING
+            sender.
+    CLASS-METHODS:
+      on_closed FOR EVENT closed OF cl_gui_container_bar_xt
+        IMPORTING
+            id
+            sender.
+ENDCLASS.
+
+CLASS lcl_events IMPLEMENTATION.
+  METHOD on_clicked.
+    MESSAGE |Property: { id } { container-&gt;get_container_type( ) }| TYPE 'S'.
+  ENDMETHOD.
+
+  METHOD on_empty.
+    BREAK-POINT.
+  ENDMETHOD.
+
+  METHOD on_closed.
+    BREAK-POINT.
+  ENDMETHOD.
+ENDCLASS.
+
+INITIALIZATION.
+  TRY.
+      DATA(o_splitter) = NEW cl_gui_splitter_container( parent                  = cl_gui_container=&gt;default_screen
+                                                        no_autodef_progid_dynnr = abap_true
+                                                        rows                    = 1
+                                                        columns                 = 2 ).
+
+      o_splitter-&gt;set_column_width( id = 1 width = 10 ).
+
+      DATA(o_container_left) = o_splitter-&gt;get_container( row = 1 column = 1 ).
+      DATA(o_container_right) = o_splitter-&gt;get_container( row = 1 column = 2 ).
+
+
+      DATA(it_captions) = VALUE sbptcaptns( ( caption      = 'ABAP'
+                                              icon         = icon_abap
+                                              no_close     = abap_false
+                                              name         = 'CAP1'
+                                              invisible    = abap_false
+                                              pre_inst     = abap_false
+                                              reuse_cnt_of = '' )
+                                            ( caption      = 'ABC'
+                                              icon         = icon_abc
+                                              no_close     = abap_false
+                                              name         = 'CAP2'
+                                              invisible    = abap_false
+                                              pre_inst     = abap_false
+                                              reuse_cnt_of = '' ) ).
+
+      DATA(o_toolbar_xt) = NEW cl_gui_container_bar_xt( active_id     = 1                                    " Nr. des aktiven Eintrages
+                                                        parent        = o_container_left                     " Einbettung in linken Container
+                                                        captions      = it_captions                          " Einträge
+                                                        style         = cl_gui_container_bar_xt=&gt;c_style_fix " Style: Fix = Feste Anordnung, Outlook = Anordnung klappt
+                                                        close_buttons = abap_true ).                         " Schließen Kreuze anzeigen
+
+
+      DATA(lv_caption) = VALUE sbptcaptn( caption      = 'Activate'
+                                          icon         = icon_activate
+                                          no_close     = abap_false
+                                          name         = 'CAP3'
+                                          invisible    = abap_false
+                                          pre_inst     = abap_false
+                                          reuse_cnt_of = '' ).
+
+      DATA(lv_id) = 0.
+      o_toolbar_xt-&gt;add_cell( EXPORTING caption = lv_caption
+                              CHANGING  id      = lv_id ).
+
+      DATA(o_cont) = o_toolbar_xt-&gt;get_container( id = lv_id ).
+
+      o_toolbar_xt-&gt;set_active( id = lv_id ).
+
+
+      SET HANDLER lcl_events=&gt;on_clicked FOR o_toolbar_xt.
+      SET HANDLER lcl_events=&gt;on_empty FOR o_toolbar_xt.
+      SET HANDLER lcl_events=&gt;on_closed FOR o_toolbar_xt.
+
+      DATA: it_sflight TYPE STANDARD TABLE OF sflight.
+
+      SELECT * FROM sflight INTO TABLE @it_sflight.
+
+      DATA: o_salv TYPE REF TO cl_salv_table.
+
+      cl_salv_table=&gt;factory( EXPORTING
+                                r_container    = o_container_right
+                              IMPORTING
+                                r_salv_table   = o_salv
+                              CHANGING
+                                t_table        = it_sflight ).
+
+      o_salv-&gt;get_functions( )-&gt;set_all( ).
+      o_salv-&gt;display( ).
+
+      cl_abap_list_layout=&gt;suppress_toolbar( ).
+
+      WRITE: space.
+    CATCH cx_root INTO DATA(e_txt).
+  ENDTRY.</pre><p>Второй вариант:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR_2.png"><img loading="lazy" class="alignnone size-full wp-image-4398" src="https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR_2.png" alt="" width="1601" height="223" srcset="https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR_2.png 1601w, https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR_2-300x42.png 300w, https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR_2-1024x143.png 1024w, https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR_2-768x107.png 768w, https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR_2-1536x214.png 1536w" sizes="(max-width: 1601px) 100vw, 1601px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_events DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS:
+      on_clicked FOR EVENT clicked OF cl_gui_container_bar_2
+        IMPORTING
+            id
+            container
+            sender.
+    CLASS-METHODS:
+      on_empty FOR EVENT empty OF cl_gui_container_bar_2
+        IMPORTING
+            sender.
+    CLASS-METHODS:
+      on_closed FOR EVENT closed OF cl_gui_container_bar_2
+        IMPORTING
+            id
+            sender.
+ENDCLASS.
+
+CLASS lcl_events IMPLEMENTATION.
+
+  METHOD on_clicked.
+    MESSAGE |Property: { id } { container-&gt;get_container_type( ) }| TYPE 'S'.
+  ENDMETHOD.
+
+  METHOD on_empty.
+    BREAK-POINT.
+  ENDMETHOD.
+
+  METHOD on_closed.
+    BREAK-POINT.
+  ENDMETHOD.
+ENDCLASS.
+
+INITIALIZATION.
+  TRY.
+
+      DATA(o_splitter) = NEW cl_gui_splitter_container( parent                  = cl_gui_container=&gt;default_screen
+                                                        no_autodef_progid_dynnr = abap_true
+                                                        rows                    = 1
+                                                        columns                 = 2 ).
+
+      o_splitter-&gt;set_column_width( id = 1 width = 10 ).
+
+      DATA(o_container_left) = o_splitter-&gt;get_container( row = 1 column = 1 ).
+      DATA(o_container_right) = o_splitter-&gt;get_container( row = 1 column = 2 ).
+
+      DATA(it_captions) = VALUE sbptcaptns( ( caption      = 'ABAP'
+                                              icon         = icon_abap
+                                              no_close     = abap_false
+                                              name         = 'CAP1'
+                                              invisible    = abap_false
+                                              pre_inst     = abap_false
+                                              reuse_cnt_of = '' )
+                                            ( caption      = 'ABC'
+                                              icon         = icon_abc
+                                              no_close     = abap_false
+                                              name         = 'CAP2'
+                                              invisible    = abap_false
+                                              pre_inst     = abap_false
+                                              reuse_cnt_of = '' ) ).
+
+
+      DATA(o_toolbar) = NEW cl_gui_container_bar_2( active_id     = 1                                    "
+                                                    parent        = o_container_left                     "
+                                                    captions      = it_captions                          "
+                                                    style         = cl_gui_container_bar_2=&gt;c_style_tile " 
+                                                    close_buttons = abap_false ).                        " 
+
+      DATA(lv_caption) = VALUE sbptcaptn( caption      = 'Activate'
+                                          icon         = icon_activate
+                                          no_close     = abap_false
+                                          name         = 'CAP3'
+                                          invisible    = abap_false
+                                          pre_inst     = abap_false
+                                          reuse_cnt_of = '' ).
+
+      DATA(lv_id) = 0.
+      o_toolbar-&gt;add_cell( EXPORTING caption = lv_caption
+                           CHANGING  id      = lv_id ).
+
+      DATA(o_cont) = o_toolbar-&gt;get_container( id = lv_id ).
+
+      o_toolbar-&gt;set_active( id = lv_id ).
+
+      SET HANDLER lcl_events=&gt;on_clicked FOR o_toolbar.
+      SET HANDLER lcl_events=&gt;on_empty FOR o_toolbar.
+      SET HANDLER lcl_events=&gt;on_closed FOR o_toolbar.
+
+
+      DATA: it_sflight TYPE STANDARD TABLE OF sflight.
+
+      SELECT * FROM sflight INTO TABLE @it_sflight.
+
+      DATA: o_salv TYPE REF TO cl_salv_table.
+
+      cl_salv_table=&gt;factory( EXPORTING
+                                r_container    = o_container_right
+                              IMPORTING
+                                r_salv_table   = o_salv
+                              CHANGING
+                                t_table        = it_sflight ).
+
+      o_salv-&gt;get_functions( )-&gt;set_all( ).
+      o_salv-&gt;display( ).
+
+      cl_abap_list_layout=&gt;suppress_toolbar( ).
+
+      WRITE: space.
+    CATCH cx_root INTO DATA(e_txt).
+  ENDTRY.</pre><p>Третий вариант:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR_3.png"><img loading="lazy" class="alignnone size-full wp-image-4399" src="https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR_3.png" alt="" width="801" height="194" srcset="https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR_3.png 801w, https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR_3-300x73.png 300w, https://abap-blog.ru/wp-content/uploads/2020/07/CL_GUI_CONTAINER_BAR_3-768x186.png 768w" sizes="(max-width: 801px) 100vw, 801px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_events DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS:
+      on_clicked FOR EVENT clicked OF cl_gui_container_bar
+        IMPORTING
+            id
+            container
+            sender.
+ENDCLASS.
+
+CLASS lcl_events IMPLEMENTATION.
+  METHOD on_clicked.
+    MESSAGE |Property: { id } { container-&gt;get_container_type( ) }| TYPE 'S'.
+  ENDMETHOD.
+ENDCLASS.
+
+INITIALIZATION.
+  TRY.
+
+      DATA(o_splitter) = NEW cl_gui_splitter_container( parent                  = cl_gui_container=&gt;default_screen
+                                                        no_autodef_progid_dynnr = abap_true
+                                                        rows                    = 1
+                                                        columns                 = 2 ).
+
+      o_splitter-&gt;set_column_width( id = 1 width = 10 ).
+
+      DATA(o_container_left) = o_splitter-&gt;get_container( row = 1 column = 1 ).
+      DATA(o_container_right) = o_splitter-&gt;get_container( row = 1 column = 2 ).
+
+      DATA(it_captions) = VALUE sbptcaptns( ( caption      = 'ABAP'
+                                              icon         = icon_abap
+                                              no_close     = abap_false
+                                              name         = 'CAP1'
+                                              invisible    = abap_false
+                                              pre_inst     = abap_false
+                                              reuse_cnt_of = '' )
+                                            ( caption      = 'ABC'
+                                              icon         = icon_abc
+                                              no_close     = abap_false
+                                              name         = 'CAP2'
+                                              invisible    = abap_false
+                                              pre_inst     = abap_false
+                                              reuse_cnt_of = '' )
+                                            ( caption      = 'Activate'
+                                              icon         = icon_activate
+                                              no_close     = abap_false
+                                              name         = 'CAP3'
+                                              invisible    = abap_false
+                                              pre_inst     = abap_false
+                                              reuse_cnt_of = '' ) ).
+
+      DATA(o_toolbar) = NEW cl_gui_container_bar( active_id     = 1
+                                                  parent        = o_container_left
+                                                  captions      = it_captions ).
+
+
+      SET HANDLER lcl_events=&gt;on_clicked FOR o_toolbar.
+
+
+      DATA: it_sflight TYPE STANDARD TABLE OF sflight.
+
+      SELECT * FROM sflight INTO TABLE @it_sflight.
+
+      DATA: o_salv TYPE REF TO cl_salv_table.
+
+      cl_salv_table=&gt;factory( EXPORTING
+                                r_container    = o_container_right
+                              IMPORTING
+                                r_salv_table   = o_salv
+                              CHANGING
+                                t_table        = it_sflight ).
+
+      o_salv-&gt;get_functions( )-&gt;set_all( ).
+      o_salv-&gt;display( ).
+
+
+      cl_abap_list_layout=&gt;suppress_toolbar( ).
+
+
+      WRITE: space.
+    CATCH cx_root INTO DATA(e_txt).
+  ENDTRY.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/vertikalnyj-toolbar/">Вертикальный Toolbar</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/vertikalnyj-toolbar/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

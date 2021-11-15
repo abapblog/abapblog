@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>cl_gos_service_tools | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_gos_service_tools/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:55:27 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Generic Object Services (Часть 2 &#8212; вложения и связи)</title>
+		<link>https://abap-blog.ru/enhancements/generic-object-services-chast-2-vlozheniya-i-soedineniya/</link>
+					<comments>https://abap-blog.ru/enhancements/generic-object-services-chast-2-vlozheniya-i-soedineniya/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 30 Jan 2012 07:31:46 +0000</pubDate>
+				<category><![CDATA[Расширения]]></category>
+		<category><![CDATA[cl_binary_relation]]></category>
+		<category><![CDATA[cl_gos_service_tools]]></category>
+		<category><![CDATA[GOS]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=379</guid>
+
+					<description><![CDATA[<p>Использование соединений Между двумя бизнес объектами могут быть созданы ссылочные связи.  Например: к закупочному заказу мы можем привязать все материальные документы, которые относились к данному заказу. То в какой роли выступает объект, прописывается в ракурсе VROBJROLES.  Например, для того чтобы иметь возможность присоединять плановые заказы в виде ссылок, необходимо внести соответствующую запись в указанный выше [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/enhancements/generic-object-services-chast-2-vlozheniya-i-soedineniya/">Generic Object Services (Часть 2 — вложения и связи)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<h4>Использование соединений</h4>
+<p>Между двумя бизнес объектами могут быть созданы ссылочные связи.  Например: к закупочному заказу мы можем привязать все материальные документы, которые относились к данному заказу. То в какой роли выступает объект, прописывается в ракурсе <strong>VROBJROLES</strong>.  Например, для того чтобы иметь возможность присоединять плановые заказы в виде ссылок, необходимо внести соответствующую запись в указанный выше ракурс. Указать тип роли: <strong>REFERENZ</strong>.</p>
+<p><span id="more-379"></span></p>
+<p>Для создания соединений создан статический метод <strong>create_link</strong> (<strong>DELETE_LINK</strong> – для удаления) класса <strong>cl_binary_relation</strong>, данный метод не поддерживает все типы соединений, в этом случае необходимо воспользоваться ФМ<strong> BINARY_RELATION_CREATE</strong> (<strong>BINARY_RELATION_DELETE</strong> – для удаления).</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  zgos_relation_create.
+*
+*
+CLASS lcl_relation DEFINITION.
+  PUBLIC SECTION.
+    TYPES:
+      BEGIN OF ty_related.
+            INCLUDE TYPE sibflporb.
+    TYPES:
+        relation TYPE oblreltype,
+      END OF ty_related.
+    TYPES:
+      ty_t_related TYPE STANDARD TABLE OF ty_related.
+    METHODS:
+      CONSTRUCTOR
+        IMPORTING
+          obj_no   TYPE sibfboriid
+          obj_type TYPE sibftypeid
+          obj_cat  TYPE sibfcatid.
+    METHODS:
+      add_relation
+        IMPORTING
+          obj_no   TYPE sibfboriid
+          obj_type TYPE sibftypeid
+          obj_cat  TYPE sibfcatid
+          relation TYPE oblreltype.
+    METHODS:
+      create_relations.
+  PRIVATE SECTION.
+    DATA:
+      t_related TYPE ty_t_related,  "sibflporbt,
+      my_prop   TYPE sibflporb.
+ENDCLASS.                    "lcl_relation DEFINITION
+*
+*
+CLASS lcl_relation IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+* Установим id объекта к которому добавляем соединение
+    me-&gt;my_prop-instid = obj_no.
+    me-&gt;my_prop-typeid = obj_type.
+    me-&gt;my_prop-catid  = obj_cat.
+  ENDMETHOD.                    "constructor
+  METHOD add_relation.
+* Добавим соединение во внутреннюю таблицу
+    FIELD-SYMBOLS: &lt;lfs_relat&gt; LIKE LINE OF me-&gt;t_related.
+    APPEND INITIAL LINE TO me-&gt;t_related ASSIGNING &lt;lfs_relat&gt;.
+    &lt;lfs_relat&gt;-instid = obj_no.
+    &lt;lfs_relat&gt;-typeid = obj_type.
+    &lt;lfs_relat&gt;-catid  = obj_cat.
+    &lt;lfs_relat&gt;-relation = relation.
+  ENDMETHOD.                    "add_relation
+*
+  METHOD create_relations.
+    DATA: lwa_relate_key TYPE sibflporb.
+    FIELD-SYMBOLS: &lt;lfs_relat&gt; LIKE LINE OF me-&gt;t_related.
+*
+    DATA:
+      ls_parent   TYPE borident,
+      ls_related  TYPE borident,
+      lv_relation TYPE binreltyp,
+      lx_obl    TYPE REF TO cx_obl,
+      lp_errstr TYPE STRING,
+      lv_done TYPE flag.
+*
+    LOOP AT me-&gt;t_related ASSIGNING &lt;lfs_relat&gt;.
+      MOVE-CORRESPONDING &lt;lfs_relat&gt; TO lwa_relate_key.
+      TRY.
+          CALL METHOD cl_binary_relation=&gt;create_link
+            EXPORTING
+              is_object_a = my_prop
+              is_object_b = lwa_relate_key
+              ip_reltype  = &lt;lfs_relat&gt;-relation.
+*
+          lv_done = 'X'.
+*
+* Если соединение не может быть обработано данным классом
+* Воспользуемся ФМ
+        CATCH cx_obl_model_error.
+*
+          ls_parent-objkey  = me-&gt;my_prop-instid.
+          ls_parent-objtype = me-&gt;my_prop-typeid.
+          ls_related-objkey  = &lt;lfs_relat&gt;-instid.
+          ls_related-objtype = &lt;lfs_relat&gt;-typeid.
+          lv_relation = &lt;lfs_relat&gt;-relation.
+*
+          CALL FUNCTION 'BINARY_RELATION_CREATE'
+            EXPORTING
+              obj_rolea      = ls_parent
+              obj_roleb      = ls_related
+              relationtype   = lv_relation
+            EXCEPTIONS
+              no_model       = 1
+              internal_error = 2
+              unknown        = 3
+              OTHERS         = 4.
+          IF sy-subrc &lt;&gt; 0.
+            MESSAGE ID sy-msgid TYPE 'S' NUMBER sy-msgno
+                    WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+          ELSE.
+            lv_done = 'X'.
+          ENDIF.
+        CATCH cx_obl INTO lx_obl.
+          lp_errstr = lx_obl-&gt;get_text( ).
+          MESSAGE lp_errstr TYPE 'S'.
+      ENDTRY.
+*
+      IF lv_done = 'X'.
+        WRITE: / 'Связь создана: ', &lt;lfs_relat&gt;-instid(10), &lt;lfs_relat&gt;-relation.
+      ENDIF.
+*
+    ENDLOOP.
+*
+    COMMIT WORK.
+*
+  ENDMETHOD.
+ENDCLASS.
+*
+START-OF-SELECTION.
+  DATA: o_relation TYPE REF TO lcl_relation.
+*
+* В качестве документа к которому создаем соединение выступает сбытовой заказ
+  CREATE OBJECT o_relation
+    EXPORTING
+      obj_no   = '1000010010'
+      obj_type = 'BUS2032'
+      obj_cat  = 'BO'.
+*
+* Добавим поставку в качестве ссылки к сбытовому заказу
+  o_relation-&gt;add_relation(
+    obj_no   = '8000020000'
+    obj_type = 'LIKP'
+    obj_cat  = 'BO'
+    relation = 'LINK' ).             " Link
+*
+* Добавим IDOC в качестве ссылки к сбытовому заказу
+  o_relation-&gt;add_relation(
+    obj_no   = '1000012345'
+    obj_type = 'IDOC'
+    obj_cat  = 'BO'
+    relation = 'IDC0' ).             " IDOC
+*
+* Создаем соединения
+  o_relation-&gt;create_relations( ).</pre><p><strong>Работа с вложениями</strong></p>
+<p>Для получения списка вложений можно воспользоваться все тем же классом cl_binary_relation и его методом <strong>read_links</strong>. Для чтения содержимого вложения используется ФМ: <strong>SO_OBJECT_READ</strong>.</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  zgos_note.
+
+START-OF-SELECTION.
+  DATA: gs_lpor TYPE sibflporb,
+        lt_relat TYPE obl_t_relt,
+        la_relat LIKE LINE OF lt_relat.
+
+  gs_lpor-instid = '4500000324'.
+  gs_lpor-typeid = 'BUS2012'.
+  gs_lpor-catid  = 'BO'.
+
+  la_relat-SIGN = 'I'.
+  la_relat-OPTION = 'CP'.
+  la_relat-LOW = '*'.
+  APPEND la_relat TO lt_relat.
+
+  DATA: t_links TYPE obl_t_link,
+        la_links LIKE LINE OF t_links.
+
+  DATA: lo_root TYPE REF TO CX_ROOT.
+
+  TRY.
+      CALL METHOD cl_binary_relation=&gt;read_links
+        EXPORTING
+          is_object           = gs_lpor
+          it_relation_options = lt_relat
+        IMPORTING
+          et_links            = t_links.
+    CATCH CX_ROOT INTO lo_root.
+  ENDTRY.
+
+  DATA l_folder_id TYPE soodk.
+  DATA l_object_id TYPE soodk.
+  DATA document_id TYPE sofmk.
+
+  READ TABLE t_links INTO la_links INDEX 1.
+  document_id = la_links-instid_b.
+
+  l_folder_id-objtp = document_id-foltp.
+  l_folder_id-objyr = document_id-folyr.
+  l_folder_id-objno = document_id-folno.
+
+  l_object_id-objtp = document_id-doctp.
+  l_object_id-objyr = document_id-docyr.
+  l_object_id-objno = document_id-docno.
+
+  DATA: document_content  TYPE STANDARD TABLE OF soli,
+        SOFM2   TYPE SOOD2. " Кто и когда создал
+* Получение содержимого файла.
+  CALL FUNCTION 'SO_OBJECT_READ'
+    EXPORTING
+      folder_id                  = l_folder_id
+      object_id                  = l_object_id
+    IMPORTING
+      object_hd_display          = SOFM2
+    TABLES
+      objcont                    = document_content
+    EXCEPTIONS
+      active_user_not_exist      = 1
+      communication_failure      = 2
+      component_not_available    = 3
+      folder_not_exist           = 4
+      folder_no_authorization    = 5
+      object_not_exist           = 6
+      object_no_authorization    = 7
+      operation_no_authorization = 8
+      owner_not_exist            = 9
+      parameter_error            = 10
+      substitute_not_active      = 11
+      substitute_not_defined     = 12
+      system_failure             = 13
+      x_error                    = 14
+      OTHERS                     = 15.
+  IF sy-subrc NE 0.
+    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+            WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+  ENDIF.</pre><p>Еще один полезный метод  <strong>copy_linked_objects</strong> класса <strong>cl_gos_service_tools</strong> позволяет копировать вложения между двумя бизнес объектами.</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  Zсopy_gos_att.
+*
+*
+DATA: lt_services TYPE tgos_sels.    " Services table typ
+DATA: ls_service TYPE sgos_sels.     " Services structure type
+DATA: ls_source TYPE sibflporb,      " Source
+      ls_target TYPE sibflporb.      " Target
+*
+START-OF-SELECTION.
+*
+* Service needs to be performed
+  ls_service-SIGN   = 'I'.
+  ls_service-OPTION = 'EQ'.
+  ls_service-LOW    = 'PCATTA_CREA'.
+  APPEND ls_service TO lt_services.
+*
+* Source
+  ls_source-instid = 'CUST1'.
+  ls_source-typeid = 'KNA1'.
+  ls_source-catid  = 'BO'.
+*
+* Target
+  ls_target-instid = 'CUST2'.
+  ls_target-typeid = 'KNA1'.
+  ls_target-catid  = 'BO'.
+*
+* Copy the objects between Source and Target
+  cl_gos_service_tools=&gt;copy_linked_objects(
+      is_source            = ls_source
+      is_target            = ls_target
+      it_service_selection = lt_services
+         ).
+*
+  COMMIT WORK.</pre><p><a href="http://abap-blog.ru/others/generic-object-services-chast-1/">Предыдущая статья</a></p><p>The post <a href="https://abap-blog.ru/enhancements/generic-object-services-chast-2-vlozheniya-i-soedineniya/">Generic Object Services (Часть 2 — вложения и связи)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/enhancements/generic-object-services-chast-2-vlozheniya-i-soedineniya/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

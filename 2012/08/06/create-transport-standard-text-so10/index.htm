@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+
+<!--[if gte IE 9]>
+<html class="ie" lang="en-US">
+<![endif]-->
+
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar" content="black"/>
+    <title>Create &amp; Transport Standard Text (SO10) | SAP Blogs</title>
+    <link rel="profile" href="http://gmpg.org/xfn/11"/>
+
+    
+    
+    <!--[if lt IE 9]>
+    <script src="https://blogs.sap.com/wp-content/themes/sap-v3-neo/js/html5.min.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link rel="icon" type="image"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.png" /><link rel="shortcut icon" type="image/x-icon"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.ico" /><link rel="apple-touch-icon" href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/apple-touch-icon.png" /><meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//static.community.services.sap' />
+<link rel='dns-prefetch' href='//assets.adobedtm.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Feed" href="https://blogs.sap.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Comments Feed" href="https://blogs.sap.com/comments/feed/" />
+<meta name="type" content="Blog" /><meta name="description" content="CREATE &amp; TRANSPORT STANDARD TEXT STEP1: Create Standard Text:&nbsp; T-Code SO10 Enter the Text Name and then click CREATE Push Button. A Text Screen will appear where you can maintain the Text and SAVE." /><meta name="sm_tech_ids" content="167431589774684563301227734202839,01200615320800000659,209057551571413566377230676804921"/><meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" /><link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Create &amp; Transport Standard Text (SO10) Comments Feed" href="https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/blogs.sap.com\/res1dx-135\/wp-includes\/js\/wp-emoji-release.min.js"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/style.min.css' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/css/ie.css' type='text/css' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='designmate_styles-css'  href='https://static.community.services.sap/designmate/v3/136/latest/designmate.css' type='text/css' media='all' />
+<link rel='stylesheet' id='designsystem_styles-css'  href='https://static.community.services.sap/community-ds/v1/188/main.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dist/block-library/style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='prism-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/js/tinymce/plugins/codesample/css/prism.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_custom_link_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom//include/css/sap-core-custom.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_lightbox_gallery_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='pt_style_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-primary-tag/css/pt_style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-popular-posts-css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/css/wpp.css' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery.min.js' id='jquery-core-js'></script>
+<script type='text/javascript' id='jquery-core-js-after'>
+if (jQuery !== undefined) {
+                jQuery(window).on("load", function(){
+                    var _wpWindowLoaded = document.createElement("div");
+                    _wpWindowLoaded.setAttribute("class", "hidden");
+                    _wpWindowLoaded.setAttribute("id", "wp_window_loaded");
+                    document.body.appendChild(_wpWindowLoaded);
+                });
+            }
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery-migrate.min.js' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='//assets.adobedtm.com/ccc66c06b30b/d266848b2882/launch-f095fbc32a96.min.js' id='scn_adobe_dtm-js'></script>
+<script type='text/javascript' id='wpp-js-js-extra'>
+/* <![CDATA[ */
+var wpp_params = {"sampling_active":"","sampling_rate":"100","ajax_url":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php","action":"update_views_ajax","ID":"330691","token":"938e4875d9"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/js/wpp.js' id='wpp-js-js'></script>
+<link rel="https://api.w.org/" href="https://blogs.sap.com/wp-json/" /><link rel="alternate" type="application/json" href="https://blogs.sap.com/wp-json/wp/v2/posts/330691" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.sap.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.sap.com/wp-includes/wlwmanifest.xml" /> 
+
+<link rel="canonical" href="https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/" />
+<link rel='shortlink' href='https://blogs.sap.com/?p=330691' />
+<script type="text/javascript">var ajaxurl = "https://blogs.sap.com/wp-admin/admin-ajax.php";var likePostLabel = "Like";var unLikePostLabel = "Liked";var likeCommentLabel = "Like";var unLikeCommentLabel = "Liked";</script>    <!--[if IE ]>
+    <link rel="stylesheet" id="scn-ie-styles" href="https://blogs.sap.com/wp-content/themes/sap-v3-neo/css/ie.css"
+          type="text/css" media="all">
+    <link id="ids-popup-css" href="https://accounts.sap.com/universalui/shared/stylesheets/idsPopup.css"
+          rel="stylesheet"
+          type="text/css">
+    <![endif]-->
+
+
+</head>
+
+<body class="post-template-default single single-post postid-330691 single-format-standard custom-font-enabled">
+
+
+<div class="page-wrapper">
+<b class="cn-accessibility"><a href="#main" tabindex="0" accesskey="S">Skip to Content</a></b>
+<div id="page" class="hfeed site">
+
+<header id="masthead" class="blogs-nav sap-header">
+    <header id="comm-hdr-Header" role="masthead"><div class="dm-header"><div class="dm-header__inner"><div class="dm-header__logo-wrapper"><a class="dm-logo--header" href="http://www.sap.com/" title="SAP"></a></div><nav id="comm-hdr-Navigation" class="dm-mainNav"><div class="dm-mobileSearch"><form class="dm-header__search-form" action=""><div class="dm-search-container dm-input dm-search__input"><label class="dm-input__box" aria-label="search SAP Community"><input class="dm-input__control" placeholder="Search SAP Community" name="filter-search" type="search" required="" aria-label="type here to search"><button class="dm-search__button dm-search__button-clear" type="reset" role="button" title="Reset Search"><span class="dm-search__buttonIcon dm-icon-encoded--close" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" role="button" title="Search SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form></div><ul class="dm-mainNav__menu dm-mainNav__menu--withGroups" role="menubar"><li class="dm-header__homeItem" role="none"><a class="dm-header__homeItem-link" role="menuitem" aria-label="Community Home" target="_self" href="https://community.sap.com">Community</a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/topics" aria-label="" aria-haspopup="false" role="menuitem">Topics<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://groups.sap.com" aria-label="Groups. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Groups<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://answers.sap.com/index.html" aria-label="Answers. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Answers<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://blogs.sap.com" aria-label="Blogs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Blogs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/events" aria-label="Events. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Events<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/programs" aria-label="Programs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Programs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources" aria-label="Resources. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Resources<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources/what-is-new" aria-label="" aria-haspopup="false" role="menuitem">What's New<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li></ul></nav><ul class="dm-header__actions"><li id="comm-hdr-Search" class="dm-header__actions-item dm-headerSearch"><a class="dm-search-action dm-icon-encoded dm-header__search-icon" aria-label="Search the SAP Community" href="#" role="button" aria-expanded="false" title="Search"></a><div class="dm-headerSearch__wrapper"><form class="dm-searchdropdown dm-align-center" action=""><div class="dm-search__input dm-input" role="search"><label class="dm-input__box" aria-label="search the SAP community"><input class="dm-input__control" placeholder="Search the SAP Community" name="filter-search" aria-label="type here to search" type="input"><button class="dm-search__button dm-search__button-clear" type="reset" title="Reset"><span class="dm-search__buttonIcon dm-icon-encoded--clear" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" title="Search the SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form><a class="dm-headerSearch__closeButton" type="submit" role="button" title="Close search input" href="javascript:void(0);"><span class="dm-icon-encoded dm-icon-encoded--close" role="img" aria-label="Close search input"></span></a></div></li><li id="comm-hdr-Authentication" class="dm-header__actions-item dm-header__account"><a id="comm-hdr-SignIn" class="dm-user__login-button--wrapper" aria-haspopup="true" aria-expanded="false" role="button" href="#" title="Log In" rel="IDS_login"><div id="comm-hdr-AnonymousIcon" class="dm-icon-encoded dm-icon-encoded--account dm-hidden" aria-label="click here to login"></div><div id="comm-hdr-Avatar" class="dm-user dm-header__avatar"><img class="dm-header__avatar-image dm-hidden" data-src="" src="" width="24px" height="24px"><span class="dm-header__notifications dm-hidden js-notification-indicator"></span></div></a><ul id="comm-hdr-UserProfileMenu" class="dm-header__actionsSubMenu dm-profileFlyoutMenu dm-profileMenuDropdown" role="menu" aria-label="drop down menu of people profile"><li class="dm-profileMenu__userData"><div id="comm-hdr-Username" class="dm-profileMenu__userName"></div><div id="comm-hdr-Email" class="dm-profileMenu__userEmail"></div><a id="comm-hdr-SubMenuTitleLink" class="dm-link" href="#">Manage my Account</a></li><li id="comm-hdr-ProfileMenuTopSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li id="comm-hdr-ProfileMenuMiddleSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li class="dm-profileMenu__section"><ul class="dm-profileMenu__list dm-profileMenu__logout"><li class="dm-profileMenu__item"><a id="comm-hdr-LogOut" class="dm-button dm-button--secondary" href="#" role="button"><span class="dm-button-text">Logout</span></a></li></ul></li></ul></li><li class="dm-header__actions-item dm-header__mobileMenu"><a id="comm-hdr-MobileMenuBtn" class="dm-mobileMenuButton" aria-label="Search SAP community"><span class="dm-icon-encoded dm-icon-encoded--mobile-menu"></span><span style="display:none;">Search</span></a></li></ul></div></div></header><div class="announcements" role="menubar"></div><div class="dm-wrapper dm-subheader dm-subheader--wrapper  dm-user--unauthenticated "><div class="dm-grid"><div class="dm-breadcrumb dm-user--unauthenticated" role="menubar">
+    <ul class="dm-breadcrumb-nav" role="navigation" aria-label="breadcrumb navigation to trace the path back to original landing point">
+        
+        <li><a id="comm-shdr-breadcrumb-home" href="https://www.sap.com" title="Home">Home</a></li>
+        
+        <li><a id="comm-shdr-breadcrumb-community" href="https://community.sap.com" title="Community">Community</a></li>
+        
+    </ul>
+    <ul class="dm-breadcrumb-actions" role="menu">
+        
+        <li><a id="comm-shdr-AskQuestion" href="https://answers.sap.com/questions/ask.html" title="Ask a Question">Ask a Question</a></li>
+        
+        <li><a id="comm-shdr-WriteBlogPost" href="https://blogs.sap.com/wp-admin/post-new.php" title="Write a Blog Post">Write a Blog Post</a></li>
+        
+        <li class="dm-user__login-button--wrapper"><a class="dm-button-small dm-button--primary" role="button" rel="IDS_login" aria-label="Login or Sign up. Click here to log in or sign up"><span class="dm-button-text">Login / Sign-up</span></a></li>
+        <li class="dm-breadcrumb-actions__dropdown">
+            <span id="comm-shdr-actions-opener" class="dm-breadcrumb-actions__dropdown-toggle" title="Community actions">
+                 <span class="dm-icon-encoded dm-icon-encoded--3dots"></span>
+            </span>
+            <ul id="comm-shdr-user-actions-ul" class="dm-breadcrumb-actions__dropdown-menu" role="menu">
+            </ul>
+        </li>
+    </ul>
+</div>
+</div></div>    <!-- #site-navigation -->
+
+</header>
+
+<!-- #masthead -->
+<div id="main" tabindex="0" class="wrapper">
+
+
+
+
+<div class="ds-blog-post-detail">
+<div class="ds-flexGrid">
+  <div class="ds-flexRow">
+    <div class="ds-flexCol">
+            <div class="ds-content-wrapper ds-blog-post__content-wrapper">
+        <h6 class="ds-heading ds-heading--xs ds-blog-post__sub-title"></h6>
+        <div class="ds-flexRow">
+          <div class="ds-flexCol-sm-12 ds-flexCol-md-9">
+            
+<div class="ds-blog-post__body-wrapper">
+  <div class="ds-blog-post__content">
+    <div class="ds-blog-post__header-wrapper">
+      <a target="_blank" rel="noopener noreferrer" href="https://people.sap.com/amitesh.anand2" class="ds-blog-post__avatar "  >
+        <img alt='Author&#039;s profile photo Amitesh Anand' src='https://avatars.services.sap.com/images/amitesh.anand2.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />      </a>
+      <div class="ds-blog-post__author-info-wrapper">
+        <div class="ds-user ds-blog-post__author">
+          <a class="ds-link ds-user__name " href="https://people.sap.com/amitesh.anand2" target="_blank" title="Amitesh Anand" aria-label="" rel="noopener noreferrer">Amitesh Anand</a>
+                  </div>
+        <div class="ds-blog-post__meta-info">
+          <span class="ds-blog-post__date">August 6, 2012</span>
+          <span class="ds-blog-post__read-duration">2 minute read</span>
+        </div>
+      </div>
+    </div>
+    <h1 class="ds-heading ds-heading--m ds-blog-post__title">Create &amp; Transport Standard Text (SO10)</h1>
+    <div class="ds-blog-post__social-stats-wrapper">
+      <div class="ds-social-stats ">
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--comments"></i>29        </span>
+        <span id="post-likes-counter" class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--likes-outline"></i>60        </span>
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--views"></i>324,191        </span>
+      </div>
+          </div>
+    <div class="ds-blog-post__body ds-editor-content">
+      <div class="jive-rendered-content">
+<p align="center" style="text-align: center;">
+<p align="center" style="text-align: center;"><span style="color: #0000ff;"><strong>CREATE &amp; TRANSPORT STANDARD TEXT </strong></span></p>
+</p>
+<p><strong>STEP1: Create Standard Text:&nbsp; T-Code SO10</strong></p>
+</p>
+<p>Enter the Text Name and then click CREATE Push Button. A Text Screen will appear where you can maintain the Text and SAVE.</p>
+</p>
+<p><a href="/wp-content/uploads/2012/08/capture_126689.jpg" ><img class="jive-image ds-lightbox__img" alt="Capture.JPG" src="/wp-content/uploads/2012/08/capture_126689.jpg" data-index="1" data-id="plbox-330691" /></a></p>
+</p>
+<p><strong>STEP 2: CREATE TRANSPORT REQUEST FOR TRANSPORTING THE TEXT</strong></p>
+<p>T-Code:- SE09</p>
+</p>
+<p><a href="/wp-content/uploads/2012/08/capture_126690.jpg" ><img class="jive-image ds-lightbox__img" alt="Capture.JPG" src="/wp-content/uploads/2012/08/capture_126690.jpg" data-index="2" data-id="plbox-330691" /></a></p>
+</p>
+<p>Click on CREATE</p>
+</p>
+<p><a href="/wp-content/uploads/2012/08/capture_126691.jpg" ><img class="jive-image ds-lightbox__img" alt="Capture.JPG" src="/wp-content/uploads/2012/08/capture_126691.jpg" data-index="3" data-id="plbox-330691" /></a></p>
+<p>Create a Transport Request</p>
+</p>
+<p><a href="/wp-content/uploads/2012/08/capture_126701.jpg" ><img class="jive-image ds-lightbox__img" alt="Capture.JPG" src="/wp-content/uploads/2012/08/capture_126701.jpg" data-index="4" data-id="plbox-330691" /></a></p>
+</p>
+<p>Also need to change the Transport Request from Unclassified to Correction or Repair. For this select your transport request (BCDK906932) and then click on Request/Task on main menu &agrave; Change Type and then select the Correction. </p>
+</p>
+<p><a href="/wp-content/uploads/2012/08/capture_126702.jpg" ><img class="jive-image jive-image-thumbnail ds-lightbox__img" alt="Capture.JPG" src="/wp-content/uploads/2012/08/capture_126702.jpg" width="620" data-index="5" data-id="plbox-330691" /></a></p>
+</p>
+<p>Now you can see that from Unclassified the request type changed to Development/Correction.</p>
+</p>
+<p><a href="/wp-content/uploads/2012/08/capture_126704.jpg" ><img class="jive-image ds-lightbox__img" alt="Capture.JPG" src="/wp-content/uploads/2012/08/capture_126704.jpg" data-index="6" data-id="plbox-330691" /></a></p>
+</p>
+<p><strong>STEP 3: Include the Text in Transport Request</strong></p>
+<p>T-Code:&nbsp; SE38,&nbsp; run program RSTXTRAN</p>
+</p>
+<p><a href="/wp-content/uploads/2012/08/capture_126705.jpg" ><img class="jive-image ds-lightbox__img" alt="Capture.JPG" src="/wp-content/uploads/2012/08/capture_126705.jpg" data-index="7" data-id="plbox-330691" /></a></p>
+</p>
+<p>Following Screen will appear, enter your Transport Request No. (note that the transport request no. of Sub-Object will be entered here and not the Main Object)</p>
+</p>
+<p><a href="/wp-content/uploads/2012/08/capture_126706.jpg" ><img class="jive-image ds-lightbox__img" alt="Capture.JPG" src="/wp-content/uploads/2012/08/capture_126706.jpg" data-index="8" data-id="plbox-330691" /></a></p>
+</p>
+<p>Following Screen will appear:</p>
+</p>
+<p><a href="/wp-content/uploads/2012/08/capture_126707.jpg" ><img class="jive-image ds-lightbox__img" alt="Capture.JPG" src="/wp-content/uploads/2012/08/capture_126707.jpg" data-index="9" data-id="plbox-330691" /></a></p>
+</p>
+<p>Deselect all Objects and Select your Objects only&nbsp; </p>
+</p>
+<p><a href="/wp-content/uploads/2012/08/capture_126708.jpg" ><img class="jive-image ds-lightbox__img" loading="lazy" alt="Capture.JPG" height="327" src="/wp-content/uploads/2012/08/capture_126708.jpg" width="604" data-index="10" data-id="plbox-330691" /></a></p>
+</p>
+<p>Press &agrave; ENTER </p>
+<p>Your selected Objects will be shown</p>
+</p>
+<p><a href="/wp-content/uploads/2012/08/capture_126709.jpg" ><img class="jive-image ds-lightbox__img" alt="Capture.JPG" src="/wp-content/uploads/2012/08/capture_126709.jpg" data-index="11" data-id="plbox-330691" /></a></p>
+</p>
+<p>Click on Trsfr texts to corr. Push Buttons</p>
+</p>
+<p><a href="/wp-content/uploads/2012/08/capture_126710.jpg" ><img class="jive-image ds-lightbox__img" alt="Capture.JPG" src="/wp-content/uploads/2012/08/capture_126710.jpg" data-index="12" data-id="plbox-330691" /></a></p>
+</p>
+<p>Now you can Release and Import the Transport Request as usual.</p>
+</div>
+    </div>
+  </div>
+  <div class="ds-blog-post__social-side-bar">
+    <div class="ds-sticky-on-scroll ">
+      <div class="ds-sticky-on-scroll__wrapper  ">
+        <div class="ds-sticky-on-scroll__content">
+          <div class="ds-blog-post__social-actions">
+            <button class="sap-button-follow ds-button ds-button--primary ds-blog-post__social-action ds-blog-post__social-action--follow" id="sap-button-follow-hdr-id" onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2012%2F08%2F06%2Fcreate-transport-standard-text-so10%2F%3Fs_action%3Dss_change_follow_status%26nonce%3D705a693f83'" rel="IDS_login"  type="button" data-content-type="blogpost" data-content-id="330691" data-nonce="705a693f83" title="Please log into the system to use follow/unfollow functionality."><span class="ds-button-text">Follow</span></button>            <button type='button' class='ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action likes-post-link dolike ' rel='IDS_login' onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2012%2F08%2F06%2Fcreate-transport-standard-text-so10%2F%3Fs_action%3Dss_change_like_status%26nonce%3D580b46d63f'" title='Like' data-nonce='580b46d63f' data-post-id='330691'><i class='ds-icon ds-icon--likes-outline ds-icon--regular ds-m-r-xs' tabindex='-1'></i><span class='ds-button-text'>Like</span></button>            <button type="button" class="ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action" title="RSS Feed" onclick="location.href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/feed/'">
+              <i class="ds-icon ds-icon--rss-feed ds-icon--regular ds-m-r-xs" tabindex="-1"></i>RSS Feed
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+            <div class="ds-blog-post__social-row">
+              <div class="ds-blog-post__social-icons">
+                <a href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.sap.com%2F2012%2F08%2F06%2Fcreate-transport-standard-text-so10%2F' title='Share on Facebook' target='_blank'><span class='ds-social-icon ds-social-icon--dark-facebook'></span></a><a href='https://twitter.com/share?url=https%3A%2F%2Fblogs.sap.com%2F2012%2F08%2F06%2Fcreate-transport-standard-text-so10%2F&text=Create+%26+Transport+Standard+Text+%28SO10%29' title='Share on Twitter' target='_blank'><span class='ds-social-icon ds-social-icon--dark-twitter'></span></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.sap.com%2F2012%2F08%2F06%2Fcreate-transport-standard-text-so10%2F&title=Create+%26+Transport+Standard+Text+%28SO10%29' title='Share on LinkedIn' target='_blank'><span class='ds-social-icon ds-social-icon--dark-linkedin'></span></a>              </div>
+              <div class='ds-tooltip__wrapper'>
+    <div class='ds-tooltip__anchor'>
+    <button
+      type="button"
+      class="ds-button ds-button--secondary ds-blog-post__alert-moderator-button ds-button--disabled"
+      aria-label="Alert Moderator"
+      data-toggle="collapse"
+      data-hide-class="ds-collapse"
+      data-triggers=".alertModerator"
+      aria-expanded="false">Alert Moderator
+    </button>
+    </div>
+    <div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Alerting is not available for unauthorized users</div>
+</div>
+            </div>
+            
+  <div class="wprc-content-v3">
+    <div class="ds-blog-post-form ds-blog-post__alert-moderator-form ds-collapse alertModerator wprc-form-v3" data-toggle="collapseComponent" data-name="alertModerator">
+          </div>
+  </div>
+          </div>
+          <div class="ds-blog-post__right-side-bar ds-flexCol-sm-12 ds-flexCol-md-3">
+            <div id="sapassignedtagswidget-v3-2" class="ds-side-bar-widget ds-assigned-tags ds-m-b-l"><h3 class="ds-side-bar-widget__heading">Assigned Tags</h3></div><div id="sap-relatedcontent-widget-v3-2" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Similar Blog Posts<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="blogpost" data-limit="3"></ul></div></div><div id="sap-relatedcontent-widget-v3-3" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Related Questions<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="question" data-limit="3"></ul></div></div>          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="content-lightbox-modal"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="plbox-330691"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="plbox-330691" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2012/08/capture_126689.jpg" alt="Capture.JPG"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2012/08/capture_126690.jpg" alt="Capture.JPG"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2012/08/capture_126691.jpg" alt="Capture.JPG"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2012/08/capture_126701.jpg" alt="Capture.JPG"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2012/08/capture_126702.jpg" alt="Capture.JPG"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2012/08/capture_126704.jpg" alt="Capture.JPG"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2012/08/capture_126705.jpg" alt="Capture.JPG"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2012/08/capture_126706.jpg" alt="Capture.JPG"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2012/08/capture_126707.jpg" alt="Capture.JPG"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2012/08/capture_126708.jpg" alt="Capture.JPG"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2012/08/capture_126709.jpg" alt="Capture.JPG"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2012/08/capture_126710.jpg" alt="Capture.JPG"/></div><a class="lightbox-gallery-button--prev ds-lightbox__gallery-button ds-icon ds-icon--arrow-left" href="javascript:void(0);" aria-label="Show previous image"></a><a class="ds-lightbox__gallery-button lightbox-gallery-button--next ds-icon ds-icon--arrow-right" href="javascript:void(0);" aria-label="Show next image"></a></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>
+  <div class="ds-blog-post__comment-section">
+    <div class="ds-flexGrid">
+      <div class="ds-flexRow">
+        <div class="ds-flexCol-12 ds-flexCol-md-10 ds-flexCol-lg-10">
+          
+<div id="comments" class="ds-blog-post-comments">
+  
+      <div class="ds-blog-post-comments__counter" title="Number of Comments">
+      29 Comments      </div>
+              <div class="dm-section dm-align-center dm-section-header__title" title="Please log on to comment" aria-role="alert">
+                You must be <a href="https://blogs.sap.com/wp-login.php?redirect_to=2012/08/06/create-transport-standard-text-so10" class="opener js-idspopup" rel="IDS_login" title="Log On">Logged on</a> to comment or reply to a post.
+        </div>
+      
+    <div class="ds-blog-post-comments__list">
+              <div class="comment byuser comment-author-formermember even thread-even depth-1 ds-blog-post-comment" id="li-comment-118318">
+        <div id="comment-118318" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-01-09T04:40:24+00:00"
+                >January 9, 2013 at 4:40 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>it is good learning for me.</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118318" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118318" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118318'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember odd alt thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-118319">
+        <div id="comment-118319" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-02-11T06:20:14+00:00"
+                >February 11, 2013 at 6:20 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi,</p>
+<p>Actually there is no need to use se09.</p>
+<p>You can directly use T-Code:&nbsp; SE38,&nbsp; run program RSTXTRAN and create the transport request by selecting your customized TEXT id .</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p>regards</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118319" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118319" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118319'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-garyoneill even depth-2 ds-blog-post-comment" id="li-comment-532591">
+        <div id="comment-532591" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/garyoneill">
+                <img alt='Author&#039;s profile photo Gary O&#039;Neill' src='https://avatars.services.sap.com/images/garyoneill_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Gary O'Neill' href='https://people.sap.com/garyoneill' rel='external nofollow' class='ds-link ds-user__name ' >Gary O'Neill</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-10-07T13:21:54+00:00"
+                >October 7, 2020 at 1:21 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Works like a charm.</p>
+              </div>
+
+            <div id="comment-actions-532591" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_532591" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-532591'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-118320">
+        <div id="comment-118320" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-09-18T07:24:51+00:00"
+                >September 18, 2013 at 7:24 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p style="font-size: 12px; background-color: #ffffff; color: #333333;">Hi Amitesh,</p>
+<p style="font-size: 12px; background-color: #ffffff; color: #333333;">It is not common but very informative document and the way you presented the issue and its solution is appreciable...</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p style="font-size: 12px; background-color: #ffffff; color: #333333;">Kind regards,</p>
+<p style="font-size: 12px; background-color: #ffffff; color: #333333;">Khushi</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118320" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118320" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118320'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-118321">
+        <div id="comment-118321" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-10-21T12:04:52+00:00"
+                >October 21, 2013 at 12:04 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Amitesh,</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p>Thanks for sharing, but the screen shots are not readable can u&nbsp; reorganize it. Also if you can share why &amp; where it should be used it will be beneficial for other.&nbsp; </p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p>Thanks</p>
+<p>Sukant Chakraborthy</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118321" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118321" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118321'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-amiteshanand2 bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-118324">
+        <div id="comment-118324" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/amitesh.anand2">
+                <img alt='Author&#039;s profile photo Amitesh Anand' src='https://avatars.services.sap.com/images/amitesh.anand2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Amitesh Anand' href='https://people.sap.com/amitesh.anand2' rel='external nofollow' class='ds-link ds-user__name ' >Amitesh Anand</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-11-05T10:20:05+00:00"
+                >November 5, 2013 at 10:20 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Sukant,</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p>Normally we maintain Text in Customer/Condition Type/Documents etc. and then from there it flows to other documents, which may be used for printing on some Output. These text are normally specific to that particular Customer or Document. However sometime we need to print some Text which are based on certain scenarions for example:- In case of Deemed Export, you want to print some text (like Notification No.) on Excise Invoice, so instead of asking Users to maitain it in Sales Document we can maintain it in SO10 and from there we print as per the logic. We can maintain the SO10 text on every client just like Master Data, by using the Transport Process, we can maintain the SO10 Text as configuration and and then it can be transported to other clients just like any other transport, so user is not requuired to maintain it in every client.</p>
+<p>Hope I am able to clarify your query.</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p>Thanks and regards,</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p>Amitesh Anand</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118324" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118324" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118324'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember even depth-3 ds-blog-post-comment" id="li-comment-118326">
+        <div id="comment-118326" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-11-05T10:25:37+00:00"
+                >November 5, 2013 at 10:25 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Thanks amitesh for replying.</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118326" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118326" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118326'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-venuch8 odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-118322">
+        <div id="comment-118322" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/venu.ch8">
+                <img alt='Author&#039;s profile photo venu gopal' src='https://avatars.services.sap.com/images/venu.ch8_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name venu gopal' href='https://people.sap.com/venu.ch8' rel='external nofollow' class='ds-link ds-user__name ' >venu gopal</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-10-21T14:51:37+00:00"
+                >October 21, 2013 at 2:51 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Dear ,, just&nbsp; plz explain me exact what is the use of this plz </p>
+<p>i understood the process but i did not i understood&nbsp; out put Results plz pzl z</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118322" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118322" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118322'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-amiteshanand2 bypostauthor even depth-2 ds-blog-post-comment" id="li-comment-118325">
+        <div id="comment-118325" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/amitesh.anand2">
+                <img alt='Author&#039;s profile photo Amitesh Anand' src='https://avatars.services.sap.com/images/amitesh.anand2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Amitesh Anand' href='https://people.sap.com/amitesh.anand2' rel='external nofollow' class='ds-link ds-user__name ' >Amitesh Anand</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-11-05T10:21:40+00:00"
+                >November 5, 2013 at 10:21 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Venu,</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p>Kindly check my response to Sukant.</p>
+<p>Hope it clarifies your query too.</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p>Thanks and regards,</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p>Amitesh Anand</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118325" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118325" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118325'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-sivavasireddy2 odd alt thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-118323">
+        <div id="comment-118323" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/siva.vasireddy2">
+                <img alt='Author&#039;s profile photo Shiva Vasireddy' src='https://avatars.services.sap.com/images/siva.vasireddy2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Shiva Vasireddy' href='https://people.sap.com/siva.vasireddy2' rel='external nofollow' class='ds-link ds-user__name ' >Shiva Vasireddy</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2013-10-28T05:20:35+00:00"
+                >October 28, 2013 at 5:20 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Thanks for sharing</p>
+<p>Fine Explanation</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118323" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118323" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118323'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember even thread-even depth-1 ds-blog-post-comment" id="li-comment-118327">
+        <div id="comment-118327" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2014-05-14T04:36:36+00:00"
+                >May 14, 2014 at 4:36 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>It is a good practice to transport standard texts through TRs instead of maintaining directly in production system with the help of business. This will ensure uniformity across all the systems (test system and production system) and no confusion will occur.</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p>Thanks,</p>
+<p>Swosti Panda.</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118327" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118327" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118327'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-yuvrajchaudhari odd alt thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-118328">
+        <div id="comment-118328" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/yuvraj.chaudhari">
+                <img alt='Author&#039;s profile photo Yuvraj Chaudhari' src='https://avatars.services.sap.com/images/yuvraj.chaudhari_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Yuvraj Chaudhari' href='https://people.sap.com/yuvraj.chaudhari' rel='external nofollow' class='ds-link ds-user__name ' >Yuvraj Chaudhari</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2014-08-13T12:17:34+00:00"
+                >August 13, 2014 at 12:17 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Thanks for sharing...</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118328" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118328" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118328'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-vigneshwarreddy even thread-even depth-1 ds-blog-post-comment" id="li-comment-118329">
+        <div id="comment-118329" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/vigneshwar.reddy">
+                <img alt='Author&#039;s profile photo vigneshwar reddy' src='https://avatars.services.sap.com/images/vigneshwar.reddy_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name vigneshwar reddy' href='https://people.sap.com/vigneshwar.reddy' rel='external nofollow' class='ds-link ds-user__name ' >vigneshwar reddy</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2014-11-25T12:36:56+00:00"
+                >November 25, 2014 at 12:36 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Thank You Amitesh for sharing this document.</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118329" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118329" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118329'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-petersomers odd alt thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-118330">
+        <div id="comment-118330" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/peter.somers">
+                <img alt='Author&#039;s profile photo Peter Somers' src='https://avatars.services.sap.com/images/peter.somers_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Peter Somers' href='https://people.sap.com/peter.somers' rel='external nofollow' class='ds-link ds-user__name ' >Peter Somers</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2014-12-26T16:08:02+00:00"
+                >December 26, 2014 at 4:08 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Thanks for the explanation, much appreciated</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118330" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118330" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118330'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember even thread-even depth-1 ds-blog-post-comment" id="li-comment-118331">
+        <div id="comment-118331" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-02-10T23:33:25+00:00"
+                >February 10, 2015 at 11:33 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Thanks for sharing this information.&nbsp; I followed step by step and it seemed to work with no errors.&nbsp; But I can't see the new text in my smartform.&nbsp; </p>
+</div>
+              </div>
+
+            <div id="comment-actions-118331" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118331" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118331'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-amiteshanand2 bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-118338">
+        <div id="comment-118338" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/amitesh.anand2">
+                <img alt='Author&#039;s profile photo Amitesh Anand' src='https://avatars.services.sap.com/images/amitesh.anand2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Amitesh Anand' href='https://people.sap.com/amitesh.anand2' rel='external nofollow' class='ds-link ds-user__name ' >Amitesh Anand</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-02-11T08:30:42+00:00"
+                >February 11, 2015 at 8:30 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Tom,</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p>Thanks for your appreciation.</p>
+<p>Regarding smart-form, please check the logic used by ABAP. </p>
+<p>The logic for picking the text from standard text is different from the Text of Sales Document (Order/Delivery/Billing).</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118338" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118338" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118338'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-chrispark even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-118332">
+        <div id="comment-118332" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/chrispark">
+                <img alt='Author&#039;s profile photo Chris Park' src='https://avatars.services.sap.com/images/chrispark_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Chris Park' href='https://people.sap.com/chrispark' rel='external nofollow' class='ds-link ds-user__name ' >Chris Park</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-02-19T14:28:29+00:00"
+                >February 19, 2015 at 2:28 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Perfect step by step - thanks <img class=" ds-lightbox__img" height="16px" src="http://scn.sap.com/111/images/emoticons/happy.gif" width="16px" data-index="1" data-id="clbox-118332" /></p>
+</div>
+              </div>
+
+            <div id="comment-actions-118332" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118332" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118332'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+        <div id="content-lightbox-modal--118332"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="clbox-118332"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="clbox-118332" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="http://scn.sap.com/111/images/emoticons/happy.gif" alt=""/></div></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>    </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-118333">
+        <div id="comment-118333" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-05-17T14:16:32+00:00"
+                >May 17, 2015 at 2:16 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Good one to anybody to follow</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118333" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118333" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118333'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-118334">
+        <div id="comment-118334" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-05-28T09:51:02+00:00"
+                >May 28, 2015 at 9:51 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Very Informative document</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118334" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118334" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118334'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-118335">
+        <div id="comment-118335" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-10-19T09:51:07+00:00"
+                >October 19, 2015 at 9:51 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>EXCELLENT DOCUMENT - VERY INFORMATIVE</p>
+<p>THANKYOU</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p>GANESH</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118335" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118335" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118335'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-raneprashant even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-118336">
+        <div id="comment-118336" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/rane.prashant">
+                <img alt='Author&#039;s profile photo Prashant Govind Rane' src='https://avatars.services.sap.com/images/rane.prashant_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Prashant Govind Rane' href='https://people.sap.com/rane.prashant' rel='external nofollow' class='ds-link ds-user__name ' >Prashant Govind Rane</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2016-02-11T07:16:25+00:00"
+                >February 11, 2016 at 7:16 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Good information and good documentation.</p>
+<p style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</p>
+<p>Thanks!</p>
+</div>
+              </div>
+
+            <div id="comment-actions-118336" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_118336" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-118336'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-swateelandge odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-377196">
+        <div id="comment-377196" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/swatee.landge">
+                <img alt='Author&#039;s profile photo Swatee Landge' src='https://avatars.services.sap.com/images/swatee.landge_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Swatee Landge' href='https://people.sap.com/swatee.landge' rel='external nofollow' class='ds-link ds-user__name ' >Swatee Landge</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2017-06-02T12:04:11+00:00"
+                >June 2, 2017 at 12:04 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Very nice information.. in a very systematic manner. thanks.</p>
+              </div>
+
+            <div id="comment-actions-377196" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_377196" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-377196'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-383461">
+        <div id="comment-383461" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2017-07-19T13:19:02+00:00"
+                >July 19, 2017 at 1:19 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thanks Amitesh for the nice content !!</p>
+              </div>
+
+            <div id="comment-actions-383461" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_383461" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-383461'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-verakulish2 odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-400735">
+        <div id="comment-400735" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/vera.kulish2">
+                <img alt='Author&#039;s profile photo Vera Kulish' src='https://avatars.services.sap.com/images/vera.kulish2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Vera Kulish' href='https://people.sap.com/vera.kulish2' rel='external nofollow' class='ds-link ds-user__name ' >Vera Kulish</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2017-11-29T22:17:32+00:00"
+                >November 29, 2017 at 10:17 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p><span style="font-size: 1rem">Amitesh , </span></p>
+<p>Thank you for making this very nice step by step document for SO10 text transport. Appreciated.</p>
+              </div>
+
+            <div id="comment-actions-400735" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_400735" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-400735'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-anacatarinapires even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-437122">
+        <div id="comment-437122" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/anacatarina.pires">
+                <img alt='Author&#039;s profile photo Ana Catarina Pires' src='https://avatars.services.sap.com/images/anacatarina.pires_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Ana Catarina Pires' href='https://people.sap.com/anacatarina.pires' rel='external nofollow' class='ds-link ds-user__name ' >Ana Catarina Pires</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2018-09-18T14:19:31+00:00"
+                >September 18, 2018 at 2:19 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi all,</p>
+<p>Very helpful and great explanation.</p>
+<p>Thank you very much.</p>
+<p>Catarina</p>
+              </div>
+
+            <div id="comment-actions-437122" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_437122" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-437122'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-gaytan odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-467265">
+        <div id="comment-467265" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/gaytan">
+                <img alt='Author&#039;s profile photo Jennifer Gaytan' src='https://avatars.services.sap.com/images/gaytan_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Jennifer Gaytan' href='https://people.sap.com/gaytan' rel='external nofollow' class='ds-link ds-user__name ' >Jennifer Gaytan</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-07-24T09:48:40+00:00"
+                >July 24, 2019 at 9:48 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Well, thanks for the information. It is very helpful and I liked it. I am a writer and I sell my own notes of every paper at cheapest prices. If you do not believe then you can visit my website and try to &lt;a href="https://www.toptenwritingservices.com/trustmypaper-com-review/" rel="nofollow" class="userlink"&gt;trustmypaper prices&lt;/a&gt; and then you will definitely take help from me. If you are interested then you can contact me at my website. I am 24*7 available for the service. thanks.</p>
+              </div>
+
+            <div id="comment-actions-467265" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_467265" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-467265'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-garyoneill even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-498010">
+        <div id="comment-498010" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/garyoneill">
+                <img alt='Author&#039;s profile photo Gary O&#039;Neill' src='https://avatars.services.sap.com/images/garyoneill_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Gary O'Neill' href='https://people.sap.com/garyoneill' rel='external nofollow' class='ds-link ds-user__name ' >Gary O'Neill</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-03-10T15:21:17+00:00"
+                >March 10, 2020 at 3:21 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Really appreciate this info, thanks!</p>
+              </div>
+
+            <div id="comment-actions-498010" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_498010" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-498010'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-nicholashassanali odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-545891">
+        <div id="comment-545891" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/nicholashassanali">
+                <img alt='Author&#039;s profile photo Nicholas Hassanali' src='https://avatars.services.sap.com/images/nicholashassanali_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Nicholas Hassanali' href='https://people.sap.com/nicholashassanali' rel='external nofollow' class='ds-link ds-user__name ' >Nicholas Hassanali</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-12-24T11:54:34+00:00"
+                >December 24, 2020 at 11:54 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Good Day. Thanks for the information. A great learning for me.</p>
+              </div>
+
+            <div id="comment-actions-545891" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_545891" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-545891'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-sriramkompell even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-575483">
+        <div id="comment-575483" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/sriram.kompell">
+                <img alt='Author&#039;s profile photo Sriram Kompell' src='https://avatars.services.sap.com/images/sriram.kompell_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Sriram Kompell' href='https://people.sap.com/sriram.kompell' rel='external nofollow' class='ds-link ds-user__name ' >Sriram Kompell</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2021-06-10T11:21:37+00:00"
+                >June 10, 2021 at 11:21 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Amitesh,</p>
+<p>&nbsp;</p>
+<p>Very useful blog indeed. People who're beginners can easily understand the concept through this blog. very informative. Thanks .</p>
+<p>Keep posting blogs like this to help the needy.</p>
+<p>&nbsp;</p>
+<p>Regards</p>
+<p>Sri Ram</p>
+              </div>
+
+            <div id="comment-actions-575483" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_575483" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2012/08/06/create-transport-standard-text-so10/#comment-575483'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+
+      
+        </div> <!-- main comments content area -->
+
+    
+            
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+                </div> <!-- #main -->
+                <div id="shared_footer" class="dm-container dm-wrapper">
+                    <footer class="dm-footer">
+    <div class="dm-footer__inner-wrapper">
+        <div class="dm-socialmedia">
+            <h5 class="dm-socialmedia__headline" id="hl-sharefollow">Find us on</h5>
+            <ul class="dm-socialmedia__links" aria-labelledby="hl-sharefollow">
+                <li><a href="https://www.facebook.com/sapcommunity" title="Facebook"><span class="dm-icon-encoded--facebook"></span></a></li>
+                <li><a href="https://twitter.com/SAPCommunity" title="Twitter"><span class="dm-icon-encoded--twitter"></span></a></li>
+                <li><a href="https://www.youtube.com/c/SAPCommunities" title="YouTube"><span class="dm-icon-encoded--youtube"></span></a></li>
+                <li><a href="https://www.linkedin.com/company/sap" title="LinkedIn"><span class="dm-icon-encoded--linkedin"></span></a></li>
+                <li><a href="https://instagram.com/sap/" title="Instagram"><span class="dm-icon-encoded--instagram"></span></a></li>
+                <li><a href="http://www.slideshare.net/SAP" title="Slideshare"><span class="dm-icon-encoded--slideshare"></span></a></li>
+                <li><a href="mailto:?subject='SAP Community'" title="Email Share"><span class="dm-icon-encoded--email"></span></a></li>
+            </ul>
+        </div>
+        <nav role="navigation" class="dm-footer__navigation">
+            <ul class="dm-footer__navigation__list" aria-label="footer navigation">
+                <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+                <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+                <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+                <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+                <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+                <li id="teconsent"></li>
+                <li><a href="https://www.sap.com/cmp/nl/sap-community-voice/index.html" target="_blank">Newsletter</a></li>
+                <li><a href="mailto:sapnetwork@sap.com" target="_blank">Support</a></li>
+            </ul>
+        </nav>
+    </div>
+</footer>                </div>
+            </div> <!-- #page -->
+            <script type="application/ld+json" data-schema="330691-post-Default">{"@context":"https:\/\/schema.org\/","@type":"BlogPosting","@id":"https:\/\/blogs.sap.com\/2012\/08\/06\/create-transport-standard-text-so10\/#BlogPosting","mainEntityOfPage":"https:\/\/blogs.sap.com\/2012\/08\/06\/create-transport-standard-text-so10\/","headline":"Create &amp; Transport Standard Text (SO10)","name":"Create &amp; Transport Standard Text (SO10)","description":"CREATE &amp; TRANSPORT STANDARD TEXT STEP1: Create Standard Text:&nbsp; T-Code SO10 Enter the Text Name and then click CREATE Push Button. A Text Screen will appear where you can maintain the Text and SAVE. STEP","datePublished":"2012-08-06","dateModified":"2012-08-06","author":{"@type":"Person","@id":"https:\/\/blogs.sap.com\/author\/amitesh.anand2\/#Person","name":"Amitesh Anand","url":"https:\/\/blogs.sap.com\/author\/amitesh.anand2\/","image":{"@type":"ImageObject","@id":"https:\/\/avatars.services.sap.com\/images\/amitesh.anand2_small.png","url":"https:\/\/avatars.services.sap.com\/images\/amitesh.anand2_small.png","height":96,"width":96}},"publisher":{"@type":"Organization","name":"SAP Community Blogs","logo":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","width":600,"height":60}},"image":{"@type":"ImageObject","@id":"\/wp-content\/uploads\/2012\/08\/capture_126689.jpg","url":"\/wp-content\/uploads\/2012\/08\/capture_126689.jpg","height":"","width":""},"url":"https:\/\/blogs.sap.com\/2012\/08\/06\/create-transport-standard-text-so10\/","about":["Uncategorized"],"wordCount":552,"keywords":["enterprise resource planning","sap erp sales and distribution"]}</script>
+<script type="application/ld+json" data-schema="Breadcrumb">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"2012","item":"https:\/\/blogs.sap.com\/2012\/#breadcrumbitem"},{"@type":"ListItem","position":2,"name":"08","item":"https:\/\/blogs.sap.com\/2012\/\/08\/#breadcrumbitem"},{"@type":"ListItem","position":3,"name":"06","item":"https:\/\/blogs.sap.com\/2012\/\/08\/\/06\/#breadcrumbitem"},{"@type":"ListItem","position":4,"name":"Create &amp; Transport Standard Text (SO10)","item":"https:\/\/blogs.sap.com\/2012\/08\/06\/create-transport-standard-text-so10\/#breadcrumbitem"}]}</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/action-tooltip-handler.js' id='tooltip-handler-js'></script>
+<script type='text/javascript' id='unified_header-js-extra'>
+/* <![CDATA[ */
+var headerInitArgs = {"system":"blogs","wrapperID":"page","breadcrumbItems":[{"text":"Blogs","href":"https:\/\/blogs.sap.com"}]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/js/scn-header.min.js' id='unified_header-js'></script>
+<script type='text/javascript' id='unified_header-js-after'>
+            scnHeader.init(headerInitArgs);
+            setCookie("userArgs", headerInitArgs.user ? JSON.stringify(headerInitArgs.user) : "", { path : "/" });
+    
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/header.js' id='designmate_header_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/subheader.js' id='designmate_subheader_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/designmate.js' id='designmate_script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/comment-reply.min.js' id='comment-reply-js'></script>
+<script type='text/javascript' id='satm_handler-js-extra'>
+/* <![CDATA[ */
+var satmContentSelectors = ["div.dm-contentDetail__body-content","div.dm-list-comments__item-content","div.ds-blog-post__body","div.ds-blog-post-comment__content"];
+var satmProfileBaseUrl = "people.sap.com\/";
+var satmChangeableElementsSelectors = ["div.dm-list-comments__item-content","div.ds-blog-post-comment__content"];
+var satmPluginEnabled = "1";
+var satmApiUrl = "https:\/\/uss.api.community.sap.com";
+var satmApiCallWithCredentials = "1";
+var satmRequestDelayMs = "100";
+/* ]]> */
+</script>
+<script type='text/javascript' defer src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-at-mention/js/sap-at-mention.min.js' id='satm_handler-js'></script>
+<script type='text/javascript' id='sap-comment-validation-js-extra'>
+/* <![CDATA[ */
+var commentValidation = {"validateMaxLinks":"1","max_links_number":"7","BLOGS_PAGE":"single"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/sap-comment-validation.min.js' id='sap-comment-validation-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-post-status.min.js' id='scn_post_status_check-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/jquery-plugins.min.js' id='sap_jquery_plugins-js'></script>
+<script type='text/javascript' id='sap-login-csrf-cookie-js-extra'>
+/* <![CDATA[ */
+var sapLoginCookieConfig = {"cookieName":"SAP_BLOGS_ANONYMOUS_NONCE","sapActionName":"s_action"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-login-csrf-cookie.min.js' id='sap-login-csrf-cookie-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.js' id='sap_lightbox_gallery_js-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/choices.min.js' id='choices.js-js'></script>
+<script type='text/javascript' id='wprc-script-js-extra'>
+/* <![CDATA[ */
+var wprcajaxhandler = {"ajaxurl":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-report-content/static/js/v3/scripts.min.js' id='wprc-script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/single.min.js' id='sap_single_v3-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/onscroll-sticky.min.js' id='onscroll_sticky-js'></script>
+<script type='text/javascript' id='blog-detail-page-js-extra'>
+/* <![CDATA[ */
+var alertReasonsSelectArgs = {"selectId":"sap-blog-alert-reasons","reasons":["Incorrect Tag\/Category\r","Cross-Posting\r","Private Information\r","Unprofessional Conduct\r","Spam"]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/dist/blog-detail.min.js' id='blog-detail-page-js'></script>
+<script type='text/javascript' id='sap_assignedtags_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var assignedTagsWidgetSettings = {"maxItemsBeforeHide":"7","data":{"SD Sales":"https:\/\/blogs.sap.com\/tags\/167431589774684563301227734202839\/","SAP ERP":"https:\/\/blogs.sap.com\/tags\/01200615320800000659\/","SD (Sales and Distribution)":"https:\/\/blogs.sap.com\/tags\/209057551571413566377230676804921\/","enterprise resource planning":"https:\/\/blogs.sap.com\/tag\/enterprise-resource-planning\/","sap erp sales and distribution":"https:\/\/blogs.sap.com\/tag\/sap-erp-sales-and-distribution\/"},"widgetClassname":".ds-assigned-tags"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/assigned-tags/js/sap-assigned-tags-widget.min.js' id='sap_assignedtags_widget_js_v3-js'></script>
+<script type='text/javascript' id='sap_relatedcontent_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var relatedContentWidgetSettings = {"widgetSelector":".widget_sap-relatedcontent-widget-v3","contentServiceUrl":"https:\/\/content.services.sap.com\/cse\/search\/topic","profileUrl":"https:\/\/people.sap.com","targetContentItem":{"id":330691,"type":"blogpost","title":"Create &amp; Transport Standard Text (SO10)","primary_tag":"167431589774684563301227734202839"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/related-content/js/sap-related-content-widget.min.js' id='sap_relatedcontent_widget_js_v3-js'></script>
+<div id="wp-load_tinymce-wrap" class="wp-core-ui wp-editor-wrap html-active"><link rel='stylesheet' id='dashicons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dashicons.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='editor-buttons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/editor.min.css' type='text/css' media='all' />
+<style>#wp-load_tinymce-wrap {display:none;}</style>
+<div id="wp-load_tinymce-editor-container" class="wp-editor-container"><div id="qt_load_tinymce_toolbar" class="quicktags-toolbar"></div><textarea class="wp-editor-area" rows="20" cols="40" name="load_tinymce" id="load_tinymce"></textarea></div>
+</div>
+
+<link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/skin.min.css?wp-mce-49110-20201110' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/plugins/codesample/css/prism.css' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/content.min.css?wp-mce-49110-20201110' as='style'>
+		<script type="text/javascript">
+		tinyMCEPreInit = {
+			baseURL: "https://blogs.sap.com/wp-includes/js/tinymce",
+			suffix: ".min",
+						mceInit: {},
+			qtInit: {'load_tinymce':{id:"load_tinymce",buttons:"strong,em,link,block,del,ins,img,ul,ol,li,code,more,close"}},
+			ref: {plugins:"",theme:"modern",language:""},
+			load_ext: function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
+		};
+		</script>
+				<script type="text/javascript">
+		var ajaxurl = "/wp-admin/admin-ajax.php";
+		( function() {
+			var init, id, $wrap;
+
+			if ( typeof tinymce !== 'undefined' ) {
+				if ( tinymce.Env.ie && tinymce.Env.ie < 11 ) {
+					tinymce.$( '.wp-editor-wrap ' ).removeClass( 'tmce-active' ).addClass( 'html-active' );
+					return;
+				}
+
+				for ( id in tinyMCEPreInit.mceInit ) {
+					init = tinyMCEPreInit.mceInit[id];
+					$wrap = tinymce.$( '#wp-' + id + '-wrap' );
+
+					if ( ( $wrap.hasClass( 'tmce-active' ) || ! tinyMCEPreInit.qtInit.hasOwnProperty( id ) ) && ! init.wp_skip_init ) {
+						tinymce.init( init );
+
+						if ( ! window.wpActiveEditor ) {
+							window.wpActiveEditor = id;
+						}
+					}
+				}
+			}
+
+			if ( typeof quicktags !== 'undefined' ) {
+				for ( id in tinyMCEPreInit.qtInit ) {
+					quicktags( tinyMCEPreInit.qtInit[id] );
+
+					if ( ! window.wpActiveEditor ) {
+						window.wpActiveEditor = id;
+					}
+				}
+			}
+		}());
+		</script>
+				<div id="wp-link-backdrop" style="display: none"></div>
+		<div id="wp-link-wrap" class="wp-core-ui" style="display: none" role="dialog" aria-labelledby="link-modal-title">
+		<form id="wp-link" tabindex="-1">
+		<input type="hidden" id="_ajax_linking_nonce" name="_ajax_linking_nonce" value="d98c848450" />		<h3 id="link-modal-title">Insert/edit link</h3>
+		<button type="button" id="wp-link-close"><span class="screen-reader-text">Close</span></button>
+		<div id="link-selector">
+			<div id="link-options">
+				<p class="howto" id="wplink-enter-url">Enter the destination URL</p>
+				<div>
+					<label><span>URL</span>
+					<input id="wp-link-url" type="text" aria-describedby="wplink-enter-url" /></label>
+				</div>
+				<div class="wp-link-text-field">
+					<label><span>Link Text</span>
+					<input id="wp-link-text" type="text" /></label>
+				</div>
+				<div class="link-target">
+					<label><span></span>
+					<input type="checkbox" id="wp-link-target" /> Open link in a new tab</label>
+				</div>
+			</div>
+			<p class="howto" id="wplink-link-existing-content">Or link to existing content</p>
+			<div id="search-panel">
+				<div class="link-search-wrapper">
+					<label>
+						<span class="search-label">Search</span>
+						<input type="search" id="wp-link-search" class="link-search-field" autocomplete="off" aria-describedby="wplink-link-existing-content" />
+						<span class="spinner"></span>
+					</label>
+				</div>
+				<div id="search-results" class="query-results" tabindex="0">
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+				<div id="most-recent-results" class="query-results" tabindex="0">
+					<div class="query-notice" id="query-notice-message">
+						<em class="query-notice-default">No search term specified. Showing recent items.</em>
+						<em class="query-notice-hint screen-reader-text">Search or use up and down arrow keys to select an item.</em>
+					</div>
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="submitbox">
+			<div id="wp-link-cancel">
+				<button type="button" class="button">Cancel</button>
+			</div>
+			<div id="wp-link-update">
+				<input type="submit" value="Add Link" class="button button-primary" id="wp-link-submit" name="wp-link-submit">
+			</div>
+		</div>
+		</form>
+		</div>
+		<script type="text/javascript">jQuery(window).on("load", function() {tinymce.codesampleplugin.Prism.highlightAll();});</script><script type='text/javascript'>_satellite.pageBottom();</script>        </div> <!-- .page-wrapper -->
+    </body>
+</html>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>сервер приложений | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/server-prilozhenij/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:51:27 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Выбор файлов на экране выбора</title>
+		<link>https://abap-blog.ru/osnovy-abap/files/vibor-fajlov-na-ekrane/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/files/vibor-fajlov-na-ekrane/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 06 Jan 2012 05:37:25 +0000</pubDate>
+				<category><![CDATA[Работа с файлами]]></category>
+		<category><![CDATA[sap gui]]></category>
+		<category><![CDATA[сервер приложений]]></category>
+		<category><![CDATA[средство поиска]]></category>
+		<category><![CDATA[файлы]]></category>
+		<category><![CDATA[экран выбора]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=109</guid>
+
+					<description><![CDATA[<p>При работе с файлами в ABAP встает необходимость предоставить пользователю возможность выбора файла на экране выбора, для выбора файла на стороне клиента можно воспользоваться методом класса cl_gui_frontend_services=&#62;file_open_dialog или простой обёрткой над ним cl_salv_test_data=&#62;select_file. Далее будет продемонстрировано как предоставить пользователю выбор файла как на стороне клиента, так и на сервере приложений. [crayon-618a18437715a568495378/] Еще один способ выбора файла на сервере [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/files/vibor-fajlov-na-ekrane/">Выбор файлов на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>При работе с файлами в ABAP встает необходимость предоставить пользователю возможность выбора файла на экране выбора, для выбора файла на стороне клиента можно воспользоваться методом класса <strong>cl_gui_frontend_services=&gt;file_open_dialog</strong> или простой обёрткой над ним <strong>cl_salv_test_data=&gt;select_file.</strong> Далее будет продемонстрировано как предоставить пользователю выбор файла как на стороне клиента, так и на сервере приложений.</p>
+<p><span id="more-109"></span></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: l_true TYPE btch0000-char1.
+DATA: v_file TYPE STRING,
+      l_path TYPE dxlpath,
+      l_abend_flag TYPE dxxabend,
+      file TYPE filename,
+      flag1 TYPE C.
+
+DATA: it_fieldvalues TYPE STANDARD TABLE OF dynpread,
+      wa_fieldvalues TYPE dynpread.
+
+*----------------------------------------------------------------------*
+* SELECTION- SCREEN
+*----------------------------------------------------------------------*
+
+SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE text-001.
+PARAMETERS: p_file(120) LOWER CASE OBLIGATORY.
+PARAMETERS: p_appl RADIOBUTTON GROUP g1,
+            p_pres RADIOBUTTON GROUP g1.
+SELECTION-SCREEN END OF BLOCK b1.
+
+*----------------------------------------------------------------------*
+* AT SELECTION- SCREEN ( F4 functionality )
+*----------------------------------------------------------------------*
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.
+  PERFORM f4_file_name.
+
+*----------------------------------------------------------------------*
+* START-OF-SELECTION.
+*----------------------------------------------------------------------*
+
+START-OF-SELECTION.
+  IF p_appl = 'X'.
+    PERFORM validate_server_file.
+  ELSE.
+    PERFORM validate_presentation_server.
+  ENDIF.
+
+*----------------------------------------------------------------------*
+* END-OF-SELECTION
+*----------------------------------------------------------------------*
+
+END-OF-SELECTION.
+  IF flag1 = 'X'.
+    MESSAGE s777(hk) WITH 'Файл не существует'.
+    CLEAR flag1.
+  ELSE.
+    WRITE 'Файл успешно выбран'.
+  ENDIF.
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Проверка существования файла на сервере приложений
+*&amp;---------------------------------------------------------------------*
+FORM validate_server_file.
+  DATA: l_file TYPE tpfht-pffile.
+  CLEAR l_file.
+  l_file = p_file.
+
+  CALL FUNCTION 'PFL_CHECK_OS_FILE_EXISTENCE'
+    EXPORTING
+      fully_qualified_filename = l_file
+    IMPORTING
+      file_exists              = l_true.
+
+  IF l_true = SPACE.
+    flag1 = 'X'.
+    STOP.
+  ENDIF.
+
+ENDFORM.                    " validate_server_file
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Проверка существования файла на сервере представления (фронтенде)
+*&amp;---------------------------------------------------------------------*
+FORM validate_presentation_server .
+  DATA: RESULT,
+        xfile TYPE STRING.
+  xfile = p_file.
+
+  CALL METHOD cl_gui_frontend_services=&gt;file_exist
+    EXPORTING
+      file   = xfile
+    RECEIVING
+      RESULT = RESULT.
+  IF RESULT NE 'X'.
+    flag1 = 'X'.
+    STOP.
+  ENDIF.
+
+ENDFORM.                    "validate_presentation_server
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Обработка F4 для поля с именем файла
+*&amp;---------------------------------------------------------------------*
+FORM f4_file_name .
+
+  wa_fieldvalues-fieldname = 'P_PRES'.
+  APPEND wa_fieldvalues TO it_fieldvalues.
+  CLEAR wa_fieldvalues.
+
+  wa_fieldvalues-fieldname = 'P_APPL'.
+  APPEND wa_fieldvalues TO it_fieldvalues.
+  CLEAR wa_fieldvalues.
+
+  " Считаем значения экрана выбора
+  CALL FUNCTION 'DYNP_VALUES_READ'
+    EXPORTING
+      dyname               = sy-repid
+      dynumb               = sy-dynnr
+    TABLES
+      dynpfields           = it_fieldvalues
+    EXCEPTIONS
+      invalid_abapworkarea = 1
+      invalid_dynprofield  = 2
+      invalid_dynproname   = 3
+      invalid_dynpronummer = 4
+      invalid_request      = 5
+      no_fielddescription  = 6
+      invalid_parameter    = 7
+      undefind_error       = 8
+      double_conversion    = 9
+      stepl_not_found      = 10
+      OTHERS               = 11.
+
+  READ TABLE it_fieldvalues INTO wa_fieldvalues WITH KEY fieldname = 'P_APPL'.
+
+  " В зависимости от того что выбрано на экране выбора, будем запрашивать
+  " либо файл на стороне сервера, либо на клиенте.
+  IF wa_fieldvalues-fieldvalue = 'X'.
+    PERFORM get_f4_application.
+  ELSE.
+    PERFORM get_f4_presentation.
+  ENDIF.
+
+ENDFORM.                    " f4_file_name
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Открыть диалог выбора файла на клиенте
+*&amp;---------------------------------------------------------------------*
+FORM get_f4_presentation .
+
+*-- F4 functionality for file name on Presentation Server
+  DATA: l_file TYPE STRING.
+  CALL METHOD cl_salv_test_data=&gt;select_file
+    IMPORTING
+      filename = l_file.
+
+  p_file = l_file.
+
+ENDFORM.                    " get_f4_presentation
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Диалог выбора файлов на сервере
+*&amp;---------------------------------------------------------------------*
+FORM get_f4_application .
+
+*-- F4 functionality for filename on Application Server
+  CALL FUNCTION 'F4_DXFILENAME_TOPRECURSION'
+    EXPORTING
+      i_location_flag       = 'A'
+      i_server              = ' '
+      i_path                = '/secure_data/data_mig/dev'
+    IMPORTING
+      o_path                = l_path
+      abend_flag            = l_abend_flag
+    EXCEPTIONS
+      communication_failure = 1
+      system_failure        = 2
+      rfc_error             = 3.
+  IF sy-subrc EQ 0.
+    p_file = l_path.
+  ENDIF.
+  IF l_abend_flag = 'X'.
+    EXIT.  ENDIF.
+
+ENDFORM.                    " get_f4_application</pre><p>Еще один способ выбора файла на сервере приложений:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECTION-SCREEN BEGIN OF BLOCK 002 WITH FRAME TITLE text-002.
+PARAMETERS : p_aps LIKE rlgrap-filename MODIF ID pth .
+SELECTION-SCREEN END OF BLOCK 002.
+DATA : path_name(150) TYPE C.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_aps.
+
+SUBMIT rs_get_f4_dir_from_applserv AND RETURN.
+IMPORT path_name FROM MEMORY ID 'PATH_NAME_SDL'.
+ p_aps = path_name.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/files/vibor-fajlov-na-ekrane/">Выбор файлов на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/files/vibor-fajlov-na-ekrane/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

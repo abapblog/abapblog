@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>REPOSITORY_ENVIRONMENT_SET_RFC | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/repository_environment_set_rfc/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:58:01 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Получение списка объектов используемых в программе</title>
+		<link>https://abap-blog.ru/others/poluchenie-spiska-obektov-ispolzuemyx-v-programme/</link>
+					<comments>https://abap-blog.ru/others/poluchenie-spiska-obektov-ispolzuemyx-v-programme/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 28 Feb 2012 17:58:45 +0000</pubDate>
+				<category><![CDATA[Прочее]]></category>
+		<category><![CDATA[REPOSITORY_ENVIRONMENT_SET_RFC]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=564</guid>
+
+					<description><![CDATA[<p>[crayon-618a220e14939902732352/]</p>
+<p>The post <a href="https://abap-blog.ru/others/poluchenie-spiska-obektov-ispolzuemyx-v-programme/">Получение списка объектов используемых в программе</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZDYN_SELECTIONS.
+
+PARAMETERS:pa_prog TYPE tadir-obj_name.
+DATA: environment_selection TYPE envi_types,
+      source_searched TYPE TABLE OF rsfind,
+      output_list TYPE TABLE OF senvi.
+START-OF-SELECTION.
+  environment_selection-prog = ' '. "Программы
+  environment_selection-fugr = ' '. "Группы функций
+  environment_selection-ldba = ' '. "Логические базы данных
+  environment_selection-msag = ' '. "Классы сообщений
+  environment_selection-tran = ' '. "Транзакции
+  environment_selection-func = 'X'. "Функциональные модули
+  environment_selection-dial = ' '. "Диалоговые модули
+  environment_selection-tabl = ' '. "Таблицы базы данных
+  environment_selection-shlp = ' '. "Средства поиска
+  environment_selection-doma = ' '. "Домены
+  environment_selection-dtel = 'X'. "Элементы данных
+  environment_selection-view = ' '. "Курсоры
+  environment_selection-mcob = ' '. "Matchcode object
+  environment_selection-mcid = ' '. "Matchcode ID
+  environment_selection-para = ' '. "SET/GET параметры
+  environment_selection-conv = ' '. "Conversion exit
+  environment_selection-suso = ' '. "Объекты авторизации
+  environment_selection-TYPE = ' '. "Группы типов
+  environment_selection-ttyp = ' '. "Типы таблиц
+  environment_selection-stru = ' '. "Структуры
+  environment_selection-enqu = ' '. "Объекты блокировок
+  environment_selection-sqlt = ' '. "SQL tables
+  environment_selection-clas = ' '. "Классы
+  environment_selection-intf = ' '. "Интерфейсы
+  environment_selection-udmo = ' '. "Data model
+  environment_selection-ueno = ' '. "Entity type
+  environment_selection-shi3 = ' '. "Area menu
+  environment_selection-cntx = ' '. "Context
+  environment_selection-ttab = ' '. "Типы таблиц
+  CALL FUNCTION 'REPOSITORY_ENVIRONMENT_SET_RFC'
+    EXPORTING
+      obj_type          = 'PROG'
+      environment_types = environment_selection
+      object_name       = pa_prog
+    TABLES
+      ENVIRONMENT       = output_list
+      source_objects    = source_searched.</pre><p></p><p>The post <a href="https://abap-blog.ru/others/poluchenie-spiska-obektov-ispolzuemyx-v-programme/">Получение списка объектов используемых в программе</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/others/poluchenie-spiska-obektov-ispolzuemyx-v-programme/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>OIB_MATERIAL_UNIT_CONVERSION | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/oib_material_unit_conversion/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:59:36 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Перевод количеств из разных АЕИ</title>
+		<link>https://abap-blog.ru/osnovy-abap/perevod-iz-raznyx-aei/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/perevod-iz-raznyx-aei/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 03 Apr 2012 14:18:43 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[MATERIAL_UNIT_CONVERSION]]></category>
+		<category><![CDATA[OIB_MATERIAL_UNIT_CONVERSION]]></category>
+		<category><![CDATA[Единицы измерения]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=666</guid>
+
+					<description><![CDATA[<p>Для перевода количества из одной единицы измерения в другую существует функциональный модуль: MATERIAL_UNIT_CONVERSION. Данный ФМ может преобразовывать либо из базисной ЕИ в альтернативную, либо наоборот. Для преобразования из одной АЕИ в другую можно либо дважды вызвать MATERIAL_UNIT_CONVERSION, либо воспользоваться другим ФМ: OIB_MATERIAL_UNIT_CONVERSION (работает с учётом долей продукта для партии).  Пример его использования: [crayon-618a23dbdc328259362736/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/perevod-iz-raznyx-aei/">Перевод количеств из разных АЕИ</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Для перевода количества из одной единицы измерения в другую существует функциональный модуль: <strong>MATERIAL_UNIT_CONVERSION</strong>. Данный ФМ может преобразовывать либо из базисной ЕИ в альтернативную, либо наоборот. Для преобразования из одной АЕИ в другую можно либо дважды вызвать MATERIAL_<wbr />UNIT_CONVERSION, либо воспользоваться другим ФМ: <strong>OIB_MATERIAL_</strong><wbr /><strong>UNIT_CONVERSION </strong>(работает с учётом долей продукта для партии)<strong>. </strong></p>
+<p>Пример его использования:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  gv_ves_t TYPE F VALUE '1.342',
+  gv_ves_tb TYPE F,
+  gv_material TYPE matnr VALUE 'Номер материала',
+  gv_error  TYPE STRING,
+  gv_werks  TYPE werks VALUE 'Завод',
+  gv_charge TYPE charg_d VALUE 'Партия'.
+
+CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+  EXPORTING
+    INPUT  = gv_material
+  IMPORTING
+    OUTPUT = gv_material.
+
+CALL FUNCTION 'OIB_MATERIAL_UNIT_CONVERSION'
+  EXPORTING
+    iv_matnr            = gv_material
+    iv_plant            = '1000'
+    iv_charg            = gv_charge
+    iv_inuom            = 'TB'
+    iv_outuom           = 'TO'
+    iv_quantity         = gv_ves_t
+  IMPORTING
+    ev_quantity         = gv_ves_tb
+  EXCEPTIONS
+    error_material_read = 1
+    conversion_failed   = 2
+    OTHERS              = 3.
+
+IF sy-subrc &lt;&gt; 0.
+  WRITE: sy-subrc.
+ELSE.
+  WRITE gv_ves_tb STYLE cl_abap_format=&gt;o_simple.
+ENDIF.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/perevod-iz-raznyx-aei/">Перевод количеств из разных АЕИ</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/perevod-iz-raznyx-aei/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

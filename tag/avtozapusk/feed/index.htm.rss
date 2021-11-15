@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>cl_gui_timer | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/avtozapusk/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:01:06 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Автоматический запуск транзакции</title>
+		<link>https://abap-blog.ru/osnovy-abap/avtomaticheskij-zapusk-tranzakcii/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/avtomaticheskij-zapusk-tranzakcii/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 20 Apr 2012 09:42:20 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[cl_gui_timer]]></category>
+		<category><![CDATA[автозапуск транзакции]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=774</guid>
+
+					<description><![CDATA[<p>С помощью ФМ &#8212; NAVIGATION_SET_START_TCODE и NAVIGATION_GET_START_TCODE можно определить автоматический запуск транзакции для пользователя.</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/avtomaticheskij-zapusk-tranzakcii/">Автоматический запуск транзакции</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>С помощью ФМ &#8212; <strong>NAVIGATION_SET_START_TCODE и <strong>NAVIGATION_GET_START_TCODE </strong></strong>можно определить автоматический запуск транзакции для пользователя.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/avtomaticheskij-zapusk-tranzakcii/">Автоматический запуск транзакции</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/avtomaticheskij-zapusk-tranzakcii/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Автозапуск отчёта</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/autorun/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/autorun/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 03 Jan 2012 13:23:58 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[cl_gui_timer]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=53</guid>
+
+					<description><![CDATA[<p>Не знаю пригодится ли это в реальной жизни, но идея довольна забавная. Допустим необходимо запустить отчёт на выполнение через определённый промежуток времени, сделать это можно при помощи класса CL_GUI_TIMER. Собственно программа довольно простая, дополнительного описания не требует: [crayon-618a1e7e76c5a432021382/]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/autorun/">Автозапуск отчёта</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Не знаю пригодится ли это в реальной жизни, но идея довольна забавная. Допустим необходимо запустить отчёт на выполнение через определённый промежуток времени, сделать это можно при помощи класса <strong>CL_GUI_TIMER</strong>.<span id="more-53"></span></p>
+<p>Собственно программа довольно простая, дополнительного описания не требует:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZTEST.
+
+CLASS lcl_handler DEFINITION.
+  PUBLIC SECTION.
+    METHODS: when_done FOR EVENT finished OF cl_gui_timer.
+ENDCLASS.                    "lcl_event_handler DEFINITION
+
+CLASS lcl_handler IMPLEMENTATION.
+  METHOD when_done.
+    cl_gui_cfw=&gt;set_new_ok_code( new_code = 'ONLI' ). "ONLI = Execute
+  ENDMETHOD.                    "explode
+ENDCLASS.                    "lcl_event_handler IMPLEMENTATION
+
+PARAMETERS: pa_carr TYPE s_carrid DEFAULT 'AA'.
+
+DATA: timer TYPE REF TO cl_gui_timer.
+DATA: href TYPE REF TO lcl_handler.
+
+AT SELECTION-SCREEN OUTPUT.
+* Создадим экземпляры классов
+  CREATE OBJECT: timer, href.
+* Зарегистрируем обработчик события таймера
+  SET HANDLER href-&gt;when_done FOR timer.
+* Установим интервал срабатывания таймера
+  timer-&gt;interval = 10.
+* Запустим таймер
+  timer-&gt;run( ).
+
+START-OF-SELECTION.
+* После запуска программы отключим таймер
+  timer-&gt;cancel( ).
+  WRITE 'Программа запущена'.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/autorun/">Автозапуск отчёта</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/autorun/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

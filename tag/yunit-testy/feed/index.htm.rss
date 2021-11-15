@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Юнит тесты | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/yunit-testy/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:10:34 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Тестирование, управляемое данными (Data-Driven Testing)</title>
+		<link>https://abap-blog.ru/osnovy-abap/testirovanie-upravlyaemoe-dannymi-data-driven-testing/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/testirovanie-upravlyaemoe-dannymi-data-driven-testing/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 25 Apr 2014 14:47:15 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[ABAP Unit]]></category>
+		<category><![CDATA[DDT]]></category>
+		<category><![CDATA[ecatt]]></category>
+		<category><![CDATA[secatt]]></category>
+		<category><![CDATA[Юнит тесты]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1915</guid>
+
+					<description><![CDATA[<p>Методология тестирования, управляемого данными (DDT) применяется в автоматизации тестирования ПО, представляет собой тестирование, выполнение и верификация которого производится на основе данных, которые хранятся в БД или любых других источниках данных. Обычно сравнивают эталонные данные с теми, что на выходе получает система из метода (функции, программы и т.п.). Тестирование, управляемое данными подразумевает разделение юнит тестов и [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/testirovanie-upravlyaemoe-dannymi-data-driven-testing/">Тестирование, управляемое данными (Data-Driven Testing)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Методология <strong>тестирования, управляемого данными (</strong><strong>DDT</strong><strong>)</strong> применяется в автоматизации тестирования ПО, представляет собой тестирование, выполнение и верификация которого производится на основе данных, которые хранятся в БД или любых других источниках данных.</p>
+<p>Обычно сравнивают эталонные данные с теми, что на выходе получает система из метода (функции, программы и т.п.).</p>
+<p>Тестирование, управляемое данными подразумевает разделение юнит тестов и данных, которые в них проверяются. Юнит тесты получают эталонные данные из некого источника и сравнивают их с результатами, полученными при тестировании объекта.</p>
+<p>Изначально <strong>ABAP </strong><strong>Unit </strong>не предоставляет никакого сервиса для хранения и ведения тестируемых данных, как например это делают другие фреймворки для тестирования: jUnit, nUnit. В статье пойдет речь о том как обойти это недоразумение.</p>
+<p><span id="more-1915"></span></p>
+<p>В качестве подобного сервиса можно использовать контейнеры данных <strong>eCATT</strong>. Что такое <strong>eCATT </strong>и для чего он нужен можно посмотреть <a href="http://help.sap.com/saphelp_sm70ehp1_sp23/helpdata/en/1b/e81c3b84e65e7be10000000a11402f/frameset.htm">тут</a>. Нас интересует один из элементов <strong>eCATT</strong>, а именно контейнер тестовых данных. Исходя из названия, становится понятно, что контейнер позволяет хранить внутри себя какие-то данные, но кроме хранения можно так же и вести (изменять) эти данные.</p>
+<p>Рассмотрим небольшой пример, допустим, есть метод рассчитывающий тип треугольника относительно размеров его сторон, как известно из школьной программы, тип может быть следующим:</p>
+<ul>
+<li>Равносторонний (все стороны равны)</li>
+<li>Равнобедренный (хотя бы две стороны равны)</li>
+<li>Разносторонний (нет равных сторон).</li>
+</ul>
+<p>Создадим класс ZCL_TRIANGLE c указанными атрибутами:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/triangle_attr.png"><img loading="lazy" class="alignnone size-full wp-image-1916" src="http://abap-blog.ru/wp-content/uploads/2014/04/triangle_attr.png" alt="triangle_attr" width="875" height="187" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/triangle_attr.png 875w, https://abap-blog.ru/wp-content/uploads/2014/04/triangle_attr-300x64.png 300w" sizes="(max-width: 875px) 100vw, 875px" /></a></p>
+<p>Метод GET_TYPE:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/triangle_type.png"><img loading="lazy" class="alignnone size-full wp-image-1917" src="http://abap-blog.ru/wp-content/uploads/2014/04/triangle_type.png" alt="triangle_type" width="691" height="140" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/triangle_type.png 691w, https://abap-blog.ru/wp-content/uploads/2014/04/triangle_type-300x60.png 300w" sizes="(max-width: 691px) 100vw, 691px" /></a></p>
+<p>Параметры метода:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/type_param.png"><img loading="lazy" class="alignnone size-full wp-image-1918" src="http://abap-blog.ru/wp-content/uploads/2014/04/type_param.png" alt="type_param" width="804" height="178" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/type_param.png 804w, https://abap-blog.ru/wp-content/uploads/2014/04/type_param-300x66.png 300w" sizes="(max-width: 804px) 100vw, 804px" /></a></p>
+<p>Реализация:</p><pre class="urvanov-syntax-highlighter-plain-tag">method GET_TYPE.
+  IF ( iv_a &lt;= 0 ) OR ( iv_b &lt;= 0 ) OR ( iv_c &lt;= 0 ).
+    RAISE EXCEPTION TYPE zcx_wrong_tria_parameters.
+  ENDIF.
+
+  IF ( iv_a = iv_b AND iv_b = iv_c ).
+    re_type = zcl_triangle=&gt;cv_equilateral. " Односторонний
+    RETURN.
+  ENDIF.
+
+  IF ( iv_a = iv_b ) OR ( iv_b = iv_c ) OR ( iv_c = iv_a ).
+    re_type = zcl_triangle=&gt;cv_isosceles. " равнобедренный
+    RETURN.
+  ENDIF.
+
+  re_type = zcl_triangle=&gt;cv_scalene. " разносторонний
+endmethod.</pre><p>Как видно из примера, в случае некорректных данных вызывается исключение. В данной статье не описывается создание и использование классов исключений, при желании можете посмотреть в ранее опубликованной <a href="http://abap-blog.ru/abap/abap-objects/obrabotka-osobyx-situacij-v-abap/">статье</a>.</p>
+<p>Статья подразумевает что вы знаете как писать юнит тесты, а если нет, добро пожаловать в <a href="http://abaphr.ru/ispolzovanie-sistemy-testirovaniya-koda-abap-unit/">введение</a>.</p>
+<p>Напишем сначала юнит тест, проверяющий метод без использования каталогов тестов:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/new_test.png"><img loading="lazy" class="alignnone size-full wp-image-1919" src="http://abap-blog.ru/wp-content/uploads/2014/04/new_test.png" alt="new_test" width="842" height="114" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/new_test.png 842w, https://abap-blog.ru/wp-content/uploads/2014/04/new_test-300x40.png 300w" sizes="(max-width: 842px) 100vw, 842px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">*"* use this source file for your ABAP unit test classes
+CLASS lcl_triangle_test DEFINITION FOR TESTING RISK LEVEL HARMLESS.
+  PUBLIC SECTION.
+    METHODS:
+      test_scalene FOR TESTING,
+      test_isosceles FOR TESTING,
+      test_equilateral FOR TESTING.
+ENDCLASS.
+
+CLASS lcl_triangle_test IMPLEMENTATION.
+  METHOD test_equilateral.
+    DATA:
+      lv_type TYPE i,
+      lo_exc  TYPE REF TO zcx_wrong_tria_parameters.
+    " Равносторонний
+    TRY.
+      cl_abap_unit_assert=&gt;assert_equals(
+        act = zcl_triangle=&gt;get_type(  iv_a = 1
+                                       iv_b = 1
+                                       iv_c = 1 )
+        exp = zcl_triangle=&gt;cv_equilateral
+      ).
+    CATCH zcx_wrong_tria_parameters INTO lo_exc.
+      cl_abap_unit_assert=&gt;fail(
+        EXPORTING
+          msg    = lo_exc-&gt;get_text( )
+      ).
+    ENDTRY.
+  ENDMETHOD.
+
+  METHOD test_isosceles.
+    DATA:
+      lv_type TYPE i,
+      lo_exc  TYPE REF TO zcx_wrong_tria_parameters.
+    " Равнобедренный
+    TRY.
+      cl_abap_unit_assert=&gt;assert_equals(
+        act = zcl_triangle=&gt;get_type(  iv_a = 1
+                                       iv_b = 1
+                                       iv_c = 3 )
+        exp = zcl_triangle=&gt;cv_isosceles
+      ).
+    CATCH zcx_wrong_tria_parameters INTO lo_exc.
+      cl_abap_unit_assert=&gt;fail(
+        EXPORTING
+          msg    = lo_exc-&gt;get_text( )
+      ).
+    ENDTRY.
+  ENDMETHOD.
+
+  METHOD test_scalene.
+    DATA:
+      lv_type TYPE i,
+      lo_exc  TYPE REF TO zcx_wrong_tria_parameters.
+    " Разносторонний
+    TRY.
+      cl_abap_unit_assert=&gt;assert_equals(
+        act = zcl_triangle=&gt;get_type(  iv_a = 1
+                                       iv_b = 2
+                                       iv_c = 3 )
+        exp = zcl_triangle=&gt;cv_scalene
+      ).
+    CATCH zcx_wrong_tria_parameters INTO lo_exc.
+      cl_abap_unit_assert=&gt;fail(
+        EXPORTING
+          msg    = lo_exc-&gt;get_text( )
+      ).
+    ENDTRY.
+  ENDMETHOD.
+ENDCLASS.</pre><p>Как вы можете убедиться, запустив тест (ctrl+shift+F10), он будет успешно пройден:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/test_ok.png"><img loading="lazy" class="alignnone size-full wp-image-1920" src="http://abap-blog.ru/wp-content/uploads/2014/04/test_ok.png" alt="test_ok" width="399" height="25" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/test_ok.png 399w, https://abap-blog.ru/wp-content/uploads/2014/04/test_ok-300x18.png 300w" sizes="(max-width: 399px) 100vw, 399px" /></a></p>
+<p>Но что делать, если количество тестовых данных возрастает? Описывать множество возможных вариантов для тестирования в самом юнит тесте не корректно, т.к. объем кода в этом случае будет огромным. Тут к нам на помощь приходит методология тестирования, управляемого данными и каталог тестовых данных <strong>eCATT</strong>.</p>
+<ul>
+<li>Создаем каталог, запустив транзакцию <strong>SECATT</strong>:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/secatt.png"><img loading="lazy" class="alignnone size-full wp-image-1921" src="http://abap-blog.ru/wp-content/uploads/2014/04/secatt.png" alt="secatt" width="431" height="263" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/secatt.png 431w, https://abap-blog.ru/wp-content/uploads/2014/04/secatt-300x183.png 300w" sizes="(max-width: 431px) 100vw, 431px" /></a></p>
+<ul>
+<li>Определяем параметры (то из чего состоит) каталога:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/cat_param.png"><img loading="lazy" class="alignnone size-full wp-image-1922" src="http://abap-blog.ru/wp-content/uploads/2014/04/cat_param.png" alt="cat_param" width="922" height="176" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/cat_param.png 922w, https://abap-blog.ru/wp-content/uploads/2014/04/cat_param-300x57.png 300w" sizes="(max-width: 922px) 100vw, 922px" /></a></p>
+<ul>
+<li>Далее необходимо определить сами данные, данные определяются в так называемых вариантах, по умолчанию всегда в системе есть вариант ECATTDEFAULT, его будем игнорировать в дальнейшем:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/cat_variants.png"><img loading="lazy" class="alignnone size-full wp-image-1923" src="http://abap-blog.ru/wp-content/uploads/2014/04/cat_variants.png" alt="cat_variants" width="819" height="223" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/cat_variants.png 819w, https://abap-blog.ru/wp-content/uploads/2014/04/cat_variants-300x81.png 300w" sizes="(max-width: 819px) 100vw, 819px" /></a></p>
+<p>На данном этапе закончим с <strong>eCATT </strong>и создадим один небольшой класс, от которого будут наследоваться наши тестовые классы, в нем мы напишем метод, запускающий тестовые методы с указанным каталогом тестов.</p>
+<p>Атрибуты:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/attr_unit.png"><img loading="lazy" class="alignnone size-full wp-image-1924" src="http://abap-blog.ru/wp-content/uploads/2014/04/attr_unit.png" alt="attr_unit" width="707" height="160" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/attr_unit.png 707w, https://abap-blog.ru/wp-content/uploads/2014/04/attr_unit-300x67.png 300w" sizes="(max-width: 707px) 100vw, 707px" /></a></p>
+<p>У класса будет единственный метод run_variants, который используя API <strong>eCATT</strong>, будет получать тестовые данные, API реализовано в классе <strong>cl_apl_ecatt_tdc_api</strong>. Более подробное описание API можно найти официальной <a href="http://help.sap.com/saphelp_nw73ehp1/helpdata/en/49/70aad181463e90e10000000a42189c/content.htm?frameset=/en/20/e81c3b84e65e7be10000000a11402f/frameset.htm">документации</a>.</p>
+<p>Параметры метода:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/unit_param.png"><img loading="lazy" class="alignnone size-full wp-image-1925" src="http://abap-blog.ru/wp-content/uploads/2014/04/unit_param.png" alt="unit_param" width="549" height="139" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/unit_param.png 549w, https://abap-blog.ru/wp-content/uploads/2014/04/unit_param-300x75.png 300w" sizes="(max-width: 549px) 100vw, 549px" /></a></p>
+<p>Код:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD run_variants.
+  DATA: lt_variants TYPE etvar_name_tabtype,
+        lo_ex TYPE REF TO cx_root.
+
+  " Получаем данные SECATT
+  TRY .
+      go_tdc_api = cl_apl_ecatt_tdc_api=&gt;get_instance( iv_container_name ).
+      " Считываем все варианты из контейнера
+      lt_variants = go_tdc_api-&gt;get_variant_list( ).
+    CATCH cx_ecatt_tdc_access INTO lo_ex.
+      cl_aunit_assert=&gt;fail(
+          msg  = |Варианты { gv_current_variant } не считаны: { lo_ex-&gt;get_text( ) }|
+          quit = if_aunit_constants=&gt;no ).
+      RETURN.
+  ENDTRY.
+
+  " Удаляем вариант по умолчанию
+  DELETE lt_variants WHERE table_line = 'ECATTDEFAULT'.
+
+  " Запускаем тестовый метод со всеми тестовыми данными (вариантами)
+  " Метод не должен содержать параметров и должен быть создан в дочерних классах
+  LOOP AT lt_variants INTO gv_current_variant.
+    TRY .
+        CALL METHOD (iv_method_name).
+      CATCH cx_root INTO lo_ex.
+        cl_aunit_assert=&gt;fail(
+            msg  = |Вариант { gv_current_variant } не выполнен: { lo_ex-&gt;get_text( ) }|
+            quit = if_aunit_constants=&gt;no ).
+    ENDTRY.
+  ENDLOOP.
+ENDMETHOD.</pre><p>Далее перепишем наш тестовый класс:</p><pre class="urvanov-syntax-highlighter-plain-tag">*"* use this source file for your ABAP unit test classes
+DEFINE get_val.
+  try.
+      go_tdc_api-&gt;get_value(
+              exporting
+                i_param_name = &amp;1
+                i_variant_name = gv_current_variant
+              changing
+                e_param_value = &amp;2 ).
+    catch cx_root.
+  endtry.
+END-OF-DEFINITION.
+
+CLASS lcl_triangle_test DEFINITION FOR TESTING RISK LEVEL HARMLESS INHERITING FROM zcl_ecat_unit.
+  PUBLIC SECTION.
+    METHODS:
+      test_type FOR TESTING,
+      test_type_variant.
+ENDCLASS.
+
+CLASS lcl_triangle_test IMPLEMENTATION.
+  METHOD test_type.
+    run_variants(
+        iv_container_name = 'ZTRIANGLE_CATALOG'
+        iv_method_name  = 'TEST_TYPE_VARIANT' ).
+  ENDMETHOD.
+
+  METHOD test_type_variant.
+    DATA: lv_a TYPE i,
+          lv_b TYPE i,
+          lv_c TYPE i,
+          lv_exp_type TYPE i,
+          lo_exc TYPE REF TO zcx_wrong_tria_parameters.
+
+    get_val: 'A' lv_a,
+             'B' lv_b,
+             'C' lv_c,
+             'EXP_TYPE' lv_exp_type.
+
+    TRY.
+        cl_abap_unit_assert=&gt;assert_equals(
+          exp = lv_exp_type
+          act = zcl_triangle=&gt;get_type( iv_a = lv_a
+                                        iv_b = lv_b
+                                        iv_c = lv_c )
+          quit = if_aunit_constants=&gt;no
+          msg = |Не верное значение типа для варианта { gv_current_variant }| ).
+      CATCH zcx_wrong_tria_parameters INTO lo_exc.
+        cl_abap_unit_assert=&gt;fail(
+          EXPORTING
+            msg    = |Ошибка при передаче тестовых параметров { gv_current_variant }|
+            quit   = if_aunit_constants=&gt;no
+        ).
+    ENDTRY.
+  ENDMETHOD.
+ENDCLASS.</pre><p>Как видно покрытие тестами возрасло, а код уменьшился на порядок. В итоге благодаря DDT и <strong>eCATT </strong>можно сильно облегчить себе жизнь в ходе тестирования, опираясь на данные, не зашитые в самом юнит тесте.</p>
+<p>Материал данной статьи был позаимствован из следующего источника:</p>
+<p><a href="http://scn.sap.com/community/abap/testing-and-troubleshooting/blog/2014/02/25/data-driven-testing-with-abap-unit">http://scn.sap.com/community/abap/testing-and-troubleshooting/blog/2014/02/25/data-driven-testing-with-abap-unit</a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/testirovanie-upravlyaemoe-dannymi-data-driven-testing/">Тестирование, управляемое данными (Data-Driven Testing)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/testirovanie-upravlyaemoe-dannymi-data-driven-testing/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,512 @@
+﻿<!DOCTYPE html>
+<html lang="ru-RU" id="html">
+<head>
+		<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="profile" href="../../xfn/11.html">
+	<link rel="pingback" href="https://abap-blog.ru/xmlrpc.php">
+	<title>ABAP Blog - Язык ABAP и все что с ним связано - Part 4</title>
+
+		<!-- All in One SEO 4.1.4.4 -->
+		<meta name="description" content="Все о разработке в SAP решениях: ABAP, HANA, UI5, OData, Fiori. - Part 4">
+		<meta name="robots" content="noindex, nofollow, max-image-preview:large">
+		<meta name="keywords" content="abap,hana,sap,badi,rfc,abap objects,абап,alv,расширения,сап,разработка">
+		<link rel="canonical" href="index.htm">
+		<link rel="prev" href="../3/index.htm">
+		<link rel="next" href="../5/index.htm">
+		<script type="application/ld+json" class="aioseo-schema">
+			{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebSite","@id":"https:\/\/abap-blog.ru\/#website","url":"https:\/\/abap-blog.ru\/","name":"ABAP Blog","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445 \u043e\u0442 SAP","inLanguage":"ru-RU","publisher":{"@id":"https:\/\/abap-blog.ru\/#person"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https:\/\/abap-blog.ru\/?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/#person","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/page\/4\/#personImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"BreadcrumbList","@id":"https:\/\/abap-blog.ru\/page\/4\/#breadcrumblist","itemListElement":[{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/#listItem","position":1,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/","name":"\u0413\u043b\u0430\u0432\u043d\u0430\u044f","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 SAP \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445: ABAP, HANA, UI5, OData, Fiori. - Part 4","url":"https:\/\/abap-blog.ru\/"}}]},{"@type":"CollectionPage","@id":"https:\/\/abap-blog.ru\/page\/4\/#collectionpage","url":"https:\/\/abap-blog.ru\/page\/4\/","name":"ABAP Blog - \u042f\u0437\u044b\u043a ABAP \u0438 \u0432\u0441\u0435 \u0447\u0442\u043e \u0441 \u043d\u0438\u043c \u0441\u0432\u044f\u0437\u0430\u043d\u043e - Part 4","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 SAP \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445: ABAP, HANA, UI5, OData, Fiori. - Part 4","inLanguage":"ru-RU","isPartOf":{"@id":"https:\/\/abap-blog.ru\/#website"},"breadcrumb":{"@id":"https:\/\/abap-blog.ru\/page\/4\/#breadcrumblist"},"about":{"@id":"https:\/\/abap-blog.ru\/#person"}}]}
+		</script>
+		<script type="text/javascript">
+			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+			ga('create', "UA-150412824-1", { 'cookieDomain': 'abap-blog.ru' } );
+			ga('require', 'outboundLinkTracker');
+			ga('send', 'pageview');
+		</script>
+		<script async="" src="../../analytics.js"></script>
+		<script async="" src="../../wp-content/plugins/all-in-one-seo-pack/app/Common/Assets/js/autotrack.js?ver=4.1.4.4"></script>
+		<!-- All in One SEO -->
+
+<link rel='dns-prefetch' href='../../index-1.htm'>
+<link rel='dns-prefetch' href='//fonts.googleapis.com'>
+<link rel='dns-prefetch' href='../../index-2.htm'>
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента" href="../../feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев" href="../../comments/feed/index.htm.rss">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/abap-blog.ru\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8.1"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='urvanov_syntax_highlighter-css' href='../../wp-content/plugins/urvanov-syntax-highlighter/css/min/urvanov_syntax_highlighter.min.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='wp-block-library-css' href='../../wp-includes/css/dist/block-library/style.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='arve-main-css' href='../../wp-content/plugins/advanced-responsive-video-embedder/build/main.css?ver=b809f4d4c33c91a5ae3a5099af09bdde' media='all'>
+<link rel='stylesheet' id='contact-form-7-css' href='../../wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.5.1' media='all'>
+<link rel='stylesheet' id='bg-shce-genericons-css' href='../../wp-content/plugins/show-hidecollapse-expand/assets/css/genericons/genericons.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='bg-show-hide-css' href='../../wp-content/plugins/show-hidecollapse-expand/assets/css/bg-show-hide.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='dashicons-css' href='../../wp-includes/css/dashicons.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='tooltip-css' href='../../wp-content/plugins/wp-poll/assets/tool-tip.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-cb-css' href='../../wp-content/plugins/wp-poll/assets/front/css/checkbox.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-css' href='../../wp-content/plugins/wp-poll/assets/front/css/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='flat-fonts-css' href='../../css.css?family=Lobster%7CRoboto:400,700%7CRoboto+Slab%7CRoboto%20Condensed' media='all'>
+<link rel='stylesheet' id='flat-theme-css' href='../../wp-content/themes/flat/assets/css/flat.css?ver=1.7.11' media='all'>
+<link rel='stylesheet' id='flat-style-css' href='../../wp-content/themes/flat/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='slb_core-css' href='../../wp-content/plugins/simple-lightbox/client/css/app.css?ver=2.8.1' media='all'>
+<link rel='stylesheet' id='decent-comments-widget-css' href='../../wp-content/plugins/decent-comments/css/decent-comments-widget.css' media='all'>
+<script src='../../wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script src='../../wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' id='urvanov_syntax_highlighter_js-js-extra'>
+/* <![CDATA[ */
+var UrvanovSyntaxHighlighterSyntaxSettings = {"version":"2.8.22","is_admin":"0","ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","prefix":"urvanov-syntax-highlighter-","setting":"urvanov-syntax-highlighter-setting","selected":"urvanov-syntax-highlighter-setting-selected","changed":"urvanov-syntax-highlighter-setting-changed","special":"urvanov-syntax-highlighter-setting-special","orig_value":"data-orig-value","debug":""};
+var UrvanovSyntaxHighlighterSyntaxStrings = {"copy":"\u041d\u0430\u0436\u043c\u0438\u0442\u0435 %s \u0434\u043b\u044f \u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f, %s \u0434\u043b\u044f \u0432\u0441\u0442\u0430\u0432\u043a\u0438","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/urvanov-syntax-highlighter/js/min/urvanov_syntax_highlighter.min.js?ver=2.8.22' id='urvanov_syntax_highlighter_js-js'></script>
+<script src='../../wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.7' id='regenerator-runtime-js'></script>
+<script src='../../wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
+<script async="async" src='../../wp-content/plugins/advanced-responsive-video-embedder/build/main.js?ver=b809f4d4c33c91a5ae3a5099af09bdde' id='arve-main-js'></script>
+<script src='../../wp-content/plugins/wp-poll/assets/front/js/svgcheckbx.js?ver=5.8.1' id='wpp-front-cb-js'></script>
+<script type='text/javascript' id='wpp-front-js-extra'>
+/* <![CDATA[ */
+var wpp_object = {"ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","copyText":"Copied !","voteText":"Vote(s)","tempProDownload":"https:\/\/pluginbazar.com\/my-account\/downloads\/","tempProDownloadTxt":"Download Version 1.1.0"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/wp-poll/assets/front/js/scripts.js?ver=5.8.1' id='wpp-front-js'></script>
+<script src='../../wp-content/themes/flat/assets/js/flat.js?ver=1.7.11' id='flat-js-js'></script>
+<!--[if lt IE 9]>
+<script src='https://abap-blog.ru/wp-content/themes/flat/assets/js/html5shiv.min.js?ver=3.7.2' id='html5shiv-js'></script>
+<![endif]-->
+<link rel="https://api.w.org/" href="../../wp-json/index.htm.json"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="../../xmlrpc.php.xml?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../../wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.8.1">
+
+<!-- WP Youtube Player 1.7 by unijimpe -->
+<style type="text/css">#page:before, .sidebar-offcanvas, #secondary { background-color: #272727; }@media (max-width: 1199px) { #page &gt; .container { background-color: #272727; } }body { background-size: initial; }</style><style type="text/css">#masthead .site-title {font-family:Lobster}body {font-family:Roboto }h1,h2,h3,h4,h5,h6 {font-family:Roboto Slab}#masthead .site-description, .hentry .entry-meta {font-family:Roboto Condensed}</style><style type="text/css" media="screen">body{position:relative}#dynamic-to-top{display:none;overflow:hidden;width:auto;z-index:90;position:fixed;bottom:20px;right:20px;top:auto;left:auto;font-family:sans-serif;font-size:1em;color:#fff;text-decoration:none;text-shadow:0 1px 0 #333;font-weight:bold;padding:17px 16px;border:2px solid #000;background:#4c5055;-webkit-background-origin:border;-moz-background-origin:border;-icab-background-origin:border;-khtml-background-origin:border;-o-background-origin:border;background-origin:border;-webkit-background-clip:padding-box;-moz-background-clip:padding-box;-icab-background-clip:padding-box;-khtml-background-clip:padding-box;-o-background-clip:padding-box;background-clip:padding-box;-webkit-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-ms-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-moz-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-o-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-khtml-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-icab-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-webkit-border-radius:30px;-moz-border-radius:30px;-icab-border-radius:30px;-khtml-border-radius:30px;border-radius:30px}#dynamic-to-top:hover{background:#4fd650;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 255, 255, 255, .2 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );cursor:pointer}#dynamic-to-top:active{background:#4c5055;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 0, 0, 0, .3 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) )}#dynamic-to-top,#dynamic-to-top:active,#dynamic-to-top:focus,#dynamic-to-top:hover{outline:none}#dynamic-to-top span{display:block;overflow:hidden;width:14px;height:12px;background:url( ../../wp-content/plugins/dynamic-to-top/css/images/up.png )no-repeat center center}</style><style type="text/css" id="custom-background-css">
+body.custom-background { background-image: url("../../wp-content/uploads/2014/10/escheresque_ste.png"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+		</head>
+
+<body class="home blog paged custom-background paged-4" itemscope="" itemtype="http://schema.org/WebPage">
+		<div id="page">
+	<div class="container">
+		<div class="row row-offcanvas row-offcanvas-left" style="background: #272727;">			
+			
+			<div id="secondary1" class="col-lg-t" style="background: #272727; display:none">
+								<header id="masthead1" class="site-headerex" role="banner">
+										<div class="hgroupex">
+						<h1 class="site-title display-title"><a href="../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+									</header>
+							</div>
+
+
+			<div id="secondary" class="col-lg-3" style="display:block">
+								<header id="masthead" class="site-header" role="banner">
+										<div class="hgroup">
+						<h1 class="site-title display-title"><a href="../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+					<button type="button" class="btn btn-link hidden-lg toggle-sidebar" data-toggle="offcanvas" aria-label="Sidebar"><i class="fa fa-gear"></i></button>
+					<button type="button" class="btn btn-link hidden-lg toggle-navigation" aria-label="Navigation Menu"><i class="fa fa-bars"></i></button>
+					<nav id="site-navigation" class="navigation main-navigation" role="navigation">
+						<ul id="menu-glavnoe-menyu" class="nav-menu"><li id="menu-item-2313" class="fa fa-home menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-home menu-item-has-children menu-item-2313"><a href="../../index.htm">Главная</a>
+<ul class="sub-menu">
+	<li id="menu-item-2363" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2363"><a href="../../category/osnovy-abap/index.htm">Основы ABAP</a>
+	<ul class="sub-menu">
+		<li id="menu-item-2906" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2906"><a href="../../category/osnovy-abap/oop/index.htm">ABAP Objects</a></li>
+		<li id="menu-item-2370" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2370"><a href="../../category/osnovy-abap/slovar/index.htm">ABAP Словарь</a></li>
+		<li id="menu-item-2367" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2367"><a href="../../category/osnovy-abap/files/index.htm">Работа с файлами</a></li>
+		<li id="menu-item-2364" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2364"><a href="../../category/osnovy-abap/sap-dynpro/index.htm">SAP Dynpro</a></li>
+		<li id="menu-item-6845" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6845"><a href="../../category/osnovy-abap/vnutrennie-tablicy/index.htm">Внутренние таблицы</a></li>
+		<li id="menu-item-6849" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6849"><a href="../../category/osnovy-abap/dinamicheskoe-programmirovanie/index.htm">Динамическое программирование</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2366" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2366"><a href="../../category/database-work/index.htm">Работа с БД</a>
+	<ul class="sub-menu">
+		<li id="menu-item-7303" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7303"><a href="../../category/hana/index.htm">HANA</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2368" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2368"><a href="../../category/network/index.htm">Сетевые технологии</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6328" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6328"><a href="../../category/network/ui5fiori/index.htm">UI5 &amp; Fiori</a></li>
+		<li id="menu-item-6327" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6327"><a href="../../category/network/odata-network/index.htm">OData</a></li>
+		<li id="menu-item-2907" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2907"><a href="../../category/network/web-dynpro/index.htm">Web Dynpro</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2369" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2369"><a href="../../category/enhancements/index.htm">Расширения</a></li>
+	<li id="menu-item-6329" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6329"><a href="../../category/abap-cloud/index.htm">ABAP Cloud</a></li>
+	<li id="menu-item-2365" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2365"><a href="../../category/others/index.htm">Прочее</a></li>
+</ul>
+</li>
+<li id="menu-item-3536" class="fa fa-bell menu-item menu-item-type-post_type menu-item-object-page menu-item-3536"><a href="../../abap-the-best-practice/index.htm">ABAP Best Practice</a></li>
+<li id="menu-item-3727" class="fa fa-child menu-item menu-item-type-post_type menu-item-object-page menu-item-3727"><a href="../../vakansii/index.htm">Вакансии ABAP</a></li>
+<li id="menu-item-3885" class="fa fa-bookmark menu-item menu-item-type-post_type menu-item-object-page menu-item-3885"><a href="../../abap-notes/index.htm">Быстрые заметки</a></li>
+<li id="menu-item-2316" class="fa fa-info-circle menu-item menu-item-type-post_type menu-item-object-page menu-item-2316"><a href="../../about/index.htm">Обо мне</a></li>
+</ul>					</nav>
+									</header>
+				
+				<div class="sidebar-offcanvas">
+<div id="main-sidebar" class="widget-area" role="complementary">
+											<aside id="search-2" class="widget widget_search">
+	<form method="get" id="searchform" action="https://abap-blog.ru/">
+		<label for="s" class="assistive-text">Поиск</label>
+		<input type="text" class="field" name="s" id="s" placeholder="Поиск">
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Поиск">
+	</form>
+					</aside>
+					<aside id="linkcat-2" class="widget widget_links">
+						<h3 class='widget-title'>Ссылки</h3>
+
+	<ul class='xoxo blogroll'>
+<li><a href="../../topics/abap.html" target="_blank">ABAP Community</a></li>
+<li><a href="../../wiki/display/ABAP/ABAP Development.html" title="Wiki по ABAP" target="_blank">ABAP Development Wiki</a></li>
+<li><a href="../../doc/abapdocu_latest_index_htm/latest/en-US/index.htm" title="Последняя версия справки по ABAP" target="_blank">ABAP Help</a></li>
+<li><a href="../../doc/abapdocu_cp_index_htm/CLOUD/en-US/index.htm" target="_blank">ABAP Help (Cloud)</a></li>
+<li><a href="../../learning-journeys/overview.html?role=Developer" target="_blank">Developer Learning Journeys</a></li>
+<li><a href="../../index-3.htm" target="_blank">Open Source Projects</a></li>
+<li><a href="../../tutorial-navigator.html" target="_blank">SAP Tutorials</a></li>
+<li><a href="https://t.me/abapblog" target="_blank"><img src="../../wp-content/uploads/2020/04/telegram-1.png" alt="Канал в Telegram"> Канал в Telegram</a></li>
+
+	</ul>
+					</aside>
+
+					<aside id="endo_wrc_widget-2" class="widget widget_endo_wrc_widget">
+						<h3 class='widget-title'>Цитаты</h3>
+<p>Чистый код прост и прямолинеен. Чистый код читается, как хорошо написанная проза. Чистый код никогда не затемняет намерения проектировщика; он полон четких абстракций и простых линий передачи управления.</p>
+<p><strong>Г. Буч</strong></p>
+					</aside>
+								<aside id="custom-post-type-recent-posts-3" class="widget widget_recent_entries">
+						<h3 class='widget-title'>Новое</h3>
+			<ul>
+													<li>
+										<a href="../../abap-notes/poluchenie-instancii-cl_gui_alv_grid-dlya-salv/index.htm">Получение инстанции cl_gui_alv_grid для SALV</a>
+											<span class="post-date">11.09.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-cloud/introduction-to-abap-in-the-cloud/index.htm">Introduction to ABAP in the Cloud</a>
+											<span class="post-date">18.08.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/getting-started-with-fpm-bopf-integration/index.htm">Getting Started with FPM BOPF Integration</a>
+											<span class="post-date">01.06.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/how-to-use-authority-checks-in-business-object-processing-framework/index.htm">30. How to Use Authority Checks in Business Object Processing Framework</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-extensibility/index.htm">29. BOPF Extensibility</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-enterprise-procurement-model-epm/index.htm">28. BOPF Enterprise Procurement Model (EPM)</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-integration/index.htm">27. BOPF Integration</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-business-configuration-objects/index.htm">26. BOPF Business Configuration Objects</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-performance/index.htm">25. BOPF Performance</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-supportability/index.htm">24. BOPF Supportability</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+							</ul>
+								</aside>
+					<aside id="decent_comments_widget-2" class="widget widget_decent_comments_widget">
+						<h3 class='widget-title'>Последние комментарии</h3>
+<div class="decent-comments"><ul><li><div class="comment"><span class="comment-author">Николай</span><span class="comment-date"> 27.10.2021 в 15:19</span><span class="comment-link"> на <a href="../../osnovy-abap/internal-table-as-data-source-select/index.htm#comment-17857">Внутренние таблицы как источник в SQL запросах</a></span><span class="comment-excerpt">Спасибо за статью. Если нужно сделать агрегацию внутренней таблицы то агрегация через передачу во временную таблицу на БД тоже будет работать медленней чем через loop/collect? Например таблица 100к записей, которая становится 5к после агрегации. </span></div></li><li><div class="comment"><span class="comment-author">Аноним</span><span class="comment-date"> 14.10.2021 в 13:50</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17856">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Так поведение Decorator не надо будет повторно описывать повторно в других Component. Но это возможно при изменении типа mo_component, например, на object. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 11.10.2021 в 06:50</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17854">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет:) Возможно, я не так выразил мысль. Я имел ввиду, какая ценность от класса Decorator, если можно декорировать поведение от Component и от него же наследовать конкретные декораторы? (см. первую UML диаграмму) </span></div></li><li><div class="comment"><span class="comment-author">Astrafox</span><span class="comment-date"> 10.10.2021 в 12:39</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17853">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет! Можно и так, однако конкретный компонент может иметь более широкий интерфейс, нежели тот, что нужен в декораторах. Тут скорее пример не совсем удачный, декорируемое поведение лучше вынести в отдельный интерфейс, реализуемый как компонентом, так и декораторами. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 04.10.2021 в 12:51</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17850">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">А какую роль играет базовый класс декоратора lcl_decorator? Что мешает конкретные декораторы наследовать от компонента lcl_concrete_component? Клиентский код и логика выполнения не поменяется. </span></div></li></ul></div>					</aside>
+											</div>
+				</div>
+			</div>
+
+						<div id="primary" class="content-area col-lg-9" itemprop="mainContentOfPage" style="">
+						<div id="content" class="site-content" role="main">
+		
+						<article itemscope="" itemtype="http://schema.org/Article" id="post-6194" class="post-6194 post type-post status-publish format-standard hentry category-osnovy-abap">
+	<header class="entry-header">
+		<h2 class="entry-title" itemprop="name">
+			<a itemprop="url" href="../../osnovy-abap/abap-platform-1909-developer-edition/index.htm" title="Постоянная ссылка: ABAP Platform 1909 &#8212; Developer Edition" rel="bookmark">ABAP Platform 1909 &#8212; Developer Edition</a>
+		</h2>
+							<div class="entry-meta"><span class="entry-date"><a href="../../osnovy-abap/abap-platform-1909-developer-edition/index.htm" rel="bookmark"><time class="entry-date published" datetime="2021-02-16T09:27:16+04:00" itemprop="datepublished">16.02.2021</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="../../osnovy-abap/abap-platform-1909-developer-edition/index.htm#respond" itemprop="discussionUrl">Нет комментариев</a></span></div>
+			</header>
+								<div class="entry-content" itemprop="articleBody">
+						<p>На DockerHub <a href="../../_/sap-abap-trial.html">выложили</a> Trial версию <strong>ABAP Platform</strong> <strong>1909 (СУБД HANA 2.0) </strong><a href="../../_/sap-abap-trial/plans/ac8a4f9b-ae29-4afa-9b39-25aeea24b821.html?tab=instructions">c инструкцией по установке и запуску</a>. Более подробно про эту новость и особенности данной версии <a href="../../2021/02/15/sap-abap-platform-1909-developer-edition-available-soon/index.htm">здесь</a>.</p>
+<p>Для установки требуется:</p>
+<ul>
+<li>Около 170Гб на жёстком диске</li>
+<li>16Гб оперативной памяти под контейнер.</li>
+</ul>
+<p>Доп. инструкции:</p>
+<ul>
+<li><a href="../../2021/02/20/sap-abap-platform-1909-developer-edition-wrapuptips-of-installation-on-windows-10/index.htm">Установка на локальный Windows 10</a></li>
+<li><a href="../../2021/02/22/installing-sap-abap-platform-1909-developer-edition-on-a-hobby-server-in-the-cloud-two-options/index.htm">Установка в облаке</a></li>
+<li><a href="../../2021/02/22/install-abap-platform-developer-edition-1909-using-vm-and-suse/index.htm">Установка на виртуальную машину</a></li>
+<li><a href="../../2021/02/23/sap-abap-platform-1909-developer-edition-wsl2-memory-cpu-hogging-tip/index.htm">Ограничение потребления памяти и CPU в Docker</a></li>
+</ul>
+<p><a href="../../wp-content/uploads/2021/02/s4h.png" data-slb-active="1" data-slb-asset="1089748441" data-slb-internal="0" data-slb-group="6194"><img loading="lazy" class="alignnone size-full wp-image-6208" src="../../wp-content/uploads/2021/02/s4h.png" alt="" width="563" height="291" srcset="../../wp-content/uploads/2021/02/s4h.png 563w, ../../wp-content/uploads/2021/02/s4h-300x155.png 300w" sizes="(max-width: 563px) 100vw, 563px"></a></p>
+								</div>
+			</article>
+					<article itemscope="" itemtype="http://schema.org/Article" id="post-6183" class="post-6183 post type-post status-publish format-standard hentry category-osnovy-abap">
+	<header class="entry-header">
+		<h2 class="entry-title" itemprop="name">
+			<a itemprop="url" href="../../osnovy-abap/abap-restful-application-programming-model/index.htm" title="Постоянная ссылка: Введение в ABAP RESTful Application Programming Model" rel="bookmark">Введение в ABAP RESTful Application Programming Model</a>
+		</h2>
+							<div class="entry-meta"><span class="entry-date"><a href="../../osnovy-abap/abap-restful-application-programming-model/index.htm" rel="bookmark"><time class="entry-date published" datetime="2021-02-10T23:04:33+04:00" itemprop="datepublished">10.02.2021</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="../../osnovy-abap/abap-restful-application-programming-model/index.htm#respond" itemprop="discussionUrl">Нет комментариев</a></span></div>
+			</header>
+								<div class="entry-content" itemprop="articleBody">
+						<div class="arve" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-i-hi6aqz2we618a08a8bd4c8344903540" style="max-width:720px;" itemscope="" itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/i-HI6AQZ2WE?list=PLKSPsENL3CxzRehaCAyH_K0yHM8KwLrDz&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" class="arve-iframe fitvidsignore" data-arve="arve-youtube-i-hi6aqz2we618a08a8bd4c8344903540" data-src-no-ap="https://www.youtube-nocookie.com/embed/i-HI6AQZ2WE?list=PLKSPsENL3CxzRehaCAyH_K0yHM8KwLrDz&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="405" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="../../embed/i-HI6AQZ2WE.html?list=PLKSPsENL3CxzRehaCAyH_K0yHM8KwLrDz&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="720"></iframe>
+
+</span>
+
+</span>
+
+</div>
+
+								</div>
+			</article>
+					<article itemscope="" itemtype="http://schema.org/Article" id="post-5807" class="post-5807 post type-post status-publish format-standard hentry category-osnovy-abap">
+	<header class="entry-header">
+		<h2 class="entry-title" itemprop="name">
+			<a itemprop="url" href="../../osnovy-abap/abap-platform-dlya-sap-s-4hana-2020/index.htm" title="Постоянная ссылка: ABAP Platform для SAP S/4HANA 2020" rel="bookmark">ABAP Platform для SAP S/4HANA 2020</a>
+		</h2>
+							<div class="entry-meta"><span class="entry-date"><a href="../../osnovy-abap/abap-platform-dlya-sap-s-4hana-2020/index.htm" rel="bookmark"><time class="entry-date published" datetime="2020-12-06T13:38:54+04:00" itemprop="datepublished">06.12.2020</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="../../osnovy-abap/abap-platform-dlya-sap-s-4hana-2020/index.htm#respond" itemprop="discussionUrl">Нет комментариев</a></span></div>
+			</header>
+								<div class="entry-content" itemprop="articleBody">
+						<p>SAP представила новую версию <a href="../../2020/11/30/abap-platform-for-sap-s-4hana-2020/index.htm?utm_source=dlvr.it&amp;utm_medium=twitter">ABAP Platform для S/4 HANA 2020</a>, основные нововведения описаны <a href="https://help.sap.com/doc/34796706f38646f68d51a0fa0d4636e4/100/en-US/2d00eb02542547dca636bd7f3ea1b917.html">тут</a> и в презентации:</p>
+<p style="text-align: left;"><input type='hidden' bg_collapse_expand='618a08a8be29f2062711070' value='618a08a8be29f2062711070'><input type='hidden' id='bg-show-more-text-618a08a8be29f2062711070' value='Product Highlights'><input type='hidden' id='bg-show-less-text-618a08a8be29f2062711070' value='Скрыть'><button id='bg-showmore-action-618a08a8be29f2062711070' class='bg-showmore-plg-button bg-orange-button  ' style=" color:#4a4949;">Product Highlights</button><div id='bg-showmore-hidden-618a08a8be29f2062711070'>		<style>
+                    </style>
+        	    <div id="h5vp618a08a8be83c" class="pdfp_wrapper">
+                        <div class="cta_wrapper">
+                	            <p><a href="../../wp-content/plugins/pdf-poster/pdfjs/web/viewer.php-44.html?file=https://abap-blog.ru/wp-content/uploads/2020/04/ABAP-Platform-in-SAP-S_4HANA-2020-Overview-and-Product-Highlights.pdf&#038;download=true&#038;print=&#038;openfile=false"><button>View Fullscreen</button></a></p>
+            </div>
+            <div class="iframe_wrapper">
+                <iframe loading="lazy" width="100%" height="1122px" src="../../wp-content/plugins/pdf-poster/pdfjs/web/viewer.php-44.html?file=https://abap-blog.ru/wp-content/uploads/2020/04/ABAP-Platform-in-SAP-S_4HANA-2020-Overview-and-Product-Highlights.pdf&#038;download=true&#038;print=&#038;openfile=false"></iframe>
+            </div>
+	    </div>
+        </div>
+								</div>
+			</article>
+					<article itemscope="" itemtype="http://schema.org/Article" id="post-5770" class="post-5770 post type-post status-publish format-standard hentry category-osnovy-abap">
+	<header class="entry-header">
+		<h2 class="entry-title" itemprop="name">
+			<a itemprop="url" href="../../osnovy-abap/netweaver-abap-v-docker-kontejnere/index.htm" title="Постоянная ссылка: Установка NW ABAP в Docker" rel="bookmark">Установка NW ABAP в Docker</a>
+		</h2>
+							<div class="entry-meta"><span class="entry-date"><a href="../../osnovy-abap/netweaver-abap-v-docker-kontejnere/index.htm" rel="bookmark"><time class="entry-date published" datetime="2020-12-01T17:46:43+04:00" itemprop="datepublished">01.12.2020</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="../../osnovy-abap/netweaver-abap-v-docker-kontejnere/index.htm#respond" itemprop="discussionUrl">Нет комментариев</a></span></div>
+			</header>
+								<div class="entry-content" itemprop="articleBody">
+						<div class="arve" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-fl4xkwb617w618a08a8c15e0928695681" style="max-width:720px;" itemscope="" itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/fL4XkwB617w?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" class="arve-iframe fitvidsignore" data-arve="arve-youtube-fl4xkwb617w618a08a8c15e0928695681" data-src-no-ap="https://www.youtube-nocookie.com/embed/fL4XkwB617w?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="405" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="../../embed/fL4XkwB617w.html?feature=oembed&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="720"></iframe>
+
+</span>
+
+</span>
+
+</div>
+
+<p>Установить на локальную машину триальный ABAP Netweaver становится все проще.  В видео рассматривается довольно простая инструкция по установке. По скорости работы Netweaver в Docker существенно выигрывает относительно варианта с виртуальной машиной (Относительно сравнения VirtualBox и Docker на <a href="../../ru-ru/windows/wsl/install.html">WSL2</a>). Из недостатков разве что большее потребление места на жёстком диске.</p>
+<p>UPD. Обратите внимание на доступность <a href="../../osnovy-abap/abap-platform-1909-developer-edition/index.htm">нового образа</a>.</p>
+								</div>
+			</article>
+					<article itemscope="" itemtype="http://schema.org/Article" id="post-5730" class="post-5730 post type-post status-publish format-standard hentry category-database-work">
+	<header class="entry-header">
+		<h2 class="entry-title" itemprop="name">
+			<a itemprop="url" href="../../database-work/a-first-step-towards-sap-hana-query-optimization/index.htm" title="Постоянная ссылка: A First Step Towards SAP HANA Query Optimization" rel="bookmark">A First Step Towards SAP HANA Query Optimization</a>
+		</h2>
+							<div class="entry-meta"><span class="entry-date"><a href="../../database-work/a-first-step-towards-sap-hana-query-optimization/index.htm" rel="bookmark"><time class="entry-date published" datetime="2020-11-28T15:14:00+04:00" itemprop="datepublished">28.11.2020</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="../../database-work/a-first-step-towards-sap-hana-query-optimization/index.htm#respond" itemprop="discussionUrl">Нет комментариев</a></span></div>
+			</header>
+								<div class="entry-content" itemprop="articleBody">
+						<p>На OpenSAP сейчас проходит весьма интересный <a href="../../courses/hanasql1/index.htm">курс</a> посвящённый анализу выполнения SQL запросов и их оптимизации в СУБД HANA.</p>
+								</div>
+			</article>
+					<article itemscope="" itemtype="http://schema.org/Article" id="post-5638" class="post-5638 post type-post status-publish format-standard hentry category-osnovy-abap">
+	<header class="entry-header">
+		<h2 class="entry-title" itemprop="name">
+			<a itemprop="url" href="../../osnovy-abap/besplatnyj-dostup-k-sap-learning-hub-event-edition/index.htm" title="Постоянная ссылка: Бесплатный доступ к SAP Learning Hub: Event Edition" rel="bookmark">Бесплатный доступ к SAP Learning Hub: Event Edition</a>
+		</h2>
+							<div class="entry-meta"><span class="entry-date"><a href="../../osnovy-abap/besplatnyj-dostup-k-sap-learning-hub-event-edition/index.htm" rel="bookmark"><time class="entry-date published" datetime="2020-11-20T22:19:09+04:00" itemprop="datepublished">20.11.2020</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="../../osnovy-abap/besplatnyj-dostup-k-sap-learning-hub-event-edition/index.htm#respond" itemprop="discussionUrl">Нет комментариев</a></span></div>
+			</header>
+								<div class="entry-content" itemprop="articleBody">
+						<p>Для всех кто зарегистрируется на TechEd 2020, будет доступно специальное предложение по бесплатному доступу к<a href="../../teched.html"> SAP Learning Hub: Event Edition</a>.</p>
+<p>Подробнее по <a href="../../2020/11/19/sap-learning-hub-event-edition-for-sap-teched-in-2020-guide/index.htm">ссылке</a>.</p>
+								</div>
+			</article>
+					<article itemscope="" itemtype="http://schema.org/Article" id="post-5610" class="post-5610 post type-post status-publish format-standard hentry category-abap-cloud category-osnovy-abap">
+	<header class="entry-header">
+		<h2 class="entry-title" itemprop="name">
+			<a itemprop="url" href="../../osnovy-abap/interesnye-sessii-teched-2020/index.htm" title="Постоянная ссылка: Интересные сессии TechEd 2020" rel="bookmark">Интересные сессии TechEd 2020</a>
+		</h2>
+							<div class="entry-meta"><span class="entry-date"><a href="../../osnovy-abap/interesnye-sessii-teched-2020/index.htm" rel="bookmark"><time class="entry-date published" datetime="2020-11-17T22:53:03+04:00" itemprop="datepublished">17.11.2020</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="../../osnovy-abap/interesnye-sessii-teched-2020/index.htm#respond" itemprop="discussionUrl">Нет комментариев</a></span></div>
+			</header>
+								<div class="entry-content" itemprop="articleBody">
+						<p>На TechEd 2020 ожидается довольно много <a href="../../2020/11/18/abap-platform-sessions-at-sap-teched-2020/index.htm">сессий посвященных ABAP</a> разработке и будущему ABAP платформы, наиболее интересные из них:</p>
+<ul>
+<li><a href="../../widget/sap/sapteched2020/Catalog.html?search=DEV825" target="_blank" rel="noopener noreferrer">DEV825 Road Map: ABAP</a> &#8212; Будут обозначены основные направления в развитии языка и его окружения.</li>
+<li><a href="../../widget/sap/sapteched2020/Catalog-1.html?search=DEV260" target="_blank" rel="noopener noreferrer">DEV260 Build SAP Fiori Apps with the ABAP RESTful Application Programming Model</a> &#8212; RAP &#8212; фреймворк, заменяющий BOPF, способствующий более ускоренному и простому созданию Backend Odata (и не только Odata) сервисов.</li>
+<li><a href="../../widget/sap/sapteched2020/Catalog-2.html?search=DEV102" target="_blank" rel="noopener noreferrer">DEV102  Major Updates on ABAP RESTful Application Programming Model</a> &#8212; обзорная сессия посвящённая нововведениям в RAP.</li>
+<li><a href="../../widget/sap/sapteched2020/Catalog-3.html?search=DEV300" target="_blank" rel="noopener noreferrer">DEV300 SAP Cloud Platform, ABAP Environment: Overview</a> &#8212; Обзор ABAP Cloud Environment (aka Steampunk).</li>
+<li><a href="../../widget/sap/sapteched2020/Catalog-4.html?search=DEV208" target="_blank" rel="noopener noreferrer">DEV208 DevOps for ABAP? Try the Git-Enabled Change and Transport System</a> &#8212; Возможно одна из самых интересных сессий, Git в мире ABAP разработки набирает обороты, любопытно посмотреть каким образом SAP планирует интегрировать Git и существующую систему контроля версий CTS.</li>
+</ul>
+								</div>
+			</article>
+					<article itemscope="" itemtype="http://schema.org/Article" id="post-5608" class="post-5608 post type-post status-publish format-standard hentry category-abap-cloud">
+	<header class="entry-header">
+		<h2 class="entry-title" itemprop="name">
+			<a itemprop="url" href="../../abap-cloud/nastrojka-business-application-studio-v-trial-akkaunte/index.htm" title="Постоянная ссылка: Настройка Business Application Studio в Trial аккаунте SAP Cloud" rel="bookmark">Настройка Business Application Studio в Trial аккаунте SAP Cloud</a>
+		</h2>
+							<div class="entry-meta"><span class="entry-date"><a href="../../abap-cloud/nastrojka-business-application-studio-v-trial-akkaunte/index.htm" rel="bookmark"><time class="entry-date published" datetime="2020-11-17T22:36:10+04:00" itemprop="datepublished">17.11.2020</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="../../abap-cloud/nastrojka-business-application-studio-v-trial-akkaunte/index.htm#respond" itemprop="discussionUrl">Нет комментариев</a></span></div>
+			</header>
+								<div class="entry-content" itemprop="articleBody">
+						<p>SAP Business Application Studio &#8212; является заменой устаревшей на текущей момент Web IDE для разработки Fiori приложений. В видео демонстрируются подготовительные действия для доступа к BAS.</p>
+<div class="arve" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-ww6z4anyriw618a08a8c6975172949999" style="max-width:720px;" itemscope="" itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/WW6z4AnYriw?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" class="arve-iframe fitvidsignore" data-arve="arve-youtube-ww6z4anyriw618a08a8c6975172949999" data-src-no-ap="https://www.youtube-nocookie.com/embed/WW6z4AnYriw?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="405" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="../../embed/WW6z4AnYriw.html?feature=oembed&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="720"></iframe>
+
+</span>
+
+</span>
+
+</div>
+
+								</div>
+			</article>
+					<article itemscope="" itemtype="http://schema.org/Article" id="post-5606" class="post-5606 post type-post status-publish format-standard hentry category-abap-cloud">
+	<header class="entry-header">
+		<h2 class="entry-title" itemprop="name">
+			<a itemprop="url" href="../../abap-cloud/sozdanie-trial-akkaunta-s-dostupom-do-365-dnej/index.htm" title="Постоянная ссылка: Создание Trial аккаунта в SAP Cloud с доступом до 365 дней" rel="bookmark">Создание Trial аккаунта в SAP Cloud с доступом до 365 дней</a>
+		</h2>
+							<div class="entry-meta"><span class="entry-date"><a href="../../abap-cloud/sozdanie-trial-akkaunta-s-dostupom-do-365-dnej/index.htm" rel="bookmark"><time class="entry-date published" datetime="2020-11-17T22:33:42+04:00" itemprop="datepublished">17.11.2020</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="../../abap-cloud/sozdanie-trial-akkaunta-s-dostupom-do-365-dnej/index.htm#respond" itemprop="discussionUrl">Нет комментариев</a></span></div>
+			</header>
+								<div class="entry-content" itemprop="articleBody">
+						<p>В рамках предстоящего TechEd 2020 SAP анонсирует возможность продления триального доступа к их облаку вплоть до 365 дней. Каждые 30 дней необходимо будет продлевать этот доступ. После 365 дней аккаунт будет удалён автоматически.</p>
+<div class="arve" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-n5lusqkyvqq618a08a8c996e302904045" style="max-width:720px;" itemscope="" itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/n5luSQKYvQQ?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" class="arve-iframe fitvidsignore" data-arve="arve-youtube-n5lusqkyvqq618a08a8c996e302904045" data-src-no-ap="https://www.youtube-nocookie.com/embed/n5luSQKYvQQ?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="405" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="../../embed/n5luSQKYvQQ.html?feature=oembed&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="720"></iframe>
+
+</span>
+
+</span>
+
+</div>
+
+								</div>
+			</article>
+					<article itemscope="" itemtype="http://schema.org/Article" id="post-5489" class="post-5489 post type-post status-publish format-standard hentry category-others">
+	<header class="entry-header">
+		<h2 class="entry-title" itemprop="name">
+			<a itemprop="url" href="../../others/teched-2020/index.htm" title="Постоянная ссылка: TechEd 2020" rel="bookmark">TechEd 2020</a>
+		</h2>
+							<div class="entry-meta"><span class="entry-date"><a href="../../others/teched-2020/index.htm" rel="bookmark"><time class="entry-date published" datetime="2020-11-10T01:20:00+04:00" itemprop="datepublished">10.11.2020</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="../../others/teched-2020/index.htm#respond" itemprop="discussionUrl">Нет комментариев</a></span></div>
+			</header>
+								<div class="entry-content" itemprop="articleBody">
+						<p><a href="../../sap/sapteched2020/index.html">Открылась регистрация</a> на TechEd 2020, в этом году мероприятие будет онлайн и бесплатным.</p>
+<div class="arve" data-mode="normal" data-oembed="1" data-provider="vimeo" id="arve-vimeo-472303838618a08a8cbffd712353684" style="max-width:720px;" itemscope="" itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://player.vimeo.com/video/472303838?dnt=1&amp;app_id=122963&amp;html5=1&amp;title=1&amp;byline=0&amp;portrait=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" class="arve-iframe fitvidsignore" data-arve="arve-vimeo-472303838618a08a8cbffd712353684" data-src-no-ap="https://player.vimeo.com/video/472303838?dnt=1&amp;app_id=122963&amp;html5=1&amp;title=1&amp;byline=0&amp;portrait=0&amp;autoplay=0" frameborder="0" height="405" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox allow-forms" scrolling="no" src="../../video/472303838.html?dnt=1&#038;app_id=122963&#038;html5=1&#038;title=1&#038;byline=0&#038;portrait=0&#038;autoplay=0" width="720"></iframe>
+
+</span>
+
+</span>
+
+</div>
+
+								</div>
+			</article>
+				
+	<nav class="navigation pagination" role="navigation" aria-label="Записи">
+		<h2 class="screen-reader-text">Навигация по записям</h2>
+		<div class="nav-links"><a class="prev page-numbers" href="../3/index.htm"><i class="fa fa-chevron-left"></i></a>
+<a class="page-numbers" href="../../index.htm">1</a>
+<span class="page-numbers dots">&hellip;</span>
+<a class="page-numbers" href="../3/index.htm">3</a>
+<span aria-current="page" class="page-numbers current">4</span>
+<a class="page-numbers" href="../5/index.htm">5</a>
+<span class="page-numbers dots">&hellip;</span>
+<a class="page-numbers" href="../26/index.htm">26</a>
+<a class="next page-numbers" href="../5/index.htm"><i class="fa fa-chevron-right"></i></a></div>
+	</nav>	
+			</div>
+								</div>
+					</div>
+	</div>
+</div>
+<link rel='stylesheet' id='pdfp-public-css' href='../../wp-content/plugins/pdf-poster/dist/public.css?ver=2.0.5' media='all'>
+<script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"api":{"root":"https:\/\/abap-blog.ru\/wp-json\/","namespace":"contact-form-7\/v1"}};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.5.1' id='contact-form-7-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect.min.js?ver=1.12.1' id='jquery-effects-core-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-slide.min.js?ver=1.12.1' id='jquery-effects-slide-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-highlight.min.js?ver=1.12.1' id='jquery-effects-highlight-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-fold.min.js?ver=1.12.1' id='jquery-effects-fold-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-blind.min.js?ver=1.12.1' id='jquery-effects-blind-js'></script>
+<script type='text/javascript' id='bg-show-hide-script-js-extra'>
+/* <![CDATA[ */
+var BG_SHCE_USE_EFFECTS = ["0"];
+var BG_SHCE_TOGGLE_SPEED = ["400"];
+var BG_SHCE_TOGGLE_OPTIONS = ["none"];
+var BG_SHCE_TOGGLE_EFFECT = ["blind"];
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/show-hidecollapse-expand/assets/js/bg-show-hide.js?ver=5.8.1' id='bg-show-hide-script-js'></script>
+<script src='../../wp-content/plugins/dynamic-to-top/js/libs/jquery.easing.js?ver=1.3' id='jquery-easing-js'></script>
+<script type='text/javascript' id='dynamic-to-top-js-extra'>
+/* <![CDATA[ */
+var mv_dynamic_to_top = {"text":"To Top","version":"0","min":"300","speed":"1100","easing":"easeInExpo","margin":"20"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/dynamic-to-top/js/dynamic.to.top.min.js?ver=3.5' id='dynamic-to-top-js'></script>
+<script src='../../recaptcha/api.js?render=6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC&#038;ver=3.0' id='google-recaptcha-js'></script>
+<script type='text/javascript' id='wpcf7-recaptcha-js-extra'>
+/* <![CDATA[ */
+var wpcf7_recaptcha = {"sitekey":"6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC","actions":{"homepage":"homepage","contactform":"contactform"}};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.5.1' id='wpcf7-recaptcha-js'></script>
+<script src='../../wp-includes/js/wp-embed.min.js?ver=5.8.1' id='wp-embed-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/client/js/prod/lib.core.js?ver=2.8.1' id='slb_core-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/client/js/prod/lib.view.js?ver=2.8.1' id='slb_view-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/themes/baseline/js/prod/client.js?ver=2.8.1' id='slb-asset-slb_baseline-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/themes/default/js/prod/client.js?ver=2.8.1' id='slb-asset-slb_default-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/template-tags/item/js/prod/tag.item.js?ver=2.8.1' id='slb-asset-item-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/template-tags/ui/js/prod/tag.ui.js?ver=2.8.1' id='slb-asset-ui-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/content-handlers/image/js/prod/handler.image.js?ver=2.8.1' id='slb-asset-image-base-js'></script>
+<script type="text/javascript" id="slb_footer">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB && SLB.has_child('View.init') ) { SLB.View.init({"ui_autofit":true,"ui_animate":true,"slideshow_autostart":false,"slideshow_duration":"6","group_loop":true,"ui_overlay_opacity":"0.8","ui_title_default":false,"theme_default":"slb_default","ui_labels":{"loading":"\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430","close":"\u0417\u0430\u043a\u0440\u044b\u0442\u044c","nav_next":"\u0412\u043f\u0435\u0440\u0435\u0434","nav_prev":"\u041d\u0430\u0437\u0430\u0434","slideshow_start":"\u0417\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0441\u043b\u0430\u0439\u0434\u0448\u043e\u0443","slideshow_stop":"\u041e\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c \u0441\u043b\u0430\u0439\u0434\u0448\u043e\u0443","group_status":"\u0418\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435 %current%  \u0438\u0437 %total%"}}); }
+if ( !!window.SLB && SLB.has_child('View.assets') ) { {$.extend(SLB.View.assets, {"1089748441":{"id":6208,"type":"image","internal":true,"source":"https:\/\/abap-blog.ru\/wp-content\/uploads\/2021\/02\/s4h.png","title":"s4h","caption":"","description":""}});} }
+/* THM */
+if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_baseline',{"name":"\u0411\u0430\u0437\u043e\u0432\u0430\u044f \u043b\u0438\u043d\u0438\u044f","parent":"","styles":[{"handle":"base","uri":"https:\/\/abap-blog.ru\/wp-content\/plugins\/simple-lightbox\/themes\/baseline\/css\/style.css","deps":[]}],"layout_raw":"<div class=\"slb_container\"><div class=\"slb_content\">{{item.content}}<div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><div class=\"slb_controls\"><span class=\"slb_close\">{{ui.close}}<\/span><span class=\"slb_slideshow\">{{ui.slideshow_control}}<\/span><\/div><div class=\"slb_loading\">{{ui.loading}}<\/div><\/div><div class=\"slb_details\"><div class=\"inner\"><div class=\"slb_data\"><div class=\"slb_data_content\"><span class=\"slb_data_title\">{{item.title}}<\/span><span class=\"slb_group_status\">{{ui.group_status}}<\/span><div class=\"slb_data_desc\">{{item.description}}<\/div><\/div><\/div><div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><\/div><\/div><\/div>"}); }if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_default',{"name":"\u041f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e (\u0441\u0432\u0435\u0442\u043b\u044b\u0439)","parent":"slb_baseline","styles":[{"handle":"base","uri":"https:\/\/abap-blog.ru\/wp-content\/plugins\/simple-lightbox\/themes\/default\/css\/style.css","deps":[]}]}); }})})(jQuery);}/* ]]> */</script>
+<script type="text/javascript" id="slb_context">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB ) { {$.extend(SLB, {"context":["public","user_guest"]});} }})})(jQuery);}/* ]]> */</script>
+</body>
+</html>

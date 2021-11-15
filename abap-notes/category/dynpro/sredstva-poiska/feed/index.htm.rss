@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Средства поиска | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/dynpro/sredstva-poiska/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sun, 22 Nov 2020 16:13:30 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Диалог ведения диапазонов</title>
+		<link>https://abap-blog.ru/abap-notes/dialog-vedeniya-diapazonov/</link>
+					<comments>https://abap-blog.ru/abap-notes/dialog-vedeniya-diapazonov/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 16:13:30 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5665</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dd7d47e8808567274/] Или так: [crayon-618a1dd7d47f7164317400/] Результат:</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/dialog-vedeniya-diapazonov/">Диалог ведения диапазонов</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lt_carrid TYPE RANGE OF s_carrid.
+
+CALL FUNCTION 'COMPLEX_SELECTIONS_DIALOG'
+  EXPORTING
+    title             = 'Заголовок'
+    text              = 'Номер материала'
+  TABLES
+    range             = lt_carrid
+  EXCEPTIONS
+    no_range_tab      = 1
+    cancelled         = 2
+    internal_error    = 3
+    invalid_fieldname = 4
+    OTHERS            = 5.
+
+IF sy-subrc = 0.
+  cl_demo_output=&gt;display( lt_carrid ).
+ENDIF.</pre><p>Или так:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA(lv_tab_field) = VALUE rstabfield( tablename = 'SCARR' fieldname = 'CARRID' ).
+
+DATA: rg_test TYPE RANGE OF scarr-carrid.
+
+CALL FUNCTION 'COMPLEX_SELECTIONS_DIALOG'
+  EXPORTING
+    title             = 'Заголовок'
+    text              = 'Номер авиакомпании'
+    tab_and_field     = lv_tab_field
+    help_field        = 'SCARR-CARRID'
+  TABLES
+    range             = rg_test
+  EXCEPTIONS
+    no_range_tab      = 1
+    cancelled         = 2
+    internal_error    = 3
+    invalid_fieldname = 4
+    OTHERS            = 5.
+
+IF sy-subrc = 0.
+  cl_demo_output=&gt;display( rg_test ).
+ENDIF.</pre><p>Результат:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/11/complexdialog.png"><img loading="lazy" class="alignnone size-full wp-image-5666" src="https://abap-blog.ru/wp-content/uploads/2020/11/complexdialog.png" alt="" width="656" height="382" srcset="https://abap-blog.ru/wp-content/uploads/2020/11/complexdialog.png 656w, https://abap-blog.ru/wp-content/uploads/2020/11/complexdialog-300x175.png 300w" sizes="(max-width: 656px) 100vw, 656px" /></a></p><p>The post <a href="https://abap-blog.ru/abap-notes/dialog-vedeniya-diapazonov/">Диалог ведения диапазонов</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/dialog-vedeniya-diapazonov/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>СП для выбора месяца</title>
+		<link>https://abap-blog.ru/abap-notes/sp-dlya-vybora-mesyaca/</link>
+					<comments>https://abap-blog.ru/abap-notes/sp-dlya-vybora-mesyaca/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 12 Apr 2020 08:13:14 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4051</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dd7d5229530453237/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/sp-dlya-vybora-mesyaca/">СП для выбора месяца</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2020/04/f4month.png"><img loading="lazy" class="alignnone size-full wp-image-4052" src="https://abap-blog.ru/wp-content/uploads/2020/04/f4month.png" alt="" width="199" height="132" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS:
+  p_month LIKE isellist-month.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_month.
+  CALL FUNCTION 'POPUP_TO_SELECT_MONTH'
+    EXPORTING
+      actual_month               = sy-datum(6)
+      factory_calendar           = ' '
+      holiday_calendar           = ' '
+      language                   = sy-langu
+      start_column               = 8
+      start_row                  = 5
+    IMPORTING
+      selected_month             = p_month
+    EXCEPTIONS
+      OTHERS                     = 0.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/sp-dlya-vybora-mesyaca/">СП для выбора месяца</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/sp-dlya-vybora-mesyaca/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>СП к файлу на сервере приложений/представления</title>
+		<link>https://abap-blog.ru/abap-notes/sp-k-fajlu-na-servere-prilozhenij-predstavleniya/</link>
+					<comments>https://abap-blog.ru/abap-notes/sp-k-fajlu-na-servere-prilozhenij-predstavleniya/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 12 Apr 2020 08:04:28 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4047</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dd7d53ff422492497/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/sp-k-fajlu-na-servere-prilozhenij-predstavleniya/">СП к файлу на сервере приложений/представления</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2020/04/f4app.png"><img loading="lazy" class="alignnone size-full wp-image-4048" src="https://abap-blog.ru/wp-content/uploads/2020/04/f4app.png" alt="" width="711" height="315" srcset="https://abap-blog.ru/wp-content/uploads/2020/04/f4app.png 711w, https://abap-blog.ru/wp-content/uploads/2020/04/f4app-300x133.png 300w" sizes="(max-width: 711px) 100vw, 711px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS:
+  p_file TYPE dxfields-longpath.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.
+  CALL FUNCTION 'F4_DXFILENAME_TOPRECURSION'
+    EXPORTING
+      i_location_flag       = 'A' " P - Presentation server
+      i_server              = ' '
+      i_path                = ''
+    IMPORTING
+      o_path                = p_file
+    EXCEPTIONS
+      communication_failure = 1
+      system_failure        = 2
+      rfc_error             = 3.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/sp-k-fajlu-na-servere-prilozhenij-predstavleniya/">СП к файлу на сервере приложений/представления</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/sp-k-fajlu-na-servere-prilozhenij-predstavleniya/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>СП к дате с производственным календарём</title>
+		<link>https://abap-blog.ru/abap-notes/sp-k-date-s-proizvodstvennym-kalendaryom/</link>
+					<comments>https://abap-blog.ru/abap-notes/sp-k-date-s-proizvodstvennym-kalendaryom/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 12 Apr 2020 07:55:18 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4044</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dd7d55d0946522943/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/sp-k-date-s-proizvodstvennym-kalendaryom/">СП к дате с производственным календарём</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2020/04/f4date.png"><img loading="lazy" class="alignnone size-full wp-image-4045" src="https://abap-blog.ru/wp-content/uploads/2020/04/f4date.png" alt="" width="354" height="369" srcset="https://abap-blog.ru/wp-content/uploads/2020/04/f4date.png 354w, https://abap-blog.ru/wp-content/uploads/2020/04/f4date-288x300.png 288w" sizes="(max-width: 354px) 100vw, 354px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS p_date TYPE workflds-gkday.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_date.
+  CALL FUNCTION 'F4_DATE'
+    EXPORTING
+      date_for_first_month = sy-datum
+      factory_calendar_id  = 'RU'
+    IMPORTING
+      select_date          = p_date
+    EXCEPTIONS
+      OTHERS               = 0.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/sp-k-date-s-proizvodstvennym-kalendaryom/">СП к дате с производственным календарём</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/sp-k-date-s-proizvodstvennym-kalendaryom/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Логика определения СП к экранным полям</title>
+		<link>https://abap-blog.ru/abap-notes/logika-opredeleniya-sp-k-ekrannym-polyam/</link>
+					<comments>https://abap-blog.ru/abap-notes/logika-opredeleniya-sp-k-ekrannym-polyam/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 05 Apr 2020 10:28:47 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=3960</guid>
+
+					<description><![CDATA[<p>Стандартный алгоритм определения СП к полю на экране:</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/logika-opredeleniya-sp-k-ekrannym-polyam/">Логика определения СП к экранным полям</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Стандартный алгоритм определения СП к полю на экране:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/04/search_help_determination-1.png"><img loading="lazy" class="wp-image-3964 aligncenter" src="https://abap-blog.ru/wp-content/uploads/2020/04/search_help_determination-1.png" alt="" width="650" height="427" srcset="https://abap-blog.ru/wp-content/uploads/2020/04/search_help_determination-1.png 863w, https://abap-blog.ru/wp-content/uploads/2020/04/search_help_determination-1-300x197.png 300w, https://abap-blog.ru/wp-content/uploads/2020/04/search_help_determination-1-768x505.png 768w" sizes="(max-width: 650px) 100vw, 650px" /></a></p><p>The post <a href="https://abap-blog.ru/abap-notes/logika-opredeleniya-sp-k-ekrannym-polyam/">Логика определения СП к экранным полям</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/logika-opredeleniya-sp-k-ekrannym-polyam/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>СП для значений внутренней таблицы</title>
+		<link>https://abap-blog.ru/abap-notes/f4-po-vnutrennej-tablice/</link>
+					<comments>https://abap-blog.ru/abap-notes/f4-po-vnutrennej-tablice/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 04 Apr 2020 10:11:04 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=3900</guid>
+
+					<description><![CDATA[<p>Удобный способ создать средство поиска по внутренней таблице &#8212; воспользоваться классом cl_reca_gui_f4_popup (обратите внимание, класс относится к пакету RE-FX): [crayon-618a1dd7d57a0585801754/] Стандартный альтернативный вариант &#8212; использование ФМ: F4IF_INT_TABLE_VALUE_REQUEST [crayon-618a1dd7d57a8550734660/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/f4-po-vnutrennej-tablice/">СП для значений внутренней таблицы</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Удобный способ создать средство поиска по внутренней таблице &#8212; воспользоваться классом <strong>cl_reca_gui_f4_popup</strong> (обратите внимание, класс относится к пакету RE-FX):</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS:
+  p_carrid TYPE s_carr_id.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_carrid.
+  SELECT carrid, carrname FROM scarr INTO TABLE @DATA(lt_values).
+
+  DATA(lo_f4) = cl_reca_gui_f4_popup=&gt;factory_grid( id_key_field    = 'CARRID'
+                                                    it_f4value      = lt_values
+                                                    if_multi        = abap_false
+                                                    id_title        = 'Выбор значения' ).
+
+  lo_f4-&gt;display( IMPORTING et_result    = lt_values
+                            ef_cancelled = DATA(lv_cancelled) ).
+
+  CHECK lv_cancelled = abap_false.
+
+  p_carrid = VALUE #( lt_values[ 1 ]-carrid OPTIONAL ).</pre><p>Стандартный альтернативный вариант &#8212; использование ФМ: <b><span lang="EN-US">F4IF_INT_TABLE_VALUE_REQUEST</span></b></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS:
+  p_carrid TYPE spfli-carrid,
+  p_cname  TYPE scarr-carrname.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_carrid.
+
+  TYPES: t_return_tab  TYPE ddshretval.
+
+  TYPES: BEGIN OF ty_line,
+           carrid   TYPE spfli-carrid,
+           carrname TYPE scarr-carrname,
+         END OF ty_line.
+
+  DATA: it_list      TYPE STANDARD TABLE OF ty_line,
+        w_return_tab TYPE t_return_tab,
+        i_return_tab TYPE STANDARD TABLE OF t_return_tab,
+        v_repid      TYPE sy-repid,
+        v_dynnr      TYPE sy-dynnr.
+
+  DATA:
+    it_map TYPE STANDARD TABLE OF dselc,
+    wa_map TYPE dselc.
+
+  v_repid = sy-repid.
+  v_dynnr = sy-dynnr.
+
+  SELECT carrid carrname FROM scarr INTO TABLE it_list.
+
+  IF sy-subrc = 0.
+    wa_map-fldname = 'F0001'.
+    wa_map-dyfldname = 'P_CARRID'.
+    APPEND wa_map TO it_map.
+
+    wa_map-fldname = 'F0002'.
+    wa_map-dyfldname = 'P_CNAME'.
+    APPEND wa_map TO it_map.
+
+    CALL FUNCTION 'F4IF_INT_TABLE_VALUE_REQUEST'
+      EXPORTING
+        retfield        = 'CARRID'
+        dynpprog        = v_repid
+        dynpnr          = v_dynnr
+        dynprofield     = 'P_CARRID'
+        value_org       = 'S'
+      TABLES
+        value_tab       = it_list
+        dynpfld_mapping = it_map
+      EXCEPTIONS
+        OTHERS          = 0.
+  ENDIF.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/f4-po-vnutrennej-tablice/">СП для значений внутренней таблицы</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/f4-po-vnutrennej-tablice/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

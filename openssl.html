@@ -1,0 +1,161 @@
+
+<script type="text/javascript" src="//s206.ucoz.net/cgi/uutils.fcg?a=uprdata&r=0.675151204108445"></script>
+<script type="text/javascript">
+try{
+	Object.defineProperty(window, "u_global_data", {
+	   value: {
+   			basic_params:{dcode:"o",ads_lite:0,isadblock:1,user_country:"ru",user_ip:"46.254.21.60",server:"s206",site_type:"narod",site_lng:"RU",rndid:"cHdUvdE",ban240pos:"0",ischild:"0",ispolitic:"0",iswarez:"0",isnative:"1",isdoubtful:"0",isabandoned:"1",iscriteo970:"1",isreligion:"0",iswarn:"0",iabcat:"19-4",isgoogle:"1",isyandex:"0",ismobile:"0"},
+   			geo:{city:"Pokrovka",region:"Primorskiy kray"},
+   			urls:{
+   				adprru:[],
+   				adprci:[]
+   			}
+   		},
+	   writable: false,
+	   configurable: false
+	});
+	/*var u_global_data={
+			basic_params:{dcode:"o",ads_lite:0,isadblock:1,user_country:"ru",user_ip:"46.254.21.60",server:"s206",site_type:"narod",site_lng:"RU",rndid:"cHdUvdE",ban240pos:"0",ischild:"0",ispolitic:"0",iswarez:"0",isnative:"1",isdoubtful:"0",isabandoned:"1",iscriteo970:"1",isreligion:"0",iswarn:"0",iabcat:"19-4",isgoogle:"1",isyandex:"0",ismobile:"0"},
+			geo:{city:"Pokrovka",region:"Primorskiy kray"},
+			urls:{
+				adprru:[],
+				adprci:[]
+			}
+		};*/
+	
+}catch(e){};
+</script>
+<script type="text/javascript" src="https://s206.ucoz.net/bnr/blocks/ads.js?0.0413042172569327" onload="u_global_data.basic_params.isadblock=0"></script>
+<script type="text/javascript" src="//big-town.narod.ru/IaYVu5X?AD%21ncFHcq63s4v%21%3BRtDMWgqCG7CMG8YDPVy582fxwci1%5EmRLIUe%3B3aYzeN%3ByWGtQ888YKVO2GxhwTEkE"></script>
+
+	<script type="text/javascript">new Image().src = "//counter.yadro.ru/hit;narodadst1?r"+escape(document.referrer)+(screen&&";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth||screen.pixelDepth))+";u"+escape(document.URL)+";"+Date.now();</script>
+	<script type="text/javascript">new Image().src = "//counter.yadro.ru/hit;narod_desktop_ad?r"+escape(document.referrer)+(screen&&";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth||screen.pixelDepth))+";u"+escape(document.URL)+";"+Date.now();</script><script type="text/javascript" src="//big-town.narod.ru/.s/src/jquery-3.3.1.min.js"></script><script type="text/javascript" src="//s206.ucoz.net/cgi/uutils.fcg?a=uSD&ca=2&ug=999&isp=0&r=0.991717281425508"></script>
+<html>
+<head>
+<meta charset="utf-8">
+<title>openssl vs cryptopro</title>
+  <style type="text/css">
+   b { 
+    font-size: 80%; 
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+    color: yellow;
+   }
+   .block1 { 
+ 
+    background: #1f1f1f;
+    padding: 5px;
+    color: yellow;
+    padding-right: 20px; 
+    border: solid 1px grey; 
+   }
+  </style>
+</head>
+<body bgcolor=black>
+<font color=lime>
+<p>
+Вы наверное уже тоже столкнулись с ситуацией когда требуется подписать или зашифровать какой либо файл и по требованием ФСБ это
+должен быть ГОСТ-овский алгоритм. И конечно бесплатной  альтернативы КриптоПРО найти не удавалось. Да и вообще надо сказать что 
+это не самый гибкий инструмент. А если вы еще и *nix системы используете, то тут вообще беда. 
+И наконец то это совершилось! Вышел openssl-1.0 именно с этой верси появилась встроеная поддержка ГОСТ-овских алгоритмов. 
+В версии 1.0.1 ГОСТ уже включен по умолчанию. В этом файле вы можете прочитать как включить поддержку ГОСТ 
+<b>openssl-1.0.2-stable-SNAP-20131130/engines/ccgost/README.gost</b>
+Если в кратце то находим наш конфиг обычно это <b>/etc/ssl/openssl.cnf</b>
+И добавляем строки в файл
+<code><pre class="block1">
+  openssl_conf = openssl_def # Это в начало файла
+
+    #Все что ниже в конец
+    [openssl_def]
+    engines = engine_section
+
+    [engine_section]
+    gost = gost_section
+
+    [gost_section]
+    engine_id = gost
+    dynamic_path = /usr/lib/ssl/engines/libgost.so
+    default_algorithms = ALL
+    CRYPT_PARAMS = id-Gost28147-89-CryptoPro-A-ParamSet
+
+</pre></code>
+
+Проверяем
+<code><pre class="block1">
+$ openssl ciphers | tr ":" "\n" | grep -i gost
+GOST2001-GOST89-GOST89
+GOST94-GOST89-GOST89
+</pre></code>
+Теперь наша задача вытащить контейнер с закрытым ключом с нашего хранилища.
+В этом нам очень поможет утилита P12FromGostCSP.
+Сохраним его например <b>p12.pfx</b>. Так же нам понадобиться сертификат получателя.
+Обычно они сохраняются в формате DER и имеют расширение .cer пусть в нашем случае это будет <b>cert.cer</b>.
+Как определить в каком формате сертификат DER или PEM ? Очень просто достаточно его открыть в любом текстовом редакторе.
+И если есть начальный тег "-----BEGIN CERTIFICATE-----" это PEM.
+Теперь нам необходимо переконвертировать наш ключ и сертификат в PEM.
+Для этого
+
+<code><pre class="block1">
+openssl pkcs12 -in p12.pfx -nodes # Поглядим все ли там есть
+openssl pkcs12 -in p12.pfx -out key.pem -nodes -clcerts # Конвертируем
+</pre></code>
+Аналогично для сертификата
+<code><pre class="block1">
+openssl x509 -inform der -in cert.cer -out cert.crt
+</pre></code>
+
+Ну дальше собственно без коментариев, в примере подопытный файл <b>1.txt</b>
+
+<p>
+Подписываем:
+<code><pre class="block1">
+openssl smime -sign -signer key.pem -engine gost -gost89 -binary -noattr -outform DER -in 1.txt -out 1.txt.sig
+</pre></code>
+<p>
+Шифруем
+<code><pre class="block1">
+./openssl smime -encrypt -engine gost -gost89 -binary -noattr -outform DER -in 1.txt -out 1.txt.enc cert.crt
+</pre></code>
+<p>
+Подписываем и шифруем одновременно
+<code><pre class="block1">
+openssl smime -sign -signer key.pem -engine gost -gost89 -binary -noattr -outform DER -nodetach -in 1.txt | \
+openssl smime -encrypt -engine gost -gost89 -binary -noattr -outform DER  -out 1.txt.sig.enc cert.crt
+</pre></code>
+<p>
+Расшифровать
+<code><pre class="block1">
+./openssl smime -decrypt -engine gost -gost89 -binary -noattr -inform DER  -in 1.txt.enc -out 1dec.txt.enc -inkey recivekey.pem
+</pre></code>
+recivekey.pem - это закрытый ключ получателя. Кому принадлежит сертификат cert.crt
+
+Немного о параметрах
+<code><pre class="block1">
+smime - тип сообщения
+-sign - указываем что надо подписать
+-encrypt - указываем что надо шифровать
+-decrypt - указываем что надо расшифровать 
+-signer - указываем приватный ключ из которого генериться подпись
+-engine - движок госта
+-gost89 - указываем какой алгоритм использовать 
+-binary - говорим что файл будет двоичный
+-noattr - не вкладывать дополнительные атрибуты
+-outform - какую кодировку пользовать DER или PEM
+-nodetach - не отсоединять подпись
+-in - входной файл
+-out - выходной файл
+-inkey - приватный ключ
+</pre></code>
+И еще маленький бонус как быстро подписать файл имея только КриптоПРО.
+Делаем bat-файл например <b>Подписать.bat</b> с содержимым
+
+<code><pre class="block1">
+if NOT $1 == "" (
+Диск:\Путь установки КриптоПРО\csptest.exe -sfsign -sign -in $1 -out $1.sig -my "Имя сертификата в контейнере личные"
+) 
+</pre></code>
+Кидаем его в папку <b>C:\Users\<Имя Пользователя>\AppData\Roaming\Microsoft\Windows\SendTo</b> - для win7 или <b>C:\Documents and setting\<Имя Пользователя>\SendTo</b> - для  winxp.
+Для подиси нажимаем правой клавишей на файле который хотим подписать <b>"Отправить - > Подписать"</b> и в этой же папке появится подписанный файл с расширением <b>.sig</b>.
+</font>
+</body>
+
+</html> 

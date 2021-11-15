@@ -1,0 +1,711 @@
+
+
+<!DOCTYPE html>
+
+<html>
+<head><title>
+	CAA104 - Optimize Your Custom ABAP Code for SAP HANA, Barcelona 2019 | SAP TechEd Archive
+</title>
+    <meta property="fb:app_id" content="268116219940777" />
+    <meta property="og:title" content="CAA104 - Optimize Your Custom ABAP Code for SAP HANA, Barcelona 2019 | SAP TechEd Archive" /><meta property="og:description" content="SAP HANA is more present than ever in the ABAP world, as evidenced by SAP Business Suite powered by SAP HANA and SAP S/4HANA. In this context, ABAP developers are being asked to fully exploit the power of SAP HANA in business applications by using advanced programming techniques, such as core data services (CDS), ABAP-managed database procedures, and ABAP SQL (formerly Open SQL). Join us to gain deeper insight into these techniques and stay informed about what’s new in this area." /><meta property="og:url" content="http://events.sap.com/embed.aspx?eventname=teched&amp;languagename=en&amp;sid=51535" /><meta property="og:site_name" /><meta property="og:locale" content="en_US" /><meta property="og:type" content="video" /><meta property="og:video:type" content="application/x-shockwave-flash" /><meta property="og:video:height" content="288" /><meta property="og:video:width" content="512" /><meta property="og:image" content="https://e4eafaffd25969a075aa-6a6fed4cb515ba40d2d865a7ea5151eb.ssl.cf5.rackcdn.com/15214d81-ecf7-4f49-bfdc-174b21cc299091170.jpg" />
+    <link href="//content.dm.ux.sap.com/etc/designs/sep1dx/clientlibs/css/video-js-core-and-plugins.min.css" rel="stylesheet" />
+    <link href="//content.dm.ux.sap.com/etc/designs/sep1dx/clientlibs/css/video-js-setup-wrapper.css" rel="stylesheet" />
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-image: none !important;
+            background-color: #000;
+        }
+    </style>
+
+    <script src="//assets.dm.ux.sap.com/commonutils/js/jquery/3.5.1/jquery.min.js"></script>
+
+    
+    <script>
+        var decryptedAssetURL = '';
+
+        function loadAdobeScript(url, callback) {
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = url;
+            script.onreadystatechange = callback;
+            script.onload = callback;
+
+            const s0 = document.getElementsByTagName("script")[0];
+            s0.parentNode.insertBefore(script, s0);
+        }
+
+        const includeVideoJS = function () {
+            const js_core = document.createElement("script");
+            js_core.src = "//content.dm.ux.sap.com/etc/designs/sep1dx/clientlibs/js/video-js-core-and-plugins.min.js";
+            js_core.async = false;
+
+            const playerutility = document.createElement("script");
+            playerutility.src = "../../JControls/Player/js/playerutilityVJS.js";
+            playerutility.async = false;
+
+            const s0 = document.getElementsByTagName("script")[0];
+            s0.after(js_core);
+
+            const s1 = document.getElementsByTagName("script")[1];
+            s1.after(playerutility);
+        };
+
+        const hostName = window.location.hostname;
+        let urlLaunch;
+
+        if (hostName === "events.sap.com" || hostName === "previewevents.dm.ux.sap.com") {
+            urlLaunch = "//assets.adobedtm.com/ccc66c06b30b/2e8d8b957fca/launch-0143f67290b3.min.js";
+
+        } else if (hostName === "discover.sap.com" || hostName === "previewdiscover.dm.ux.sap.com") {
+            urlLaunch = "//assets.adobedtm.com/ccc66c06b30b/e161c22dd229/launch-0e314c2f5201.min.js";
+
+        } else if (hostName === "webinars.sap.com" || hostName === "previewwebinars.dm.ux.sap.com") {
+            urlLaunch = "//assets.adobedtm.com/ccc66c06b30b/74bdb5e07a1b/launch-5d4062810d94.min.js";
+
+        } else if (hostName.includes("devevents") || hostName.includes("devpreviewevents") || hostName.includes("localhost")) {
+            urlLaunch = "//assets.adobedtm.com/ccc66c06b30b/2e8d8b957fca/launch-c937c9afcfcd-development.min.js";
+
+        } else if (hostName.includes("devwebinars") || hostName.includes("devpreviewwebinars")) {
+            urlLaunch = "//assets.adobedtm.com/ccc66c06b30b/74bdb5e07a1b/launch-b787e86f5cde-development.min.js";
+
+        } else if (hostName.includes("devdiscover") || hostName.includes("devpreviewdiscover")) {
+            urlLaunch = "//assets.adobedtm.com/ccc66c06b30b/e161c22dd229/launch-9e0a8af0a1bd-development.min.js";
+
+        } else if (hostName.includes("testevents") || hostName.includes("testpreviewevents")) {
+            urlLaunch = "//assets.adobedtm.com/ccc66c06b30b/2e8d8b957fca/launch-48dbcfdbf78c-staging.min.js";
+
+        } else if (hostName.includes("testwebinars") || hostName.includes("testpreviewwebinars")) {
+            urlLaunch = "//assets.adobedtm.com/ccc66c06b30b/74bdb5e07a1b/launch-4b933e4d0468-staging.min.js";
+
+        } else if (hostName.includes("testdiscover") || hostName.includes("testpreviewdiscover")) {
+            urlLaunch = "//assets.adobedtm.com/ccc66c06b30b/e161c22dd229/launch-3b7656ea9ce0-staging.min.js";
+        }
+
+        loadAdobeScript(urlLaunch, includeVideoJS);
+    </script>
+    
+
+    
+<script type="text/javascript" src=""></script>
+
+
+    <script type="text/javascript">
+        let checkAssetSecurity_;
+        let isChannel;
+        let isSession;
+        const channelURL = "live/";
+        const sessionURL = "session/";
+        let gPreview = false;
+        let gPreviewLoginSession = false;
+        let gIsEmbed = true;
+        let FirstTimeVideoPlayed = 1;
+        let tempPre = '';
+        let tempPost = '';
+        let CheckIsMobile = '';
+        const enablevideoAD = 'off';
+
+        if (getQuerystring("sid") != "") {
+            isSession = true;
+            checkAssetSecurity_ = checkAssetsSecurity('sessions', getQuerystring("sid"));
+        }
+
+        if (getQuerystring("cid") != "") {
+            isChannel = true;
+            checkAssetSecurity_ = checkAssetsSecurity('channels', getQuerystring("cid"));
+        }
+
+        function getQuerystring(key, default_) {
+            if (default_ == null) default_ = "";
+            const _currentURL = key == "v" ? window.location.href : 'http://events.sap.com/embed.aspx?eventname=teched&languagename=en&sid=51535';
+            key = key.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            const regex = new RegExp("[\\?&]" + key.toLowerCase() + "=([^&#]*)");
+            const qs = regex.exec(_currentURL);
+            if (qs == null)
+                return default_;
+            else
+                return qs[1];
+        }
+
+        function checkAssetsSecurity(AssetType, AssetId) {
+            let checkasset = "premium";
+            const defaultparam = "{assetID:" + AssetId + ",assetType:'" + AssetType + "'}";
+
+            const url = '../../auth.aspx/GetAssetSecurity?eventname=teched';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: defaultparam,
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                async: false,
+                success: function (msg) {
+                    checkasset = msg.d;
+                }
+            });
+            return checkasset;
+        }
+
+        function AddVideoWatchReport() {
+            if (getQuerystring("v") != "") {
+                return false;
+            }
+            let containerURL = getParentUrl();
+            let AddUrl;
+            let dataParam;
+            const SessionID = document.getElementById('hiddenSessionID').value;
+            const SourceUrl = document.URL;
+            const DestinationURL = document.URL;
+            const SessionExhibitorCollateralName = escape(document.getElementById('hiddenname').value);
+            const LocationName = document.getElementById('hiddenLocationName').value;
+            const IsLive = document.getElementById('hiddenlive').value;
+            const IsKeyNote = document.getElementById('hiddenkeynote').value;
+            const SessionNumber = document.getElementById('hiddenSessionNumber').value;
+            const SequenceName = document.getElementById('hdnSequenceName').value;
+            const SequenceID = document.getElementById('hdnSequenceID').value;
+
+            if (isSession) {
+                AddUrl = '../../Controller/TrackUIManager.aspx/AddVideoWatchReport?eventname=teched ';
+                dataParam = '{ "SessionID":' + SessionID + ',"SourceURL":"' + SourceUrl + '","DestinationURL":"' + DestinationURL + '","SessionExhibitorCollateralName":"' + SessionExhibitorCollateralName + '","IsLive":"' + IsLive + '","IsKeyNote":"' + IsKeyNote + '","LocationName":"' + LocationName + '","SessionNumber":"' + SessionNumber + '","Preview":"' + gPreview + '","PreviewLoginSession":"' + gPreviewLoginSession + '","IsEmbed":"' + gIsEmbed + '","SequenceName":"' + SequenceName + '","SequenceID":"' + SequenceID + '","FirstTimeVideoPlayed":"' + FirstTimeVideoPlayed + '","ContainerURL":"' + containerURL + '"}';
+            }
+            else if (isChannel) {
+                AddUrl = '../../Controller/TrackUIManager.aspx/AddVideoWatchReportForChannel?eventname=teched ';
+                dataParam = '{ "SessionID":' + SessionID + ',"SourceURL":"' + SourceUrl + '","DestinationURL":"' + DestinationURL + '","SessionExhibitorCollateralName":"' + SessionExhibitorCollateralName + '","IsLive":"' + IsLive + '","IsKeyNote":"false","ChannelNumber":"' + SessionNumber + '","LocationName":"' + LocationName + '","Ispopup":"no","Preview":"' + gPreview + '","PreviewLoginSession":"' + gPreviewLoginSession + '","IsEmbed":"' + gIsEmbed + '","SequenceName":"' + SequenceName + '","SequenceID":"' + SequenceID + '","ContainerURL":"' + containerURL + '","FirstTimeVideoPlayed":"' + FirstTimeVideoPlayed + '"}';
+            }
+            $.ajax({
+                type: "POST",
+                url: AddUrl,
+                data: dataParam,
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                success: function (msg) {
+                    document.getElementById('videowatchid').value = msg.d;
+                    FirstTimeVideoPlayed = 0;
+                }
+            });
+        }
+
+        function AddAdvertisementWatchReport(videoAdMode) {
+            if (!isSession) return;
+
+            const containerURL = getParentUrl();
+            let AddUrl;
+            let dataParam;
+            const SessionID = document.getElementById('hiddenSessionID').value;
+            const SourceUrl = document.URL;
+            const DestinationURL = document.URL;
+            const SessionExhibitorCollateralName = escape(document.getElementById('hiddenname').value);
+            const LocationName = document.getElementById('hiddenLocationName').value;
+            const IsLive = document.getElementById('hiddenlive').value;
+            const IsKeyNote = document.getElementById('hiddenkeynote').value;
+            const SessionNumber = document.getElementById('hiddenSessionNumber').value;
+            const SequenceName = document.getElementById('hdnSequenceName').value;
+            const SequenceID = document.getElementById('hdnSequenceID').value;
+            let AdvertisementID = 0;
+            let AdvertisementTitle = '';
+            let AdvertisementType = '';
+
+            if (videoAdMode == 'pre') {
+                AdvertisementID = document.getElementById('hiddenADIDPre').value;
+                AdvertisementTitle = document.getElementById('hiddenADTitlePre').value;
+                AdvertisementType = 'pre';
+            }
+            else if (videoAdMode == 'post') {
+                AdvertisementID = document.getElementById('hiddenADIDPost').value;
+                AdvertisementTitle = document.getElementById('hiddenADTitlePost').value;
+                AdvertisementType = 'post';
+            }
+
+            //No Tracking for No Advertisement. 
+            if (AdvertisementID == 0) return;
+
+            if (isSession) {
+                AddUrl = '../../Controller/TrackUIManager.aspx/AddAdvertisementWatchReport?eventname=teched ';
+                dataParam = '{ "SessionID":' + SessionID + ',"SourceURL":"' + SourceUrl + '","DestinationURL":"' + DestinationURL + '","SessionExhibitorCollateralName":"' + SessionExhibitorCollateralName + '","IsLive":"' + IsLive + '","IsKeyNote":"' + IsKeyNote + '","LocationName":"' + LocationName + '","SessionNumber":"' + SessionNumber + '","Preview":"' + gPreview + '","PreviewLoginSession":"' + gPreviewLoginSession + '","IsEmbed":"' + gIsEmbed + '","SequenceName":"' + SequenceName + '","SequenceID":"' + SequenceID + '","FirstTimeVideoPlayed":"' + FirstTimeVideoPlayed + '","ContainerURL":"' + containerURL + '","AdvertisementId":"' + AdvertisementID + '","AdvertisementTitle":"' + AdvertisementTitle + '","AdvertisementType":"' + AdvertisementType + '"}';
+            }
+
+            $.ajax({
+                type: "POST",
+                url: AddUrl,
+                data: dataParam,
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                success: function (msg) {
+                    document.getElementById('videowatchid').value = msg.d;
+                    FirstTimeVideoPlayed = 0;
+                }
+            });
+        }
+
+        function UpdateVideoWatchReport() {
+            if (getQuerystring("v") != "") {
+                return false;
+            }
+            const videowatchid = document.getElementById('videowatchid').value;
+            if (videowatchid != "0") {
+                const AddUrl = '../../Controller/TrackUIManager.aspx/UpdateVideoWatchReport?eventname=teched ';
+                const VideoWatchReportID = videowatchid;
+                const SessionID = document.getElementById('hiddenSessionID').value;
+                const SourceUrl = document.URL;
+                const DestinationURL = document.URL;
+                const SessionExhibitorCollateralName = escape(document.getElementById('hiddenname').value);
+                const IsLive = document.getElementById('hiddenlive').value;
+                let IsKeyNote = document.getElementById('hiddenkeynote').value;
+                const SessionNumber = document.getElementById('hiddenSessionNumber').value;
+
+                if (IsKeyNote == "") {
+                    IsKeyNote = true;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: AddUrl,
+
+                    data: '{ "VideoWatchReportID":"' + VideoWatchReportID + '","SessionID":' + SessionID + ',"SourceURL":"' + SourceUrl + '","DestinationURL":"' + DestinationURL + '","SessionExhibitorCollateralName":"' + SessionExhibitorCollateralName + '","IsLive":"' + IsLive + '","IsKeyNote":"' + IsKeyNote + '","SessionNumber":"' + SessionNumber + '","Preview":"' + gPreview + '","PreviewLoginSession":"' + gPreviewLoginSession + '","IsEmbed":"' + gIsEmbed + '"}',
+
+                    contentType: "application/json; charset=utf-8",
+                    datatype: "json",
+                    success: function (msg) {
+                        if (msg.d == "Update") {
+                            document.getElementById('videowatchid').value = "0";
+                        }
+                    }
+                });
+            }
+        }
+
+        function redirectToPlatform() {
+            const currentLocation = window.location.href;
+
+            let redirectionPage;
+            if (isSession) {
+                redirectionPage = sessionURL + getQuerystring("sid") + "?showlogin=true&trackid=0"; //appended trackid=0 to avoid eror on conditionalaccess page which expects trackid
+            }
+            else if (isChannel) {
+                redirectionPage = channelURL + getQuerystring("cid") + "?showlogin=true&trackid=0"; //appended trackid=0 to avoid eror on conditionalaccess page which expects trackid
+            }
+
+            let redirectionURL = currentLocation.substring(0, currentLocation.lastIndexOf("/") + 1) + redirectionPage;
+
+            if (window.parent != undefined && window.parent != null) {
+                try {
+                    window.parent.location = redirectionURL.toLowerCase().replace("https", "http");
+                }
+                catch (ex1) { }
+            }
+            else {
+                window.location.href = redirectionURL.toLowerCase().replace("https", "http");
+            }
+        }
+    </script>
+</head>
+
+<body style="vertical-align: bottom;">
+    
+            <!--
+            Start of DoubleClick Floodlight Tag: Please do not remove
+            Activity name of this tag: 2014_SAPPHIRENOW_CR_Social_SANOW Events Page
+            URL of the webpage where the tag is expected to be placed: http://events.sap.com/sapphirenow/en/home
+            This tag must be placed between the <body> and </body> tags, as close as possible to the opening tag.
+            Creation Date: 05/06/2014
+            -->
+            <script type="text/javascript">
+                var axel = Math.random() + "";
+                var a = axel * 10000000000000;
+                document.write('<iframe src="//1672981.fls.doubleclick.net/activityi;src=1672981;type=cr_sa228;cat=2014_847;ord=' + a + '?" width="1" height="1" frameborder="0" style="display:none"></iframe>');
+            </script>
+            <noscript>
+                <iframe src="//1672981.fls.doubleclick.net/activityi;src=1672981;type=cr_sa228;cat=2014_847;ord=1?" width="1" height="1" frameborder="0" style="display:none"></iframe>
+            </noscript>
+            <!-- End of DoubleClick Floodlight Tag: Please do not remove -->
+    
+
+    <form name="form1" method="post" action="./embed.aspx?eventname=teched&amp;languagename=en&amp;sid=51535" id="form1">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTQ1NDM5ODkyOA8WAh4TVmFsaWRhdGVSZXF1ZXN0TW9kZQIBFgJmD2QWEAIBDxUBDzI2ODExNjIxOTk0MDc3N2QCAg8WAh4HY29udGVudAVZQ0FBMTA0IC0gT3B0aW1pemUgWW91ciBDdXN0b20gQUJBUCBDb2RlIGZvciBTQVAgSEFOQSwgQmFyY2Vsb25hIDIwMTkgfCBTQVAgVGVjaEVkIEFyY2hpdmVkAgMPFgIfAQXmA1NBUCBIQU5BIGlzIG1vcmUgcHJlc2VudCB0aGFuIGV2ZXIgaW4gdGhlIEFCQVAgd29ybGQsIGFzIGV2aWRlbmNlZCBieSBTQVAgQnVzaW5lc3MgU3VpdGUgcG93ZXJlZCBieSBTQVAgSEFOQSBhbmQgU0FQIFMvNEhBTkEuIEluIHRoaXMgY29udGV4dCwgQUJBUCBkZXZlbG9wZXJzIGFyZSBiZWluZyBhc2tlZCB0byBmdWxseSBleHBsb2l0IHRoZSBwb3dlciBvZiBTQVAgSEFOQSBpbiBidXNpbmVzcyBhcHBsaWNhdGlvbnMgYnkgdXNpbmcgYWR2YW5jZWQgcHJvZ3JhbW1pbmcgdGVjaG5pcXVlcywgc3VjaCBhcyBjb3JlIGRhdGEgc2VydmljZXMgKENEUyksIEFCQVAtbWFuYWdlZCBkYXRhYmFzZSBwcm9jZWR1cmVzLCBhbmQgQUJBUCBTUUwgKGZvcm1lcmx5IE9wZW4gU1FMKS4gSm9pbiB1cyB0byBnYWluIGRlZXBlciBpbnNpZ2h0IGludG8gdGhlc2UgdGVjaG5pcXVlcyBhbmQgc3RheSBpbmZvcm1lZCBhYm91dCB3aGF04oCZcyBuZXcgaW4gdGhpcyBhcmVhLmQCBA8WAh8BBUtodHRwOi8vZXZlbnRzLnNhcC5jb20vZW1iZWQuYXNweD9ldmVudG5hbWU9dGVjaGVkJmxhbmd1YWdlbmFtZT1lbiZzaWQ9NTE1MzVkAgUPFgIfAWRkAgYPFgIfAQUFZW5fVVNkAgsPFgIfAQV/aHR0cHM6Ly9lNGVhZmFmZmQyNTk2OWEwNzVhYS02YTZmZWQ0Y2I1MTViYTQwZDJkODY1YTdlYTUxNTFlYi5zc2wuY2Y1LnJhY2tjZG4uY29tLzE1MjE0ZDgxLWVjZjctNGY0OS1iZmRjLTE3NGIyMWNjMjk5MDkxMTcwLmpwZ2QCDQ8VBTEuLi8uLi9hdXRoLmFzcHgvR2V0QXNzZXRTZWN1cml0eT9ldmVudG5hbWU9dGVjaGVkSS4uLy4uL0NvbnRyb2xsZXIvVHJhY2tVSU1hbmFnZXIuYXNweC9BZGRWaWRlb1dhdGNoUmVwb3J0P2V2ZW50bmFtZT10ZWNoZWRTLi4vLi4vQ29udHJvbGxlci9UcmFja1VJTWFuYWdlci5hc3B4L0FkZFZpZGVvV2F0Y2hSZXBvcnRGb3JDaGFubmVsP2V2ZW50bmFtZT10ZWNoZWRRLi4vLi4vQ29udHJvbGxlci9UcmFja1VJTWFuYWdlci5hc3B4L0FkZEFkdmVydGlzZW1lbnRXYXRjaFJlcG9ydD9ldmVudG5hbWU9dGVjaGVkTC4uLy4uL0NvbnRyb2xsZXIvVHJhY2tVSU1hbmFnZXIuYXNweC9VcGRhdGVWaWRlb1dhdGNoUmVwb3J0P2V2ZW50bmFtZT10ZWNoZWRkZOSaZ6e5k8gh6zPbR26IKM2D/JaVuEuODP3CLgCvlp3i" />
+
+<script src="../../51Degrees.core.js" type="text/javascript"></script>
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="D0363126" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAPjkr1Vo9Q+SaloSHIOIbdH/p062Nuj4SdUyDBIy3sXHZFScsx8uolVYwtVOGK8qXb9OniEcFTmHXhJQkcQCb3o/uox4LVOZSRVvBbQll5eqA==" />
+        <input name="videowatchid" type="hidden" id="videowatchid" value="0" />
+        <input type="hidden" id="hiddenSessionID" value="0" />
+        <input type="hidden" id="hiddenSessionNumber" value="0" />
+        <input type="hidden" id="hiddenADXMLPre" />
+        <input type="hidden" id="hiddenADXMLPost" />
+        <input type="hidden" id="hiddenADTitlePre" />
+        <input type="hidden" id="hiddenADTitlePost" />
+        <input type="hidden" id="hiddenADIDPre" />
+        <input type="hidden" id="hiddenADIDPost" />
+        <input type="hidden" id="hiddenname" />
+        <input type="hidden" id="hiddenLocationName" />
+        <input type="hidden" id="hiddenlive" />
+        <input type="hidden" id="hiddenkeynote" />
+        <input type="hidden" id="hiddenTrackID" value="0" />
+        <input type="hidden" id="hdnSequenceName" />
+        <input type="hidden" id="hdnSequenceID" />
+        <input type="hidden" id="hdnChannelStateChangeToCheck" />
+        <input type="hidden" name="hdnassetTinyurl" id="hdnassetTinyurl" value="http://tinyurl.com/yyxczacg" />
+
+        <div id="outerContainer">
+            <video id="mainplayercontainer" class="video-js vjs-big-play-centered" playsinline>
+            </video>
+        </div>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+new FODIO('w', 'h');//]]>
+</script>
+</form>
+    <script type="text/javascript">
+        let omnitureJSPath = '';
+        let channelStatus = "";
+        let PlayerImageURL = '';
+        let PlaybackURL = "";
+        var offset;
+        const playerContainer = "mainplayercontainer";
+
+        try {
+            omnitureJSPath = '//events.sap.com/js/roil_virtualevents_jwplayer_plugin.js';
+            if (window.location.protocol == 'https:') {
+                omnitureJSPath = omnitureJSPath.replace('http://', 'https://')
+            }
+        }
+        catch (e) {console.log(e);}
+
+        $("html,body").css("overflow", "hidden");
+
+        jQuery(function () {
+            try {
+                if (getQuerystring("sid")) {
+                    GetADDetailsBySessionID();
+                }
+            }
+            catch (e) {console.log(e);}
+
+            const offsettime = getQuerystring("offsettime");
+            offset = offsettime || '';
+        });
+
+        function loadplayer() {
+            const ShowMessage = 'NO';
+            const HideChannel = 'YES';
+            const HideSession = 'NO';
+
+            if (ShowMessage == 'YES' && HideChannel == 'YES' && HideSession == 'YES') {
+                $(playerContainer).html('<span style="color:red">Video not found</span>');
+            }
+            else if (HideChannel != 'YES') {
+                if (ShowMessage != 'YES') {
+                    ChannelPlayer();
+                } else {
+                    $(playerContainer).html('<span style="color:red">Video not found</span>');
+                }
+            }
+            else if (HideSession != 'YES') {
+                if (ShowMessage != 'YES') {
+                    channelStatus = "REPLAYS:";
+                    SessionPlayer();
+                } else {
+                    $(playerContainer).html('<span style="color:red">Video not found</span>');
+                }
+            }
+        }
+
+        function ChannelPlayer() {
+            const PlayerImageURL = '';
+            const VideoURLIOS = '';
+            const SessionPlayBackType = '';
+            const VideoVODURL = '';
+            document.getElementById('hiddenSessionID').value = getQuerystring("cid");
+            document.getElementById('hiddenname').value = 'CAA104 - Optimize Your Custom ABAP Code for SAP HANA, Barcelona 2019';
+            document.getElementById('hiddenlive').value = 'False';
+            document.getElementById('hiddenSessionNumber').value = "91170";
+            document.getElementById('hiddenLocationName').value = "Barcelona";
+            document.getElementById('hdnSequenceName').value = "SAP TechEd Online_2019_Barcelona";
+            document.getElementById('hdnSequenceID').value = "357f0d3c-c5f9-4535-9250-40cc3088f898";
+            document.getElementById('hdnChannelStateChangeToCheck').value = SessionPlayBackType;
+
+            if (SessionPlayBackType == "1") {
+                channelStatus = "LIVE:";
+                PlaybackURL = VideoURLIOS;
+            }
+            else if (SessionPlayBackType == "2") {
+                channelStatus = "LOOP:";
+                PlaybackURL = VideoVODURL;
+            } else PlaybackURL = VideoVODURL || VideoURLIOS;
+
+            SetupVideoPlayer(PlayerImageURL, PlaybackURL);
+            setInterval("CheckChannelStateChangeOrNot()", 60000);
+        }
+
+        function SetupVideoPlayer(ImageUrl, PlaybackURL) {
+            let AutoPlayVideo = false;
+            let filepath = '';
+            let captionFilePath = '';
+            let trackObject = {};
+            const urlAutoPlay = getQuerystring("autoplay");
+
+            if (urlAutoPlay != 'off') {
+                if (checkAssetSecurity_ == "free" && isChannel) {
+                    AutoPlayVideo = true;
+                }
+            }
+
+            if (isSession) {
+                filepath = '../../relatedvideo.ashx?sId=51535&eventid=1&eventname=teched&languageid=1&page=embed&type=json';
+                captionFilePath = filepath + "&vttfiletype=caption";
+            }
+
+            trackObject = {
+                src: captionFilePath,
+                kind: 'captions',
+                label: 'English',
+                language: 'en',
+                'default': 'true'
+            };
+
+            PlaybackURL = PlaybackURL.replace(/ /g, "");
+            const OmniturePluginTitle = channelStatus + 'CAA104 - Optimize Your Custom ABAP Code for SAP HANA, Barcelona 2019';
+
+            let advertObject = false;
+            if (isSession) {
+                if (typeof enablevideoAD !== 'undefined' && enablevideoAD.trim().toLowerCase() == 'on') {
+                    let preRoll = {};
+                    let postRoll = {};
+
+                    if (typeof tempPre !== 'undefined') {
+                        preRoll["offset"] = "pre";
+                        preRoll.src = tempPre;
+                        preRoll.skipTime = 5;
+                        preRoll.adSign = true;
+                    }
+
+                    if (typeof tempPost !== 'undefined') {
+                        postRoll["offset"] = "post";
+                        postRoll.src = tempPost;
+                        postRoll.skipTime = 5;
+                        postRoll.adSign = true;
+                    }
+
+                    advertObject = {preroll: preRoll, postroll: postRoll};
+                }
+            }
+
+            const playerOptions = {
+                playerID: playerContainer,
+                videoURL: PlaybackURL,
+                imageURL: ImageUrl,
+                autoPlayVideo: AutoPlayVideo,
+                omniturePluginTitle: OmniturePluginTitle,
+                advertObject: advertObject,
+                trackObject: trackObject
+            };
+
+            InitiateVJSPlayer(playerOptions);
+
+            videojs(playerContainer).on('play', function () {
+                if (typeof enablevideoAD !== 'undefined' && enablevideoAD.trim().toLowerCase() == 'on') {
+                    if (tempPre) {
+                        AddAdvertisementWatchReport('pre');
+                    }
+                }
+
+                if (checkAssetSecurity_ == 'premium') {
+                    videojs(playerContainer).pause();
+                    redirectToPlatform();
+                }
+                else {
+                    AddVideoWatchReport();
+                }
+            });
+
+            videojs(playerContainer).one('play', function () {
+                if (checkAssetSecurity_ != 'premium') {
+                    if (offset != "" && offset != "0") {
+                        videojs(playerContainer).currentTime(offset);
+                    }
+                }
+            });
+
+            videojs(playerContainer).on('pause', function () {
+                UpdateVideoWatchReport();
+            });
+
+            videojs(playerContainer).on('ended', function () {
+                if (typeof enablevideoAD !== 'undefined' && enablevideoAD.trim().toLowerCase() == 'on') {
+                    if (tempPost) {
+                        AddAdvertisementWatchReport('post');
+                    }
+                }
+
+                UpdateVideoWatchReport();
+            });
+        }
+
+        function SessionPlayer() {
+            const PlayerImageURL = 'https://e4eafaffd25969a075aa-6a6fed4cb515ba40d2d865a7ea5151eb.ssl.cf5.rackcdn.com/15214d81-ecf7-4f49-bfdc-174b21cc299091170.jpg';
+            PlaybackURL = 'https://sapeventsvod-vh.akamaihd.net/i/teched/barcelona2019/vod/91170_,200,600,1200,2500,.mp4.csmil/master.m3u8';
+            document.getElementById('hiddenSessionID').value = getQuerystring("sid");
+            document.getElementById('hiddenname').value = 'CAA104 - Optimize Your Custom ABAP Code for SAP HANA, Barcelona 2019';
+            document.getElementById('hiddenlive').value = 'False';
+            document.getElementById('hiddenkeynote').value = 'False';
+            document.getElementById('hiddenSessionNumber').value = "91170";
+            document.getElementById('hiddenLocationName').value = "Barcelona";
+            document.getElementById('hdnSequenceName').value = "SAP TechEd Online_2019_Barcelona";
+            document.getElementById('hdnSequenceID').value = "357f0d3c-c5f9-4535-9250-40cc3088f898";
+
+            SetupVideoPlayer(PlayerImageURL, PlaybackURL);
+        }
+    </script>
+
+    
+<!-- ZAP Lightning Bolt Ends -->
+<script language="JavaScript" type="text/javascript">
+    try {
+        var s = s || {};
+        /* START CUSTOM CODING */
+        s.channel = 'teched';
+        s.prop2 = 'en-US';
+        s.prop9 = 'logN';
+        
+        
+        
+        /* END CUSTOM CODING */
+    } catch (err) { }
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+    if (navigator.appVersion.indexOf('MSIE') >= 0) document.write(unescape('%3C') + '\!-' + '-')
+    //-->
+</script>
+<!-- End SiteCatalyst code version: H.21. -->
+
+    <script type="text/javascript">
+
+        $(function () {
+            $(window).on("unload", function () {
+                UpdateVideoWatchReportClosing();
+            });
+
+            $(window).on('beforeunload', function () {
+                UpdateVideoWatchReportClosing();
+            });
+        });
+
+        function getSessionADDetailForPlayer(strPREID, strPRETitle, videoADURLPre, strPOSTID, strPOSTTitle, videoADURLPost) {
+            document.getElementById('hiddenADXMLPre').value = videoADURLPre;
+            document.getElementById('hiddenADXMLPost').value = videoADURLPost;
+            document.getElementById('hiddenADTitlePre').value = strPRETitle;
+            document.getElementById('hiddenADTitlePost').value = strPOSTTitle;
+            document.getElementById('hiddenADIDPre').value = strPREID;
+            document.getElementById('hiddenADIDPost').value = strPOSTID;
+
+            if (enablevideoAD && enablevideoAD == 'on') {
+                if (videoADURLPre) {
+                    tempPre = videoADURLPre;
+                }
+                if (videoADURLPost) {
+                    tempPost = videoADURLPost;
+                }
+            }
+        }
+
+        function UpdateVideoWatchReportClosing() {
+            if (getQuerystring("v") != "") {
+                return false;
+            }
+            try {
+                const videowatchid = document.getElementById('videowatchid').value;
+                if (videowatchid != "0") {
+                    const VideoWatchReportID = videowatchid;
+                    const AddUrl = ' ';
+                    const SessionID = document.getElementById('hiddenSessionID').value;
+                    const SourceUrl = document.URL;
+                    const DestinationURL = document.URL;
+                    const SessionExhibitorCollateralName = escape(document.getElementById('hiddenname').value);
+                    const IsLive = document.getElementById('hiddenlive').value;
+                    let IsKeyNote = document.getElementById('hiddenkeynote').value;
+                    if (IsKeyNote == "") {
+                        IsKeyNote = true;
+                    }
+                    const SessionNumber = document.getElementById('hiddenSessionNumber').value;
+                    $.ajax({
+                        type: "POST",
+                        url: AddUrl,
+                        async: false,
+                        data: '{ "VideoWatchReportID":"' + VideoWatchReportID + '","SessionID":' + SessionID + ',"SourceURL":"' + SourceUrl + '","DestinationURL":"' + DestinationURL + '","SessionExhibitorCollateralName":"' + SessionExhibitorCollateralName + '","IsLive":"' + IsLive + '","IsKeyNote":"' + IsKeyNote + '","SessionNumber":"' + SessionNumber + '","Preview":"' + gPreview + '","PreviewLoginSession":"' + gPreviewLoginSession + '","IsEmbed":"' + gIsEmbed + '"}',
+                        contentType: "application/json; charset=utf-8",
+                        datatype: "json",
+                        success: function (msg) {
+                            if (msg.d == "Update") {
+                                document.getElementById('videowatchid').value = "0";
+                            }
+                        }
+                    });
+                }
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
+
+        function CheckChannelStateChangeOrNot() {
+            if (isChannel == true) {
+                const ChannelID = document.getElementById('hiddenSessionID').value;
+                const ChannelStateToCheck = document.getElementById('hdnChannelStateChangeToCheck').value;
+                const url = '../../Controller/Sessions.aspx/GetSessionBySessionTitle?eventname=teched';
+                const defaultParameters = "{ChannelID:" + ChannelID + "}";
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: defaultParameters,
+                    contentType: "application/json; charset=utf-8",
+                    datatype: "json",
+                    success: function (msg) {
+                        if (msg.d.records != null) {
+                            if (msg.d.records[0].SessionPlayBackType != ChannelStateToCheck) {
+                                window.location.href = "embed.aspx?cid=" + ChannelID;
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function stripHTML(htmlString) {
+            let div = document.createElement("div");
+            div.innerHTML = htmlString;
+            const htmlText = div.textContent || div.innerText || "";
+            return htmlText;
+        }
+
+        function getParentUrl() {
+            return parentUrl = parent !== window ? document.referrer : null;
+        }
+
+        function GetADDetailsBySessionID() {
+            const SessionID = '51535';
+            const url = '../../Controller/Sessions.aspx/GetADDetailsBySessionID?eventname=teched';
+            const params = "{sessionID: " + SessionID + "}";
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: params,
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg.d != null) {
+                        getSessionADDetailForPlayer(msg.d[0].AdvertisementID, msg.d[0].AdvertisementTitle, msg.d[0].AdvertisementURL, msg.d[1].AdvertisementID, msg.d[1].AdvertisementTitle, msg.d[1].AdvertisementURL);
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

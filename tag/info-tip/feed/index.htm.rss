@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>инфо-тип | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/info-tip/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:03:45 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Сокрытие полей ввода на селекционном экране</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/abaphr-ru-sokrytie-polej-vvoda-na-selekcionnom-ekrane/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/abaphr-ru-sokrytie-polej-vvoda-na-selekcionnom-ekrane/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 27 Oct 2012 16:06:04 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[HR]]></category>
+		<category><![CDATA[SM30]]></category>
+		<category><![CDATA[инфо-тип]]></category>
+		<category><![CDATA[поля ввода]]></category>
+		<category><![CDATA[экран выбора]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1157</guid>
+
+					<description><![CDATA[<p>Иногда возникает необходимость скрыть одно или несколько полей (или любой другой элемент) на экране в зависимости от некоторых условий. Существует несколько способов это сделать, как простых и незамысловатых, так и достаточно сложных, но дающих максимальную гибкость настройки экрана. Пойдем от простого к сложному. NO-DISPLAY для элементов экрана Для таких элементов экрана, как PARAMETERS и SELECT-OPTIONS есть дополнение [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/abaphr-ru-sokrytie-polej-vvoda-na-selekcionnom-ekrane/">Сокрытие полей ввода на селекционном экране</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Иногда возникает необходимость скрыть одно или несколько полей (или любой другой элемент) на экране в зависимости от некоторых условий. Существует несколько способов это сделать, как простых и незамысловатых, так и достаточно сложных, но дающих максимальную гибкость настройки экрана. Пойдем от простого к сложному.</p>
+<p><span id="more-1157"></span><br />
+<strong>NO-</strong><strong>DISPLAY для элементов экрана</strong></p>
+<p>Для таких элементов экрана, как <strong>PARAMETERS</strong> и <strong>SELECT-OPTIONS</strong> есть дополнение <strong>NO-DISPLAY</strong>, позволяющее скрыть поля на экране. Поле с таким дополнением будет скрыто, но к нему можно будет обратиться, например, при вызове программы с таким полем из другой программы с передачей SET-параметров. Выглядит это так:</p>
+<p>&nbsp;</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS p_par TYPE CHAR10 NO-DISPLAY.
+
+SELECT-OPTIONS so_sopt FOR gv_somevar NO-DISPLAY.</pre><p>&nbsp;</p>
+<p><strong>Сокрытие полей экранов инфо-типов </strong><strong>HR</strong></p>
+<p>Настройка полей инфо-типа производится в таблице <strong>T588</strong><strong>M</strong>, открыть которую можно из транзакции <strong>SM30</strong>.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/10/t588M.png"><img loading="lazy" class="size-full wp-image-1158 alignnone" title="t588M" src="http://abap-blog.ru/wp-content/uploads/2012/10/t588M.png" alt="" width="591" height="257" srcset="https://abap-blog.ru/wp-content/uploads/2012/10/t588M.png 591w, https://abap-blog.ru/wp-content/uploads/2012/10/t588M-300x130.png 300w" sizes="(max-width: 591px) 100vw, 591px" /></a></p>
+<p>Здесь первоначальным экраном служит экран, для которого поле «Переменный ключ» не заполнено. По двойному щелчку можно открыть детальный просмотр:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/10/t588M_2.png"><img loading="lazy" class="size-full wp-image-1159 alignnone" title="t588M_2" src="http://abap-blog.ru/wp-content/uploads/2012/10/t588M_2.png" alt="" width="569" height="456" srcset="https://abap-blog.ru/wp-content/uploads/2012/10/t588M_2.png 569w, https://abap-blog.ru/wp-content/uploads/2012/10/t588M_2-300x240.png 300w" sizes="(max-width: 569px) 100vw, 569px" /></a></p>
+<p>Как видно из рисунка, для полей экрана можно задать не только невидимость (столбцы выделены красной рамкой), но и сделать поле обязательным (<strong>Обяз</strong>), необязательным (<strong>Необ</strong>) или закрытым для редактирования (<strong>Вывд</strong>). Поле <strong>Скрт </strong>делает поле невидимым, а поле <strong>Иниц</strong> вдобавок к невидимости очищает его содержимое.</p>
+<p><strong>Сокрытие полей в </strong><strong>ABAP</strong></p>
+<p>Скрыть поля экрана можно при помощи реализации цикла с использованием специальной структуры <strong>SCREEN </strong>(её можно найти в словаре данных SE11). Как правило, цикл по структуре включается либо в событие AT SELECTION-SCREEN OUTPUT (для селекционного экрана) либо в PBO-модуль (для селекционного и обычного экранов). Цикл по экрану выглядит как обычный цикл:</p><pre class="urvanov-syntax-highlighter-plain-tag">LOOP AT SCREEN.
+
+...
+
+ENDLOOP.</pre><p>Есть одно различие: в данном цикле нельзя использовать дополнительный параметр WHERE, т.к. SCREEN в данном случае выступает в качестве рабочей области, а таблицей является сам экран. Получить доступ по ключу или по номеру строки таблицы к строкам экрана нельзя.</p>
+<p>Для того, чтобы скрыть элемент экрана, нужно отредактировать два поля структуры SCREEN:</p><pre class="urvanov-syntax-highlighter-plain-tag">SCREEN-INVISIBLE ='1'.
+
+SCREEN-ACTIVE = '0'.</pre><p>После этого нужно обязательно сделать <strong>MODIFY SCREEN</strong>.</p>
+<p>Существует несколько способов определения, какой именно объект нужно скрыть на экране.</p>
+<p><strong>1 способ – по имени поля</strong></p>
+<p>Часто используется для модификации селекционного экрана, из-за простоты обращения. Например, у нас есть параметр на селекционном экране:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS p_par1(10).</pre><p>Все элементы экрана, такие как, например, сгенерированная подпись, в своём имени будут содержать имя параметра P_PAR1. Соответственно, в цикле по экрану мы можем сделать проверку на присутствие названия параметра в имени элемента:</p><pre class="urvanov-syntax-highlighter-plain-tag">IF SCREEN-NAME CS ‘P_PAR1’.
+
+   SCREEN-INVISIBLE = '1'.
+
+   SCREEN-ACTIVE = '0'.
+
+   MODIFY SCREEN.
+
+ENDIF.</pre><p><strong>2 способ – по группе полей</strong></p>
+<p>В редакторе экрана для интересующих нас полей можно задать группы:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/10/field_group.png"><img loading="lazy" class="alignnone size-full wp-image-1166" title="field_group" src="http://abap-blog.ru/wp-content/uploads/2012/10/field_group.png" alt="" width="243" height="389" srcset="https://abap-blog.ru/wp-content/uploads/2012/10/field_group.png 243w, https://abap-blog.ru/wp-content/uploads/2012/10/field_group-187x300.png 187w" sizes="(max-width: 243px) 100vw, 243px" /></a></p>
+<p>Этим группам в структуре SCREEN соответствуют поля <strong>GROUP1…</strong><strong>GROUP4</strong>. Проверка групп будет выглядеть следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">IF SCREEN-GROUP1 = ‘GR1’.
+
+   SCREEN-INVISIBLE = '1'.
+
+   SCREEN-ACTIVE = '0'.
+
+   MODIFY SCREEN.
+
+ENDIF.</pre><p>Данный способ больше подходит для обычного экрана, т.к. если мы внесём свои группы в поля селекционного экрана, то, если в будущем произойдёт перегенерация экрана, все группы затрутся.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/abaphr-ru-sokrytie-polej-vvoda-na-selekcionnom-ekrane/">Сокрытие полей ввода на селекционном экране</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/abaphr-ru-sokrytie-polej-vvoda-na-selekcionnom-ekrane/feed/</wfw:commentRss>
+			<slash:comments>5</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

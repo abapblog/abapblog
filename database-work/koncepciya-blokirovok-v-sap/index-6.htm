@@ -1,0 +1,578 @@
+﻿<!DOCTYPE html>
+<html lang="ru-RU" id="html">
+<head>
+		<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="profile" href="../../xfn/11.html">
+	<link rel="pingback" href="https://abap-blog.ru/xmlrpc.php">
+	<title>ABAP Blog | Концепция блокировок в SAP</title>
+
+		<!-- All in One SEO 4.1.4.4 -->
+		<meta name="description" content="Если несколько программ конкурируют за доступ к одним и тем же данным, Вам необходимо обеспечить синхронизацию обращения к этим данным чтобы они оставались корректными и работа логики приложений не была нарушена. К примеру, если в системе резервирования билетов необходимо оформить билет на рейс, необходимо защитить данные в таблице хранящей записи о рейсах, чтобы во время […]">
+		<meta name="robots" content="max-image-preview:large">
+		<meta name="keywords" content="dequeue,dequeue_all,enqueue,enqueue_read,sm12,система блокировок,работа с бд">
+		<link rel="canonical" href="index.htm">
+		<script type="application/ld+json" class="aioseo-schema">
+			{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebSite","@id":"https:\/\/abap-blog.ru\/#website","url":"https:\/\/abap-blog.ru\/","name":"ABAP Blog","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445 \u043e\u0442 SAP","inLanguage":"ru-RU","publisher":{"@id":"https:\/\/abap-blog.ru\/#person"}},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/#person","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/database-work\/koncepciya-blokirovok-v-sap\/#personImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"BreadcrumbList","@id":"https:\/\/abap-blog.ru\/database-work\/koncepciya-blokirovok-v-sap\/#breadcrumblist","itemListElement":[{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/#listItem","position":1,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/","name":"\u0413\u043b\u0430\u0432\u043d\u0430\u044f","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 SAP \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445: ABAP, HANA, UI5, OData, Fiori.","url":"https:\/\/abap-blog.ru\/"},"nextItem":"https:\/\/abap-blog.ru\/database-work\/#listItem"},{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/database-work\/#listItem","position":2,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/database-work\/","name":"\u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u0411\u0414","description":"\u0415\u0441\u043b\u0438 \u043d\u0435\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c \u043a\u043e\u043d\u043a\u0443\u0440\u0438\u0440\u0443\u044e\u0442 \u0437\u0430 \u0434\u043e\u0441\u0442\u0443\u043f \u043a \u043e\u0434\u043d\u0438\u043c \u0438 \u0442\u0435\u043c \u0436\u0435 \u0434\u0430\u043d\u043d\u044b\u043c, \u0412\u0430\u043c \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u043e\u0431\u0435\u0441\u043f\u0435\u0447\u0438\u0442\u044c \u0441\u0438\u043d\u0445\u0440\u043e\u043d\u0438\u0437\u0430\u0446\u0438\u044e \u043e\u0431\u0440\u0430\u0449\u0435\u043d\u0438\u044f \u043a \u044d\u0442\u0438\u043c \u0434\u0430\u043d\u043d\u044b\u043c \u0447\u0442\u043e\u0431\u044b \u043e\u043d\u0438 \u043e\u0441\u0442\u0430\u0432\u0430\u043b\u0438\u0441\u044c \u043a\u043e\u0440\u0440\u0435\u043a\u0442\u043d\u044b\u043c\u0438 \u0438 \u0440\u0430\u0431\u043e\u0442\u0430 \u043b\u043e\u0433\u0438\u043a\u0438 \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u0439 \u043d\u0435 \u0431\u044b\u043b\u0430 \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0430. \u041a \u043f\u0440\u0438\u043c\u0435\u0440\u0443, \u0435\u0441\u043b\u0438 \u0432 \u0441\u0438\u0441\u0442\u0435\u043c\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f \u0431\u0438\u043b\u0435\u0442\u043e\u0432 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u043e\u0444\u043e\u0440\u043c\u0438\u0442\u044c \u0431\u0438\u043b\u0435\u0442 \u043d\u0430 \u0440\u0435\u0439\u0441, \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u0437\u0430\u0449\u0438\u0442\u0438\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0435 \u0432 \u0442\u0430\u0431\u043b\u0438\u0446\u0435 \u0445\u0440\u0430\u043d\u044f\u0449\u0435\u0439 \u0437\u0430\u043f\u0438\u0441\u0438 \u043e \u0440\u0435\u0439\u0441\u0430\u0445, \u0447\u0442\u043e\u0431\u044b \u0432\u043e \u0432\u0440\u0435\u043c\u044f [\u2026]","url":"https:\/\/abap-blog.ru\/database-work\/"},"nextItem":"https:\/\/abap-blog.ru\/database-work\/koncepciya-blokirovok-v-sap\/#listItem","previousItem":"https:\/\/abap-blog.ru\/#listItem"},{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/database-work\/koncepciya-blokirovok-v-sap\/#listItem","position":3,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/database-work\/koncepciya-blokirovok-v-sap\/","name":"\u041a\u043e\u043d\u0446\u0435\u043f\u0446\u0438\u044f \u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u043e\u043a \u0432 SAP","description":"\u0415\u0441\u043b\u0438 \u043d\u0435\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c \u043a\u043e\u043d\u043a\u0443\u0440\u0438\u0440\u0443\u044e\u0442 \u0437\u0430 \u0434\u043e\u0441\u0442\u0443\u043f \u043a \u043e\u0434\u043d\u0438\u043c \u0438 \u0442\u0435\u043c \u0436\u0435 \u0434\u0430\u043d\u043d\u044b\u043c, \u0412\u0430\u043c \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u043e\u0431\u0435\u0441\u043f\u0435\u0447\u0438\u0442\u044c \u0441\u0438\u043d\u0445\u0440\u043e\u043d\u0438\u0437\u0430\u0446\u0438\u044e \u043e\u0431\u0440\u0430\u0449\u0435\u043d\u0438\u044f \u043a \u044d\u0442\u0438\u043c \u0434\u0430\u043d\u043d\u044b\u043c \u0447\u0442\u043e\u0431\u044b \u043e\u043d\u0438 \u043e\u0441\u0442\u0430\u0432\u0430\u043b\u0438\u0441\u044c \u043a\u043e\u0440\u0440\u0435\u043a\u0442\u043d\u044b\u043c\u0438 \u0438 \u0440\u0430\u0431\u043e\u0442\u0430 \u043b\u043e\u0433\u0438\u043a\u0438 \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u0439 \u043d\u0435 \u0431\u044b\u043b\u0430 \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0430. \u041a \u043f\u0440\u0438\u043c\u0435\u0440\u0443, \u0435\u0441\u043b\u0438 \u0432 \u0441\u0438\u0441\u0442\u0435\u043c\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f \u0431\u0438\u043b\u0435\u0442\u043e\u0432 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u043e\u0444\u043e\u0440\u043c\u0438\u0442\u044c \u0431\u0438\u043b\u0435\u0442 \u043d\u0430 \u0440\u0435\u0439\u0441, \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u0437\u0430\u0449\u0438\u0442\u0438\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0435 \u0432 \u0442\u0430\u0431\u043b\u0438\u0446\u0435 \u0445\u0440\u0430\u043d\u044f\u0449\u0435\u0439 \u0437\u0430\u043f\u0438\u0441\u0438 \u043e \u0440\u0435\u0439\u0441\u0430\u0445, \u0447\u0442\u043e\u0431\u044b \u0432\u043e \u0432\u0440\u0435\u043c\u044f [\u2026]","url":"https:\/\/abap-blog.ru\/database-work\/koncepciya-blokirovok-v-sap\/"},"previousItem":"https:\/\/abap-blog.ru\/database-work\/#listItem"}]},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/author\/admin\/#author","url":"https:\/\/abap-blog.ru\/author\/admin\/","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/database-work\/koncepciya-blokirovok-v-sap\/#authorImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/database-work\/koncepciya-blokirovok-v-sap\/#webpage","url":"https:\/\/abap-blog.ru\/database-work\/koncepciya-blokirovok-v-sap\/","name":"ABAP Blog | \u041a\u043e\u043d\u0446\u0435\u043f\u0446\u0438\u044f \u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u043e\u043a \u0432 SAP","description":"\u0415\u0441\u043b\u0438 \u043d\u0435\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c \u043a\u043e\u043d\u043a\u0443\u0440\u0438\u0440\u0443\u044e\u0442 \u0437\u0430 \u0434\u043e\u0441\u0442\u0443\u043f \u043a \u043e\u0434\u043d\u0438\u043c \u0438 \u0442\u0435\u043c \u0436\u0435 \u0434\u0430\u043d\u043d\u044b\u043c, \u0412\u0430\u043c \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u043e\u0431\u0435\u0441\u043f\u0435\u0447\u0438\u0442\u044c \u0441\u0438\u043d\u0445\u0440\u043e\u043d\u0438\u0437\u0430\u0446\u0438\u044e \u043e\u0431\u0440\u0430\u0449\u0435\u043d\u0438\u044f \u043a \u044d\u0442\u0438\u043c \u0434\u0430\u043d\u043d\u044b\u043c \u0447\u0442\u043e\u0431\u044b \u043e\u043d\u0438 \u043e\u0441\u0442\u0430\u0432\u0430\u043b\u0438\u0441\u044c \u043a\u043e\u0440\u0440\u0435\u043a\u0442\u043d\u044b\u043c\u0438 \u0438 \u0440\u0430\u0431\u043e\u0442\u0430 \u043b\u043e\u0433\u0438\u043a\u0438 \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u0439 \u043d\u0435 \u0431\u044b\u043b\u0430 \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0430. \u041a \u043f\u0440\u0438\u043c\u0435\u0440\u0443, \u0435\u0441\u043b\u0438 \u0432 \u0441\u0438\u0441\u0442\u0435\u043c\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f \u0431\u0438\u043b\u0435\u0442\u043e\u0432 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u043e\u0444\u043e\u0440\u043c\u0438\u0442\u044c \u0431\u0438\u043b\u0435\u0442 \u043d\u0430 \u0440\u0435\u0439\u0441, \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u0437\u0430\u0449\u0438\u0442\u0438\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0435 \u0432 \u0442\u0430\u0431\u043b\u0438\u0446\u0435 \u0445\u0440\u0430\u043d\u044f\u0449\u0435\u0439 \u0437\u0430\u043f\u0438\u0441\u0438 \u043e \u0440\u0435\u0439\u0441\u0430\u0445, \u0447\u0442\u043e\u0431\u044b \u0432\u043e \u0432\u0440\u0435\u043c\u044f [\u2026]","inLanguage":"ru-RU","isPartOf":{"@id":"https:\/\/abap-blog.ru\/#website"},"breadcrumb":{"@id":"https:\/\/abap-blog.ru\/database-work\/koncepciya-blokirovok-v-sap\/#breadcrumblist"},"author":"https:\/\/abap-blog.ru\/author\/admin\/#author","creator":"https:\/\/abap-blog.ru\/author\/admin\/#author","datePublished":"2014-01-10T02:00:33+04:00","dateModified":"2021-03-02T06:09:27+04:00"},{"@type":"Article","@id":"https:\/\/abap-blog.ru\/database-work\/koncepciya-blokirovok-v-sap\/#article","name":"ABAP Blog | \u041a\u043e\u043d\u0446\u0435\u043f\u0446\u0438\u044f \u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u043e\u043a \u0432 SAP","description":"\u0415\u0441\u043b\u0438 \u043d\u0435\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c \u043a\u043e\u043d\u043a\u0443\u0440\u0438\u0440\u0443\u044e\u0442 \u0437\u0430 \u0434\u043e\u0441\u0442\u0443\u043f \u043a \u043e\u0434\u043d\u0438\u043c \u0438 \u0442\u0435\u043c \u0436\u0435 \u0434\u0430\u043d\u043d\u044b\u043c, \u0412\u0430\u043c \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u043e\u0431\u0435\u0441\u043f\u0435\u0447\u0438\u0442\u044c \u0441\u0438\u043d\u0445\u0440\u043e\u043d\u0438\u0437\u0430\u0446\u0438\u044e \u043e\u0431\u0440\u0430\u0449\u0435\u043d\u0438\u044f \u043a \u044d\u0442\u0438\u043c \u0434\u0430\u043d\u043d\u044b\u043c \u0447\u0442\u043e\u0431\u044b \u043e\u043d\u0438 \u043e\u0441\u0442\u0430\u0432\u0430\u043b\u0438\u0441\u044c \u043a\u043e\u0440\u0440\u0435\u043a\u0442\u043d\u044b\u043c\u0438 \u0438 \u0440\u0430\u0431\u043e\u0442\u0430 \u043b\u043e\u0433\u0438\u043a\u0438 \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u0439 \u043d\u0435 \u0431\u044b\u043b\u0430 \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0430. \u041a \u043f\u0440\u0438\u043c\u0435\u0440\u0443, \u0435\u0441\u043b\u0438 \u0432 \u0441\u0438\u0441\u0442\u0435\u043c\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f \u0431\u0438\u043b\u0435\u0442\u043e\u0432 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u043e\u0444\u043e\u0440\u043c\u0438\u0442\u044c \u0431\u0438\u043b\u0435\u0442 \u043d\u0430 \u0440\u0435\u0439\u0441, \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u0437\u0430\u0449\u0438\u0442\u0438\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0435 \u0432 \u0442\u0430\u0431\u043b\u0438\u0446\u0435 \u0445\u0440\u0430\u043d\u044f\u0449\u0435\u0439 \u0437\u0430\u043f\u0438\u0441\u0438 \u043e \u0440\u0435\u0439\u0441\u0430\u0445, \u0447\u0442\u043e\u0431\u044b \u0432\u043e \u0432\u0440\u0435\u043c\u044f [\u2026]","inLanguage":"ru-RU","headline":"\u041a\u043e\u043d\u0446\u0435\u043f\u0446\u0438\u044f \u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u043e\u043a \u0432 SAP","author":{"@id":"https:\/\/abap-blog.ru\/author\/admin\/#author"},"publisher":{"@id":"https:\/\/abap-blog.ru\/#person"},"datePublished":"2014-01-10T02:00:33+04:00","dateModified":"2021-03-02T06:09:27+04:00","commentCount":8,"articleSection":"\u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u0411\u0414, DEQUEUE, DEQUEUE_ALL, ENQUEUE, ENQUEUE_READ, SM12, \u0421\u0438\u0441\u0442\u0435\u043c\u0430 \u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u043e\u043a","mainEntityOfPage":{"@id":"https:\/\/abap-blog.ru\/database-work\/koncepciya-blokirovok-v-sap\/#webpage"},"isPartOf":{"@id":"https:\/\/abap-blog.ru\/database-work\/koncepciya-blokirovok-v-sap\/#webpage"},"image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/#articleImage","url":"https:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/03\/1.png","width":1440,"height":916}}]}
+		</script>
+		<script type="text/javascript">
+			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+			ga('create', "UA-150412824-1", { 'cookieDomain': 'abap-blog.ru' } );
+			ga('require', 'outboundLinkTracker');
+			ga('send', 'pageview');
+		</script>
+		<script async="" src="../../analytics.js"></script>
+		<script async="" src="../../wp-content/plugins/all-in-one-seo-pack/app/Common/Assets/js/autotrack.js?ver=4.1.4.4"></script>
+		<!-- All in One SEO -->
+
+<link rel='dns-prefetch' href='../../index-1.htm'>
+<link rel='dns-prefetch' href='//fonts.googleapis.com'>
+<link rel='dns-prefetch' href='../../index-2.htm'>
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента" href="../../feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев" href="../../comments/feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев к &laquo;Концепция блокировок в SAP&raquo;" href="feed/index.htm.rss">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/abap-blog.ru\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8.1"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='urvanov_syntax_highlighter-css' href='../../wp-content/plugins/urvanov-syntax-highlighter/css/min/urvanov_syntax_highlighter.min.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='wp-block-library-css' href='../../wp-includes/css/dist/block-library/style.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='arve-main-css' href='../../wp-content/plugins/advanced-responsive-video-embedder/build/main.css?ver=b809f4d4c33c91a5ae3a5099af09bdde' media='all'>
+<link rel='stylesheet' id='contact-form-7-css' href='../../wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.5.1' media='all'>
+<link rel='stylesheet' id='bg-shce-genericons-css' href='../../wp-content/plugins/show-hidecollapse-expand/assets/css/genericons/genericons.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='bg-show-hide-css' href='../../wp-content/plugins/show-hidecollapse-expand/assets/css/bg-show-hide.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='dashicons-css' href='../../wp-includes/css/dashicons.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='tooltip-css' href='../../wp-content/plugins/wp-poll/assets/tool-tip.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-cb-css' href='../../wp-content/plugins/wp-poll/assets/front/css/checkbox.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-css' href='../../wp-content/plugins/wp-poll/assets/front/css/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='flat-fonts-css' href='../../css.css?family=Lobster%7CRoboto:400,700%7CRoboto+Slab%7CRoboto%20Condensed' media='all'>
+<link rel='stylesheet' id='flat-theme-css' href='../../wp-content/themes/flat/assets/css/flat.css?ver=1.7.11' media='all'>
+<link rel='stylesheet' id='flat-style-css' href='../../wp-content/themes/flat/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='slb_core-css' href='../../wp-content/plugins/simple-lightbox/client/css/app.css?ver=2.8.1' media='all'>
+<link rel='stylesheet' id='decent-comments-widget-css' href='../../wp-content/plugins/decent-comments/css/decent-comments-widget.css' media='all'>
+<script src='../../wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script src='../../wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' id='urvanov_syntax_highlighter_js-js-extra'>
+/* <![CDATA[ */
+var UrvanovSyntaxHighlighterSyntaxSettings = {"version":"2.8.22","is_admin":"0","ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","prefix":"urvanov-syntax-highlighter-","setting":"urvanov-syntax-highlighter-setting","selected":"urvanov-syntax-highlighter-setting-selected","changed":"urvanov-syntax-highlighter-setting-changed","special":"urvanov-syntax-highlighter-setting-special","orig_value":"data-orig-value","debug":""};
+var UrvanovSyntaxHighlighterSyntaxStrings = {"copy":"\u041d\u0430\u0436\u043c\u0438\u0442\u0435 %s \u0434\u043b\u044f \u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f, %s \u0434\u043b\u044f \u0432\u0441\u0442\u0430\u0432\u043a\u0438","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/urvanov-syntax-highlighter/js/min/urvanov_syntax_highlighter.min.js?ver=2.8.22' id='urvanov_syntax_highlighter_js-js'></script>
+<script src='../../wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.7' id='regenerator-runtime-js'></script>
+<script src='../../wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
+<script async="async" src='../../wp-content/plugins/advanced-responsive-video-embedder/build/main.js?ver=b809f4d4c33c91a5ae3a5099af09bdde' id='arve-main-js'></script>
+<script src='../../wp-content/plugins/wp-poll/assets/front/js/svgcheckbx.js?ver=5.8.1' id='wpp-front-cb-js'></script>
+<script type='text/javascript' id='wpp-front-js-extra'>
+/* <![CDATA[ */
+var wpp_object = {"ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","copyText":"Copied !","voteText":"Vote(s)","tempProDownload":"https:\/\/pluginbazar.com\/my-account\/downloads\/","tempProDownloadTxt":"Download Version 1.1.0"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/wp-poll/assets/front/js/scripts.js?ver=5.8.1' id='wpp-front-js'></script>
+<script src='../../wp-content/themes/flat/assets/js/flat.js?ver=1.7.11' id='flat-js-js'></script>
+<!--[if lt IE 9]>
+<script src='https://abap-blog.ru/wp-content/themes/flat/assets/js/html5shiv.min.js?ver=3.7.2' id='html5shiv-js'></script>
+<![endif]-->
+<link rel="https://api.w.org/" href="../../wp-json/index.htm.json"><link rel="alternate" type="application/json" href="../../wp-json/wp/v2/posts/570.json"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="../../xmlrpc.php.xml?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../../wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.8.1">
+<link rel='shortlink' href='index.htm?p=570'>
+<link rel="alternate" type="application/json+oembed" href="../../wp-json/oembed/1.0/embed-326.json?url=https%3A%2F%2Fabap-blog.ru%2Fdatabase-work%2Fkoncepciya-blokirovok-v-sap%2F">
+<link rel="alternate" type="text/xml+oembed" href="../../wp-json/oembed/1.0/embed-326.xml?url=https%3A%2F%2Fabap-blog.ru%2Fdatabase-work%2Fkoncepciya-blokirovok-v-sap%2F&#038;format=xml">
+
+<!-- WP Youtube Player 1.7 by unijimpe -->
+<style type="text/css">#page:before, .sidebar-offcanvas, #secondary { background-color: #272727; }@media (max-width: 1199px) { #page &gt; .container { background-color: #272727; } }body { background-size: initial; }</style><style type="text/css">#masthead .site-title {font-family:Lobster}body {font-family:Roboto }h1,h2,h3,h4,h5,h6 {font-family:Roboto Slab}#masthead .site-description, .hentry .entry-meta {font-family:Roboto Condensed}</style><style type="text/css" media="screen">body{position:relative}#dynamic-to-top{display:none;overflow:hidden;width:auto;z-index:90;position:fixed;bottom:20px;right:20px;top:auto;left:auto;font-family:sans-serif;font-size:1em;color:#fff;text-decoration:none;text-shadow:0 1px 0 #333;font-weight:bold;padding:17px 16px;border:2px solid #000;background:#4c5055;-webkit-background-origin:border;-moz-background-origin:border;-icab-background-origin:border;-khtml-background-origin:border;-o-background-origin:border;background-origin:border;-webkit-background-clip:padding-box;-moz-background-clip:padding-box;-icab-background-clip:padding-box;-khtml-background-clip:padding-box;-o-background-clip:padding-box;background-clip:padding-box;-webkit-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-ms-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-moz-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-o-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-khtml-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-icab-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-webkit-border-radius:30px;-moz-border-radius:30px;-icab-border-radius:30px;-khtml-border-radius:30px;border-radius:30px}#dynamic-to-top:hover{background:#4fd650;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 255, 255, 255, .2 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );cursor:pointer}#dynamic-to-top:active{background:#4c5055;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 0, 0, 0, .3 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) )}#dynamic-to-top,#dynamic-to-top:active,#dynamic-to-top:focus,#dynamic-to-top:hover{outline:none}#dynamic-to-top span{display:block;overflow:hidden;width:14px;height:12px;background:url( ../../wp-content/plugins/dynamic-to-top/css/images/up.png )no-repeat center center}</style><style type="text/css" id="custom-background-css">
+body.custom-background { background-image: url("../../wp-content/uploads/2014/10/escheresque_ste.png"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+		</head>
+
+<body class="post-template-default single single-post postid-570 single-format-standard custom-background" itemscope="" itemtype="http://schema.org/WebPage">
+		<div id="page">
+	<div class="container">
+		<div class="row row-offcanvas row-offcanvas-left" style="background: #272727;">			
+			
+			<div id="secondary1" class="col-lg-t" style="background: #272727; display:none">
+								<header id="masthead1" class="site-headerex" role="banner">
+										<div class="hgroupex">
+						<h1 class="site-title display-title"><a href="../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+									</header>
+							</div>
+
+
+			<div id="secondary" class="col-lg-3" style="display:block">
+								<header id="masthead" class="site-header" role="banner">
+										<div class="hgroup">
+						<h1 class="site-title display-title"><a href="../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+					<button type="button" class="btn btn-link hidden-lg toggle-sidebar" data-toggle="offcanvas" aria-label="Sidebar"><i class="fa fa-gear"></i></button>
+					<button type="button" class="btn btn-link hidden-lg toggle-navigation" aria-label="Navigation Menu"><i class="fa fa-bars"></i></button>
+					<nav id="site-navigation" class="navigation main-navigation" role="navigation">
+						<ul id="menu-glavnoe-menyu" class="nav-menu"><li id="menu-item-2313" class="fa fa-home menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-2313"><a href="../../index.htm">Главная</a>
+<ul class="sub-menu">
+	<li id="menu-item-2363" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2363"><a href="../../category/osnovy-abap/index.htm">Основы ABAP</a>
+	<ul class="sub-menu">
+		<li id="menu-item-2906" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2906"><a href="../../category/osnovy-abap/oop/index.htm">ABAP Objects</a></li>
+		<li id="menu-item-2370" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2370"><a href="../../category/osnovy-abap/slovar/index.htm">ABAP Словарь</a></li>
+		<li id="menu-item-2367" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2367"><a href="../../category/osnovy-abap/files/index.htm">Работа с файлами</a></li>
+		<li id="menu-item-2364" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2364"><a href="../../category/osnovy-abap/sap-dynpro/index.htm">SAP Dynpro</a></li>
+		<li id="menu-item-6845" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6845"><a href="../../category/osnovy-abap/vnutrennie-tablicy/index.htm">Внутренние таблицы</a></li>
+		<li id="menu-item-6849" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6849"><a href="../../category/osnovy-abap/dinamicheskoe-programmirovanie/index.htm">Динамическое программирование</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2366" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children menu-item-2366"><a href="../../category/database-work/index.htm">Работа с БД</a>
+	<ul class="sub-menu">
+		<li id="menu-item-7303" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7303"><a href="../../category/hana/index.htm">HANA</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2368" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2368"><a href="../../category/network/index.htm">Сетевые технологии</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6328" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6328"><a href="../../category/network/ui5fiori/index.htm">UI5 &amp; Fiori</a></li>
+		<li id="menu-item-6327" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6327"><a href="../../category/network/odata-network/index.htm">OData</a></li>
+		<li id="menu-item-2907" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2907"><a href="../../category/network/web-dynpro/index.htm">Web Dynpro</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2369" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2369"><a href="../../category/enhancements/index.htm">Расширения</a></li>
+	<li id="menu-item-6329" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6329"><a href="../../category/abap-cloud/index.htm">ABAP Cloud</a></li>
+	<li id="menu-item-2365" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2365"><a href="../../category/others/index.htm">Прочее</a></li>
+</ul>
+</li>
+<li id="menu-item-3536" class="fa fa-bell menu-item menu-item-type-post_type menu-item-object-page menu-item-3536"><a href="../../abap-the-best-practice/index.htm">ABAP Best Practice</a></li>
+<li id="menu-item-3727" class="fa fa-child menu-item menu-item-type-post_type menu-item-object-page menu-item-3727"><a href="../../vakansii/index.htm">Вакансии ABAP</a></li>
+<li id="menu-item-3885" class="fa fa-bookmark menu-item menu-item-type-post_type menu-item-object-page menu-item-3885"><a href="../../abap-notes/index.htm">Быстрые заметки</a></li>
+<li id="menu-item-2316" class="fa fa-info-circle menu-item menu-item-type-post_type menu-item-object-page menu-item-2316"><a href="../../about/index.htm">Обо мне</a></li>
+</ul>					</nav>
+									</header>
+				
+				<div class="sidebar-offcanvas">
+<div id="main-sidebar" class="widget-area" role="complementary">
+											<aside id="search-2" class="widget widget_search">
+	<form method="get" id="searchform" action="https://abap-blog.ru/">
+		<label for="s" class="assistive-text">Поиск</label>
+		<input type="text" class="field" name="s" id="s" placeholder="Поиск">
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Поиск">
+	</form>
+					</aside>
+					<aside id="linkcat-2" class="widget widget_links">
+						<h3 class='widget-title'>Ссылки</h3>
+
+	<ul class='xoxo blogroll'>
+<li><a href="../../topics/abap.html" target="_blank">ABAP Community</a></li>
+<li><a href="../../wiki/display/ABAP/ABAP Development.html" title="Wiki по ABAP" target="_blank">ABAP Development Wiki</a></li>
+<li><a href="../../doc/abapdocu_latest_index_htm/latest/en-US/index.htm" title="Последняя версия справки по ABAP" target="_blank">ABAP Help</a></li>
+<li><a href="../../doc/abapdocu_cp_index_htm/CLOUD/en-US/index.htm" target="_blank">ABAP Help (Cloud)</a></li>
+<li><a href="../../learning-journeys/overview.html?role=Developer" target="_blank">Developer Learning Journeys</a></li>
+<li><a href="../../index-3.htm" target="_blank">Open Source Projects</a></li>
+<li><a href="../../tutorial-navigator.html" target="_blank">SAP Tutorials</a></li>
+<li><a href="https://t.me/abapblog" target="_blank"><img src="../../wp-content/uploads/2020/04/telegram-1.png" alt="Канал в Telegram"> Канал в Telegram</a></li>
+
+	</ul>
+					</aside>
+
+					<aside id="endo_wrc_widget-2" class="widget widget_endo_wrc_widget">
+						<h3 class='widget-title'>Цитаты</h3>
+<p>Самый лучший способ чему-то научиться — учить других. Факты запоминаются быстрее всего тогда, когда вы должны их сообщить другим людям, за которых вы отвечаете. Таким образом, основную пользу отпреподавания получает прежде всего преподаватель.<br>
+<strong>Р.Мартин</strong></p>
+					</aside>
+								<aside id="custom-post-type-recent-posts-3" class="widget widget_recent_entries">
+						<h3 class='widget-title'>Новое</h3>
+			<ul>
+													<li>
+										<a href="../../abap-notes/poluchenie-instancii-cl_gui_alv_grid-dlya-salv/index.htm">Получение инстанции cl_gui_alv_grid для SALV</a>
+											<span class="post-date">11.09.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-cloud/introduction-to-abap-in-the-cloud/index.htm">Introduction to ABAP in the Cloud</a>
+											<span class="post-date">18.08.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/getting-started-with-fpm-bopf-integration/index.htm">Getting Started with FPM BOPF Integration</a>
+											<span class="post-date">01.06.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/how-to-use-authority-checks-in-business-object-processing-framework/index.htm">30. How to Use Authority Checks in Business Object Processing Framework</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-extensibility/index.htm">29. BOPF Extensibility</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-enterprise-procurement-model-epm/index.htm">28. BOPF Enterprise Procurement Model (EPM)</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-integration/index.htm">27. BOPF Integration</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-business-configuration-objects/index.htm">26. BOPF Business Configuration Objects</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-performance/index.htm">25. BOPF Performance</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-supportability/index.htm">24. BOPF Supportability</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+							</ul>
+								</aside>
+					<aside id="decent_comments_widget-2" class="widget widget_decent_comments_widget">
+						<h3 class='widget-title'>Последние комментарии</h3>
+<div class="decent-comments"><ul><li><div class="comment"><span class="comment-author">Николай</span><span class="comment-date"> 27.10.2021 в 15:19</span><span class="comment-link"> на <a href="../../osnovy-abap/internal-table-as-data-source-select/index.htm#comment-17857">Внутренние таблицы как источник в SQL запросах</a></span><span class="comment-excerpt">Спасибо за статью. Если нужно сделать агрегацию внутренней таблицы то агрегация через передачу во временную таблицу на БД тоже будет работать медленней чем через loop/collect? Например таблица 100к записей, которая становится 5к после агрегации. </span></div></li><li><div class="comment"><span class="comment-author">Аноним</span><span class="comment-date"> 14.10.2021 в 13:50</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17856">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Так поведение Decorator не надо будет повторно описывать повторно в других Component. Но это возможно при изменении типа mo_component, например, на object. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 11.10.2021 в 06:50</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17854">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет:) Возможно, я не так выразил мысль. Я имел ввиду, какая ценность от класса Decorator, если можно декорировать поведение от Component и от него же наследовать конкретные декораторы? (см. первую UML диаграмму) </span></div></li><li><div class="comment"><span class="comment-author">Astrafox</span><span class="comment-date"> 10.10.2021 в 12:39</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17853">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет! Можно и так, однако конкретный компонент может иметь более широкий интерфейс, нежели тот, что нужен в декораторах. Тут скорее пример не совсем удачный, декорируемое поведение лучше вынести в отдельный интерфейс, реализуемый как компонентом, так и декораторами. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 04.10.2021 в 12:51</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17850">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">А какую роль играет базовый класс декоратора lcl_decorator? Что мешает конкретные декораторы наследовать от компонента lcl_concrete_component? Клиентский код и логика выполнения не поменяется. </span></div></li></ul></div>					</aside>
+											</div>
+				</div>
+			</div>
+
+						<div id="primary" class="content-area col-lg-9" itemprop="mainContentOfPage" style="">
+							<div id="content" class="site-content" role="main" itemscope="" itemtype="http://schema.org/Article">
+			<article id="post-570" class="post-570 post type-post status-publish format-standard hentry category-database-work tag-dequeue tag-dequeue_all tag-enqueue tag-enqueue_read tag-sm12 tag-sistema-blokirovok">
+	<header class="entry-header">
+		<h1 class="entry-title" itemprop="name">Концепция блокировок в SAP</h1>
+							<div class="entry-meta"><span class="entry-date"><a href="index.htm" rel="bookmark"><time class="entry-date published" datetime="2014-01-10T06:00:33+04:00" itemprop="datepublished">10.01.2014</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="index.htm#comments" itemprop="discussionUrl">8 комментариев</a></span></div>
+			</header>
+		
+	
+	<div class="entry-content" itemprop="articleBody">
+				<p>Если несколько программ конкурируют за доступ к одним и тем же данным, Вам необходимо обеспечить синхронизацию обращения к этим данным чтобы они оставались корректными и работа логики приложений не была нарушена.</p>
+<p><strong>К примеру</strong>, если в системе резервирования билетов необходимо оформить билет на рейс, необходимо защитить данные в таблице хранящей записи о рейсах, чтобы во время оформления другая программа не успела зарезервировать место раньше.</p>
+<p><span id="more-570"></span></p>
+<p><a href="../../wp-content/uploads/2012/03/1.png" data-slb-active="1" data-slb-asset="1887848061" data-slb-internal="0" data-slb-group="570"><img loading="lazy" class="alignnone wp-image-571" title="1" src="../../wp-content/uploads/2012/03/1.png" alt="" width="518" height="330" srcset="../../wp-content/uploads/2012/03/1.png 1440w, ../../wp-content/uploads/2012/03/1-300x190.png 300w, ../../wp-content/uploads/2012/03/1-1024x651.png 1024w" sizes="(max-width: 518px) 100vw, 518px"></a></p>
+<p>С помощью блокировок можно скоординировать доступ к критичным данным. Программа должна предварительно запросить блокировку на эти данные. В данном случае необходимо чтобы программа как можно раньше сняла блокировку, чтобы не задерживать выполнение других.</p>
+<p>СУБД физически блокирует записи в таблице во время их изменения, например: если используется синтаксис <strong>SELECT SINGLE &lt;f&gt; FROM</strong><strong>&lt;dbtab&gt; FOR UPDATE</strong>. Другие пользователи, которые хотят изменить те же данные, должны ожидать пока физическая блокировка будет снята. В конце ЛЕР (логической единицы работы, англ. LUW) базы данных все физические блокировки снимаются. В системе R3 это означает что при каждой смене экрана, будет сниматься физическая блокировка базы данных, так как при смене экрана вызывается неявный DB COMMIT, тем самым завершая ЛЕР базы данных.  Следовательно, физической блокировки записей средствами СУБД не достаточно, если данные собираются на нескольких экранах и необходимо сохранять блокировку во время их переключения. (использование множества экранов при сборе данных не является единственным вариантом вызова неявного DB Commit).</p>
+<p>Для сохранения блокировки, в случае использования множества экранов (и не только), в системе R3 используется глобальная таблица блокировок, которая служит для установки <strong>логических блокировок</strong> для записей в таблицах. Все логические блокировки (далее блокировки) не зависят от сервера приложений, на котором они были вызваны, т.о. они являются общими для всех серверов приложений.</p>
+<p>Кроме того вы можете использовать блокировки даже для тех записей, которых ещё не существует в системе.</p>
+<p>Допускается использование специального символа @ при передаче значений параметров. Если указать в качестве значения параметра &#8212; 12345@, будут заблокированы объекты в диапазонах: от 123450 до 123459, от 12345a до 12345z, от 12345A до 12345Z и все объекты со специальными символами в 6-й позиции.</p>
+<p>Логические блокировки вызываются модулем блокировки, который создаётся для объекта блокировки. Для вызова блокировки вызывается модуль ENQUEUE_&lt;имяОбъекта&gt;. Для снятия блокировки необходимо вызвать модуль DEQUEUE_&lt;ИмяОбъекта&gt;. Создаётся объект блокировки в транзакции SE11 (ABAP словарь). Например: объект EMMARCE блокирует таблицу MARC от записи. На вкладке ПарамБлокировки задаётся уровень блокировки:</p>
+<p><a href="../../wp-content/uploads/2012/03/3.png" data-slb-active="1" data-slb-asset="360704257" data-slb-internal="0" data-slb-group="570"><img loading="lazy" class="alignnone size-full wp-image-573" title="3" src="../../wp-content/uploads/2012/03/3.png" alt="" width="663" height="219" srcset="../../wp-content/uploads/2012/03/3.png 663w, ../../wp-content/uploads/2012/03/3-300x99.png 300w" sizes="(max-width: 663px) 100vw, 663px"></a></p>
+<p>Таким образом, мы можем заблокировать таблицу от записи на уровне манданта, материала, завода.  Свои объекты блокировок должны называться, начиная с EY или EZ. <em>Кроме того важной особенностью системы блокировок является то, что мы можем заблокировать еще не созданный (не существующий) объект.</em> После создания и активации объекта блокировок, модули блокирования/деблокирования создаются автоматически.</p>
+<h3>Установка, настройка и администрирование логических блокировок</h3>
+<p><a href="../../wp-content/uploads/2012/03/4.png" data-slb-active="1" data-slb-asset="652686656" data-slb-internal="0" data-slb-group="570"><img loading="lazy" class="alignnone wp-image-574" title="4" src="../../wp-content/uploads/2012/03/4.png" alt="" width="518" height="304" srcset="../../wp-content/uploads/2012/03/4.png 1440w, ../../wp-content/uploads/2012/03/4-300x176.png 300w, ../../wp-content/uploads/2012/03/4-1024x600.png 1024w" sizes="(max-width: 518px) 100vw, 518px"></a></p>
+<p>При вызове модуля блокирования система может вернуть два исключения. Первое FOREIGN_LOCK – означает, что блокировка уже установлена ранее.  SYSTEM_FAILURE – системная ошибка механизма блокировок.</p>
+<p>Данные исключения необходимо корректно обработать, например: попросить пользователя подождать или сообщить о блокировании ресурса. Обратите внимание, что если блокировка не сработает, из-за уже установленной ранее, в системные переменные сообщений запишутся данные об ошибке, в частности параметр <strong>SY-MSGV1</strong> будет содержать имя пользователя установившего блокировку.</p>
+<p>В случае завершения работы ABAP программы, все блокировки снимаются автоматически (неявно, но если произойдёт разрыв сети, то блокировка какое-то время будет «висеть» в системе).  Кроме того, блокировки могут так же сниматься программой обновления, за эту логику отвечает параметр _SCOPE (описание ниже). При вызове сообщений с типом X или A, вызовом команды LEAVE PROGRAM, LEAVE TO TRANSACTION или вводом команды /n блокировки так же снимаются.</p>
+<p>Если вы хотите снять все блокировки в программе можно воспользоваться ФМ: DEQUEUE_ALL.  Для просмотра таблицы блокировок можно использовать транзакцию SM12, или ФМ: ENQUE_READ. Для удаления записи из таблицы блокировок ФМ: ENQUE_DELETE (или тр. SM12).</p>
+<h4>Параметры EUQUEUE модуля</h4>
+<p><strong>Mode_&lt;ИмяТаблицы&gt;</strong> &#8212; режим блокировки.  Перезаписывает режим блокировки из объекта блокировки:</p>
+<ul>
+<li>E (Exclusive lock &amp; cumulative) – блокирование от изменения данных, повторный вызов блокировки объекта в этом режиме не приведёт к ошибке, если вызов происходит в рамках одной программы (При запуске внутри одной сессии других программ через оператор CALL TRANSACTION или SUBMIT, если запущенная программа попытается выставить блокировку, система не позволит ей этого сделать). Следует использовать, когда вы изменяете какие-либо критичные данные, но не запрещаете просмотр этих данных. Если выставлена подобная блокировка, нельзя поставить блокировку в режиме S.</li>
+<li>S (Shared lock) – данный режим следует использовать, в случае если вы хотите, чтобы во время показа данных пользователю, никто другой не смог их изменить. Может устанавливаться несколькими пользователями одновременно при просмотре данных. Если выставлена подобная блокировка, нельзя поставить блокировку в режиме E. Если была выставлена блокировка в режиме E (X), нельзя установить блокировку в режиме S.</li>
+<li>O (Optimistic lock) –используется в тех случаях, когда вы отображаете какие-либо данные в режиме редактирования и хотите иметь возможность изменить их позже. Пример: перед вами список рейсов, вы думаете забронировать билет на один из них, что повлияет на количество занятых мест на этом рейсе. Соответственно вы должны поставить блокировки на все отображаемые рейсы, но так чтобы не мешать другим пользователям работать в системе бронирования. С другой стороны, установленные в таком режиме блокировки должны иметь возможность преобразовываться в реальные блокировки для записи (режим E).</li>
+<li>X (Exclusive lock &amp; not cumulative) &#8212; расширенная блокировка от изменения данных (Если в своей программе вы вызываете блокировку от изменения данных второй раз для того же объекта, то в случае с X блокировка не пройдёт, но если вы поставили E или S система блокировок не выдаст исключения, <b>это важно понимать когда вы будете использовать систему блокировок в расширениях SAP системы или перед вызовом BAPI функций</b>).</li>
+</ul>
+<p>Кроме вышеуказанных режимов есть еще и другие значения этого параметра, которые выступают в роли команды для модуля блокировки:</p>
+<ul>
+<li>R &#8212; перевод ранее установленной оптимистичной блокировки в блокировку на запись E.</li>
+<li>С &#8212; проверка возможности преобразования оптимистичной блокировки в блокировку на запись E.</li>
+<li>U,V,W &#8212; проверка возможности установки блокировки в режимах X,E,S соответственно.</li>
+</ul>
+<p>На рисунках ниже демонстрируется, что будет происходить при установке блокировок в разных режимах (если программа ранее уже установила блокировку на объект и если блокировка была установлена другой программой):</p>
+<p><a href="../../wp-content/uploads/2012/03/1111.png" style="line-height: 1.5em;" data-slb-active="1" data-slb-asset="1336278252" data-slb-internal="0" data-slb-group="570"><img loading="lazy" class="alignnone wp-image-1716" src="../../wp-content/uploads/2012/03/1111.png" alt="111" width="479" height="305" srcset="../../wp-content/uploads/2012/03/1111.png 798w, ../../wp-content/uploads/2012/03/1111-300x190.png 300w" sizes="(max-width: 479px) 100vw, 479px"></a></p>
+<p><a href="../../wp-content/uploads/2012/03/11111.png" data-slb-active="1" data-slb-asset="1125982299" data-slb-internal="0" data-slb-group="570"><img loading="lazy" class="alignnone wp-image-1718" src="../../wp-content/uploads/2012/03/11111.png" alt="1111" width="487" height="288" srcset="../../wp-content/uploads/2012/03/11111.png 812w, ../../wp-content/uploads/2012/03/11111-300x177.png 300w" sizes="(max-width: 487px) 100vw, 487px"></a></p>
+<p><b>&lt;ИмяПараметра&gt;</b> &#8212; при вводе параметров вы указываете, какие записи в таблицы будете блокировать.</p>
+<p><b>X_&lt;ИмяПараметра&gt;</b> &#8212; в случае если значение равно X, блокируются записи с пустыми значениями.</p>
+<p><b>_SCOPE</b> – может принимать следующие значения:</p>
+<ul>
+<li>«1» &#8212; Блокировка остаётся в программе и снимается ею же, либо после завершения транзакции. Если программа использует асинхронное обновление данных, нет гарантии что во время работы процесса обновления изменяемые данные не были заблокированы другим пользователем, соответственно не следует использовать при асинхронных обновлениях, используйте scope = 3.</li>
+<li>«2» &#8212; По умолчанию. Блокировка снимается программой обновления, либо модулем деблокирования. Сразу при запуске ROLLBACK WORK. В случае если запускается COMMIT WORK и есть отложенные модули обновления (CALL FUNCTION ‘…’ IN UPDATE TASK), блокировка снимается после выполнения модулей обновления V1, на этапе вызова модулей обновления V2 блокировки уже сняты. Если до вызова COMMIT WORK не было запущено модулей обновления, блокировки не будут сняты.</li>
+<li>«3» &#8212; Устанавливается две блокировки, одна остаётся установленной в программе и должна быть удалена в ней. Другая блокировка передаётся в программу обновления. Блокировка будет снята тогда, когда мы снимем её в программе и закончится обновление (по второму сценарию), либо после завершения программы.</li>
+</ul>
+<p><b>_wait</b> – если значение «X», функциональный модуль, в случае если уже стоит блокировка, будет ожидать определённый промежуток времени перед повторным вызовом ФМ. Количество повторений задаётся параметром в профиле (RZ11) &#8212; <b>ENQUE/DELAY_MAX</b>. Время, которое будет ожидать система 1 секунда (по умолчанию), параметр <b>ENQUE/DELAY_MAX_REFINE</b> отвечает за то, сколько раз в секунду будет происходить проверка.</p>
+<p><b>_collect</b> – отвечает за то, что блокировка, перед тем как попасть в таблицу блокировок, будет помещена во временный буфер, после чего используя ФМ: <b>FLUSH_ENQUEUE</b> весь этот буфер будет отправлен на сервер блокировок (в таблицу блокировок), в случае если хотя бы одна блокировка не удалась, система выдаст исключение. Для очистки буфера служит ФМ: <b>RESET_ENQUEUE</b>. Используется при множественной блокировке объектов.</p>
+<h3>Две концепции применения блокировок при изменении данных</h3>
+<p>Если вы хотите быть уверенными в том, что редактируете актуальную версию данных и намерены её сохранить в базе данных, следует использовать одну из концепций установки блокировок: пессимистичную и оптимистичную. Оптимистичная концепция была внедрена начиная с версии ABAP 7.0. EhP2.</p>
+<p>Пессимистичная блокировка (классическая) использует следующий порядок действий:</p>
+<ol>
+<li>Установить блокировку в режиме E (X)</li>
+<li>Если блокировка установлена, считать данные из БД</li>
+<li>Изменить данные в программе и БД</li>
+<li>Снять блокировку</li>
+</ol>
+<p><a href="../../wp-content/uploads/2012/03/classiclock.png" data-slb-active="1" data-slb-asset="361534582" data-slb-internal="0" data-slb-group="570"><img loading="lazy" class="alignnone size-large wp-image-1723" src="../../wp-content/uploads/2012/03/classiclock-1024x674.png" alt="classiclock" width="550" height="362" srcset="../../wp-content/uploads/2012/03/classiclock-1024x674.png 1024w, ../../wp-content/uploads/2012/03/classiclock-300x197.png 300w, ../../wp-content/uploads/2012/03/classiclock.png 1440w" sizes="(max-width: 550px) 100vw, 550px"></a></p>
+<p>Оптимистичная блокировка:</p>
+<p><a href="../../wp-content/uploads/2012/03/optimistic.png" data-slb-active="1" data-slb-asset="1826762775" data-slb-internal="0" data-slb-group="570"><img loading="lazy" class="alignnone size-full wp-image-1728" src="../../wp-content/uploads/2012/03/optimistic.png" alt="optimistic" width="648" height="427" srcset="../../wp-content/uploads/2012/03/optimistic.png 648w, ../../wp-content/uploads/2012/03/optimistic-300x197.png 300w" sizes="(max-width: 648px) 100vw, 648px"></a></p>
+<p>Как было сказано выше, оптимистичные блокировки используются, когда пользователю отображаются данные в режиме изменения, но менять их в текущий момент пользователь не хочет. Если пользователь захочет сохранить измененные данные, ему потребуется сначала преобразовать блокировку из оптимистичной в блокировку на запись (эксклюзивную, режим «E»). Преобразование происходит путём вызова модуля блокировки с указанным режимом «R». Преобразование не сработает, если была выставлена другая блокировка в режиме E (X) или S. Если преобразование было успешным, другие оптимистичные блокировки будут сняты, выставлена одна с типом E.</p>
+<p>Таким образом, для реализации оптимистичной системы блокировок применяются следующие шаги:</p>
+<ol>
+<li>Установка блокировки в режиме «O». На данном этапе ошибка может возникнуть, если в системе уже выставлена блокировка на запись, режим E (X).</li>
+<li>Если блокировка успешно выставлена, читаем данные из БД.</li>
+<li>Попытаться преобразовать блокировку из оптимистичной в блокировку на запись. В случае успеха оптимистичные блокировки в других программах будут сняты. Ошибка на данном этапе может возникнуть, если установлена блокировка в режиме S или оптимистичная блокировка была удалена (в связи с преобразованием оптимистичной блокировки в блокировку на запись в другой программе)</li>
+<li>Изменить и сохранить данные в БД</li>
+<li>Снять блокировку.</li>
+</ol>
+<p>Оптимистичные блокировки не защищают от внешних изменений данных, но благодаря им мы можем идентифицировать эти изменения.</p>
+<h3>Важные параметры настройки системы блокировок</h3>
+<ul>
+<li>enque/table_size &#8212; размер таблицы блокировок в килобайтах, значение по умолчанию &#8212; 4096. Так как хранится таблица не на уровне сервера БД, а в памяти может потребоваться увеличение её объема.</li>
+<li>enque/backup_file &#8212; путь к бекап файлу, блокировки из которого будут загружены при перезагрузке сервера блокировок.</li>
+</ul>
+<p>Официальная документация <a href="http://help.sap.com/saphelp_crm70/helpdata/en/47/df116e6abf296fe10000000a42189b/content.htm?frameset=/en/47/ea5dcce97f486ee10000000a42189d/frameset.htm">тут</a>.</p>
+							</div>
+		<div class="tags-links"><a href="../../tag/dequeue/index.htm" rel="tag">DEQUEUE</a> <a href="../../tag/dequeue_all/index.htm" rel="tag">DEQUEUE_ALL</a> <a href="../../tag/enqueue/index.htm" rel="tag">ENQUEUE</a> <a href="../../tag/enqueue_read/index.htm" rel="tag">ENQUEUE_READ</a> <a href="../../tag/sm12/index.htm" rel="tag">SM12</a> <a href="../../tag/sistema-blokirovok/index.htm" rel="tag">Система блокировок</a></div></article>
+	
+	<nav class="navigation post-navigation" role="navigation" aria-label="Записи">
+		<h2 class="screen-reader-text">Навигация по записям</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="../../others/podsvetka-sintaksisa-abap-dlya-notepad/index.htm" rel="prev"><span class="meta-nav" aria-hidden="true">Назад</span> <span class="screen-reader-text">Предыдущая запись:</span> <span class="post-title">Подсветка синтаксиса ABAP для Notepad++</span></a></div><div class="nav-next"><a href="../../osnovy-abap/gibkaya-nastrojka-vyzyvaemyx-soobshhenij/index.htm" rel="next"><span class="meta-nav" aria-hidden="true">Далее</span> <span class="screen-reader-text">Следующая запись:</span> <span class="post-title">Гибкая настройка сообщений</span></a></div></div>
+	</nav>
+
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			<span itemprop="interactionCount">8</span> комментариев		</h2>
+
+		<ol class="comment-list">
+					<li id="comment-17630" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-17630" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/3aabc1916d004284b42307ca26ea9dd3.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/3aabc1916d004284b42307ca26ea9dd3-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Эдуард</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17630"><time datetime="2014-12-19T18:59:00+04:00">19.12.2014 в 18:59</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>На рисунке, изображающем что будет, если программа, установившая блокировку попытается её изменить &#8212; ошибка. Изменить блокировку с S на E &#8212; нельзя. An exclusive lock set on an object that already has a shared lock will be rejected.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-1.htm?replytocom=17630#respond' data-commentid="17630" data-postid="570" data-belowelement="div-comment-17630" data-respondelement="respond" data-replyto="Комментарий к записи Эдуард" aria-label='Комментарий к записи Эдуард'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-17642" class="comment odd alt depth-2 parent">
+			<article id="div-comment-17642" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/47a1eb6e85596e832b844631b7c9dd09.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/47a1eb6e85596e832b844631b7c9dd09-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Astrafox</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17642"><time datetime="2015-05-21T14:55:00+04:00">21.05.2015 в 14:55</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Если программа сама поставила блокировку типа S, она вполне может выставить блокировку типа E.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-2.htm?replytocom=17642#respond' data-commentid="17642" data-postid="570" data-belowelement="div-comment-17642" data-respondelement="respond" data-replyto="Комментарий к записи Astrafox" aria-label='Комментарий к записи Astrafox'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-17643" class="comment even depth-3">
+			<article id="div-comment-17643" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/3aabc1916d004284b42307ca26ea9dd3.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/3aabc1916d004284b42307ca26ea9dd3-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Эдуард</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17643"><time datetime="2015-05-21T18:19:00+04:00">21.05.2015 в 18:19</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Да, я был не прав.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-3.htm?replytocom=17643#respond' data-commentid="17643" data-postid="570" data-belowelement="div-comment-17643" data-respondelement="respond" data-replyto="Комментарий к записи Эдуард" aria-label='Комментарий к записи Эдуард'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-17728" class="comment odd alt thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-17728" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/abbea8d6b0cd428b54012d634af6ac98.jpeg?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/abbea8d6b0cd428b54012d634af6ac98-1.jpeg 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">svirinstel</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17728"><time datetime="2016-09-19T17:22:00+04:00">19.09.2016 в 17:22</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Небольшое дополнение, а скорее уточнение:<br>
+если при вызове блокировки в поле  передать какое-то значение и при этом оставить &#8216;X&#8217; на соответствующем ему поле X_, то в блокировку подставится именно переданное значению, а не пустое поле.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-4.htm?replytocom=17728#respond' data-commentid="17728" data-postid="570" data-belowelement="div-comment-17728" data-respondelement="respond" data-replyto="Комментарий к записи svirinstel" aria-label='Комментарий к записи svirinstel'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-17729" class="comment even depth-2 parent">
+			<article id="div-comment-17729" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/47a1eb6e85596e832b844631b7c9dd09.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/47a1eb6e85596e832b844631b7c9dd09-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn"><a href='../../index.htm' rel='external nofollow ugc' class='url'>Astrafox</a></b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17729"><time datetime="2016-09-20T08:38:00+04:00">20.09.2016 в 08:38</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Привет! Все верно, ведь x_field имеет смысл только если field имеет начальное (initial) значение.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-5.htm?replytocom=17729#respond' data-commentid="17729" data-postid="570" data-belowelement="div-comment-17729" data-respondelement="respond" data-replyto="Комментарий к записи Astrafox" aria-label='Комментарий к записи Astrafox'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-17730" class="comment odd alt depth-3">
+			<article id="div-comment-17730" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/abbea8d6b0cd428b54012d634af6ac98.jpeg?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/abbea8d6b0cd428b54012d634af6ac98-1.jpeg 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">svirinstel</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17730"><time datetime="2016-09-20T23:35:00+04:00">20.09.2016 в 23:35</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Привет. Ага, отсюда и вычитал (:</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-6.htm?replytocom=17730#respond' data-commentid="17730" data-postid="570" data-belowelement="div-comment-17730" data-respondelement="respond" data-replyto="Комментарий к записи svirinstel" aria-label='Комментарий к записи svirinstel'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-17770" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-17770" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/ebc4ba8bc978564893c2d206b4e92a92.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/ebc4ba8bc978564893c2d206b4e92a92-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Мария</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17770"><time datetime="2017-10-24T14:39:00+04:00">24.10.2017 в 14:39</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Добрый день! Каким образом можно узнать сколько времени на объекте была блокировка?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-7.htm?replytocom=17770#respond' data-commentid="17770" data-postid="570" data-belowelement="div-comment-17770" data-respondelement="respond" data-replyto="Комментарий к записи Мария" aria-label='Комментарий к записи Мария'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-17775" class="comment odd alt depth-2">
+			<article id="div-comment-17775" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/47a1eb6e85596e832b844631b7c9dd09.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/47a1eb6e85596e832b844631b7c9dd09-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn"><a href='../../index.htm' rel='external nofollow ugc' class='url'>Сидорочкин Михаил</a></b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17775"><time datetime="2017-11-21T17:02:00+04:00">21.11.2017 в 17:02</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Добрый день! По существующей, время установки можно узнать через ФМ ENQUEUE_READ.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-8.htm?replytocom=17775#respond' data-commentid="17775" data-postid="570" data-belowelement="div-comment-17775" data-respondelement="respond" data-replyto="Комментарий к записи Сидорочкин Михаил" aria-label='Комментарий к записи Сидорочкин Михаил'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		</ol>
+
+		
+		
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Добавить комментарий для <a href="#comment-17730">svirinstel</a> <small><a rel="nofollow" id="cancel-comment-reply-link" href="index.htm#respond">Отменить ответ</a></small></h3><form action="https://abap-blog.ru/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate=""><p class="comment-notes"><span id="email-notes">Ваш адрес email не будет опубликован.</span></p><p class="comment-form-comment"><label for="comment">Комментарий</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Имя</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
+<div class="anr_captcha_field"><div id="anr_captcha_field_1" class="anr_captcha_field_div"></div></div><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Отправить комментарий"> <input type='hidden' name='comment_post_ID' value='570' id='comment_post_ID'>
+<input type='hidden' name='comment_parent' id='comment_parent' value='17730'>
+</p></form>	</div><!-- #respond -->
+	
+	
+</div>
+
+			</div>
+							</div>
+					</div>
+	</div>
+</div>
+<script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"api":{"root":"https:\/\/abap-blog.ru\/wp-json\/","namespace":"contact-form-7\/v1"}};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.5.1' id='contact-form-7-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect.min.js?ver=1.12.1' id='jquery-effects-core-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-slide.min.js?ver=1.12.1' id='jquery-effects-slide-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-highlight.min.js?ver=1.12.1' id='jquery-effects-highlight-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-fold.min.js?ver=1.12.1' id='jquery-effects-fold-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-blind.min.js?ver=1.12.1' id='jquery-effects-blind-js'></script>
+<script src='../../wp-content/plugins/show-hidecollapse-expand/assets/js/bg-show-hide.js?ver=5.8.1' id='bg-show-hide-script-js'></script>
+<script src='../../wp-includes/js/comment-reply.min.js?ver=5.8.1' id='comment-reply-js'></script>
+<script src='../../wp-content/plugins/dynamic-to-top/js/libs/jquery.easing.js?ver=1.3' id='jquery-easing-js'></script>
+<script type='text/javascript' id='dynamic-to-top-js-extra'>
+/* <![CDATA[ */
+var mv_dynamic_to_top = {"text":"To Top","version":"0","min":"300","speed":"1100","easing":"easeInExpo","margin":"20"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/dynamic-to-top/js/dynamic.to.top.min.js?ver=3.5' id='dynamic-to-top-js'></script>
+<script src='../../recaptcha/api.js?render=6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC&#038;ver=3.0' id='google-recaptcha-js'></script>
+<script type='text/javascript' id='wpcf7-recaptcha-js-extra'>
+/* <![CDATA[ */
+var wpcf7_recaptcha = {"sitekey":"6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC","actions":{"homepage":"homepage","contactform":"contactform"}};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.5.1' id='wpcf7-recaptcha-js'></script>
+<script src='../../wp-includes/js/wp-embed.min.js?ver=5.8.1' id='wp-embed-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/client/js/prod/lib.core.js?ver=2.8.1' id='slb_core-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/client/js/prod/lib.view.js?ver=2.8.1' id='slb_view-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/themes/baseline/js/prod/client.js?ver=2.8.1' id='slb-asset-slb_baseline-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/themes/default/js/prod/client.js?ver=2.8.1' id='slb-asset-slb_default-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/template-tags/item/js/prod/tag.item.js?ver=2.8.1' id='slb-asset-item-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/template-tags/ui/js/prod/tag.ui.js?ver=2.8.1' id='slb-asset-ui-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/content-handlers/image/js/prod/handler.image.js?ver=2.8.1' id='slb-asset-image-base-js'></script>
+<script type="text/javascript" id="slb_footer">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB && SLB.has_child('View.init') ) { SLB.View.init({"ui_autofit":true,"ui_animate":true,"slideshow_autostart":false,"slideshow_duration":"6","group_loop":true,"ui_overlay_opacity":"0.8","ui_title_default":false,"theme_default":"slb_default","ui_labels":{"loading":"\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430","close":"\u0417\u0430\u043a\u0440\u044b\u0442\u044c","nav_next":"\u0412\u043f\u0435\u0440\u0435\u0434","nav_prev":"\u041d\u0430\u0437\u0430\u0434","slideshow_start":"\u0417\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0441\u043b\u0430\u0439\u0434\u0448\u043e\u0443","slideshow_stop":"\u041e\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c \u0441\u043b\u0430\u0439\u0434\u0448\u043e\u0443","group_status":"\u0418\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435 %current%  \u0438\u0437 %total%"}}); }
+if ( !!window.SLB && SLB.has_child('View.assets') ) { {$.extend(SLB.View.assets, {"1887848061":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/03\/1.png"},"360704257":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/03\/3.png"},"652686656":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/03\/4.png"},"1336278252":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/03\/1111.png"},"1125982299":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/03\/11111.png"},"361534582":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/03\/classiclock.png"},"1826762775":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/03\/optimistic.png"}});} }
+/* THM */
+if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_baseline',{"name":"\u0411\u0430\u0437\u043e\u0432\u0430\u044f \u043b\u0438\u043d\u0438\u044f","parent":"","styles":[{"handle":"base","uri":"https:\/\/abap-blog.ru\/wp-content\/plugins\/simple-lightbox\/themes\/baseline\/css\/style.css","deps":[]}],"layout_raw":"<div class=\"slb_container\"><div class=\"slb_content\">{{item.content}}<div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><div class=\"slb_controls\"><span class=\"slb_close\">{{ui.close}}<\/span><span class=\"slb_slideshow\">{{ui.slideshow_control}}<\/span><\/div><div class=\"slb_loading\">{{ui.loading}}<\/div><\/div><div class=\"slb_details\"><div class=\"inner\"><div class=\"slb_data\"><div class=\"slb_data_content\"><span class=\"slb_data_title\">{{item.title}}<\/span><span class=\"slb_group_status\">{{ui.group_status}}<\/span><div class=\"slb_data_desc\">{{item.description}}<\/div><\/div><\/div><div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><\/div><\/div><\/div>"}); }if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_default',{"name":"\u041f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e (\u0441\u0432\u0435\u0442\u043b\u044b\u0439)","parent":"slb_baseline","styles":[{"handle":"base","uri":"https:\/\/abap-blog.ru\/wp-content\/plugins\/simple-lightbox\/themes\/default\/css\/style.css","deps":[]}]}); }})})(jQuery);}/* ]]> */</script>
+<script type="text/javascript" id="slb_context">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB ) { {$.extend(SLB, {"context":["public","user_guest"]});} }})})(jQuery);}/* ]]> */</script>
+			<script type="text/javascript">
+				var anr_onloadCallback = function() {
+					for ( var i = 0; i < document.forms.length; i++ ) {
+						var form = document.forms[i];
+						var captcha_div = form.querySelector( '.anr_captcha_field_div' );
+
+						if ( null === captcha_div )
+							continue;
+						captcha_div.innerHTML = '';
+						( function( form ) {
+							var anr_captcha = grecaptcha.render( captcha_div,{
+								'sitekey' : '6LfmhbAaAAAAABBrfPpMngzFHB6qZ4ATxXd3rvOR',
+								'size'  : 'normal',
+								'theme' : 'light'
+							});
+							if ( typeof jQuery !== 'undefined' ) {
+								jQuery( document.body ).on( 'checkout_error', function(){
+									grecaptcha.reset(anr_captcha);
+								});
+							}
+							if ( typeof wpcf7 !== 'undefined' ) {
+								document.addEventListener( 'wpcf7submit', function() {
+									grecaptcha.reset(anr_captcha);
+								}, false );
+							}
+						})(form);
+					}
+				};
+			</script>
+						<script src="../../recaptcha/api-1.js?onload=anr_onloadCallback&#038;render=explicit" async="" defer="">
+			</script>
+			</body>
+</html>

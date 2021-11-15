@@ -1,0 +1,786 @@
+﻿<!DOCTYPE html>
+<html lang="ru-RU" id="html">
+<head>
+		<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="profile" href="../../xfn/11.html">
+	<link rel="pingback" href="https://abap-blog.ru/xmlrpc.php">
+	<title>ABAP Blog | ABAP Managed Database Procedures (AMDP)</title>
+
+		<!-- All in One SEO 4.1.4.4 -->
+		<meta name="description" content="Все больше в настоящее время SAP систем переходят на новую платформу (СУБД) – HANA (High-Performance Analytic Appliance), в основе которой лежит технология вычислений in-memory с использованием принципа поколоночного хранения данных. Вместе с новой платформой, появляются так же и новые возможности для обработки больших объемов данных и более высокопроизводительных вычислений. Для ускорения ABAP решений на базе HANA, […]">
+		<meta name="robots" content="max-image-preview:large">
+		<meta name="keywords" content="amdp,native sql,работа с бд">
+		<link rel="canonical" href="index.htm">
+		<script type="application/ld+json" class="aioseo-schema">
+			{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebSite","@id":"https:\/\/abap-blog.ru\/#website","url":"https:\/\/abap-blog.ru\/","name":"ABAP Blog","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445 \u043e\u0442 SAP","inLanguage":"ru-RU","publisher":{"@id":"https:\/\/abap-blog.ru\/#person"}},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/#person","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/database-work\/abap-managed-database-procedures-amdp\/#personImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"BreadcrumbList","@id":"https:\/\/abap-blog.ru\/database-work\/abap-managed-database-procedures-amdp\/#breadcrumblist","itemListElement":[{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/#listItem","position":1,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/","name":"\u0413\u043b\u0430\u0432\u043d\u0430\u044f","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 SAP \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445: ABAP, HANA, UI5, OData, Fiori.","url":"https:\/\/abap-blog.ru\/"},"nextItem":"https:\/\/abap-blog.ru\/database-work\/#listItem"},{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/database-work\/#listItem","position":2,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/database-work\/","name":"\u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u0411\u0414","description":"\u0412\u0441\u0435 \u0431\u043e\u043b\u044c\u0448\u0435 \u0432 \u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0435\u0435 \u0432\u0440\u0435\u043c\u044f SAP \u0441\u0438\u0441\u0442\u0435\u043c \u043f\u0435\u0440\u0435\u0445\u043e\u0434\u044f\u0442 \u043d\u0430 \u043d\u043e\u0432\u0443\u044e \u043f\u043b\u0430\u0442\u0444\u043e\u0440\u043c\u0443 (\u0421\u0423\u0411\u0414) \u2013 HANA (High-Performance Analytic Appliance), \u0432 \u043e\u0441\u043d\u043e\u0432\u0435 \u043a\u043e\u0442\u043e\u0440\u043e\u0439 \u043b\u0435\u0436\u0438\u0442 \u0442\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0438\u044f \u0432\u044b\u0447\u0438\u0441\u043b\u0435\u043d\u0438\u0439 in-memory \u0441 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435\u043c \u043f\u0440\u0438\u043d\u0446\u0438\u043f\u0430 \u043f\u043e\u043a\u043e\u043b\u043e\u043d\u043e\u0447\u043d\u043e\u0433\u043e \u0445\u0440\u0430\u043d\u0435\u043d\u0438\u044f \u0434\u0430\u043d\u043d\u044b\u0445. \u0412\u043c\u0435\u0441\u0442\u0435 \u0441 \u043d\u043e\u0432\u043e\u0439 \u043f\u043b\u0430\u0442\u0444\u043e\u0440\u043c\u043e\u0439, \u043f\u043e\u044f\u0432\u043b\u044f\u044e\u0442\u0441\u044f \u0442\u0430\u043a \u0436\u0435 \u0438 \u043d\u043e\u0432\u044b\u0435 \u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e\u0441\u0442\u0438 \u0434\u043b\u044f \u043e\u0431\u0440\u0430\u0431\u043e\u0442\u043a\u0438 \u0431\u043e\u043b\u044c\u0448\u0438\u0445 \u043e\u0431\u044a\u0435\u043c\u043e\u0432 \u0434\u0430\u043d\u043d\u044b\u0445 \u0438 \u0431\u043e\u043b\u0435\u0435 \u0432\u044b\u0441\u043e\u043a\u043e\u043f\u0440\u043e\u0438\u0437\u0432\u043e\u0434\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0445 \u0432\u044b\u0447\u0438\u0441\u043b\u0435\u043d\u0438\u0439. \u0414\u043b\u044f \u0443\u0441\u043a\u043e\u0440\u0435\u043d\u0438\u044f ABAP \u0440\u0435\u0448\u0435\u043d\u0438\u0439 \u043d\u0430 \u0431\u0430\u0437\u0435 HANA, [\u2026]","url":"https:\/\/abap-blog.ru\/database-work\/"},"nextItem":"https:\/\/abap-blog.ru\/database-work\/abap-managed-database-procedures-amdp\/#listItem","previousItem":"https:\/\/abap-blog.ru\/#listItem"},{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/database-work\/abap-managed-database-procedures-amdp\/#listItem","position":3,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/database-work\/abap-managed-database-procedures-amdp\/","name":"ABAP Managed Database Procedures (AMDP)","description":"\u0412\u0441\u0435 \u0431\u043e\u043b\u044c\u0448\u0435 \u0432 \u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0435\u0435 \u0432\u0440\u0435\u043c\u044f SAP \u0441\u0438\u0441\u0442\u0435\u043c \u043f\u0435\u0440\u0435\u0445\u043e\u0434\u044f\u0442 \u043d\u0430 \u043d\u043e\u0432\u0443\u044e \u043f\u043b\u0430\u0442\u0444\u043e\u0440\u043c\u0443 (\u0421\u0423\u0411\u0414) \u2013 HANA (High-Performance Analytic Appliance), \u0432 \u043e\u0441\u043d\u043e\u0432\u0435 \u043a\u043e\u0442\u043e\u0440\u043e\u0439 \u043b\u0435\u0436\u0438\u0442 \u0442\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0438\u044f \u0432\u044b\u0447\u0438\u0441\u043b\u0435\u043d\u0438\u0439 in-memory \u0441 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435\u043c \u043f\u0440\u0438\u043d\u0446\u0438\u043f\u0430 \u043f\u043e\u043a\u043e\u043b\u043e\u043d\u043e\u0447\u043d\u043e\u0433\u043e \u0445\u0440\u0430\u043d\u0435\u043d\u0438\u044f \u0434\u0430\u043d\u043d\u044b\u0445. \u0412\u043c\u0435\u0441\u0442\u0435 \u0441 \u043d\u043e\u0432\u043e\u0439 \u043f\u043b\u0430\u0442\u0444\u043e\u0440\u043c\u043e\u0439, \u043f\u043e\u044f\u0432\u043b\u044f\u044e\u0442\u0441\u044f \u0442\u0430\u043a \u0436\u0435 \u0438 \u043d\u043e\u0432\u044b\u0435 \u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e\u0441\u0442\u0438 \u0434\u043b\u044f \u043e\u0431\u0440\u0430\u0431\u043e\u0442\u043a\u0438 \u0431\u043e\u043b\u044c\u0448\u0438\u0445 \u043e\u0431\u044a\u0435\u043c\u043e\u0432 \u0434\u0430\u043d\u043d\u044b\u0445 \u0438 \u0431\u043e\u043b\u0435\u0435 \u0432\u044b\u0441\u043e\u043a\u043e\u043f\u0440\u043e\u0438\u0437\u0432\u043e\u0434\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0445 \u0432\u044b\u0447\u0438\u0441\u043b\u0435\u043d\u0438\u0439. \u0414\u043b\u044f \u0443\u0441\u043a\u043e\u0440\u0435\u043d\u0438\u044f ABAP \u0440\u0435\u0448\u0435\u043d\u0438\u0439 \u043d\u0430 \u0431\u0430\u0437\u0435 HANA, [\u2026]","url":"https:\/\/abap-blog.ru\/database-work\/abap-managed-database-procedures-amdp\/"},"previousItem":"https:\/\/abap-blog.ru\/database-work\/#listItem"}]},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/author\/admin\/#author","url":"https:\/\/abap-blog.ru\/author\/admin\/","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/database-work\/abap-managed-database-procedures-amdp\/#authorImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/database-work\/abap-managed-database-procedures-amdp\/#webpage","url":"https:\/\/abap-blog.ru\/database-work\/abap-managed-database-procedures-amdp\/","name":"ABAP Blog | ABAP Managed Database Procedures (AMDP)","description":"\u0412\u0441\u0435 \u0431\u043e\u043b\u044c\u0448\u0435 \u0432 \u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0435\u0435 \u0432\u0440\u0435\u043c\u044f SAP \u0441\u0438\u0441\u0442\u0435\u043c \u043f\u0435\u0440\u0435\u0445\u043e\u0434\u044f\u0442 \u043d\u0430 \u043d\u043e\u0432\u0443\u044e \u043f\u043b\u0430\u0442\u0444\u043e\u0440\u043c\u0443 (\u0421\u0423\u0411\u0414) \u2013 HANA (High-Performance Analytic Appliance), \u0432 \u043e\u0441\u043d\u043e\u0432\u0435 \u043a\u043e\u0442\u043e\u0440\u043e\u0439 \u043b\u0435\u0436\u0438\u0442 \u0442\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0438\u044f \u0432\u044b\u0447\u0438\u0441\u043b\u0435\u043d\u0438\u0439 in-memory \u0441 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435\u043c \u043f\u0440\u0438\u043d\u0446\u0438\u043f\u0430 \u043f\u043e\u043a\u043e\u043b\u043e\u043d\u043e\u0447\u043d\u043e\u0433\u043e \u0445\u0440\u0430\u043d\u0435\u043d\u0438\u044f \u0434\u0430\u043d\u043d\u044b\u0445. \u0412\u043c\u0435\u0441\u0442\u0435 \u0441 \u043d\u043e\u0432\u043e\u0439 \u043f\u043b\u0430\u0442\u0444\u043e\u0440\u043c\u043e\u0439, \u043f\u043e\u044f\u0432\u043b\u044f\u044e\u0442\u0441\u044f \u0442\u0430\u043a \u0436\u0435 \u0438 \u043d\u043e\u0432\u044b\u0435 \u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e\u0441\u0442\u0438 \u0434\u043b\u044f \u043e\u0431\u0440\u0430\u0431\u043e\u0442\u043a\u0438 \u0431\u043e\u043b\u044c\u0448\u0438\u0445 \u043e\u0431\u044a\u0435\u043c\u043e\u0432 \u0434\u0430\u043d\u043d\u044b\u0445 \u0438 \u0431\u043e\u043b\u0435\u0435 \u0432\u044b\u0441\u043e\u043a\u043e\u043f\u0440\u043e\u0438\u0437\u0432\u043e\u0434\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0445 \u0432\u044b\u0447\u0438\u0441\u043b\u0435\u043d\u0438\u0439. \u0414\u043b\u044f \u0443\u0441\u043a\u043e\u0440\u0435\u043d\u0438\u044f ABAP \u0440\u0435\u0448\u0435\u043d\u0438\u0439 \u043d\u0430 \u0431\u0430\u0437\u0435 HANA, [\u2026]","inLanguage":"ru-RU","isPartOf":{"@id":"https:\/\/abap-blog.ru\/#website"},"breadcrumb":{"@id":"https:\/\/abap-blog.ru\/database-work\/abap-managed-database-procedures-amdp\/#breadcrumblist"},"author":"https:\/\/abap-blog.ru\/author\/admin\/#author","creator":"https:\/\/abap-blog.ru\/author\/admin\/#author","datePublished":"2016-06-02T20:03:15+04:00","dateModified":"2021-03-02T06:15:02+04:00"},{"@type":"Article","@id":"https:\/\/abap-blog.ru\/database-work\/abap-managed-database-procedures-amdp\/#article","name":"ABAP Blog | ABAP Managed Database Procedures (AMDP)","description":"\u0412\u0441\u0435 \u0431\u043e\u043b\u044c\u0448\u0435 \u0432 \u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0435\u0435 \u0432\u0440\u0435\u043c\u044f SAP \u0441\u0438\u0441\u0442\u0435\u043c \u043f\u0435\u0440\u0435\u0445\u043e\u0434\u044f\u0442 \u043d\u0430 \u043d\u043e\u0432\u0443\u044e \u043f\u043b\u0430\u0442\u0444\u043e\u0440\u043c\u0443 (\u0421\u0423\u0411\u0414) \u2013 HANA (High-Performance Analytic Appliance), \u0432 \u043e\u0441\u043d\u043e\u0432\u0435 \u043a\u043e\u0442\u043e\u0440\u043e\u0439 \u043b\u0435\u0436\u0438\u0442 \u0442\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0438\u044f \u0432\u044b\u0447\u0438\u0441\u043b\u0435\u043d\u0438\u0439 in-memory \u0441 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435\u043c \u043f\u0440\u0438\u043d\u0446\u0438\u043f\u0430 \u043f\u043e\u043a\u043e\u043b\u043e\u043d\u043e\u0447\u043d\u043e\u0433\u043e \u0445\u0440\u0430\u043d\u0435\u043d\u0438\u044f \u0434\u0430\u043d\u043d\u044b\u0445. \u0412\u043c\u0435\u0441\u0442\u0435 \u0441 \u043d\u043e\u0432\u043e\u0439 \u043f\u043b\u0430\u0442\u0444\u043e\u0440\u043c\u043e\u0439, \u043f\u043e\u044f\u0432\u043b\u044f\u044e\u0442\u0441\u044f \u0442\u0430\u043a \u0436\u0435 \u0438 \u043d\u043e\u0432\u044b\u0435 \u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e\u0441\u0442\u0438 \u0434\u043b\u044f \u043e\u0431\u0440\u0430\u0431\u043e\u0442\u043a\u0438 \u0431\u043e\u043b\u044c\u0448\u0438\u0445 \u043e\u0431\u044a\u0435\u043c\u043e\u0432 \u0434\u0430\u043d\u043d\u044b\u0445 \u0438 \u0431\u043e\u043b\u0435\u0435 \u0432\u044b\u0441\u043e\u043a\u043e\u043f\u0440\u043e\u0438\u0437\u0432\u043e\u0434\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0445 \u0432\u044b\u0447\u0438\u0441\u043b\u0435\u043d\u0438\u0439. \u0414\u043b\u044f \u0443\u0441\u043a\u043e\u0440\u0435\u043d\u0438\u044f ABAP \u0440\u0435\u0448\u0435\u043d\u0438\u0439 \u043d\u0430 \u0431\u0430\u0437\u0435 HANA, [\u2026]","inLanguage":"ru-RU","headline":"ABAP Managed Database Procedures (AMDP)","author":{"@id":"https:\/\/abap-blog.ru\/author\/admin\/#author"},"publisher":{"@id":"https:\/\/abap-blog.ru\/#person"},"datePublished":"2016-06-02T20:03:15+04:00","dateModified":"2021-03-02T06:15:02+04:00","commentCount":4,"articleSection":"\u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u0411\u0414, AMDP, Native SQL","mainEntityOfPage":{"@id":"https:\/\/abap-blog.ru\/database-work\/abap-managed-database-procedures-amdp\/#webpage"},"isPartOf":{"@id":"https:\/\/abap-blog.ru\/database-work\/abap-managed-database-procedures-amdp\/#webpage"},"image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/#articleImage","url":"https:\/\/abap-blog.ru\/wp-content\/uploads\/2016\/06\/sqlcode1.jpg","width":400,"height":300}}]}
+		</script>
+		<script type="text/javascript">
+			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+			ga('create', "UA-150412824-1", { 'cookieDomain': 'abap-blog.ru' } );
+			ga('require', 'outboundLinkTracker');
+			ga('send', 'pageview');
+		</script>
+		<script async="" src="../../analytics.js"></script>
+		<script async="" src="../../wp-content/plugins/all-in-one-seo-pack/app/Common/Assets/js/autotrack.js?ver=4.1.4.4"></script>
+		<!-- All in One SEO -->
+
+<link rel='dns-prefetch' href='../../index-1.htm'>
+<link rel='dns-prefetch' href='//fonts.googleapis.com'>
+<link rel='dns-prefetch' href='../../index-2.htm'>
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента" href="../../feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев" href="../../comments/feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев к &laquo;ABAP Managed Database Procedures (AMDP)&raquo;" href="feed/index.htm.rss">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/abap-blog.ru\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8.1"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='urvanov_syntax_highlighter-css' href='../../wp-content/plugins/urvanov-syntax-highlighter/css/min/urvanov_syntax_highlighter.min.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='crayon-theme-abapblog-css' href='../../wp-content/uploads/urvanov-syntax-highlighter/themes/abapblog/abapblog.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='crayon-font-monospace-css' href='../../wp-content/plugins/urvanov-syntax-highlighter/fonts/monospace.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='wp-block-library-css' href='../../wp-includes/css/dist/block-library/style.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='arve-main-css' href='../../wp-content/plugins/advanced-responsive-video-embedder/build/main.css?ver=b809f4d4c33c91a5ae3a5099af09bdde' media='all'>
+<link rel='stylesheet' id='contact-form-7-css' href='../../wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.5.1' media='all'>
+<link rel='stylesheet' id='bg-shce-genericons-css' href='../../wp-content/plugins/show-hidecollapse-expand/assets/css/genericons/genericons.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='bg-show-hide-css' href='../../wp-content/plugins/show-hidecollapse-expand/assets/css/bg-show-hide.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='dashicons-css' href='../../wp-includes/css/dashicons.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='tooltip-css' href='../../wp-content/plugins/wp-poll/assets/tool-tip.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-cb-css' href='../../wp-content/plugins/wp-poll/assets/front/css/checkbox.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-css' href='../../wp-content/plugins/wp-poll/assets/front/css/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='flat-fonts-css' href='../../css.css?family=Lobster%7CRoboto:400,700%7CRoboto+Slab%7CRoboto%20Condensed' media='all'>
+<link rel='stylesheet' id='flat-theme-css' href='../../wp-content/themes/flat/assets/css/flat.css?ver=1.7.11' media='all'>
+<link rel='stylesheet' id='flat-style-css' href='../../wp-content/themes/flat/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='slb_core-css' href='../../wp-content/plugins/simple-lightbox/client/css/app.css?ver=2.8.1' media='all'>
+<link rel='stylesheet' id='decent-comments-widget-css' href='../../wp-content/plugins/decent-comments/css/decent-comments-widget.css' media='all'>
+<script src='../../wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script src='../../wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' id='urvanov_syntax_highlighter_js-js-extra'>
+/* <![CDATA[ */
+var UrvanovSyntaxHighlighterSyntaxSettings = {"version":"2.8.22","is_admin":"0","ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","prefix":"urvanov-syntax-highlighter-","setting":"urvanov-syntax-highlighter-setting","selected":"urvanov-syntax-highlighter-setting-selected","changed":"urvanov-syntax-highlighter-setting-changed","special":"urvanov-syntax-highlighter-setting-special","orig_value":"data-orig-value","debug":""};
+var UrvanovSyntaxHighlighterSyntaxStrings = {"copy":"\u041d\u0430\u0436\u043c\u0438\u0442\u0435 %s \u0434\u043b\u044f \u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f, %s \u0434\u043b\u044f \u0432\u0441\u0442\u0430\u0432\u043a\u0438","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/urvanov-syntax-highlighter/js/min/urvanov_syntax_highlighter.min.js?ver=2.8.22' id='urvanov_syntax_highlighter_js-js'></script>
+<script src='../../wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.7' id='regenerator-runtime-js'></script>
+<script src='../../wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
+<script async="async" src='../../wp-content/plugins/advanced-responsive-video-embedder/build/main.js?ver=b809f4d4c33c91a5ae3a5099af09bdde' id='arve-main-js'></script>
+<script src='../../wp-content/plugins/wp-poll/assets/front/js/svgcheckbx.js?ver=5.8.1' id='wpp-front-cb-js'></script>
+<script type='text/javascript' id='wpp-front-js-extra'>
+/* <![CDATA[ */
+var wpp_object = {"ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","copyText":"Copied !","voteText":"Vote(s)","tempProDownload":"https:\/\/pluginbazar.com\/my-account\/downloads\/","tempProDownloadTxt":"Download Version 1.1.0"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/wp-poll/assets/front/js/scripts.js?ver=5.8.1' id='wpp-front-js'></script>
+<script src='../../wp-content/themes/flat/assets/js/flat.js?ver=1.7.11' id='flat-js-js'></script>
+<!--[if lt IE 9]>
+<script src='https://abap-blog.ru/wp-content/themes/flat/assets/js/html5shiv.min.js?ver=3.7.2' id='html5shiv-js'></script>
+<![endif]-->
+<link rel="https://api.w.org/" href="../../wp-json/index.htm.json"><link rel="alternate" type="application/json" href="../../wp-json/wp/v2/posts/3050.json"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="../../xmlrpc.php.xml?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../../wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.8.1">
+<link rel='shortlink' href='index.htm?p=3050'>
+<link rel="alternate" type="application/json+oembed" href="../../wp-json/oembed/1.0/embed-28.json?url=https%3A%2F%2Fabap-blog.ru%2Fdatabase-work%2Fabap-managed-database-procedures-amdp%2F">
+<link rel="alternate" type="text/xml+oembed" href="../../wp-json/oembed/1.0/embed-28.xml?url=https%3A%2F%2Fabap-blog.ru%2Fdatabase-work%2Fabap-managed-database-procedures-amdp%2F&#038;format=xml">
+
+<!-- WP Youtube Player 1.7 by unijimpe -->
+<style type="text/css">#page:before, .sidebar-offcanvas, #secondary { background-color: #272727; }@media (max-width: 1199px) { #page &gt; .container { background-color: #272727; } }body { background-size: initial; }</style><style type="text/css">#masthead .site-title {font-family:Lobster}body {font-family:Roboto }h1,h2,h3,h4,h5,h6 {font-family:Roboto Slab}#masthead .site-description, .hentry .entry-meta {font-family:Roboto Condensed}</style><style type="text/css" media="screen">body{position:relative}#dynamic-to-top{display:none;overflow:hidden;width:auto;z-index:90;position:fixed;bottom:20px;right:20px;top:auto;left:auto;font-family:sans-serif;font-size:1em;color:#fff;text-decoration:none;text-shadow:0 1px 0 #333;font-weight:bold;padding:17px 16px;border:2px solid #000;background:#4c5055;-webkit-background-origin:border;-moz-background-origin:border;-icab-background-origin:border;-khtml-background-origin:border;-o-background-origin:border;background-origin:border;-webkit-background-clip:padding-box;-moz-background-clip:padding-box;-icab-background-clip:padding-box;-khtml-background-clip:padding-box;-o-background-clip:padding-box;background-clip:padding-box;-webkit-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-ms-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-moz-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-o-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-khtml-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-icab-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-webkit-border-radius:30px;-moz-border-radius:30px;-icab-border-radius:30px;-khtml-border-radius:30px;border-radius:30px}#dynamic-to-top:hover{background:#4fd650;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 255, 255, 255, .2 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );cursor:pointer}#dynamic-to-top:active{background:#4c5055;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 0, 0, 0, .3 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) )}#dynamic-to-top,#dynamic-to-top:active,#dynamic-to-top:focus,#dynamic-to-top:hover{outline:none}#dynamic-to-top span{display:block;overflow:hidden;width:14px;height:12px;background:url( ../../wp-content/plugins/dynamic-to-top/css/images/up.png )no-repeat center center}</style><style type="text/css" id="custom-background-css">
+body.custom-background { background-image: url("../../wp-content/uploads/2014/10/escheresque_ste.png"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+		</head>
+
+<body class="post-template-default single single-post postid-3050 single-format-standard custom-background" itemscope="" itemtype="http://schema.org/WebPage">
+		<div id="page">
+	<div class="container">
+		<div class="row row-offcanvas row-offcanvas-left" style="background: #272727;">			
+			
+			<div id="secondary1" class="col-lg-t" style="background: #272727; display:none">
+								<header id="masthead1" class="site-headerex" role="banner">
+										<div class="hgroupex">
+						<h1 class="site-title display-title"><a href="../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+									</header>
+							</div>
+
+
+			<div id="secondary" class="col-lg-3" style="display:block">
+								<header id="masthead" class="site-header" role="banner">
+										<div class="hgroup">
+						<h1 class="site-title display-title"><a href="../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+					<button type="button" class="btn btn-link hidden-lg toggle-sidebar" data-toggle="offcanvas" aria-label="Sidebar"><i class="fa fa-gear"></i></button>
+					<button type="button" class="btn btn-link hidden-lg toggle-navigation" aria-label="Navigation Menu"><i class="fa fa-bars"></i></button>
+					<nav id="site-navigation" class="navigation main-navigation" role="navigation">
+						<ul id="menu-glavnoe-menyu" class="nav-menu"><li id="menu-item-2313" class="fa fa-home menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-2313"><a href="../../index.htm">Главная</a>
+<ul class="sub-menu">
+	<li id="menu-item-2363" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2363"><a href="../../category/osnovy-abap/index.htm">Основы ABAP</a>
+	<ul class="sub-menu">
+		<li id="menu-item-2906" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2906"><a href="../../category/osnovy-abap/oop/index.htm">ABAP Objects</a></li>
+		<li id="menu-item-2370" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2370"><a href="../../category/osnovy-abap/slovar/index.htm">ABAP Словарь</a></li>
+		<li id="menu-item-2367" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2367"><a href="../../category/osnovy-abap/files/index.htm">Работа с файлами</a></li>
+		<li id="menu-item-2364" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2364"><a href="../../category/osnovy-abap/sap-dynpro/index.htm">SAP Dynpro</a></li>
+		<li id="menu-item-6845" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6845"><a href="../../category/osnovy-abap/vnutrennie-tablicy/index.htm">Внутренние таблицы</a></li>
+		<li id="menu-item-6849" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6849"><a href="../../category/osnovy-abap/dinamicheskoe-programmirovanie/index.htm">Динамическое программирование</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2366" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children menu-item-2366"><a href="../../category/database-work/index.htm">Работа с БД</a>
+	<ul class="sub-menu">
+		<li id="menu-item-7303" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7303"><a href="../../category/hana/index.htm">HANA</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2368" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2368"><a href="../../category/network/index.htm">Сетевые технологии</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6328" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6328"><a href="../../category/network/ui5fiori/index.htm">UI5 &amp; Fiori</a></li>
+		<li id="menu-item-6327" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6327"><a href="../../category/network/odata-network/index.htm">OData</a></li>
+		<li id="menu-item-2907" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2907"><a href="../../category/network/web-dynpro/index.htm">Web Dynpro</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2369" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2369"><a href="../../category/enhancements/index.htm">Расширения</a></li>
+	<li id="menu-item-6329" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6329"><a href="../../category/abap-cloud/index.htm">ABAP Cloud</a></li>
+	<li id="menu-item-2365" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2365"><a href="../../category/others/index.htm">Прочее</a></li>
+</ul>
+</li>
+<li id="menu-item-3536" class="fa fa-bell menu-item menu-item-type-post_type menu-item-object-page menu-item-3536"><a href="../../abap-the-best-practice/index.htm">ABAP Best Practice</a></li>
+<li id="menu-item-3727" class="fa fa-child menu-item menu-item-type-post_type menu-item-object-page menu-item-3727"><a href="../../vakansii/index.htm">Вакансии ABAP</a></li>
+<li id="menu-item-3885" class="fa fa-bookmark menu-item menu-item-type-post_type menu-item-object-page menu-item-3885"><a href="../../abap-notes/index.htm">Быстрые заметки</a></li>
+<li id="menu-item-2316" class="fa fa-info-circle menu-item menu-item-type-post_type menu-item-object-page menu-item-2316"><a href="../../about/index.htm">Обо мне</a></li>
+</ul>					</nav>
+									</header>
+				
+				<div class="sidebar-offcanvas">
+<div id="main-sidebar" class="widget-area" role="complementary">
+											<aside id="search-2" class="widget widget_search">
+	<form method="get" id="searchform" action="https://abap-blog.ru/">
+		<label for="s" class="assistive-text">Поиск</label>
+		<input type="text" class="field" name="s" id="s" placeholder="Поиск">
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Поиск">
+	</form>
+					</aside>
+					<aside id="linkcat-2" class="widget widget_links">
+						<h3 class='widget-title'>Ссылки</h3>
+
+	<ul class='xoxo blogroll'>
+<li><a href="../../topics/abap.html" target="_blank">ABAP Community</a></li>
+<li><a href="../../wiki/display/ABAP/ABAP Development.html" title="Wiki по ABAP" target="_blank">ABAP Development Wiki</a></li>
+<li><a href="../../doc/abapdocu_latest_index_htm/latest/en-US/index.htm" title="Последняя версия справки по ABAP" target="_blank">ABAP Help</a></li>
+<li><a href="../../doc/abapdocu_cp_index_htm/CLOUD/en-US/index.htm" target="_blank">ABAP Help (Cloud)</a></li>
+<li><a href="../../learning-journeys/overview.html?role=Developer" target="_blank">Developer Learning Journeys</a></li>
+<li><a href="../../index-3.htm" target="_blank">Open Source Projects</a></li>
+<li><a href="../../tutorial-navigator.html" target="_blank">SAP Tutorials</a></li>
+<li><a href="https://t.me/abapblog" target="_blank"><img src="../../wp-content/uploads/2020/04/telegram-1.png" alt="Канал в Telegram"> Канал в Telegram</a></li>
+
+	</ul>
+					</aside>
+
+					<aside id="endo_wrc_widget-2" class="widget widget_endo_wrc_widget">
+						<h3 class='widget-title'>Цитаты</h3>
+<p>Тот, кто не ищет новых лекарств, должен ожидать появления новых бед, ведь время – величайший новатор.</p>
+<p><strong>Ф. Бэкон</strong></p>
+					</aside>
+								<aside id="custom-post-type-recent-posts-3" class="widget widget_recent_entries">
+						<h3 class='widget-title'>Новое</h3>
+			<ul>
+													<li>
+										<a href="../../abap-notes/poluchenie-instancii-cl_gui_alv_grid-dlya-salv/index.htm">Получение инстанции cl_gui_alv_grid для SALV</a>
+											<span class="post-date">11.09.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-cloud/introduction-to-abap-in-the-cloud/index.htm">Introduction to ABAP in the Cloud</a>
+											<span class="post-date">18.08.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/getting-started-with-fpm-bopf-integration/index.htm">Getting Started with FPM BOPF Integration</a>
+											<span class="post-date">01.06.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/how-to-use-authority-checks-in-business-object-processing-framework/index.htm">30. How to Use Authority Checks in Business Object Processing Framework</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-extensibility/index.htm">29. BOPF Extensibility</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-enterprise-procurement-model-epm/index.htm">28. BOPF Enterprise Procurement Model (EPM)</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-integration/index.htm">27. BOPF Integration</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-business-configuration-objects/index.htm">26. BOPF Business Configuration Objects</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-performance/index.htm">25. BOPF Performance</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-supportability/index.htm">24. BOPF Supportability</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+							</ul>
+								</aside>
+					<aside id="decent_comments_widget-2" class="widget widget_decent_comments_widget">
+						<h3 class='widget-title'>Последние комментарии</h3>
+<div class="decent-comments"><ul><li><div class="comment"><span class="comment-author">Николай</span><span class="comment-date"> 27.10.2021 в 15:19</span><span class="comment-link"> на <a href="../../osnovy-abap/internal-table-as-data-source-select/index.htm#comment-17857">Внутренние таблицы как источник в SQL запросах</a></span><span class="comment-excerpt">Спасибо за статью. Если нужно сделать агрегацию внутренней таблицы то агрегация через передачу во временную таблицу на БД тоже будет работать медленней чем через loop/collect? Например таблица 100к записей, которая становится 5к после агрегации. </span></div></li><li><div class="comment"><span class="comment-author">Аноним</span><span class="comment-date"> 14.10.2021 в 13:50</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17856">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Так поведение Decorator не надо будет повторно описывать повторно в других Component. Но это возможно при изменении типа mo_component, например, на object. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 11.10.2021 в 06:50</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17854">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет:) Возможно, я не так выразил мысль. Я имел ввиду, какая ценность от класса Decorator, если можно декорировать поведение от Component и от него же наследовать конкретные декораторы? (см. первую UML диаграмму) </span></div></li><li><div class="comment"><span class="comment-author">Astrafox</span><span class="comment-date"> 10.10.2021 в 12:39</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17853">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет! Можно и так, однако конкретный компонент может иметь более широкий интерфейс, нежели тот, что нужен в декораторах. Тут скорее пример не совсем удачный, декорируемое поведение лучше вынести в отдельный интерфейс, реализуемый как компонентом, так и декораторами. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 04.10.2021 в 12:51</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17850">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">А какую роль играет базовый класс декоратора lcl_decorator? Что мешает конкретные декораторы наследовать от компонента lcl_concrete_component? Клиентский код и логика выполнения не поменяется. </span></div></li></ul></div>					</aside>
+											</div>
+				</div>
+			</div>
+
+						<div id="primary" class="content-area col-lg-9" itemprop="mainContentOfPage" style="">
+							<div id="content" class="site-content" role="main" itemscope="" itemtype="http://schema.org/Article">
+			<article id="post-3050" class="post-3050 post type-post status-publish format-standard hentry category-database-work tag-amdp tag-native-sql">
+	<header class="entry-header">
+		<h1 class="entry-title" itemprop="name">ABAP Managed Database Procedures (AMDP)</h1>
+							<div class="entry-meta"><span class="entry-date"><a href="index.htm" rel="bookmark"><time class="entry-date published" datetime="2016-06-03T00:03:15+04:00" itemprop="datepublished">03.06.2016</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="index.htm#comments" itemprop="discussionUrl">4 комментария</a></span></div>
+			</header>
+		
+	
+	<div class="entry-content" itemprop="articleBody">
+				<p><a href="../../wp-content/uploads/2016/06/sqlcode1.jpg" data-slb-active="1" data-slb-asset="694742175" data-slb-internal="0" data-slb-group="3050"><img loading="lazy" class=" wp-image-3079 alignleft" src="../../wp-content/uploads/2016/06/sqlcode1.jpg" alt="sqlcode[1]" width="365" height="274" srcset="../../wp-content/uploads/2016/06/sqlcode1.jpg 400w, ../../wp-content/uploads/2016/06/sqlcode1-300x225.jpg 300w" sizes="(max-width: 365px) 100vw, 365px"></a>Все больше в настоящее время SAP систем переходят на новую платформу (СУБД) – HANA (High-Performance Analytic Appliance), в основе которой лежит технология вычислений in-memory с использованием принципа поколоночного хранения данных. Вместе с новой платформой, появляются так же и новые возможности для обработки больших объемов данных и более высокопроизводительных вычислений.</p>
+<p>Для ускорения ABAP решений на базе HANA, используется перенос вычислений с уровня сервера приложений (AS ABAP) на сервер СУБД (Code-to-Data). Данную задачу можно решить несколькими способами, одним из которых является использование Native SQL и AMDP как средства его вызова.</p>
+<p>В контексте ABAP разработки, под Native SQL понимается язык SQL запросов поддерживаемый текущей или дополнительной СУБД сервера приложений.</p>
+<p>В данной статье будут рассмотрены основные моменты использования AMDP.</p>
+<p><span id="more-3050"></span></p>
+<p>SAP <a href="http://help.sap.com/abapdocu_750/en/abendatabase_access_guidl.htm">рекомендует </a>использовать Native SQL в ABAP только тогда, когда задачу оптимизации не решить стандартными средствами <a href="../../2014/09/26/code-push-down-for-hana-from-abap-starts-with-open-sql/index.htm">OpenSQL</a>, в частности AMDP следует использовать только если будут задействованы какие-то специфичные для HANA вещи или объем данных слишком велик чтобы переносить его между СУБД и сервером приложений.</p>
+<p>Вызывать Native SQL в ABAP напрямую можно несколькими методами, среди которых:</p>
+<ul>
+<li><a href="../adbc-abap-database-connectivity/index.htm">ADBC </a>классы,</li>
+<li><a href="http://help.sap.com/abapdocu_750/en/abennativesql.htm">EXEC SQL</a> (без возможности использования динамики),</li>
+<li>AMDP.</li>
+</ul>
+<p>Косвенно через:</p>
+<ul>
+<li><a href="http://help.sap.com/abapdocu_750/en/abensql_script.htm">External Procedures </a>(proxies). Рекомендуется использовать только если невозможно тоже самое сделать через AMDP (например, когда HANA подключена как дополнительная СУБД),</li>
+<li><a href="http://help.sap.com/abapdocu_750/en/abenexternal_views.htm">External views</a> (если учесть что view будет к calculation view на базе SQL Script), так же не рекомендуется к использованию если возможно тоже самое реализовать через <a href="../../osnovy-abap/slovar/abap-cds-core-data-services/index.htm">ABAP CDS</a> или AMDP.</li>
+</ul>
+<p>Наиболее удобным и современным способом вызова Native SQL является использование AMDP, преимущества заключаются в следующем:</p>
+<ul>
+<li>Проверка синтаксиса и подсветка команд,</li>
+<li>Стандартное для ABAP объектов управление жизненным циклом (В отличие от внешних процедур и ракурсов,  где необходимо использовать HANA артефакты для переноса объекта между системами),</li>
+<li>Автодополнение и навигация к используемым объектам,</li>
+<li>Простой вызов из ABAP.</li>
+</ul>
+<p>Технически AMDP это обёртка над <a href="../../wiki/Хранимая_процедура.html">хранимыми процедурами</a> в СУБД. Обёртка заворачивает Native SQL код в методы ABAP класса (AMDP методы), которые Вы можете использовать в своих программах как обычные методы обычных классов. Во время первого доступа к такому методу, на сервере БД будет создана хранимая процедура, которая создаётся в основной схеме для сервера приложений с именем SAPSid, где Sid – идентификатор системы. Доступ из хранимой процедуры можно получить к объектам БД текущей схемы (SAPSid) и объектам других схем, явно указав их имена.</p>
+<p>В настоящее время AMDP поддерживается только для HANA, однако в будущем планируется поддержка других СУБД. Проверить поддержку AMDP можно через класс CL_ABAP_DBFEATURES и его метод CALL_AMDP_METHOD (ABAP 7.5).</p>
+<p>Под Native SQL в HANA подразумеваются языки SQL Script и L, однако L доступен только для разработчиков SAP.</p>
+<h2>AMDP классы</h2>
+<p>&nbsp;</p>
+<p>Как и большинство новых объектов разработки, AMDP классы доступны для редактирования только из ADT (ABAP Development Tools for Eclipse). Создаётся AMDP класс таким же образом, как и обычные глобальные классы, единственным отличаем, является реализация классом специального интерфейса <strong>&#8212; IF_AMDP_MARKER_HDB</strong>. Данный интерфейс является своего рода меткой для системы, чтобы она понимала, что в методах этого класса может быть встроен вызов AMDP. Кроме AMDP методов такой класс может содержать и обычные методы.</p>
+<h2>AMDP методы</h2>
+<p>&nbsp;</p>
+<p>Метод AMDP может быть как статическим, так и методом инстанции с любой видимостью. По своему описанию в заголовке класса он ничем не отличается от обычных методов. Понять, что это AMDP метод можно только заглянув в исходный код.</p>
+<p>На AMDP метод накладываются определенные ограничения.</p>
+<p>Ограничения в интерфейсе:</p>
+<ul>
+<li>Нельзя использовать обобщенные типы (TYPE DATA, TYPE CSEQUENCE и др.), доступны только элементарные типы данных и табличные, компоненты которых являются элементарными.</li>
+<li>Нельзя использовать для описания типа устаревшие словарные типы &#8212; DF16_SCL и DF34_SCL.</li>
+<li>Параметры всегда должны переноситься по значению, перенос по ссылке недоступен.</li>
+<li>RETURNING параметры запрещены.</li>
+<li>Только входные параметры могут быть помечены как необязательные и для всех необязательных параметров необходимо, чтобы было задано начальное значение.</li>
+<li>Параметры с типами f, decfloat16, decfloat34, string, и xstring не могут быть со значением по умолчанию, а значит, они не могут быть необязательными.</li>
+<li>Имена параметров:
+<ul>
+<li>Не могут начинаться с префикса «%_».</li>
+<li>Нельзя использовать параметры с именами: endmethod и client.</li>
+</ul>
+</li>
+<li>Если используется параметр с именем connection, он обязательно должен иметь тип &#8212; DBCON_NAME, используется он когда AMDP вызывается через <a href="http://help.sap.com/abapdocu_750/en/abenamdp_db_connections.htm">сервисное подключение</a>, в таком случае его адрес необходимо будет передать через параметр.</li>
+<li>При описании исключений можно использовать только заранее <a href="http://help.sap.com/abapdocu_740/en/abenamdp_exceptions.htm">определенные</a> классы исключений. Классические исключения недоступны.</li>
+<li>CHANGING параметры не могут иметь тип string или xstring.</li>
+<li>Длина параметров с типом C или N не может превышать 5000 символов.</li>
+</ul>
+<p>Ограничения в рамках реализации:</p>
+<ul>
+<li>Нельзя использовать DDL синтаксис.</li>
+<li>Локальные временные объекты БД не могут быть доступны из метода.</li>
+<li>Запрещено использование rollback или commit. Транзакции должны быть обработаны в рамках ABAP программ.</li>
+<li>Доступ на запись к словарным таблицам, для которых активна буферизация &#8212; запрещен.</li>
+<li>AMDP методы не могут содержать внутри себя неявных расширений.</li>
+<li>AMDP метод не может быть пустым.</li>
+<li>Конструктор нельзя реализовать как AMDP метод.</li>
+</ul>
+<p>В ABAP 7.4. можно реализовать только метод AMDP процедуры, в 7.5 добавилась так же возможность создания метода AMDP функции. AMDP функции можно использовать для получения данных в других AMDP процедурах и функциях, в ABAP CDS и даже в OpenSQL. Для функций параметр RETURNING является обязательным. В статье реализация функций не рассматривается, подробнее о функциях смотрите в <a href="http://help.sap.com/abapdocu_750/en/abenamdp_function_methods.htm#@@ITOC@@ABENAMDP_FUNCTION_METHODS_2">документации</a>.</p>
+<p>Для AMDP методов, как и для обычных методов доступна поддержка наследования, пример использования можно посмотреть в программе &#8212; demo_amdp_polymorphism. Таким образом, можно сделать разные реализации и в зависимости от поддержки AMDP, вызывать либо их, либо обычные методы с OpenSQL.</p>
+<p>Так как AMDP это Native SQL, поддержка клиента (манданта) должна быть реализована вручную, как правило клиент предаётся внутрь AMDP как параметр. Другим способом является возможность использования специальной функции – <a href="http://help.sap.com/abapdocu_750/en/abenamdp_client_handling.htm">SESSION_CONTEXT</a>, использовать которую следует, только если ваша AMDP процедура вызывается из ABAP.</p>
+<p>Как уже говорилось выше, понять, что это AMDP метод можно только по исходному коду. Меткой для системы в таком случае служит дополнение BY DATABASE PROCEDURE у выражения – METHOD.</p>
+<p>Синтаксис этого дополнения следующий:</p><!-- Urvanov Syntax Highlighter v2.8.22 -->
+
+		<div id="urvanov-syntax-highlighter-618a08d98112e421991352" class="urvanov-syntax-highlighter-syntax crayon-theme-abapblog urvanov-syntax-highlighter-font-monospace urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-bottom: 12px; clear: none; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="urvanov-syntax-highlighter-plain-wrap"></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d98112e421991352-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d98112e421991352-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d98112e421991352-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d98112e421991352-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d98112e421991352-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d98112e421991352-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d98112e421991352-7">7</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d98112e421991352-1"><span class="crayon-st">METHOD</span><span class="crayon-h"> </span>meth<span class="crayon-h"> </span><span class="crayon-st">BY</span><span class="crayon-h"> </span><span class="crayon-st">DATABASE</span><span class="crayon-h"> </span><span class="crayon-st">PROCEDURE</span><span class="crayon-h"> </span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d98112e421991352-2"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">FOR</span><span class="crayon-h"> </span>db<span class="crayon-h"> </span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d98112e421991352-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">LANGUAGE</span><span class="crayon-h"> </span>db<span class="crayon-sy">_</span>lang<span class="crayon-h"> </span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d98112e421991352-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-o">[</span><span class="crayon-st">OPTIONS</span><span class="crayon-h"> </span>db<span class="crayon-sy">_</span>options<span class="crayon-o">]</span><span class="crayon-h"> </span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d98112e421991352-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-o">[</span><span class="crayon-st">USING</span><span class="crayon-h">&nbsp;&nbsp; </span>db<span class="crayon-sy">_</span>entities<span class="crayon-o">]</span><span class="crayon-o">.</span><span class="crayon-h"> </span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d98112e421991352-6"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-o">.</span><span class="crayon-o">.</span><span class="crayon-o">.</span><span class="crayon-h"> </span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d98112e421991352-7"><span class="crayon-st">ENDMETHOD</span><span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0018 seconds] -->
+<p>Дополнение FOR определяет, для какой СУБД создана текущая AMDP процедура. В настоящее время доступно только определение для HANA:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>db</strong></td>
+<td><strong>СУБД</strong></td>
+<td><strong>Интерфейс</strong></td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>SAP HANA</td>
+<td>IF_AMDP_MARKER_HDB</td>
+</tr>
+</tbody>
+</table>
+<p>В будущем, возможно, появится поддержка других СУБД, тогда можно будет использовать несколько маркеров (интерфейсов), чтобы реализовывать методы для разных СУБД.</p>
+<p>Дополнение LANGUAGE определяет то, на каком языке будет реализация AMDP процедуры. Доступны следующие варианты:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>db</strong></td>
+<td><strong>db_lang</strong></td>
+<td><strong>Язык</strong></td>
+<td><strong>Комментарий</strong></td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>SQLSCRIPT</td>
+<td>SQLScript</td>
+<td>Доступно для всех</td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>LLANG</td>
+<td>L</td>
+<td>Доступно только внутри SAP</td>
+</tr>
+</tbody>
+</table>
+<p>Дополнение OPTIONS описывает специфичные для СУБД параметры обработки AMDP. Доступные следующие варианты:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>db</strong></td>
+<td><strong>option</strong></td>
+<td><strong>Значение</strong></td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>READ-ONLY</td>
+<td>В рамках AMDP нельзя будет изменять значения таблиц.</td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>SUPPRESS SYNTAX ERRORS</td>
+<td>Для внутреннего использования SAP.</td>
+</tr>
+</tbody>
+</table>
+<p>Основным по значимости дополнением является дополнение USING. В рамках него указывается, какие объекты СУБД будут обработаны в текущей реализации AMDP. Указание объектов необходимо прежде всего для того, чтобы система могла выполнить соответствующие проверки синтаксиса.</p>
+<p>Необходимо указывать следующие объекты:</p>
+<ul>
+<li>Все таблицы и ракурсы из ABAP словаря.</li>
+<li>Все процедуры (или функции ABAP 7.5) AMDP, даже если они из одного класса.</li>
+</ul>
+<p>Все остальные объекты (не управляемые из ABAP) не могут присутствовать в дополнении USING. Указанные в USING объекты должны присутствовать в текущей схеме БД и могут использоваться без её указания. Объекты из других схем должны использоваться с указанием полного имени, в том числе имени схемы, исключением являются объекты из текущей схемы с префиксом &#8212; /1BCAMDP/.</p>
+<p>Объекты из USING должны обязательно быть использованы в реализации AMDP процедуры.</p>
+<p>Пример вызова одной AMDP процедуры из другой:</p><!-- Urvanov Syntax Highlighter v2.8.22 -->
+
+		<div id="urvanov-syntax-highlighter-618a08d98114e729655421" class="urvanov-syntax-highlighter-syntax crayon-theme-abapblog urvanov-syntax-highlighter-font-monospace urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-bottom: 12px; clear: none; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="urvanov-syntax-highlighter-plain-wrap"></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d98114e729655421-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d98114e729655421-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d98114e729655421-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d98114e729655421-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d98114e729655421-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d98114e729655421-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d98114e729655421-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d98114e729655421-8">8</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d98114e729655421-9">9</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d98114e729655421-10">10</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d98114e729655421-11">11</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d98114e729655421-12">12</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d98114e729655421-13">13</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d98114e729655421-1"><span class="crayon-st">METHOD</span><span class="crayon-h"> </span>increase<span class="crayon-sy">_</span>price<span class="crayon-h"> </span><span class="crayon-st">BY</span><span class="crayon-h"> </span><span class="crayon-st">DATABASE</span><span class="crayon-h"> </span><span class="crayon-st">PROCEDURE</span><span class="crayon-h"> </span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d98114e729655421-2"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">FOR</span><span class="crayon-h"> </span><span class="crayon-st">HDB</span><span class="crayon-h"> </span><span class="crayon-st">LANGUAGE</span><span class="crayon-h"> </span><span class="crayon-st">SQLSCRIPT</span><span class="crayon-h"> </span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d98114e729655421-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">USING</span><span class="crayon-h"> </span>cl<span class="crayon-sy">_</span>demo<span class="crayon-sy">_</span>amdp<span class="crayon-sy">_</span>call<span class="crayon-sy">_</span>amdp<span class="crayon-o">=</span><span class="crayon-o">&gt;</span>increase<span class="crayon-sy">_</span>price<span class="crayon-sy">_</span>amdp<span class="crayon-o">.</span><span class="crayon-h"> </span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d98114e729655421-4"><span class="crayon-h">&nbsp;&nbsp;</span>call<span class="crayon-h"> </span><span class="crayon-c">"CL_DEMO_AMDP_CALL_AMDP=&gt;INCREASE_PRICE_AMDP"( </span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d98114e729655421-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">CLNT</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-o">:</span><span class="crayon-st">CLNT</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-st">INCPRICE</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-o">:</span><span class="crayon-st">INCPRICE</span><span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d98114e729655421-6"><span class="crayon-st">ENDMETHOD</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d98114e729655421-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d98114e729655421-8"><span class="crayon-st">METHOD</span><span class="crayon-h"> </span>increase<span class="crayon-sy">_</span>price<span class="crayon-sy">_</span>amdp<span class="crayon-h"> </span><span class="crayon-st">BY</span><span class="crayon-h"> </span><span class="crayon-st">DATABASE</span><span class="crayon-h"> </span><span class="crayon-st">PROCEDURE</span><span class="crayon-h"> </span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d98114e729655421-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-st">FOR</span><span class="crayon-h"> </span><span class="crayon-st">HDB</span><span class="crayon-h"> </span><span class="crayon-st">LANGUAGE</span><span class="crayon-h"> </span><span class="crayon-st">SQLSCRIPT</span><span class="crayon-h"> </span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d98114e729655421-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-st">USING</span><span class="crayon-h"> </span>sflight<span class="crayon-o">.</span><span class="crayon-h"> </span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d98114e729655421-11"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-e">update </span><span class="crayon-e">sflight </span><span class="crayon-e">set </span>price<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>price<span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-e">incprice </span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d98114e729655421-12"><span class="crayon-e">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-e">where </span>mandt<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>clnt<span class="crayon-sy">;</span><span class="crayon-h"> </span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d98114e729655421-13"><span class="crayon-st">ENDMETHOD</span><span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0015 seconds] -->
+<p>Как видно из примера, в процедуре через дополнение USING была описана используемая в реализации другая AMDP процедура.</p>
+<p>Из-за ограничений HANA, рекурсивные и циклические вызовы в AMDP процедур запрещены.</p>
+<h2>AMDP BADI</h2>
+<p>&nbsp;</p>
+<p>AMDP классы могут быть использованы в расширениях через специальные AMDP BAdi, с определенными ограничениями в сравнении с обычными BAdi.</p>
+<p>Ограничения в определении и реализации:</p>
+<ul>
+<li>Нельзя использовать фильтры</li>
+<li>Fallback класс должен быть всегда определен (Реализация BAdi по умолчанию).</li>
+<li>Каждый метод BAdi должен быть реализован через AMDP процедуру.</li>
+</ul>
+<p>Вызываются такие AMDP BAdi так же как и стандартные Kernel BAdi через GET BADI, CALL BADI.</p>
+<p>В следующем видео подробно с примерами разобрано использование AMDP BAdi:</p>
+<div class="arve aligncenter" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-5f6elumavzm618a08d9991a9081246121" style="max-width:960px;" itemscope="" itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/5F6ELUmavzM?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" class="arve-iframe fitvidsignore" data-arve="arve-youtube-5f6elumavzm618a08d9991a9081246121" data-src-no-ap="https://www.youtube-nocookie.com/embed/5F6ELUmavzM?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="540" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="../../embed/5F6ELUmavzM.html?feature=oembed&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="960"></iframe>
+
+</span>
+
+</span>
+
+</div>
+
+<h2>Отладка AMDP</h2>
+<p>&nbsp;</p>
+<p>Для отладки AMDP в ABAP 7.4. необходимо сделать предварительные настройки:</p>
+<ul>
+<li>Настроить внешнюю отладку и поставить точку останова в HANA Studio,</li>
+<li>Выдать соответствующие полномочия пользователю в HANA, под которым будет выполнена отладка.</li>
+</ul>
+<p>После чего можно использовать Procedure Debugger в HANA Studio, вызвав процедуру из ABAP.</p>
+<p>В ABAP 7.5. отладку процедур можно выполнять прямо в <a href="../../2015/10/22/how-to-debug-abap-managed-database-procedures-using-adt-basics/index.htm">ADT без HANA Studio</a>, используя новый для этой версии инструмент ADT &#8212; AMDP Debugger.</p>
+<p>На тему отладки AMDP процедур в ABAP 7.4 на SCN есть хорошая <a href="../../2014/01/31/tutorial-how-to-debug-an-abap-managed-database-procedure/index.htm">статья</a>.</p>
+<p>Так же доступно видео с полным разбором:</p>
+<div class="arve aligncenter" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-5oeuyl_s5me618a08d99a31f275846199" style="max-width:960px;" itemscope="" itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/5OEuyl_s5ME?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" class="arve-iframe fitvidsignore" data-arve="arve-youtube-5oeuyl_s5me618a08d99a31f275846199" data-src-no-ap="https://www.youtube-nocookie.com/embed/5OEuyl_s5ME?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="540" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="../../embed/5OEuyl_s5ME.html?feature=oembed&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="960"></iframe>
+
+</span>
+
+</span>
+
+</div>
+
+<h2>SQL Script</h2>
+<p>&nbsp;</p>
+<p>Синтаксис языка SQL Script описан в  соответствующей <a href="../../viewer/product/SAP_HANA_PLATFORM.html">документации</a> (обратите внимание на версию HANA в документе).  В AMDP могут быть использованы CE_* функции которые работают с любыми типами View (CE_COLUMN_TABLE не будет работать, так как эта функция работает только с column store). Однако по заявлениям некоторых представителей SAP, данные функции отживают свое и возможно скоро будут считаться устаревшими.</p>
+<p>Пример использования CE_UNION_ALL:</p><!-- Urvanov Syntax Highlighter v2.8.22 -->
+
+		<div id="urvanov-syntax-highlighter-618a08d981156058822895" class="urvanov-syntax-highlighter-syntax crayon-theme-abapblog urvanov-syntax-highlighter-font-monospace urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-bottom: 12px; clear: none; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="urvanov-syntax-highlighter-plain-wrap"></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-8">8</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-9">9</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-10">10</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-11">11</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-12">12</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-13">13</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-14">14</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-15">15</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-16">16</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-17">17</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-18">18</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-19">19</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-20">20</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-21">21</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-22">22</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-23">23</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-24">24</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-25">25</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-26">26</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-27">27</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-28">28</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-29">29</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-30">30</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-31">31</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-32">32</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-33">33</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-34">34</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-35">35</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a08d981156058822895-36">36</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-1"><span class="crayon-st">CLASS</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>amdp<span class="crayon-sy">_</span>test<span class="crayon-sy">_</span>case1<span class="crayon-h"> </span><span class="crayon-st">DEFINITION</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-2"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">PUBLIC</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-3"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">FINAL</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-4"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">CREATE</span><span class="crayon-h"> </span><span class="crayon-st">PUBLIC</span><span class="crayon-h"> </span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-5"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-m">PUBLIC SECTION</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">INTERFACES</span><span class="crayon-o">:</span><span class="crayon-h"> </span>if<span class="crayon-sy">_</span>amdp<span class="crayon-sy">_</span>marker<span class="crayon-sy">_</span>hdb<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">CLASS</span><span class="crayon-o">-</span><span class="crayon-st">METHODS</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>amdp<span class="crayon-sy">_</span>get<span class="crayon-sy">_</span>aa<span class="crayon-h"> </span><span class="crayon-st">EXPORTING</span><span class="crayon-h"> </span><span class="crayon-st">VALUE</span><span class="crayon-o">(</span>et<span class="crayon-sy">_</span>aa<span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span>SPFLI<span class="crayon-sy">_</span>TAB<span class="crayon-h"> </span><span class="crayon-st">RAISING</span><span class="crayon-h"> </span><span class="crayon-t">cx_amdp_error</span><span class="crayon-sy">,</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>amdp<span class="crayon-sy">_</span>get<span class="crayon-sy">_</span>ua<span class="crayon-h"> </span><span class="crayon-st">EXPORTING</span><span class="crayon-h"> </span><span class="crayon-st">VALUE</span><span class="crayon-o">(</span>et<span class="crayon-sy">_</span>ua<span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span>SPFLI<span class="crayon-sy">_</span>TAB<span class="crayon-h"> </span><span class="crayon-st">RAISING</span><span class="crayon-h"> </span><span class="crayon-t">cx_amdp_error</span><span class="crayon-sy">,</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>amdp<span class="crayon-sy">_</span>get<span class="crayon-sy">_</span>all<span class="crayon-h"> </span><span class="crayon-st">EXPORTING</span><span class="crayon-h"> </span><span class="crayon-st">VALUE</span><span class="crayon-o">(</span>et<span class="crayon-sy">_</span>all<span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span>spfli<span class="crayon-sy">_</span>tab<span class="crayon-h"> </span><span class="crayon-st">RAISING</span><span class="crayon-h"> </span><span class="crayon-t">cx_amdp_error</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-11"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-m">PROTECTED SECTION</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-12"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-m">PRIVATE SECTION</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-13"><span class="crayon-st">ENDCLASS</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-14">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-15"><span class="crayon-st">CLASS</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>amdp<span class="crayon-sy">_</span>test<span class="crayon-sy">_</span>case1<span class="crayon-h"> </span><span class="crayon-st">IMPLEMENTATION</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-16"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">METHOD</span><span class="crayon-h"> </span>amdp<span class="crayon-sy">_</span>get<span class="crayon-sy">_</span>aa<span class="crayon-h"> </span><span class="crayon-st">BY</span><span class="crayon-h"> </span><span class="crayon-st">DATABASE</span><span class="crayon-h"> </span><span class="crayon-st">PROCEDURE</span><span class="crayon-h"> </span><span class="crayon-st">FOR</span><span class="crayon-h"> </span><span class="crayon-st">HDB</span><span class="crayon-h"> </span><span class="crayon-st">LANGUAGE</span><span class="crayon-h"> </span><span class="crayon-st">SQLSCRIPT</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">USING</span><span class="crayon-h"> </span>spfli<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>et<span class="crayon-sy">_</span>aa<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-st">SELECT</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-st">FROM</span><span class="crayon-h"> </span>spfli<span class="crayon-h"> </span><span class="crayon-st">WHERE</span><span class="crayon-h"> </span>carrid<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'AA'</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-19"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">ENDMETHOD</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-20">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-21"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">METHOD</span><span class="crayon-h"> </span>amdp<span class="crayon-sy">_</span>get<span class="crayon-sy">_</span>ua<span class="crayon-h"> </span><span class="crayon-st">BY</span><span class="crayon-h"> </span><span class="crayon-st">DATABASE</span><span class="crayon-h"> </span><span class="crayon-st">PROCEDURE</span><span class="crayon-h"> </span><span class="crayon-st">FOR</span><span class="crayon-h"> </span><span class="crayon-st">HDB</span><span class="crayon-h"> </span><span class="crayon-st">LANGUAGE</span><span class="crayon-h"> </span><span class="crayon-st">SQLSCRIPT</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-22"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">USING</span><span class="crayon-h"> </span>spfli<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>et<span class="crayon-sy">_</span>ua<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-st">SELECT</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-st">FROM</span><span class="crayon-h"> </span>spfli<span class="crayon-h"> </span><span class="crayon-st">WHERE</span><span class="crayon-h"> </span>carrid<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'UA'</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-24"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">ENDMETHOD</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-25">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-26"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">METHOD</span><span class="crayon-h"> </span>amdp<span class="crayon-sy">_</span>get<span class="crayon-sy">_</span>all<span class="crayon-h"> </span><span class="crayon-st">BY</span><span class="crayon-h"> </span><span class="crayon-st">DATABASE</span><span class="crayon-h"> </span><span class="crayon-st">PROCEDURE</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-27"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">FOR</span><span class="crayon-h"> </span><span class="crayon-st">HDB</span><span class="crayon-h"> </span><span class="crayon-st">LANGUAGE</span><span class="crayon-h"> </span><span class="crayon-st">SQLSCRIPT</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-28"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">USING</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>amdp<span class="crayon-sy">_</span>test<span class="crayon-sy">_</span>case1<span class="crayon-o">=</span><span class="crayon-o">&gt;</span><span class="crayon-e">amdp_get_aa</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-29"><span class="crayon-e">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>zcl<span class="crayon-sy">_</span>amdp<span class="crayon-sy">_</span>test<span class="crayon-sy">_</span>case1<span class="crayon-o">=</span><span class="crayon-o">&gt;</span>amdp<span class="crayon-sy">_</span>get<span class="crayon-sy">_</span>ua<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-30"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>call<span class="crayon-h"> </span><span class="crayon-c">"ZCL_AMDP_TEST_CASE1=&gt;AMDP_GET_AA"(</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-31"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ET<span class="crayon-sy">_</span>AA<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-o">:</span>lt<span class="crayon-sy">_</span>aa<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-32"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>call<span class="crayon-h"> </span><span class="crayon-c">"ZCL_AMDP_TEST_CASE1=&gt;AMDP_GET_UA"(</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-33"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ET<span class="crayon-sy">_</span>UA<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-o">:</span>lt<span class="crayon-sy">_</span>ua<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-34"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>et<span class="crayon-sy">_</span>all<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>CE<span class="crayon-sy">_</span>UNION<span class="crayon-sy">_</span>ALL<span class="crayon-o">(</span><span class="crayon-o">:</span>lt<span class="crayon-sy">_</span>aa<span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-o">:</span>lt<span class="crayon-sy">_</span>ua<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a08d981156058822895-35"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">ENDMETHOD</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a08d981156058822895-36"><span class="crayon-st">ENDCLASS</span><span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0043 seconds] -->
+<p>Одной из типичных проблем, с которыми сталкивается разработчик при использовании AMDP – передача RANGE с экрана выбора. Решается задача путём формирования WHERE условия с помощью класса &#8212; CL_SHDB_SELTAB и его применения к выбранным данным через SQL Script функцию APPLY_FILTER, пример можно посмотреть в <a href="../../2015/03/30/handling-of-select-options-parameters-within-amdp/index.htm">статье</a> на SCN.</p>
+<p>Если данного класса нет в Вашей системе, он может быть установлен <a href="https://websmp130.sap-ag.de/sap(bD1ydSZjPTAwMQ==)/bc/bsp/sno/ui_entry/entry.htm?param=69765F6D6F64653D3030312669765F7361706E6F7465735F6E756D6265723D3231323436373226">нотой</a>.</p>
+<p>При обработке данных получаемых из ABAP система сопоставляет типы ABAP и HANA по следующим правилам:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>ABAP Тип</strong></td>
+<td><strong>HANA Тип</strong></td>
+<td><strong>Комментарий</strong></td>
+</tr>
+<tr>
+<td><strong>b</strong></td>
+<td>SMALLINT</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>s</strong></td>
+<td>SMALLINT</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>i</strong></td>
+<td>INTEGER</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>p</strong>, длинна <strong>leng</strong> с <strong>dec</strong> знаками после запятой</td>
+<td>DECIMAL, длинна  <strong>2 </strong><strong>leng</strong><strong>-1</strong> c <strong>dec</strong> знаками после запятой</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>decfloat16</strong></td>
+<td>VARBINARY, длинна 8</td>
+<td>Вычисления как с числовыми типами система произвести не сможет</td>
+</tr>
+<tr>
+<td><strong>decfloat34</strong></td>
+<td>VARBINARY, длинна 16</td>
+<td>Вычисления как с числовыми типами система произвести не сможет</td>
+</tr>
+<tr>
+<td><strong>f</strong></td>
+<td>DOUBLE</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>c, </strong>длинна <strong>len</strong></td>
+<td>NVARCHAR, длинна  len</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>string</strong></td>
+<td>NCLOB</td>
+<td>Не разрешено для CHANGING параметров AMDP</td>
+</tr>
+<tr>
+<td><strong>n, </strong>длинна <strong>len</strong></td>
+<td>NVARCHAR, длинна len</td>
+<td>Для использования в арифметических выражениях следует использование преобразование типа к числовому типу HANA</td>
+</tr>
+<tr>
+<td><strong>d</strong></td>
+<td>NVARCHAR, длинна 8</td>
+<td>Для использования в расчётах с датой необходимо преобразование к типу даты в HANA</td>
+</tr>
+<tr>
+<td><strong>t</strong></td>
+<td>NVARCHAR, длинна 6</td>
+<td>Для использования в расчётах с временем необходимо преобразование к типу времени в HANA</td>
+</tr>
+<tr>
+<td><strong>x, </strong>длинна <strong>len</strong></td>
+<td>VARBINARY, длинна len</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>xstring</strong></td>
+<td>BLOB</td>
+<td>Не разрешено для CHANGING параметров AMDP</td>
+</tr>
+</tbody>
+</table>
+<p>Типы ABAP словаря сопоставляются так же как и <a href="http://help.sap.com/abapdocu_750/en/abenddic_builtin_types.htm">сопоставимые с ними ABAP типы</a>, за исключением:</p>
+<table>
+<tbody>
+<tr>
+<td width="199">DF16_DEC, длинна <strong>leng</strong> с <strong>dec</strong> знаками после запятой</td>
+<td width="210">DECIMAL, длинна <strong>2</strong><strong>len</strong><strong>-1</strong> с <strong>dec</strong> знаками после запятой</td>
+<td>Тип в HANA имеет меньший диапазон значений, чем в ABAP</td>
+</tr>
+<tr>
+<td width="199">DF34_DEC, длинна <strong>leng</strong> с <strong>dec</strong> знаками после запятой</td>
+<td width="210">DECIMAL, длинна <strong>2</strong><strong>len</strong><strong>-1</strong> с <strong>dec</strong> знаками после запятой</td>
+<td>Тип в HANA имеет меньший диапазон значений, чем в ABAP</td>
+</tr>
+<tr>
+<td width="199">DF16_SCL</td>
+<td width="210">&#8212;</td>
+<td>Устарело, не поддерживается</td>
+</tr>
+<tr>
+<td width="199">DF34_SCL</td>
+<td width="210">&#8212;</td>
+<td>Устарело, не поддерживается</td>
+</tr>
+<tr>
+<td width="199">SSTRING, длинна <strong>len</strong></td>
+<td width="210">NVARCHAR, длинна <strong>len</strong></td>
+<td>&#8212;</td>
+</tr>
+</tbody>
+</table>
+<h2>Источники</h2>
+<ul>
+<li><a href="../../viewer/product/SAP_HANA_PLATFORM.html">SQL Script Reference</a>,</li>
+<li><a href="https://training.sap.com/shop/course/ha400-abap-programming-for-sap-hana-classroom-008-g-en/">HA400</a>,</li>
+<li><a href="http://help.sap.com/abapdocu_750/en/abenamdp.htm">ABAP Help</a>.</li>
+</ul>
+							</div>
+		<div class="tags-links"><a href="../../tag/amdp/index.htm" rel="tag">AMDP</a> <a href="../../tag/native-sql/index.htm" rel="tag">Native SQL</a></div></article>
+	
+	<nav class="navigation post-navigation" role="navigation" aria-label="Записи">
+		<h2 class="screen-reader-text">Навигация по записям</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="../../osnovy-abap/slovar/abap-cds-core-data-services/index.htm" rel="prev"><span class="meta-nav" aria-hidden="true">Назад</span> <span class="screen-reader-text">Предыдущая запись:</span> <span class="post-title">ABAP CDS (Core Data Services)</span></a></div><div class="nav-next"><a href="../../osnovy-abap/abap-7-51/index.htm" rel="next"><span class="meta-nav" aria-hidden="true">Далее</span> <span class="screen-reader-text">Следующая запись:</span> <span class="post-title">ABAP 7.51</span></a></div></div>
+	</nav>
+
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			<span itemprop="interactionCount">4</span> комментария		</h2>
+
+		<ol class="comment-list">
+					<li id="comment-17713" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-17713" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/6f01b7f1576d90b5f086abc333d0e5d0.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/6f01b7f1576d90b5f086abc333d0e5d0-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Вячеслав</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17713"><time datetime="2016-06-14T08:31:00+04:00">14.06.2016 в 08:31</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>как всегда, большое спасибо за статью (жалко только, что не на полгода раньше)</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-1.htm?replytocom=17713#respond' data-commentid="17713" data-postid="3050" data-belowelement="div-comment-17713" data-respondelement="respond" data-replyto="Комментарий к записи Вячеслав" aria-label='Комментарий к записи Вячеслав'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-17714" class="comment odd alt depth-2">
+			<article id="div-comment-17714" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/47a1eb6e85596e832b844631b7c9dd09.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/47a1eb6e85596e832b844631b7c9dd09-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn"><a href='../../index.htm' rel='external nofollow ugc' class='url'>Astrafox</a></b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17714"><time datetime="2016-06-14T20:51:00+04:00">14.06.2016 в 20:51</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Всегда пожалуйста!</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-2.htm?replytocom=17714#respond' data-commentid="17714" data-postid="3050" data-belowelement="div-comment-17714" data-respondelement="respond" data-replyto="Комментарий к записи Astrafox" aria-label='Комментарий к записи Astrafox'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-17755" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-17755" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/bd78656b7a9e9c115a3391355f7adeaa.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/bd78656b7a9e9c115a3391355f7adeaa-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Kostya Mesnyankin</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17755"><time datetime="2017-04-19T18:07:00+04:00">19.04.2017 в 18:07</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>В последнем куске кода использование CE_UNION_ALL не оправдано, потому что по рекомендациям от SAPа нельзя смешивать CE функции с чистым sql или с sqlscriptом и даже может быть в данном конкретном случае это не вызовет каких то &#171;торможений&#187;( более плохая оптимизация ) или искажений в данных, но это сделано не по best practice&#8217;ам . Это во-первых. А во-вторых  на текущий момент SAP вообще не рекомендует использовать CE функции поскольку они уже устарели, и развиваться не будут. Сейчас только SQLScript.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-3.htm?replytocom=17755#respond' data-commentid="17755" data-postid="3050" data-belowelement="div-comment-17755" data-respondelement="respond" data-replyto="Комментарий к записи Kostya Mesnyankin" aria-label='Комментарий к записи Kostya Mesnyankin'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-17756" class="comment odd alt depth-2">
+			<article id="div-comment-17756" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/47a1eb6e85596e832b844631b7c9dd09.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/47a1eb6e85596e832b844631b7c9dd09-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn"><a href='../../index.htm' rel='external nofollow ugc' class='url'>Сидорочкин Михаил</a></b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17756"><time datetime="2017-04-19T23:51:00+04:00">19.04.2017 в 23:51</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Все верно, CE функции уже устарели. Вообще относительно SQL скрипта крайне желательно всегда смотреть на актуальную версию гайда. Примеры же сделаны были исключительно ради демонстрации возможностей AMDP. Best practice есть в тех же гайдах. </p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-4.htm?replytocom=17756#respond' data-commentid="17756" data-postid="3050" data-belowelement="div-comment-17756" data-respondelement="respond" data-replyto="Комментарий к записи Сидорочкин Михаил" aria-label='Комментарий к записи Сидорочкин Михаил'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		</ol>
+
+		
+		
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Добавить комментарий для <a href="#comment-17756">Сидорочкин Михаил</a> <small><a rel="nofollow" id="cancel-comment-reply-link" href="index.htm#respond">Отменить ответ</a></small></h3><form action="https://abap-blog.ru/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate=""><p class="comment-notes"><span id="email-notes">Ваш адрес email не будет опубликован.</span></p><p class="comment-form-comment"><label for="comment">Комментарий</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Имя</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
+<div class="anr_captcha_field"><div id="anr_captcha_field_1" class="anr_captcha_field_div"></div></div><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Отправить комментарий"> <input type='hidden' name='comment_post_ID' value='3050' id='comment_post_ID'>
+<input type='hidden' name='comment_parent' id='comment_parent' value='17756'>
+</p></form>	</div><!-- #respond -->
+	
+	
+</div>
+
+			</div>
+							</div>
+					</div>
+	</div>
+</div>
+<script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"api":{"root":"https:\/\/abap-blog.ru\/wp-json\/","namespace":"contact-form-7\/v1"}};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.5.1' id='contact-form-7-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect.min.js?ver=1.12.1' id='jquery-effects-core-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-slide.min.js?ver=1.12.1' id='jquery-effects-slide-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-highlight.min.js?ver=1.12.1' id='jquery-effects-highlight-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-fold.min.js?ver=1.12.1' id='jquery-effects-fold-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-blind.min.js?ver=1.12.1' id='jquery-effects-blind-js'></script>
+<script src='../../wp-content/plugins/show-hidecollapse-expand/assets/js/bg-show-hide.js?ver=5.8.1' id='bg-show-hide-script-js'></script>
+<script src='../../wp-includes/js/comment-reply.min.js?ver=5.8.1' id='comment-reply-js'></script>
+<script src='../../wp-content/plugins/dynamic-to-top/js/libs/jquery.easing.js?ver=1.3' id='jquery-easing-js'></script>
+<script type='text/javascript' id='dynamic-to-top-js-extra'>
+/* <![CDATA[ */
+var mv_dynamic_to_top = {"text":"To Top","version":"0","min":"300","speed":"1100","easing":"easeInExpo","margin":"20"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/dynamic-to-top/js/dynamic.to.top.min.js?ver=3.5' id='dynamic-to-top-js'></script>
+<script src='../../recaptcha/api.js?render=6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC&#038;ver=3.0' id='google-recaptcha-js'></script>
+<script type='text/javascript' id='wpcf7-recaptcha-js-extra'>
+/* <![CDATA[ */
+var wpcf7_recaptcha = {"sitekey":"6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC","actions":{"homepage":"homepage","contactform":"contactform"}};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.5.1' id='wpcf7-recaptcha-js'></script>
+<script src='../../wp-includes/js/wp-embed.min.js?ver=5.8.1' id='wp-embed-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/client/js/prod/lib.core.js?ver=2.8.1' id='slb_core-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/client/js/prod/lib.view.js?ver=2.8.1' id='slb_view-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/themes/baseline/js/prod/client.js?ver=2.8.1' id='slb-asset-slb_baseline-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/themes/default/js/prod/client.js?ver=2.8.1' id='slb-asset-slb_default-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/template-tags/item/js/prod/tag.item.js?ver=2.8.1' id='slb-asset-item-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/template-tags/ui/js/prod/tag.ui.js?ver=2.8.1' id='slb-asset-ui-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/content-handlers/image/js/prod/handler.image.js?ver=2.8.1' id='slb-asset-image-base-js'></script>
+<script type="text/javascript" id="slb_footer">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB && SLB.has_child('View.init') ) { SLB.View.init({"ui_autofit":true,"ui_animate":true,"slideshow_autostart":false,"slideshow_duration":"6","group_loop":true,"ui_overlay_opacity":"0.8","ui_title_default":false,"theme_default":"slb_default","ui_labels":{"loading":"\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430","close":"\u0417\u0430\u043a\u0440\u044b\u0442\u044c","nav_next":"\u0412\u043f\u0435\u0440\u0435\u0434","nav_prev":"\u041d\u0430\u0437\u0430\u0434","slideshow_start":"\u0417\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0441\u043b\u0430\u0439\u0434\u0448\u043e\u0443","slideshow_stop":"\u041e\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c \u0441\u043b\u0430\u0439\u0434\u0448\u043e\u0443","group_status":"\u0418\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435 %current%  \u0438\u0437 %total%"}}); }
+if ( !!window.SLB && SLB.has_child('View.assets') ) { {$.extend(SLB.View.assets, {"694742175":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2016\/06\/sqlcode1.jpg"}});} }
+/* THM */
+if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_baseline',{"name":"\u0411\u0430\u0437\u043e\u0432\u0430\u044f \u043b\u0438\u043d\u0438\u044f","parent":"","styles":[{"handle":"base","uri":"https:\/\/abap-blog.ru\/wp-content\/plugins\/simple-lightbox\/themes\/baseline\/css\/style.css","deps":[]}],"layout_raw":"<div class=\"slb_container\"><div class=\"slb_content\">{{item.content}}<div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><div class=\"slb_controls\"><span class=\"slb_close\">{{ui.close}}<\/span><span class=\"slb_slideshow\">{{ui.slideshow_control}}<\/span><\/div><div class=\"slb_loading\">{{ui.loading}}<\/div><\/div><div class=\"slb_details\"><div class=\"inner\"><div class=\"slb_data\"><div class=\"slb_data_content\"><span class=\"slb_data_title\">{{item.title}}<\/span><span class=\"slb_group_status\">{{ui.group_status}}<\/span><div class=\"slb_data_desc\">{{item.description}}<\/div><\/div><\/div><div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><\/div><\/div><\/div>"}); }if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_default',{"name":"\u041f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e (\u0441\u0432\u0435\u0442\u043b\u044b\u0439)","parent":"slb_baseline","styles":[{"handle":"base","uri":"https:\/\/abap-blog.ru\/wp-content\/plugins\/simple-lightbox\/themes\/default\/css\/style.css","deps":[]}]}); }})})(jQuery);}/* ]]> */</script>
+<script type="text/javascript" id="slb_context">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB ) { {$.extend(SLB, {"context":["public","user_guest"]});} }})})(jQuery);}/* ]]> */</script>
+			<script type="text/javascript">
+				var anr_onloadCallback = function() {
+					for ( var i = 0; i < document.forms.length; i++ ) {
+						var form = document.forms[i];
+						var captcha_div = form.querySelector( '.anr_captcha_field_div' );
+
+						if ( null === captcha_div )
+							continue;
+						captcha_div.innerHTML = '';
+						( function( form ) {
+							var anr_captcha = grecaptcha.render( captcha_div,{
+								'sitekey' : '6LfmhbAaAAAAABBrfPpMngzFHB6qZ4ATxXd3rvOR',
+								'size'  : 'normal',
+								'theme' : 'light'
+							});
+							if ( typeof jQuery !== 'undefined' ) {
+								jQuery( document.body ).on( 'checkout_error', function(){
+									grecaptcha.reset(anr_captcha);
+								});
+							}
+							if ( typeof wpcf7 !== 'undefined' ) {
+								document.addEventListener( 'wpcf7submit', function() {
+									grecaptcha.reset(anr_captcha);
+								}, false );
+							}
+						})(form);
+					}
+				};
+			</script>
+						<script src="../../recaptcha/api-1.js?onload=anr_onloadCallback&#038;render=explicit" async="" defer="">
+			</script>
+			</body>
+</html>

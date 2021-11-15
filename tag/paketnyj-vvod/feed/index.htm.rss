@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>пакетный ввод | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/paketnyj-vvod/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:55:14 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>LSMW &#8212; Инструкция</title>
+		<link>https://abap-blog.ru/others/legacy-system-migration-workbench/</link>
+					<comments>https://abap-blog.ru/others/legacy-system-migration-workbench/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 26 Jan 2012 10:51:34 +0000</pubDate>
+				<category><![CDATA[Прочее]]></category>
+		<category><![CDATA[bapi]]></category>
+		<category><![CDATA[Legacy System Migration Workbench]]></category>
+		<category><![CDATA[shdb]]></category>
+		<category><![CDATA[sm35]]></category>
+		<category><![CDATA[пакетный ввод]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=331</guid>
+
+					<description><![CDATA[<p>LSMW – инструмент для переноса данных из внешних систем в SAP систему.  Данные могут быть введены с помощью следующих технологий: Batch Input, Direct Input, BAPIs или IDocs. Далее инструкция как этим инструментом пользоваться. Принцип работы LSMW: Преимущества: LSMW – часть SAP системы не зависимая от платформы Большое количество возможностей по преобразованию данных Поддержка основных технологий [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/others/legacy-system-migration-workbench/">LSMW — Инструкция</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>LSMW – инструмент для переноса данных из внешних систем в SAP систему.  Данные могут быть введены с помощью следующих технологий: Batch Input, Direct Input, BAPIs или IDocs. Далее инструкция как этим инструментом пользоваться.</p>
+<p><span id="more-331"></span></p>
+<p>Принцип работы LSMW:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw1.png"><img loading="lazy" class="alignnone size-full wp-image-332" title="lw1" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw1.png" alt="" width="574" height="385" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw1.png 574w, https://abap-blog.ru/wp-content/uploads/2012/01/lw1-300x201.png 300w" sizes="(max-width: 574px) 100vw, 574px" /></a></p>
+<p>Преимущества:</p>
+<ul>
+<li>LSMW – часть SAP системы не зависимая от платформы</li>
+<li>Большое количество возможностей по преобразованию данных</li>
+<li>Поддержка основных технологий ввода: Bath Input, Direct Input, BAPIs, IDocs.</li>
+<li>Удобный путеводитель по миграции данных</li>
+<li>Является бесплатным инструментом для партнеров SAP</li>
+</ul>
+<p>Основные функции:</p>
+<ul>
+<li>Импорт данных (данные из файлов, электронных таблиц)</li>
+<li>Преобразование данных в необходимый формат</li>
+<li>Импорт данных в SAP систему.</li>
+</ul>
+<p>До того как применять LSMW необходимо убедиться в следующем:</p>
+<ul>
+<li>SAP система окончательно настроена и готова к вводу</li>
+<li>Решите, имеет ли смысл использовать инструмент, его использование оправдано на больших объемах данных. Скорость импорта для режима Direct Input и Bath Input примерно 10000 записей в час, величина может меняться в зависимости от аппаратной части сервера.</li>
+<li>Определитесь с транзакциями в SAP системе, через которые будете выполнять импорт данных.  Созданы ли стандартные объекты Direct Input, Batch Input, есть ли необходимые BAPI.</li>
+<li>Протестируйте выбранные транзакции вручную, определите, какие поля являются обязательными к заполнению.</li>
+<li>LSMW не извлекает данные из внешних систем, их необходимо предварительно подготовить. Формат файла должен соответствовать возможностям чтения файлов LSMW. Например: кодировка должна быть либо ASCII или IBM.</li>
+<li>Определитесь с методом импорта данных (BAPI, Direct Input и т.п.).</li>
+</ul>
+<h3>Предварительная настройка</h3>
+<p>Убедитесь что у пользователя, под которым будет происходить импорт, достаточные полномочия:</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="192"><strong>Уровень авторизации </strong></td>
+<td valign="top" width="192"><strong>Профиль</strong></td>
+<td valign="top" width="192"><strong>Функции</strong></td>
+</tr>
+<tr>
+<td valign="top" width="192">Просмотр</td>
+<td valign="top" width="192">B_LSMW_SHOW</td>
+<td valign="top" width="192">Пользователю разрешается просматривать все проекты LSMW</td>
+</tr>
+<tr>
+<td valign="top" width="192">Выполнение</td>
+<td valign="top" width="192">B_LSMW_EXEC</td>
+<td valign="top" width="192">Пользователь может выполнять и редактировать шаги проектов</td>
+</tr>
+<tr>
+<td valign="top" width="192">Изменение</td>
+<td valign="top" width="192">B_LSMW_CHG</td>
+<td valign="top" width="192">Пользователь обладает полномочиями на просмотр объекта LSMW, импорт и чтение данных.</td>
+</tr>
+<tr>
+<td valign="top" width="192">Администрирование</td>
+<td valign="top" width="192">B_LSMW_ALL</td>
+<td valign="top" width="192">Все полномочия на LSMW</td>
+</tr>
+</tbody>
+</table>
+<p>Внешний вид после запуска инструмента (транзакция LSMW):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw2.png"><img loading="lazy" class="alignnone size-full wp-image-333" title="lw2" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw2.png" alt="" width="816" height="285" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw2.png 816w, https://abap-blog.ru/wp-content/uploads/2012/01/lw2-300x104.png 300w" sizes="(max-width: 816px) 100vw, 816px" /></a></p>
+<p>Project – имя проекта, например «Логистика»</p>
+<p>Subproject – имя подпроекта, например «Закупки»</p>
+<p>Object – имя объекта LSMW который включает все операции по переносу данных, например «Заявка».</p>
+<p>С помощью кнопок на начальном экране можно:</p>
+<ul>
+<li>Запустить проект на выполнение</li>
+<li>Создать новый проект, объект</li>
+<li>Изменить проект</li>
+<li>Просмотреть все объекты LSMW в системе</li>
+<li>Просмотреть все свои объекты</li>
+<li>Просмотреть все объекты к проекту</li>
+<li>Изменить документацию к проекту</li>
+</ul>
+<h3>Администрирование</h3>
+<p>Для копирования, изменения, удаления объектов, проектов и подпроектов необходимо перейти в администрирование: Go to -&gt; Administration.</p>
+<h3>Импорт данных шаг за шагом</h3>
+<p>После выбора (создания) проекта, подпроекта и объекта LSMW нажмите ENTER, вы попадете на экран определения шагов для объекта:</p>
+<p><strong>ВНИМАНИЕ!</strong> При авторизации в SAP GUI на английском языке названия шагов отображаются на английском языке, при авторизации на русском языке, отображаются только номера шагов. Однако при работе на EN русские названия в считываемых файлах отображаются некорректно, поэтому загрузку следует осуществлять ТОЛЬКО с авторизацией на RU(русском) языке в SAP GUI.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw3.png"><img loading="lazy" class="alignnone size-full wp-image-334" title="lw3" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw3.png" alt="" width="908" height="662" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw3.png 908w, https://abap-blog.ru/wp-content/uploads/2012/01/lw3-300x218.png 300w" sizes="(max-width: 908px) 100vw, 908px" /></a></p>
+<p>С помощью кнопки Personal Menu вы определяете, какие шаги будут использоваться в объекте. Кнопка Object Overview позволяет посмотреть всю информацию по выбранному объекту.  Action Log – просмотр истории изменений, запусков. Execute – выполнить выбранный шаг. Для изменения шагов выберите Double Click = Change.</p>
+<h4>Определение атрибута объекта (Maintain Object Attributes)</h4>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw4.png"><img loading="lazy" class="alignnone size-full wp-image-335" title="lw4" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw4.png" alt="" width="576" height="689" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw4.png 576w, https://abap-blog.ru/wp-content/uploads/2012/01/lw4-250x300.png 250w" sizes="(max-width: 576px) 100vw, 576px" /></a></p>
+<ul>
+<li>Укажите, как будет происходить импорт данных однократно (once) или с периодичностью (periodic – в статье не рассмотрены).  При периодичном импорте необходимо настроить шаг (Frame Program for Periodic Data Transfer).</li>
+<li>Определите, какой тип импорта будете использовать: Standard Bath /Direct Input – заранее подготовленные программы, Batch Input Recording – ранее созданная запись пакетного ввода, (Для записи на начальном экране необходимо выбрать GoTo -&gt; Recordings) BAPI – использование методов бизнес объектов (BAPI), IDoc.</li>
+</ul>
+<h4>Определение пользовательских структур(Maintain Source Structures)</h4>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw5.png"><img loading="lazy" class="alignnone size-full wp-image-336" title="lw5" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw5.png" alt="" width="628" height="387" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw5.png 628w, https://abap-blog.ru/wp-content/uploads/2012/01/lw5-300x184.png 300w" sizes="(max-width: 628px) 100vw, 628px" /></a></p>
+<p>На данном шаге определяются имена пользовательских структур их описания и иерархия. Одна структура может включать несколько других, которые в свою очередь могут включать другие и т.д. Пользовательская структура заполняется из внешних данных, после чего используется для переноса данных в SAP систему.</p>
+<h4>Определение полей для структур(Maintain Source Structures)</h4>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw6.png"><img loading="lazy" class="alignnone size-full wp-image-337" title="lw6" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw6.png" alt="" width="748" height="603" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw6.png 748w, https://abap-blog.ru/wp-content/uploads/2012/01/lw6-300x241.png 300w" sizes="(max-width: 748px) 100vw, 748px" /></a></p>
+<p>Этот шаг определяет, из каких полей состоят пользовательские структуры. При создании поля можно определить ее тип, длину, имя, описание. Используя параметр «<strong>Selection Parameter for Import/Convert data</strong>» мы определяем, будет ли данное поле появляться на экране в шагах чтения, конвертации данных, если да то данные из файла будут считаны в соответствии с введенным значением в эти поля. Структуру можно скопировать из внешнего файла, репозитария, другого объекта.  При копировании из внешнего файла с разделением полей табуляцией можно воспользоваться Excel структура файла будет примерно такой:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw7.png"><img loading="lazy" class="alignnone size-full wp-image-338" title="lw7" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw7.png" alt="" width="708" height="459" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw7.png 708w, https://abap-blog.ru/wp-content/uploads/2012/01/lw7-300x194.png 300w" sizes="(max-width: 708px) 100vw, 708px" /></a></p>
+<h4>Определение связей структур (Maintain Structure Relations)</h4>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw8.png"><img loading="lazy" class="alignnone size-full wp-image-339" title="lw8" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw8.png" alt="" width="1024" height="768" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw8.png 1024w, https://abap-blog.ru/wp-content/uploads/2012/01/lw8-300x225.png 300w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></p>
+<p>На данном шаге определяется связь между структурами объекта импорта (Поля в структурах BAPI, поля для пакетного ввода и т.п.) и пользовательскими структурами. В приведенном выше примере структуры из пакетного ввода: BGR00, BKN00, BKNA1, BKNB1 будут заполнены из пользовательской структуры CUSTOMER_HEADER, структура BKNVK из CUSTOMER_CONTACTS. Обратите внимание на то, что многие программы пакетного ввода содержат структуры BGR00 и BI000, они должны быть заполнены всегда.</p>
+<h4>Определение связей и правил преобразования (Maintain Field Mapping and Conversion Rules)</h4>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw9.png"><img loading="lazy" class="alignnone size-full wp-image-340" title="lw9" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw9.png" alt="" width="794" height="567" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw9.png 794w, https://abap-blog.ru/wp-content/uploads/2012/01/lw9-300x214.png 300w" sizes="(max-width: 794px) 100vw, 794px" /></a></p>
+<p>На данном шаге определяется связь между полями пользовательских структур и полями структур назначения (Полями пакетного ввода, BAPI и др.), а так же правила преобразования. Все поля структур назначения, которые были заполнены на предыдущем шаге, будут отображены на этом экране. Поля содержат следующую информацию:</p>
+<ul>
+<li>Описание поля</li>
+<li>Присвоенное поле из структуры назначения</li>
+<li>Правило, по которому присваивается значение полю (Константа, пустое, присвоение и т.п.)</li>
+<li>Код программы преобразования</li>
+</ul>
+<p>Некоторые поля являются техническими и заполняются системой автоматически, правило для них присваивается как Default Settings (зеленые записи).  Изменение значений данных полей может повлиять на ход выполнения импорта.</p>
+<p>Система позволяет автоматически сделать присвоение полей, в случае если их имена совпадают: Extras -&gt; Auto-field Mapping.</p>
+<p>Правила присвоения полей:</p>
+<ul>
+<li><strong>Initial</strong>: Пустое значение для поля. Когда выбрано данное правило значение поля может принимать  следующие значения: для стандартного пакетного ввода – пустое символьное значение ‘’, для записи пакетного ввода ‘/’, для BAPI или IDoc для символьных полей ‘’, для полей числовых ‘0..00’.</li>
+<li><strong>Move</strong>: Работает так же, как и ABAP команда MOVE.</li>
+<li><strong>Constant:</strong> Значение по умолчанию.</li>
+<li><strong>Fixed value (reusable):</strong>  Присваивается значение переменной определенной на шаге <strong>Maintain Fixed Values, Translations, User-Defined Routine</strong>.</li>
+<li><strong>Translation (</strong><strong>reusable):</strong> Определяется порядок преобразования поля, само преобразование определяется в шаге <strong>Maintain Fixed Values, Translations, User-Defined Routine</strong>.</li>
+<li><strong>User-</strong><strong>written </strong><strong>routine (</strong><strong>reusable):</strong> Определяется имя кодировки для поля, сама кодировка так же определяется на шаге <strong>Maintain Fixed Values, Translations, User-Defined Routine</strong>.</li>
+<li><strong>Prefix</strong>: Задается значение, которое должно быть перед содержимым поля.</li>
+<li><strong>Suffix</strong>: Задается значение, которое должно быть после содержимого поля.</li>
+<li><strong>Concatenation</strong>: Вы можете задать объединение двух или нескольких исходных полей в одно поле назначения.</li>
+<li><strong>Transfer left-justified: </strong>записать содержимое с выравниванием по левому краю.</li>
+<li><strong>ABAP coding: </strong>задает кодировку ABAP для преобразования поля.  В кодировке можно использовать все поля исходной структуры, глобальные переменные, глобальные функции.</li>
+<li><strong>XField:</strong> специальная функция для IDocs и BAPI объектов. Функция заполняет так называемые X-структуры (структуры изменений для BAPI функций). В случае если поле было изменено, соответствующее поле X структуры должно иметь значение «Х». Следующий код генерируется автоматически:</li>
+</ul>
+<p>If not &lt;field in the data transfer structure&gt; is initial.<br />
+&lt;field in X-structure&gt; = ‘X’.<br />
+else.<br />
+&lt;field in X-structure&gt; = ‘’.<br />
+Endif.</p>
+<p>Нажав на кнопку выбора варианта и выбрав последние три галочки, вы можете определить дополнительную кодировку для событий до запуска транзакции, после запуска и т.п.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw10.png"><img loading="lazy" class="alignnone size-full wp-image-342" title="lw10" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw10.png" alt="" width="324" height="215" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw10.png 324w, https://abap-blog.ru/wp-content/uploads/2012/01/lw10-300x199.png 300w" sizes="(max-width: 324px) 100vw, 324px" /></a></p>
+<p>Например, кодировка <strong>__</strong><strong>BEGIN_</strong><strong>OF_</strong><strong>TRANSACTION__</strong>: ее выполнение начинается до момента обработки записи, в случае создание объекта в R3 на данном этапе можно проверить его существование в системе, в случае если он уже есть, пропустить текущую запись с помощью глобальной функции &#8212; <strong>skip_transaction</strong>. Таким образом, можно уберечься от падения в дамп сессии пакетного ввода при импорте данных.</p>
+<p>Кроме того кодировки позволяют динамически менять транзакции и записи пакетного ввода манипулируя полями bkn00-tcode и TABNAME. Например, в случае если объект присутствует в системе запустить пакетный ввод на его изменение.</p>
+<p>На шаге <strong>Maintain </strong><strong>Fixed </strong><strong>Values, </strong><strong>Translations, </strong><strong>User-</strong><strong>Defined </strong><strong>Routines </strong>с помощью правил преобразования (Translations) можно определить, чем будет заменены значения из исходных структур, определять правила как для конкретных значений, так и для диапазонов. Кроме того на этом шаге определяются константы используемые на предыдущем (Fixed Values) и кодировки которые вызываются не однократно (User-written routine).</p>
+<h4>Определение файлов(Specify Files)</h4>
+<p>На данном шаге определяются файлы:</p>
+<ul>
+<li>С вашими данными (Legacy Data)</li>
+<li>Файл с правилами чтения данных …lsmw.read ставится автоматически</li>
+<li>Файл с правилами преобразования данных …lsmw.conv ставится автоматически</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw11.png"><img loading="lazy" class="alignnone size-full wp-image-343" title="lw11" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw11.png" alt="" width="772" height="711" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw11.png 772w, https://abap-blog.ru/wp-content/uploads/2012/01/lw11-300x276.png 300w" sizes="(max-width: 772px) 100vw, 772px" /></a></p>
+<p>При присвоении файла с данными можно выбрать:</p>
+<ul>
+<li>Находится ли в файле содержимое одной структуры, либо файл содержит несколько структур (Data for one source structure или Data for multiple source structures)</li>
+<li>Определить разделители в файле между полями (; tab и др.)</li>
+<li>Содержит ли файл названия полей (Field names at start of file, необходимо чтобы имена совпадали с именами в пользовательской структуре)</li>
+<li>Совпадает ли порядок полей в файле с порядком в пользовательской структуре (Field Order Matches Source Structure Definition)</li>
+<li>Тип файла (Текстовый, бинарный) и кодовая страница по умолчанию (ASCII или IBM).</li>
+</ul>
+<p>На данном шаге можно определить шаблон для группы файлов, на рисунке ниже показано как это делается, в данном примере структура HEADER будет заполняться из набора файлов с именами файлов: PO HEADER * .txt, структура POSITION из файлов PO POSITION* .txt.  Обратите внимание что файлы с правилами чтения, преобразования так же создаются со значением «*» в имени файла, кроме того необходимо создать 2 набора (wildcards):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw12.png"><img loading="lazy" class="alignnone size-full wp-image-344" title="lw12" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw12.png" alt="" width="812" height="705" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw12.png 812w, https://abap-blog.ru/wp-content/uploads/2012/01/lw12-300x260.png 300w" sizes="(max-width: 812px) 100vw, 812px" /></a></p>
+<h4>Присвоение файлов структурам(Assign Files)</h4>
+<p>На данном этапе задается из какого файла будет читаться структура. Если структура одна данный шаг можно пропустить.</p>
+<h4>Генерация программы считывания (Generate Read Program)</h4>
+<p>На данном этапе генерируется программа чтения данных из файла. Можно пропустить.</p>
+<h4>Просмотр программы чтения (Generate Read Program)</h4>
+<p>Просмотр исходника программы чтения файлов. Можно пропустить.</p>
+<h4>Чтение данных (Read Data)</h4>
+<p>На данном шаге определяется количество записей, которые необходимо считать (Transaction Number).  Если при определении полей структуры было указано что поле должно показываться на экране выбора чтения/конвертации данных, так же его необходимо заполнить. Так же задаются правила для преобразования чисел и дат.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw13.png"><img loading="lazy" class="alignnone size-full wp-image-345" title="lw13" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw13.png" alt="" width="684" height="356" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw13.png 684w, https://abap-blog.ru/wp-content/uploads/2012/01/lw13-300x156.png 300w" sizes="(max-width: 684px) 100vw, 684px" /></a></p>
+<p>В данном случае при чтении файла проверяется поле CUSTOMERNUMBER.</p>
+<h4>Просмотр считанных данных (Display Read Data)</h4>
+<p>На данном шаге отображаются считанные из файлов данные.</p>
+<h4>Генерация программы преобразования (Generate Conversion Program)</h4>
+<p>На данном этапе генерируется программа по преобразованию считанных данных. Можно пропустить.</p>
+<h4>Конвертация данных (Convert Data)</h4>
+<p>На данном этапе производится преобразование считанных данных в поля объекта LSMW. (BAPI, поля Batch input и т.п.). Если в пользовательской структуре были поля указанные как поля ввода, необходимо их так же ввести.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw14.png"><img loading="lazy" class="alignnone size-full wp-image-346" title="lw14" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw14.png" alt="" width="684" height="356" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw14.png 684w, https://abap-blog.ru/wp-content/uploads/2012/01/lw14-300x156.png 300w" sizes="(max-width: 684px) 100vw, 684px" /></a></p>
+<h4>Просмотр присвоений после конвертации (Display Converted Data)</h4>
+<p>На данном шаге показываются все присвоения после конвертации данных.</p>
+<h4>Импорт данных</h4>
+<p>В зависимости от типа объекта LSMW далее будут отображены следующие шаги:</p>
+<ul>
+<li>Standard batch input or Recordings:   Generate batch input session – создание сессии пакетного ввода, Run batch input session – запуск сессии пакетного ввода.</li>
+<li>Standard direct input: start direct input session – запуск сессии direct input.</li>
+<li>BAPI или IDOCs: Start IDoc Creation, Start IDoc Processing, Create IDoc Overview, Start IDoc processing.</li>
+</ul>
+<p>После выполнения шагов по импорту данных, если все шаги были правильно определены, данные будут записаны в SAP систему.  При запуске в продуктивной системе, если расположение файлов не изменилось, выполнять пункты до определения файлов уже не нужно.</p>
+<h4>Перенос проектов LSMW.</h4>
+<p>Для переноса проекта LSMW в систему контроля качества (продуктивную систему) необходимо создать запрос на перенос. На главном экране LSMW Extras -&gt; Generate Change Request.  При переносе старый проект  удаляется и создается заново.</p>
+<h4>Экспорт/импорт проектов.</h4>
+<p>Для экспорта/импорта проектов в главном меню: Extras -&gt; Export (Import).</p>
+<h4>Запись пакетного ввода (Recordings)</h4>
+<p>Для создания записи пакетного ввода на начальном экране необходимо перейти по Go to -&gt; Recordings.  Обратите внимание, что при создании записи нет режима симуляции, т.е. все изменения которые совершите в системе, сохранятся в ней. Для объекта LSMW можно назначить несколько записей пакетного ввода.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/lw15.png"><img loading="lazy" class="alignnone size-full wp-image-347" title="lw15" src="http://abap-blog.ru/wp-content/uploads/2012/01/lw15.png" alt="" width="816" height="643" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/lw15.png 816w, https://abap-blog.ru/wp-content/uploads/2012/01/lw15-300x236.png 300w" sizes="(max-width: 816px) 100vw, 816px" /></a></p>
+<p>Вы можете назначать полям пакетного ввода значения по умолчанию (столбец слева), поля которым присвоены имена (столбец справа &#8212; красные) на шаге «Maintain Field Mapping and Conversion Rules» будет возможно присваивать значения из пользовательской структуры (создавать привязку).</p><p>The post <a href="https://abap-blog.ru/others/legacy-system-migration-workbench/">LSMW — Инструкция</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/others/legacy-system-migration-workbench/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

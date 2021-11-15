@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="ru" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>ls — Википедия</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":!1,"wgSeparatorTransformTable":[",\t."," \t,"],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"],"wgRequestId":"ccaa0427-56b1-4fc9-bcbc-786acc8b719b","wgCSPNonce":!1,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":!1,"wgNamespaceNumber":0,"wgPageName":"Ls","wgTitle":"Ls","wgCurRevisionId":105602520,"wgRevisionId":105602520,"wgArticleId":25886,"wgIsArticle":!0,"wgIsRedirect":!1,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Страницы, использующие устаревший тег source","Википедия:Статьи без ссылок на источники с июня 2018 года",
+"Википедия:Статьи без источников (тип: утилита UNIX)","Википедия:Статьи без источников (не распределённые по типам)","Утилиты Unix"],"wgPageContentLanguage":"ru","wgPageContentModel":"wikitext","wgRelevantPageName":"Ls","wgRelevantArticleId":25886,"wgIsProbablyEditable":!0,"wgRelevantPageIsProbablyEditable":!0,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgFlaggedRevsParams":{"tags":{"accuracy":{"levels":1}}},"wgStableRevisionId":86689972,"wgMediaViewerOnClick":!0,"wgMediaViewerEnabledByDefault":!0,"wgPopupsFlags":10,"wgVisualEditor":{"pageLanguageCode":"ru","pageLanguageDir":"ltr","pageVariantFallbacks":"ru"},"wgMFDisplayWikibaseDescriptions":{"search":!0,"nearby":!0,"watchlist":!0,"tagline":!1},"wgWMESchemaEditAttemptStepOversample":!1,"wgULSCurrentAutonym":"русский","wgNoticeProject":"wikipedia","wgEditSubmitButtonLabelPublish":!0,"wgULSPosition":
+"interlanguage","wgULSisCompactLinksEnabled":!0,"wgCentralAuthMobileDomain":!1,"wgWikibaseItemId":"Q283503","wgGENewcomerTasksGuidanceEnabled":!0,"wgGEAskQuestionEnabled":!0,"wgGELinkRecommendationsFrontendEnabled":!0};RLSTATE={"ext.globalCssJs.user.styles":"ready","site.styles":"ready","user.styles":"ready","ext.globalCssJs.user":"ready","user":"ready","user.options":"loading","ext.flaggedRevs.icons":"ready","oojs-ui-core.styles":"ready","oojs-ui.styles.indicators":"ready","mediawiki.widgets.styles":"ready","oojs-ui-core.icons":"ready","ext.pygments":"ready","skins.vector.styles.legacy":"ready","ext.flaggedRevs.basic":"ready","ext.visualEditor.desktopArticleTarget.noscript":"ready","ext.uls.interlanguage":"ready","ext.wikimediaBadges":"ready","wikibase.client.init":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","mediawiki.toc","skins.vector.legacy.js","ext.flaggedRevs.advanced","ext.gadget.collapserefs","ext.gadget.directLinkToCommons","ext.gadget.referenceTooltips",
+"ext.gadget.logo","ext.gadget.edittop","ext.gadget.blpEditNotice","ext.gadget.wikibugs","ext.gadget.sidebarRelated","ext.gadget.navboxNavigation","mmv.head","mmv.bootstrap.autostart","ext.popups","ext.visualEditor.desktopArticleTarget.init","ext.visualEditor.targetLoader","ext.eventLogging","ext.wikimediaEvents","ext.navigationTiming","ext.uls.compactlinks","ext.uls.interface","ext.cx.eventlogging.campaigns","ext.quicksurveys.init","ext.centralNotice.geoIP","ext.centralNotice.startUp","ext.centralauth.centralautologin","ext.growthExperiments.SuggestedEditSession"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@1hzgi",function($,jQuery,require,module){/*@nomin*/mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});
+});});</script>
+<link rel="stylesheet" href="/w/load.php?lang=ru&amp;modules=ext.flaggedRevs.basic%2Cicons%7Cext.pygments%2CwikimediaBadges%7Cext.uls.interlanguage%7Cext.visualEditor.desktopArticleTarget.noscript%7Cmediawiki.widgets.styles%7Coojs-ui-core.icons%2Cstyles%7Coojs-ui.styles.indicators%7Cskins.vector.styles.legacy%7Cwikibase.client.init&amp;only=styles&amp;skin=vector"/>
+<script async="" src="/w/load.php?lang=ru&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=vector"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/w/load.php?lang=ru&amp;modules=site.styles&amp;only=styles&amp;skin=vector"/>
+<noscript><link rel="stylesheet" href="/w/load.php?lang=ru&amp;modules=noscript&amp;only=styles&amp;skin=vector"/></noscript>
+<meta name="generator" content="MediaWiki 1.38.0-wmf.7"/>
+<meta name="referrer" content="origin"/>
+<meta name="referrer" content="origin-when-crossorigin"/>
+<meta name="referrer" content="origin-when-cross-origin"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta property="og:title" content="ls — Википедия"/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="//upload.wikimedia.org"/>
+<link rel="alternate" media="only screen and (max-width: 720px)" href="//ru.m.wikipedia.org/wiki/Ls"/>
+<link rel="alternate" type="application/x-wiki" title="Править" href="/w/index.php?title=Ls&amp;action=edit"/>
+<link rel="apple-touch-icon" href="/static/apple-touch/wikipedia.png"/>
+<link rel="shortcut icon" href="/static/favicon/wikipedia.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Википедия (ru)"/>
+<link rel="EditURI" type="application/rsd+xml" href="//ru.wikipedia.org/w/api.php?action=rsd"/>
+<link rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/"/>
+<link rel="canonical" href="https://ru.wikipedia.org/wiki/Ls"/>
+<link rel="dns-prefetch" href="//meta.wikimedia.org" />
+<link rel="dns-prefetch" href="//login.wikimedia.org"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject mw-editable page-Ls rootpage-Ls skin-vector action-view skin-vector-legacy"><div id="mw-page-base" class="noprint"></div>
+<div id="mw-head-base" class="noprint"></div>
+<div id="content" class="mw-body" role="main">
+	<a id="top"></a>
+	<div id="siteNotice"><!-- CentralNotice --></div>
+	<div class="mw-indicators">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" >ls</h1>
+	<div id="bodyContent" class="vector-body">
+		<div id="siteSub" class="noprint">Материал из Википедии — свободной энциклопедии</div>
+		<div id="contentSub"><div id='mw-fr-reviewnotice' class='plainlinks flaggedrevs_preview'>Текущая версия страницы пока <a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0_%D1%81%D1%82%D0%B0%D1%82%D0%B5%D0%B9/%D0%9F%D0%BE%D1%8F%D1%81%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B4%D0%BB%D1%8F_%D1%87%D0%B8%D1%82%D0%B0%D1%82%D0%B5%D0%BB%D0%B5%D0%B9" title="Википедия:Проверка статей/Пояснение для читателей">не проверялась</a> опытными участниками и может значительно отличаться от <a class="external text" href="https://ru.wikipedia.org/w/index.php?title=Ls&amp;stable=1">версии</a>, проверенной 22 октября 2018; проверки требуют <a class="external text" href="https://ru.wikipedia.org/w/index.php?title=Ls&amp;oldid=86689972&amp;diff=cur&amp;diffonly=0">9 правок</a>.</div><div id="mw-fr-revisiontag" class="flaggedrevs_short flaggedrevs_draft_notsynced plainlinks noprint"><div class="flaggedrevs_short_basic"><span aria-disabled='false' title='Текущая версия' class='flaggedrevs-icon oo-ui-widget oo-ui-widget-enabled oo-ui-iconElement-icon oo-ui-icon-block oo-ui-iconElement oo-ui-labelElement-invisible oo-ui-iconWidget'></span><span id='mw-fr-revisiontoggle' aria-disabled='false' title='показать/скрыть подробности' class='fr-toggle-arrow oo-ui-widget oo-ui-widget-enabled oo-ui-indicatorElement-indicator oo-ui-indicator-down oo-ui-indicatorElement oo-ui-labelElement-invisible oo-ui-indicatorWidget'></span></div>
+<div id="mw-fr-revisiondetails-wrapper" style="position:relative;"><div id="mw-fr-revisiondetails" class="flaggedrevs_short_details" style="display:none">Текущая версия страницы пока <a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0_%D1%81%D1%82%D0%B0%D1%82%D0%B5%D0%B9/%D0%9F%D0%BE%D1%8F%D1%81%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B4%D0%BB%D1%8F_%D1%87%D0%B8%D1%82%D0%B0%D1%82%D0%B5%D0%BB%D0%B5%D0%B9" title="Википедия:Проверка статей/Пояснение для читателей">не проверялась</a> опытными участниками и может значительно отличаться от <a class="external text" href="https://ru.wikipedia.org/w/index.php?title=Ls&amp;stable=1">версии</a>, проверенной 22 октября 2018; проверки требуют <a class="external text" href="https://ru.wikipedia.org/w/index.php?title=Ls&amp;oldid=86689972&amp;diff=cur&amp;diffonly=0">9 правок</a>.</div>
+</div>
+</div>
+</div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Перейти к навигации</a>
+		<a class="mw-jump-link" href="#searchInput">Перейти к поиску</a>
+		<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="ru" dir="ltr"><div class="mw-parser-output"><p>
+<b>ls</b> (dir, vdir)&#160;— утилита <a href="/wiki/Unix" title="Unix">Unix</a>, которая печатает в <a href="/wiki/%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B9_%D0%B2%D1%8B%D0%B2%D0%BE%D0%B4" class="mw-redirect" title="Стандартный вывод">стандартный вывод</a> содержимое <a href="/wiki/%D0%9A%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3_(%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D0%B0%D1%8F_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0)" title="Каталог (файловая система)">каталогов</a>.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="ru" dir="ltr"><h2 id="mw-toc-heading">Содержание</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Синтаксис"><span class="tocnumber">1</span> <span class="toctext">Синтаксис</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Описание"><span class="tocnumber">2</span> <span class="toctext">Описание</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Ключи_POSIX"><span class="tocnumber">3</span> <span class="toctext">Ключи POSIX</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Подробности_версии_GNU"><span class="tocnumber">4</span> <span class="toctext">Подробности версии GNU</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#Ключи_GNU"><span class="tocnumber">4.1</span> <span class="toctext">Ключи GNU</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-6"><a href="#Стандартные_ключи_GNU"><span class="tocnumber">5</span> <span class="toctext">Стандартные ключи GNU</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#Окружение"><span class="tocnumber">6</span> <span class="toctext">Окружение</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#Ошибки_реализации"><span class="tocnumber">7</span> <span class="toctext">Ошибки реализации</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#Совместимость"><span class="tocnumber">8</span> <span class="toctext">Совместимость</span></a></li>
+</ul>
+</div>
+
+<h2><span id=".D0.A1.D0.B8.D0.BD.D1.82.D0.B0.D0.BA.D1.81.D0.B8.D1.81"></span><span class="mw-headline" id="Синтаксис">Синтаксис</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Ls&amp;veaction=edit&amp;section=1" class="mw-editsection-visualeditor" title="Редактировать раздел «Синтаксис»">править</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Ls&amp;action=edit&amp;section=1" title="Редактировать раздел «Синтаксис»">править код</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir="ltr"><pre><span></span>ls <span class="o">[</span>опции<span class="o">]</span> <span class="o">[</span>файл…<span class="o">]</span>
+dir <span class="o">[</span>файл…<span class="o">]</span>
+vdir <span class="o">[</span>файл…<span class="o">]</span>
+</pre></div>
+<h2><span id=".D0.9E.D0.BF.D0.B8.D1.81.D0.B0.D0.BD.D0.B8.D0.B5"></span><span class="mw-headline" id="Описание">Описание</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Ls&amp;veaction=edit&amp;section=2" class="mw-editsection-visualeditor" title="Редактировать раздел «Описание»">править</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Ls&amp;action=edit&amp;section=2" title="Редактировать раздел «Описание»">править код</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>Команда <code>ls</code> сначала выводит список всех <a href="/wiki/%D0%A4%D0%B0%D0%B9%D0%BB" title="Файл">файлов</a> (не каталогов), перечисленных в командной строке, а затем выводит список всех файлов, находящихся в каталогах, перечисленных в командной строке. Если не указано ни одного файла, то по умолчанию аргументом назначается <tt>.</tt> (текущий каталог). Опция <code>-d</code> заставляет <code>ls</code> не считать аргументы-каталоги каталогами. Будут отображаться только файлы, которые не начинаются с <tt>.</tt> или все файлы, если задана опция <code>-a</code>.
+</p><p>Каждый список файлов (для файлов, которые не являются каталогами и для каждого каталога, содержащего список файлов) сортируется отдельно в алфавитной последовательности текущих региональных настроек (<a href="/wiki/Locale" title="Locale">locale</a>). Когда указана опция <code>-l</code>, то перед каждым списком выводится итоговая строка с общим размером всех файлов в списке, который измеряется в блоках (размер блока по умолчанию 1024 байта, и может быть изменен с помощью опции <code>--block-size</code>).
+</p><p>Результаты печатаются на <a href="/wiki/%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B9_%D0%B2%D1%8B%D0%B2%D0%BE%D0%B4" class="mw-redirect" title="Стандартный вывод">стандартный вывод</a>, по одному файлу на строку, если с помощью опции <code>-C</code> не задан многоколоночный вывод. Однако при выводе на <a href="/wiki/%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81_%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%BD%D0%BE%D0%B9_%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B8" title="Интерфейс командной строки">терминал</a> не определено, будет ли вывод осуществляться в одну колонку или в несколько. Для задания одноколоночного или многоколоночного режима вывода могут использоваться опции <code>-1</code> и <code>-C</code>, соответственно.
+</p><p>Получить список каталогов в текущем каталоге можно при помощи команды:
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir="ltr"><pre><span></span>ls -F <span class="p">|</span> grep / <span class="p">|</span> sed <span class="s1">&#39;s/\///g&#39;</span> 
+<span class="c1">#или так </span>
+ls -d */
+<span class="c1">#наконец дерево каталогов рекурсивно</span>
+ls -R <span class="p">|</span> grep <span class="s2">&quot;:</span>$<span class="s2">&quot;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/:$//&#39;</span> -e <span class="s1">&#39;s/[^-][^\/]*\//--/g&#39;</span> -e <span class="s1">&#39;s/^/ /&#39;</span> -e <span class="s1">&#39;s/-/|/&#39;</span>
+</pre></div>
+<h2><span id=".D0.9A.D0.BB.D1.8E.D1.87.D0.B8_POSIX"></span><span class="mw-headline" id="Ключи_POSIX">Ключи <a href="/wiki/POSIX" title="POSIX">POSIX</a></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Ls&amp;veaction=edit&amp;section=3" class="mw-editsection-visualeditor" title="Редактировать раздел «Ключи POSIX»">править</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Ls&amp;action=edit&amp;section=3" title="Редактировать раздел «Ключи POSIX»">править код</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>-C&#160;— напечатать список файлов в колонках с вертикальной сортировкой.
+</p><p>-F&#160;— для каждого имени каталога добавлять суффикс `/', для каждого
+имени <a href="/wiki/FIFO" title="FIFO">FIFO</a>&#160;— `|' и для каждого имени исполняемого файла `*'.
+</p><p>-R&#160;— включить рекурсивную выдачу списка каталогов.
+</p><p>-a&#160;— включать в список файлы с именем, начинающимся с точки (показывать скрытые файлы).
+</p><p>-c&#160;— использовать при сортировке (при задании опции -t или -l) время изменения состояния файла вместо времени последней модификации файла.
+</p><p>-d&#160;— выдавать имена каталогов, как будто они обычные файлы, вместо того, чтобы показывать их содержимое.
+</p><p>-i&#160;— предварять вывод для каждого файла его серийным номером (номером <a href="/wiki/Inode" title="Inode">inode</a>).
+</p><p>-l&#160;— выдавать (в одноколоночном формате) тип файла, права доступа к файлу, количество ссылок на файл, имя владельца, имя группы, размер файла (в байтах), временной штамп и имя файла.
+</p><p>Типы файлов могут принимать следующие значения:&#160;- для обычного файла, d для каталога, b для блочного устройства, c для символьного устройства, l для символической ссылки, p для <a href="/wiki/FIFO" title="FIFO">FIFO</a> и s для гнезда (<a href="/wiki/%D0%A1%D0%BE%D0%BA%D0%B5%D1%82_(%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BD%D1%8B%D0%B9_%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81)" title="Сокет (программный интерфейс)">socket</a>).
+</p><p>По умолчанию временной штамп является временем последней модификации; опции -c и -u позволяют выбрать два других временных штампа. Для файлов устройств поле размера обычно заменяется на старший и младший номера устройства.
+</p><p>-q&#160;— вместо непечатаемых символов в имени файла при выводе будут ставиться знаки вопроса. (Эта опция включена по умолчанию при выводе на терминал.)
+</p><p>-r&#160;— производить сортировку в обратном порядке.
+</p><p>-t&#160;— сортировать по показываемому временному штампу.
+</p><p>-u&#160;— использовать при сортировке (опция -t) или перечислении (опция -l) время последнего доступа к файлу вместо времени последней модификации файла.
+</p><p>-1&#160;— выдавать в одноколоночном формате.
+</p><p>-- — завершает список ключей.
+</p>
+<h2><span id=".D0.9F.D0.BE.D0.B4.D1.80.D0.BE.D0.B1.D0.BD.D0.BE.D1.81.D1.82.D0.B8_.D0.B2.D0.B5.D1.80.D1.81.D0.B8.D0.B8_GNU"></span><span class="mw-headline" id="Подробности_версии_GNU">Подробности версии <a href="/wiki/GNU" title="GNU">GNU</a></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Ls&amp;veaction=edit&amp;section=4" class="mw-editsection-visualeditor" title="Редактировать раздел «Подробности версии GNU»">править</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Ls&amp;action=edit&amp;section=4" title="Редактировать раздел «Подробности версии GNU»">править код</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>Если стандартный вывод является терминалом, то вывод производится в многоколоночном формате (с вертикальной сортировкой).
+</p>
+<h3><span id=".D0.9A.D0.BB.D1.8E.D1.87.D0.B8_GNU"></span><span class="mw-headline" id="Ключи_GNU">Ключи <a href="/wiki/GNU" title="GNU">GNU</a></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Ls&amp;veaction=edit&amp;section=5" class="mw-editsection-visualeditor" title="Редактировать раздел «Ключи GNU»">править</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Ls&amp;action=edit&amp;section=5" title="Редактировать раздел «Ключи GNU»">править код</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p><code>-1</code>, --format=single-column&#160;— выдавать один файл на строку. Эта опция включается по умолчанию, если стандартный вывод не является терминалом.
+</p><p>-a, --all&#160;— выдавать все файлы в каталогах, включая скрытые файлы, начинающиеся с точки.
+</p><p>-b, --escape, --quoting-style=escape&#160;— Заменять неграфические символы в именах файлов, используя алфавитно-цифровые последовательности, а также последовательности вида -Q, за исключением того, что имена файлов не заключаются в двойные кавычки.
+</p><p>-c, --time=ctime, --time=status&#160;— сортировать содержимое каталога в соответствии с временем изменения состояния файла (поле `ctime' в inode). Если с помощью опции -l задан длинный формат, то выдавать время изменения состояния файла вместо времени его модификации.
+</p><p>-d, --directory&#160;— выдавать имена каталогов, как будто они обычные файлы, вместо того, чтобы показывать их содержимое.
+</p><p>-f&#160;— не сортировать содержимое каталога; выдавать файлы в том порядке, в котором они записаны на диск. Эта опция также разрешает -a и -U и запрещает -l, --color, -s, и -t, если они были заданы перед -f.
+</p><p>-g&#160;— игнорируется; нужна для совместимости с <a href="/wiki/Unix" title="Unix">Unix</a>.
+</p><p>-h, --human-readable&#160;— добавлять к каждому размеру файла букву размера, например, M для двоичных <a href="/wiki/%D0%9C%D0%B5%D0%B3%D0%B0%D0%B1%D0%B0%D0%B9%D1%82" title="Мегабайт">мегабайт</a> (`<a href="/wiki/%D0%9C%D0%B5%D0%B1%D0%B8%D0%B1%D0%B0%D0%B9%D1%82" title="Мебибайт">мебибайт</a>'). (Новое в fileutils-4.0.)
+</p><p>-i, --inode&#160;— выдавать номер <a href="/wiki/Inode" title="Inode">inode</a> (также называемый серийным номером файла и номером индекса) каждого файла, слева от его имени. (Этот номер однозначно идентифицирует каждый файл в каждой файловой системе)
+</p><p>-k, --kilobytes&#160;— если выдаются размеры файлов, то выдавать их в <a href="/wiki/%D0%9A%D0%B8%D0%BB%D0%BE%D0%B1%D0%B0%D0%B9%D1%82" title="Килобайт">килобайтах</a>.
+</p><p>-l, --format=long, --format=verbose&#160;— в дополнении к имени каждого файла, выводятся тип файла, права доступа к файлу, количество ссылок на файл, имя владельца, имя группы, размер файла в байтах и временной штамп (время последней модификации файла, если не задано другое). Для файлов с временем больше чем 6 месяцев назад или больше, чем 1 час в будущее, временной штамп содержит год вместо времени дня.
+</p><p>Каждый каталог со списком содержимого предваряется строкой `total blocks', где blocks&#160;— общее дисковое пространство, используемое всеми файлами в данном каталоге. По умолчанию размер блока составляет 1024 байта; если установлена переменная окружения POSIXLY_CORRECT , то используется размер блока 512 байт (если не задана опция -k). blocks считает каждую жёсткую ссылку отдельно; задать по-другому через аргументы невозможно.
+Права доступа отображаются в практически обычном символьном виде, но ls комбинирует несколько битов в третий символ каждого набора прав доступа:
+</p>
+<ul><li>s&#160;— setuid или setgid бит установлены вместе с соответствующим битом прав на выполнение.</li>
+<li>S&#160;— setuid или setgid бит установлены, но соответствующий бит прав на выполнение не установлен.</li>
+<li>t&#160;— sticky-бит установлен вместе с битом прав на выполнение остальными.</li>
+<li>T&#160;— sticky-бит установлен, но бит прав на выполнение остальными нет.</li>
+<li>x&#160;— бит прав на выполнение установлен, и не выполняется ни одно из вышеуказанных условий.</li>
+<li>&#160;— — во всех остальных случаях.</li></ul>
+<p>-m, --format=commas&#160;— выдавать список файлов в строчку с максимально возможным количеством имён файлов на строку, разделяя имена запятой и пробелом.
+</p><p>-n, --numeric-uid-gid&#160;— выдавать числовые UID и GID вместо имён владельца и группы.
+</p><p>-o&#160;— применять длинный формат, но не показывать информацию о группе. Данная опция эквивалентна --format=long --no-group и предоставляется для совместимости с другими версиями ls.
+</p><p>-p, --file-type, --indicator-style=file-type&#160;— добавлять символ, показывающий тип файла, к каждому имени файла. Данная опция похожа на -F, за исключением того, что исполняемые файлы не помечаются. (Фактически в fileutils-4.0 опция --file- type эквивалентна --classify.)
+</p><p>-q, --hide-control-chars&#160;— выдавать знаки вопроса вместо неграфических символов в имени файла. Эта опция включена по умолчанию.
+</p><p>-r, --reverse&#160;— сортировать содержимое каталога в обратном порядке.
+</p><p>-s, --size&#160;— выдавать размер каждого файла в блоках по 1024 байта слева от имени файла. Если установлена переменная окружения POSIXLY_COR- RECT, то применяется размер блока 512, если не задана опция -k.
+</p><p>-t, --sort=time&#160;— сортировать по времени последней модификации (поле `mtime' в inode) вместо того, чтобы производить сортировку по алфавиту. Самые свежие файлы будут отображаться первыми.
+</p><p>-u, --time=atime, --time=access, --time=use&#160;— сортировать по времени последнего доступа к файлу, вместо времени последней модификации (поле `atime' в <a href="/wiki/Inode" title="Inode">inode</a>). Если задан длинный формат вывода, выдавать время последнего доступа вместо времени последней модификации.
+</p><p>-v&#160;— производить сортировку в соответствии с номером версии файлов. При этом учитывается, что имена файлов часто содержат номера версий или порядковые номера. Стандартные функции сортировки обычно не обеспечивают сортировку, которую мог бы ожидать человек, так как сортировка производится на основе посимвольного сравнения. Сортировка по версиям решает эту проблему и особенно полезна, когда производится просмотр каталогов, содержащих много файлов, у которых в имени есть номер версии. Например:
+</p>
+<div class="mw-highlight mw-highlight-lang-text mw-content-ltr" dir="ltr"><pre><span></span>           &gt; ls -1            &gt; ls -1v
+           foo.zml-1.gz       foo.zml-1.gz
+           foo.zml-100.gz     foo.zml-12.gz
+           foo.zml-12.gz      foo.zml-25.gz
+           foo.zml-25.gz      foo.zml-100.gz
+</pre></div>
+<p>Цифровые части с лидирующими нулями определяются как более маленькие:
+</p>
+<div class="mw-highlight mw-highlight-lang-text mw-content-ltr" dir="ltr"><pre><span></span>            &gt; ls -1            &gt; ls -1v
+            abc-1.007.tgz      abc-1.007.tgz
+            abc-1.012b.tgz     abc-1.01a.tgz
+            abc-1.01a.tgz      abc-1.012b.tgz
+</pre></div>
+<p>-w, --width cols&#160;— назначает вывод на экран в cols колонок. По умолчанию, если это возможно, данное значение узнается от драйвера терминала; в противном случае используется значение переменной окружения COLUMNS, если она установлена; в противном случае, по умолчанию, устанавливается 80.
+</p><p>-x, --format=across, --format=horizontal&#160;— выдавать список файлов в многоколоночном режиме, с сортировкой по горизонтали.
+</p><p>-A, --almost-all&#160;— выдавать все файлы, кроме `.' и `..'.
+</p><p>-B, --ignore-backups&#160;— не показывать файлы, которые заканчиваются на `~', если они не заданы в командной строке.
+</p><p>-C, --format=vertical&#160;— выдавать файлы в многоколоночном режиме, с сортировкой по вертикали. Опция устанавливается по умолчанию, если стандартный вывод является терминалом. Данная опция всегда устанавливается по умолчанию для программ dir и d.
+</p><p>-D, --dired&#160;— при длинном формате (-l), после основного вывода, выдавать дополнительную строку вида: //DIRED// BEG1 END1 BEG2 END2 …
+</p><p>Здесь BEGn и ENDn&#160;— целые беззнаковые числа, которые для каждой записи показывают байтовую позицию начала и конца каждого имени файла. Таким образом, <a href="/wiki/Emacs" title="Emacs">Emacs</a> может легко найти имена, даже когда они содержат необычные символы, такие как пробелы или символы новой строки.
+</p><p>Если каталоги отображаются рекурсивно (-R), то похожая строка выводится после каждого подкаталога: //SUBDIRED// BEG1 END1 …
+</p><p>-F, --classify, --indicator-style=classify&#160;— добавлять к каждому имени файла символ, показывающий его тип. Для обычных исполняемых файлов это `*'. Для каталога добавляется `/', для FIFO&#160;— `|', для символических ссылок `@', для гнёзд `=', для обычных файлов ничего не добавляется.
+</p><p>-G, --no-group&#160;— не отображать информацию о группе в длинном формате вывода.
+</p><p>-H, --si&#160;— делает то же, что и опция -h, но использует официальные единицы измерения <a href="/wiki/%D0%A1%D0%98" class="mw-redirect" title="СИ">СИ</a> (где для расчётов используется 1000 вместо 1024 и, таким образом, M&#160;— 1000000 вместо 10485576). (Новое в fileutils-4.0.)
+</p><p>-I, --ignore=шаблон&#160;— не показывать файлы, имена которых совпадают с заданным шаблоном (шаблон&#160;— не регулярное выражение), если только они не заданы в командной строке. Как и в shell, начальная `.' в имени файла не совпадает с символом `*', заданным в начале шаблона.
+</p><p>-L, --dereference&#160;— выдавать информацию о файлах, на которые указывают символические ссылки, вместо информации о самих символических ссылках.
+</p><p>-N, --literal&#160;— не заключать в кавычки имена файлов.
+</p><p>-Q, --quote-name, --quoting-style=c&#160;— заключать имена файлов в двойные кавычки и показывать неграфические символы, как в языке <a href="/wiki/%D0%A1%D0%B8_(%D1%8F%D0%B7%D1%8B%D0%BA_%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F)" title="Си (язык программирования)">С</a>.
+</p><p>-R, --recursive&#160;— рекурсивно выдавать список содержимого всех каталогов.
+</p><p>-S, --sort=size&#160;— производить сортировку по размеру файла, вместо сортировки по алфавиту. Таким образом, наибольшие файлы будут показаны сначала.
+</p><p>-T, --tabsize cols&#160;— назначить ширину табуляции в cols колонок. По умолчанию 8, может быть также задано с помощью переменной окружения TABSIZE, если при этом не установлена переменная окружения POSIXLY_CORRECT. ls использует табуляцию для выравнивания вывода, когда это возможно. Если cols равно нулю, то табуляция не используется.
+</p><p>-U, --sort=none&#160;— Не производить сортировку; список файлов будет выдаваться в том порядке, в каком файлы записаны на диск (отличие между опциями -U и -f состоит в том, что данная опция не запрещает и не разрешает другие опции). Эта опция может быть особенно полезна, когда выдаются списки содержимого очень больших каталогов, при этом сортировка не выполняется и весь процесс происходит быстрее).
+</p><p>-X, --sort=extension&#160;— производить сортировку в алфавитном порядке по расширениям файлов (символы после последней `.'); файлы без расширений будут показаны первыми.
+</p><p>--block-size=size&#160;— выдаёт размеры в блоках по size байт. (Новое в fileutils-4.0.)
+</p><p>--color[=when]&#160;— задаёт цвет для различения типов файлов. Цвета задаются с использованием переменной окружения LS_COLORS. Информацию о том, как нужно задавать значение этой переменной, можно найти в странице руководства [1]dircolors(1). Параметр when может быть опущен или принимать одно из следующих значений:
+</p>
+<ul><li>none&#160;— вообще не использовать цвет. Установлено по умолчанию.</li>
+<li>auto&#160;— использовать цвет, только если стандартный вывод является терминалом.</li>
+<li>always&#160;— всегда использовать цвет. Задание --color без параметра when эквивалентно --color=always.</li></ul>
+<p>--full-time&#160;— выдавать время в полном, а не в стандартном сокращённом варианте. Данный формат выглядит так же, как и в команде <a href="/wiki/Date" title="Date">date</a> по умолчанию; его невозможно изменить, но вы можете извлечь строку с датой через команду <a href="/wiki/Cut" title="Cut">cut</a> и пропустить результат через `date -d'. Это может быть очень полезно, потому что время в таком формате включает секунды. (Файловые системы Unix записывают временной штамп файла с округлением до секунды, так что данная опция показывает полную информацию о временном штампе). Например, это может помочь, если вы разбираетесь, почему некий <a href="/wiki/Makefile" title="Makefile">Makefile</a> неправильно перегенерирует файлы.
+</p><p>--quoting-style=word&#160;— используйте стиль word для выбора режима квотинга имён файлов. Стиль word может принимать следующие значения:
+</p>
+<ul><li>literal&#160;— вывод имён файлов как есть. Это поведение <i>ls</i> по умолчанию.</li>
+<li>shell&#160;— заключает имена файлов в одиночные кавычки для <a href="/wiki/%D0%9E%D0%B1%D0%BE%D0%BB%D0%BE%D1%87%D0%BA%D0%B0_%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D0%BE%D0%B9_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B" title="Оболочка операционной системы">shell</a>, если они содержат метасимволы или могут привести к неоднозначной выдаче.</li>
+<li>shell-always&#160;— заключает имена файлов в одиночные кавычки для <a href="/wiki/%D0%9E%D0%B1%D0%BE%D0%BB%D0%BE%D1%87%D0%BA%D0%B0_%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D0%BE%D0%B9_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B" title="Оболочка операционной системы">shell</a>, даже если этого не требуется.</li>
+<li>c&#160;— заключает имена файлов в двойные кавычки, как в языке C; это равносильно опции -Q.</li>
+<li>escape&#160;— как и для c, за исключением того, что имя не заключается в двойные кавычки; эквивалентно опции -b.</li></ul>
+<p>Значение по умолчанию для данной опции может быть задано в переменной окружения QUOTING_STYLE (см. <a href="#Окружение">ниже</a>).
+</p>
+<ul><li>--show-control-chars&#160;— выдавать неграфические символы в именах файлов как есть. Так задано по умолчанию, если вывод осуществляется на терминал, а программа называется <i>ls</i>.</li></ul>
+<h2><span id=".D0.A1.D1.82.D0.B0.D0.BD.D0.B4.D0.B0.D1.80.D1.82.D0.BD.D1.8B.D0.B5_.D0.BA.D0.BB.D1.8E.D1.87.D0.B8_GNU"></span><span class="mw-headline" id="Стандартные_ключи_GNU">Стандартные ключи <a href="/wiki/GNU" title="GNU">GNU</a></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Ls&amp;veaction=edit&amp;section=6" class="mw-editsection-visualeditor" title="Редактировать раздел «Стандартные ключи GNU»">править</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Ls&amp;action=edit&amp;section=6" title="Редактировать раздел «Стандартные ключи GNU»">править код</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p><code>--help</code>&#160;— выдать подсказку на стандартный вывод и успешно завершиться.
+</p><p><code>--version</code>&#160;— выдать информацию о версии на стандартный вывод и успешно завершиться.
+</p><p><code>--</code>&#160;— служит для обозначения конца списка ключей.
+</p>
+<h2><span id=".D0.9E.D0.BA.D1.80.D1.83.D0.B6.D0.B5.D0.BD.D0.B8.D0.B5"></span><span class="mw-headline" id="Окружение">Окружение</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Ls&amp;veaction=edit&amp;section=7" class="mw-editsection-visualeditor" title="Редактировать раздел «Окружение»">править</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Ls&amp;action=edit&amp;section=7" title="Редактировать раздел «Окружение»">править код</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>Переменная <tt>POSIXLY_CORRECT</tt> определяет размер блока. Переменная <tt>TABSIZE</tt> задаёт ширину табуляции, если не установлена переменная <tt>POSIXLY_CORRECT</tt>. Переменная <tt>COLUMNS</tt> (когда она содержит целое число) определяет ширину вывода в колонках (для использования с опцией <code>-C</code>). Имена файлов не должны обрезаться, чтобы уместить их в многоколоночном выводе.
+</p><p>При работе обычным образом используются значения переменных <tt>LANG</tt>, <tt>LC_ALL</tt>, <tt>LC_CTYPE</tt> и <tt>LC_MESSAGES</tt>. Переменная <tt>TZ</tt> задаёт временную зону для временных меток, которые выдаёт <code>ls</code>. Переменная <tt>LS_COLORS</tt> используется для задания цветов.
+</p><p>Переменная <tt>QUOTING_STYLE</tt> используется для задания значения по умолчанию для опции <code>--quoting-style</code>. Данная опция по умолчанию установлена в literal, но авторы предупреждают, что это умолчание может когда-нибудь в следующей версии измениться на shell.
+</p>
+<h2><span id=".D0.9E.D1.88.D0.B8.D0.B1.D0.BA.D0.B8_.D1.80.D0.B5.D0.B0.D0.BB.D0.B8.D0.B7.D0.B0.D1.86.D0.B8.D0.B8"></span><span class="mw-headline" id="Ошибки_реализации">Ошибки реализации</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Ls&amp;veaction=edit&amp;section=8" class="mw-editsection-visualeditor" title="Редактировать раздел «Ошибки реализации»">править</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Ls&amp;action=edit&amp;section=8" title="Редактировать раздел «Ошибки реализации»">править код</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>В <a href="/wiki/BSD" title="BSD">BSD</a> системах <code>ls</code> выдаёт размеры, которые являются наполовину меньше правильных, для файлов, которые смонтированы по <a href="/wiki/Network_File_System" title="Network File System">NFS</a> из <a href="/wiki/HP-UX" title="HP-UX">HP-UX</a>-систем. В <a href="/wiki/HP-UX" title="HP-UX">HP-UX</a>-системах <code>ls</code> выдаёт размеры, которые в два раза больше правильных для файлов, которые смонтированы по <a href="/wiki/Network_File_System" title="Network File System">NFS</a> из <a href="/wiki/BSD" title="BSD">BSD</a>-систем. Это недостаток систем <a href="/wiki/HP-UX" title="HP-UX">HP-UX</a>; он также есть и в программе <code>ls</code> из <a href="/wiki/HP-UX" title="HP-UX">HP-UX</a>.
+</p>
+<h2><span id=".D0.A1.D0.BE.D0.B2.D0.BC.D0.B5.D1.81.D1.82.D0.B8.D0.BC.D0.BE.D1.81.D1.82.D1.8C"></span><span class="mw-headline" id="Совместимость">Совместимость</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Ls&amp;veaction=edit&amp;section=9" class="mw-editsection-visualeditor" title="Редактировать раздел «Совместимость»">править</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Ls&amp;action=edit&amp;section=9" title="Редактировать раздел «Совместимость»">править код</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p><a href="/wiki/POSIX" title="POSIX">POSIX</a> 1003.3
+</p>
+<div role="navigation" class="navbox" aria-labelledby="Команды_Unix" data-name="Команды Unix" style="padding:3px"><table class="nowraplinks collapsible autocollapse navbox-inner" style="border-spacing:0;background:transparent;color:inherit"><tbody><tr><th scope="colgroup" class="navbox-title" colspan="2"><span class="navbox-gear" style="float:left;text-align:left;width:5em;margin-right:0.5em"><a href="/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:%D0%9A%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B_Unix" title="Просмотр этого шаблона"><img alt="⛭" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Wikipedia_interwiki_section_gear_icon.svg/14px-Wikipedia_interwiki_section_gear_icon.svg.png" decoding="async" width="14" height="14" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Wikipedia_interwiki_section_gear_icon.svg/21px-Wikipedia_interwiki_section_gear_icon.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Wikipedia_interwiki_section_gear_icon.svg/28px-Wikipedia_interwiki_section_gear_icon.svg.png 2x" data-file-width="14" data-file-height="14" /></a></span><div id="Команды_Unix" style="font-size:114%;margin:0 5em">Команды Unix</div></th></tr><tr><td class="navbox-list navbox-odd" style="width:100%;padding:0px"><div style="padding:0em 0.25em"></div><table class="nowraplinks collapsible uncollapsed navbox-subgroup" style="border-spacing:0"><tbody><tr><th scope="colgroup" class="navbox-title" colspan="2"><span class="navbox-gear" style="float:left;text-align:left;width:5em;margin-right:0.5em"><a href="/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:POSIX.1-2008" title="Просмотр этого шаблона"><img alt="⛭" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Wikipedia_interwiki_section_gear_icon.svg/14px-Wikipedia_interwiki_section_gear_icon.svg.png" decoding="async" width="14" height="14" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Wikipedia_interwiki_section_gear_icon.svg/21px-Wikipedia_interwiki_section_gear_icon.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Wikipedia_interwiki_section_gear_icon.svg/28px-Wikipedia_interwiki_section_gear_icon.svg.png 2x" data-file-width="14" data-file-height="14" /></a></span><div id="Утилиты_POSIX.1-2008" style="font-size:114%;margin:0 5em">Утилиты <a href="/wiki/POSIX" title="POSIX">POSIX.1-2008</a></div></th></tr><tr><td class="navbox-list navbox-odd hlist" style="width:100%;padding:0px"><div style="padding:0em 0.25em">
+<ul><li><a href="/w/index.php?title=Admin&amp;action=edit&amp;redlink=1" class="new" title="Admin (страница отсутствует)">admin</a></li>
+<li><a href="/wiki/Alias_(bash)" title="Alias (bash)">alias</a></li>
+<li><a href="/wiki/Ar_(Unix)" title="Ar (Unix)">ar</a></li>
+<li><a href="/w/index.php?title=Asa&amp;action=edit&amp;redlink=1" class="new" title="Asa (страница отсутствует)">asa</a></li>
+<li><a href="/wiki/At" title="At">at</a></li>
+<li><a href="/wiki/Awk" class="mw-redirect" title="Awk">awk</a></li>
+<li><a href="/wiki/Basename" title="Basename">basename</a></li>
+<li><a href="/w/index.php?title=Batch&amp;action=edit&amp;redlink=1" class="new" title="Batch (страница отсутствует)">batch</a></li>
+<li><a href="/wiki/Bc" title="Bc">bc</a></li>
+<li><a href="/wiki/Bg" class="mw-redirect" title="Bg">bg</a></li>
+<li><a href="/w/index.php?title=C99_(%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0)&amp;action=edit&amp;redlink=1" class="new" title="C99 (команда) (страница отсутствует)">c99</a></li>
+<li><a href="/w/index.php?title=Cal&amp;action=edit&amp;redlink=1" class="new" title="Cal (страница отсутствует)">cal</a></li>
+<li><a href="/wiki/Cat" title="Cat">cat</a></li>
+<li><a href="/wiki/Cd_(%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0)" title="Cd (команда)">cd</a></li>
+<li><a href="/w/index.php?title=Cflow&amp;action=edit&amp;redlink=1" class="new" title="Cflow (страница отсутствует)">cflow</a></li>
+<li><a href="/wiki/Chgrp" title="Chgrp">chgrp</a></li>
+<li><a href="/wiki/Chmod" title="Chmod">chmod</a></li>
+<li><a href="/wiki/Chown" title="Chown">chown</a></li>
+<li><a href="/wiki/Cksum" title="Cksum">cksum</a></li>
+<li><a href="/wiki/Cmp" title="Cmp">cmp</a></li>
+<li><a href="/wiki/Comm" title="Comm">comm</a></li>
+<li><a href="/w/index.php?title=Command_(Unix)&amp;action=edit&amp;redlink=1" class="new" title="Command (Unix) (страница отсутствует)">command</a></li>
+<li><a href="/w/index.php?title=Compress&amp;action=edit&amp;redlink=1" class="new" title="Compress (страница отсутствует)">compress</a></li>
+<li><a href="/wiki/Cp" title="Cp">cp</a></li>
+<li><a href="/wiki/Crontab" class="mw-redirect" title="Crontab">crontab</a></li>
+<li><a href="/wiki/Csplit" title="Csplit">csplit</a></li>
+<li><a href="/wiki/Ctags" title="Ctags">ctags</a></li>
+<li><a href="/wiki/Cut" title="Cut">cut</a></li>
+<li><a href="/w/index.php?title=Cxref&amp;action=edit&amp;redlink=1" class="new" title="Cxref (страница отсутствует)">cxref</a></li>
+<li><a href="/wiki/Date" title="Date">date</a></li>
+<li><a href="/wiki/Dd" title="Dd">dd</a></li>
+<li><a href="/w/index.php?title=Delta_(Unix)&amp;action=edit&amp;redlink=1" class="new" title="Delta (Unix) (страница отсутствует)">delta</a></li>
+<li><a href="/wiki/Df" title="Df">df</a></li>
+<li><a href="/wiki/Diff" title="Diff">diff</a></li>
+<li><a href="/wiki/Dirname" title="Dirname">dirname</a></li>
+<li><a href="/wiki/Du" title="Du">du</a></li>
+<li><a href="/wiki/Echo" title="Echo">echo</a></li>
+<li><a href="/wiki/Ed" title="Ed">ed</a></li>
+<li><a href="/wiki/Env" title="Env">env</a></li>
+<li><a href="/wiki/Ex_(Unix)" title="Ex (Unix)">ex</a></li>
+<li><a href="/wiki/Expand" title="Expand">expand</a></li>
+<li><a href="/wiki/Expr" title="Expr">expr</a></li>
+<li><a href="/wiki/False" title="False">false</a></li>
+<li><a href="/wiki/Fc_(Unix)" title="Fc (Unix)">fc</a></li>
+<li><a href="/wiki/Fg" title="Fg">fg</a></li>
+<li><a href="/wiki/File_(Unix)" title="File (Unix)">file</a></li>
+<li><a href="/wiki/Find" title="Find">find</a></li>
+<li><a href="/wiki/Fold" title="Fold">fold</a></li>
+<li><a href="/w/index.php?title=Fort77&amp;action=edit&amp;redlink=1" class="new" title="Fort77 (страница отсутствует)">fort77</a></li>
+<li><a href="/wiki/Fuser" title="Fuser">fuser</a></li>
+<li><a href="/w/index.php?title=Gencat&amp;action=edit&amp;redlink=1" class="new" title="Gencat (страница отсутствует)">gencat</a></li>
+<li><a href="/w/index.php?title=Get&amp;action=edit&amp;redlink=1" class="new" title="Get (страница отсутствует)">get</a></li>
+<li><a href="/w/index.php?title=Getconf&amp;action=edit&amp;redlink=1" class="new" title="Getconf (страница отсутствует)">getconf</a></li>
+<li><a href="/w/index.php?title=Getopts&amp;action=edit&amp;redlink=1" class="new" title="Getopts (страница отсутствует)">getopts</a></li>
+<li><a href="/wiki/Grep" title="Grep">grep</a></li>
+<li><a href="/wiki/Hash" class="mw-redirect" title="Hash">hash</a></li>
+<li><a href="/wiki/Head_(Unix)" title="Head (Unix)">head</a></li>
+<li><a href="/wiki/Iconv" title="Iconv">iconv</a></li>
+<li><a href="/wiki/Id" title="Id">id</a></li>
+<li><a href="/w/index.php?title=Ipcrm&amp;action=edit&amp;redlink=1" class="new" title="Ipcrm (страница отсутствует)">ipcrm</a></li>
+<li><a href="/w/index.php?title=Ipcs&amp;action=edit&amp;redlink=1" class="new" title="Ipcs (страница отсутствует)">ipcs</a></li>
+<li><a href="/w/index.php?title=Jobs&amp;action=edit&amp;redlink=1" class="new" title="Jobs (страница отсутствует)">jobs</a></li>
+<li><a href="/wiki/Join_(Unix)" title="Join (Unix)">join</a></li>
+<li><a href="/wiki/Kill" title="Kill">kill</a></li>
+<li><a href="/wiki/Lex" title="Lex">lex</a></li>
+<li><a href="/w/index.php?title=Link_(Unix)&amp;action=edit&amp;redlink=1" class="new" title="Link (Unix) (страница отсутствует)">link</a></li>
+<li><a href="/wiki/Ln_(UNIX)" class="mw-redirect" title="Ln (UNIX)">ln</a></li>
+<li><a href="/wiki/Locale" title="Locale">locale</a></li>
+<li><a href="/w/index.php?title=Localedef&amp;action=edit&amp;redlink=1" class="new" title="Localedef (страница отсутствует)">localedef</a></li>
+<li><a href="/wiki/Logger" title="Logger">logger</a></li>
+<li><a href="/wiki/Logname" title="Logname">logname</a></li>
+<li><a href="/wiki/Lp" title="Lp">lp</a></li>
+<li><a class="mw-selflink selflink">ls</a></li>
+<li><a href="/wiki/%D0%9C%D0%B0%D0%BA%D1%80%D0%BE%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81%D0%BE%D1%80_m4" class="mw-redirect" title="Макропроцессор m4">m4</a></li>
+<li><a href="/w/index.php?title=Mailx&amp;action=edit&amp;redlink=1" class="new" title="Mailx (страница отсутствует)">mailx</a></li>
+<li><a href="/wiki/Make" title="Make">make</a></li>
+<li><a href="/wiki/Man" title="Man">man</a></li>
+<li><a href="/wiki/Mesg" title="Mesg">mesg</a></li>
+<li><a href="/wiki/Mkdir" title="Mkdir">mkdir</a></li>
+<li><a href="/wiki/Mkfifo" class="mw-redirect" title="Mkfifo">mkfifo</a></li>
+<li><a href="/wiki/More" title="More">more</a></li>
+<li><a href="/wiki/Mv" title="Mv">mv</a></li>
+<li><a href="/w/index.php?title=Newgrp&amp;action=edit&amp;redlink=1" class="new" title="Newgrp (страница отсутствует)">newgrp</a></li>
+<li><a href="/wiki/Nice" title="Nice">nice</a></li>
+<li><a href="/wiki/Nl" title="Nl">nl</a></li>
+<li><a href="/wiki/Nm" title="Nm">nm</a></li>
+<li><a href="/wiki/Nohup" title="Nohup">nohup</a></li>
+<li><a href="/wiki/Od" title="Od">od</a></li>
+<li><a href="/wiki/Paste" title="Paste">paste</a></li>
+<li><a href="/wiki/Patch_(UNIX)" class="mw-redirect" title="Patch (UNIX)">patch</a></li>
+<li><a href="/w/index.php?title=Pathchk&amp;action=edit&amp;redlink=1" class="new" title="Pathchk (страница отсутствует)">pathchk</a></li>
+<li><a href="/wiki/Pax_(Unix)" title="Pax (Unix)">pax</a></li>
+<li><a href="/w/index.php?title=Pr_(Unix)&amp;action=edit&amp;redlink=1" class="new" title="Pr (Unix) (страница отсутствует)">pr</a></li>
+<li><a href="/wiki/Printf" title="Printf">printf</a></li>
+<li><a href="/w/index.php?title=Prs&amp;action=edit&amp;redlink=1" class="new" title="Prs (страница отсутствует)">prs</a></li>
+<li><a href="/wiki/Ps" title="Ps">ps</a></li>
+<li><a href="/wiki/Pwd" title="Pwd">pwd</a></li>
+<li><a href="/w/index.php?title=Qalter&amp;action=edit&amp;redlink=1" class="new" title="Qalter (страница отсутствует)">qalter</a></li>
+<li><a href="/w/index.php?title=Qdel&amp;action=edit&amp;redlink=1" class="new" title="Qdel (страница отсутствует)">qdel</a></li>
+<li><a href="/w/index.php?title=Qhold&amp;action=edit&amp;redlink=1" class="new" title="Qhold (страница отсутствует)">qhold</a></li>
+<li><a href="/w/index.php?title=Qmove&amp;action=edit&amp;redlink=1" class="new" title="Qmove (страница отсутствует)">qmove</a></li>
+<li><a href="/w/index.php?title=Qmsg&amp;action=edit&amp;redlink=1" class="new" title="Qmsg (страница отсутствует)">qmsg</a></li>
+<li><a href="/w/index.php?title=Qrerun&amp;action=edit&amp;redlink=1" class="new" title="Qrerun (страница отсутствует)">qrerun</a></li>
+<li><a href="/w/index.php?title=Qrls&amp;action=edit&amp;redlink=1" class="new" title="Qrls (страница отсутствует)">qrls</a></li>
+<li><a href="/w/index.php?title=Qselect&amp;action=edit&amp;redlink=1" class="new" title="Qselect (страница отсутствует)">qselect</a></li>
+<li><a href="/w/index.php?title=Qsig&amp;action=edit&amp;redlink=1" class="new" title="Qsig (страница отсутствует)">qsig</a></li>
+<li><a href="/w/index.php?title=Qstat&amp;action=edit&amp;redlink=1" class="new" title="Qstat (страница отсутствует)">qstat</a></li>
+<li><a href="/w/index.php?title=Qsub&amp;action=edit&amp;redlink=1" class="new" title="Qsub (страница отсутствует)">qsub</a></li>
+<li><a href="/w/index.php?title=Read_(UNIX)&amp;action=edit&amp;redlink=1" class="new" title="Read (UNIX) (страница отсутствует)">read</a></li>
+<li><a href="/wiki/Renice" title="Renice">renice</a></li>
+<li><a href="/wiki/Rm" title="Rm">rm</a></li>
+<li><a href="/w/index.php?title=Rmdel&amp;action=edit&amp;redlink=1" class="new" title="Rmdel (страница отсутствует)">rmdel</a></li>
+<li><a href="/wiki/Rmdir" title="Rmdir">rmdir</a></li>
+<li><a href="/w/index.php?title=Sact&amp;action=edit&amp;redlink=1" class="new" title="Sact (страница отсутствует)">sact</a></li>
+<li><a href="/wiki/Source_Code_Control_System" title="Source Code Control System">sccs</a></li>
+<li><a href="/wiki/Sed" title="Sed">sed</a></li>
+<li><a href="/wiki/Bash" title="Bash">sh</a></li>
+<li><a href="/wiki/Sleep" title="Sleep">sleep</a></li>
+<li><a href="/wiki/Sort" title="Sort">sort</a></li>
+<li><a href="/wiki/Split" title="Split">split</a></li>
+<li><a href="/wiki/Strings" title="Strings">strings</a></li>
+<li><a href="/wiki/Strip_(UNIX)" title="Strip (UNIX)">strip</a></li>
+<li><a href="/w/index.php?title=Stty&amp;action=edit&amp;redlink=1" class="new" title="Stty (страница отсутствует)">stty</a></li>
+<li><a href="/w/index.php?title=Tabs&amp;action=edit&amp;redlink=1" class="new" title="Tabs (страница отсутствует)">tabs</a></li>
+<li><a href="/wiki/Tail" title="Tail">tail</a></li>
+<li><a href="/w/index.php?title=Talk_(UNIX)&amp;action=edit&amp;redlink=1" class="new" title="Talk (UNIX) (страница отсутствует)">talk</a></li>
+<li><a href="/wiki/Tee" title="Tee">tee</a></li>
+<li><a href="/wiki/Test" title="Test">test</a></li>
+<li><a href="/wiki/Time_(Unix)" title="Time (Unix)">time</a></li>
+<li><a href="/wiki/Touch" title="Touch">touch</a></li>
+<li><a href="/w/index.php?title=Tput&amp;action=edit&amp;redlink=1" class="new" title="Tput (страница отсутствует)">tput</a></li>
+<li><a href="/wiki/Tr" title="Tr">tr</a></li>
+<li><a href="/wiki/True" title="True">true</a></li>
+<li><a href="/w/index.php?title=Tsort&amp;action=edit&amp;redlink=1" class="new" title="Tsort (страница отсутствует)">tsort</a></li>
+<li><a href="/wiki/Tty_(UNIX)" class="mw-redirect" title="Tty (UNIX)">tty</a></li>
+<li><a href="/wiki/Type" title="Type">type</a></li>
+<li><a href="/w/index.php?title=Ulimit&amp;action=edit&amp;redlink=1" class="new" title="Ulimit (страница отсутствует)">ulimit</a></li>
+<li><a href="/wiki/Umask" title="Umask">umask</a></li>
+<li><a href="/w/index.php?title=Unalias&amp;action=edit&amp;redlink=1" class="new" title="Unalias (страница отсутствует)">unalias</a></li>
+<li><a href="/wiki/Uname" title="Uname">uname</a></li>
+<li><a href="/w/index.php?title=Uncompress&amp;action=edit&amp;redlink=1" class="new" title="Uncompress (страница отсутствует)">uncompress</a></li>
+<li><a href="/wiki/Unexpand" title="Unexpand">unexpand</a></li>
+<li><a href="/w/index.php?title=Unget&amp;action=edit&amp;redlink=1" class="new" title="Unget (страница отсутствует)">unget</a></li>
+<li><a href="/wiki/Uniq" title="Uniq">uniq</a></li>
+<li><a href="/wiki/Unlink" title="Unlink">unlink</a></li>
+<li><a href="/wiki/Uucp" title="Uucp">uucp</a></li>
+<li><a href="/wiki/Uudecode" class="mw-redirect" title="Uudecode">uudecode</a></li>
+<li><a href="/wiki/Uuencode" class="mw-redirect" title="Uuencode">uuencode</a></li>
+<li><a href="/w/index.php?title=Uustat&amp;action=edit&amp;redlink=1" class="new" title="Uustat (страница отсутствует)">uustat</a></li>
+<li><a href="/w/index.php?title=Uux&amp;action=edit&amp;redlink=1" class="new" title="Uux (страница отсутствует)">uux</a></li>
+<li><a href="/w/index.php?title=Val&amp;action=edit&amp;redlink=1" class="new" title="Val (страница отсутствует)">val</a></li>
+<li><a href="/wiki/Vi" title="Vi">vi</a></li>
+<li><a href="/wiki/Wait_(%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0)" title="Wait (команда)">wait</a></li>
+<li><a href="/wiki/Wc" title="Wc">wc</a></li>
+<li><a href="/w/index.php?title=What&amp;action=edit&amp;redlink=1" class="new" title="What (страница отсутствует)">what</a></li>
+<li><a href="/wiki/Who" title="Who">who</a></li>
+<li><a href="/wiki/Write" title="Write">write</a></li>
+<li><a href="/wiki/Xargs" title="Xargs">xargs</a></li>
+<li><a href="/wiki/Yacc" title="Yacc">yacc</a></li>
+<li><a href="/w/index.php?title=Zcat&amp;action=edit&amp;redlink=1" class="new" title="Zcat (страница отсутствует)">zcat</a></li></ul>
+</div></td></tr></tbody></table><div></div></td></tr><tr><td class="navbox-list navbox-even" style="width:100%;padding:0px"><div style="padding:0em 0.25em"><div role="navigation" class="navbox" aria-labelledby="GNU_Coreutils" data-name="GNU Coreutils" style="padding:3px"><table class="nowraplinks collapsible uncollapsed navbox-inner" style="border-spacing:0;background:transparent;color:inherit"><tbody><tr><th scope="colgroup" class="navbox-title" colspan="2"><span class="navbox-gear" style="float:left;text-align:left;width:5em;margin-right:0.5em"><a href="/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:GNU_Coreutils" title="Просмотр этого шаблона"><img alt="⛭" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Wikipedia_interwiki_section_gear_icon.svg/14px-Wikipedia_interwiki_section_gear_icon.svg.png" decoding="async" width="14" height="14" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Wikipedia_interwiki_section_gear_icon.svg/21px-Wikipedia_interwiki_section_gear_icon.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Wikipedia_interwiki_section_gear_icon.svg/28px-Wikipedia_interwiki_section_gear_icon.svg.png 2x" data-file-width="14" data-file-height="14" /></a></span><div id="GNU_Coreutils" style="font-size:114%;margin:0 5em"><a href="/wiki/GNU_Coreutils" title="GNU Coreutils">GNU Coreutils</a></div></th></tr><tr><th scope="row" class="navbox-group" style="width:1px">Файловые утилиты</th><td class="navbox-list navbox-odd hlist" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px"><div style="padding:0em 0.25em">
+<ul><li><a href="/wiki/Chgrp" title="Chgrp">chgrp</a></li>
+<li><a href="/wiki/Chown" title="Chown">chown</a></li>
+<li><a href="/wiki/Chmod" title="Chmod">chmod</a></li>
+<li><a href="/wiki/Cp" title="Cp">cp</a></li>
+<li><a href="/wiki/Dd" title="Dd">dd</a></li>
+<li><a href="/wiki/Df" title="Df">df</a></li>
+<li><a class="mw-selflink selflink">dir</a></li>
+<li><a href="/w/index.php?title=Dircolors&amp;action=edit&amp;redlink=1" class="new" title="Dircolors (страница отсутствует)">dircolors</a></li>
+<li><span data-interwiki-lang="en" data-interwiki-article="install (Unix)"><a href="/w/index.php?title=Install_(Unix)&amp;action=edit&amp;redlink=1" class="new" title="Install (Unix) (страница отсутствует)">install</a></span><span style="font-style:normal; font-weight:normal;"><sup class="noprint"><a href="https://en.wikipedia.org/wiki/install_(Unix)" class="extiw" title="en:install (Unix)"><span title="install (Unix) — версия статьи «Install (Unix)» на английском языке">[en]</span></a></sup></span></li>
+<li><a href="/wiki/Ln_(UNIX)" class="mw-redirect" title="Ln (UNIX)">ln</a></li>
+<li><a class="mw-selflink selflink">ls</a></li>
+<li><a href="/wiki/Mkdir" title="Mkdir">mkdir</a></li>
+<li><a href="/wiki/Mkfifo" class="mw-redirect" title="Mkfifo">mkfifo</a></li>
+<li><span data-interwiki-lang="en" data-interwiki-article="Device file#Node creation"><a href="/wiki/%D0%A1%D0%BF%D0%B5%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D1%84%D0%B0%D0%B9%D0%BB_%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0" title="Специальный файл устройства">mknod</a></span><span style="font-style:normal; font-weight:normal;"><sup class="noprint"><a href="https://en.wikipedia.org/wiki/Device_file#Node_creation" class="extiw" title="en:Device file"><span title="Device file#Node creation — версия статьи «Специальный файл устройства» на английском языке">[en]</span></a></sup></span></li>
+<li><a href="/wiki/Mv" title="Mv">mv</a></li>
+<li><a href="/wiki/Rm" title="Rm">rm</a></li>
+<li><a href="/wiki/Rmdir" title="Rmdir">rmdir</a></li>
+<li><a href="/wiki/Shred" title="Shred">shred</a></li>
+<li><a href="/wiki/Sync" title="Sync">sync</a></li>
+<li><a href="/wiki/Touch" title="Touch">touch</a></li>
+<li><a href="/wiki/Vdir" title="Vdir">vdir</a></li></ul>
+</div></td></tr><tr><th scope="row" class="navbox-group" style="width:1px">Текстовые утилиты</th><td class="navbox-list navbox-even hlist" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px"><div style="padding:0em 0.25em">
+<ul><li><a href="/wiki/Cat" title="Cat">cat</a></li>
+<li><a href="/wiki/Cksum" title="Cksum">cksum</a></li>
+<li><a href="/wiki/Comm" title="Comm">comm</a></li>
+<li><a href="/wiki/Csplit" title="Csplit">csplit</a></li>
+<li><a href="/wiki/Cut" title="Cut">cut</a></li>
+<li><a href="/wiki/Expand" title="Expand">expand</a></li>
+<li><a href="/wiki/Fmt" title="Fmt">fmt</a></li>
+<li><a href="/wiki/Fold" title="Fold">fold</a></li>
+<li><a href="/wiki/Head_(Unix)" title="Head (Unix)">head</a></li>
+<li><a href="/wiki/Join_(UNIX)" class="mw-redirect" title="Join (UNIX)">join</a></li>
+<li><a href="/wiki/Md5sum" title="Md5sum">md5sum</a></li>
+<li><a href="/wiki/Nl" title="Nl">nl</a></li>
+<li><a href="/wiki/Od" title="Od">od</a></li>
+<li><a href="/wiki/Paste" title="Paste">paste</a></li>
+<li><span data-interwiki-lang="en" data-interwiki-article="ptx (Unix)"><a href="/w/index.php?title=Ptx_(Unix)&amp;action=edit&amp;redlink=1" class="new" title="Ptx (Unix) (страница отсутствует)">ptx</a></span><span style="font-style:normal; font-weight:normal;"><sup class="noprint"><a href="https://en.wikipedia.org/wiki/ptx_(Unix)" class="extiw" title="en:ptx (Unix)"><span title="ptx (Unix) — версия статьи «Ptx (Unix)» на английском языке">[en]</span></a></sup></span></li>
+<li><span data-interwiki-lang="en" data-interwiki-article="pr (UNIX)"><a href="/w/index.php?title=Pr_(UNIX)&amp;action=edit&amp;redlink=1" class="new" title="Pr (UNIX) (страница отсутствует)">pr</a></span><span style="font-style:normal; font-weight:normal;"><sup class="noprint"><a href="https://en.wikipedia.org/wiki/pr_(UNIX)" class="extiw" title="en:pr (UNIX)"><span title="pr (UNIX) — версия статьи «Pr (UNIX)» на английском языке">[en]</span></a></sup></span></li>
+<li><a href="/wiki/Sha1sum" title="Sha1sum">sha1sum</a></li>
+<li><a href="/wiki/Sort" title="Sort">sort</a></li>
+<li><a href="/wiki/Split" title="Split">split</a></li>
+<li><a href="/wiki/Sum_(Unix)" title="Sum (Unix)">sum</a></li>
+<li><a href="/w/index.php?title=Tac&amp;action=edit&amp;redlink=1" class="new" title="Tac (страница отсутствует)">tac</a></li>
+<li><a href="/wiki/Tail" title="Tail">tail</a></li>
+<li><a href="/wiki/Tr" title="Tr">tr</a></li>
+<li><span data-interwiki-lang="en" data-interwiki-article="tsort"><a href="/w/index.php?title=Tsort&amp;action=edit&amp;redlink=1" class="new" title="Tsort (страница отсутствует)">tsort</a></span><span style="font-style:normal; font-weight:normal;"><sup class="noprint"><a href="https://en.wikipedia.org/wiki/tsort" class="extiw" title="en:tsort"><span title="tsort — версия статьи «Tsort» на английском языке">[en]</span></a></sup></span></li>
+<li><a href="/wiki/Unexpand" title="Unexpand">unexpand</a></li>
+<li><a href="/wiki/Uniq" title="Uniq">uniq</a></li>
+<li><a href="/wiki/Wc" title="Wc">wc</a></li></ul>
+</div></td></tr><tr><th scope="row" class="navbox-group" style="width:1px">Shell-утилиты</th><td class="navbox-list navbox-odd hlist" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px"><div style="padding:0em 0.25em">
+<ul><li><a href="/wiki/Basename" title="Basename">basename</a></li>
+<li><a href="/wiki/Chroot" title="Chroot">chroot</a></li>
+<li><a href="/wiki/Date" title="Date">date</a></li>
+<li><a href="/wiki/Dirname" title="Dirname">dirname</a></li>
+<li><a href="/wiki/Du" title="Du">du</a></li>
+<li><a href="/wiki/Echo" title="Echo">echo</a></li>
+<li><a href="/wiki/Env" title="Env">env</a></li>
+<li><a href="/wiki/Expr" title="Expr">expr</a></li>
+<li><span data-interwiki-lang="en" data-interwiki-article="factor (Unix)"><a href="/w/index.php?title=Factor_(Unix)&amp;action=edit&amp;redlink=1" class="new" title="Factor (Unix) (страница отсутствует)">factor</a></span><span style="font-style:normal; font-weight:normal;"><sup class="noprint"><a href="https://en.wikipedia.org/wiki/factor_(Unix)" class="extiw" title="en:factor (Unix)"><span title="factor (Unix) — версия статьи «Factor (Unix)» на английском языке">[en]</span></a></sup></span></li>
+<li><a href="/wiki/False" title="False">false</a></li>
+<li><span data-interwiki-lang="en" data-interwiki-article="Group (computing)"><a href="/w/index.php?title=Group_(computing)&amp;action=edit&amp;redlink=1" class="new" title="Group (computing) (страница отсутствует)">groups</a></span><span style="font-style:normal; font-weight:normal;"><sup class="noprint"><a href="https://en.wikipedia.org/wiki/Group_(computing)" class="extiw" title="en:Group (computing)"><span title="Group (computing) — версия статьи «Group (computing)» на английском языке">[en]</span></a></sup></span></li>
+<li><a href="/w/index.php?title=Hostid&amp;action=edit&amp;redlink=1" class="new" title="Hostid (страница отсутствует)">hostid</a></li>
+<li><a href="/wiki/Id" title="Id">id</a></li>
+<li><a href="/w/index.php?title=Link_(Unix)&amp;action=edit&amp;redlink=1" class="new" title="Link (Unix) (страница отсутствует)">link</a></li>
+<li><a href="/wiki/Logname" title="Logname">logname</a></li>
+<li><a href="/wiki/Nice" title="Nice">nice</a></li>
+<li><a href="/wiki/Nohup" title="Nohup">nohup</a></li>
+<li><a href="/w/index.php?title=Pathchk&amp;action=edit&amp;redlink=1" class="new" title="Pathchk (страница отсутствует)">pathchk</a></li>
+<li><a href="/w/index.php?title=Pinky&amp;action=edit&amp;redlink=1" class="new" title="Pinky (страница отсутствует)">pinky</a></li>
+<li><span data-interwiki-lang="en" data-interwiki-article="Environment variable#Unix"><a href="/wiki/%D0%9F%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F_%D1%81%D1%80%D0%B5%D0%B4%D1%8B" title="Переменная среды">printenv</a></span><span style="font-style:normal; font-weight:normal;"><sup class="noprint"><a href="https://en.wikipedia.org/wiki/Environment_variable#Unix" class="extiw" title="en:Environment variable"><span title="Environment variable#Unix — версия статьи «Переменная среды» на английском языке">[en]</span></a></sup></span></li>
+<li><a href="/wiki/Printf" title="Printf">printf</a></li>
+<li><a href="/wiki/Pwd" title="Pwd">pwd</a></li>
+<li><a href="/w/index.php?title=Readlink&amp;action=edit&amp;redlink=1" class="new" title="Readlink (страница отсутствует)">readlink</a></li>
+<li><span data-interwiki-lang="en" data-interwiki-article="seq (Unix)"><a href="/w/index.php?title=Seq_(Unix)&amp;action=edit&amp;redlink=1" class="new" title="Seq (Unix) (страница отсутствует)">seq</a></span><span style="font-style:normal; font-weight:normal;"><sup class="noprint"><a href="https://en.wikipedia.org/wiki/seq_(Unix)" class="extiw" title="en:seq (Unix)"><span title="seq (Unix) — версия статьи «Seq (Unix)» на английском языке">[en]</span></a></sup></span></li>
+<li><a href="/wiki/Sleep" title="Sleep">sleep</a></li>
+<li><a href="/w/index.php?title=Stat&amp;action=edit&amp;redlink=1" class="new" title="Stat (страница отсутствует)">stat</a></li>
+<li><a href="/w/index.php?title=Stty&amp;action=edit&amp;redlink=1" class="new" title="Stty (страница отсутствует)">stty</a></li>
+<li><a href="/wiki/Tee" title="Tee">tee</a></li>
+<li><a href="/wiki/Test" title="Test">test</a></li>
+<li><a href="/wiki/True" title="True">true</a></li>
+<li><a href="/wiki/Tty_(UNIX)" class="mw-redirect" title="Tty (UNIX)">tty</a></li>
+<li><a href="/wiki/Uname" title="Uname">uname</a></li>
+<li><a href="/wiki/Unlink" title="Unlink">unlink</a></li>
+<li><a href="/wiki/Users" title="Users">users</a></li>
+<li><a href="/wiki/Who" title="Who">who</a></li>
+<li><a href="/wiki/Whoami" title="Whoami">whoami</a></li>
+<li><a href="/wiki/Yes_(Unix)" title="Yes (Unix)">yes</a></li></ul>
+</div></td></tr></tbody></table></div></div></td></tr></tbody></table></div>
+<table class="plainlinks metadata ambox ambox-content" role="presentation"><tbody><tr><td class="mbox-image"><div style="width:52px"><a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%A1%D1%81%D1%8B%D0%BB%D0%BA%D0%B8_%D0%BD%D0%B0_%D0%B8%D1%81%D1%82%D0%BE%D1%87%D0%BD%D0%B8%D0%BA%D0%B8" title="Ссылки на источники"><img alt="Ссылки на источники" src="//upload.wikimedia.org/wikipedia/commons/thumb/6/64/Question_book-4.svg/48px-Question_book-4.svg.png" decoding="async" width="48" height="37" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/64/Question_book-4.svg/72px-Question_book-4.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/64/Question_book-4.svg/96px-Question_book-4.svg.png 2x" data-file-width="262" data-file-height="204" /></a></div></td><td class="mbox-text"><div class="mbox-text-div"><b>В этой статье не хватает <a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%A1%D1%81%D1%8B%D0%BB%D0%BA%D0%B8_%D0%BD%D0%B0_%D0%B8%D1%81%D1%82%D0%BE%D1%87%D0%BD%D0%B8%D0%BA%D0%B8" title="Википедия:Ссылки на источники">ссылок на источники информации</a>.</b></div><div class="mbox-textsmall-div hide-when-compact" style="font-size:85%">Информация должна быть <a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D1%8F%D0%B5%D0%BC%D0%BE%D1%81%D1%82%D1%8C" title="Википедия:Проверяемость">проверяема</a>, иначе она может быть поставлена под сомнение и удалена.<br />Вы можете <a class="external text" href="https://ru.wikipedia.org/w/index.php?title=Ls&amp;action=edit">отредактировать</a> эту статью, добавив ссылки на <a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%90%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D1%82%D0%B5%D1%82%D0%BD%D1%8B%D0%B5_%D0%B8%D1%81%D1%82%D0%BE%D1%87%D0%BD%D0%B8%D0%BA%D0%B8" title="Википедия:Авторитетные источники">авторитетные источники</a>.<br />Эта отметка установлена  <b>22 июня 2018 года</b>.</div></td></tr></tbody></table>
+<!-- 
+NewPP limit report
+Parsed by mw1392
+Cached time: 20211103202838
+Cache expiry: 1814400
+Reduced expiry: false
+Complications: []
+CPU time usage: 0.339 seconds
+Real time usage: 0.727 seconds
+Preprocessor visited node count: 806/1000000
+Post‐expand include size: 69215/2097152 bytes
+Template argument size: 545/2097152 bytes
+Highest expansion depth: 21/40
+Expensive parser function count: 10/500
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 1834/5000000 bytes
+Lua time usage: 0.136/10.000 seconds
+Lua memory usage: 4161760/52428800 bytes
+Number of Wikibase entities loaded: 1/400
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%  634.775      1 -total
+ 81.56%  517.746      1 Шаблон:Нет_ссылок
+ 64.95%  412.259      1 Шаблон:Сортировка:_статьи_без_источников
+ 41.14%  261.121      1 Шаблон:Сортировка:_по_типам
+ 23.30%  147.887      1 Шаблон:Сортировка:_по_странам
+ 21.70%  137.763      3 Шаблон:Навигационная_таблица
+ 13.16%   83.507      1 Шаблон:Команды_Unix
+ 11.15%   70.796     10 Шаблон:РМЗСОВД
+ 10.01%   63.557      1 Шаблон:Ambox
+  8.28%   52.539     10 Шаблон:Wikidata
+-->
+
+<!-- Saved in parser cache with key ruwiki:pcache:idhash:25886-0!canonical and timestamp 20211103202837 and revision id 105602520. Serialized with JSON.
+ -->
+</div><noscript><img src="//ru.wikipedia.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript>
+<div class="printfooter">Источник — <a dir="ltr" href="https://ru.wikipedia.org/w/index.php?title=Ls&amp;oldid=105602520">https://ru.wikipedia.org/w/index.php?title=Ls&amp;oldid=105602520</a></div></div>
+		<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D0%B8" title="Служебная:Категории">Категория</a>: <ul><li><a href="/wiki/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A3%D1%82%D0%B8%D0%BB%D0%B8%D1%82%D1%8B_Unix" title="Категория:Утилиты Unix">Утилиты Unix</a></li></ul></div><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Скрытые категории: <ul><li><a href="/wiki/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A1%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D1%8B,_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D1%8E%D1%89%D0%B8%D0%B5_%D1%83%D1%81%D1%82%D0%B0%D1%80%D0%B5%D0%B2%D1%88%D0%B8%D0%B9_%D1%82%D0%B5%D0%B3_source" title="Категория:Страницы, использующие устаревший тег source">Страницы, использующие устаревший тег source</a></li><li><a href="/wiki/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%A1%D1%82%D0%B0%D1%82%D1%8C%D0%B8_%D0%B1%D0%B5%D0%B7_%D1%81%D1%81%D1%8B%D0%BB%D0%BE%D0%BA_%D0%BD%D0%B0_%D0%B8%D1%81%D1%82%D0%BE%D1%87%D0%BD%D0%B8%D0%BA%D0%B8_%D1%81_%D0%B8%D1%8E%D0%BD%D1%8F_2018_%D0%B3%D0%BE%D0%B4%D0%B0" title="Категория:Википедия:Статьи без ссылок на источники с июня 2018 года">Википедия:Статьи без ссылок на источники с июня 2018 года</a></li><li><a href="/wiki/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%A1%D1%82%D0%B0%D1%82%D1%8C%D0%B8_%D0%B1%D0%B5%D0%B7_%D0%B8%D1%81%D1%82%D0%BE%D1%87%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2_(%D1%82%D0%B8%D0%BF:_%D1%83%D1%82%D0%B8%D0%BB%D0%B8%D1%82%D0%B0_UNIX)" title="Категория:Википедия:Статьи без источников (тип: утилита UNIX)">Википедия:Статьи без источников (тип: утилита UNIX)</a></li><li><a href="/wiki/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%A1%D1%82%D0%B0%D1%82%D1%8C%D0%B8_%D0%B1%D0%B5%D0%B7_%D0%B8%D1%81%D1%82%D0%BE%D1%87%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2_(%D0%BD%D0%B5_%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D1%91%D0%BD%D0%BD%D1%8B%D0%B5_%D0%BF%D0%BE_%D1%82%D0%B8%D0%BF%D0%B0%D0%BC)" title="Категория:Википедия:Статьи без источников (не распределённые по типам)">Википедия:Статьи без источников (не распределённые по типам)</a></li></ul></div></div>
+	</div>
+</div>
+<div id='mw-data-after-content'>
+	<div class="read-more-container"></div>
+</div>
+
+<div id="mw-navigation">
+	<h2>Навигация</h2>
+	<div id="mw-head">
+		<nav id="p-personal" class="mw-portlet mw-portlet-personal vector-user-menu-legacy vector-menu" aria-labelledby="p-personal-label" role="navigation" 
+	 >
+	<h3 id="p-personal-label" aria-label="" class="vector-menu-heading">
+		
+		<span>Персональные инструменты</span>
+	</h3>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="pt-anonuserpage" class="mw-list-item"><span>Вы не представились системе</span></li><li id="pt-anontalk" class="mw-list-item"><a href="/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%9C%D0%BE%D1%91_%D0%BE%D0%B1%D1%81%D1%83%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5" title="Страница обсуждений для моего IP [n]" accesskey="n"><span>Обсуждение</span></a></li><li id="pt-anoncontribs" class="mw-list-item"><a href="/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%9C%D0%BE%D0%B9_%D0%B2%D0%BA%D0%BB%D0%B0%D0%B4" title="Список правок, сделанных с этого IP-адреса [y]" accesskey="y"><span>Вклад</span></a></li><li id="pt-createaccount" class="mw-list-item"><a href="/w/index.php?title=%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%83%D1%87%D1%91%D1%82%D0%BD%D1%83%D1%8E_%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D1%8C&amp;returnto=Ls" title="Мы предлагаем вам создать учётную запись и войти в систему, хотя это и не обязательно."><span>Создать учётную запись</span></a></li><li id="pt-login" class="mw-list-item"><a href="/w/index.php?title=%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%92%D1%85%D0%BE%D0%B4&amp;returnto=Ls" title="Здесь можно зарегистрироваться в системе, но это необязательно. [o]" accesskey="o"><span>Войти</span></a></li></ul>
+		
+	</div>
+</nav>
+
+		<div id="left-navigation">
+			<nav id="p-namespaces" class="mw-portlet mw-portlet-namespaces vector-menu vector-menu-tabs" aria-labelledby="p-namespaces-label" role="navigation" 
+	 >
+	<h3 id="p-namespaces-label" aria-label="" class="vector-menu-heading">
+		
+		<span>Пространства имён</span>
+	</h3>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Ls" title="Просмотр основной страницы [c]" accesskey="c"><span>Статья</span></a></li><li id="ca-talk" class="mw-list-item"><a href="/wiki/%D0%9E%D0%B1%D1%81%D1%83%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5:Ls" rel="discussion" title="Обсуждение основной страницы [t]" accesskey="t"><span>Обсуждение</span></a></li></ul>
+		
+	</div>
+</nav>
+
+			<nav id="p-variants" class="mw-portlet mw-portlet-variants emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown" aria-labelledby="p-variants-label" role="navigation" 
+	 >
+	<input type="checkbox"
+		id="p-variants-checkbox"
+		role="button"
+		aria-haspopup="true"
+		data-event-name="ui.dropdown-p-variants"
+		class="vector-menu-checkbox" aria-labelledby="p-variants-label" />
+	<h3 id="p-variants-label" aria-label="Change language variant" class="vector-menu-heading">
+		
+		<span>Варианты</span>
+			<span class="vector-menu-checkbox-expanded">expanded</span>
+			<span class="vector-menu-checkbox-collapsed">collapsed</span>
+	</h3>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		
+	</div>
+</nav>
+
+		</div>
+		<div id="right-navigation">
+			<nav id="p-views" class="mw-portlet mw-portlet-views vector-menu vector-menu-tabs" aria-labelledby="p-views-label" role="navigation" 
+	 >
+	<h3 id="p-views-label" aria-label="" class="vector-menu-heading">
+		
+		<span>Просмотры</span>
+	</h3>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="ca-view" class="mw-list-item"><a href="/w/index.php?title=Ls&amp;stable=1"><span>Читать</span></a></li><li id="ca-current" class="collapsible selected mw-list-item"><a href="/w/index.php?title=Ls&amp;stable=0&amp;redirect=no" title="Показать текущую версию этой страницы [v]" accesskey="v"><span>Текущая версия</span></a></li><li id="ca-ve-edit" class="mw-list-item"><a href="/w/index.php?title=Ls&amp;veaction=edit" title="Редактировать данную страницу [v]" accesskey="v"><span>Править</span></a></li><li id="ca-edit" class="collapsible mw-list-item"><a href="/w/index.php?title=Ls&amp;action=edit" title="Эту статью можно изменять. Перед сохранением изменений, пожалуйста, нажмите кнопку предварительного просмотра для визуальной проверки результата [e]" accesskey="e"><span>Править код</span></a></li><li id="ca-history" class="mw-list-item"><a href="/w/index.php?title=Ls&amp;action=history" title="Журнал изменений страницы [h]" accesskey="h"><span>История</span></a></li></ul>
+		
+	</div>
+</nav>
+
+			<nav id="p-cactions" class="mw-portlet mw-portlet-cactions emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown" aria-labelledby="p-cactions-label" role="navigation"  title="Больше возможностей"
+	 >
+	<input type="checkbox"
+		id="p-cactions-checkbox"
+		role="button"
+		aria-haspopup="true"
+		data-event-name="ui.dropdown-p-cactions"
+		class="vector-menu-checkbox" aria-labelledby="p-cactions-label" />
+	<h3 id="p-cactions-label" aria-label="" class="vector-menu-heading">
+		
+		<span>Ещё</span>
+			<span class="vector-menu-checkbox-expanded">expanded</span>
+			<span class="vector-menu-checkbox-collapsed">collapsed</span>
+	</h3>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		
+	</div>
+</nav>
+
+			<div id="p-search" role="search" class=" vector-search-box">
+	<div>
+			<h3 >
+				<label for="searchInput">Поиск</label>
+			</h3>
+		<form action="/w/index.php" id="searchform"
+			class="vector-search-box-form">
+			<div id="simpleSearch"
+				class="vector-search-box-inner"
+				 data-search-loc="header-navigation">
+				<input class="vector-search-box-input"
+					 type="search" name="search" placeholder="Искать в Википедии" aria-label="Искать в Википедии" autocapitalize="sentences" title="Искать в Википедии [f]" accesskey="f" id="searchInput"
+				/>
+				<input type="hidden" name="title" value="Служебная:Поиск"/>
+				<input id="mw-searchButton"
+					 class="searchButton mw-fallbackSearchButton" type="submit" name="fulltext" title="Найти страницы, содержащие указанный текст" value="Найти" />
+				<input id="searchButton"
+					 class="searchButton" type="submit" name="go" title="Перейти к странице, имеющей в точности такое название" value="Перейти" />
+			</div>
+		</form>
+	</div>
+</div>
+
+		</div>
+	</div>
+	
+<div id="mw-panel">
+	<div id="p-logo" role="banner">
+		<a class="mw-wiki-logo" href="/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0"
+			title="Перейти на заглавную страницу"></a>
+	</div>
+	<nav id="p-navigation" class="mw-portlet mw-portlet-navigation vector-menu vector-menu-portal portal" aria-labelledby="p-navigation-label" role="navigation" 
+	 >
+	<h3 id="p-navigation-label" aria-label="" class="vector-menu-heading">
+		
+		<span>Навигация</span>
+	</h3>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-mainpage-description" class="mw-list-item"><a href="/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0" title="Перейти на заглавную страницу [z]" accesskey="z"><span>Заглавная страница</span></a></li><li id="n-browse" class="mw-list-item"><a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%9F%D0%BE%D0%B8%D1%81%D0%BA_%D0%BF%D0%BE_%D0%BA%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F%D0%BC" title="Поиск по категориям"><span>Рубрикация</span></a></li><li id="n-index" class="mw-list-item"><a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%90%D0%BB%D1%84%D0%B0%D0%B2%D0%B8%D1%82%D0%BD%D1%8B%D0%B9_%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8C" title="Поиск по двум первым буквам"><span>Указатель А — Я</span></a></li><li id="n-featured" class="mw-list-item"><a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%98%D0%B7%D0%B1%D1%80%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5_%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8" title="Статьи, считающиеся лучшими статьями проекта"><span>Избранные статьи</span></a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%A1%D0%BB%D1%83%D1%87%D0%B0%D0%B9%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0" title="Посмотреть случайно выбранную страницу [x]" accesskey="x"><span>Случайная страница</span></a></li><li id="n-currentevents" class="mw-list-item"><a href="/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB:%D0%A2%D0%B5%D0%BA%D1%83%D1%89%D0%B8%D0%B5_%D1%81%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D1%8F" title="Статьи о текущих событиях в мире"><span>Текущие события</span></a></li></ul>
+		
+	</div>
+</nav>
+
+	<nav id="p-participation" class="mw-portlet mw-portlet-participation vector-menu vector-menu-portal portal" aria-labelledby="p-participation-label" role="navigation" 
+	 >
+	<h3 id="p-participation-label" aria-label="" class="vector-menu-heading">
+		
+		<span>Участие</span>
+	</h3>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-bug_in_article" class="mw-list-item"><a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%A1%D0%BE%D0%BE%D0%B1%D1%89%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BE%D0%B1_%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%D1%85" title="Сообщить об ошибке в этой статье"><span>Сообщить об ошибке</span></a></li><li id="n-portal" class="mw-list-item"><a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%A1%D0%BE%D0%BE%D0%B1%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE" title="О проекте, о том, чем здесь можно заниматься, а также — где что находится"><span>Сообщество</span></a></li><li id="n-forum" class="mw-list-item"><a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%A4%D0%BE%D1%80%D1%83%D0%BC" title="Форум участников Википедии"><span>Форум</span></a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%A1%D0%B2%D0%B5%D0%B6%D0%B8%D0%B5_%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B8" title="Список последних изменений [r]" accesskey="r"><span>Свежие правки</span></a></li><li id="n-newpages" class="mw-list-item"><a href="/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%9D%D0%BE%D0%B2%D1%8B%D0%B5_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D1%8B" title="Список недавно созданных страниц"><span>Новые страницы</span></a></li><li id="n-help" class="mw-list-item"><a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0" title="Место расположения Справки"><span>Справка</span></a></li><li id="n-sitesupport" class="mw-list-item"><a href="//donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_ru.wikipedia.org&amp;uselang=ru" title="Поддержите нас"><span>Пожертвовать</span></a></li></ul>
+		
+	</div>
+</nav>
+<nav id="p-tb" class="mw-portlet mw-portlet-tb vector-menu vector-menu-portal portal" aria-labelledby="p-tb-label" role="navigation" 
+	 >
+	<h3 id="p-tb-label" aria-label="" class="vector-menu-heading">
+		
+		<span>Инструменты</span>
+	</h3>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%A1%D1%81%D1%8B%D0%BB%D0%BA%D0%B8_%D1%81%D1%8E%D0%B4%D0%B0/Ls" title="Список всех страниц, ссылающихся на данную [j]" accesskey="j"><span>Ссылки сюда</span></a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%A1%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5_%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B8/Ls" rel="nofollow" title="Последние изменения в страницах, на которые ссылается эта страница [k]" accesskey="k"><span>Связанные правки</span></a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%A1%D0%BF%D0%B5%D1%86%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D1%8B" title="Список служебных страниц [q]" accesskey="q"><span>Служебные страницы</span></a></li><li id="t-permalink" class="mw-list-item"><a href="/w/index.php?title=Ls&amp;oldid=105602520" title="Постоянная ссылка на эту версию страницы"><span>Постоянная ссылка</span></a></li><li id="t-info" class="mw-list-item"><a href="/w/index.php?title=Ls&amp;action=info" title="Подробнее об этой странице"><span>Сведения о странице</span></a></li><li id="t-cite" class="mw-list-item"><a href="/w/index.php?title=%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%A6%D0%B8%D1%82%D0%B0%D1%82%D0%B0&amp;page=Ls&amp;id=105602520&amp;wpFormIdentifier=titleform" title="Информация о том, как цитировать эту страницу"><span>Цитировать страницу</span></a></li><li id="t-wikibase" class="mw-list-item"><a href="https://www.wikidata.org/wiki/Special:EntityPage/Q283503" title="Ссылка на связанный элемент репозитория данных [g]" accesskey="g"><span>Элемент Викиданных</span></a></li></ul>
+		
+	</div>
+</nav>
+<nav id="p-coll-print_export" class="mw-portlet mw-portlet-coll-print_export vector-menu vector-menu-portal portal" aria-labelledby="p-coll-print_export-label" role="navigation" 
+	 >
+	<h3 id="p-coll-print_export-label" aria-label="" class="vector-menu-heading">
+		
+		<span>Печать/экспорт</span>
+	</h3>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="coll-create_a_book" class="mw-list-item"><a href="/w/index.php?title=%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%9A%D0%BE%D0%BB%D0%BB%D0%B5%D0%BA%D1%86%D0%B8%D1%8F_%D0%BA%D0%BD%D0%B8%D0%B3&amp;bookcmd=book_creator&amp;referer=Ls"><span>Создать книгу</span></a></li><li id="coll-download-as-rl" class="mw-list-item"><a href="/w/index.php?title=%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:DownloadAsPdf&amp;page=Ls&amp;action=show-download-screen"><span>Скачать как PDF</span></a></li><li id="t-print" class="mw-list-item"><a href="/w/index.php?title=Ls&amp;printable=yes" title="Версия этой страницы для печати [p]" accesskey="p"><span>Версия для печати</span></a></li></ul>
+		
+	</div>
+</nav>
+
+	<nav id="p-lang" class="mw-portlet mw-portlet-lang vector-menu vector-menu-portal portal" aria-labelledby="p-lang-label" role="navigation" 
+	 >
+	<h3 id="p-lang-label" aria-label="" class="vector-menu-heading">
+		
+		<span>На других языках</span>
+	</h3>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li class="interlanguage-link interwiki-ar mw-list-item"><a href="https://ar.wikipedia.org/wiki/%D8%A5%D9%84_%D8%A5%D8%B3" title="إل إس — арабский" lang="ar" hreflang="ar" class="interlanguage-link-target"><span>العربية</span></a></li><li class="interlanguage-link interwiki-be mw-list-item"><a href="https://be.wikipedia.org/wiki/Ls" title="Ls — белорусский" lang="be" hreflang="be" class="interlanguage-link-target"><span>Беларуская</span></a></li><li class="interlanguage-link interwiki-ca mw-list-item"><a href="https://ca.wikipedia.org/wiki/Ls_(Unix)" title="Ls (Unix) — каталанский" lang="ca" hreflang="ca" class="interlanguage-link-target"><span>Català</span></a></li><li class="interlanguage-link interwiki-cs mw-list-item"><a href="https://cs.wikipedia.org/wiki/Ls_(Unix)" title="Ls (Unix) — чешский" lang="cs" hreflang="cs" class="interlanguage-link-target"><span>Čeština</span></a></li><li class="interlanguage-link interwiki-de mw-list-item"><a href="https://de.wikipedia.org/wiki/Ls_(Unix)" title="Ls (Unix) — немецкий" lang="de" hreflang="de" class="interlanguage-link-target"><span>Deutsch</span></a></li><li class="interlanguage-link interwiki-en mw-list-item"><a href="https://en.wikipedia.org/wiki/Ls" title="Ls — английский" lang="en" hreflang="en" class="interlanguage-link-target"><span>English</span></a></li><li class="interlanguage-link interwiki-es mw-list-item"><a href="https://es.wikipedia.org/wiki/Ls" title="Ls — испанский" lang="es" hreflang="es" class="interlanguage-link-target"><span>Español</span></a></li><li class="interlanguage-link interwiki-eu mw-list-item"><a href="https://eu.wikipedia.org/wiki/Ls" title="Ls — баскский" lang="eu" hreflang="eu" class="interlanguage-link-target"><span>Euskara</span></a></li><li class="interlanguage-link interwiki-fa mw-list-item"><a href="https://fa.wikipedia.org/wiki/Ls" title="Ls — персидский" lang="fa" hreflang="fa" class="interlanguage-link-target"><span>فارسی</span></a></li><li class="interlanguage-link interwiki-fr mw-list-item"><a href="https://fr.wikipedia.org/wiki/Ls" title="Ls — французский" lang="fr" hreflang="fr" class="interlanguage-link-target"><span>Français</span></a></li><li class="interlanguage-link interwiki-he mw-list-item"><a href="https://he.wikipedia.org/wiki/Ls" title="Ls — иврит" lang="he" hreflang="he" class="interlanguage-link-target"><span>עברית</span></a></li><li class="interlanguage-link interwiki-hr mw-list-item"><a href="https://hr.wikipedia.org/wiki/Ls" title="Ls — хорватский" lang="hr" hreflang="hr" class="interlanguage-link-target"><span>Hrvatski</span></a></li><li class="interlanguage-link interwiki-hu mw-list-item"><a href="https://hu.wikipedia.org/wiki/Ls" title="Ls — венгерский" lang="hu" hreflang="hu" class="interlanguage-link-target"><span>Magyar</span></a></li><li class="interlanguage-link interwiki-id mw-list-item"><a href="https://id.wikipedia.org/wiki/Ls" title="Ls — индонезийский" lang="id" hreflang="id" class="interlanguage-link-target"><span>Bahasa Indonesia</span></a></li><li class="interlanguage-link interwiki-it mw-list-item"><a href="https://it.wikipedia.org/wiki/Ls_(Unix)" title="Ls (Unix) — итальянский" lang="it" hreflang="it" class="interlanguage-link-target"><span>Italiano</span></a></li><li class="interlanguage-link interwiki-ja mw-list-item"><a href="https://ja.wikipedia.org/wiki/Ls_(UNIX)" title="Ls (UNIX) — японский" lang="ja" hreflang="ja" class="interlanguage-link-target"><span>日本語</span></a></li><li class="interlanguage-link interwiki-ka mw-list-item"><a href="https://ka.wikipedia.org/wiki/Ls" title="Ls — грузинский" lang="ka" hreflang="ka" class="interlanguage-link-target"><span>ქართული</span></a></li><li class="interlanguage-link interwiki-ko mw-list-item"><a href="https://ko.wikipedia.org/wiki/Ls_(%EC%9C%A0%EB%8B%89%EC%8A%A4)" title="Ls (유닉스) — корейский" lang="ko" hreflang="ko" class="interlanguage-link-target"><span>한국어</span></a></li><li class="interlanguage-link interwiki-lmo mw-list-item"><a href="https://lmo.wikipedia.org/wiki/Ls" title="Ls — Lombard" lang="lmo" hreflang="lmo" class="interlanguage-link-target"><span>Lombard</span></a></li><li class="interlanguage-link interwiki-ms mw-list-item"><a href="https://ms.wikipedia.org/wiki/Ls" title="Ls — малайский" lang="ms" hreflang="ms" class="interlanguage-link-target"><span>Bahasa Melayu</span></a></li><li class="interlanguage-link interwiki-nl mw-list-item"><a href="https://nl.wikipedia.org/wiki/Ls_(Unix)" title="Ls (Unix) — нидерландский" lang="nl" hreflang="nl" class="interlanguage-link-target"><span>Nederlands</span></a></li><li class="interlanguage-link interwiki-pl mw-list-item"><a href="https://pl.wikipedia.org/wiki/Ls_(Unix)" title="Ls (Unix) — польский" lang="pl" hreflang="pl" class="interlanguage-link-target"><span>Polski</span></a></li><li class="interlanguage-link interwiki-pt mw-list-item"><a href="https://pt.wikipedia.org/wiki/Ls" title="Ls — португальский" lang="pt" hreflang="pt" class="interlanguage-link-target"><span>Português</span></a></li><li class="interlanguage-link interwiki-ro mw-list-item"><a href="https://ro.wikipedia.org/wiki/Ls" title="Ls — румынский" lang="ro" hreflang="ro" class="interlanguage-link-target"><span>Română</span></a></li><li class="interlanguage-link interwiki-sv mw-list-item"><a href="https://sv.wikipedia.org/wiki/Ls" title="Ls — шведский" lang="sv" hreflang="sv" class="interlanguage-link-target"><span>Svenska</span></a></li><li class="interlanguage-link interwiki-uk mw-list-item"><a href="https://uk.wikipedia.org/wiki/Ls" title="Ls — украинский" lang="uk" hreflang="uk" class="interlanguage-link-target"><span>Українська</span></a></li><li class="interlanguage-link interwiki-vi mw-list-item"><a href="https://vi.wikipedia.org/wiki/Ls" title="Ls — вьетнамский" lang="vi" hreflang="vi" class="interlanguage-link-target"><span>Tiếng Việt</span></a></li><li class="interlanguage-link interwiki-zh mw-list-item"><a href="https://zh.wikipedia.org/wiki/Ls" title="Ls — китайский" lang="zh" hreflang="zh" class="interlanguage-link-target"><span>中文</span></a></li></ul>
+		<div class="after-portlet after-portlet-lang"><span class="wb-langlinks-edit wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Special:EntityPage/Q283503#sitelinks-wikipedia" title="Править межъязыковые ссылки" class="wbc-editpage">Править ссылки</a></span></div>
+	</div>
+</nav>
+
+</div>
+
+</div>
+<footer id="footer" class="mw-footer" role="contentinfo" >
+	<ul id="footer-info">
+	<li id="footer-info-lastmod"> Эта страница в последний раз была отредактирована 10 марта 2020 в 18:25.</li>
+	<li id="footer-info-copyright">Текст доступен по <a rel="license" href="//ru.wikipedia.org/wiki/Википедия:Текст_лицензии_Creative_Commons_Attribution-ShareAlike_3.0_Unported">лицензии Creative Commons Attribution-ShareAlike</a><a rel="license" href="//creativecommons.org/licenses/by-sa/3.0/" style="display:none;"></a>; в отдельных случаях могут действовать дополнительные условия.
+<span class="noprint">Подробнее см. <a href="//foundation.wikimedia.org/wiki/Terms_of_Use/ru">Условия использования</a>.</span><br>
+Wikipedia® — зарегистрированный товарный знак некоммерческой организации <a href="//wikimediafoundation.org">Wikimedia Foundation, Inc.</a></li>
+</ul>
+
+	<ul id="footer-places">
+	<li id="footer-places-privacy"><a href="https://meta.wikimedia.org/wiki/Privacy_policy/ru" class="extiw" title="m:Privacy policy/ru">Политика конфиденциальности</a></li>
+	<li id="footer-places-about"><a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5" title="Википедия:Описание">Описание Википедии</a></li>
+	<li id="footer-places-disclaimer"><a href="/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%9E%D1%82%D0%BA%D0%B0%D0%B7_%D0%BE%D1%82_%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8" title="Википедия:Отказ от ответственности">Отказ от ответственности</a></li>
+	<li id="footer-places-contact"><a href="//ru.wikipedia.org/wiki/Википедия:Контакты">Свяжитесь с нами</a></li>
+	<li id="footer-places-mobileview"><a href="//ru.m.wikipedia.org/w/index.php?title=Ls&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Мобильная версия</a></li>
+	<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Разработчики</a></li>
+	<li id="footer-places-statslink"><a href="https://stats.wikimedia.org/#/ru.wikipedia.org">Статистика</a></li>
+	<li id="footer-places-cookiestatement"><a href="https://foundation.wikimedia.org/wiki/Cookie_statement">Заявление о куки</a></li>
+</ul>
+
+	<ul id="footer-icons" class="noprint">
+	<li id="footer-copyrightico"><a href="https://wikimediafoundation.org/"><img src="/static/images/footer/wikimedia-button.png" srcset="/static/images/footer/wikimedia-button-1.5x.png 1.5x, /static/images/footer/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation" loading="lazy" /></a></li>
+	<li id="footer-poweredbyico"><a href="https://www.mediawiki.org/"><img src="/static/images/footer/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/footer/poweredby_mediawiki_132x47.png 1.5x, /static/images/footer/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a></li>
+</ul>
+
+</footer>
+
+
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.339","walltime":"0.727","ppvisitednodes":{"value":806,"limit":1000000},"postexpandincludesize":{"value":69215,"limit":2097152},"templateargumentsize":{"value":545,"limit":2097152},"expansiondepth":{"value":21,"limit":40},"expensivefunctioncount":{"value":10,"limit":500},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":1834,"limit":5000000},"entityaccesscount":{"value":1,"limit":400},"timingprofile":["100.00%  634.775      1 -total"," 81.56%  517.746      1 Шаблон:Нет_ссылок"," 64.95%  412.259      1 Шаблон:Сортировка:_статьи_без_источников"," 41.14%  261.121      1 Шаблон:Сортировка:_по_типам"," 23.30%  147.887      1 Шаблон:Сортировка:_по_странам"," 21.70%  137.763      3 Шаблон:Навигационная_таблица"," 13.16%   83.507      1 Шаблон:Команды_Unix"," 11.15%   70.796     10 Шаблон:РМЗСОВД"," 10.01%   63.557      1 Шаблон:Ambox","  8.28%   52.539     10 Шаблон:Wikidata"]},"scribunto":{"limitreport-timeusage":{"value":"0.136","limit":"10.000"},"limitreport-memusage":{"value":4161760,"limit":52428800}},"cachereport":{"origin":"mw1392","timestamp":"20211103202838","ttl":1814400,"transientcontent":false}}});});</script>
+<script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"Article","name":"Ls","url":"https:\/\/ru.wikipedia.org\/wiki\/Ls","sameAs":"http:\/\/www.wikidata.org\/entity\/Q283503","mainEntity":"http:\/\/www.wikidata.org\/entity\/Q283503","author":{"@type":"Organization","name":"Contributors to Wikimedia projects"},"publisher":{"@type":"Organization","name":"\u0424\u043e\u043d\u0434 \u0412\u0438\u043a\u0438\u043c\u0435\u0434\u0438\u0430","logo":{"@type":"ImageObject","url":"https:\/\/www.wikimedia.org\/static\/images\/wmf-hor-googpub.png"}},"datePublished":"2005-02-09T02:21:07Z","dateModified":"2020-03-10T18:25:43Z"}</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":132,"wgHostname":"mw1405"});});</script>
+</body></html>

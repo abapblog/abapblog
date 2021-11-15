@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>abap stack | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/abap-stack/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:02:51 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Быстрое получение позиции в стеке</title>
+		<link>https://abap-blog.ru/osnovy-abap/udobnoe-poluchenie-pozicii-v-steke/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/udobnoe-poluchenie-pozicii-v-steke/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 02 Aug 2012 14:57:55 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[abap stack]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=903</guid>
+
+					<description><![CDATA[<p>Иногда при разработке расширений или использовании отладочных скриптов, возникает необходимость в получении определенного уровня в стеке вызовов. В основном для этого используется FM SYSTEM_CALLSTACK, но как правило интересует не весь стек, а лишь определенный его уровень (обычно вызывающая программа или процедура), для получения данных стека относительно уровня можно воспользоваться классом: CL_RECA_SYSTEM_CALLSTACK и его статическим методом &#8212; GET_CURRENT_SOURCE_POS. [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/udobnoe-poluchenie-pozicii-v-steke/">Быстрое получение позиции в стеке</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Иногда при разработке расширений или использовании отладочных скриптов, возникает необходимость в получении определенного уровня в стеке вызовов. В основном для этого используется FM <strong>SYSTEM_CALLSTACK</strong>, но как правило интересует не весь стек, а лишь определенный его уровень (обычно вызывающая программа или процедура), для получения данных стека относительно уровня можно воспользоваться классом: <strong>CL_RECA_SYSTEM_CALLSTACK</strong> и его статическим методом &#8212; <strong>GET_CURRENT_SOURCE_POS</strong>.</p>
+<p>Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zte_system_stack.
+
+DATA:
+  lv_progname   TYPE STRING,
+  lv_eventname  TYPE STRING,
+  lv_eventtype  TYPE STRING,
+  lv_line_num   TYPE I,
+  lv_symsg1     TYPE symsgv,
+  lv_symsg2     TYPE symsgv.
+
+START-OF-SELECTION.
+
+PERFORM get_stack.
+
+FORM get_stack.
+
+  cl_reca_system_callstack=&gt;get_current_source_pos(
+  EXPORTING
+    id_ignore_levels  = 1 " Поднимаемся на 1 уровень вверх (start-of-selection)
+  IMPORTING
+    ed_progname       = lv_progname     " Имя программы
+    ed_eventtype      = lv_eventtype    " Тип события
+    ed_eventname      = lv_eventname    " Имя события
+    ed_lineno         = lv_line_num     " Номер строки в исходном коде
+    ed_formatted_var1 = lv_symsg1       " Сообщение из sy-msgvx
+    ed_formatted_var2 = lv_symsg1
+).
+
+  BREAK-POINT.
+ENDFORM.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/udobnoe-poluchenie-pozicii-v-steke/">Быстрое получение позиции в стеке</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/udobnoe-poluchenie-pozicii-v-steke/feed/</wfw:commentRss>
+			<slash:comments>5</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

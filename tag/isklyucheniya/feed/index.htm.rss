@@ -1,0 +1,700 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>исключения | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/isklyucheniya/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:05:42 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Обработка особых ситуаций в ABAP</title>
+		<link>https://abap-blog.ru/osnovy-abap/obrabotka-osobyx-situacij-v-abap/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/obrabotka-osobyx-situacij-v-abap/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 10 Aug 2013 17:07:59 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[exceptions]]></category>
+		<category><![CDATA[исключения]]></category>
+		<category><![CDATA[исключительные ситуации]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1560</guid>
+
+					<description><![CDATA[<p>Когда мы создаем какой-либо многократно используемый компонент, например функциональный модуль или метод в классе, мы сталкиваемся с необходимостью обработки непредвиденных ситуаций (какой-либо входной параметр, оказался не заполненным или доступ к файлу не был получен и т.п.), т.е. тех ситуаций, после которых программа не может выполняться далее стандартным образом, либо требуется дополнительная обработка. В приведенной статье [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/obrabotka-osobyx-situacij-v-abap/">Обработка особых ситуаций в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/images.jpg"><img loading="lazy" class="size-full wp-image-1590 alignleft" style="margin: 10px;" src="http://abap-blog.ru/wp-content/uploads/2013/08/images.jpg" alt="images" width="259" height="194" /></a>Когда мы создаем какой-либо многократно используемый компонент, например функциональный модуль или метод в классе, мы сталкиваемся с необходимостью обработки непредвиденных ситуаций (какой-либо входной параметр, оказался не заполненным или доступ к файлу не был получен и т.п.), т.е. тех ситуаций, после которых программа не может выполняться далее стандартным образом, либо требуется дополнительная обработка.</p>
+<p>В приведенной статье рассматриваются способы вызова и обработки данных ситуаций, называемых исключениями.</p>
+<p><span id="more-1560"></span></p>
+<p>В ABAP есть два основных способа работы с исключениями, классический способ заключается в вызове особых ситуаций описанных в ФМ или методе на отдельной закладке:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/1.png"><img loading="lazy" class="alignnone size-full wp-image-1561" src="http://abap-blog.ru/wp-content/uploads/2013/08/1.png" alt="1" width="629" height="173" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/1.png 629w, https://abap-blog.ru/wp-content/uploads/2013/08/1-300x82.png 300w" sizes="(max-width: 629px) 100vw, 629px" /></a></p>
+<p>Классический способ может использоваться и в классах:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/2.png"><img loading="lazy" class="alignnone size-full wp-image-1562" src="http://abap-blog.ru/wp-content/uploads/2013/08/2.png" alt="2" width="545" height="243" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/2.png 545w, https://abap-blog.ru/wp-content/uploads/2013/08/2-300x133.png 300w" sizes="(max-width: 545px) 100vw, 545px" /></a></p>
+<p>Новый способ основывается на ООП, где в качестве исключений используются классы (обратите внимание, что установлена галочка – классы исключений):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/3.png"><img loading="lazy" class="alignnone size-full wp-image-1563" src="http://abap-blog.ru/wp-content/uploads/2013/08/3.png" alt="3" width="532" height="227" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/3.png 532w, https://abap-blog.ru/wp-content/uploads/2013/08/3-300x128.png 300w" sizes="(max-width: 532px) 100vw, 532px" /></a><br />
+<script src="http://pagead2.googlesyndication.com/pagead/show_ads.js">// <![CDATA[ // ]]&gt;</script></p>
+<p>Хочется отметить, что новый способ был введен с версии SAP Web AS 6.10 и при создании новых функциональных модулей или методов рекомендуется использовать именно его. В данной статье не рассматриваются системные исключения и их обработка до введения классов исключений.</p>
+<p>В RFC модулях в настоящее время используется классический способ обработки исключений. Не допускается одновременно использовать классический и основанный на классах, способы обработки исключений (в интерфейсе методов, процедур, функций).</p>
+<h2>Классический способ обработки исключений</h2>
+<p>При вызове исключения, системное поле sy-subrc будет заполнено номером, под которым исключение было обозначено при вызове ФМ, метода или процедуры:</p><pre class="urvanov-syntax-highlighter-plain-tag">CALL FUNCTION ...
+...
+EXCEPTIONS
+  Ошибка1 = 1
+  Ошибка2 = 2.</pre><p>Как правило, исключения вызываются с текстом сообщения, данный текст может быть описан статически – при вызове исключения оператором MESSAGE, либо динамически – путём получения текста из описания ФМ.</p>
+<p>Так же исключение может быть вызвано без какого-либо текста (оператором RAISE ИмяИсключения), но данный способ лучше не использовать, т.к. вызов исключения должен как-то себя расшифровывать и говорить о том, что собственно произошло.</p>
+<p>Напишем небольшой ФМ, рассчитывающий сумму двух чисел, оба параметра помечены как необязательные, если первый параметр не будет задан при вызове ФМ, система выдаст исключение – no_num_1.</p><pre class="urvanov-syntax-highlighter-plain-tag">FUNCTION ZTEST_EXC.
+*"----------------------------------------------------------------------
+*"*"Локальный интерфейс:
+*"  IMPORTING
+*"     REFERENCE(I_NUM_1) TYPE  I OPTIONAL
+*"     REFERENCE(I_NUM_2) TYPE  I OPTIONAL
+*"  EXPORTING
+*"     REFERENCE(E_SUMM) TYPE  I
+*"  EXCEPTIONS
+*"      NO_NUM_1
+*"----------------------------------------------------------------------
+
+  IF i_num_1 IS NOT SUPPLIED.
+    MESSAGE e398(00) WITH 'Число 1 не указано, расчёт невозможен' RAISING no_num_1.
+  ENDIF.
+
+  E_SUMM = i_num_1 + i_num_2.
+
+ENDFUNCTION.</pre><p>И программа для его вызова:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  gv_num_2 TYPE i VALUE 10,
+  gv_summ  TYPE i.
+
+CALL FUNCTION 'ZTEST_EXC'
+  EXPORTING
+    i_num_2  = gv_num_2    " Число 2
+  IMPORTING
+    e_summ   = gv_summ     " Сумма
+  EXCEPTIONS
+    no_num_1 = 1
+    others   = 2.
+
+IF sy-subrc &lt;&gt; 0.
+ MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+            WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+ENDIF.
+
+WRITE gv_summ.</pre><p>При запуске программы произойдет вызов исключения, т.к. был использован тип сообщения «Е», программа завершит свое выполнение после показа сообщения:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/4.png"><img loading="lazy" class="alignnone size-full wp-image-1564" src="http://abap-blog.ru/wp-content/uploads/2013/08/4.png" alt="4" width="361" height="33" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/4.png 361w, https://abap-blog.ru/wp-content/uploads/2013/08/4-300x27.png 300w" sizes="(max-width: 361px) 100vw, 361px" /></a></p>
+<p>Замечу, что это вовсе не означает, что при вызове ФМ или метода и обработке исключения необходимо завершать работу программы, вы можете свободно продолжить её выполнение и далее, добавив например, сообщение об ошибке в лог программы, а не на вывод как в примере.</p>
+<p>Ключевое слово <b>OTHERS</b> используется для того чтобы поймать исключения не описанные в ФМ или явно неуказанные, при вызове ФМ.</p>
+<p>Пример вызова неописанного исключения:</p><pre class="urvanov-syntax-highlighter-plain-tag">FUNCTION ztest_exc.
+*"----------------------------------------------------------------------
+*"*"Локальный интерфейс:
+*"  IMPORTING
+*"     REFERENCE(I_NUM_1) TYPE  I OPTIONAL
+*"     REFERENCE(I_NUM_2) TYPE  I OPTIONAL
+*"  EXPORTING
+*"     REFERENCE(E_SUMM) TYPE  I
+*"  EXCEPTIONS
+*"      NO_NUM_1
+*"----------------------------------------------------------------------
+
+  IF i_num_1 IS NOT SUPPLIED.
+    MESSAGE e398(00) WITH 'Число 1 не указано, расчёт невозможен' RAISING no_num_2.
+  ENDIF.
+
+  E_SUMM = i_num_1 + i_num_2.
+
+ENDFUNCTION.</pre><p>В данном примере вызывается неописанное в интерфейсе ФМ исключение – no_num_2, которое будет благополучно поймано с помощью ключевого слова OTHERS (системное поле sy-subrc примет значение равное 2).</p>
+<p>Кроме того, можно не обрабатывать большой список всех возможных исключений описанных в ФМ, тогда в случае если такое исключение будет вызвано поле sy-subrc примет значение, указанное в OTHERS.</p>
+<p>В ФМ, могут быть добавлены новые исключения и в случае, когда при вызове ФМ они не обработаны и не указано слово OTHERS программа упадет в дамп с ошибкой времени выполнения &#8212; <b>RAISE_EXCEPTION</b>. Отсюда вывод, ключевое слово OTHERS подставляем всегда, при вызове ФМ (метода или процедуры), когда мы точно не уверены в неизменности компонента.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/5.png"><img loading="lazy" class="alignnone size-full wp-image-1565" src="http://abap-blog.ru/wp-content/uploads/2013/08/5.png" alt="5" width="531" height="253" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/5.png 531w, https://abap-blog.ru/wp-content/uploads/2013/08/5-300x142.png 300w" sizes="(max-width: 531px) 100vw, 531px" /></a></p>
+<p>&nbsp;</p>
+<p>При вызове исключения в процедурах (perform…) из ФМ, система пытается найти и вызвать исключение в первом ФМ из стека вызовов, если исключение не найдено, вызывается так же, как и неопределенное исключение в ФМ.</p>
+<p>Как уже было упомянуто выше, есть возможность получать текст непосредственно из описания особой ситуации:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/6.png"><img loading="lazy" class="alignnone size-full wp-image-1566" src="http://abap-blog.ru/wp-content/uploads/2013/08/6.png" alt="6" width="575" height="131" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/6.png 575w, https://abap-blog.ru/wp-content/uploads/2013/08/6-300x68.png 300w" sizes="(max-width: 575px) 100vw, 575px" /></a></p>
+<p>ФМ будет выглядеть следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">FUNCTION ztest_exc.
+*"----------------------------------------------------------------------
+*"*"Локальный интерфейс:
+*"  IMPORTING
+*"     REFERENCE(I_NUM_1) TYPE  I OPTIONAL
+*"     REFERENCE(I_NUM_2) TYPE  I OPTIONAL
+*"  EXPORTING
+*"     REFERENCE(E_SUMM) TYPE  I
+*"  EXCEPTIONS
+*"      NO_NUM_1
+*"----------------------------------------------------------------------
+
+  DATA:
+    lv_fun TYPE funct-funcname,
+    lv_exc TYPE funct-parameter,
+    lv_txt TYPE swotlq-shorttext.
+
+  lv_fun = 'ZTEST_EXC'.
+  lv_exc = 'NO_NUM_1'.
+
+  CALL FUNCTION 'SWO_TEXT_FUNCTION_EXCEPTION'
+    EXPORTING
+      language  = sy-langu
+      function  = lv_fun
+      exception = lv_exc
+    IMPORTING
+      shorttext = lv_txt.
+
+  IF i_num_1 IS NOT SUPPLIED.
+    MESSAGE e398(00) WITH lv_txt RAISING no_num_1.
+  ENDIF.
+
+  e_summ = i_num_1 + i_num_2.
+
+ENDFUNCTION.</pre><p>Результат: <a href="http://abap-blog.ru/wp-content/uploads/2013/08/7.png"><img loading="lazy" class="alignnone size-full wp-image-1567" src="http://abap-blog.ru/wp-content/uploads/2013/08/7.png" alt="7" width="170" height="17" /></a></p>
+<p>Иногда особые ситуации используются не как исключения, а как параметры показывающие обработку ФМ и его результат, возвращаемый в поле sy-subrc, хотя лучше бы пренебречь подобным стилем:</p><pre class="urvanov-syntax-highlighter-plain-tag">FUNCTION ZMORE_THEN_10.
+*"----------------------------------------------------------------------
+*"*"Локальный интерфейс:
+*"  IMPORTING
+*"     REFERENCE(I_VAL) TYPE  I
+*"  EXCEPTIONS
+*"      MORE_10
+*"      LESS_10
+*"      EQUAL_10
+*"----------------------------------------------------------------------
+
+  IF i_val = 10.
+    RAISE equal_10.
+  ELSEIF i_val &gt; 10.
+    RAISE more_10.
+  ELSE.
+    RAISE less_10.
+  ENDIF.
+
+ENDFUNCTION.</pre><p>Программа:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  gv_val TYPE i VALUE 10.
+
+CALL FUNCTION 'ZMORE_THEN_10'
+  EXPORTING
+    i_val    = gv_val
+  EXCEPTIONS
+    more_10  = 1
+    less_10  = 2
+    equal_10 = 3.
+
+CASE sy-subrc.
+  WHEN 1.
+    WRITE 'More 10'.
+  WHEN 2.
+    WRITE 'Less 10'.
+  WHEN 3.
+    WRITE 'Equal</pre><p>Результат:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/8.png"><img loading="lazy" class="alignnone size-full wp-image-1568" src="http://abap-blog.ru/wp-content/uploads/2013/08/8.png" alt="8" width="235" height="123" /></a></p>
+<p>Сообщения, вызываемые в ФМ или методах, оператором MESSAGE, без дополнения RAISING, либо сообщения вызываемые системой (например, при обработке экранов), могут быть обработаны программой с использованием дополнения: <b>error_message</b> = n_error, указываемого так же после ключевого слова <b>EXCEPTIONS</b>.</p>
+<p>При обработке сообщений:</p>
+<ul>
+<li>Сообщения с типом I, W, S не обрабатываются, но записываются в журнал обработки фонового выполнения, если происходит обработка в фоне.</li>
+<li>Сообщения с типом E или A могут быть обработаны, при этом в поле sy-subrc будет записано значение n_error. При вызове сообщения с типом А, происходит вызов ROLLBACK WORK (см. описание оператора MESSAGE).</li>
+<li>Сообщение с типом X не обрабатывается, программа завершается с дампом.</li>
+</ul>
+<p>Пример ФМ:</p><pre class="urvanov-syntax-highlighter-plain-tag">FUNCTION ztest_exc.
+*"----------------------------------------------------------------------
+*"*"Локальный интерфейс:
+*"  IMPORTING
+*"     REFERENCE(I_NUM_1) TYPE  I OPTIONAL
+*"     REFERENCE(I_NUM_2) TYPE  I OPTIONAL
+*"  EXPORTING
+*"     REFERENCE(E_SUMM) TYPE  I
+*"  EXCEPTIONS
+*"      NO_NUM_1
+*"----------------------------------------------------------------------
+
+  IF i_num_1 IS NOT SUPPLIED.
+    MESSAGE e398(00) WITH 'Число 1 не указано, расчёт невозможен'.
+  ENDIF.
+
+  E_SUMM = i_num_1 + i_num_2.
+
+ENDFUNCTION.</pre><p>Программа:</p><pre class="urvanov-syntax-highlighter-plain-tag">PROGRAM test_exceptions.
+
+DATA:
+  gv_val TYPE i VALUE 10,
+  gv_summ TYPE i.
+
+CALL FUNCTION 'ZTEST_EXC'
+  EXPORTING
+    i_num_2  = gv_val    " Число 2
+  IMPORTING
+    e_summ   = gv_summ    " Сумма
+  EXCEPTIONS
+    error_message = 1
+    others   = 2.
+
+IF sy-subrc = 1.
+  WRITE 'ФМ вызвал MESSAGE с типом E,A'.
+ENDIF.</pre><p>Результат:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/9.png"><img loading="lazy" class="alignnone size-full wp-image-1569" src="http://abap-blog.ru/wp-content/uploads/2013/08/9.png" alt="9" width="299" height="80" /></a></p>
+<p>Обработка исключения классическим способом может быть выполнена динамически, с помощью ключевого слова EXCEPTION-TABLE. Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: line     TYPE c LENGTH 80,
+      text_tab LIKE STANDARD TABLE OF line,
+      filename TYPE string,
+       filetype TYPE c LENGTH 10,
+      fleng    TYPE i.
+
+DATA: func TYPE string,
+      ptab TYPE abap_func_parmbind_tab,
+      ptab_line TYPE abap_func_parmbind,
+      etab TYPE abap_func_excpbind_tab,
+      etab_line TYPE abap_func_excpbind.
+
+func = 'GUI_DOWNLOAD'.
+filename = 'c:\temp\text.txt'.
+filetype = 'ASC'.
+
+ptab_line-name = 'FILENAME'.
+ptab_line-kind = abap_func_exporting.
+GET REFERENCE OF filename INTO ptab_line-value.
+INSERT ptab_line INTO TABLE ptab.
+
+ptab_line-name = 'FILETYPE'.
+ptab_line-kind = abap_func_exporting.
+GET REFERENCE OF filetype INTO ptab_line-value.
+INSERT ptab_line INTO TABLE ptab.
+
+ptab_line-name = 'DATA_TAB'.
+ptab_line-kind = abap_func_tables.
+GET REFERENCE OF text_tab INTO ptab_line-value.
+INSERT ptab_line INTO TABLE ptab.
+
+ptab_line-name = 'FILELENGTH'.
+ptab_line-kind = abap_func_importing.
+GET REFERENCE OF fleng INTO ptab_line-value.
+INSERT ptab_line INTO TABLE ptab.
+
+...
+
+etab_line-name = 'OTHERS'.
+etab_line-value = 10.
+INSERT etab_line INTO TABLE etab.
+
+CALL FUNCTION func
+  PARAMETER-TABLE
+  ptab
+  EXCEPTION-TABLE
+  etab.
+
+CASE sy-subrc.
+  WHEN 1.
+    ...
+    ...
+ENDCASE.</pre><p></p>
+<h2>Обработка исключений, основанная на классах</h2>
+<p>Как понятно из названия, под исключениями в данном случае понимаются объекты специальных классов исключений. Вызов такого исключения может быть выполнен либо в программе с помощью оператора RAISE EXCEPTION, либо системой (например, при делении на ноль будет вызвано предопределённое исключение CX_SY_ZERODIVIDE, <a href="http://help.sap.com/abapdocu_740/en/abenabap_exception_classes.htm">список</a> таких исключений), либо через дополнение <b>THROW</b> в условных выражениях (с версии ABAP 7.4).</p>
+<p>Во всех случаях инициируется создание объекта указанного класса (если указано дополнение INTO в CATCH), в атрибутах которого содержится информация о возникшей исключительной ситуации, доступ к ним, как правило, осуществляется через методы этого класса.</p>
+<p>Классы особых ситуаций могут быть определены как локально, так и глобально через построитель классов – транзакция SE24, диалог создания:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/10.png"><img loading="lazy" class="alignnone size-full wp-image-1570" src="http://abap-blog.ru/wp-content/uploads/2013/08/10.png" alt="10" width="350" height="362" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/10.png 350w, https://abap-blog.ru/wp-content/uploads/2013/08/10-290x300.png 290w" sizes="(max-width: 350px) 100vw, 350px" /></a></p>
+<p>В данном случае галочка «с классом сообщений» означает использование в качестве текста сообщения из класса сообщений транзакция <b>SE91</b> (будет рассмотрено ниже). По умолчанию текст сообщения создается в текстах класса:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/11.png"><img loading="lazy" class="alignnone size-full wp-image-1571" src="http://abap-blog.ru/wp-content/uploads/2013/08/11.png" alt="11" width="504" height="180" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/11.png 504w, https://abap-blog.ru/wp-content/uploads/2013/08/11-300x107.png 300w" sizes="(max-width: 504px) 100vw, 504px" /></a></p>
+<h3>Категории исключений</h3>
+<p>Все классы особых ситуаций являются производными одного из классов: CX_NO_CHECK, CX_DYNAMIC_CHECK или CX_STATIC_CHECK, которые сами являются производными общего суперкласса CX_ROOT.</p>
+<ul>
+<li><b>CX_</b><b>STATIC_</b><b>CHECK</b> – как правило, исключения которые вызываются в процедуре (ФМ или методе), должны быть либо обработаны в ней, либо процедура должна иметь соответствующий интерфейс, чтобы вызывающий её код мог обработать эту ситуацию. Если исключение определено как потомок этого класса, оно должно быть явно указано в интерфейсе метода (ФМ или формы) в котором происходит его вызов. Данная категория используется тогда, когда в коде явно ожидается передача обработки особой ситуации на уровень выше того места где оно было вызвано. Если при статической проверке, система не увидит обработки в блоке TRY..CATCH..ENDTRY подобного исключения система выдаст предупреждение: <a href="http://abap-blog.ru/wp-content/uploads/2013/08/12.png"><img loading="lazy" class="alignnone size-full wp-image-1572" src="http://abap-blog.ru/wp-content/uploads/2013/08/12.png" alt="12" width="593" height="83" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/12.png 593w, https://abap-blog.ru/wp-content/uploads/2013/08/12-300x41.png 300w" sizes="(max-width: 593px) 100vw, 593px" /></a></li>
+<li><b>CX_</b><b>DYNAMIC_</b><b>CHECK</b> – при проверке кода, компилятор не будет делать предупреждений об отсутствии обработки исключений их этой категории, в случае вызова исключения его обработка будет проверена динамически и если обработчик не будет найден программа упадет в дамп. Обычно данная категория используется тогда, когда исключение может быть обработано внутри самого метода, без передачи обработки выше по стеку. Примером такой категории может являться исключение вызываемое при делении на ноль, передавать его выше по стеку и указывать в интерфейсе метода вовсе не обязательно, т.к. мы можем его обработать внутри самого метода. Однако, если мы хотим передать обработку данного исключения, необходимо указать его в интерфейсе метода.</li>
+<li><b>CX_</b><b>NO_</b><b>CHECK</b> – аналогичны предыдущему типу, но данную категорию нельзя объявлять в интерфейсах, при этом классы исключений наследуемые от этого класса, неявно все же передаются в интерфейс и выше по стеку вызовов. Данную категорию следует использовать для исключительных ситуаций, которые могут произойти в любое время и не могут быть обработаны непосредственно в коде метода. Кроме того, можно использовать в случаях когда одна и та же исключительная ситуация может возникнуть во множествах методов, а объявлять её в интерфейсах каждого из методов не имеет смысла, т.к. это усложнит код. В итоге подобные исключения могут пройти всю цепочку вызовов методов (т.к. неявно передаются в интерфейс) и быть обработаны на уровне программы.</li>
+</ul>
+<p>На исключения накладываются следующие ограничения:</p>
+<ul>
+<li>Исключение не может быть объявлено в интерфейсе статического конструктора:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/13.png"><img loading="lazy" class="alignnone size-full wp-image-1573" src="http://abap-blog.ru/wp-content/uploads/2013/08/13.png" alt="13" width="586" height="78" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/13.png 586w, https://abap-blog.ru/wp-content/uploads/2013/08/13-300x39.png 300w" sizes="(max-width: 586px) 100vw, 586px" /></a></p>
+<ul>
+<li>Исключение не может быть объявлено в интерфейсе обработчика событий. При этом если в коде обработчика произошел вызов исключения, и он не был обработан, система вызовет исключение &#8212; CX_SY_NO_HANDLER, которое может быть обработано в вызывающем его коде.</li>
+<li>При вызове программ через SUMBIT или CALL TRANSACTION, исключение, возникающее в вызываемой программе, не может быть передано в вызывающую программу.</li>
+</ul>
+<p>Небольшой пример с локальным классом исключения:</p><pre class="urvanov-syntax-highlighter-plain-tag">PROGRAM test_exceptions.
+
+CLASS lcx_no_num DEFINITION INHERITING FROM cx_static_check.
+ENDCLASS.
+
+CLASS lcl_test_exceptions DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      do_summ IMPORTING
+                i_num_1 TYPE i OPTIONAL
+                i_num_2 TYPE i OPTIONAL
+              RETURNING value(re_summ) TYPE int1
+              RAISING lcx_no_num.
+ENDCLASS.
+
+CLASS lcl_test_exceptions IMPLEMENTATION.
+  METHOD do_summ.
+    IF i_num_1 IS NOT SUPPLIED OR i_num_2 IS NOT SUPPLIED.
+      " Данное исключение присутствует в интерфейсе, может быть обработано вне метода
+      RAISE EXCEPTION TYPE lcx_no_num.
+    ENDIF.
+
+    TRY.
+      re_summ = i_num_1 + i_num_2.
+      " Ошибка с дин. проверкой, при её обработке обнулим результат
+    CATCH CX_SY_CONVERSION_OVERFLOW.
+      re_summ = 0.
+    ENDTRY.
+  ENDMETHOD.
+ENDCLASS.
+
+DATA:
+  go_test_exceptions TYPE REF TO lcl_test_exceptions,
+  gv_summ TYPE int1.
+
+START-OF-SELECTION.
+  CREATE OBJECT go_test_exceptions.
+
+  TRY.
+    go_test_exceptions-&gt;do_summ(
+      EXPORTING
+        i_num_2 = 1
+      RECEIVING
+        re_summ = gv_summ
+    ).
+  CATCH lcx_no_num.
+    WRITE 'Не заполнены все параметры'.
+  ENDTRY.
+
+  go_test_exceptions-&gt;do_summ(
+    EXPORTING
+      i_num_1 = 999
+      i_num_2 = 1
+    RECEIVING
+      re_summ = gv_summ
+  ).
+
+  WRITE: / 'Результат cуммы 999 и 1:', gv_summ.</pre><p>В стандартной системе SAP имена всех классов особых ситуаций начинаются с CX_ , пользовательские исключения рекомендуется называть, начиная с ZCX или lcx для локальных классов исключений.</p>
+<p>Класс <b>CX_ROOT</b> предоставляет некоторые предопределенные методы, которые наследуются всеми классами особых ситуаций:</p>
+<ul>
+<li>Метод <b>GET_SOURCE_POSITION</b> возвращает имя главной программы и (если связаны) имена включенных программ (инклудов) и номер строки исходного кода, в которой возникла особая ситуация.</li>
+<li>Метод <b>GET_TEXT</b> возвращает текст особой ситуации в форме строки.</li>
+<li>Метод <b>GET_</b><b>LONGTEXT</b> возвращает подробный текст текста особой ситуации в форме строки.</li>
+</ul>
+<h3>Тексты исключений</h3>
+<p>Каждому классу можно присвоить несколько текстов. Присвоенные им идентификаторы создаются построителем классов как константы в атрибутах класса. Тексты сохраняются в репозитарии текстов (OTR). Константы идентификаторы, представленные в шестнадцатеричном формате, уникальны на уровне системы:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/14.png"><img loading="lazy" class="alignnone size-large wp-image-1574" src="http://abap-blog.ru/wp-content/uploads/2013/08/14-1024x257.png" alt="14" width="550" height="138" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/14-1024x257.png 1024w, https://abap-blog.ru/wp-content/uploads/2013/08/14-300x75.png 300w, https://abap-blog.ru/wp-content/uploads/2013/08/14.png 1097w" sizes="(max-width: 550px) 100vw, 550px" /></a></p>
+<p>Доступ к хранилищу текстов можно получить через транзакцию <b>SOTR_EDIT</b>.</p>
+<p>В текстах можно определить параметры, их необходимо обозначить в амперсандах. В качестве примера, можно рассмотреть текст из класса исключения &#8212; <b>CX_SY_FILE_IO</b>:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/15.png"><img loading="lazy" class="alignnone size-full wp-image-1575" src="http://abap-blog.ru/wp-content/uploads/2013/08/15.png" alt="15" width="849" height="221" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/15.png 849w, https://abap-blog.ru/wp-content/uploads/2013/08/15-300x78.png 300w" sizes="(max-width: 849px) 100vw, 849px" /></a></p>
+<p>В параметры будут переданы (при вызове метода GET_TEXT) соответствующие им атрибуты класса:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/16.png"><img loading="lazy" class="alignnone size-full wp-image-1576" src="http://abap-blog.ru/wp-content/uploads/2013/08/16.png" alt="16" width="892" height="412" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/16.png 892w, https://abap-blog.ru/wp-content/uploads/2013/08/16-300x138.png 300w" sizes="(max-width: 892px) 100vw, 892px" /></a></p>
+<p>Заполняются эти атрибуты в конструкторе при вызове исключения:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lr_ex  TYPE REF TO cx_sy_file_io, 
+      lv_msg TYPE string. 
+TRY. 
+   ... 
+   RAISE EXCPETION TYPE cx_sy_file_io 
+      EXPORTING 
+         textid = cx_sy_file_io=&gt;read_error 
+         filename = 'somefile.txt'. 
+CATCH cx_sy_file_io INTO lr_ex. 
+   lv_msg = lr_ex-&gt;get_text( ). 
+   MESSAGE lv_msg TYPE 'I'. 
+ENDTRY.</pre><p>Так же в конструкторе можно указать, какой текст должен использоваться при инициировании особой ситуации, передав одну из определенных констант в параметр импорта <b>TEXTID</b>. Не рекомендуется использовать подобную методику, т.к. это может запутать код, однако как было уже показано выше SAP сам это использует (read_error, write_error в <b>CX_SY_FILE_IO</b>). Инкапсуляция текстов в классах сообщений и их саморасшифровываемость является одним из преимуществ над классическими исключениями.</p>
+<p>Конструктор, который генерируется автоматически в <b>SE24</b>, для нового созданного исключения (ZCX_NO_NUM1), выглядит так:</p><pre class="urvanov-syntax-highlighter-plain-tag">CALL METHOD SUPER-&gt;CONSTRUCTOR
+EXPORTING
+TEXTID = TEXTID
+PREVIOUS = PREVIOUS
+.
+ IF textid IS INITIAL.
+   me-&gt;textid = ZCX_NO_NUM1 .
+ ENDIF.</pre><p></p>
+<h3>Блок обработки исключений</h3>
+<p>Особая ситуация может быть обработана, только если оператор, который может инициировать ее, заключен в блок TRY-ENDTRY. Затем особая ситуация обрабатывается с помощью оператора CATCH в блоке TRY-ENDTRY.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/17.png"><img loading="lazy" class="alignnone size-full wp-image-1577" src="http://abap-blog.ru/wp-content/uploads/2013/08/17.png" alt="17" width="657" height="430" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/17.png 657w, https://abap-blog.ru/wp-content/uploads/2013/08/17-300x196.png 300w" sizes="(max-width: 657px) 100vw, 657px" /></a></p>
+<p>Блок TRY содержит набор операторов, обрабатывающих особые ситуации. Если в блоке TRY появляется особая ситуация, система осуществляет поиск первого оператора CATCH в том же блоке TRY-ENDTRY, а затем последовательно снаружи во всех заключающих блоках TRY-ENDTRY, обрабатывающих особую ситуацию. Если оператор находится, система осуществляет переход к его обработчику. Если обработчик найти не удается, но блок TRY-ENDTRY находится в процедуре, система осуществляет попытку передачи особой ситуации вызывающей программе.</p>
+<p>Блок CATCH содержит обработчик особых ситуаций, исполняемый при возникновении указанной особой ситуации в связанном блоке TRY. Для оператора CATCH можно указать любое количество классов особых ситуаций. Таким образом, определяется обработчик особых ситуаций для всех этих классов особых ситуаций и их подклассов.</p>
+<p>Блоки TRY-ENDTRY могут иметь вложенность любой глубины. Поэтому блок TRY, блоки CATCH и блок CLEANUP в целом сами могут содержать полные блоки TRY-ENDTRY.</p>
+<p>При возникновении особой ситуации система осуществляет поиск по перечисленным обработчикам особых ситуаций в указанном порядке. Затем она исполняет первый обработчик особых ситуаций, оператор CATCH которого содержит подходящий класс особой ситуации или один из ее суперклассов.</p>
+<p>Если ошибка не будет обработана и не будет передана вызывающей программе, система выдаст дамп с ошибкой времени выполнения &#8212; <b>UNCAUGHT_EXCEPTION</b>, в том случае когда не обрабатывается исключительная ситуация, связанная с ошибкой времени выполнения, система выдает дамп с ошибкой времени выполнения (например, CX_SY_CONVERSION_CODEPAGE &#8212; CONVT_CODEPAGE):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/18.png"><img loading="lazy" class="alignnone size-full wp-image-1578" src="http://abap-blog.ru/wp-content/uploads/2013/08/18.png" alt="18" width="362" height="136" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/18.png 362w, https://abap-blog.ru/wp-content/uploads/2013/08/18-300x112.png 300w" sizes="(max-width: 362px) 100vw, 362px" /></a></p>
+<p>Просмотр ошибки в транзакции ST22:<a href="http://abap-blog.ru/wp-content/uploads/2013/08/Безымянный.png"><img loading="lazy" class="alignnone size-full wp-image-1607" src="http://abap-blog.ru/wp-content/uploads/2013/08/Безымянный.png" alt="Безымянный" width="806" height="187" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/Безымянный.png 806w, https://abap-blog.ru/wp-content/uploads/2013/08/Безымянный-300x69.png 300w" sizes="(max-width: 806px) 100vw, 806px" /></a></p>
+<h3>Распространение особых ситуаций</h3>
+<p>Если возникает особая ситуация (наследуемая от CX_DYNAMIC_CHECK, CX_STATIC_CHECK), она автоматически распространяется на все уровни стека вызовов, до тех пор, пока она не будет обработана или пока не встретится такой интерфейс, в котором она (либо её предки) будет отсутствовать.</p>
+<p>Следующий пример демонстрирует распространение особой ситуации на несколько методов:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcx_calc_error DEFINITION INHERITING FROM cx_static_check.
+ENDCLASS.
+
+CLASS lcx_summ_error DEFINITION INHERITING FROM lcx_calc_error.
+ENDCLASS.
+
+CLASS lcl_test_exc DEFINITION.
+  PUBLIC SECTION.
+  METHODS:
+    do_calc
+      RAISING
+        lcx_calc_error,
+    do_summ
+      RAISING
+        lcx_summ_error.
+ENDCLASS.
+
+CLASS lcl_test_exc IMPLEMENTATION.
+
+  METHOD do_calc.
+    do_summ( ).
+  ENDMETHOD.
+
+  METHOD do_summ.
+    RAISE EXCEPTION TYPE lcx_summ_error.
+  ENDMETHOD.
+
+ENDCLASS.
+
+DATA:
+  go_test TYPE REF TO lcl_test_exc.
+
+START-OF-SELECTION.
+  CREATE OBJECT go_test.
+  TRY.
+    go_test-&gt;do_calc( ).
+  CATCH lcx_calc_error.
+    WRITE 'Catched'.
+  ENDTRY.</pre><p>Обратите внимание на метод do_calc, в нем описана особая ситуация от которой наследуется lcx_summ_error, соответственно прерывание продолжится на следующий уровень и будет обработано в блоке TRY..CATCH..ENDTRY. При правильно выстроенной архитектуре наследования исключительных ситуаций, прозрачность кода заметно повышается.</p>
+<p>В случае, когда используется исключение, наследуемое от CX_NO_CHECK, описание его в интерфейсе метода может быть опущено, т.к. оно инициируется неявным способом системой:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcx_calc_error DEFINITION INHERITING FROM cx_no_check.
+ENDCLASS.
+
+CLASS lcx_summ_error DEFINITION INHERITING FROM lcx_calc_error.
+ENDCLASS.
+
+CLASS lcl_test_exc DEFINITION.
+  PUBLIC SECTION.
+  METHODS:
+    do_calc,
+    do_summ.
+ENDCLASS.
+
+CLASS lcl_test_exc IMPLEMENTATION.
+
+  METHOD do_calc.
+    do_summ( ).
+  ENDMETHOD.
+
+  METHOD do_summ.
+    RAISE EXCEPTION TYPE lcx_summ_error.
+  ENDMETHOD.
+
+ENDCLASS.
+
+DATA:
+  go_test TYPE REF TO lcl_test_exc.
+
+START-OF-SELECTION.
+  CREATE OBJECT go_test.
+  TRY.
+    go_test-&gt;do_calc( ).
+  CATCH lcx_calc_error.
+    WRITE 'Catched'.
+  ENDTRY.</pre><p></p>
+<h3>Очистка после вызовов исключений</h3>
+<p>Блок CLEANUP исполняется, когда выполнен выход из блока TRY-ENDTRY, так как система не смогла найти обработчик для исключения в определенном блоке TRY-ENDTRY, но особая ситуация обрабатывается в окружающем блоке TRY-ENDTRY или передается вызывающей программе.</p>
+<p>Данный блок обычно применяется для освобождения занятых ресурсов: очистке ссылочных переменных, закрытие локаторов или наборов данных (datasets) и т.п. Допустим, Вы записываете некоторые данные в файл на сервере приложений. Внутри блока TRY Вы открываете набор данных (dataset) и начинаете запись в него. Однако в некоторый момент, случается особая ситуация, которую вы не обработали и блок TRY прерывает свою работу, при этом, не выполнив закрытие набора данных. Для того чтобы избежать подобной ситуации воспользуемся ключевым словом CLEANUP:</p><pre class="urvanov-syntax-highlighter-plain-tag">TRY. 
+*  Открываем файл на запись: 
+   OPEN DATASET lv_file FOR OUTPUT IN TEXT MODE 
+                        ENCODING DEFAULT. 
+
+*  Переносим данные в файл: 
+   LOOP AT lt_extract INTO ls_record. 
+      PERFORM sub_format_record CHANGING ls_record. 
+      TRANSFER ls_record TO lv_file. 
+   ENDLOOP. 
+
+*  Закрываем файл: 
+   CLOSE DATASET lv_file. 
+CATCH cx_sy_file_access_error INTO lr_file_ex. 
+*  Ошибки ввода, вывода (датасет в таком случае не открыт)... 
+CATCH lcx_format_error INTO lr_format_ex. 
+*  Обрабатываем свою внутренюю ошибку при форматировании...
+*  при этом необходимо закрыть набор данных
+   CLOSE DATASET lv_file. 
+CLEANUP. 
+*  В случае если возникнет не обработанное исключение закроем набор данных: 
+   CLOSE DATASET lv_file. 
+ENDTRY.</pre><p>В случае возобновляемых оператором RESUME исключений, блок CLEANUP не выполняется. Блок CLEANUP, как и блок CATCH позволяет получить ссылочную переменную на вызванное исключение, с помощью дополнения [INTO oref].</p>
+<h3>Передача исключений по цепочке</h3>
+<p>Необходимо понимать, что особая ситуация может передаваться через любое количество иерархий вызова перед финальной обработкой. Одна особая ситуация может инициировать вторую и т. д. Каждая инстанция должна оставаться действительной, независимо то того, был ли связанный блок CATCH уже обработан или нет. Поэтому необходимо убедиться, что предыдущая инстанция особой ситуации доступна с помощью, по крайней мере, одной ссылки. Атрибут общей инстанции PREVIOUS, наследуемый всеми классами особых состояний из CX_ROOT, обеспечивает удобный для этого способ.</p>
+<p>Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcx_very_big DEFINITION INHERITING FROM cx_static_check.
+ENDCLASS.
+
+CLASS lcx_calc_error DEFINITION INHERITING FROM cx_static_check.
+ENDCLASS.
+
+CLASS lcl_test_exceptions DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      do_calc IMPORTING
+                i_num_1 TYPE i OPTIONAL
+                i_num_2 TYPE i OPTIONAL
+              RETURNING VALUE(re_result) TYPE i
+              RAISING lcx_calc_error.
+  PRIVATE SECTION.
+    METHODS:
+      do_summ IMPORTING
+                i_num_1 TYPE i OPTIONAL
+                i_num_2 TYPE i OPTIONAL
+              RETURNING value(re_summ) TYPE i
+              RAISING lcx_very_big.
+ENDCLASS.
+
+CLASS lcl_test_exceptions IMPLEMENTATION.
+  METHOD do_summ.
+    re_summ = i_num_1 + i_num_2.
+    IF re_summ &gt; 100.
+      RAISE EXCEPTION TYPE lcx_very_big.
+    ENDIF.
+  ENDMETHOD.
+
+  METHOD do_calc.
+    DATA:
+      lo_very_big TYPE REF TO lcx_very_big.
+
+    TRY.
+      me-&gt;do_summ(
+        EXPORTING
+          i_num_1 = i_num_1
+          i_num_2 = i_num_2
+        RECEIVING
+          re_summ = re_result
+      ).
+    CATCH lcx_very_big INTO lo_very_big.
+      RAISE EXCEPTION TYPE lcx_calc_error EXPORTING previous = lo_very_big.
+    ENDTRY.
+  ENDMETHOD.
+ENDCLASS.
+
+DATA:
+  go_test_exceptions TYPE REF TO lcl_test_exceptions,
+  gv_result TYPE i,
+  go_calc_error TYPE REF TO lcx_calc_error,
+  go_big_error  TYPE REF TO lcx_very_big.
+
+START-OF-SELECTION.
+  CREATE OBJECT go_test_exceptions.
+
+  TRY.
+    go_test_exceptions-&gt;do_calc(
+      EXPORTING
+        i_num_1   = 1000
+        i_num_2   = 500
+      RECEIVING
+        re_result = gv_result
+    ).
+  CATCH lcx_calc_error INTO go_calc_error.
+    go_big_error ?= go_calc_error-&gt;previous.
+  ENDTRY.</pre><p>Таким образом, пройдя по цепочке, мы всегда можем определить, в каком конкретном месте было инициировано исключение и что из-за этого произошло. Иногда при построении какой-либо ООП модели, удобно собрать всю цепочку из ошибок в каком-нибудь одном виде и выдать в качестве универсального исключения, в качестве примера рекомендую посмотреть <a href="http://scn.sap.com/community/abap/application-development/objects/blog/2010/01/07/abap-objects-custom-sap-erp-hcm-class-library--example-3--exceptions">этот</a> пример.</p>
+<h3>Возобновляемые исключения и повтор блока TRY</h3>
+<p>При срабатывании исключения, выполнение программы в текущем контексте завершается. Иногда необходимо не завершать выполнение текущего контекста, для этого были созданы так называемые возобновляемые исключения. Для того чтобы вызвать такое исключение, необходимо в операторе RAISE (или в THROW) указать что вызывается именно возобновляемое исключение, при этом для того чтобы воспользоваться оператором RESUME (который возвращает код обратно в то место где было вызвано исключение), необходимо у оператора CATCH указать дополнение BEFORE UNWIND (обозначает обработку возобновляемого исключения), иначе система вызовет исключение CX_SY_ILLEGAL_HANDLER. При возврате в контекст, из которого было вызвано исключение блок CLEANUP не вызывается. Если в указанном в CATCH блоке не будет вызван оператор RESUME, контекст будет удален при выходе из блока CATCH.</p>
+<p>Пример обработки возобновляемого исключения:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcx_no_num DEFINITION INHERITING FROM cx_static_check.
+ENDCLASS.
+
+CLASS lcx_less_zero DEFINITION INHERITING FROM cx_no_check.
+ENDCLASS.
+
+CLASS lcl_test_exceptions DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      do_summ IMPORTING
+                i_num_1 TYPE i OPTIONAL
+                i_num_2 TYPE i OPTIONAL
+              RETURNING value(re_summ) TYPE int1
+              RAISING RESUMABLE(lcx_no_num).
+ENDCLASS.
+
+CLASS lcl_test_exceptions IMPLEMENTATION.
+  METHOD do_summ.
+    IF i_num_1 IS NOT SUPPLIED OR i_num_2 IS NOT SUPPLIED.
+      " Данное исключение присутствует в интерфейсе, может быть обработано вне метода
+      RAISE RESUMABLE EXCEPTION TYPE lcx_no_num.
+    ENDIF.
+
+    TRY.
+      re_summ = i_num_1 + i_num_2.
+      " Динамическая ошибка, при её обработке обнулим результат
+    CATCH CX_SY_CONVERSION_OVERFLOW.
+      re_summ = 0.
+    ENDTRY.
+  ENDMETHOD.
+ENDCLASS.
+
+DATA:
+  go_test_exceptions TYPE REF TO lcl_test_exceptions,
+  gv_summ TYPE int1.
+
+START-OF-SELECTION.
+  CREATE OBJECT go_test_exceptions.
+
+  TRY.
+    go_test_exceptions-&gt;do_summ(
+      EXPORTING
+        i_num_2 = 1
+      RECEIVING
+        re_summ = gv_summ
+    ).
+  CATCH BEFORE UNWIND lcx_no_num.
+    RESUME.
+  ENDTRY.
+
+  WRITE: / 'Cумма без указания 1-го числа', gv_summ.
+
+  go_test_exceptions-&gt;do_summ(
+    EXPORTING
+      i_num_1 = 999
+      i_num_2 = 1
+    RECEIVING
+      re_summ = gv_summ
+  ).
+
+  WRITE: / 'Результат cуммы 999 и 1:', gv_summ.</pre><p>При обработке исключений так же есть возможность повтора блока TRY..CATCH, делается это с использованием оператора <b>RETRY</b>. Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: number1 TYPE i,
+            number2 TYPE i.
+
+DATA result  TYPE p DECIMALS 2.
+
+TRY.
+    result = number1 / number2.
+  CATCH cx_sy_zerodivide.
+    number1 = 0.
+    RETRY.
+ENDTRY.</pre><p>В данном случае если номер 2 будет равен нулю, система вызовет исключение, с помощью RETRY мы заново запустим блок TRY..CACTH, при этом уже исключение не возникнет, т.к. при делении нуля на ноль результатом будет ноль.</p>
+<h3>Отображение сообщений из классов сообщений в тексты исключений</h3>
+<p>Начиная с версии 6.40, появилась возможность связывать тексты исключительных сообщений с классами сообщений (транзакция <b>SE91</b>). Как уже упоминалось выше для этого необходимо в конструкторе класса, указать галочку класс сообщений. При этом вместо интерфейса IF_MESSAGE будет внедрен интерфейс IF_T100_MESSAGE (таблица T100 хранит в себе эти сообщения):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/19.png"><img loading="lazy" class="alignnone size-full wp-image-1580" src="http://abap-blog.ru/wp-content/uploads/2013/08/19.png" alt="19" width="638" height="327" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/19.png 638w, https://abap-blog.ru/wp-content/uploads/2013/08/19-300x153.png 300w" sizes="(max-width: 638px) 100vw, 638px" /></a></p>
+<p>При редактировании текста, необходимо будет привязать его к классу и номеру сообщения, при этом заполнить параметры, если это необходимо:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/20.png"><img loading="lazy" class="alignnone size-full wp-image-1581" src="http://abap-blog.ru/wp-content/uploads/2013/08/20.png" alt="20" width="860" height="482" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/20.png 860w, https://abap-blog.ru/wp-content/uploads/2013/08/20-300x168.png 300w" sizes="(max-width: 860px) 100vw, 860px" /></a></p>
+<p>Начиная с NW 2004, оператор MESSAGE позволяет напрямую обработку исключений, внедряющих интерфейс IF_T100_MESSAGE:</p><pre class="urvanov-syntax-highlighter-plain-tag">TRY. 
+   ... 
+CATCH cx_some_exception INTO lr_ex. 
+   MESSAGE lr_ex TYPE 'E'. 
+ENDTRY.</pre><p>&nbsp;</p>
+<h3>Локальный класс исключения в приватном методе глобального класса</h3>
+<p>Бывают ситуации, когда для какого-либо приватного метода необходимо реализовать исключение, которое может быть вызвано исключительно данным методом (классом).  Реализовать подобное можно, если создать локальный класс исключений:</p>
+<ul>
+<li>Перейти в локальные определения/внедрения:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/21.png"><img loading="lazy" class="alignnone size-full wp-image-1582" src="http://abap-blog.ru/wp-content/uploads/2013/08/21.png" alt="21" width="851" height="233" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/21.png 851w, https://abap-blog.ru/wp-content/uploads/2013/08/21-300x82.png 300w" sizes="(max-width: 851px) 100vw, 851px" /></a></p>
+<ul>
+<li>Создать класс исключения:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/22.png"><img loading="lazy" class="alignnone size-full wp-image-1583" src="http://abap-blog.ru/wp-content/uploads/2013/08/22.png" alt="22" width="531" height="70" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/22.png 531w, https://abap-blog.ru/wp-content/uploads/2013/08/22-300x39.png 300w" sizes="(max-width: 531px) 100vw, 531px" /></a></p>
+<ul>
+<li> Указать в методе имя локального класса исключения (обязательно в режиме редактирования исходного кода):</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/23.png"><img loading="lazy" class="alignnone size-full wp-image-1584" src="http://abap-blog.ru/wp-content/uploads/2013/08/23.png" alt="23" width="340" height="71" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/23.png 340w, https://abap-blog.ru/wp-content/uploads/2013/08/23-300x62.png 300w" sizes="(max-width: 340px) 100vw, 340px" /></a></p>
+<p>Результат:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/24.png"><img loading="lazy" class="alignnone size-full wp-image-1585" src="http://abap-blog.ru/wp-content/uploads/2013/08/24.png" alt="24" width="513" height="158" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/24.png 513w, https://abap-blog.ru/wp-content/uploads/2013/08/24-300x92.png 300w" sizes="(max-width: 513px) 100vw, 513px" /></a></p>
+<p>Если попробовать сделать тоже самое в режиме редактирования на основе формуляров, выскочит предупреждение о том, что такого класса не существует:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/25.png"><img loading="lazy" class="alignnone size-full wp-image-1586" src="http://abap-blog.ru/wp-content/uploads/2013/08/25.png" alt="25" width="336" height="172" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/25.png 336w, https://abap-blog.ru/wp-content/uploads/2013/08/25-300x153.png 300w" sizes="(max-width: 336px) 100vw, 336px" /></a></p>
+<p>&nbsp;</p>
+<p><strong>Более подробно об исключениях можно почитать в официальной документации:</strong></p>
+<p><a href="http://help.sap.com/abapdocu_740/en/abenabap_exceptions.htm">http://help.sap.com/abapdocu_740/en/abenabap_exceptions.htm</a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/obrabotka-osobyx-situacij-v-abap/">Обработка особых ситуаций в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/obrabotka-osobyx-situacij-v-abap/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

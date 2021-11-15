@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>cl_gui_textedit | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_gui_textedit/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:54:56 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Просмотр файла в шестнадцатеричном виде</title>
+		<link>https://abap-blog.ru/osnovy-abap/prosmotr-fajla-v-shestnadcaterichnom-vide/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/prosmotr-fajla-v-shestnadcaterichnom-vide/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Jan 2012 08:41:36 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[cl_gui_frontend_services]]></category>
+		<category><![CDATA[cl_gui_textedit]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=307</guid>
+
+					<description><![CDATA[<p>Ниже пример того как можно посмотреть шестнадцатеричное представление файла с помощью текстового редактора реализованного через класс cl_gui_textedit. Обратите внимание что в качестве контейнера для редактора служит экран выбора программы, а ссылку на него можно получить через статическую переменную screen0 класса cl_gui_container. [crayon-618a21f8f1891111321509/]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/prosmotr-fajla-v-shestnadcaterichnom-vide/">Просмотр файла в шестнадцатеричном виде</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Ниже пример того как можно посмотреть шестнадцатеричное представление файла с помощью текстового редактора реализованного через класс <strong>cl_gui_textedit.</strong> Обратите внимание что в качестве контейнера для редактора служит экран выбора программы, а ссылку на него можно получить через статическую переменную <strong>screen0</strong> класса <strong>cl_gui_container</strong>.<span id="more-307"></span></p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zhex_view.
+
+DATA: go_textedit TYPE REF TO cl_gui_textedit,
+      gt_exclude TYPE TABLE OF rsexfcode,
+      gs_exclude TYPE rsexfcode.
+
+PARAMETER: DUMMY(1).
+
+INITIALIZATION.
+  gs_exclude-fcode  = 'ONLI'.
+  APPEND gs_exclude TO gt_exclude.
+
+AT SELECTION-SCREEN OUTPUT.
+  PERFORM s1000_pbo.
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Form S1000_PBO
+*&amp;---------------------------------------------------------------------*
+FORM s1000_pbo.
+  IF go_textedit IS INITIAL.
+    DATA lt_filetable    TYPE filetable.
+    DATA ls_filetable    TYPE LINE OF filetable.
+    DATA l_rc           TYPE I.
+    DATA l_action       TYPE I.
+
+    CALL FUNCTION 'RS_SET_SELSCREEN_STATUS'
+      EXPORTING
+        p_status  = '%_00'
+        p_program = 'RSSYSTDB'
+      TABLES
+        p_exclude = gt_exclude.
+
+    CALL METHOD cl_gui_frontend_services=&gt;file_open_dialog
+      CHANGING
+        file_table              = lt_filetable
+        rc                      = l_rc
+        user_action             = l_action
+      EXCEPTIONS
+        file_open_dialog_failed = 1
+        cntl_error              = 2
+        error_no_gui            = 3
+        not_supported_by_gui    = 4
+        OTHERS                  = 5.
+
+    IF sy-subrc NE 0.
+      LEAVE PROGRAM.
+    ELSEIF l_action NE cl_gui_frontend_services=&gt;action_ok.
+      LEAVE PROGRAM.
+    ELSE.
+      READ TABLE lt_filetable INDEX 1 INTO ls_filetable.
+      ASSERT sy-subrc = 0.
+      DATA l_xstring TYPE XSTRING.
+      DATA l_string TYPE STRING.
+      DATA lt_textedit TYPE abaptxt255_tab.
+      PERFORM read_bin_file USING ls_filetable-filename CHANGING l_xstring.
+
+      l_string = l_xstring.
+      CALL FUNCTION 'SWA_STRING_TO_TABLE'
+        EXPORTING
+          character_string = l_string
+        IMPORTING
+          character_table  = lt_textedit[].
+      CREATE OBJECT go_textedit
+        EXPORTING
+          parent = cl_gui_container=&gt;screen0.
+      CALL METHOD go_textedit-&gt;set_wordwrap_behavior
+        EXPORTING
+          wordwrap_mode     = cl_gui_textedit=&gt;wordwrap_at_fixed_position
+          wordwrap_position = 120.
+      CALL METHOD go_textedit-&gt;set_text_as_stream
+        EXPORTING
+          text = lt_textedit.
+      CALL METHOD go_textedit-&gt;set_readonly_mode
+        EXPORTING
+          readonly_mode	= 1.
+    ENDIF.
+  ENDIF.
+  SET TITLEBAR 'TIT' OF PROGRAM 'SAPLDSYP' WITH 'File Hex Viewer'(001).
+ENDFORM.                                                    "s1000_pbo
+
+FORM read_bin_file
+      USING i_filename TYPE CLIKE
+      CHANGING e_file_xstring TYPE XSTRING.
+  DATA l_filename TYPE STRING.
+  DATA l_length TYPE I.
+  DATA lt_x255 TYPE TABLE OF x255.
+  l_filename = i_filename.
+  CALL METHOD cl_gui_frontend_services=&gt;gui_upload
+    EXPORTING
+      filename   = l_filename
+      filetype   = 'BIN'
+    IMPORTING
+      filelength = l_length
+    CHANGING
+      data_tab   = lt_x255
+    EXCEPTIONS
+      OTHERS     = 1.
+  IF sy-subrc = 0.
+    CALL METHOD cl_swf_utl_convert_xstring=&gt;table_to_xstring
+      EXPORTING
+        i_table  = lt_x255
+        i_size   = l_length
+      RECEIVING
+        r_stream = e_file_xstring
+      EXCEPTIONS
+        OTHERS   = 3.
+  ENDIF.
+ENDFORM.                    "read_bin_file</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/prosmotr-fajla-v-shestnadcaterichnom-vide/">Просмотр файла в шестнадцатеричном виде</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/prosmotr-fajla-v-shestnadcaterichnom-vide/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

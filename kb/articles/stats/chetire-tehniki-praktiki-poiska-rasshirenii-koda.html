@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><script>document.getElementsByTagName('html')[0].classList.add('js')</script>
+	<title>Сапёр / Статьи / База знаний / SAPLAND / SAPLand — Мир решений SAP</title>
+<meta name="keywords" content="Пакеты расширения, Enhancement packagesмодификации/расширения, Modifications/Enhancements, SAP Enhancement Package, Информационные технологии, IT, Basis, ABAP, SAP Консультант, Consultant" />
+<meta name="description" content="Данная статья посвящена одной из задач, возникающей у консультантов любого направления – поиск точек расширения в стандартной функциональности. В статье разбираются все стандартные технологии расширения стандартного кода, а также рассмотрены особенности поиска каждой из технологий." />
+		    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700,800&display=swap&subset=cyrillic"
+          rel="stylesheet">
+	<link rel="stylesheet" href="/build/attention-block/login-article.cb663f57.css" />
+<link rel="stylesheet" href="/build/attention-block/attention-blue.23524ae8.css" />
+<link rel="stylesheet" href="/build/login.c6183aa5.css" />
+<link rel="stylesheet" href="/build/main-menu.83fc82c5.css" />
+<link rel="stylesheet" href="/build/header.fc38405f.css" />
+<link rel="stylesheet" href="/build/breadcrumbs.ff1969dd.css" />
+<link rel="stylesheet" href="/build/short-info.94d9a3a3.css" />
+<link rel="stylesheet" href="/build/short-info/author-statistic.53b83cff.css" />
+<link rel="stylesheet" href="/build/hovered-info.ea33fb03.css" />
+<link rel="stylesheet" href="/build/article/layout.8f67d1fe.css" />
+<link rel="stylesheet" href="/build/article-page/block-title.82fbb182.css" />
+<link rel="stylesheet" href="/build/article-page/share.321c2ae2.css" />
+<link rel="stylesheet" href="/build/parent-comment.1ea1934d.css" />
+<link rel="stylesheet" href="/build/comment.67a31886.css" />
+<link rel="stylesheet" href="/build/article-page/comment-article.881f89af.css" />
+<link rel="stylesheet" href="/build/article-page/note-gray.d9a735de.css" />
+<link rel="stylesheet" href="/build/page-container.0347724b.css" />
+<link rel="stylesheet" href="/build/arrow-up.bfddcdb1.css" />
+<link rel="stylesheet" href="/build/footer.953024a7.css" />
+<link rel="stylesheet" href="/build/article-page.c568a741.css" />
+<link rel="stylesheet" href="/build/article-page/article-close.3d00c05a.css" />
+<link rel="stylesheet" href="/build/global.3974230d.css" />
+</head>
+<body>
+		
+			<header>
+	<div class="header-wrap container">
+		<div class="menu-icon"><img src="/build/images/icons/menu.svg" alt=""></div><div class="logo">
+				<a href="/publications">
+					<img src="/os/modules/material/images/logo.svg" alt="">
+				</a>
+			</div><nav class="burger-menu">
+				<ul>
+					<li><a href="/publications">Публикации</a></li>
+					<li><a href="/comments">Обсуждения</a></li>
+					<li><a href="/authors">Авторы</a></li>
+					<li><a href="/authors-columns">Колонки</a></li>
+				</ul>
+				<div class="loop"><img src="/build/images/icons/search.svg" alt=""></div>
+				<form action="/publications" method="get">
+					<div class="search"><input type="text" placeholder="Искать" name="filter[search][full-search-criterion][]"><button type="submit"><img src="/build/images/icons/search-bl.svg" alt=""></button></div>
+				</form>
+			</nav>
+<div class="person-wrap">
+	<a href="//sappro.sapland.ru/subscription" class="btn-subscribe">Подписка</a>
+			<a href="/login/" class="btn-reg">Войти</a>
+	</div>
+
+		<div class="login-wrap">
+	<div class="enter">
+		<form class="enter-box" name="login-form" method="post">
+			<input type="hidden" name="auth[csrf]" value="ijIO2jwGg1UYp79rxK3wZlSd2XxtAkjpwlBBf441TDE" />
+			<p>Добро пожаловать</p>
+			<div class="input-box">
+				<span>Адрес электронной почты</span>
+				<input type="text" placeholder="E-mail" name="auth[login]" required>
+				<span>Пароль</span>
+				<input type="password" placeholder="Password" name="auth[password]" required>
+			</div>
+			<div class="btn-box">
+				<button class="enter-btn" type="submit">Войти</button>
+				<a href="?auth[reset_password]">Забыли пароль?</a>
+			</div>
+		</form>
+	</div>
+	<div class="registration">
+		<p>Станьте участником SAPLAND и получите доступ к самым интересным публикациям SAPPRO</p>
+		<a  style="background-color: #ff9920;" href="//sapland.ru/register/">Зарегистрироваться</a>
+	</div>
+</div>
+	</div>
+	<div class="main-menu-wrap">
+	<div class="main-menu-box container">
+		<div class="logo-menu">
+			<a href="/">
+				<img src="/build/images/logo-menu.svg" alt="">
+			</a>
+			<p>Развитие в экосистеме SAP</p>
+		</div>
+		<div class="main-menu-list">
+			<div class="main-menu-item">
+			<img src="/build/images/icons/project.svg" alt="">
+			<span class="menu-click">О проекте</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="//sapland.ru/about">Концепция</a>
+					</li>
+									<li>
+						<a href="/policy">Политики</a>
+					</li>
+									<li>
+						<a href="/contacts/">Контакты</a>
+					</li>
+									<li>
+						<a href="//sapland.ru/authors/to-author">Авторам</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/SAPPRO.svg" alt="">
+			<span class="menu-click">Журнал SAPPRO</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/publications">Публикации</a>
+					</li>
+									<li>
+						<a href="/comments">Обсуждения</a>
+					</li>
+									<li>
+						<a href="/authors">Авторы</a>
+					</li>
+									<li>
+						<a href="/authors-columns">Колонки</a>
+					</li>
+									<li>
+						<a href="/compilations">Антологии</a>
+					</li>
+									<li>
+						<a href="/subscription">Подписка</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/education.svg" alt="">
+			<span class="menu-click">Учебный центр</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="//edu.sapland.ru/courses/">Курсы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/master-classes/">Мастер-классы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/webinars/?materials_filter%5Bmaterial__by-format%5D%5B%5D=935&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bfrom%5D=&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bto%5D=&filter%5Bsearch%5D%5Bfull-search-criterion%5D%5B%5D=">Вебинары</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/SAPPRO1.svg" alt="">
+			<span class="menu-click">Книги SAP Press</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/books/novelty/">Книги на английском</a>
+					</li>
+									<li>
+						<a href="/books/Knigi_na_russkom/">Книги на русском</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/lib.svg" alt="">
+			<span class="menu-click">Библиотека презентаций</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/event">Мероприятия</a>
+					</li>
+									<li>
+						<a href="/presentations/">Презентации</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/eco.svg" alt="">
+			<span class="menu-click">Экосистема SAP СНГ</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/p-events/news/">Новости</a>
+					</li>
+									<li>
+						<a href="/a-list">Анонсы</a>
+					</li>
+							</ul>
+		</div>
+	</div>
+
+		<div class="social-menu">
+			<ul>
+	<li><a target="_blank" href="#" style=" pointer-events: none;" ><img src="/build/images/icons/sn/telegram-plane.svg" alt=""></a></li><li><a target="_blank" href="https://www.facebook.com/pages/SAPLand/127114854020362"><img src="/build/images/icons/sn/facebook.svg" alt=""></a></li><li><a target="_blank" href="https://vk.com/club4419971"><img src="/build/images/icons/sn/vk.svg" alt=""></a></li><li><a target="_blank" href="https://twitter.com/SAPLand"><img src="/build/images/icons/sn/twitter.svg" alt=""></a></li><li><a target="_blank" href="https://www.linkedin.com/groups/6797279/"><img src="/build/images/icons/sn/linkedin-in.svg" alt=""></a></li></ul>
+		</div>
+		<div class="close"></div>
+	</div>
+</div>
+</header>
+			<div class="container breadcrumbs">
+						<span><a href="//sapland.ru">SAPLAND</a></span>
+								<span><a href="/">SAPPRO</a></span>
+								<span><a href="/publications">Публикации</a></span>
+								<span>Статья</span>
+			</div>
+
+	
+		<div class="container page article-closed "><div class="sidebar">
+			</div>
+	<div class="content">				
+<div class="block-title">
+	
+			<div class="article">
+		<div class="info">
+						<p class="cat">
+							</p>
+
+			<h1>Четыре техники-практики поиска расширений кода</h1><div class="bottom">
+				
+				
+
+
+
+								
+																			<div class="author">
+													<a href="/profile/19568/publications">Грибов Александр В.</a>
+												<div class="hovered-info">
+										<div class="avatar">
+		<img src="https://sappro.sapland.ru/images/cache/avatar64/userfiles/user/19568.png" alt="">
+	</div>
+<div class="information">
+			<h3 title="Грибов Александр В.">				<a href="/profile/19568/publications">Грибов Александр В.</a>
+			</h3>
+							<p>Инженер</p>
+	</div>
+
+			<div class="stat stat_author">
+											<span class="rating">572</span>
+									
+				<a href="/profile/19568/publications"
+				><span class="pubs">3</span></a>
+
+												
+				<span class="comments" >11</span>
+								</div>
+	<div class="rhombus"></div>
+
+		
+
+	
+							</div>
+
+					</div>
+
+																																
+				
+				
+				<p class="date">28 мая 2018</p>
+							</div>
+		</div>
+	</div>
+</div>
+
+	 
+	 
+
+	<div class="article-body">
+		<div class="note-wrap gray-note pd">
+			<p>Данная статья посвящена одной из задач, возникающей у консультантов любого направления – поиск точек расширения в стандартной функциональности. В статье разбираются все стандартные технологии расширения стандартного кода, а также рассмотрены особенности поиска каждой из технологий.</p>
+		</div>
+<h1 style="text-align:justify">Оглавление</h1>
+
+<p style="text-align:justify"><a href="#_Toc509223752">Аннотация</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223753">1. Завязка</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223754">2. Кратко о расширениях и модификациях</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223755">2.1. Дополнительные знания</a></p>
+
+<p style="text-align:justify"><a href="#_Toc5092237551">3. Техники поиска расширений кода</a></p>
+
+<p style="text-align:justify"><a href="#_Toc5092237552">3.1. Принципы оценки техник поиска. Оценочный лист</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223756">3.2. Техника 1. Отладчик</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223757">3.3. Техника 2. ST12 «Анализ производительности транзакции»</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223758">3.4. Техника 3. Software Layer-Aware Debugging (SLAD)</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223759">3.4.1. Работа с инструментом SLAD. Создание профиля отладки</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223760">3.4.2. Работа с отладчиком. Использование профиля отладки</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223761">3.4.3. Краткие итоги</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223762">3.5. Техника 4. ABAP Debugger Scripting (ADS)</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223763">3.5.1. Краткий перечень инструментария</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223764">3.5.2. Debugger-скрипт. Ловим простые события</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223765">3.5.3. Debugger-скрипт. Ловим непростые события</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223766">3.5.4. Debugger-скрипт.  Сборка событий в единый скрипт и упрощение логики</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223767">3.5.5. Результаты работы Debug-скрипта. Транзакция SAS</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223768">4. Фабула. Общие итоги</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223769">5. Послесловие</a></p>
+
+<p style="text-align:justify"><a href="#_Toc509223770">6. Ссылки</a></p>
+
+<h1 style="text-align:justify"><a name="_Toc509223752">Аннотация</a></h1>
+
+<p style="text-align:justify">Данная статья посвящена одной из задач, возникающей у консультантов любого направления – поиск точек расширения в стандартной функциональности. В статье разбираются все стандартные технологии расширения стандартного кода, а также рассмотрены особенности поиска каждой из технологий.</p>
+
+<p style="text-align:justify">Автор предлагает четыре способа поиска точек расширения. Каждое из решений оценивается по 9 параметрам, итоговые данные собраны в единую сравнительную таблицу. Кроме того, предложено авторское решение поиска, которое может быть использовано любым читателем.</p>
+
+<p style="text-align:justify">Статья будет полезна разработчикам и консультантам SAP. Для наиболее полного понимания информации желательно знакомство с технологиями расширения кода, а также с инструментами отладки (хотя и необязательно).</p>
+
+<h1 style="text-align:justify"><a name="_Toc509223753">1.Завязка</a></h1>
+
+<p style="text-align:justify">Пожалуй, каждый из консультантов и разработчиков сталкивался с необходимостью расширить или изменить функциональность стандартного кода. Найти необходимое и приемлемое место расширения – задача нетипичная и нелегкая, скорость поиска в немалой степени зависит от опытности консультанта: одних только технологий расширения у SAP насчитывается 7 видов.</p>
+
+<p style="text-align:justify">Или другая задача для консультанта: имеем некий бизнес-процесс, который ведёт себя неправильно. По мере рассмотрения проблемы подозрения падают на расширения стандартного кода. И снова для поиска места возникновения проблем в ход идут разные ухищрения, начинается работа с отладчиком…</p>
+
+<p style="text-align:justify">Ещё немного  «сгустим краски»: бизнес-процесс нестандартный, но построен на использовании стандартных BADI\BAPI; вызовы BAPI из одних областей пересекаются с вызовами BAPI других областей; документация, увы, не помощник. В помощь консультанту призывается сам Horst Keller - опытный разработчик, приносятся жертвоприношения всем богам, сыплются проклятия на головы причастных…</p>
+
+<p style="text-align:justify">Автоматизация данного процесса значительно облегчит работу консультанту и разработчику, сэкономит время, нервы, деньги. В статье рассматривается 4 возможных техники поиска, с использованием разных инструментов и разными возможностями, с разной степенью автоматизации.</p>
+
+<p style="text-align:justify">Портал SAPLAND ранее публиковал статьи на инструменты, описываемые в данном тексте. Хотелось бы избежать повторений, и потому в статье будут отсылки на ранние статьи, в которых некоторые вопросы будут раскрыты более подробно.</p>
+
+<h1 style="text-align:justify"><a name="_Toc509223754">2.Кратко о расширениях и модификациях</a></h1>
+
+<p style="text-align:justify">Компания SAP подробно раскрывает основные технологии расширения объектов системы и ABAP-кода в двух курсах: BC425 и BC427 (Disclaimer note: говоря в аннотации «все стандартные технологии расширения стандартного кода» автор имел в виду именно технологии, перечисленные в данных двух курсах). Кратко перечислим возможные способы расширения\изменения кода и способы их поиска, которые предлагает SAP.</p>
+
+<ol>
+	<li style="text-align:justify">Технология Customer-exit. Как вызывается Customer-exit: с помощью команды CALL CUSTOMER-FUNCTION. В рамках этой технологии также используется команда CALL CUSTOMER-SUBSCREEN, однако мне не приходилось увидеть использование оной и эта команда не рассматривается в дальнейшем.</li>
+	<li style="text-align:justify">Технология User-exit. Как вызывается User-Exit: с помощью вызова подпрограмм с именем типа USER_EXIT_*. Соответственно, и искать мы будет PERFORM USER_EXIT_*.</li>
+	<li style="text-align:justify">Технология Field-Exit, технология обработки полей ввода. Работает данная технология через вызов ФМ вида FIELD_EXIT_*; логично, что и искать его надо по имени.</li>
+	<li style="text-align:justify">Технология BTE (Business Transaction Events ). Данная технология имеет два типа функций: Publish&amp;Subscribe и Process. Соответственно, и способов поиска также два: вызов CALL FUNCTION OPEN_FI_PERFORM_* , вызов CALL FUNCTION OUTBOUND_CALL_* .</li>
+	<li style="text-align:justify">Teхнология Badi. Эта технология делится на два вида, условно назовём их «старые» (old) BADI и «новые» (new) BADI. Вызываются по-разному (а, значит, и искать их надо по-разному):
+	<ol style="list-style-type:lower-alpha">
+		<li>«Старые» BAdi вызываются опосредованно, через поиск нужного BAdi-расширения с помощью вызова метода CL_EXITHANDLER=&gt;GET_INSTANCE или CL_EXITHANDLER=&gt;GET_INSTANCE_FOR_SUBSCREENS.</li>
+		<li>Новые BAdi ищутся и вызываются с помощью команд GET BADI и CALL BADI соответственно.</li>
+	</ol>
+	</li>
+	<li style="text-align:justify">Технология Enhancements. Несмотря на то, что данная технология включает в себя несколько способов расширений (это и Enhancement-Point, и Enhancement—Spot, И Enhancement-Section, и неявные точки расширения) найти  такое расширение можно  по ключевому слову «ENHANCEMENT».</li>
+	<li style="text-align:justify">Технология расширения методов класса. Любой метод класса (кроме конструкторов) может быть расширен:</li>
+</ol>
+
+<ol>
+	<li style="text-align:justify">С помощью PreExit-расширения. Расширение вызывается перед выполнением метода.</li>
+	<li style="text-align:justify">С помощью PostExit-расширения. Расширение вызывается после выполнения метода.</li>
+	<li style="text-align:justify">С помощью Overwrite-Exit-расширения. Расширение вызывается вместо метода.</li>
+</ol>
+
+<p style="text-align:justify">Строго говоря, расширение создаётся как Enhancement, соответственно, и искать его можно по ключевому слову Enhancement.</p>
+
+<h1 style="text-align:justify"><a name="_Toc509223755">2.1.Дополнительные знания</a></h1>
+
+<p style="text-align:justify">Для упрощения задачи воспользуемся нижеперечисленными дополнительными знаниями о системе; эти знания существенно облегчат нам задачу:</p>
+
+<ol>
+	<li style="text-align:justify">Внутри каждого CALL CUSTOMER-FUNCTION происходит вызов ФМ вида EXIT_*.</li>
+	<li style="text-align:justify">Для технологии BTE помимо вызова ФМ OPEN_FI_PERFORM_* можно использовать поиск по ФМ BF_FUNCTIONS_FIND (он вызывается внутри ФМ OPEN_FI_PERFORM_*). Аналогично и для второго ФМ OUTBOUND_CALL_* - можно использовать поиск по ФМ PC_FUNCTION_FIND . Это правило соблюдается <strong><u>почти(!)</u></strong> всегда. В редких случаях эти «парные» ФМ вызываются по отдельности, друг за другом. Впрочем, цена ошибки невелика, исключение легко проверяется.</li>
+	<li style="text-align:justify">Любой Old BADI являются классом с именем CL_EX_*. Соответственно, вычислить запуск OLD BADI можно по маске имени класса.</li>
+	<li style="text-align:justify">В методе CL_EXITHANDLER=&gt;GET_INSTANCE имя BADI передаётся через входной параметр EXIT_NAME. Однако в некоторых случаях параметр EXIT_NAME не заполняется. В такой ситуации вызываемый BADI требуется искать опосредованно, через тип входного параметра INSTANCE; далее в статье будет разобран подобный случай.</li>
+	<li style="text-align:justify">Технология расширения методов класса обладает следующими закономерностями. При создании для класса Enhancement-расширения для такого класса создаётся локальный класс-«друг». Каждый расширяемый метод получает «друзей»-методов, имена которых имеют следующую закономерность:</li>
+</ol>
+
+<ul>
+	<li style="text-align:justify">имя PreExit-метода начинается с IPR_*;</li>
+	<li style="text-align:justify">имя PostExit-метода начинается с IPO_*;</li>
+	<li style="text-align:justify">имя Overwrite-Exit-метода начинается с IWO_*;</li>
+	<li style="text-align:justify">имя *Exit-метода оканчивается на «~имя_расширяемого_метода».</li>
+</ul>
+
+<h1 style="text-align:justify"><a name="_Toc5092237551">3.Техники поиска расширений кода</a></h1>
+
+<h1 style="text-align:justify"><a name="_Toc5092237552">3.1.Принципы оценки техник поиска. Оценочный лист</a></h1>
+
+<p style="text-align:justify">Для качественной оценки каждой из техник предлагается следующий перечень критериев:</p>
+
+<ol>
+	<li style="text-align:justify">Поиск Customer-Exit. Учитывается поиск CALL CUSTOMER-EXIT, но не учитывается CALL CUSTOMER-SUBSCREEN.</li>
+	<li style="text-align:justify">Поиск User-Exit.</li>
+	<li style="text-align:justify">Поиск Field-Exit.</li>
+	<li style="text-align:justify">Поиск BTE.</li>
+	<li style="text-align:justify">Поиск OLD BADI.</li>
+	<li style="text-align:justify">Поиск NEW BADI. Поиск OLD BADI\NEW BADI отличается, и потому BADI оценивается по двум разным критериям.</li>
+	<li style="text-align:justify">Поиск Enhancement. Немного забегая вперёд: ни одна из техник не показывает неявные точки расширения, которые не были реализованы; впрочем, это и не требуется. Реализованные неявные точки – успешно находятся.</li>
+	<li style="text-align:justify">Поиск Pre-, Post-, Overwrite-методов для расширения классов.</li>
+	<li style="text-align:justify">Возможность вывода найденных точек расширения единым списком. Часть техник способны на это, другие же могут показать только текущую найденную точку.</li>
+</ol>
+
+<p style="text-align:justify">Для удобства критерии собраны в таблицу<strong> (Таблица 1)</strong> в следующем виде:</p>
+
+<p style="text-align:justify"><img alt="" src="/files/articles/russ/10/gr-pic1-tabl1.jpg" style="height:275px; width:333px"></p>
+
+<p style="text-align:justify"><strong>Таблица 1. </strong>Табличный вид критериев поиска</p>
+
+<h1 style="text-align:justify"><a name="_Toc509223756">3.2.Техника 1. Отладчик</a></h1>
+
+<p style="text-align:justify">Самый первый, самый популярный способ – конечно, отладчик.</p>
+
+<p style="text-align:justify"><strong>Возможности. </strong>С помощью точек прерывания можно поймать вызов многих простых событий, например:</p>
+
+<ol>
+	<li style="text-align:justify">Поймать вызов команды CALL CUSTOMER-FUNCTION;</li>
+	<li style="text-align:justify">Поймать вызов команд CALL BADI, GET_BADI;</li>
+	<li style="text-align:justify">Поймать вызов команды ENHANCEMENT;</li>
+	<li style="text-align:justify">Поймать вызов методов CL_EXITHANDLER=&gt;GET_INSTANCE и =&gt; GET_INSTANCE_FOR_SUBSCREENS;</li>
+	<li style="text-align:justify">Поймать вызов ФМ, если известно его точное имя.</li>
+</ol>
+
+<p style="text-align:justify"><strong>Рис. 1</strong> наглядно иллюстрирует создание точек прерывания.</p>
+
+<p style="text-align:justify"><img src="/files/articles/russ/10/gr-pic1.jpg" style="height:281px; width:673px"></p>
+
+<p style="text-align:justify"><strong>Рис. 1</strong> Создание точки прерывания с помощью отладчика</p>
+
+<p style="text-align:justify">Думаю, что нет смысла давать подробное описание того, как работать с точками прерывания и точками наблюдения в отладчике. Если есть необходимость – в конце статьи в разделе «Ссылки» есть несколько замечательных статей, которые подробно раскрывают тему.</p>
+
+<p style="text-align:justify"><strong>Ограничения.</strong> Всё остальное, не перечисленное к «возможностях» – к сожалению, поймать нельзя. Отладчик не может работать с именами команд\ методов\ функций\ подпрограмм по маске.</p>
+
+<p style="text-align:justify"><strong>Краткий итог.</strong></p>
+
+<p style="text-align:justify">Результаты представлены в <strong>Таблица 2.</strong></p>
+
+<p style="text-align:justify"><strong><img alt="" src="/files/articles/russ/10/gr-pic1-tabl2.jpg" style="height:316px; width:333px"></strong></p>
+
+<p style="text-align:justify"><strong>Таблица 2. </strong>Результаты для инструмента "Отладчик"</p>
+
+<p style="text-align:justify">Отладчик – инструмент хорошо знакомый разработчикам;  к сожалению, охватывает не весь перечень возможностей.</p>
+
+<h1 style="text-align:justify"><a name="_Toc509223757">3.3.Техника 2. ST12 «Анализ производительности транзакции»</a></h1>
+
+<p style="text-align:justify">Вторая техника, о которой пойдёт речь – транзакция ST12. Функциональность данного инструмента разработчика – тема для отдельной статьи, которых, кстати, немало – некоторые из них упомянуты в конце статьи.</p>
+
+<p style="text-align:justify">Запускаем транзакцию\программу, выполняем нужные действия, возвращаемся на первый экран и дожидаемся окончания сбора статистики.</p>
+
+<p style="text-align:justify">Далее запускаем просмотр полученного трейса в режиме «Per Call» и ставим ALV-фильтр по столбцу «Call». Возможные для поиска точки расширения (не все) перечислены на <strong>Рис. 2</strong></p>
+
+<p style="text-align:justify"><img src="/files/articles/russ/10/gr-pic2.jpg" style="height:444px; width:624px"></p>
+
+<p style="text-align:justify"><strong>Рис. 2</strong> Транзакция ST12. Задание фильтра "точек расширения"</p>
+
+<p style="text-align:justify">Через мгновение получаем перечень возможных точек расширения <strong>(Рис. 3)</strong></p>
+
+<p style="text-align:justify"><img src="/files/articles/russ/10/gr-pic3.jpg" style="height:591px; width:623px"></p>
+
+<p style="text-align:justify"><strong>Рис. 3</strong> Транзакция ST12, результаты поиска.</p>
+
+<p style="text-align:justify"><strong>Ограничения. </strong>Нельзя поймать вызов NEW BADI, Enhancement.</p>
+
+<p style="text-align:justify"><strong>Краткие итоги.</strong></p>
+
+<p style="text-align:justify">Заполним <strong>таблицу 3:</strong></p>
+
+<p style="text-align:justify"><strong><img alt="" src="/files/articles/russ/10/gr-pic1-tabl3.jpg" style="height:328px; width:341px"></strong></p>
+
+<p style="text-align:justify"><strong>Таблица 3. </strong>Результаты для инструмента "ST12"</p>
+
+<p style="text-align:justify">Плюсы инструмента:</p>
+
+<ul>
+	<li style="text-align:justify">решение «из коробки»;</li>
+	<li style="text-align:justify">простота использования, не требует настройки;</li>
+	<li style="text-align:justify">возможность просмотра результатов как в «плоском» виде, так и в иерархическом списке вызовов.</li>
+</ul>
+
+<p style="text-align:justify">Минусы инструмента:</p>
+
+<ul>
+	<li style="text-align:justify">неполное покрытие списка точек расширения.</li>
+</ul>
+
+<h1 style="text-align:justify"><a name="_Toc509223758">3.4.Техника 3. Software Layer-Aware Debugging (SLAD)</a></h1>
+
+<p style="text-align:justify">Для решения задачи использовать другой инструмент «из коробки» -  Software Layer-Aware Debugging (SLAD).</p>
+
+<p style="text-align:justify">SLAD предназначен для разграничения уровней срабатывания отладчика. К примеру, с помощью SLAD можно работать в отладке со своим Z-кодом и пропускать стандартный код (например, ALV-код, WebDynpro-код и т.п.).</p>
+
+<p style="text-align:justify">Рассмотрим настройку SLAD.</p>
+
+<h1 style="text-align:justify"><a name="_Toc509223759">3.4.1. Работа с инструментом SLAD. Создание профиля отладки</a></h1>
+
+<p style="text-align:justify">Запускаем транзакцию SLAD. Создаём профиль <strong>(Рис. 4).</strong></p>
+
+<p style="text-align:justify"><img src="/files/articles/russ/10/gr-pic4.jpg" style="height:394px; width:624px"></p>
+
+<p style="text-align:justify"><strong>Рис. 4.</strong> SLAD. Создание профиля.</p>
+
+<p style="text-align:justify">Переходим на вкладку «Наборы объектов». Создаем набор <strong>(Рис. 5).</strong></p>
+
+<p style="text-align:justify"><img src="/files/articles/russ/10/gr-pic5.jpg" style="height:367px; width:623px"></p>
+
+<p style="text-align:justify"><strong>Рис. 5.</strong> SLAD. Создание набора объектов.</p>
+
+<p style="text-align:justify">Создаём два объема выборок. Имя выборок придумываем, заполняем аналогично <strong>Рис. 6.</strong></p>
+
+<p style="text-align:justify"><img src="/files/articles/russ/10/gr-pic6.jpg" style="height:224px; width:623px"></p>
+
+<p style="text-align:justify"><strong>Рис. 6. </strong>SLAD. Создание объёмов выборок.</p>
+
+<p style="text-align:justify">Заполняем первый объем выборки, перечисляем функциональные модули. Подробности – на <strong>Рис. 7.</strong></p>
+
+<p style="text-align:justify"><img src="/files/articles/russ/10/gr-pic7.jpg" style="height:545px; width:624px"></p>
+
+<p style="text-align:justify"><strong>Рис. 7.</strong> SLAD. Заполнение объёмов выборок для ФМ.</p>
+
+<p style="text-align:justify">Заполняем второй объём выборок, выборка по классам <strong>(Рис. 8).</strong></p>
+
+<p style="text-align:justify"><img src="/files/articles/russ/10/gr-pic8.jpg" style="height:443px; width:624px"></p>
+
+<p style="text-align:justify"><strong>Рис. 8.</strong> SLAD. Заполнение объёмов выборок для классов.</p>
+
+<p style="text-align:justify">Далее задаём условие соединения объемов выборок <strong>(Рис. 9).</strong></p>
+
+<p style="text-align:justify"><img src="/files/articles/russ/10/gr-pic9.jpg" style="height:136px; width:537px"></p>
+
+<p style="text-align:justify"><strong>Рис. 9.</strong> SLAD. Условие соединения выборок.</p>
+
+<p style="text-align:justify">Не забываем сохраниться и возвращаемся на закладку «Профили». Включаем сохранённый набор объектов в профиль, ставим чекбоксы так, как указано на <strong>Рис. 10</strong>, сохраняем профиль. Всё.</p>
+
+<p style="text-align:justify"><img src="/files/articles/russ/10/gr-pic10.jpg" style="height:218px; width:617px"></p>
+
+<p style="text-align:justify"><strong>Рис. 10. </strong>SLAD. Включение набора объектов в профиль.</p>
+
+<h1 style="text-align:justify"><a name="_Toc509223760">3.4.2.Работа с отладчиком. Использование профиля отладки</a></h1>
+
+<p style="text-align:justify">Заходим в отладчик и загружаем SLAD-профиль. На <strong>Рис. 11</strong> наглядно показано как выполняется загрузка профиля.</p>
+
+<p style="text-align:justify"><img src="/files/articles/russ/10/gr-pic11.jpg" style="height:374px; width:624px"></p>
+
+<p style="text-align:justify"><strong>Рис. 11.</strong> SLAD. Загрузка SLAD-профиля.</p>
+
+<p style="text-align:justify">Следующий шаг – необходимо активировать использование SLAD. Жмём соответствующую кнопку.</p>
+
+<p style="text-align:justify">На этом вся настройка закончена, SLAD активирован. Теперь по каждому нажатию на соответствующую кнопку отладчик будет останавливаться в тех местах, которые отвечают условиям активированного профиля.</p>
+
+<h1 style="text-align:justify"><a name="_Toc509223761">3.4.3.Краткие итоги</a></h1>
+
+<p style="text-align:justify">Заполним <strong>таблицу 4:</strong></p>
+
+<p style="text-align:justify"><strong><img alt="" src="/files/articles/russ/10/gr-pic1-tabl4.jpg" style="height:307px; width:330px"></strong></p>
+
+<p style="text-align:justify"><strong>Таблица 4.</strong> Результаты для инструмента "SLAD"</p>
+
+<p style="text-align:justify">SLAD можно в некоторых случаях использовать для поиска точек расширения.</p>
+
+<p style="text-align:justify">Его плюсы:</p>
+
+<ul>
+	<li style="text-align:justify">профиль можно и нужно создать один раз и пользоваться в дальнейшем;</li>
+	<li style="text-align:justify">Сравнительно быстрая настройка.</li>
+</ul>
+
+<p style="text-align:justify">Минусы инструмента:</p>
+
+<ul>
+	<li style="text-align:justify">неполное покрытие списка точек расширения;</li>
+	<li style="text-align:justify">нельзя получить список всех мест, где произошло событие-прерывание. Работа возможна</li>
+</ul>
+<div class="attention blue">
+		<p class="heading">Если хотите прочитать статью полностью и оставить свои комментарии присоединяйтесь к <span>sapland</span>
+	</p>
+	<a href="//sapland.ru/register/" class="btn-login">Зарегистрироваться</a>
+	<div>
+		<p class="text">У вас уже есть учетная запись?</p>
+		<a href="#" class = "btn-reg">Войти</a>
+	</div>
+	
+</div>
+
+	
+</div>
+
+	<div class="share-wrap">
+			<a class="btn-print" onclick="window.print();" type="button"><span>Распечатать</span></a>
+</div>
+	<div class="comment-article-wrap comments-h">
+	<h2 class="ifp-h">Обсуждения <span class="count"><img src="/build/images/icons/speak.svg"
+														  alt="Количество комментариев">6</span>
+		<a class="btn rpl rpl-h inactive" href="javascript:void(0)">Написать комментарий</a>
+	</h2>
+			<div class="show-comment">
+										<div class="comment-wrap comment-h" id="comment-2815" data-comment-id="2815">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/28684">Евгений Данилович</a>
+								<span class="data-container"><span class="data">07 июня 2018, 05:52</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/images/users/male.jpg" alt="">
+							</div>
+			<div class="comment-item">
+								<div class="answer">
+					Спасибо за статью!<br />
+Можно найти расширения и по пакету разработки.<br />
+USER exits, например, по пакету VMOD. Перейти в Object Navigator (SE80). Выбрать раздел пакет, ввести VMOD и получим список вех includes для модуля SD. Также зная пакет разработки транзакции, класса и т.д. получим список BADI в разделе 'Расширения' пункт 'Бизнес-Add Ins (опред.)' это Old BADI и пункт 'Точки Расширений' - New Badi.
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-2817" data-comment-id="2817">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/19568">Александр Грибов</a>
+								<span class="data-container"><span class="data">07 июня 2018, 12:58</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userfiles/user/19568.png" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='2815'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/28684">Евгений Данилович </a>
+								<span class="data-container"><a href="#comment-2815" class="data">07 июня 2018, 05:52</a></span>
+			</p>
+		</div>
+		<p>
+			Спасибо за статью!<br />
+Можно найти расширения и по пакету разработки.<br />
+USER exits, например, по пакету VMOD. Перейти в Object Navigator (SE80). Выбрать раздел пакет, ввести VMOD и получим список вех includes для модуля SD. Также зная пакет разработки транзакции, класса и т.д. получим список BADI в разделе 'Расширения' пункт 'Бизнес-Add Ins (опред.)' это Old BADI и пункт 'Точки Расширений' - New Badi.
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Спасибо за проявленный интерес! <br />
+Да, вы совершенно правы, список ВСЕХ точек расширения можно найти в том или ином виде с помощью стандартных инструментов. Вопрос в том, что найти список _используемых_ точек (или точек, которые можно использовать) в конкретном случае не так очевидно.
+<br />&nbsp;<br />
+Впрочем, век живи - век учись: уже после написания данной статьи я узнал ещё об одном простом способе выявить используемые точки. Об этом я напишу в следующей статье.
+<br />&nbsp;<br />
+Вы испробовали тот debugger-скрипт, что приложен к статье?
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-2818" data-comment-id="2818">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/28684">Евгений Данилович</a>
+								<span class="data-container"><span class="data">08 июня 2018, 08:44</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/images/users/male.jpg" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='2817'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/19568">Александр Грибов </a>
+								<span class="data-container"><a href="#comment-2817" class="data">07 июня 2018, 12:58</a></span>
+			</p>
+		</div>
+		<p>
+			Спасибо за проявленный интерес! <br />
+Да, вы совершенно правы, список ВСЕХ точек расширения можно найти в том или ином виде с помощью стандартных инструментов. Вопрос в том, что найти список _используемых_ точек (или точек, которые можно использовать) в конкретном случае не так очевидно.
+<br />&nbsp;<br />
+Впрочем, век живи - век учись: уже после написания данной статьи я узнал ещё об одном простом способе выявить используемые точки. Об этом я напишу в следующей статье.
+<br />&nbsp;<br />
+Вы испробовали тот debugger-скрипт, что приложен к статье?
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Тестирую приложения через SAP EPortal. Висит. Не дождался завершения. Ещё на BREAK-POINT падает в дамп. Это видимо особенность режима в котором вызывается скрипт
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-2819" data-comment-id="2819">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/19568">Александр Грибов</a>
+								<span class="data-container"><span class="data">08 июня 2018, 08:56</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userfiles/user/19568.png" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='2818'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/28684">Евгений Данилович </a>
+								<span class="data-container"><a href="#comment-2818" class="data">08 июня 2018, 08:44</a></span>
+			</p>
+		</div>
+		<p>
+			Тестирую приложения через SAP EPortal. Висит. Не дождался завершения. Ещё на BREAK-POINT падает в дамп. Это видимо особенность режима в котором вызывается скрипт
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Да, стоило предупредить, что работает медленно..<br />
+Ведь по сути анализируется каждая выполняемая команда.
+<br />&nbsp;<br />
+Работает медленно, но работает :)
+<br />&nbsp;<br />
+Если падает в дамп - перед запуском удалите все точки прерывания отладчика. Есть какие-то внутренние глюки в отладке..
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-2822" data-comment-id="2822">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/1264">Сергей Бережной</a>
+								<span class="data-container"><span class="data">13 июня 2018, 11:24</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/images/users/male.jpg" alt="">
+							</div>
+			<div class="comment-item">
+								<div class="answer">
+					Александр, еще удобно пользоваться тр.SAT.<br />
+Запустили стандартную транзакцию или отчет, выполнили действия и посмотрели в Z пакетах все расширения, ...<br />
+<img src="/images/r/500x200w/uploads/u-1264/saplogon_2018-06-13_11-27-31&#46;jpg" alt="" />
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-2823" data-comment-id="2823">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/19568">Александр Грибов</a>
+								<span class="data-container"><span class="data">13 июня 2018, 15:24</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userfiles/user/19568.png" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='2822'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/1264">Сергей Бережной </a>
+								<span class="data-container"><a href="#comment-2822" class="data">13 июня 2018, 11:24</a></span>
+			</p>
+		</div>
+		<p>
+			Александр, еще удобно пользоваться тр.SAT.<br />
+Запустили стандартную транзакцию или отчет, выполнили действия и посмотрели в Z пакетах все расширения, ...<br />
+<img src="/images/r/500x200w/uploads/u-1264/saplogon_2018-06-13_11-27-31&#46;jpg" alt="" />
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Да, Сергей, вы верно упомянули SAT. И в принципе стоило рассказать о ней вместо транзакции ST12 - они очень похожи. Даже возможности\ограничения у них совпадают.
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+			
+	</div>
+</div>
+
+
+
+	
+			</div></div>
+	<div id="arrowUp"></div>
+
+
+		<div class="footer-wrapper">
+				<footer>
+	<div class="footer-wrap container">
+		<div class="logo-wrap">
+			<a href="/">
+				<img src="/build/images/logo-footer.svg" alt="">
+			</a>
+			<ul>
+	<li><a target="_blank" href="#" style=" pointer-events: none;" ><img src="/build/images/icons/sn/telegram-plane.svg" alt=""></a></li><li><a target="_blank" href="https://www.facebook.com/pages/SAPLand/127114854020362"><img src="/build/images/icons/sn/facebook.svg" alt=""></a></li><li><a target="_blank" href="https://vk.com/club4419971"><img src="/build/images/icons/sn/vk.svg" alt=""></a></li><li><a target="_blank" href="https://twitter.com/SAPLand"><img src="/build/images/icons/sn/twitter.svg" alt=""></a></li><li><a target="_blank" href="https://www.linkedin.com/groups/6797279/"><img src="/build/images/icons/sn/linkedin-in.svg" alt=""></a></li></ul>
+		</div>
+		<div class="menu-wrap">
+			<div class="menu-item">
+			<span>О проекте</span>
+			<ul>
+									<li>
+						<a href="//sapland.ru/about">Концепция</a>
+					</li>
+									<li>
+						<a href="/policy">Политики</a>
+					</li>
+									<li>
+						<a href="/contacts/">Контакты</a>
+					</li>
+									<li>
+						<a href="//sapland.ru/authors/to-author">Авторам</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Журнал SAPPRO</span>
+			<ul>
+									<li>
+						<a href="/publications">Публикации</a>
+					</li>
+									<li>
+						<a href="/comments">Обсуждения</a>
+					</li>
+									<li>
+						<a href="/authors">Авторы</a>
+					</li>
+									<li>
+						<a href="/authors-columns">Колонки</a>
+					</li>
+									<li>
+						<a href="/compilations">Антологии</a>
+					</li>
+									<li>
+						<a href="/subscription">Подписка</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Учебный центр</span>
+			<ul>
+									<li>
+						<a href="//edu.sapland.ru/courses/">Курсы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/master-classes/">Мастер-классы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/webinars/?materials_filter%5Bmaterial__by-format%5D%5B%5D=935&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bfrom%5D=&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bto%5D=&filter%5Bsearch%5D%5Bfull-search-criterion%5D%5B%5D=">Вебинары</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Книги SAP Press</span>
+			<ul>
+									<li>
+						<a href="/books/novelty/">Книги на английском</a>
+					</li>
+									<li>
+						<a href="/books/Knigi_na_russkom/">Книги на русском</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Библиотека презентаций</span>
+			<ul>
+									<li>
+						<a href="/event">Мероприятия</a>
+					</li>
+									<li>
+						<a href="/presentations/">Презентации</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Экосистема SAP СНГ</span>
+			<ul>
+									<li>
+						<a href="/p-events/news/">Новости</a>
+					</li>
+									<li>
+						<a href="/a-list">Анонсы</a>
+					</li>
+							</ul>
+		</div>
+	</div>
+		<span class="text-info">Републикация материалов — только со ссылкой на SAPLAND.RU, с разрешения редакции сайта.
+								Редакция не несет ответственности за высказывания пользователей на сайте.</span>
+		<span class	= "writeUs">Связаться с нами:&nbsp;<a href="mailto:support@sapland.ru" class="text-mail"> support@sapland.ru</a></span>
+		<span class="text-right">18+ &copy; 2009 - 2021, Учредитель ООО «Эксперт РП». Все права защищены</span>
+	</div>
+</footer>
+	
+	</div>
+
+			
+	
+			
+	
+		<script src="/build/runtime.f011bcb1.js"></script>
+<script src="/build/5.faf5a91c.js"></script>
+<script src="/build/global.648d4089.js"></script>
+	<script src="/build/attention-block/login-article.69d7841a.js"></script>
+<script src="/build/attention-block/attention-blue.3ff74d37.js"></script>
+<script src="/build/0.1fec29ad.js"></script>
+<script src="/build/blocks/user.f97fe11c.js"></script>
+<script src="/build/login.b895675d.js"></script>
+<script src="/build/main-menu.31eac860.js"></script>
+<script src="/build/header.7fd84952.js"></script>
+<script src="/build/breadcrumbs.e36f86c3.js"></script>
+<script src="/build/short-info.76413a3a.js"></script>
+<script src="/build/short-info/author-statistic.d460c927.js"></script>
+<script src="/build/hovered-info.16280c01.js"></script>
+<script src="/build/1.32feafaf.js"></script>
+<script src="/build/article/layout.a7a2b8ff.js"></script>
+<script src="/build/article-page/block-title.a6d5d176.js"></script>
+<script src="/build/article-page/share.f5b6dade.js"></script>
+<script src="/build/parent-comment.fa26b620.js"></script>
+<script src="/build/comment.139721f4.js"></script>
+<script src="/build/article-page/comment-article.38d7be87.js"></script>
+<script src="/build/article-page/note-gray.e6c6d3bb.js"></script>
+<script src="/build/page-container.ef05586f.js"></script>
+<script src="/build/arrow-up.cb27db9e.js"></script>
+<script src="/build/footer.b018aec7.js"></script>
+<script src="/build/article-page.2915c0e5.js"></script>
+<script src="/build/article-page/article-close.68bb7c2e.js"></script>
+	<style>
+        @media print {
+            header {
+                display: none !important;
+            }
+			.breadcrumbs {
+                display: none; !important;
+			}
+			.comment-article-wrap {
+                display: none; !important;
+			}
+			.books-wrap-sl {
+                display: none; !important;
+			}
+			.share-wrap {
+                display: none; !important;
+			}
+			#arrowUp {
+                display: none; !important;
+			}
+            footer {
+                display: none; !important;
+            }
+        }
+	</style>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(1375405, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        trackHash:true
+    });
+    ym(1375405,'reachGoal','NEW_DESIGN');
+
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/1375405" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-28264801-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-28264801-1');
+</script>
+</body>
+</html>

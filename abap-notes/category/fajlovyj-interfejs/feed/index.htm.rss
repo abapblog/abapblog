@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Обработка файлов | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/fajlovyj-interfejs/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sat, 28 Nov 2020 12:21:43 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Выбор файла на сервере</title>
+		<link>https://abap-blog.ru/abap-notes/vybor-fajla-na-servere/</link>
+					<comments>https://abap-blog.ru/abap-notes/vybor-fajla-na-servere/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 28 Nov 2020 12:21:43 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5738</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e2e93c00915049345/]</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/vybor-fajla-na-servere/">Выбор файла на сервере</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_apldir TYPE string.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_apldir.
+
+  CALL FUNCTION '/SAPDMC/LSM_F4_SERVER_FILE'
+    EXPORTING
+      directory        = space
+      filemask         = space
+    IMPORTING
+      serverfile       = p_apldir
+    EXCEPTIONS
+      canceled_by_user = 1
+      OTHERS           = 2.</pre><p><a href="https://abap-blog.ru/wp-content/uploads/2020/11/file_on_servert.png"><img loading="lazy" class="alignnone size-full wp-image-5739" src="https://abap-blog.ru/wp-content/uploads/2020/11/file_on_servert.png" alt="" width="606" height="315" srcset="https://abap-blog.ru/wp-content/uploads/2020/11/file_on_servert.png 606w, https://abap-blog.ru/wp-content/uploads/2020/11/file_on_servert-300x156.png 300w" sizes="(max-width: 606px) 100vw, 606px" /></a></p><p>The post <a href="https://abap-blog.ru/abap-notes/vybor-fajla-na-servere/">Выбор файла на сервере</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/vybor-fajla-na-servere/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Конвертация и модификация изображений</title>
+		<link>https://abap-blog.ru/abap-notes/konvertaciya-i-modifikaciya-izobrazhenij/</link>
+					<comments>https://abap-blog.ru/abap-notes/konvertaciya-i-modifikaciya-izobrazhenij/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 17:04:30 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5678</guid>
+
+					<description><![CDATA[<p>Программа конвертации PNG в JPEG с изменением размеров. [crayon-618a1e2e94556484526317/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/konvertaciya-i-modifikaciya-izobrazhenij/">Конвертация и модификация изображений</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Программа конвертации PNG в JPEG с изменением размеров.</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_fname TYPE file_table-filename OBLIGATORY.
+PARAMETERS: p_width TYPE i DEFAULT 800.
+PARAMETERS: p_height TYPE i DEFAULT 600.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_fname.
+
+  DATA: lv_rc TYPE i.
+  DATA: it_files TYPE filetable.
+  DATA: lv_action TYPE i.
+
+  CLEAR it_files.
+
+  TRY.
+      cl_gui_frontend_services=&gt;file_open_dialog( EXPORTING
+                                                    file_filter = |png (*.png)\|*.png\|{ cl_gui_frontend_services=&gt;filetype_all }|
+                                                  CHANGING
+                                                    file_table  = it_files
+                                                    rc          = lv_rc
+                                                    user_action = lv_action ).
+
+      IF lv_action = cl_gui_frontend_services=&gt;action_ok.
+        IF lines( it_files ) &gt; 0.
+          p_fname = it_files[ 1 ]-filename.
+        ENDIF.
+      ENDIF.
+
+    CATCH cx_root INTO DATA(e_text).
+      MESSAGE e_text-&gt;get_text( ) TYPE 'S' DISPLAY LIKE 'E'.
+  ENDTRY.
+
+START-OF-SELECTION.
+
+  TRY.
+      DATA: lv_filesize TYPE w3param-cont_len.
+      DATA: lv_filetype TYPE w3param-cont_type.
+      DATA: it_bin_data TYPE w3mimetabtype.
+
+      WRITE: / p_fname.
+
+      cl_gui_frontend_services=&gt;gui_upload( EXPORTING
+                                              filename   = |{ p_fname }|
+                                              filetype   = 'BIN'
+                                            IMPORTING
+                                              filelength = lv_filesize
+                                            CHANGING
+                                              data_tab   = it_bin_data ).
+
+      DATA(lv_img_data) = cl_bcs_convert=&gt;solix_to_xstring( it_solix = it_bin_data ).
+
+      DATA(o_ip) = NEW cl_fxs_image_processor( ).
+
+      DATA(lv_hndl) = o_ip-&gt;add_image( iv_data = lv_img_data ).
+
+      DATA: lv_mimetype TYPE string.
+      DATA: lv_xres TYPE i.
+      DATA: lv_yres TYPE i.
+      DATA: lv_xdpi TYPE i.
+      DATA: lv_ydpi TYPE i.
+      DATA: lv_bitdepth TYPE i.
+
+      o_ip-&gt;get_info( EXPORTING
+                        iv_handle   = lv_hndl
+                      IMPORTING
+                        ev_mimetype = lv_mimetype
+                        ev_xres     = lv_xres
+                        ev_yres     = lv_yres
+                        ev_xdpi     = lv_xdpi
+                        ev_ydpi     = lv_ydpi
+                        ev_bitdepth = lv_bitdepth ).
+
+      WRITE: / 'MIME-Type:', lv_mimetype.
+      WRITE: / '        X:', lv_xres.
+      WRITE: / '        Y:', lv_yres.
+      WRITE: / '    X-DPI:', lv_xdpi.
+      WRITE: / '    Y-DPI:', lv_ydpi.
+      WRITE: / '      Bit:', lv_bitdepth.
+
+      o_ip-&gt;resize( EXPORTING
+                      iv_handle = lv_hndl
+                      iv_xres   = p_width
+                      iv_yres   = p_height ).
+
+
+      o_ip-&gt;convert( EXPORTING
+                      iv_handle = lv_hndl
+                      iv_format = cl_fxs_mime_types=&gt;co_image_jpeg ).
+
+      o_ip-&gt;get_info( EXPORTING
+                        iv_handle   = lv_hndl
+                      IMPORTING
+                        ev_mimetype = lv_mimetype
+                        ev_xres     = lv_xres
+                        ev_yres     = lv_yres
+                        ev_xdpi     = lv_xdpi
+                        ev_ydpi     = lv_ydpi
+                        ev_bitdepth = lv_bitdepth ).
+      WRITE: / 'MIME-Type:', lv_mimetype.
+      WRITE: / '        X:', lv_xres.
+      WRITE: / '        Y:', lv_yres.
+      WRITE: / '    X-DPI:', lv_xdpi.
+      WRITE: / '    Y-DPI:', lv_ydpi.
+      WRITE: / '      Bit:', lv_bitdepth.
+
+      DATA(lv_img_conv_data) = o_ip-&gt;get_image( EXPORTING iv_handle = lv_hndl ).
+
+      DATA(it_img_conv_data) = cl_bcs_convert=&gt;xstring_to_solix( iv_xstring = lv_img_conv_data ).
+
+      WRITE: / |{ p_fname }.jpg|.
+
+      cl_gui_frontend_services=&gt;gui_download( EXPORTING
+                                                filename     = |{ p_fname }.jpg|
+                                                filetype     = 'BIN'
+                                                bin_filesize = xstrlen( lv_img_conv_data )
+                                              CHANGING
+                                                data_tab     = it_img_conv_data ).
+
+    CATCH cx_root INTO DATA(e_txt).
+      WRITE: / e_txt-&gt;get_text( ).
+  ENDTRY.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/konvertaciya-i-modifikaciya-izobrazhenij/">Конвертация и модификация изображений</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/konvertaciya-i-modifikaciya-izobrazhenij/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Проверить наличие BOM в UTF файле</title>
+		<link>https://abap-blog.ru/abap-notes/proverit-nalichie-bom-v-utf-fajle/</link>
+					<comments>https://abap-blog.ru/abap-notes/proverit-nalichie-bom-v-utf-fajle/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 13:08:16 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5652</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e2e9475d257922402/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/proverit-nalichie-bom-v-utf-fajle/">Проверить наличие BOM в UTF файле</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_file TYPE string DEFAULT '/usr/sap/tmp/testfile.csv' .
+
+START-OF-SELECTION.
+  TRY.
+      DATA: lv_bom TYPE sychar01.
+      DATA: lv_encoding TYPE sychar01.
+
+      cl_abap_file_utilities=&gt;check_utf8( EXPORTING file_name = p_file
+                                          IMPORTING bom       = lv_bom
+                                                    encoding  = lv_encoding ).
+
+      CASE lv_bom.
+        WHEN cl_abap_file_utilities=&gt;no_bom.
+          WRITE: / 'no_bom'.
+        WHEN cl_abap_file_utilities=&gt;bom_utf8.
+          WRITE: / 'bom_utf8'.
+        WHEN cl_abap_file_utilities=&gt;bom_utf16_be.
+          WRITE: / 'bom_utf16_be'.
+        WHEN cl_abap_file_utilities=&gt;bom_utf16_le.
+          WRITE: / 'bom_utf16_le'.
+      ENDCASE.
+
+      CASE lv_encoding.
+        WHEN cl_abap_file_utilities=&gt;encoding_utf8.
+          WRITE: / 'encoding_utf8'.
+        WHEN cl_abap_file_utilities=&gt;encoding_7bit_ascii.
+          WRITE: / 'encoding_7bit_ascii'.
+        WHEN cl_abap_file_utilities=&gt;encoding_other.
+          WRITE: / 'encoding_other'.
+      ENDCASE.
+
+    CATCH cx_root INTO DATA(e_txt).
+      WRITE: / e_txt-&gt;get_text( ).
+  ENDTRY.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/proverit-nalichie-bom-v-utf-fajle/">Проверить наличие BOM в UTF файле</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/proverit-nalichie-bom-v-utf-fajle/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ZAL11 &#8212; продвинутая версия AL11</title>
+		<link>https://abap-blog.ru/abap-notes/zal11-prodvinutaya-versiya-al11/</link>
+					<comments>https://abap-blog.ru/abap-notes/zal11-prodvinutaya-versiya-al11/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 20 Jun 2020 12:54:12 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4347</guid>
+
+					<description><![CDATA[<p>Sébastien HERMANN довольно таки давно представил замечательный инструмент по работе с файлами в SAP: Для удобства скачивания и установки выложил последнюю версию на Github.</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/zal11-prodvinutaya-versiya-al11/">ZAL11 — продвинутая версия AL11</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Sébastien HERMANN довольно таки давно <a href="https://blogs.sap.com/2012/05/03/al11-replacement/">представил</a> замечательный инструмент по работе с файлами в SAP:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/06/zal11.png"><img loading="lazy" class="alignnone size-full wp-image-4348" src="https://abap-blog.ru/wp-content/uploads/2020/06/zal11.png" alt="" width="931" height="540" srcset="https://abap-blog.ru/wp-content/uploads/2020/06/zal11.png 931w, https://abap-blog.ru/wp-content/uploads/2020/06/zal11-300x174.png 300w, https://abap-blog.ru/wp-content/uploads/2020/06/zal11-768x445.png 768w" sizes="(max-width: 931px) 100vw, 931px" /></a></p>
+<p>Для удобства скачивания и установки выложил последнюю версию на <a href="https://github.com/MikeSidorochkin/ZAL11">Github</a>.</p><p>The post <a href="https://abap-blog.ru/abap-notes/zal11-prodvinutaya-versiya-al11/">ZAL11 — продвинутая версия AL11</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/zal11-prodvinutaya-versiya-al11/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Рекомендации по работе с файловым интерфейсом</title>
+		<link>https://abap-blog.ru/abap-notes/rekomendacii-po-rabote-s-fajlovym-interfejsom/</link>
+					<comments>https://abap-blog.ru/abap-notes/rekomendacii-po-rabote-s-fajlovym-interfejsom/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 07 Apr 2020 09:23:17 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4005</guid>
+
+					<description><![CDATA[<p>В ноте 27 собраны общие рекомендации, проблемы и способы их устранения при работе с файловым интерфейсом в ABAP-е.</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/rekomendacii-po-rabote-s-fajlovym-interfejsom/">Рекомендации по работе с файловым интерфейсом</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>В ноте <a href="https://launchpad.support.sap.com/#/notes/27">27</a> собраны общие рекомендации, проблемы и способы их устранения при работе с файловым интерфейсом в ABAP-е.</p><p>The post <a href="https://abap-blog.ru/abap-notes/rekomendacii-po-rabote-s-fajlovym-interfejsom/">Рекомендации по работе с файловым интерфейсом</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/rekomendacii-po-rabote-s-fajlovym-interfejsom/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

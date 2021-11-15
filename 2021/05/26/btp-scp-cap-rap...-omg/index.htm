@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+
+<!--[if gte IE 9]>
+<html class="ie" lang="en-US">
+<![endif]-->
+
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar" content="black"/>
+    <title>BTP, SCP, CAP, RAP&#8230; OMG | SAP Blogs</title>
+    <link rel="profile" href="http://gmpg.org/xfn/11"/>
+
+    
+    
+    <!--[if lt IE 9]>
+    <script src="https://blogs.sap.com/wp-content/themes/sap-v3-neo/js/html5.min.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link rel="icon" type="image"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.png" /><link rel="shortcut icon" type="image/x-icon"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.ico" /><link rel="apple-touch-icon" href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/apple-touch-icon.png" /><meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//static.community.services.sap' />
+<link rel='dns-prefetch' href='//assets.adobedtm.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Feed" href="https://blogs.sap.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Comments Feed" href="https://blogs.sap.com/comments/feed/" />
+<meta name="type" content="Blog" /><meta name="description" content="R/2, R/3, ECC.. those were the days, when the SAP-life was &#8220;simple and easy&#8221;. Ok, not really simple and easy, however at least familiar and clearly laid out. However in recent days things are" /><meta name="sm_tech_ids" content="73555000100800001164,73555000100800000287,73554900100800003012,8077228b-f0b1-4176-ad1b-61a78d61a847"/><meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" /><link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; BTP, SCP, CAP, RAP&#8230; OMG Comments Feed" href="https://blogs.sap.com/2021/05/26/btp-scp-cap-rap...-omg/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/blogs.sap.com\/res1dx-135\/wp-includes\/js\/wp-emoji-release.min.js"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/style.min.css' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/css/ie.css' type='text/css' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='designmate_styles-css'  href='https://static.community.services.sap/designmate/v3/136/latest/designmate.css' type='text/css' media='all' />
+<link rel='stylesheet' id='designsystem_styles-css'  href='https://static.community.services.sap/community-ds/v1/188/main.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dist/block-library/style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='prism-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/js/tinymce/plugins/codesample/css/prism.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_custom_link_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom//include/css/sap-core-custom.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_lightbox_gallery_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='pt_style_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-primary-tag/css/pt_style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-popular-posts-css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/css/wpp.css' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery.min.js' id='jquery-core-js'></script>
+<script type='text/javascript' id='jquery-core-js-after'>
+if (jQuery !== undefined) {
+                jQuery(window).on("load", function(){
+                    var _wpWindowLoaded = document.createElement("div");
+                    _wpWindowLoaded.setAttribute("class", "hidden");
+                    _wpWindowLoaded.setAttribute("id", "wp_window_loaded");
+                    document.body.appendChild(_wpWindowLoaded);
+                });
+            }
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery-migrate.min.js' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='//assets.adobedtm.com/ccc66c06b30b/d266848b2882/launch-f095fbc32a96.min.js' id='scn_adobe_dtm-js'></script>
+<script type='text/javascript' id='wpp-js-js-extra'>
+/* <![CDATA[ */
+var wpp_params = {"sampling_active":"","sampling_rate":"100","ajax_url":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php","action":"update_views_ajax","ID":"1327398","token":"938e4875d9"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/js/wpp.js' id='wpp-js-js'></script>
+<link rel="https://api.w.org/" href="https://blogs.sap.com/wp-json/" /><link rel="alternate" type="application/json" href="https://blogs.sap.com/wp-json/wp/v2/posts/1327398" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.sap.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.sap.com/wp-includes/wlwmanifest.xml" /> 
+
+<link rel="canonical" href="https://blogs.sap.com/2021/05/26/btp-scp-cap-rap...-omg/" />
+<link rel='shortlink' href='https://blogs.sap.com/?p=1327398' />
+<script type="text/javascript">var ajaxurl = "https://blogs.sap.com/wp-admin/admin-ajax.php";var likePostLabel = "Like";var unLikePostLabel = "Liked";var likeCommentLabel = "Like";var unLikeCommentLabel = "Liked";</script>    <!--[if IE ]>
+    <link rel="stylesheet" id="scn-ie-styles" href="https://blogs.sap.com/wp-content/themes/sap-v3-neo/css/ie.css"
+          type="text/css" media="all">
+    <link id="ids-popup-css" href="https://accounts.sap.com/universalui/shared/stylesheets/idsPopup.css"
+          rel="stylesheet"
+          type="text/css">
+    <![endif]-->
+
+
+</head>
+
+<body class="post-template-default single single-post postid-1327398 single-format-standard custom-font-enabled">
+
+
+<div class="page-wrapper">
+<b class="cn-accessibility"><a href="#main" tabindex="0" accesskey="S">Skip to Content</a></b>
+<div id="page" class="hfeed site">
+
+<header id="masthead" class="blogs-nav sap-header">
+    <header id="comm-hdr-Header" role="masthead"><div class="dm-header"><div class="dm-header__inner"><div class="dm-header__logo-wrapper"><a class="dm-logo--header" href="http://www.sap.com/" title="SAP"></a></div><nav id="comm-hdr-Navigation" class="dm-mainNav"><div class="dm-mobileSearch"><form class="dm-header__search-form" action=""><div class="dm-search-container dm-input dm-search__input"><label class="dm-input__box" aria-label="search SAP Community"><input class="dm-input__control" placeholder="Search SAP Community" name="filter-search" type="search" required="" aria-label="type here to search"><button class="dm-search__button dm-search__button-clear" type="reset" role="button" title="Reset Search"><span class="dm-search__buttonIcon dm-icon-encoded--close" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" role="button" title="Search SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form></div><ul class="dm-mainNav__menu dm-mainNav__menu--withGroups" role="menubar"><li class="dm-header__homeItem" role="none"><a class="dm-header__homeItem-link" role="menuitem" aria-label="Community Home" target="_self" href="https://community.sap.com">Community</a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/topics" aria-label="" aria-haspopup="false" role="menuitem">Topics<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://groups.sap.com" aria-label="Groups. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Groups<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://answers.sap.com/index.html" aria-label="Answers. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Answers<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://blogs.sap.com" aria-label="Blogs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Blogs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/events" aria-label="Events. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Events<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/programs" aria-label="Programs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Programs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources" aria-label="Resources. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Resources<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources/what-is-new" aria-label="" aria-haspopup="false" role="menuitem">What's New<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li></ul></nav><ul class="dm-header__actions"><li id="comm-hdr-Search" class="dm-header__actions-item dm-headerSearch"><a class="dm-search-action dm-icon-encoded dm-header__search-icon" aria-label="Search the SAP Community" href="#" role="button" aria-expanded="false" title="Search"></a><div class="dm-headerSearch__wrapper"><form class="dm-searchdropdown dm-align-center" action=""><div class="dm-search__input dm-input" role="search"><label class="dm-input__box" aria-label="search the SAP community"><input class="dm-input__control" placeholder="Search the SAP Community" name="filter-search" aria-label="type here to search" type="input"><button class="dm-search__button dm-search__button-clear" type="reset" title="Reset"><span class="dm-search__buttonIcon dm-icon-encoded--clear" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" title="Search the SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form><a class="dm-headerSearch__closeButton" type="submit" role="button" title="Close search input" href="javascript:void(0);"><span class="dm-icon-encoded dm-icon-encoded--close" role="img" aria-label="Close search input"></span></a></div></li><li id="comm-hdr-Authentication" class="dm-header__actions-item dm-header__account"><a id="comm-hdr-SignIn" class="dm-user__login-button--wrapper" aria-haspopup="true" aria-expanded="false" role="button" href="#" title="Log In" rel="IDS_login"><div id="comm-hdr-AnonymousIcon" class="dm-icon-encoded dm-icon-encoded--account dm-hidden" aria-label="click here to login"></div><div id="comm-hdr-Avatar" class="dm-user dm-header__avatar"><img class="dm-header__avatar-image dm-hidden" data-src="" src="" width="24px" height="24px"><span class="dm-header__notifications dm-hidden js-notification-indicator"></span></div></a><ul id="comm-hdr-UserProfileMenu" class="dm-header__actionsSubMenu dm-profileFlyoutMenu dm-profileMenuDropdown" role="menu" aria-label="drop down menu of people profile"><li class="dm-profileMenu__userData"><div id="comm-hdr-Username" class="dm-profileMenu__userName"></div><div id="comm-hdr-Email" class="dm-profileMenu__userEmail"></div><a id="comm-hdr-SubMenuTitleLink" class="dm-link" href="#">Manage my Account</a></li><li id="comm-hdr-ProfileMenuTopSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li id="comm-hdr-ProfileMenuMiddleSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li class="dm-profileMenu__section"><ul class="dm-profileMenu__list dm-profileMenu__logout"><li class="dm-profileMenu__item"><a id="comm-hdr-LogOut" class="dm-button dm-button--secondary" href="#" role="button"><span class="dm-button-text">Logout</span></a></li></ul></li></ul></li><li class="dm-header__actions-item dm-header__mobileMenu"><a id="comm-hdr-MobileMenuBtn" class="dm-mobileMenuButton" aria-label="Search SAP community"><span class="dm-icon-encoded dm-icon-encoded--mobile-menu"></span><span style="display:none;">Search</span></a></li></ul></div></div></header><div class="announcements" role="menubar"></div><div class="dm-wrapper dm-subheader dm-subheader--wrapper  dm-user--unauthenticated "><div class="dm-grid"><div class="dm-breadcrumb dm-user--unauthenticated" role="menubar">
+    <ul class="dm-breadcrumb-nav" role="navigation" aria-label="breadcrumb navigation to trace the path back to original landing point">
+        
+        <li><a id="comm-shdr-breadcrumb-home" href="https://www.sap.com" title="Home">Home</a></li>
+        
+        <li><a id="comm-shdr-breadcrumb-community" href="https://community.sap.com" title="Community">Community</a></li>
+        
+    </ul>
+    <ul class="dm-breadcrumb-actions" role="menu">
+        
+        <li><a id="comm-shdr-AskQuestion" href="https://answers.sap.com/questions/ask.html" title="Ask a Question">Ask a Question</a></li>
+        
+        <li><a id="comm-shdr-WriteBlogPost" href="https://blogs.sap.com/wp-admin/post-new.php" title="Write a Blog Post">Write a Blog Post</a></li>
+        
+        <li class="dm-user__login-button--wrapper"><a class="dm-button-small dm-button--primary" role="button" rel="IDS_login" aria-label="Login or Sign up. Click here to log in or sign up"><span class="dm-button-text">Login / Sign-up</span></a></li>
+        <li class="dm-breadcrumb-actions__dropdown">
+            <span id="comm-shdr-actions-opener" class="dm-breadcrumb-actions__dropdown-toggle" title="Community actions">
+                 <span class="dm-icon-encoded dm-icon-encoded--3dots"></span>
+            </span>
+            <ul id="comm-shdr-user-actions-ul" class="dm-breadcrumb-actions__dropdown-menu" role="menu">
+            </ul>
+        </li>
+    </ul>
+</div>
+</div></div>    <!-- #site-navigation -->
+
+</header>
+
+<!-- #masthead -->
+<div id="main" tabindex="0" class="wrapper">
+
+
+
+
+<div class="ds-blog-post-detail">
+<div class="ds-flexGrid">
+  <div class="ds-flexRow">
+    <div class="ds-flexCol">
+            <div class="ds-content-wrapper ds-blog-post__content-wrapper">
+        <h6 class="ds-heading ds-heading--xs ds-blog-post__sub-title"><span>Product Information</span></h6>
+        <div class="ds-flexRow">
+          <div class="ds-flexCol-sm-12 ds-flexCol-md-9">
+            
+<div class="ds-blog-post__body-wrapper">
+  <div class="ds-blog-post__content">
+    <div class="ds-blog-post__header-wrapper">
+      <a target="_blank" rel="noopener noreferrer" href="https://people.sap.com/daniel.purucker" class="ds-blog-post__avatar "  >
+        <img alt='Author&#039;s profile photo Daniel Purucker' src='https://avatars.services.sap.com/images/daniel.purucker.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />      </a>
+      <div class="ds-blog-post__author-info-wrapper">
+        <div class="ds-user ds-blog-post__author">
+          <a class="ds-link ds-user__name " href="https://people.sap.com/daniel.purucker" target="_blank" title="Daniel Purucker" aria-label="" rel="noopener noreferrer">Daniel Purucker</a>
+                  </div>
+        <div class="ds-blog-post__meta-info">
+          <span class="ds-blog-post__date">May 26, 2021</span>
+          <span class="ds-blog-post__read-duration">12 minute read</span>
+        </div>
+      </div>
+    </div>
+    <h1 class="ds-heading ds-heading--m ds-blog-post__title">BTP, SCP, CAP, RAP&#8230; OMG</h1>
+    <div class="ds-blog-post__social-stats-wrapper">
+      <div class="ds-social-stats ">
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--comments"></i>0        </span>
+        <span id="post-likes-counter" class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--likes-outline"></i>11        </span>
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--views"></i>2,298        </span>
+      </div>
+          </div>
+    <div class="ds-blog-post__body ds-editor-content">
+      <p>R/2, R/3, ECC.. those were the days, when the SAP-life was &#8220;simple and easy&#8221;. Ok, not really simple and easy, however at least familiar and clearly laid out. However in recent days things are getting&#8230; complicated.<br />
+There are several “new” buzz-words like BTP, SCP, RAP, CAP. SAP products are becoming more numerous and the rebranding is making my head spin. Questions arise like, what’s this all about? What do I need to learn? Coming from ABAP and SAP BW I wonder, what’s useful for me and how I can facilitate the SAP Business Technology Platform (BTP): It&#8217;s a personal journey to get the overview on the SAP technological ecosystem up to date. And I welcome feedback, corrections and other thoughts along the way. Let&#8217;s get started…but be aware: this is a descent down the rabbit hole.</p>
+<h1>What is BTP?</h1>
+<p>On the SAP BTP Product Page this question is answered with “SAP BTP is the platform for the Intelligent Enterprise. Customers can achieve agility, business value, and continual innovation through integration, data to value, and extensibility of all SAP and third-party applications and data assets.” (<a href="https://www.sap.com/canada/products/business-technology-platform.html"  target="_blank" >SAP BTP Homepage</a>)<br />
+If you take a step back, this becomes a little clearer: At SAP TechEd 2020, SAP announced the SAP BTP, which is supposed to be the central, business-oriented technology platform for your SAP and 3rd party applications. Ok, but what does that mean? To clarify this, I’ll try two answer 3 questions:</p>
+<p>(1) What are the building blocks of SAP BTP?<br />
+(2) What can SAP BTP be used for?<br />
+(3) What’s the context of SAP BTP?</p>
+<h1>What are the building blocks of SAP BTP?</h1>
+<p>SAP BTP consists of 4 technology portfolios:<br />
+(1) Database and Data Management, which includes &#8211; among others &#8211; SAP HANA and SAP HANA Cloud as it’s technological basis.<br />
+(2) Analytics, which includes “SAP Analytics Cloud” (SAC), SAP Data Warehouse Cloud, and Business Objects BI. The goal is to deliver cross-application analytical insights throughout processes. To this end, for example, SAC is baked into several products, such as S/4 HANA (<a href="https://www.youtube.com/watch?v=ODS_jCocCwg&amp;list=PLWV533hWWvDlAu9dhv9eD-Gsp-3FSUz88&amp;index=3"  target="_blank" >Jürgen Müller, 2020, Business Technology Platform Highlights at SAP TechEd</a>).<br />
+(3) Application Development and Integration (includes SAP Integration Suite, SAP Extension Suite and SAP Process Orchestration) and last, but not least<br />
+(4) Intelligent Technologies (eg. SAP Conversational AI, Internet of Things, ML).</p>
+<p><img class=" ds-lightbox__img" src="https://www.sap.com/dam/application/shared/graphics/sap-business-technology-platform-deep-dive-graphic.svg.adapt.svg/1616408081554.svg" alt="SAP BTP Overview - Source: https://www.sap.com/germany/products/business-technology-platform.html" data-index="1" data-id="plbox-1327398" /><br />
+<em>Image &#8211; SAP BTP Overview &#8211; Source: <a href="https://www.sap.com/germany/products/business-technology-platform.html"  target="_blank" >SAP SE</a></em></p>
+<p>As the name suggests it’s a platform to “integrate data and processes”. SAP’s goal seems to integrate SAP Software with 3rd party tools, shifting the focus from tools to processes. “Bring your own programming language” (be it ABAP, Java, Python, whatever). Use whatever infrastructure you want (OnPrem, Hyperscaler, Cloud Foundry) – SAP BTP is about to be a language-agnostic, tool-independent, multicloud-based, common base of your business-processes &#8211; with the ultimate goal of “turning data into value” (<a href="https://blogs.sap.com/2021/01/27/a-robust-platform-for-rise-with-sap/#" >Müller Jürgen 2021</a>). Check out the <a href="https://blogs.sap.com/2021/01/27/a-robust-platform-for-rise-with-sap/#" >blog post “A Robust Platform for RISE with SAP” by CTO Juergen Mueller</a> for first hand insight.</p>
+<p>The SAP TechEd 2020 talk about the “Architecture Vision and Strategy behind SAP BTP” (<a href="https://www.youtube.com/watch?v=A7bLNdCBpxY&amp;list=PLXRqNBPFgx73MQT83V5NpC68oZXl6P2jo&amp;index=3"  target="_blank" >Michael Ameling, 2020</a>) mentions some key take-aways. BTP’s come to unify the plethora of technology stacks by providing a unified bus, which is event-driven and utilizes APIs (platform-driven integration instead of Point-toPoint integration):</p>
+<p>(a) it’s an event-driven architecture and extensible through APIs (api.sap.com)<br />
+(b) at the core is the “SAP One Domain Model” &#8211; one common data model along the platform-as-a-service (accessible through SAP Graph – the unified API Layer)<br />
+(c) integration is the target (this includes a seamless user experience (like the same “Look and Feel”), as well as data-harmonization and alignment of data and domain models across all applications (“SAP One Domain Model”)<br />
+(d) the platform should support development agility and speed<br />
+(e) it utilizes the multicloud (hyperscaler)<br />
+(f) Hybrid-scenarios are supported (Integration of S/4 on Prem)</p>
+<h1>What can SAP BTP be used for?</h1>
+<p>So, what can I do with SAP BTP? &#8211; Target is to “build and extend SAP applications quickly. It is a vital part of the transition to the Intelligent Enterprise” (SAP 2021): SAP mentions three scenarios:</p>
+<h2>1) Integration</h2>
+<p>“<a href="https://www.sap.com/germany/products/integration-suite.html"  target="_blank" >SAP Integration Suite</a>” (formerly Cloud Platform Integration Suite) can be used to integrate SAP and Non-SAP application using BTP as a “Hub”. The integration is done via APIs (<a href="https://api.sap.com/"  target="_blank" >API Business Hub</a>), or <a href="https://help.sap.com/viewer/product/OPEN_CONNECTORS/Cloud/en-US"  target="_blank" >Open Connectors</a> – This allows for loosely coupled architectures, based on APIs, events and messaging. In this way SalesForce, ServiceNow or Sharepoint, for example, can be integrated into one Fiori-App or into SAC. A hands on simple example can be found here: <a href="https://www.youtube.com/watch?v=W0qGNqucNaw"  target="_blank" >Youtube</a>, where a CRM is connected to Google Drive through “Open Connectors”.</p>
+<p><img class=" ds-lightbox__img" src="https://raw.githubusercontent.com/dapuru/images/b3f291fdeef4852a59b5d8eef1d75120868cf66c/Integration-Platform.png" alt="Integration Platform" data-index="2" data-id="plbox-1327398" /><br />
+<em>Image: Integration P2P vs. Platform Source: own, based on <a href="https://www.youtube.com/watch?v=A7bLNdCBpxY&amp;list=PLXRqNBPFgx73MQT83V5NpC68oZXl6P2jo&amp;index=3"  target="_blank" >Michael Ameling, 2020</a></em></p>
+<p>Further readings regarding the integration-scenario are:<br />
+&#8211; <a href="https://open.sap.com/courses/cp9"  target="_blank" >Open SAP course “Simplify Integration with SAP Cloud Platform Integration Suite”</a><br />
+&#8211; Help-Page: <a href="https://help.sap.com/viewer/368c481cd6954bdfa5d0435479fd4eaf/LATEST/en-US/2fb0aa4dc5194b589adcd1c5534901e3.html"  target="_blank" >help.sap.com &#8211; SAP Cloud Integration</a><br />
+&#8211; Starter-Tutorial on developers.sap.com: <a href="https://developers.sap.com/mission.cp-starter-integration-cpi.html"  target="_blank" >https://developers.sap.com/mission.cp-starter-integration-cpi.html</a> (Hint: Boosters can be found in the global BTP-Mainpage, not in the Subaccounts – guess who struggled with this for some time ;-).<br />
+&#8211; <a href="https://discovery-center.cloud.sap/serviceCatalog/integration-suite?region=all"  target="_blank" >Discovery-center &#8211; SAP Integration Suite</a></p>
+<h2>2) Extension</h2>
+<p>“<a href="https://www.sap.com/germany/products/extension-suite.html"  target="_blank" >SAP Extension Suite</a>” (formerly SAP Cloud Platform Extension Suite) can be used to add functionality to existing business solutions – both on-prem and cloud systems. It is broader in scope than the “classical” enhancements and modifications in ECC and S/4HANA systems, which add specific custom logic to the standard. Motivations for this so-called side-by-side extension is (according to “SAP Garage Jam ep.1”), eg.:</p>
+<p>&#8211; the integration of multiple backends to complement data<br />
+&#8211; to allow a different user-base (B2B, B2C) access to data, without giving access to the backend directly.<br />
+&#8211; to integrate 3rd party cloud services (eg. IoT, Analytics) – an example could be the verification of Business Partners (<a href="https://discovery-center.cloud.sap/missiondetail/3242/3268/"  target="_blank" >SAP Discovery Center &#8211; Extend SAP S/4HANA business processes on SAP BTP (cloud.sap)</a>)<br />
+&#8211; improve the user-experience (UI, mobile-access)<br />
+&#8211;&gt; in general: decoupling processes from the backend, by usage of the event-driven architecture.</p>
+<p>The steps for creating this kind of side-by-side extension are always similar – and follow this pattern: These steps are supported by tools – and that’s what the toolbox of the extension suite does:</p>
+<p><strong>1) Connect (to your systems)</strong><br />
+&#8211; Cloud Connector<br />
+&#8211; SAP Integration Suite<br />
+-..<br />
+<strong>2) Build endpoint</strong> (choose your programming model)<br />
+&#8211; Workflow Management<br />
+&#8211; Cloud Application Programming Model (CAP): Java, NodeJS<br />
+&#8211; ABAP Restful Programming Model (RAP): ABAP<br />
+-..<br />
+<strong>3) Add Channels (add a GUI)</strong><br />
+&#8211; SAP UI5, Fiori<br />
+&#8211; Mobile<br />
+-..<br />
+<strong>4) Deploy and operate</strong> (choose your runtime)<br />
+see next chapter</p>
+<p>Further readings regarding the extension-scenario are:<br />
+&#8211; <a href="https://open.sap.com/courses/cp11"  target="_blank" >Open SAP course “Introduction to SAP Cloud Platform Extension Suite”</a><br />
+&#8211; <a href="https://help.sap.com/doc/221f8f84afef43d29ad37ef2af0c4adf/HP_2.0/en-US/e254942b5d6641ee9af60b62810bb362.html"  target="_blank" >SAP Learning Journey &#8211; SAP Extension Suite</a><br />
+&#8211; <a href="https://blogs.sap.com/2020/07/01/event-driven-architecture-now-available-for-sap-ecc-users/" >Event-driven architecture – now available for SAP ECC users | SAP Blogs</a><br />
+&#8211; <a href="https://discovery-center.cloud.sap/missiondetail/3242/3268/"  target="_blank" >SAP Discovery Center &#8211; Extend SAP S/4HANA business processes on SAP BTP (cloud.sap)</a><br />
+<a href="https://blogs.sap.com/2020/06/25/sap-s-4hana-essentials-sap-s-4hana-extended-and-sap-s-4hana-anyprem.-how-to-keep-the-core-clean/" >Blog: SAP S/4HANA Essentials, SAP S/4HANA Extended and SAP S/4HANA Anyprem. How to keep the core clean?</a></p>
+<h2>3) Innovation</h2>
+<p>This is actually driven by the “Extension”-scenario. “fancy stuff”, like creating POCs or MVPs using bleeding-edge technology can be done side-by-side, while keeping your on-prem system “clean”. Scrolling through https://api.sap.com/ or https://discovery-center.cloud.sap/ gives an impression of the possibilities.</p>
+<p>Further readings regarding the innovation-scenario are:<br />
+<a href="https://api.sap.com/"  target="_blank" >https://api.sap.com/ </a><br />
+<a href="https://discovery-center.cloud.sap/"  target="_blank" >https://discovery-center.cloud.sap/</a></p>
+<h1>Context – SCP and environments</h1>
+<p>As of March 2021, SAP states that BTP is the new name for SCP “SAP Cloud Platform” (see <a href="https://www.sap.com/products/cloud-platform.html"  target="_blank" >“Rebranding of SAP Cloud Platform, March 2021”</a>. But it’s more than just a rebranding, according to (Michael Ameling 2020), because BTP comes with an enhanced scope. But – to keep it simple &#8211; what was true for SCP, is also true for BTP: Within SCP there were several so-called environments and runtimes, which (partly) still exist in SAP BTP (see <a href="https://blogs.sap.com/2020/05/09/sap-hana-cheat-sheet/" >https://blogs.sap.com/2020/05/09/sap-hana-cheat-sheet/</a> and <a href="https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/LATEST/en-US/15547f7e7ecd47ee9fa052b0e18c7b0a.html"  target="_blank" >help.sap.com</a>):</p>
+<p>According to the <a href="https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/LATEST/en-US/e67a1435bb571014b2758553897c59b6.html"  target="_blank" >SAP Glossary</a>, an environment “constitutes the SAP BTP actual Platform-as-a-Service offering that allows for the development and administration of applications. Each environment provides at least one application runtime, its own user and role management logic, and tools (for example, command line utility). Environments are integrated into the platform at the subaccount level.” A runtime is defined as “An engine or context for executing programs, such as Java Web Tomcat 8 or Node.js runtime.”.</p>
+<p>There are several different environments and they differ by the supported engines and programming languages, which can be used. E.g. Neo supports only Java, HTML5 and XS, whereas Cloud Foundry supports many more languages, like Java or Ruby.<br />
+To learn more about the runtimes, have a look at: <a href="https://blogs.sap.com/2020/10/12/the-runtime-for-your-cloud-foundry-applications-on-sap-cloud-platform-whats-in-a-name/" >https://blogs.sap.com/2020/10/12/the-runtime-for-your-cloud-foundry-applications-on-sap-cloud-platform-whats-in-a-name/</a></p>
+<p>For more detailed explanations have a look at these awesome blog-posts from Denys van Kempen about Cloud – especially the second one gives a great (historical) introduction:<br />
+&#8211; <a href="https://blogs.sap.com/2020/05/05/cloud-foundry-sap-hana-2.0-an-introduction/" >Cloud Foundry | SAP HANA 2.0 – An Introduction</a> (Denys van Kempen 2020)<br />
+&#8211; <a href="https://blogs.sap.com/2020/05/10/cloud-foundry-and-sap-sap-hana-2.0-an-introduction/" >Cloud Foundry and SAP | SAP HANA 2.0 – An Introduction</a> (Denys van Kempen 2020a)<br />
+&#8211; <a href="https://blogs.sap.com/2020/07/12/developing-applications-in-a-multicloud-environment/" >SAP Cloud Platform and the Multi-Cloud Foundation | An Introduction</a> (Denys van Kempen 2020b)</p>
+<h2>a) Neo (NetWeaver On-Demand)</h2>
+<p>“The SAP Cloud Platform Neo environment is based on a SAP propriety runtime environment that runs only in SAP operated Data Centers. It supports Java, SAP HANA XS and HTML5 applications” (<a href="https://saphanajourney.com/sap-analytics-cloud/learning-article/sap-cloud-platform-environments-cloud-foundry-vs-neo/"  target="_blank" >saphanajourney.com &#8211; CF vs. Neo</a>). The term Neo now refers to “reference the SAP-hosted environment on the SAP Cloud Platform and distinguish it from the Cloud Foundry environment hosted by other cloud providers.“ (Quote from <a href="https://blogs.sap.com/2020/05/10/cloud-foundry-and-sap-sap-hana-2.0-an-introduction/" >Denys van Kempen, Cloud Foundry and SAP | SAP HANA 2.0 – An Introduction</a>). Even Neo is explicitly not eof (end of life), SAP focuses on the “multi cloud first strategy” and hosting on hyperscalers (<a href="https://blogs.sap.com/2020/07/27/sap-cloud-platform-moving-forward-on-our-multi-cloud-strategy/" >Steffen Schad, SAP Cloud Platform – moving forward on our multi-cloud strategy</a>). Besides that, there are several articles and posts around, on how to migrate from Neo to CF, and “New customers and partners will be deployed on the multi-cloud foundation for SAP BTP by default” (<a href="https://blogs.sap.com/2020/08/10/sap-cloud-platform-multi-cloud-strategy-faqs/" >Yun-Hsuan Lin, SAP Business Technology Platform Multi-Cloud Strategy FAQs</a>). I will therefore not go into any further detail.</p>
+<p>see:<br />
+<a href="https://blogs.sap.com/2020/07/27/sap-cloud-platform-moving-forward-on-our-multi-cloud-strategy/" >Steffen Schad, SAP Cloud Platform – moving forward on our multi-cloud strategy</a><br />
+<a href="https://help.sap.com/viewer/b017fc4f944e4eb5b31501b3d1b6a1f0/Cloud/en-US/b02b326062c34bf19ea1ab395bc9891f.html"  target="_blank" >Help.sap.com &#8211; Why migrate from Neo to CF</a><br />
+<a href="https://saphanajourney.com/sap-analytics-cloud/neo-to-cloud-foundry/"  target="_blank" >Migrate Neo to CF</a><br />
+<a href="https://blogs.sap.com/2020/02/11/consuming-hyper-scaler-backing-services-on-sap-cloud-platform-an-update/" >Manjunath Baburao, Consuming hyper-scaler backing services on SAP Cloud Platform: An Update</a></p>
+<p>For more on Neo see:<br />
+&#8211; <a href="https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/LATEST/en-US/0f79436cf43a4785bb5b7ee9dac0c76a.html"  target="_blank" >Help.sap.com &#8211; Neo Environment</a><br />
+&#8211; <a href="https://help.sap.com/viewer/ea72206b834e4ace9cd834feed6c0e09/Cloud/en-US/34ac79024d41469a804ba9b9deeb5b1d.html"  target="_blank" >Help.sap.com &#8211; What Is SAP BTP, Neo Environment</a></p>
+<h2>b) Cloud Foundry</h2>
+<p>Cloud Foundry (CF) is an open-source, industry standard for multi-cloud environments (<a href="https://www.cloudfoundry.org/"  target="_blank" >https://www.cloudfoundry.org/</a>). Unlike Neo, which is hosted by SAP, CF can be hosted on any of the big 4 hyperscalers (AWS, Microsoft Azure, Google Cloud Platform and Alibaba Cloud, as well as OpenStack. The PaaS (platform as a service) offering hides the runtime and OS (and everything underneath, like virtualization and bare-metal), so that you can focus on your application and the data. CF also covers the deployment and management of the apps, taking care of dependencies via so-called “buildpacks”: languages like Java, Node.js, Ruby and others are supported (<a href="https://docs.cloudfoundry.org/buildpacks/system-buildpacks.html"  target="_blank" >docs.cloudfoundry.org &#8211; Buildpacks</a>).</p>
+<p><a href="https://docs.cloudfoundry.org/concepts/images/power-of-platform.png"  target="_blank" ><br />
+<em>Image: Cloud Foundry Overview &#8211; Source: https://docs.cloudfoundry.org/concepts/overview.html</em></a></p>
+<p>General information about Cloud Foundry: <a href="https://docs.cloudfoundry.org/concepts/overview.html"  target="_blank" >https://docs.cloudfoundry.org/concepts/overview.html</a><br />
+see: <a href="https://saphanajourney.com/sap-analytics-cloud/learning-article/sap-cloud-platform-environments-cloud-foundry-vs-neo/"  target="_blank" >https://saphanajourney.com/sap-analytics-cloud/learning-article/sap-cloud-platform-environments-cloud-foundry-vs-neo/</a></p>
+<h2>c) Kyma</h2>
+<p>The Kyma-Runtime is based on the open-source project of the same name. It’s a cloud-native platform, based on Kubernetes, “for extending (monolith) applications with serverless functions and microservices” (<a href="https://kyma-project.io/"  target="_blank" >https://kyma-project.io/</a>). It provides a “properly configured, monitored, and secured Kubernetes cluster”, so taking away the burden of these reoccurring standard-tasks from the programmer. Tools for this are bundled with Kyma, eg. monitoring is done by Prometheus and Grafana, logging by Loki,… and so on: “The project is designed to give you the tools you need to be able to write an end-to-end, production-grade cloud native application ” (<a href="https://kubernetes.io/blog/2019/05/23/kyma-extend-and-build-on-kubernetes-with-ease/"  target="_blank" >Kubernetes with ease</a>).</p>
+<p>You can use it to receive events and API-calls from the SAP-application, and connect 3rd party services from external sources (through the so called “service catalog”). To learn more about Kyma, see this blog-post: <a href="https://blogs.sap.com/2019/07/08/what-is-kyma" >https://blogs.sap.com/2019/07/08/what-is-kyma</a>/ . For a demo see this video from Devtoberfest (<a href="https://www.youtube.com/watch?v=6r8PwihJxsA"  target="_blank" >&#8220;SAP Cloud Platform, Kyma runtime”</a>).</p>
+<p>See:<br />
+<a href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/"  target="_blank" >https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/</a><br />
+<a href="https://kyma-project.io/docs/#overview-in-a-nutshell"  target="_blank" >https://kyma-project.io/docs/#overview-in-a-nutshell</a><br />
+<a href="https://blogs.sap.com/2019/07/08/what-is-kyma/" >https://blogs.sap.com/2019/07/08/what-is-kyma/</a><br />
+<a href="https://github.com/SAP-samples/sap-devtoberfest-2020/tree/master/topics/kyma"  target="_blank" >https://github.com/SAP-samples/sap-devtoberfest-2020/tree/master/topics/kyma</a><br />
+<a href="https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/LATEST/en-US/468c2f3c3ca24c2c8497ef9f83154c44.html"  target="_blank" >Help.sap.com &#8211; Kyma</a></p>
+<h2>d) ABAP environment</h2>
+<p>Last, but not least, is the “ABAP environment” &#8211; unofficially also called “Steampunk”. Actually it’s the possibility to write ABAP in the cloud. It is a way to extend on-prem SAP systems, using the latest technology – but sticking to a familiar programming language and decoupling extension code (<a href="https://blogs.sap.com/2019/08/20/its-steampunk-now" >https://blogs.sap.com/2019/08/20/its-steampunk-now</a>/). This blog posts also mentions a possible scenario “Think about scenarios that run in the Cloud, exploit SAP HANA and use other SAP Cloud Platform services, irrespective of the implementation language. And all this without disturbing or putting load on your on-prem ERP system, the stable digital core. With a decoupled approach using clean APIs, the times of extensions or modifications that complicate your next ERP upgrade are over” (<a href="https://blogs.sap.com/2018/09/04/sap-cloud-platform-abap-environment/" >Harald Kuck, SAP Cloud Platform ABAP Environment</a>).</p>
+<p>Be aware, that the scope of the ABAP language is limited (no SAP GUI, no Web Dynpro, no direct access to SAP tables,… instead use ADT, Fiori, Odata,..) &#8211; so there is “some” custom code adoption needed, when migrating to the cloud (<a href="https://blogs.sap.com/2019/02/27/custom-code-analysis-for-sap-s4hana-with-sap-fiori-app-custom-code-migration/" >Olga Dolinskaja, Custom code analysis for SAP S/4HANA with SAP Fiori App Custom Code Migration</a>). For a demo of the development process and the used tools see <a href="https://www.youtube.com/watch?v=eahXw8C4hc0"  target="_blank" >TechEd 2020 – DEV300</a> – SAP Cloud Platform, ABAP Environment Overview.</p>
+<p>To learn more about Steampunk, see:<br />
+<a href="https://blogs.sap.com/2020/07/12/developing-applications-in-a-multicloud-environment/" >Denys van Kempen, SAP Cloud Platform and the Multi-Cloud Foundation | An Introduction</a><br />
+<a href="https://blogs.sap.com/2018/09/04/sap-cloud-platform-abap-environment/" >Harald Kuck, SAP Cloud Platform ABAP Environment</a><br />
+<a href="https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/LATEST/en-US/11d62652aa2b4600a0fa136de0789648.html"  target="_blank" >help.sap.com &#8211; ABAP Environment</a><br />
+<a href="https://help.sap.com/doc/221f8f84afef43d29ad37ef2af0c4adf/HP_2.0/en-US/49047e7668844d419ccee567923a475e.html"  target="_blank" >SAP BTP, ABAP Environment &#8211; Learning Journey</a></p>
+<h1>How to use SAP BTP?</h1>
+<p>Within SAP BTP it’s possible to use a variety of different tool and programming languages. Which exactly are supported depends on the environment you are using. So: which environment you choose depends on your skills and the programming language of your choice <a href="https://answers.sap.com/questions/13209616/kyma-or-cf.html?childToView=13209635&amp;answerPublished=true#answer-13209635" >(see this post</a>).</p>
+<p>Depending, which platform you are using, there are two programming models available to jump start development, without the need to deal with boiler-plate coding.</p>
+<p>a) CAP can be used with CF: “The <strong>SAP Cloud Application Programming Model</strong> is a framework of languages, libraries, and tools for building enterprise-grade services and applications” (<a href="https://cap.cloud.sap/docs/about/"  target="_blank" >https://cap.cloud.sap/docs/about/</a>).</p>
+<p>To learn more, see:<br />
+<a href="https://blogs.sap.com/2018/10/10/application-programming-model-start-here/" >DJ Adams, SAP Cloud Application Programming Model (CAP) – start here</a><br />
+<a href="https://cap.cloud.sap/docs/get-started/in-a-nutshell"  target="_blank" >https://cap.cloud.sap/docs/get-started/in-a-nutshell</a><br />
+<a href="https://open.sap.com/courses/cp7"  target="_blank" >OpenSAP &#8211; Building Applications with SAP Cloud Application Programming Model</a></p>
+<p>b) <strong>ABAP RESTful Application Programming Model (RAP)</strong> can be used for Steampunk:<br />
+It “defines the architecture for efficient end-to-end development of intrinsically SAP HANA-optimized OData services (such as Fiori apps) in SAP BTP ABAP Environment or Application Server ABAP.” Architectural overview of RAP:<br />
+see: <a href="https://help.sap.com/viewer/923180ddb98240829d935862025004d6/LATEST/en-US/289477a81eec4d4e84c0302fb6835035.html"  target="_blank" >https://help.sap.com/viewer/923180ddb98240829d935862025004d6/LATEST/en-US/289477a81eec4d4e84c0302fb6835035.html</a></p>
+<p>To learn more, see:<br />
+<a href="https://blogs.sap.com/2019/10/25/getting-started-with-the-abap-restful-programming-model/" >Carine Tchoutouo Djomo, Getting Started with the ABAP RESTful Application Programming Model (RAP)</a><br />
+<a href="https://open.sap.com/courses/cp13"  target="_blank" >openSAP &#8211; Building Apps with the ABAP RESTful Application Programming Model</a><br />
+Doku help.sap.com &#8211; ABAP RESTful Application Programming Model<br />
+<a href="https://developers.sap.com/mission.scp-1-start-developing.html"  target="_blank" >https://developers.sap.com/mission.scp-1-start-developing.html</a></p>
+<h1>Summary</h1>
+<p>What did I cover in this blog post?<br />
+&#8211; I tried to understand what’s hidden behind the term BTP<br />
+&#8211; I gave a short overview on the possible scenarios<br />
+&#8211; I shed light on how that’s connected to SCP.</p>
+<p>What did I figure out? BTP is an “umbrella term” that encompasses several core technologies such as HANA, SAC and BI. But it is also a platform-as-a-service (PaaS) to integrate tools and technologies. It incorporates the SCP and pushes the idea further. It can be used to integrate SAP and Non-SAP systems as well as on-prem and cloud systems (integration-scenario). It can be used to enhance the customer experience by extending your systems (extension-scenario, side-by-side). The loosely-coupled architecture (using APIs and events) will help you gain speed in innovation and development.<br />
+However, there’s a catch: You need to look at the price tag and there are several “new” technologies involved your developers need to learn.</p>
+<p>But since SAP states in several places “innovation will happen in the cloud”, it seems to be a good idea to get to known to this platform and it’s capabilities. In a next post I’ll have a first look at “Steampunk” and try to figure out what are the crucial tools and techniques an “up to date” ABAPler needs to master. So stay tuned… and in the meantime have a look at these great resources about SAP BTP. Especially worth mentioning is the upcoming <a href="https://open.sap.com/courses/btp1"  target="_blank" >openSAP course “SAP Business Technology Platform in a Nutshell”</a> starting on July 7th 2021.</p>
+<h2>Learning Material</h2>
+<p><strong>Learning Journeys:</strong><br />
+<a href="https://help.sap.com/doc/221f8f84afef43d29ad37ef2af0c4adf/HP_2.0/en-US/ec5aa55abb8c4970bc3b07efe2253cfb.html"  target="_blank" >SAP Learning Journey &#8211; Basics of SAP BTP</a><br />
+<a href="https://help.sap.com/doc/221f8f84afef43d29ad37ef2af0c4adf/HP_2.0/en-US/f4a390d6ee7147aa89ba587102702677.html"  target="_blank" >SAP Learning Journey &#8211; SAP Integration Suite</a><br />
+<a href="https://help.sap.com/doc/221f8f84afef43d29ad37ef2af0c4adf/HP_2.0/en-US/e254942b5d6641ee9af60b62810bb362.html"  target="_blank" >SAP Learning Journey &#8211; SAP Extension Suite</a><br />
+<a href="https://help.sap.com/doc/221f8f84afef43d29ad37ef2af0c4adf/HP_2.0/en-US/49047e7668844d419ccee567923a475e.html"  target="_blank" >SAP BTP, ABAP Environment &#8211; Learning Journey</a></p>
+<p><strong>Discovery Center:</strong><br />
+<a href="https://discovery-center.cloud.sap/serviceCatalog/integration-suite?region=all"  target="_blank" >Discovery-center &#8211; SAP Integration Suite</a></p>
+<p><strong>opensap courses:</strong><br />
+<a href="https://open.sap.com/courses/cp9"  target="_blank" >OpenSAP CP9 &#8211; Simplify Integration with SAP Cloud Platform Integration Suite</a><br />
+<a href="https://open.sap.com/courses/cp11"  target="_blank" >OpenSAP CP11 &#8211; Introduction to SAP Cloud Platform Extension Suite</a><br />
+<a href="https://open.sap.com/courses/cp7"  target="_blank" >OpenSAP CP7 &#8211; Building Applications with SAP Cloud Application Programming Model</a><br />
+<a href="https://open.sap.com/courses/cp13"  target="_blank" >OpenSAP CP13 &#8211; Building Apps with the ABAP RESTful Application Programming Model</a><br />
+<a href="https://open.sap.com/courses/btp1"  target="_blank" >OpenSAP BTP1 &#8211; SAP Business Technology Platform in a Nutshell</a></p>
+<p><strong>Links:</strong><br />
+<a href="https://www.youtube.com/watch?v=eahXw8C4hc0"  target="_blank" >TechEd 2020 &#8211; SAP Cloud Platform &#8211; ABAP Environment &#8211; Steampunk</a><br />
+<a href="https://www.sap.com/germany/products/business-technology-platform.html"  target="_blank" >SAP BTP Product Homepage</a><br />
+<a href="https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/LATEST/en-US/e67a1435bb571014b2758553897c59b6.html"  target="_blank" >SAP BTP Glossary</a><br />
+<a href="https://help.sap.com/viewer/df50977d8bfa4c9a8a063ddb37113c43/Cloud/en-US/9f2bb927464e4d1ba3d13b2d79ca9bd1.html"  target="_blank" >Best Practices for SAP BTP</a><br />
+<a href="https://roadmaps.sap.com/board?PRODUCT=42F2E964FAAF1EDA9FF753E17F3000E5&amp;range=CURRENT-LAST#Q2%202021"  target="_blank" >SAP BTP Roadmap</a><br />
+<a href="https://www.sap.com/cmp/td/sap-cloud-platform-trial.html"  target="_blank" >SAP BTP Trial</a><br />
+<a href="https://www.sap.com/germany/products/business-technology-platform/resources.html?tab=2&amp;sort=title_asc"  target="_blank" >SAP BTP Learning Hub</a></p>
+    </div>
+  </div>
+  <div class="ds-blog-post__social-side-bar">
+    <div class="ds-sticky-on-scroll ">
+      <div class="ds-sticky-on-scroll__wrapper  ">
+        <div class="ds-sticky-on-scroll__content">
+          <div class="ds-blog-post__social-actions">
+            <button class="sap-button-follow ds-button ds-button--primary ds-blog-post__social-action ds-blog-post__social-action--follow" id="sap-button-follow-hdr-id" onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2021%2F05%2F26%2Fbtp-scp-cap-rap...-omg%2F%3Fs_action%3Dss_change_follow_status%26nonce%3D705a693f83'" rel="IDS_login"  type="button" data-content-type="blogpost" data-content-id="1327398" data-nonce="705a693f83" title="Please log into the system to use follow/unfollow functionality."><span class="ds-button-text">Follow</span></button>            <button type='button' class='ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action likes-post-link dolike ' rel='IDS_login' onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2021%2F05%2F26%2Fbtp-scp-cap-rap...-omg%2F%3Fs_action%3Dss_change_like_status%26nonce%3D580b46d63f'" title='Like' data-nonce='580b46d63f' data-post-id='1327398'><i class='ds-icon ds-icon--likes-outline ds-icon--regular ds-m-r-xs' tabindex='-1'></i><span class='ds-button-text'>Like</span></button>            <button type="button" class="ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action" title="RSS Feed" onclick="location.href='https://blogs.sap.com/2021/05/26/btp-scp-cap-rap...-omg/feed/'">
+              <i class="ds-icon ds-icon--rss-feed ds-icon--regular ds-m-r-xs" tabindex="-1"></i>RSS Feed
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+            <div class="ds-blog-post__social-row">
+              <div class="ds-blog-post__social-icons">
+                <a href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.sap.com%2F2021%2F05%2F26%2Fbtp-scp-cap-rap...-omg%2F' title='Share on Facebook' target='_blank'><span class='ds-social-icon ds-social-icon--dark-facebook'></span></a><a href='https://twitter.com/share?url=https%3A%2F%2Fblogs.sap.com%2F2021%2F05%2F26%2Fbtp-scp-cap-rap...-omg%2F&text=BTP%2C+SCP%2C+CAP%2C+RAP%E2%80%A6+OMG' title='Share on Twitter' target='_blank'><span class='ds-social-icon ds-social-icon--dark-twitter'></span></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.sap.com%2F2021%2F05%2F26%2Fbtp-scp-cap-rap...-omg%2F&title=BTP%2C+SCP%2C+CAP%2C+RAP%E2%80%A6+OMG' title='Share on LinkedIn' target='_blank'><span class='ds-social-icon ds-social-icon--dark-linkedin'></span></a>              </div>
+              <div class='ds-tooltip__wrapper'>
+    <div class='ds-tooltip__anchor'>
+    <button
+      type="button"
+      class="ds-button ds-button--secondary ds-blog-post__alert-moderator-button ds-button--disabled"
+      aria-label="Alert Moderator"
+      data-toggle="collapse"
+      data-hide-class="ds-collapse"
+      data-triggers=".alertModerator"
+      aria-expanded="false">Alert Moderator
+    </button>
+    </div>
+    <div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Alerting is not available for unauthorized users</div>
+</div>
+            </div>
+            
+  <div class="wprc-content-v3">
+    <div class="ds-blog-post-form ds-blog-post__alert-moderator-form ds-collapse alertModerator wprc-form-v3" data-toggle="collapseComponent" data-name="alertModerator">
+          </div>
+  </div>
+          </div>
+          <div class="ds-blog-post__right-side-bar ds-flexCol-sm-12 ds-flexCol-md-3">
+            <div id="sapassignedtagswidget-v3-2" class="ds-side-bar-widget ds-assigned-tags ds-m-b-l"><h3 class="ds-side-bar-widget__heading">Assigned Tags</h3></div><div id="sap-relatedcontent-widget-v3-2" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Similar Blog Posts<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="blogpost" data-limit="3"></ul></div></div><div id="sap-relatedcontent-widget-v3-3" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Related Questions<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="question" data-limit="3"></ul></div></div>          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="content-lightbox-modal"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="plbox-1327398"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="plbox-1327398" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://www.sap.com/dam/application/shared/graphics/sap-business-technology-platform-deep-dive-graphic.svg.adapt.svg/1616408081554.svg" alt="SAP BTP Overview - Source: https://www.sap.com/germany/products/business-technology-platform.html"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://raw.githubusercontent.com/dapuru/images/b3f291fdeef4852a59b5d8eef1d75120868cf66c/Integration-Platform.png" alt="Integration Platform"/></div><a class="lightbox-gallery-button--prev ds-lightbox__gallery-button ds-icon ds-icon--arrow-left" href="javascript:void(0);" aria-label="Show previous image"></a><a class="ds-lightbox__gallery-button lightbox-gallery-button--next ds-icon ds-icon--arrow-right" href="javascript:void(0);" aria-label="Show next image"></a></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>
+  <div class="ds-blog-post__comment-section">
+    <div class="ds-flexGrid">
+      <div class="ds-flexRow">
+        <div class="ds-flexCol-12 ds-flexCol-md-10 ds-flexCol-lg-10">
+          
+<div id="comments" class="ds-blog-post-comments">
+  
+      <div class="ds-blog-post-comments__counter" title="Number of Comments">
+      Be the first to leave a comment      </div>
+              <div class="dm-section dm-align-center dm-section-header__title" title="Please log on to comment" aria-role="alert">
+                You must be <a href="https://blogs.sap.com/wp-login.php?redirect_to=2021/05/26/btp-scp-cap-rap...-omg" class="opener js-idspopup" rel="IDS_login" title="Log On">Logged on</a> to comment or reply to a post.
+        </div>
+      
+    <div class="ds-blog-post-comments__list">
+        </div> <!-- main comments content area -->
+
+    
+            
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+                </div> <!-- #main -->
+                <div id="shared_footer" class="dm-container dm-wrapper">
+                    <footer class="dm-footer">
+    <div class="dm-footer__inner-wrapper">
+        <div class="dm-socialmedia">
+            <h5 class="dm-socialmedia__headline" id="hl-sharefollow">Find us on</h5>
+            <ul class="dm-socialmedia__links" aria-labelledby="hl-sharefollow">
+                <li><a href="https://www.facebook.com/sapcommunity" title="Facebook"><span class="dm-icon-encoded--facebook"></span></a></li>
+                <li><a href="https://twitter.com/SAPCommunity" title="Twitter"><span class="dm-icon-encoded--twitter"></span></a></li>
+                <li><a href="https://www.youtube.com/c/SAPCommunities" title="YouTube"><span class="dm-icon-encoded--youtube"></span></a></li>
+                <li><a href="https://www.linkedin.com/company/sap" title="LinkedIn"><span class="dm-icon-encoded--linkedin"></span></a></li>
+                <li><a href="https://instagram.com/sap/" title="Instagram"><span class="dm-icon-encoded--instagram"></span></a></li>
+                <li><a href="http://www.slideshare.net/SAP" title="Slideshare"><span class="dm-icon-encoded--slideshare"></span></a></li>
+                <li><a href="mailto:?subject='SAP Community'" title="Email Share"><span class="dm-icon-encoded--email"></span></a></li>
+            </ul>
+        </div>
+        <nav role="navigation" class="dm-footer__navigation">
+            <ul class="dm-footer__navigation__list" aria-label="footer navigation">
+                <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+                <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+                <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+                <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+                <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+                <li id="teconsent"></li>
+                <li><a href="https://www.sap.com/cmp/nl/sap-community-voice/index.html" target="_blank">Newsletter</a></li>
+                <li><a href="mailto:sapnetwork@sap.com" target="_blank">Support</a></li>
+            </ul>
+        </nav>
+    </div>
+</footer>                </div>
+            </div> <!-- #page -->
+            <script type="application/ld+json" data-schema="1327398-post-Default">{"@context":"https:\/\/schema.org\/","@type":"BlogPosting","@id":"https:\/\/blogs.sap.com\/2021\/05\/26\/btp-scp-cap-rap...-omg\/#BlogPosting","mainEntityOfPage":"https:\/\/blogs.sap.com\/2021\/05\/26\/btp-scp-cap-rap...-omg\/","headline":"BTP, SCP, CAP, RAP&#8230; OMG","name":"BTP, SCP, CAP, RAP&#8230; OMG","description":"R\/2, R\/3, ECC.. those were the days, when the SAP-life was &#8220;simple and easy&#8221;. Ok, not really simple and easy, however at least familiar and clearly laid out. However in recent days things are getting&#8230;","datePublished":"2021-05-26","dateModified":"2021-05-26","author":{"@type":"Person","@id":"https:\/\/blogs.sap.com\/author\/daniel.purucker\/#Person","name":"Daniel Purucker","url":"https:\/\/blogs.sap.com\/author\/daniel.purucker\/","image":{"@type":"ImageObject","@id":"https:\/\/avatars.services.sap.com\/images\/daniel.purucker_small.png","url":"https:\/\/avatars.services.sap.com\/images\/daniel.purucker_small.png","height":96,"width":96}},"publisher":{"@type":"Organization","name":"SAP Community Blogs","logo":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","width":600,"height":60}},"image":{"@type":"ImageObject","@id":"https:\/\/www.sap.com\/dam\/application\/shared\/graphics\/sap-business-technology-platform-deep-dive-graphic.svg.adapt.svg\/1616408081554.svg","url":"https:\/\/www.sap.com\/dam\/application\/shared\/graphics\/sap-business-technology-platform-deep-dive-graphic.svg.adapt.svg\/1616408081554.svg","height":"","width":""},"url":"https:\/\/blogs.sap.com\/2021\/05\/26\/btp-scp-cap-rap...-omg\/","about":["Product Information"],"wordCount":4211,"keywords":["SAP BTP Blog Post","SAP BTP Trial"]}</script>
+<script type="application/ld+json" data-schema="Breadcrumb">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"2021","item":"https:\/\/blogs.sap.com\/2021\/#breadcrumbitem"},{"@type":"ListItem","position":2,"name":"05","item":"https:\/\/blogs.sap.com\/2021\/\/05\/#breadcrumbitem"},{"@type":"ListItem","position":3,"name":"26","item":"https:\/\/blogs.sap.com\/2021\/\/05\/\/26\/#breadcrumbitem"},{"@type":"ListItem","position":4,"name":"BTP, SCP, CAP, RAP&#8230; OMG","item":"https:\/\/blogs.sap.com\/2021\/05\/26\/btp-scp-cap-rap...-omg\/#breadcrumbitem"}]}</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/action-tooltip-handler.js' id='tooltip-handler-js'></script>
+<script type='text/javascript' id='unified_header-js-extra'>
+/* <![CDATA[ */
+var headerInitArgs = {"system":"blogs","wrapperID":"page","breadcrumbItems":[{"text":"Blogs","href":"https:\/\/blogs.sap.com"}]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/js/scn-header.min.js' id='unified_header-js'></script>
+<script type='text/javascript' id='unified_header-js-after'>
+            scnHeader.init(headerInitArgs);
+            setCookie("userArgs", headerInitArgs.user ? JSON.stringify(headerInitArgs.user) : "", { path : "/" });
+    
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/header.js' id='designmate_header_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/subheader.js' id='designmate_subheader_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/designmate.js' id='designmate_script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/comment-reply.min.js' id='comment-reply-js'></script>
+<script type='text/javascript' id='satm_handler-js-extra'>
+/* <![CDATA[ */
+var satmContentSelectors = ["div.dm-contentDetail__body-content","div.dm-list-comments__item-content","div.ds-blog-post__body","div.ds-blog-post-comment__content"];
+var satmProfileBaseUrl = "people.sap.com\/";
+var satmChangeableElementsSelectors = ["div.dm-list-comments__item-content","div.ds-blog-post-comment__content"];
+var satmPluginEnabled = "1";
+var satmApiUrl = "https:\/\/uss.api.community.sap.com";
+var satmApiCallWithCredentials = "1";
+var satmRequestDelayMs = "100";
+/* ]]> */
+</script>
+<script type='text/javascript' defer src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-at-mention/js/sap-at-mention.min.js' id='satm_handler-js'></script>
+<script type='text/javascript' id='sap-comment-validation-js-extra'>
+/* <![CDATA[ */
+var commentValidation = {"validateMaxLinks":"1","max_links_number":"7","BLOGS_PAGE":"single"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/sap-comment-validation.min.js' id='sap-comment-validation-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-post-status.min.js' id='scn_post_status_check-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/jquery-plugins.min.js' id='sap_jquery_plugins-js'></script>
+<script type='text/javascript' id='sap-login-csrf-cookie-js-extra'>
+/* <![CDATA[ */
+var sapLoginCookieConfig = {"cookieName":"SAP_BLOGS_ANONYMOUS_NONCE","sapActionName":"s_action"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-login-csrf-cookie.min.js' id='sap-login-csrf-cookie-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.js' id='sap_lightbox_gallery_js-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/choices.min.js' id='choices.js-js'></script>
+<script type='text/javascript' id='wprc-script-js-extra'>
+/* <![CDATA[ */
+var wprcajaxhandler = {"ajaxurl":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-report-content/static/js/v3/scripts.min.js' id='wprc-script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/single.min.js' id='sap_single_v3-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/onscroll-sticky.min.js' id='onscroll_sticky-js'></script>
+<script type='text/javascript' id='blog-detail-page-js-extra'>
+/* <![CDATA[ */
+var alertReasonsSelectArgs = {"selectId":"sap-blog-alert-reasons","reasons":["Incorrect Tag\/Category\r","Cross-Posting\r","Private Information\r","Unprofessional Conduct\r","Spam"]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/dist/blog-detail.min.js' id='blog-detail-page-js'></script>
+<script type='text/javascript' id='sap_assignedtags_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var assignedTagsWidgetSettings = {"maxItemsBeforeHide":"7","data":{"SAP BTP, ABAP environment":"https:\/\/blogs.sap.com\/tags\/73555000100800001164\/","SAP BTP, Cloud Foundry environment":"https:\/\/blogs.sap.com\/tags\/73555000100800000287\/","SAP BTP, Kyma runtime":"https:\/\/blogs.sap.com\/tags\/73554900100800003012\/","SAP Business Technology Platform":"https:\/\/blogs.sap.com\/tags\/8077228b-f0b1-4176-ad1b-61a78d61a847\/","SAP BTP Blog Post":"https:\/\/blogs.sap.com\/tag\/sap-btp-blog-post\/","SAP BTP Trial":"https:\/\/blogs.sap.com\/tag\/sap-btp-trial\/"},"widgetClassname":".ds-assigned-tags"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/assigned-tags/js/sap-assigned-tags-widget.min.js' id='sap_assignedtags_widget_js_v3-js'></script>
+<script type='text/javascript' id='sap_relatedcontent_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var relatedContentWidgetSettings = {"widgetSelector":".widget_sap-relatedcontent-widget-v3","contentServiceUrl":"https:\/\/content.services.sap.com\/cse\/search\/topic","profileUrl":"https:\/\/people.sap.com","targetContentItem":{"id":1327398,"type":"blogpost","title":"BTP, SCP, CAP, RAP... OMG","primary_tag":"73555000100800001164"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/related-content/js/sap-related-content-widget.min.js' id='sap_relatedcontent_widget_js_v3-js'></script>
+<div id="wp-load_tinymce-wrap" class="wp-core-ui wp-editor-wrap html-active"><link rel='stylesheet' id='dashicons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dashicons.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='editor-buttons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/editor.min.css' type='text/css' media='all' />
+<style>#wp-load_tinymce-wrap {display:none;}</style>
+<div id="wp-load_tinymce-editor-container" class="wp-editor-container"><div id="qt_load_tinymce_toolbar" class="quicktags-toolbar"></div><textarea class="wp-editor-area" rows="20" cols="40" name="load_tinymce" id="load_tinymce"></textarea></div>
+</div>
+
+<link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/skin.min.css?wp-mce-49110-20201110' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/plugins/codesample/css/prism.css' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/content.min.css?wp-mce-49110-20201110' as='style'>
+		<script type="text/javascript">
+		tinyMCEPreInit = {
+			baseURL: "https://blogs.sap.com/wp-includes/js/tinymce",
+			suffix: ".min",
+						mceInit: {},
+			qtInit: {'load_tinymce':{id:"load_tinymce",buttons:"strong,em,link,block,del,ins,img,ul,ol,li,code,more,close"}},
+			ref: {plugins:"",theme:"modern",language:""},
+			load_ext: function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
+		};
+		</script>
+				<script type="text/javascript">
+		var ajaxurl = "/wp-admin/admin-ajax.php";
+		( function() {
+			var init, id, $wrap;
+
+			if ( typeof tinymce !== 'undefined' ) {
+				if ( tinymce.Env.ie && tinymce.Env.ie < 11 ) {
+					tinymce.$( '.wp-editor-wrap ' ).removeClass( 'tmce-active' ).addClass( 'html-active' );
+					return;
+				}
+
+				for ( id in tinyMCEPreInit.mceInit ) {
+					init = tinyMCEPreInit.mceInit[id];
+					$wrap = tinymce.$( '#wp-' + id + '-wrap' );
+
+					if ( ( $wrap.hasClass( 'tmce-active' ) || ! tinyMCEPreInit.qtInit.hasOwnProperty( id ) ) && ! init.wp_skip_init ) {
+						tinymce.init( init );
+
+						if ( ! window.wpActiveEditor ) {
+							window.wpActiveEditor = id;
+						}
+					}
+				}
+			}
+
+			if ( typeof quicktags !== 'undefined' ) {
+				for ( id in tinyMCEPreInit.qtInit ) {
+					quicktags( tinyMCEPreInit.qtInit[id] );
+
+					if ( ! window.wpActiveEditor ) {
+						window.wpActiveEditor = id;
+					}
+				}
+			}
+		}());
+		</script>
+				<div id="wp-link-backdrop" style="display: none"></div>
+		<div id="wp-link-wrap" class="wp-core-ui" style="display: none" role="dialog" aria-labelledby="link-modal-title">
+		<form id="wp-link" tabindex="-1">
+		<input type="hidden" id="_ajax_linking_nonce" name="_ajax_linking_nonce" value="d98c848450" />		<h3 id="link-modal-title">Insert/edit link</h3>
+		<button type="button" id="wp-link-close"><span class="screen-reader-text">Close</span></button>
+		<div id="link-selector">
+			<div id="link-options">
+				<p class="howto" id="wplink-enter-url">Enter the destination URL</p>
+				<div>
+					<label><span>URL</span>
+					<input id="wp-link-url" type="text" aria-describedby="wplink-enter-url" /></label>
+				</div>
+				<div class="wp-link-text-field">
+					<label><span>Link Text</span>
+					<input id="wp-link-text" type="text" /></label>
+				</div>
+				<div class="link-target">
+					<label><span></span>
+					<input type="checkbox" id="wp-link-target" /> Open link in a new tab</label>
+				</div>
+			</div>
+			<p class="howto" id="wplink-link-existing-content">Or link to existing content</p>
+			<div id="search-panel">
+				<div class="link-search-wrapper">
+					<label>
+						<span class="search-label">Search</span>
+						<input type="search" id="wp-link-search" class="link-search-field" autocomplete="off" aria-describedby="wplink-link-existing-content" />
+						<span class="spinner"></span>
+					</label>
+				</div>
+				<div id="search-results" class="query-results" tabindex="0">
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+				<div id="most-recent-results" class="query-results" tabindex="0">
+					<div class="query-notice" id="query-notice-message">
+						<em class="query-notice-default">No search term specified. Showing recent items.</em>
+						<em class="query-notice-hint screen-reader-text">Search or use up and down arrow keys to select an item.</em>
+					</div>
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="submitbox">
+			<div id="wp-link-cancel">
+				<button type="button" class="button">Cancel</button>
+			</div>
+			<div id="wp-link-update">
+				<input type="submit" value="Add Link" class="button button-primary" id="wp-link-submit" name="wp-link-submit">
+			</div>
+		</div>
+		</form>
+		</div>
+		<script type="text/javascript">jQuery(window).on("load", function() {tinymce.codesampleplugin.Prism.highlightAll();});</script><script type='text/javascript'>_satellite.pageBottom();</script>        </div> <!-- .page-wrapper -->
+    </body>
+</html>

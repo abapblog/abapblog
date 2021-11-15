@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	
+	>
+<channel>
+	<title>
+	Комментарии: MOVE-CORRESPONDING для внутренних таблиц	</title>
+	<atom:link href="https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/move-corresponding-dlya-vnutrennix-tablic/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/move-corresponding-dlya-vnutrennix-tablic/</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Wed, 24 Mar 2021 04:51:02 +0000</lastBuildDate>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>
+		Автор: Astrafox		</title>
+		<link>https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/move-corresponding-dlya-vnutrennix-tablic/#comment-369</link>
+
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 20 Jul 2012 14:13:11 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=567#comment-369</guid>
+
+					<description><![CDATA[В ответ на &lt;a href=&quot;https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/move-corresponding-dlya-vnutrennix-tablic/#comment-366&quot;&gt;Влад&lt;/a&gt;.
+
+Попробуйте данный класс: CL_REXC_FC_SERVICES]]></description>
+			<content:encoded><![CDATA[<p>Попробуйте данный класс: CL_REXC_FC_SERVICES</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Влад		</title>
+		<link>https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/move-corresponding-dlya-vnutrennix-tablic/#comment-366</link>
+
+		<dc:creator><![CDATA[Влад]]></dc:creator>
+		<pubDate>Fri, 20 Jul 2012 04:12:48 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=567#comment-366</guid>
+
+					<description><![CDATA[То есть в методе примерно такой код:
+ field-symbols: &#060;ls_src&#062; type any, &#060;ls_trg&#062; type any.
+ loop at it_src assigning &#060;ls_src&#062; .
+ read table ct_trg assigning &#060;ls_trg&#062; index sy-tabix.
+ check sy-subrc = 0.
+ move-corresponding &#060;ls_src&#062; to &#060;ls_trg&#062;.
+ endloop.]]></description>
+			<content:encoded><![CDATA[<p>То есть в методе примерно такой код:<br />
+ field-symbols: &lt;ls_src&gt; type any, &lt;ls_trg&gt; type any.<br />
+ loop at it_src assigning &lt;ls_src&gt; .<br />
+ read table ct_trg assigning &lt;ls_trg&gt; index sy-tabix.<br />
+ check sy-subrc = 0.<br />
+ move-corresponding &lt;ls_src&gt; to &lt;ls_trg&gt;.<br />
+ endloop.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Влад		</title>
+		<link>https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/move-corresponding-dlya-vnutrennix-tablic/#comment-363</link>
+
+		<dc:creator><![CDATA[Влад]]></dc:creator>
+		<pubDate>Thu, 19 Jul 2012 12:37:03 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=567#comment-363</guid>
+
+					<description><![CDATA[Как же этот метод работает? Из N-ой записи 1-ой таблицы данные будут перенесены именно в N-ую запись 2-ой? В данном примере 2-ая запись 1-ой останется на месте и данные из неё не пойдут во 2-ую. Она останется нетронутой и если пересылать из 2-ой таблицы в 1-ую...
+То есть в методе примерно такой код:
+field-symbols:  type any,  type any.
+loop at it_rc assigning .
+  read table ct_trg assigning  index sy-tabix.
+  check sy-subrc = 0.
+  move-corresponding  to .
+endloop.
+Честно говоря, не вижу большого смысла в таком негибком механизме...]]></description>
+			<content:encoded><![CDATA[<p>Как же этот метод работает? Из N-ой записи 1-ой таблицы данные будут перенесены именно в N-ую запись 2-ой? В данном примере 2-ая запись 1-ой останется на месте и данные из неё не пойдут во 2-ую. Она останется нетронутой и если пересылать из 2-ой таблицы в 1-ую&#8230;<br />
+То есть в методе примерно такой код:<br />
+field-symbols:  type any,  type any.<br />
+loop at it_rc assigning .<br />
+  read table ct_trg assigning  index sy-tabix.<br />
+  check sy-subrc = 0.<br />
+  move-corresponding  to .<br />
+endloop.<br />
+Честно говоря, не вижу большого смысла в таком негибком механизме&#8230;</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Astrafox		</title>
+		<link>https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/move-corresponding-dlya-vnutrennix-tablic/#comment-357</link>
+
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 18 Jul 2012 14:12:46 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=567#comment-357</guid>
+
+					<description><![CDATA[В ответ на &lt;a href=&quot;https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/move-corresponding-dlya-vnutrennix-tablic/#comment-354&quot;&gt;Влад&lt;/a&gt;.
+
+У нас в текущее время EhP 7.02 в 7.0 так же присутствовал.]]></description>
+			<content:encoded><![CDATA[<p>У нас в текущее время EhP 7.02 в 7.0 так же присутствовал.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Влад		</title>
+		<link>https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/move-corresponding-dlya-vnutrennix-tablic/#comment-354</link>
+
+		<dc:creator><![CDATA[Влад]]></dc:creator>
+		<pubDate>Wed, 18 Jul 2012 12:55:42 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=567#comment-354</guid>
+
+					<description><![CDATA[Hi! В какой же системе этот класс CL_RECA_DATA_SERVICES? Thanks]]></description>
+			<content:encoded><![CDATA[<p>Hi! В какой же системе этот класс CL_RECA_DATA_SERVICES? Thanks</p>
+]]></content:encoded>
+		
+			</item>
+	</channel>
+</rss>

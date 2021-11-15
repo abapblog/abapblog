@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22en%22%7D%7D">
+<head >
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+  <title>Комментировать или не комментировать? / Habr</title>
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+  </style>
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.961b6771.css" as="style"><link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.881c3e9d.js" as="script"><link rel="preload" href="https://assets.habr.com/habr-web/css/app.204e3e20.css" as="style"><link rel="preload" href="https://assets.habr.com/habr-web/js/app.fdbba7e2.js" as="script">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.961b6771.css"><link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.204e3e20.css">
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/en-compiled.66c1ca62e1b536e255d334fce9a49f38.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({en: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script>
+  
+  <script data-vue-meta="ssr" src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true" data-vmid="checkad"></script><script data-vue-meta="ssr" type="application/ld+json" data-vmid="ldjson-schema">{"@context":"http:\/\/schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/habr.com\/ru\/company\/enterra\/blog\/182574\/"},"headline":"Комментировать или не комментировать?","datePublished":"2013-06-12T10:12:50+04:00","dateModified":"2014-11-20T11:31:22+03:00","author":{"@type":"Person","name":"Акиньшин Андрей"},"publisher":{"@type":"Organization","name":"Habr","logo":{"@type":"ImageObject","url":"https:\/\/habrastorage.org\/webt\/a_\/lk\/9m\/a_lk9mjkccjox-zccjrpfolmkmq.png"}},"description":"По-настоящему хороший комментарий &mdash; тот, без которого вам удалось обойтись.  Дядюшка Боб  В последнее время меня стали очень утомлять оживлённые дебаты о том, ну...","url":"https:\/\/habr.com\/ru\/company\/enterra\/blog\/182574\/#post-content-body","about":["c_enterra","h_webdev","h_programming","h_complete_code","f_develop"],"image":["https:\/\/habrastorage.org\/getpro\/habr\/post_images\/e77\/e6c\/5ff\/e77e6c5ff1741d50167ab0f8d708725e.png"]}</script>
+  <script src="//www.googletagservices.com/tag/js/gpt.js" async></script>
+  <style>.grecaptcha-badge{visibility: hidden;}</style>
+  <meta name="habr-version" content="2.50.0">
+  
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613"><meta data-vue-meta="ssr" property="fb:pages" content="472597926099084"><meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image"><meta data-vue-meta="ssr" name="twitter:site" content="@habr_eng"><meta data-vue-meta="ssr" property="og:site_name" content="Habr" data-vmid="og:site_name"><meta data-vue-meta="ssr" property="og:title" content="Комментировать или не комментировать?" data-vmid="og:title"><meta data-vue-meta="ssr" name="twitter:title" content="Комментировать или не комментировать?" data-vmid="twitter:title"><meta data-vue-meta="ssr" name="aiturec:title" content="Комментировать или не комментировать?" data-vmid="aiturec:title"><meta data-vue-meta="ssr" name="description" content="По-настоящему хороший комментарий — тот,
+без которого вам удалось обойтись.
+ Дядюшка Боб
+
+В последнее время меня стали очень утомлять оживлённые дебаты о том, нужно ли комментировать код. Как..." data-vmid="description"><meta data-vue-meta="ssr" itemprop="description" content="По-настоящему хороший комментарий — тот,
+без которого вам удалось обойтись.
+ Дядюшка Боб
+
+В последнее время меня стали очень утомлять оживлённые дебаты о том, нужно ли комментировать код. Как..." data-vmid="description:itemprop"><meta data-vue-meta="ssr" property="og:description" content="По-настоящему хороший комментарий — тот,
+без которого вам удалось обойтись.
+ Дядюшка Боб
+
+В последнее время меня стали очень утомлять оживлённые дебаты о том, нужно ли комментировать код. Как..." data-vmid="og:description"><meta data-vue-meta="ssr" name="twitter:description" content="По-настоящему хороший комментарий — тот,
+без которого вам удалось обойтись.
+ Дядюшка Боб
+
+В последнее время меня стали очень утомлять оживлённые дебаты о том, нужно ли комментировать код. Как..." data-vmid="twitter:description"><meta data-vue-meta="ssr" property="aiturec:description" content="По-настоящему хороший комментарий — тот,
+без которого вам удалось обойтись.
+ Дядюшка Боб
+
+В последнее время меня стали очень утомлять оживлённые дебаты о том, нужно ли комментировать код. Как..." data-vmid="aiturec:description"><meta data-vue-meta="ssr" itemprop="image" content="https://habr.com/share/publication/182574/d0c98dd85090f3300824cabf0cf08562/" data-vmid="image:itemprop"><meta data-vue-meta="ssr" property="og:image" content="https://habr.com/share/publication/182574/d0c98dd85090f3300824cabf0cf08562/" data-vmid="og:image"><meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width"><meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height"><meta data-vue-meta="ssr" property="aiturec:image" content="https://habr.com/share/publication/182574/d0c98dd85090f3300824cabf0cf08562/" data-vmid="aiturec:image"><meta data-vue-meta="ssr" name="twitter:image" content="https://habr.com/share/publication/182574/d0c98dd85090f3300824cabf0cf08562/" data-vmid="twitter:image"><meta data-vue-meta="ssr" property="vk:image" content="https://habr.com/share/publication/182574/d0c98dd85090f3300824cabf0cf08562/" data-vmid="vk:image"><meta data-vue-meta="ssr" property="aiturec:item_id" content="182574" data-vmid="aiturec:item_id"><meta data-vue-meta="ssr" property="aiturec:datetime" content="2013-06-12T06:12:50.000Z" data-vmid="aiturec:datetime"><meta data-vue-meta="ssr" property="og:type" content="article" data-vmid="og:type"><meta data-vue-meta="ssr" property="og:locale" content="ru_RU" data-vmid="og:locale"><meta data-vue-meta="ssr" name="keywords" content="комментарии, совершенный код">
+  <link data-vue-meta="ssr" href="https://habr.com/en/company/enterra/blog/182574/" rel="og:url" data-vmid="og:url"><link data-vue-meta="ssr" href="https://habr.com/en/rss/post/182574/?fl=en" type="application/rss+xml" title="" rel="alternate" name="rss"><link data-vue-meta="ssr" href="https://habr.com/ru/company/enterra/blog/182574/" rel="canonical" data-vmid="canonical"><link data-vue-meta="ssr" data-vmid="hreflang"><link data-vue-meta="ssr" image_src="image" href="https://habr.com/share/publication/182574/d0c98dd85090f3300824cabf0cf08562/" data-vmid="image:href">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44">
+  <meta name="msapplication-TileColor" content="#629FBC">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link
+    rel="shortcut icon"
+    type="image/png"
+    sizes="16x16"
+    href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png"
+  >
+  <link
+    rel="shortcut icon"
+    type="image/png"
+    sizes="32x32"
+    href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png"
+  >
+  <link
+    rel="apple-touch-icon"
+    type="image/png"
+    sizes="76x76"
+    href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png"
+  >
+  <link
+    rel="apple-touch-icon"
+    type="image/png"
+    sizes="120x120"
+    href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png"
+  >
+  <link
+    rel="apple-touch-icon"
+    type="image/png"
+    sizes="152x152"
+    href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png"
+  >
+  <link
+    rel="apple-touch-icon"
+    type="image/png"
+    sizes="180x180"
+    href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png"
+  >
+  <link
+    rel="apple-touch-icon"
+    type="image/png"
+    sizes="256x256"
+    href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png"
+  >
+  <link
+    rel="apple-touch-startup-image"
+    media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png"
+  >
+  <link
+    rel="mask-icon"
+    color="#77a2b6"
+    href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg"
+  >
+  <link
+    crossorigin="use-credentials"
+    href="/manifest.webmanifest"
+    rel="manifest"
+  >
+</head>
+<body>
+
+
+<div id="app" data-server-rendered="true" data-async-called="true"><div class="tm-layout__wrapper"><!----> <div></div> <!----> <header class="tm-header"><div class="tm-page-width"><div class="tm-header__container"><!----> <span class="tm-header__logo-wrap"><a href="/en/" class="tm-header__logo tm-header__logo_en"><svg height="16" width="16" class="tm-svg-img tm-header__icon"><title>Habr</title> <use xlink:href="/img/habr-logo-en.svg#logo"></use></svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> <!----> <a href="/en/sandbox/start/" class="tm-header__become-author-btn">
+            How to become an author
+          </a> <!----> <!----> <!----></div></div></header> <div class="tm-layout"><div class="tm-page-progress-bar"></div> <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky"><div class="tm-page-width"><div class="tm-base-layout__header-wrapper"><div class="tm-main-menu"><div class="tm-main-menu__section"><nav class="tm-main-menu__section-content"><!----> <a href="/en/all/" class="tm-main-menu__item">
+        All streams
+      </a> <a href="/en/flows/develop/" class="tm-main-menu__item">
+          Development
+        </a><a href="/en/flows/admin/" class="tm-main-menu__item">
+          Admin
+        </a><a href="/en/flows/design/" class="tm-main-menu__item">
+          Design
+        </a><a href="/en/flows/management/" class="tm-main-menu__item">
+          Management
+        </a><a href="/en/flows/marketing/" class="tm-main-menu__item">
+          Marketing
+        </a><a href="/en/flows/popsci/" class="tm-main-menu__item">
+          PopSci
+        </a></nav></div></div> <div class="tm-header-user-menu tm-base-layout__user-menu"><a href="/en/search/" class="tm-header-user-menu__item tm-header-user-menu__search"><svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark"><title>Search</title> <use xlink:href="/img/megazord-v24.ce74655c.svg#search"></use></svg></a> <!----> <!----> <!----> <div class="tm-header-user-menu__item tm-header-user-menu__user_desktop"><div class="tm-dropdown"><div class="tm-dropdown__head"><svg height="24" width="24" data-test-id="menu-toggle-guest" class="tm-svg-img tm-header-user-menu__icon"><title>Profile</title> <use xlink:href="/img/megazord-v24.ce74655c.svg#header-user"></use></svg> <!----></div> <!----></div> <!----></div> <!----></div></div></div></div> <!----> <div class="tm-page-width"></div> <main class="tm-layout__container"><div hl="en" companyName="enterra" data-async-called="true" class="tm-page"><div class="tm-page-width"><div class="tm-page__header"><!----></div> <div class="tm-page__wrapper"><div class="tm-page__main tm-page__main_has-sidebar"><div class="pull-down"><div class="pull-down__header" style="height:0px;"><div class="pull-down__content" style="bottom:10px;"><svg height="24" width="24" class="tm-svg-img pull-down__arrow"><title>Pull to refresh</title> <use xlink:href="/img/megazord-v24.ce74655c.svg#pull-arrow"></use></svg></div></div> <div class="tm-article-presenter"><div class="tm-company-card tm-company-article__company-card"><div class="tm-company-card__info"><div class="tm-company-card__header"><a href="/en/company/enterra/profile/" class="tm-company-card__avatar"><div class="tm-entity-image"><img alt="" height="48" src="//habrastorage.org/getpro/habr/companies/5fe/858/4c6/5fe8584c62a1ad73a4d0659ab16639cf.png" width="48" class="tm-entity-image__pic"></div></a> <!----> <div class="tm-rating tm-company-card__rating"><div class="tm-rating__header"> <div class="tm-rating__counter">0</div></div> <div class="tm-rating__text">
+    Rating
+  </div></div></div> <div class="tm-company-card__info"><a href="/en/company/enterra/profile/" class="tm-company-card__name">
+        Enterra
+      </a> <div class="tm-company-card__description"></div></div></div> <div class="tm-company-card__buttons"><!----> <!----></div></div> <div class="tm-article-presenter__body"><div class="tm-misprint-area"><div class="tm-misprint-area__wrapper"><article class="tm-article-presenter__content tm-article-presenter__content_narrow"><div class="tm-article-presenter__header"> <div class="tm-article-snippet tm-article-presenter__snippet"><div class="tm-article-snippet__meta-container"><div class="tm-article-snippet__meta"><span class="tm-user-info tm-article-snippet__author"><a href="/en/users/DreamWalker/" title="DreamWalker" class="tm-user-info__userpic"><div class="tm-entity-image"><img alt="" height="24" loading="lazy" src="//habrastorage.org/r/w32/getpro/habr/avatars/389/00a/7e4/38900a7e414cc602eff71e4983752fef.jpg" width="24" class="tm-entity-image__pic"></div></a> <span class="tm-user-info__user"><a href="/en/users/DreamWalker/" class="tm-user-info__username">
+      DreamWalker
+    </a> </span></span> <span class="tm-article-snippet__datetime-published"><time datetime="2013-06-12T06:12:50.000Z" title="2013-06-12, 10:12">12  June  2013 at 10:12</time></span></div> <!----></div> <h1 lang="ru" class="tm-article-snippet__title tm-article-snippet__title_h1"><span>Комментировать или не комментировать?</span></h1> <div class="tm-article-snippet__hubs"><span class="tm-article-snippet__hubs-item"><a href="/en/company/enterra/blog/" class="tm-article-snippet__hubs-item-link router-link-active"><span>Enterra corporate blog</span> <!----></a></span><span class="tm-article-snippet__hubs-item"><a href="/en/hub/webdev/" class="tm-article-snippet__hubs-item-link"><span>Website development</span> <span title="Core hub" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/en/hub/programming/" class="tm-article-snippet__hubs-item-link"><span>Programming</span> <span title="Core hub" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/en/hub/complete_code/" class="tm-article-snippet__hubs-item-link"><span>Perfect code</span> <span title="Core hub" class="tm-article-snippet__profiled-hub">*</span></a></span></div> <!----> <!----> <!----></div></div> <!----> <div data-gallery-root="" lang="ru" class="tm-article-body"><div id="post-content-body" class="article-formatted-body article-formatted-body_version-1"><div xmlns="http://www.w3.org/1999/xhtml"><img src="/img/image-loader.svg" align="left" data-src="https://habrastorage.org/getpro/habr/post_images/e77/e6c/5ff/e77e6c5ff1741d50167ab0f8d708725e.png"/><i>По-настоящему хороший комментарий — тот,<br/>
+без которого вам удалось обойтись.<br/>
+ Дядюшка Боб</i><br/>
+<br/>
+В последнее время меня стали очень утомлять оживлённые дебаты о том, нужно ли комментировать код. Как правило, по одну сторону баррикад — самоуверенные джуниоры, имеющие непререкаемую позицию вида <i>«А как же его не комментировать, ведь без комментариев непонятно будет!»</i>. По другую — умудрённые опытом сеньоры. Они понимают, что если возможно обойтись без комментариев, то <i>«Лучше бы, чёрт возьми, так и сделать!»</i>. Наверное, у многих жажда комментировать идёт со студенческой скамьи, когда товарищи преподаватели заставляли комментировать каждую строчку, <i>«чтобы студент лучше разобрался»</i>. В реальном проекте не должно быть кучи комментариев, которые только и делают, что засоряют код. Впрочем, я не агитирую вообще не писать комментарии, но если вам удалось написать такой код, который не требует пояснений, то расценивайте это, как свою маленькую победу. Сразу хотелось бы сослаться на нескольких очень умных книжек, на основе которых формировалась моя позиция. Я люблю и уважаю авторов этих работ, полностью разделяя их мнение.<ul>
+<li><a href="http://www.ozon.ru/context/detail/id/5508646/">С. Макконнелл, «Совершенный код. Мастер-класс»</a></li>
+<li><a href="http://www.ozon.ru/context/detail/id/20216991/">Р. Мартин, «Чистый код. Создание, анализ и рефакторинг»</a></li>
+<li><a href="http://www.ozon.ru/context/detail/id/8466390/">Д. Босуэлл, Т. Фаучер, «Читаемый код, или Программирование как искусство»</a></li>
+</ul><a name="habracut"></a><br/>
+Итак, что же меня так раздражает в комментариях? Приведу несколько основных тезисов:<ul>
+<li>Комментарии захламляют непосредственный код, ухудшают его читаемость</li>
+<li>Комментарии требуют время на написание и поддержку</li>
+<li>Комментарии лгут (начинаем от криво написанных, заканчиваем устаревшими)</li>
+</ul><br/>
+В принципе, я согласен с тем, что в некоторых случаях комментарии всё-таки нужны. Но ваш код будет тем прекраснее, чем будет меньше таких случаев. Кроме того, написание хорошего комментария — это тоже искусство. Увы, им обладают не так много программистов, большинство пишут комментарии абы как. Польза от этого зачастую сомнительная. А чем тратить время и силы на написание хорошего грамотного комментария, не лучше ли потратиться на переписывание кода, чтобы он больше не требовал комментария?<br/>
+<br/>
+Давайте обсудим некоторые типичные сценарии, в которых можно сказать что-нибудь определённое про надобность комментария. Примеры кода я привожу на C#, но для данной темы это не принципиально.<br/>
+<br/>
+<h1>Когда без комментариев можно обойтись</h1><h4>Комментарии, которые повторяют код</h4>Давайте взглянем на код:<pre><code>// Этот метод отвечает за подсчёт суммы элементов массива
+public int CalcSumOfElement(int[] elements) // Метод принимает на вход массив элементов
+{
+  int result = 0; // Заводим специальную переменную под результат
+  int n = elements.Length; // Узнаём длину массива, т.е. количество элементов
+  for (int i = 0; i &lt; n; i++) // Запускаем цикл по всем элементам
+    result += elements[i]; // Прибавляем к результату очередной элемент
+  return result; // Возвращаем результат
+}
+</code></pre>Этот пример, конечно, искусственный, но, увы, я не утрирую. Я действительно не раз встречал подобный код. В данном примере комментарии не несут нам ничего нового — абсолютно всё и так понятно из кода. Но при этом прочитать этот код без захламляющего комментирования намного проще. Я уж не говорю про развитие кода: поддерживать такой уровень комментирования очень утомительно. Скорее всего при усложнении функционала половина кода останется вообще без комментариев, а другая — с кривыми устаревшими комментариями.<br/>
+<br/>
+<h4>Комментарии, которые поясняют синтаксис</h4>Ну, а вот такой пример:<pre><code>public class Item
+{
+  private int value; // Это приватное поле, извне оно не доступно
+
+  // Это конструктор
+  public Item(int twoValue)
+  {
+    value = twoValue >> 1; // Два знака больше означают побитовый сдвиг вправо
+    // таким образом мы делим число на два
+  }
+}
+</code></pre>Если это лабораторная работа первокурсника, то всё нормально. А вот если это продакшн код, и ваши программисты нуждаются в таких комментариях, то у меня для вас плохие новости. Наверное, эта статья не для вас.<br/>
+<br/>
+<h4>Комментарии, которые поясняют стандартные классы</h4><pre><code>HashSet&lt;int> set; // Это структура данных, которая называется Хеш-Сет
+// Она представляет собой множество элементов
+// Мы очень быстро можем узнать, есть ли элемент в этом множестве или нет
+// Подробнее про хеш-таблицы можно почитать в википедии: http://ru.wikipedia.org/wiki/%D0%A5%D0%B5%D1%88-%D1%82%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0
+</code></pre>Если программист действительно не знает назначение какого-то стандартного класса или метода, то он всегда может погуглить / почитать документацию / спросить у товарища. А большинство нормальных программистов скорее всего и так всё знает. Поэтому польза таких комментариев ну очень сомнительна.<br/>
+<br/>
+<h4>Комментарии, которые компенсируют плохие наименования</h4><pre><code>// Устанавливаем соединение с сервером
+// public void DoIt()
+</code></pre>Я согласен, что далеко не всегда удаётся придумать хорошее название для класса/метода/свойства/переменной. А если проект сдавать вчера, то времени на придумывание красивого названия просто нет. А давайте возьмём какое-нибудь произвольное название, а в комментарии объясним то, что происходит. Это же намного проще и быстрее! Или же всё-таки вы найдёте минутку-другую на придумывание понятного названия?<br/>
+<br/>
+<h4>Комментарии, которые объясняют абзац</h4>Часто приходится слышать подобные заявления: <i>«Не, ну этот метод занимает 300 строк, он очень много всего делает. Без комментариев в нём не разобраться. Сейчас я напишу перед каждыми 10-строчками о том, что в них делается»</i>. Если действительно дела обстоят так, то, возможно, что-то вы делаете не так. Возможно стоит разбить большой 300-строчный метод на несколько маленьких методов. И каждому маленькому методу дать понятное название — тогда и комментарии будут не нужны.<br/>
+<br/>
+<h4>Комментарии, которые поясняют константы</h4><pre><code>public int GetSeconds(int hours)
+{
+  return hours * 3600; // 3600 - это количество секунд, образующих час
+}
+</code></pre>Ну, в таком варианте, наличие комментария — это более адекватный вариант, чем просто магическое число, которое закралось в код и непонятно что обозначает. Но ещё лучше бы было сделать именованную константу, из названия которой всё было бы понятно. Например, так:<pre><code>private const int SecondsInHour = 3600;
+public int GetSeconds(int hours)
+{
+  return hours * SecondsInHour;
+}
+</code></pre><br/>
+<h4>Комментарии, которые не относятся к программированию</h4>Мне очень нравится байка из «Совершенного кода» про то, как один программист всю ночь пытался расшифровать вот такой комментарий.<pre><code>MOV AX, 723h ; R. I. P. L. V. В. 
+</code></pre>А несколько месяцев спустя он встретился с автором этого кода и узнал, что комментарий расшифровывается следующим образом: «Rest in peace, Ludwig van Beethoven», т.к. 723 — это шестнадцатеричное представление года смерти Бетховена.<br/>
+Увы, некоторые программисты считают программный код своеобразным форумом, в котором можно общаться. Некоторые пытаются проявить своё остроумие (чуть ли не анекдоты рассказывают), другие пытаются нам что-то рассказать о себе (типа <i>«Сейчас уже три часа ночи, но я всё равно пишу этот класс, ведь я так люблю программировать»</i>). Не нужно так делать, для общения есть сотни других способов. Если комментарий вставлен в код, то он должен нести в себе что-то полезное для проекта.<br/>
+<br/>
+<h4>Комментарии, которые содержат мысли</h4>Бывает, что в комментарии содержатся очень умные мысли, от которых много проку. Но в большинстве случаев это совсем не так.<pre><code>public void Main()
+{
+  // Ну, это очень полезный метод.
+  // Он выполняет основную логику этого класса.
+  // Сначала я хотел назвать его Run.
+  // Но потом подумал, Run переводится «бежать».
+  // А этот метод никуда не бежит, он очень медленный.
+  // Я думал об этом, пока мыл посуду.
+  // И когда я её домыл, я вернулся к компьютеру и переименовал метод в Main.
+  // Ведь это главный метод данного класса, пусть он называется Main.
+}
+</code></pre><br/>
+<h4>Комментарии, которые содержат примеры использования</h4>Иногда автор метода не уверен, что все правильно поймут, как пользоваться его методом. И тогда он приводит примеры использования, которые как бы говорят, что вернёт метод на определённых входных данных.<pre><code>// Sum(1, 2) == 3
+// Sum(2, 1) == 3
+// Sum(2, 2) == 4
+public int Sum(int a, int b)
+</code></pre>А я так считаю — для каждой задачи должен быть свой инструмент. Для этой задачи люди давно придумали удобный инструмент, он называется Unit-тесты. Очень толковая штука. Нужны ли на самом деле Unit-тесты или нет — также дискуссионная тема. Но если в проекте всё-таки возникла потребность описать для метода примеры возвращаемых результатов, то почему бы просто не сделать соответствующий Unit-тест?<br/>
+<br/>
+<h4>Комментарии, которые содержат историю написания</h4>К счастью, давненько я подобного не видел, но иногда доводится встречать комментарии вида:<pre><code>// 11.06.13: Исправил багу в методе. Раньше он работал так-то так-то, а теперь работает иначе.
+// 12.06.13: Ой, та бага — была не бага. Вернул всё обратно.
+</code></pre>Повторю ещё раз свою мысль: для каждой задачи — свой инструмент. Системы контроля версий прекрасно умеют хранить историю изменений. Не нужно нагружать исходники никому не нужной историей того, как вы что писали. Если кого-то будет это интересовать, то он всегда может посмотреть в репозитории.<br/>
+<br/>
+<h4>Комментарии, которые содержат код</h4>Эти комментарии меня особенно печалят. Читаешь, скажем, код какого-нибудь хорошего класса. И тут:<pre><code>// int number = GetNumber()
+// int number = 4;
+// int number = 5;
+int number = 4;
+// double number = 4.5;
+// decimal number = 4.5;
+// string number = "Это число";
+</code></pre>Вот что этим хотел сказать автор? Некоторые авторы хотят этим сказать: я провожу эксперименты по изменению кода, но при этом не хочу терять старые версии этих строчек, вдруг к ним придётся вернуться. Этот тезис возвращает нас к мысли про репозиторий, который умеет хранить все промежуточные версии вашей писанины — никуда они не пропадут. Пожалейте других разработчиков, которые будут читать ваш код. А хуже всего, что этот код в проекте теперь надолго. Автор после кучки экспериментов забывает удалить плохие версии, а его коллеги опасаются бездумно удалять то, назначение чего непонятно: <i>«я вот сейчас всё удалю, а потом окажется, что оно было ну очень нужно, тут был великий замысел, а я всё испортил».</i><br/>
+<br/>
+<h4>Комментарии, которые непонятны</h4><pre><code>bool flagA = true;
+bool flagB = false;
+bool flagC = true;
+if (Condition(flagA, flagB, flagC))
+  Foo();
+// else флаг равен true, выключение сервера
+</code></pre>В подобных случаях никогда нельзя догадаться что хотел сказать автор. Какой флаг равен true? Он всегда равен true в else-ветке или тут нужно дописать код, в котором нужно присвоить флагу значение true. А что за сервер, почему он выключается? Он выключится сам или нам нужно самим его выключить?<br/>
+От подобных комментариев вреда больше, чем пользы. Сведений он в себе по факту не несёт, а вместо этого только смущает читателя. Не смущайте читателя вашего кода! Или не пишите ничего вовсе, или потратьте время на написание доходчивого сообщения, которое всем будет понятно.<br/>
+<br/>
+<h4>Комментарии, которые содержат ну очень много текста</h4>Некоторые комментаторы очень боятся быть непонятыми. Ну, или написать слишком мало. Поэтому комментарий к методу из трёх строчек может занимать несколько экранов. В этом обширном сочинении вы узнаете об используемых алгоритмах, их временной сложности, почитаете псевдокод метода, блок-схему в ASCII-графике, обоснование именования переменных, соображения общего характера. Причём всё будет расписано настолько подробно, чтобы даже первоклассник понял.<br/>
+Это плохой подход, он заставляет тратить читателя очень много времени на изучение вашего сочинения. Если вы уж решили писать комментарий, то вам следует озаботиться его лаконичностью (разумеется, не в ущерб понятности или информативности).<br/>
+<br/>
+<h4>Комментарии, которые врут</h4><pre><code>// Произведение двух чисел
+public int Sum(int a, int b)
+</code></pre>Вы опять смущаете вашего читателя. Что тут происходит? Возможно, метод когда-то считал произведение, а потом его переделали в сумму, комментарий стал устаревшим. А может наоборот: комментарий обновили, а про название метода забыли. А может метод с самого начала считал сумму, а программист ошибся при комментировании. А метод может быть на самом деле очень сложный, придётся потратить много времени, чтобы разобраться, какая из черепашек обманывает.<br/>
+<br/>
+<h1>Когда можно и прокомментировать</h1><h4>Комментарии, которые повышают уровень абстракции</h4>Предметная область может быть очень сложна, не всегда возможно подобрать краткие названия для классов, из которых сразу будет понятно, чему они соответствуют. Поэтому вполне нормально подобрать какой-нибудь ёмкий термин для обозначения сложной сущности предметной области. Основные программисты команды и так его наизусть знают, а вот для новичков можно составить краткий комментарий, из которого всё сразу станет понятно.<br/>
+<br/>
+<h4>Комментарии, которые объясняют необъяснимое</h4>Увы, не всегда удаётся написать код, который понятен сам по себе. Возможно, используется очень хитрый алгоритм. Возможно, из-за требований к скорости пришлось написать быстрый, но не очень понятный код. Возможно, проект нужно сдавать вчера, и у вас просто нет времени «причёсывать» код. Не важно как, но в вашем проекте появился код, который ну очень трудно понять. Если с комментарием код становится более читаемым, то пусть этот комментарий действительно присутствует в проекте.<br/>
+<br/>
+<h4>Комментарии, которые TODO</h4>Вопрос опять-таки дискуссионный. Одни скажут, что есть IssueTacker, давайте все задачи хранить там. Другие скажут, что зачем нам создавать много мелких Issue, когда можно просто расставить комментарии специального вида, которые будут обращать внимание разработчиков на то, что тут надо бы дописать функционал. Благо, современные IDE умеют находить все TODO-комментарии и выдавать их большим красивым списком, так что не нужно бояться потерять подобные инструкции на будущее. Нужно сразу договориться в команде о том, какая методология будет использоваться. Многие программисты считают TODO-комментарии очень удобными, ничего особо криминального в их использовании нет.<br/>
+<br/>
+<h4>Комментарии, которые обращают внимание</h4>Иногда в коде появляются какие-то важные моменты, на которые обязательно нужно обратить внимание читателя, но средствами кода это сделать не удаётся. Например, нужно предупредить читателя, что метод выполняется очень долго. Или, класс сейчас активно разрабатывается и рефакторится несколькими людьми, в нём есть какой-то невзрачный кусок кода, который так и хочется удалить или переписать. Но лучше бы этого не делать, т.к. на самом деле он очень важный, без него всё сломается. В общем, если есть какие-то важные, но не особо очевидные аспекты вашего кода — можно и прокомментировать, лишним такой комментарий не назовёшь.<br/>
+<br/>
+<h4>Комментарии, которые документируют</h4>Многие генерируют документацию на основе комментариев специального вида (такой подход используется во многих языках). Есть и другие инструменты по созданию документации без комментариев, но в силу разных обстоятельств в некоторых проектах принципиально использовать именно комментарии для документирования, тут уж никуда не деться. Но тут речь идёт скорее о публичном API, а не о private-методе во внутреннем проекте. В команде должна быть договорённость о том, когда и где будет использоваться подобный подход к документации. Ваше время очень ценно, не следует его тратить на создание такой документации, которая никогда никем не будет использоваться.<br/>
+<br/>
+<h4>Комментарии, которые содержат юридическую информацию</h4>В ряде проектов необходимо в каждый файл с кодом вставлять шапку-комментарий с информацией о копирайте, лицензии и т.п. Ну, если надо — то надо, обсуждения тут излишни.<br/>
+<br/>
+<h1>Резюме</h1>Ещё раз хотелось бы акцентировать внимание на основной мысли: хоть я и настаиваю на уменьшении количества комментариев, это вовсе не означает, что комментарии — абсолютное зло, которое никак не должно появляться в проекте. Если вы можете обосновать необходимость комментария в данном месте, если без него не обойтись, если вы можете его составить грамотно и лаконично — то пожалуйста, пишите комментарий, ведь вы делаете исходный код более информативным. Но, увы, в реальности большинство комментариев не несут в себе особой пользы, а лишь захламляют исходники. Если ваши руки потянулись к написанию ещё одного <i>отличного</i> комментария, то сначала дайте себе немного времени на раздумье — а действительно ли этот комментарий такой <i>отличный</i>, а нельзя ли без него как-нибудь обойтись.<br/>
+<br/>
+<b>Update:</b><br/>
+Хочется заметить, что в реальных условиях многое зависит от языка программирования, от проекта, от стадии разработки, от соглашений в команде. Возможно, конкретно в вашей ситуации есть необходимость писать много комментариев (это может быть сложный алгоритм, низкоуровневый код, хитрые оптимизации и т.п.). Возможно, вы сейчас пишете локальный код, а с комментариями вам намного удобнее работать над кодом (впрочем, никто не заставляет вас коммитить комментарии в общий репозиторий). Возможно, у вас весь проект на 100 строк, и намного проще поставить несколько комментариев, чем создавать сложную расширяемую архитектуру. В статье я изложил некоторые общие рекомендации для большого проекта на языке высокого уровня, которые могут в будущем избавить вас и ваших коллег от лишней головной боли. Но не нужно относится к предложенным практикам, как к абсолютным правилам: всегда нужно смотреть по ситуации — уместно ли поставить очередной комментарий, нужен ли он тут, или же лучше будет без него. Старайтесь уделять внимание таким моментам — и ваш код будет намного лучше.</div></div> <!----> <!----></div> <div class="tm-article-presenter__meta"><div class="tm-separated-list tm-article-presenter__meta-list"><span class="tm-separated-list__title">Tags:</span> <ul class="tm-separated-list__list"><li class="tm-separated-list__item"><a href="/en/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B8%5D" class="tm-tags-list__link">комментарии</a></li><li class="tm-separated-list__item"><a href="/en/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D1%81%D0%BE%D0%B2%D0%B5%D1%80%D1%88%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9%20%D0%BA%D0%BE%D0%B4%5D" class="tm-tags-list__link">совершенный код</a></li></ul></div> <div class="tm-separated-list tm-article-presenter__meta-list"><span class="tm-separated-list__title">Hubs:</span> <ul class="tm-separated-list__list"><li class="tm-separated-list__item"><a href="/en/company/enterra/blog/" class="tm-hubs-list__link router-link-active">
+    Enterra corporate blog
+  </a></li><li class="tm-separated-list__item"><a href="/en/hub/webdev/" class="tm-hubs-list__link">
+    Website development
+  </a></li><li class="tm-separated-list__item"><a href="/en/hub/programming/" class="tm-hubs-list__link">
+    Programming
+  </a></li><li class="tm-separated-list__item"><a href="/en/hub/complete_code/" class="tm-hubs-list__link">
+    Perfect code
+  </a></li></ul></div></div></article></div> <!----></div> <div class="tm-article-sticky-panel"><div class="tm-data-icons tm-article-sticky-panel__icons"><div class="tm-article-rating tm-data-icons__item"><div class="tm-votes-meter tm-article-rating__votes-switcher"><svg height="16" width="16" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon_medium"><title>Total votes 181: ↑149 and ↓32</title> <use xlink:href="/img/megazord-v24.ce74655c.svg#counter-rating"></use></svg> <span title="Total votes 181: ↑149 and ↓32" class="tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_medium">+117</span></div> <DIV class="v-portal" style="display:none;"></DIV></div> <!----> <span title="Views" class="tm-icon-counter tm-data-icons__item"><svg height="16" width="16" class="tm-svg-img tm-icon-counter__icon"><title>Views</title> <use xlink:href="/img/megazord-v24.ce74655c.svg#counter-views"></use></svg> <span class="tm-icon-counter__value">68K</span></span> <button title="Add to bookmarks" type="button" class="bookmarks-button tm-data-icons__item"><span title="Add to bookmarks" class="tm-svg-icon__wrapper bookmarks-button__icon"><svg height="16" width="16" class="tm-svg-img tm-svg-icon"><title>Add to bookmarks</title> <use xlink:href="/img/megazord-v24.ce74655c.svg#counter-favorite"></use></svg></span> <span title="Users added post to bookmarks" class="bookmarks-button__counter">
+    439
+  </span></button> <!----> <div title="Share" class="tm-sharing tm-data-icons__item"><button type="button" class="tm-sharing__button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="tm-sharing__icon"><path fill="currentColor" d="M10.33.275l9.047 7.572a.2.2 0 010 .306l-9.048 7.572a.2.2 0 01-.328-.153V11c-8 0-9.94 6-9.94 6S-1 5 10 5V.428a.2.2 0 01.328-.153z"></path></svg></button> <!----></div> <DIV class="v-portal" style="display:none;"></DIV></div> </div></div> <!----> <!----> <div class="tm-article-presenter__footer"><div class="tm-article-blocks"><!----> <section class="tm-block tm-block_spacing-bottom"><!----> <div class="tm-block__body tm-block__body_variant-balanced"><div class="tm-article-author"><div class="tm-article-author__company"><div class="tm-article-author__company-card"><div class="tm-company-snippet"><a href="/en/company/enterra/profile/" class="tm-company-snippet__logo-link"><div class="tm-entity-image"><img alt="" height="40" src="//habrastorage.org/getpro/habr/companies/5fe/858/4c6/5fe8584c62a1ad73a4d0659ab16639cf.png" width="40" class="tm-entity-image__pic"></div></a> <div class="tm-company-snippet__info"><a href="/en/company/enterra/profile/" class="tm-company-snippet__title">Enterra</a> <div class="tm-company-snippet__description">Company</div></div></div> <div class="tm-article-author__buttons"><!----> <!----></div></div> <!----> <div class="tm-article-author__separator"></div></div> <div class="tm-user-card tm-article-author__user-card tm-user-card_variant-article"><div class="tm-user-card__info-container"><div class="tm-user-card__header"><div class="tm-user-card__header-data"><a href="/en/users/DreamWalker/" class="tm-user-card__userpic tm-user-card__userpic_size-40"><div class="tm-entity-image"><img alt="" src="//habrastorage.org/getpro/habr/avatars/389/00a/7e4/38900a7e414cc602eff71e4983752fef.jpg" class="tm-entity-image__pic"></div></a> <div class="tm-user-card__meta"><div title=" 270 votes " class="tm-karma tm-user-card__karma"><div class="tm-karma__votes tm-karma__votes_positive">
+    219.2
+  </div> <div class="tm-karma__text">
+    Karma
+  </div></div> <div title="User`s rating" class="tm-rating tm-user-card__rating"><div class="tm-rating__header"> <div class="tm-rating__counter">0</div></div> <div class="tm-rating__text">
+    Rating
+  </div></div></div></div></div> <div class="tm-user-card__info tm-user-card__info_variant-article"><div class="tm-user-card__title tm-user-card__title_variant-article"><span class="tm-user-card__name tm-user-card__name_variant-article">Акиньшин Андрей</span> <a href="/en/users/DreamWalker/" class="tm-user-card__nickname tm-user-card__nickname_variant-article">
+          @DreamWalker
+        </a> <!----></div> <p class="tm-user-card__short-info tm-user-card__short-info_variant-article">.NET Developer & Scientist</p></div></div> <div class="tm-user-card__buttons tm-user-card__buttons_variant-article"><!----> <!----> <!----> <!----> <!----></div></div> <div class="tm-article-author__user-contacts"><a href="https://aakinshin.net/" rel="noopener" target="_blank" class="tm-article-author__contact">
+      Website
+    </a><a href="https://twitter.com/andrey_akinshin" rel="noopener" target="_blank" class="tm-article-author__contact">
+      Twitter
+    </a><a href="https://github.com/AndreyAkinshin/" rel="noopener" target="_blank" class="tm-article-author__contact">
+      Github
+    </a></div></div> <DIV class="v-portal" style="display:none;"></DIV></div> <!----></section> <div class="tm-article-blocks__comments"><div class="tm-article-page-comments"><div class="tm-article-comments-counter-link tm-article-comments-counter-button"><a href="/en/company/enterra/blog/182574/comments/" class="tm-article-comments-counter-link__link tm-article-comments-counter-link__link_button-style"><svg height="16" width="16" class="tm-svg-img tm-article-comments-counter-link__icon tm-article-comments-counter-link__icon_contrasted"><title>Comments</title> <use xlink:href="/img/megazord-v24.ce74655c.svg#counter-comments"></use></svg> <span class="tm-article-comments-counter-link__value tm-article-comments-counter-link__value_contrasted">
+       Comments 243 
+    </span></a> <!----></div></div></div>  <!---->  <!----> <!----></div></div></div></div></div> <div class="tm-page__sidebar"><div class="tm-layout-sidebar"><div class="tm-layout-sidebar__placeholder_initial"></div> <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;"><!----> <section class="tm-block tm-block_spacing-bottom"><header class="tm-block__header"><h2 class="tm-block__title">Information</h2> <!----></header> <div class="tm-block__body"><div class="tm-company-basic-info"><dl class="tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title_variant-columns-nowrap">Founded</dt> <dd class="tm-description-list__body tm-description-list__body_variant-columns-nowrap"><span>
+      2001
+    </span></dd></dl> <dl class="tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title_variant-columns-nowrap">Location</dt> <dd class="tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+    Россия
+  </dd></dl> <dl class="tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title_variant-columns-nowrap">Website</dt> <dd class="tm-description-list__body tm-description-list__body_variant-columns-nowrap"><a href="http://www.enterra.ru/" target="_blank" class="tm-company-basic-info__link">
+      www.enterra.ru
+    </a></dd></dl> <dl class="tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title_variant-columns-nowrap">Employees</dt> <dd class="tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+    51–100 employees
+  </dd></dl> <dl class="tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title_variant-columns-nowrap">Registered</dt> <dd class="tm-description-list__body tm-description-list__body_variant-columns-nowrap"><time datetime="2011-02-01T12:02:13.000Z" title="2011-02-01, 15:02">1  February  2011</time></dd></dl> <!----></div></div> <!----></section> <!----> <!----></div></div></div></div></div></div></main> <!----></div> <div class="tm-footer-menu"><div class="tm-page-width"><div class="tm-footer-menu__container"><div class="tm-footer-menu__block"><h3 class="tm-footer-menu__block-title">
+          Your account
+        </h3> <div class="tm-footer-menu__block-content"><ul class="tm-footer-menu__list"><li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/en/company/enterra/blog/182574/&amp;hl=en" rel="nofollow" target="_self">
+                Log in
+              </a></li><li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/en/company/enterra/blog/182574/&amp;hl=en" rel="nofollow" target="_self">
+                Sign up
+              </a></li></ul></div></div><div class="tm-footer-menu__block"><h3 class="tm-footer-menu__block-title">
+          Sections
+        </h3> <div class="tm-footer-menu__block-content"><ul class="tm-footer-menu__list"><li class="tm-footer-menu__list-item"><a href="/en/" class="footer-menu__item-link router-link-active">
+                Posts
+              </a></li><li class="tm-footer-menu__list-item"><a href="/en/news/" class="footer-menu__item-link">
+                News
+              </a></li><li class="tm-footer-menu__list-item"><a href="/en/hubs/" class="footer-menu__item-link">
+                Hubs
+              </a></li><li class="tm-footer-menu__list-item"><a href="/en/companies/" class="footer-menu__item-link">
+                Companies
+              </a></li><li class="tm-footer-menu__list-item"><a href="/en/users/" class="footer-menu__item-link">
+                Authors
+              </a></li><li class="tm-footer-menu__list-item"><a href="/en/sandbox/" class="footer-menu__item-link">
+                Sandbox
+              </a></li></ul></div></div><div class="tm-footer-menu__block"><h3 class="tm-footer-menu__block-title">
+          Information
+        </h3> <div class="tm-footer-menu__block-content"><ul class="tm-footer-menu__list"><li class="tm-footer-menu__list-item"><a href="/en/docs/help/" class="footer-menu__item-link">
+                How it works
+              </a></li><li class="tm-footer-menu__list-item"><a href="/en/docs/authors/codex/" class="footer-menu__item-link">
+                For authors
+              </a></li><li class="tm-footer-menu__list-item"><a href="/en/docs/companies/corpblogs/" class="footer-menu__item-link">
+                For companies
+              </a></li><li class="tm-footer-menu__list-item"><a href="/en/docs/docs/transparency/" class="footer-menu__item-link">
+                Documents
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement" target="_blank">
+                Agreement
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/" target="_blank">
+                Confidential
+              </a></li></ul></div></div><div class="tm-footer-menu__block"><h3 class="tm-footer-menu__block-title">
+          Services
+        </h3> <div class="tm-footer-menu__block-content"><ul class="tm-footer-menu__list"><li class="tm-footer-menu__list-item"><a href="https://docs.google.com/presentation/d/e/2PACX-1vQLwRfQmXibiUlWaRg-BAc38s7oM3lJiaPju7qmdJsp8ysIvZ_G-Npem0njJLMozE2bPHMpDqiI5hhy/pub?start=false&amp;loop=false&amp;delayms=60000&amp;slide=id.g91a03369cd_4_297" target="_blank">
+                Ads
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://habrastorage.org/storage/stuff/habr/service_price.pdf" target="_blank">
+                Subscription plans
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://docs.google.com/presentation/d/e/2PACX-1vQJJds8-Di7BQSP_guHxICN7woVYoN5NP_22ra-BIo4bqnTT9FR6fB-Ku2P0AoRpX0Ds-LRkDeAoD8F/pub?start=false&amp;loop=false&amp;delayms=60000" target="_blank">
+                Content
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://tmtm.timepad.ru/" target="_blank">
+                Seminars
+              </a></li><li class="tm-footer-menu__list-item"><a href="/en/megaprojects/" class="footer-menu__item-link">
+                Megaprojects
+              </a></li></ul></div></div></div></div></div> <div class="tm-footer"><div class="tm-page-width"><div class="tm-footer__container"><!----> <div class="tm-footer__social"><a href="https://www.facebook.com/habr.eng" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon"><svg height="16" width="16" class="tm-svg-img tm-svg-icon"><title>Facebook</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-facebook"></use></svg></a><a href="https://twitter.com/habr_eng" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon"><svg height="16" width="16" class="tm-svg-img tm-svg-icon"><title>Twitter</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-twitter"></use></svg></a><a href="https://t.me/habr_eng" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon"><svg height="16" width="16" class="tm-svg-img tm-svg-icon"><title>Telegram</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-telegram"></use></svg></a></div> <DIV class="v-portal" style="display:none;"></DIV> <button class="tm-footer__link"><!---->
+        Language settings
+      </button> <a href="/en/about" class="tm-footer__link">
+        About
+      </a> <a href="/en/feedback/" class="tm-footer__link">
+        Support
+      </a> <!----> <a href="/berserk-mode-nope" class="tm-footer__link">
+        Return to old version
+      </a> <div class="tm-footer-copyright"><span class="tm-copyright"><span class="tm-copyright__years">© 2006–2021 </span> <span class="tm-copyright__name">«<a href="https://company.habr.com/en/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a>»</span></span></div></div></div></div> <!----> <!----></div> <div class="vue-portal-target"></div></div>
+<script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{"182574":{"id":"182574","timePublished":"2013-06-12T06:12:50+00:00","isCorporative":true,"lang":"ru","titleHtml":"Комментировать или не комментировать?","leadData":{"textHtml":"\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fpost_images\u002Fe77\u002Fe6c\u002F5ff\u002Fe77e6c5ff1741d50167ab0f8d708725e.png\" align=\"left\"\u002F\u003E\u003Ci\u003EПо-настоящему хороший комментарий — тот,\u003Cbr\u002F\u003E\r\nбез которого вам удалось обойтись.\u003Cbr\u002F\u003E\r\n Дядюшка Боб\u003C\u002Fi\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nВ последнее время меня стали очень утомлять оживлённые дебаты о том, нужно ли комментировать код. Как правило, по одну сторону баррикад — самоуверенные джуниоры, имеющие непререкаемую позицию вида \u003Ci\u003E«А как же его не комментировать, ведь без комментариев непонятно будет!»\u003C\u002Fi\u003E. По другую — умудрённые опытом сеньоры. Они понимают, что если возможно обойтись без комментариев, то \u003Ci\u003E«Лучше бы, чёрт возьми, так и сделать!»\u003C\u002Fi\u003E. Наверное, у многих жажда комментировать идёт со студенческой скамьи, когда товарищи преподаватели заставляли комментировать каждую строчку, \u003Ci\u003E«чтобы студент лучше разобрался»\u003C\u002Fi\u003E. В реальном проекте не должно быть кучи комментариев, которые только и делают, что засоряют код. Впрочем, я не агитирую вообще не писать комментарии, но если вам удалось написать такой код, который не требует пояснений, то расценивайте это, как свою маленькую победу. Сразу хотелось бы сослаться на нескольких очень умных книжек, на основе которых формировалась моя позиция. Я люблю и уважаю авторов этих работ, полностью разделяя их мнение.\u003Cul\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fwww.ozon.ru\u002Fcontext\u002Fdetail\u002Fid\u002F5508646\u002F\"\u003EС. Макконнелл, «Совершенный код. Мастер-класс»\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fwww.ozon.ru\u002Fcontext\u002Fdetail\u002Fid\u002F20216991\u002F\"\u003EР. Мартин, «Чистый код. Создание, анализ и рефакторинг»\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fwww.ozon.ru\u002Fcontext\u002Fdetail\u002Fid\u002F8466390\u002F\"\u003EД. Босуэлл, Т. Фаучер, «Читаемый код, или Программирование как искусство»\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003C\u002Ful\u003E","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"editorVersion":"1.0","postType":"article","postLabels":[],"author":{"scoreStats":{"score":219.2,"votesCount":270},"rating":0,"relatedData":null,"contacts":[{"title":"Website","url":"https:\u002F\u002Faakinshin.net\u002F","value":"https:\u002F\u002Faakinshin.net\u002F"},{"title":"Twitter","url":"https:\u002F\u002Ftwitter.com\u002Fandrey_akinshin","value":"andrey_akinshin"},{"title":"Github","url":"https:\u002F\u002Fgithub.com\u002FAndreyAkinshin\u002F","value":"AndreyAkinshin"}],"authorContacts":[{"title":"Website","url":"https:\u002F\u002Faakinshin.net\u002F","value":"https:\u002F\u002Faakinshin.net\u002F"},{"title":"Twitter","url":"https:\u002F\u002Ftwitter.com\u002Fandrey_akinshin","value":"andrey_akinshin"},{"title":"Github","url":"https:\u002F\u002Fgithub.com\u002FAndreyAkinshin\u002F","value":"AndreyAkinshin"}],"paymentDetails":{"paymentYandexMoney":null,"paymentPayPalMe":null,"paymentWebmoney":null},"id":"51579","alias":"DreamWalker","fullname":"Акиньшин Андрей","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F389\u002F00a\u002F7e4\u002F38900a7e414cc602eff71e4983752fef.jpg","speciality":".NET Developer & Scientist"},"statistics":{"commentsCount":243,"favoritesCount":439,"readingCount":67585,"score":117,"votesCount":181},"hubs":[{"relatedData":null,"id":"17149","alias":"enterra","type":"corporative","title":"Enterra corporate blog","titleHtml":"Enterra corporate blog","isProfiled":false},{"relatedData":null,"id":"91","alias":"webdev","type":"collective","title":"Website development","titleHtml":"Website development","isProfiled":true},{"relatedData":null,"id":"359","alias":"programming","type":"collective","title":"Programming","titleHtml":"Programming","isProfiled":true},{"relatedData":null,"id":"524","alias":"complete_code","type":"collective","title":"Perfect code","titleHtml":"Perfect code","isProfiled":true}],"flows":[{"id":"1","alias":"develop","title":"Development"}],"relatedData":null,"textHtml":"\u003Cdiv xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003E\u003Cimg src=\"\u002Fimg\u002Fimage-loader.svg\" align=\"left\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fpost_images\u002Fe77\u002Fe6c\u002F5ff\u002Fe77e6c5ff1741d50167ab0f8d708725e.png\"\u002F\u003E\u003Ci\u003EПо-настоящему хороший комментарий — тот,\u003Cbr\u002F\u003E\r\nбез которого вам удалось обойтись.\u003Cbr\u002F\u003E\r\n Дядюшка Боб\u003C\u002Fi\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nВ последнее время меня стали очень утомлять оживлённые дебаты о том, нужно ли комментировать код. Как правило, по одну сторону баррикад — самоуверенные джуниоры, имеющие непререкаемую позицию вида \u003Ci\u003E«А как же его не комментировать, ведь без комментариев непонятно будет!»\u003C\u002Fi\u003E. По другую — умудрённые опытом сеньоры. Они понимают, что если возможно обойтись без комментариев, то \u003Ci\u003E«Лучше бы, чёрт возьми, так и сделать!»\u003C\u002Fi\u003E. Наверное, у многих жажда комментировать идёт со студенческой скамьи, когда товарищи преподаватели заставляли комментировать каждую строчку, \u003Ci\u003E«чтобы студент лучше разобрался»\u003C\u002Fi\u003E. В реальном проекте не должно быть кучи комментариев, которые только и делают, что засоряют код. Впрочем, я не агитирую вообще не писать комментарии, но если вам удалось написать такой код, который не требует пояснений, то расценивайте это, как свою маленькую победу. Сразу хотелось бы сослаться на нескольких очень умных книжек, на основе которых формировалась моя позиция. Я люблю и уважаю авторов этих работ, полностью разделяя их мнение.\u003Cul\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fwww.ozon.ru\u002Fcontext\u002Fdetail\u002Fid\u002F5508646\u002F\"\u003EС. Макконнелл, «Совершенный код. Мастер-класс»\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fwww.ozon.ru\u002Fcontext\u002Fdetail\u002Fid\u002F20216991\u002F\"\u003EР. Мартин, «Чистый код. Создание, анализ и рефакторинг»\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fwww.ozon.ru\u002Fcontext\u002Fdetail\u002Fid\u002F8466390\u002F\"\u003EД. Босуэлл, Т. Фаучер, «Читаемый код, или Программирование как искусство»\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003C\u002Ful\u003E\u003Ca name=\"habracut\"\u003E\u003C\u002Fa\u003E\u003Cbr\u002F\u003E\r\nИтак, что же меня так раздражает в комментариях? Приведу несколько основных тезисов:\u003Cul\u003E\r\n\u003Cli\u003EКомментарии захламляют непосредственный код, ухудшают его читаемость\u003C\u002Fli\u003E\r\n\u003Cli\u003EКомментарии требуют время на написание и поддержку\u003C\u002Fli\u003E\r\n\u003Cli\u003EКомментарии лгут (начинаем от криво написанных, заканчиваем устаревшими)\u003C\u002Fli\u003E\r\n\u003C\u002Ful\u003E\u003Cbr\u002F\u003E\r\nВ принципе, я согласен с тем, что в некоторых случаях комментарии всё-таки нужны. Но ваш код будет тем прекраснее, чем будет меньше таких случаев. Кроме того, написание хорошего комментария — это тоже искусство. Увы, им обладают не так много программистов, большинство пишут комментарии абы как. Польза от этого зачастую сомнительная. А чем тратить время и силы на написание хорошего грамотного комментария, не лучше ли потратиться на переписывание кода, чтобы он больше не требовал комментария?\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nДавайте обсудим некоторые типичные сценарии, в которых можно сказать что-нибудь определённое про надобность комментария. Примеры кода я привожу на C#, но для данной темы это не принципиально.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch1\u003EКогда без комментариев можно обойтись\u003C\u002Fh1\u003E\u003Ch4\u003EКомментарии, которые повторяют код\u003C\u002Fh4\u003EДавайте взглянем на код:\u003Cpre\u003E\u003Ccode\u003E\u002F\u002F Этот метод отвечает за подсчёт суммы элементов массива\npublic int CalcSumOfElement(int[] elements) \u002F\u002F Метод принимает на вход массив элементов\n{\n  int result = 0; \u002F\u002F Заводим специальную переменную под результат\n  int n = elements.Length; \u002F\u002F Узнаём длину массива, т.е. количество элементов\n  for (int i = 0; i &lt; n; i++) \u002F\u002F Запускаем цикл по всем элементам\n    result += elements[i]; \u002F\u002F Прибавляем к результату очередной элемент\n  return result; \u002F\u002F Возвращаем результат\n}\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003EЭтот пример, конечно, искусственный, но, увы, я не утрирую. Я действительно не раз встречал подобный код. В данном примере комментарии не несут нам ничего нового — абсолютно всё и так понятно из кода. Но при этом прочитать этот код без захламляющего комментирования намного проще. Я уж не говорю про развитие кода: поддерживать такой уровень комментирования очень утомительно. Скорее всего при усложнении функционала половина кода останется вообще без комментариев, а другая — с кривыми устаревшими комментариями.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые поясняют синтаксис\u003C\u002Fh4\u003EНу, а вот такой пример:\u003Cpre\u003E\u003Ccode\u003Epublic class Item\n{\n  private int value; \u002F\u002F Это приватное поле, извне оно не доступно\n\n  \u002F\u002F Это конструктор\n  public Item(int twoValue)\n  {\n    value = twoValue \u003E\u003E 1; \u002F\u002F Два знака больше означают побитовый сдвиг вправо\n    \u002F\u002F таким образом мы делим число на два\n  }\n}\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003EЕсли это лабораторная работа первокурсника, то всё нормально. А вот если это продакшн код, и ваши программисты нуждаются в таких комментариях, то у меня для вас плохие новости. Наверное, эта статья не для вас.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые поясняют стандартные классы\u003C\u002Fh4\u003E\u003Cpre\u003E\u003Ccode\u003EHashSet&lt;int\u003E set; \u002F\u002F Это структура данных, которая называется Хеш-Сет\n\u002F\u002F Она представляет собой множество элементов\n\u002F\u002F Мы очень быстро можем узнать, есть ли элемент в этом множестве или нет\n\u002F\u002F Подробнее про хеш-таблицы можно почитать в википедии: http:\u002F\u002Fru.wikipedia.org\u002Fwiki\u002F%D0%A5%D0%B5%D1%88-%D1%82%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003EЕсли программист действительно не знает назначение какого-то стандартного класса или метода, то он всегда может погуглить \u002F почитать документацию \u002F спросить у товарища. А большинство нормальных программистов скорее всего и так всё знает. Поэтому польза таких комментариев ну очень сомнительна.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые компенсируют плохие наименования\u003C\u002Fh4\u003E\u003Cpre\u003E\u003Ccode\u003E\u002F\u002F Устанавливаем соединение с сервером\n\u002F\u002F public void DoIt()\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003EЯ согласен, что далеко не всегда удаётся придумать хорошее название для класса\u002Fметода\u002Fсвойства\u002Fпеременной. А если проект сдавать вчера, то времени на придумывание красивого названия просто нет. А давайте возьмём какое-нибудь произвольное название, а в комментарии объясним то, что происходит. Это же намного проще и быстрее! Или же всё-таки вы найдёте минутку-другую на придумывание понятного названия?\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые объясняют абзац\u003C\u002Fh4\u003EЧасто приходится слышать подобные заявления: \u003Ci\u003E«Не, ну этот метод занимает 300 строк, он очень много всего делает. Без комментариев в нём не разобраться. Сейчас я напишу перед каждыми 10-строчками о том, что в них делается»\u003C\u002Fi\u003E. Если действительно дела обстоят так, то, возможно, что-то вы делаете не так. Возможно стоит разбить большой 300-строчный метод на несколько маленьких методов. И каждому маленькому методу дать понятное название — тогда и комментарии будут не нужны.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые поясняют константы\u003C\u002Fh4\u003E\u003Cpre\u003E\u003Ccode\u003Epublic int GetSeconds(int hours)\n{\n  return hours * 3600; \u002F\u002F 3600 - это количество секунд, образующих час\n}\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003EНу, в таком варианте, наличие комментария — это более адекватный вариант, чем просто магическое число, которое закралось в код и непонятно что обозначает. Но ещё лучше бы было сделать именованную константу, из названия которой всё было бы понятно. Например, так:\u003Cpre\u003E\u003Ccode\u003Eprivate const int SecondsInHour = 3600;\npublic int GetSeconds(int hours)\n{\n  return hours * SecondsInHour;\n}\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые не относятся к программированию\u003C\u002Fh4\u003EМне очень нравится байка из «Совершенного кода» про то, как один программист всю ночь пытался расшифровать вот такой комментарий.\u003Cpre\u003E\u003Ccode\u003EMOV AX, 723h ; R. I. P. L. V. В. \n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003EА несколько месяцев спустя он встретился с автором этого кода и узнал, что комментарий расшифровывается следующим образом: «Rest in peace, Ludwig van Beethoven», т.к. 723 — это шестнадцатеричное представление года смерти Бетховена.\u003Cbr\u002F\u003E\r\nУвы, некоторые программисты считают программный код своеобразным форумом, в котором можно общаться. Некоторые пытаются проявить своё остроумие (чуть ли не анекдоты рассказывают), другие пытаются нам что-то рассказать о себе (типа \u003Ci\u003E«Сейчас уже три часа ночи, но я всё равно пишу этот класс, ведь я так люблю программировать»\u003C\u002Fi\u003E). Не нужно так делать, для общения есть сотни других способов. Если комментарий вставлен в код, то он должен нести в себе что-то полезное для проекта.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые содержат мысли\u003C\u002Fh4\u003EБывает, что в комментарии содержатся очень умные мысли, от которых много проку. Но в большинстве случаев это совсем не так.\u003Cpre\u003E\u003Ccode\u003Epublic void Main()\n{\n  \u002F\u002F Ну, это очень полезный метод.\n  \u002F\u002F Он выполняет основную логику этого класса.\n  \u002F\u002F Сначала я хотел назвать его Run.\n  \u002F\u002F Но потом подумал, Run переводится «бежать».\n  \u002F\u002F А этот метод никуда не бежит, он очень медленный.\n  \u002F\u002F Я думал об этом, пока мыл посуду.\n  \u002F\u002F И когда я её домыл, я вернулся к компьютеру и переименовал метод в Main.\n  \u002F\u002F Ведь это главный метод данного класса, пусть он называется Main.\n}\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые содержат примеры использования\u003C\u002Fh4\u003EИногда автор метода не уверен, что все правильно поймут, как пользоваться его методом. И тогда он приводит примеры использования, которые как бы говорят, что вернёт метод на определённых входных данных.\u003Cpre\u003E\u003Ccode\u003E\u002F\u002F Sum(1, 2) == 3\n\u002F\u002F Sum(2, 1) == 3\n\u002F\u002F Sum(2, 2) == 4\npublic int Sum(int a, int b)\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003EА я так считаю — для каждой задачи должен быть свой инструмент. Для этой задачи люди давно придумали удобный инструмент, он называется Unit-тесты. Очень толковая штука. Нужны ли на самом деле Unit-тесты или нет — также дискуссионная тема. Но если в проекте всё-таки возникла потребность описать для метода примеры возвращаемых результатов, то почему бы просто не сделать соответствующий Unit-тест?\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые содержат историю написания\u003C\u002Fh4\u003EК счастью, давненько я подобного не видел, но иногда доводится встречать комментарии вида:\u003Cpre\u003E\u003Ccode\u003E\u002F\u002F 11.06.13: Исправил багу в методе. Раньше он работал так-то так-то, а теперь работает иначе.\n\u002F\u002F 12.06.13: Ой, та бага — была не бага. Вернул всё обратно.\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003EПовторю ещё раз свою мысль: для каждой задачи — свой инструмент. Системы контроля версий прекрасно умеют хранить историю изменений. Не нужно нагружать исходники никому не нужной историей того, как вы что писали. Если кого-то будет это интересовать, то он всегда может посмотреть в репозитории.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые содержат код\u003C\u002Fh4\u003EЭти комментарии меня особенно печалят. Читаешь, скажем, код какого-нибудь хорошего класса. И тут:\u003Cpre\u003E\u003Ccode\u003E\u002F\u002F int number = GetNumber()\n\u002F\u002F int number = 4;\n\u002F\u002F int number = 5;\nint number = 4;\n\u002F\u002F double number = 4.5;\n\u002F\u002F decimal number = 4.5;\n\u002F\u002F string number = \"Это число\";\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003EВот что этим хотел сказать автор? Некоторые авторы хотят этим сказать: я провожу эксперименты по изменению кода, но при этом не хочу терять старые версии этих строчек, вдруг к ним придётся вернуться. Этот тезис возвращает нас к мысли про репозиторий, который умеет хранить все промежуточные версии вашей писанины — никуда они не пропадут. Пожалейте других разработчиков, которые будут читать ваш код. А хуже всего, что этот код в проекте теперь надолго. Автор после кучки экспериментов забывает удалить плохие версии, а его коллеги опасаются бездумно удалять то, назначение чего непонятно: \u003Ci\u003E«я вот сейчас всё удалю, а потом окажется, что оно было ну очень нужно, тут был великий замысел, а я всё испортил».\u003C\u002Fi\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые непонятны\u003C\u002Fh4\u003E\u003Cpre\u003E\u003Ccode\u003Ebool flagA = true;\nbool flagB = false;\nbool flagC = true;\nif (Condition(flagA, flagB, flagC))\n  Foo();\n\u002F\u002F else флаг равен true, выключение сервера\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003EВ подобных случаях никогда нельзя догадаться что хотел сказать автор. Какой флаг равен true? Он всегда равен true в else-ветке или тут нужно дописать код, в котором нужно присвоить флагу значение true. А что за сервер, почему он выключается? Он выключится сам или нам нужно самим его выключить?\u003Cbr\u002F\u003E\r\nОт подобных комментариев вреда больше, чем пользы. Сведений он в себе по факту не несёт, а вместо этого только смущает читателя. Не смущайте читателя вашего кода! Или не пишите ничего вовсе, или потратьте время на написание доходчивого сообщения, которое всем будет понятно.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые содержат ну очень много текста\u003C\u002Fh4\u003EНекоторые комментаторы очень боятся быть непонятыми. Ну, или написать слишком мало. Поэтому комментарий к методу из трёх строчек может занимать несколько экранов. В этом обширном сочинении вы узнаете об используемых алгоритмах, их временной сложности, почитаете псевдокод метода, блок-схему в ASCII-графике, обоснование именования переменных, соображения общего характера. Причём всё будет расписано настолько подробно, чтобы даже первоклассник понял.\u003Cbr\u002F\u003E\r\nЭто плохой подход, он заставляет тратить читателя очень много времени на изучение вашего сочинения. Если вы уж решили писать комментарий, то вам следует озаботиться его лаконичностью (разумеется, не в ущерб понятности или информативности).\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые врут\u003C\u002Fh4\u003E\u003Cpre\u003E\u003Ccode\u003E\u002F\u002F Произведение двух чисел\npublic int Sum(int a, int b)\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003EВы опять смущаете вашего читателя. Что тут происходит? Возможно, метод когда-то считал произведение, а потом его переделали в сумму, комментарий стал устаревшим. А может наоборот: комментарий обновили, а про название метода забыли. А может метод с самого начала считал сумму, а программист ошибся при комментировании. А метод может быть на самом деле очень сложный, придётся потратить много времени, чтобы разобраться, какая из черепашек обманывает.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch1\u003EКогда можно и прокомментировать\u003C\u002Fh1\u003E\u003Ch4\u003EКомментарии, которые повышают уровень абстракции\u003C\u002Fh4\u003EПредметная область может быть очень сложна, не всегда возможно подобрать краткие названия для классов, из которых сразу будет понятно, чему они соответствуют. Поэтому вполне нормально подобрать какой-нибудь ёмкий термин для обозначения сложной сущности предметной области. Основные программисты команды и так его наизусть знают, а вот для новичков можно составить краткий комментарий, из которого всё сразу станет понятно.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые объясняют необъяснимое\u003C\u002Fh4\u003EУвы, не всегда удаётся написать код, который понятен сам по себе. Возможно, используется очень хитрый алгоритм. Возможно, из-за требований к скорости пришлось написать быстрый, но не очень понятный код. Возможно, проект нужно сдавать вчера, и у вас просто нет времени «причёсывать» код. Не важно как, но в вашем проекте появился код, который ну очень трудно понять. Если с комментарием код становится более читаемым, то пусть этот комментарий действительно присутствует в проекте.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые TODO\u003C\u002Fh4\u003EВопрос опять-таки дискуссионный. Одни скажут, что есть IssueTacker, давайте все задачи хранить там. Другие скажут, что зачем нам создавать много мелких Issue, когда можно просто расставить комментарии специального вида, которые будут обращать внимание разработчиков на то, что тут надо бы дописать функционал. Благо, современные IDE умеют находить все TODO-комментарии и выдавать их большим красивым списком, так что не нужно бояться потерять подобные инструкции на будущее. Нужно сразу договориться в команде о том, какая методология будет использоваться. Многие программисты считают TODO-комментарии очень удобными, ничего особо криминального в их использовании нет.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые обращают внимание\u003C\u002Fh4\u003EИногда в коде появляются какие-то важные моменты, на которые обязательно нужно обратить внимание читателя, но средствами кода это сделать не удаётся. Например, нужно предупредить читателя, что метод выполняется очень долго. Или, класс сейчас активно разрабатывается и рефакторится несколькими людьми, в нём есть какой-то невзрачный кусок кода, который так и хочется удалить или переписать. Но лучше бы этого не делать, т.к. на самом деле он очень важный, без него всё сломается. В общем, если есть какие-то важные, но не особо очевидные аспекты вашего кода — можно и прокомментировать, лишним такой комментарий не назовёшь.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые документируют\u003C\u002Fh4\u003EМногие генерируют документацию на основе комментариев специального вида (такой подход используется во многих языках). Есть и другие инструменты по созданию документации без комментариев, но в силу разных обстоятельств в некоторых проектах принципиально использовать именно комментарии для документирования, тут уж никуда не деться. Но тут речь идёт скорее о публичном API, а не о private-методе во внутреннем проекте. В команде должна быть договорённость о том, когда и где будет использоваться подобный подход к документации. Ваше время очень ценно, не следует его тратить на создание такой документации, которая никогда никем не будет использоваться.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003EКомментарии, которые содержат юридическую информацию\u003C\u002Fh4\u003EВ ряде проектов необходимо в каждый файл с кодом вставлять шапку-комментарий с информацией о копирайте, лицензии и т.п. Ну, если надо — то надо, обсуждения тут излишни.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch1\u003EРезюме\u003C\u002Fh1\u003EЕщё раз хотелось бы акцентировать внимание на основной мысли: хоть я и настаиваю на уменьшении количества комментариев, это вовсе не означает, что комментарии — абсолютное зло, которое никак не должно появляться в проекте. Если вы можете обосновать необходимость комментария в данном месте, если без него не обойтись, если вы можете его составить грамотно и лаконично — то пожалуйста, пишите комментарий, ведь вы делаете исходный код более информативным. Но, увы, в реальности большинство комментариев не несут в себе особой пользы, а лишь захламляют исходники. Если ваши руки потянулись к написанию ещё одного \u003Ci\u003Eотличного\u003C\u002Fi\u003E комментария, то сначала дайте себе немного времени на раздумье — а действительно ли этот комментарий такой \u003Ci\u003Eотличный\u003C\u002Fi\u003E, а нельзя ли без него как-нибудь обойтись.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Cb\u003EUpdate:\u003C\u002Fb\u003E\u003Cbr\u002F\u003E\r\nХочется заметить, что в реальных условиях многое зависит от языка программирования, от проекта, от стадии разработки, от соглашений в команде. Возможно, конкретно в вашей ситуации есть необходимость писать много комментариев (это может быть сложный алгоритм, низкоуровневый код, хитрые оптимизации и т.п.). Возможно, вы сейчас пишете локальный код, а с комментариями вам намного удобнее работать над кодом (впрочем, никто не заставляет вас коммитить комментарии в общий репозиторий). Возможно, у вас весь проект на 100 строк, и намного проще поставить несколько комментариев, чем создавать сложную расширяемую архитектуру. В статье я изложил некоторые общие рекомендации для большого проекта на языке высокого уровня, которые могут в будущем избавить вас и ваших коллег от лишней головной боли. Но не нужно относится к предложенным практикам, как к абсолютным правилам: всегда нужно смотреть по ситуации — уместно ли поставить очередной комментарий, нужен ли он тут, или же лучше будет без него. Старайтесь уделять внимание таким моментам — и ваш код будет намного лучше.\u003C\u002Fdiv\u003E","tags":[{"titleHtml":"комментарии"},{"titleHtml":"совершенный код"}],"metadata":{"stylesUrls":[],"scriptUrls":[],"shareImageUrl":"https:\u002F\u002Fhabr.com\u002Fshare\u002Fpublication\u002F182574\u002Fd0c98dd85090f3300824cabf0cf08562\u002F","shareImageWidth":1200,"shareImageHeight":630,"vkShareImageUrl":"https:\u002F\u002Fhabr.com\u002Fshare\u002Fpublication\u002F182574\u002Fd0c98dd85090f3300824cabf0cf08562\u002F?format=vk","schemaJsonLd":"{\"@context\":\"http:\\\u002F\\\u002Fschema.org\",\"@type\":\"Article\",\"mainEntityOfPage\":{\"@type\":\"WebPage\",\"@id\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fcompany\\\u002Fenterra\\\u002Fblog\\\u002F182574\\\u002F\"},\"headline\":\"Комментировать или не комментировать?\",\"datePublished\":\"2013-06-12T10:12:50+04:00\",\"dateModified\":\"2014-11-20T11:31:22+03:00\",\"author\":{\"@type\":\"Person\",\"name\":\"Акиньшин Андрей\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Habr\",\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fwebt\\\u002Fa_\\\u002Flk\\\u002F9m\\\u002Fa_lk9mjkccjox-zccjrpfolmkmq.png\"}},\"description\":\"По-настоящему хороший комментарий &mdash; тот, без которого вам удалось обойтись.  Дядюшка Боб  В последнее время меня стали очень утомлять оживлённые дебаты о том, ну...\",\"url\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fcompany\\\u002Fenterra\\\u002Fblog\\\u002F182574\\\u002F#post-content-body\",\"about\":[\"c_enterra\",\"h_webdev\",\"h_programming\",\"h_complete_code\",\"f_develop\"],\"image\":[\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fpost_images\\\u002Fe77\\\u002Fe6c\\\u002F5ff\\\u002Fe77e6c5ff1741d50167ab0f8d708725e.png\"]}","metaDescription":"По-настоящему хороший комментарий — тот,\r\nбез которого вам удалось обойтись.\r\n Дядюшка Боб\r\n\r\nВ последнее время меня стали очень утомлять оживлённые дебаты о том, нужно ли комментировать код. Как...","mainImageUrl":null,"amp":false},"polls":[],"commentsEnabled":true,"rulesRemindEnabled":false,"votesEnabled":true,"status":"published","plannedPublishTime":null,"checked":null,"isEditorial":false}},"articlesIds":{},"isLoading":false,"pagesCount":{},"route":{},"reasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[""],"karma":{}},"authorContribution":{"authors":{}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[],"hubs":""},"comments":{"articleComments":{},"searchCommentsResults":null,"previewComment":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{"enterra":{"alias":"enterra","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompanies\u002F5fe\u002F858\u002F4c6\u002F5fe8584c62a1ad73a4d0659ab16639cf.png","titleHtml":"Enterra","descriptionHtml":null,"relatedData":null,"statistics":{"postsCount":0,"newsCount":0,"vacanciesCount":0,"employeesCount":13,"careerRating":null,"subscribersCount":188,"rating":0,"invest":null},"foundationDate":{"year":"2001","month":null,"day":null},"location":{"city":{"id":"445901","title":"Барнаул"},"region":{"id":"1673","title":"Алтайский край"},"country":{"id":"168","title":"Россия"}},"siteUrl":"http:\u002F\u002Fwww.enterra.ru\u002F","staffNumber":"51–100 employees","registrationDate":"2011-02-01T12:02:13+00:00","representativeUser":null,"contacts":[],"settings":{"analyticsSettings":[],"branding":null,"status":"expired"},"metadata":{"titleHtml":"Enterra, Барнаул -  since Since 2001","title":"Enterra, Барнаул -  since Since 2001","keywords":[],"descriptionHtml":"0 articles from Enterra company authors","description":"0 articles from Enterra company authors"},"aDeskSettings":null,"careerAlias":null,"maxCustomTrackerLinks":0}},"companyIds":{},"companyTopIds":{},"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"vacancies":{}},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0,"isLoadMore":false},"desktopState":{"desktopFl":null,"desktopHl":null,"isChecked":false,"isLoginDemanded":false},"dfp":{"slotsDict":{}},"docs":{"menu":{},"articles":{},"mainMenu":[],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":"true"},"flows":{"flows":[{"alias":"develop","id":1,"route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":6,"route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":2,"route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":3,"route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":4,"route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":7,"route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{},"hubIds":{},"pagesCount":{},"isLoading":false,"route":{}},"hubsBlock":{"hubRefs":{},"hubIds":{}},"i18n":{"fl":"en","hl":"en"},"info":{"infoPage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"search":null,"query":{},"pathname":null,"path":null,"href":""},"searchQuery":null},"me":{"user":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"pinnedPost":{"pinnedPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{}},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":[],"articleRefs":{},"pagesCount":null,"route":{},"lastVisitedRoute":{},"isLoading":false},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"items":{},"pagesCache":{},"markedViewedSilently":{},"markedRead":{},"unreadCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null},"unviewedCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null}}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script>
+<script src="https://assets.habr.com/habr-web/js/chunk-vendors.881c3e9d.js" defer></script><script src="https://assets.habr.com/habr-web/js/app.fdbba7e2.js" defer></script>
+
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    </script>
+  
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script>
+  <noscript>
+    <div>
+      <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt="" />
+    </div>
+  </noscript>
+  
+    <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script>
+  
+</body>
+</html>

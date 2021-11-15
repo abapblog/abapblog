@@ -1,0 +1,706 @@
+    
+<!DOCTYPE html>
+<html>
+<head>
+                            <title>How to debug background workflow steps - Wiki - Community Wiki</title>
+    
+        
+
+                        
+    
+                        
+    
+
+                
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE,chrome=IE7">
+<meta charset="UTF-8">
+<meta id="confluence-context-path" name="confluence-context-path" content="/wiki">
+<meta id="confluence-base-url" name="confluence-base-url" content="https://wiki.scn.sap.com/wiki">
+
+    <meta id="atlassian-token" name="atlassian-token" content="e288ae89a415b947cac88171248dba8119be8dad">
+
+
+<meta id="confluence-space-key" name="confluence-space-key" content="HOME">
+<script type="text/javascript">
+        var contextPath = '/wiki';
+</script>
+
+    
+
+    <meta name="confluence-request-time" content="1636438617579">
+        
+    
+        
+            <style>.ia-fixed-sidebar, .ia-splitter-left {width: 285px;}.theme-default .ia-splitter #main {margin-left: 285px;}.ia-fixed-sidebar {visibility: hidden;}</style>
+            <meta name="ajs-use-keyboard-shortcuts" content="true">
+            <meta name="ajs-discovered-plugin-features" content="$discoveredList">
+            <meta name="ajs-keyboardshortcut-hash" content="c5ed35e18a787aee9028bc0e9f6ed5c7">
+            
+    
+    
+            <meta name="ajs-page-title" content="How to debug background workflow steps">
+            <meta name="ajs-latest-published-page-title" content="How to debug background workflow steps">
+            <meta name="ajs-space-name" content="Wiki">
+            <meta name="ajs-page-id" content="446730140">
+            <meta name="ajs-latest-page-id" content="446730140">
+            <meta name="ajs-content-type" content="page">
+            <meta name="ajs-parent-page-title" content="6. How to use certain Workflow functionality">
+            <meta name="ajs-parent-page-id" content="269157252">
+            <meta name="ajs-space-key" content="HOME">
+            <meta name="ajs-max-number-editors" content="12">
+            <meta name="ajs-macro-placeholder-timeout" content="5000">
+            <meta name="ajs-jira-metadata-count" content="0">
+            <meta name="ajs-from-page-title" content="">
+            <meta name="ajs-can-remove-page" content="false">
+            <meta name="ajs-can-remove-page-hierarchy" content="false">
+            <meta name="ajs-browse-page-tree-mode" content="view">
+            <meta name="ajs-shared-drafts" content="true">
+            <meta name="ajs-context-path" content="/wiki">
+            <meta name="ajs-base-url" content="https://wiki.scn.sap.com/wiki">
+            <meta name="ajs-version-number" content="7.4.13">
+            <meta name="ajs-build-number" content="8402">
+            <meta name="ajs-remote-user" content="">
+            <meta name="ajs-remote-user-key" content="">
+            <meta name="ajs-remote-user-has-licensed-access" content="false">
+            <meta name="ajs-remote-user-has-browse-users-permission" content="false">
+            <meta name="ajs-current-user-fullname" content="">
+            <meta name="ajs-current-user-avatar-url" content="">
+            <meta name="ajs-current-user-avatar-uri-reference" content="/wiki/images/icons/profilepics/anonymous.svg">
+            <meta name="ajs-static-resource-url-prefix" content="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_">
+            <meta name="ajs-global-settings-attachment-max-size" content="5242880">
+            <meta name="ajs-global-settings-quick-search-enabled" content="true">
+            <meta name="ajs-user-locale" content="en_US">
+            <meta name="ajs-enabled-dark-features" content="site-wide.shared-drafts,site-wide.synchrony,clc.quick.create,confluence.view.edit.transition,cql.search.screen,confluence-inline-comments-resolved,http.session.registrar,frontend.editor.v4,nps.survey.inline.dialog,confluence.efi.onboarding.new.templates,frontend.editor.v4.compatibility,atlassian.cdn.static.assets,pdf-preview,previews.sharing,previews.versions,file-annotations,collaborative-audit-log,confluence.efi.onboarding.rich.space.content,previews.conversion-service,editor.ajax.save,graphql,read.only.mode,notification.plugin.api.enabled.com.atlassian.confluence.plugins.inlinecomments.events.InlineCommentReplyEvent,previews.trigger-all-file-types,notification.plugin.api.enabled.com.atlassian.confluence.plugins.inlinecomments.events.InlineCommentCreateEvent,lucene.caching.filter,attachment.extracted.text.extractor,confluence.table.resizable,notification.batch,previews.sharing.pushstate,confluence-inline-comments-rich-editor,site-wide.synchrony.opt-in,file-annotations.likes,gatekeeper-ui-v2,v2.content.name.searcher,mobile.supported.version,pulp,pulp.disable,confluence-inline-comments,quick-reload-inline-comments-flags,confluence-inline-comments-dangling-comment">
+            <meta name="ajs-atl-token" content="e288ae89a415b947cac88171248dba8119be8dad">
+            <meta name="ajs-confluence-flavour" content="VANILLA">
+            <meta name="ajs-user-date-pattern" content="dd MMM yyyy">
+            <meta name="ajs-access-mode" content="READ_WRITE">
+            <meta name="ajs-render-mode" content="READ_WRITE">
+            <meta name="ajs-date.format" content="MMM dd, yyyy">
+    
+    <link rel="shortcut icon" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/favicon.ico">
+
+<link rel="search" type="application/opensearchdescription+xml" href="/wiki/opensearch/osd.action" title="Community Wiki"/>
+    
+                    
+            
+
+    <script>
+window.WRM=window.WRM||{};window.WRM._unparsedData=window.WRM._unparsedData||{};window.WRM._unparsedErrors=window.WRM._unparsedErrors||{};
+WRM._unparsedData["com.atlassian.plugins.atlassian-plugins-webresource-plugin:context-path.context-path"]="\u0022\u005C/wiki\u0022";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-feature-discovery-plugin:confluence-feature-discovery-plugin-resources.test-mode"]="false";
+WRM._unparsedData["com.atlassian.analytics.analytics-client:policy-update-init.policy-update-data-provider"]="false";
+WRM._unparsedData["com.atlassian.analytics.analytics-client:programmatic-analytics-init.programmatic-analytics-data-provider"]="false";
+WRM._unparsedData["com.atlassian.confluence.plugins.synchrony-interop:synchrony-status-banner-loader.synchrony-status"]="false";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-license-banner:confluence-license-banner-resources.license-details"]="{\u0022daysBeforeLicenseExpiry\u0022:0,\u0022daysBeforeMaintenanceExpiry\u0022:0,\u0022showLicenseExpiryBanner\u0022:false,\u0022showMaintenanceExpiryBanner\u0022:false,\u0022renewUrl\u0022:null,\u0022salesUrl\u0022:null}";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-search-ui-plugin:confluence-search-ui-plugin-resources.i18n-data"]="{\u0022search.ui.recent.link.text\u0022:\u0022View more recently visited\u0022,\u0022search.ui.filter.space.category.input.label\u0022:\u0022Find space categories...\u0022,\u0022search.ui.filter.clear.selected\u0022:\u0022Clear selected items\u0022,\u0022search.ui.search.results.empty\u0022:\u0022We couldn\u005Cu0027\u005Cu0027t find anything matching \u005C\u0022{0}\u005C\u0022.\u0022,\u0022search.ui.content.name.search.items.panel.load.all.top.items.button.text\u0022:\u0022Show more app results...\u0022,\u0022search.ui.filter.space.archive.label\u0022:\u0022Search archived spaces\u0022,\u0022search.ui.filter.label\u0022:\u0022filter\u0022,\u0022search.ui.filter.contributor.button.text\u0022:\u0022Contributor\u0022,\u0022search.ui.filter.date.all.text\u0022:\u0022Any time\u0022,\u0022search.ui.filter.space.current.label\u0022:\u0022CURRENT\u0022,\u0022search.ui.clear.input.button.text\u0022:\u0022Clear text\u0022,\u0022help.search.ui.link.title\u0022:\u0022Search tips\u0022,\u0022search.ui.search.results.clear.button\u0022:\u0022clear your filters.\u0022,\u0022search.ui.filter.date.hour.text\u0022:\u0022The past day\u0022,\u0022search.ui.filters.heading\u0022:\u0022Filter by\u0022,\u0022search.ui.filter.label.input.label\u0022:\u0022Find labels...\u0022,\u0022search.ui.filter.date.month.text\u0022:\u0022The past month\u0022,\u0022search.ui.recent.items.anonymous\u0022:\u0022Start exploring. Your search results will appear here.\u0022,\u0022search.ui.input.label\u0022:\u0022Search\u0022,\u0022search.ui.search.result\u0022:\u0022{0,choice,1#{0} search result|1\u005Cu003c{0} search results}\u0022,\u0022search.ui.infinite.scroll.button.text\u0022:\u0022More results\u0022,\u0022search.ui.filter.date.button.text\u0022:\u0022Date\u0022,\u0022search.ui.filter.date.week.text\u0022:\u0022The past week\u0022,\u0022search.ui.filter.label.button.text\u0022:\u0022Label\u0022,\u0022search.ui.input.alert\u0022:\u0022Hit enter to search\u0022,\u0022search.ui.filter.no.result.text\u0022:\u0022We can\u005Cu0027\u005Cu0027t find anything matching your search\u0022,\u0022search.ui.result.subtitle.calendar\u0022:\u0022Team calendar\u0022,\u0022search.ui.filter.date.heading\u0022:\u0022Last modified within\u0022,\u0022search.ui.result.subtitle.user\u0022:\u0022User profile\u0022,\u0022search.ui.filter.contributor.input.label\u0022:\u0022Find people...\u0022,\u0022search.ui.filter.content.type.button.text\u0022:\u0022Type\u0022,\u0022search.ui.filter.space.input.label\u0022:\u0022Find spaces...\u0022,\u0022search.ui.filter.date.year.text\u0022:\u0022The past year\u0022,\u0022search.ui.filter.space.button.text\u0022:\u0022Space\u0022,\u0022search.ui.advanced.search.link.text\u0022:\u0022Advanced search\u0022,\u0022search.ui.generic.error\u0022:\u0022Something went wrong. Refresh the page, or contact your admin if this keeps happening.\u0022,\u0022search.ui.recent.spaces\u0022:\u0022Recent Spaces\u0022,\u0022search.ui.search.results.clear.line2\u0022:\u0022Try a different search term or\u0022,\u0022search.ui.filter.space.category.button.text\u0022:\u0022Space category\u0022,\u0022search.ui.search.results.clear.line1\u0022:\u0022We couldn\u005Cu0027\u005Cu0027t find anything matching your search.\u0022,\u0022search.ui.content.name.search.items.panel.load.all.top.items.admin.button.text\u0022:\u0022Show more settings and app results...\u0022,\u0022search.ui.recent.pages\u0022:\u0022Recently visited\u0022,\u0022search.ui.search.result.anonymous\u0022:\u0022{0,choice,1#{0} search result|1\u005Cu003c{0} search results}. Have an account? {1}Log in{2} to expand your search.\u0022,\u0022search.ui.recent.items.empty\u0022:\u0022Start exploring. Pages and spaces you\u005Cu0027\u005Cu0027ve visited recently will appear here.\u0022,\u0022search.ui.result.subtitle.space\u0022:\u0022Space\u0022,\u0022search.ui.filter.space.init.heading\u0022:\u0022recent spaces\u0022}";
+if(window.WRM._dataArrived)window.WRM._dataArrived();</script>
+<link type="text/css" rel="stylesheet" href="/wiki/s/64ff51b4494ddb6bd56f0bfb38c6b9ff-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/f93a1c81170760ac4fb7da71531851a9/_/download/contextbatch/css/_super/batch.css" data-wrm-key="_super" data-wrm-batch-type="context" media="all">
+<link type="text/css" rel="stylesheet" href="/wiki/s/9cfe6a86c8aace4efbeb10b6197b9db8-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/77b47d3dd1530069bc51cf3bb414587a/_/download/contextbatch/css/atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super/batch.css?gatekeeper-ui-v2=true&amp;highlightactions=true&amp;hostenabled=true" data-wrm-key="atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super" data-wrm-batch-type="context" media="all">
+<link type="text/css" rel="stylesheet" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/styles/colors.css" media="all">
+<link type="text/css" rel="stylesheet" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/styles/custom.css" media="all">
+<script type="text/javascript" src="/wiki/s/d4c8a0219030d0420604e8b5bb5c236d-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/f93a1c81170760ac4fb7da71531851a9/_/download/contextbatch/js/_super/batch.js?locale=en-US" data-wrm-key="_super" data-wrm-batch-type="context" data-initially-rendered></script>
+<script type="text/javascript" src="/wiki/s/6e3ff1bc8c546b9f23f36ba9d36e0716-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/77b47d3dd1530069bc51cf3bb414587a/_/download/contextbatch/js/atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super/batch.js?gatekeeper-ui-v2=true&amp;highlightactions=true&amp;hostenabled=true&amp;locale=en-US" data-wrm-key="atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super" data-wrm-batch-type="context" data-initially-rendered></script>
+
+    
+
+        
+    
+
+        
+        <meta name="ajs-site-title" content="Community Wiki" />
+            
+    <!-- Hide page exports on UI for anonymous users, backend restriction implemented in plugin
+    https://github.wdf.sap.corp/confluence/plugin-restrict-anonymous-actions/wiki/Documentation -->
+<!-- EWU-518 Limit/Hide the Space List in the Dashboard for Guest users out of the box -->
+<script type="text/javascript">
+    AJS.toInit(function(){
+        if (AJS.params.remoteUser == ''){
+        /* Hide page exports on UI for anonymous users*/
+          AJS.$('#action-export-pdf-link').hide();
+          AJS.$('#action-export-word-link').hide();
+
+          /* EWU-518 */
+          AJS.$('#sidebar-spaces').hide();
+        }
+    });
+</script>
+
+<!--  WDS-148 Integrate Wiki with Adobe Launch. -->
+<script src="//assets.adobedtm.com/ccc66c06b30b/563843cfec4a/launch-d6d38849b49d.min.js" async></script>
+
+    
+                <link rel="canonical" href="https://wiki.scn.sap.com/wiki/display/HOME/How+to+debug+background+workflow+steps">
+        <link rel="shortlink" href="https://wiki.scn.sap.com/wiki/x/nI_gGg">
+    <meta name="wikilink" content="[HOME:How to debug background workflow steps]">
+    <meta name="page-version" content="4">
+    <meta name="ajs-page-version" content="4">
+
+</head>
+
+    
+<body      id="com-atlassian-confluence" class="theme-default  aui-layout aui-theme-default">
+
+        
+            <div id='stp-licenseStatus-banner'></div>
+    <ul id="assistive-skip-links" class="assistive">
+    <li><a href="#title-heading">Skip to content</a></li>
+    <li><a href="#breadcrumbs">Skip to breadcrumbs</a></li>
+    <li><a href="#header-menu-bar">Skip to header menu</a></li>
+    <li><a href="#navigation">Skip to action menu</a></li>
+    <li><a href="#quick-search-query">Skip to quick search</a></li>
+</ul>
+<div id="page">
+<div id="full-height-container">
+    <div id="header-precursor">
+        <div class="cell">
+            <div style="background-color:#f6f6f6;">
+<center>
+<!-- Put your site header text here, make sure tags are symmetric -->
+</center>
+</div>
+                            </div>
+    </div>
+        
+
+
+
+
+
+<header id="header" role="banner">
+    <nav class="aui-header aui-dropdown2-trigger-group" role="navigation"><div class="aui-header-inner"><div class="aui-header-primary"><h1 id="logo" class="aui-header-logo aui-header-logo-custom"><a href="/wiki/"><img src="/wiki/download/attachments/389939204/atl.site.logo?version=1&amp;modificationDate=1574179418000&amp;api=v2" alt="Community Wiki" /><span class="aui-header-logo-text">Community Wiki</span></a></h1><ul class="aui-nav">
+                            <li>
+            
+        
+        
+<a  id="space-directory-link" href="/wiki/spacedirectory/view.action"  class=" aui-nav-imagelink"   title="Spaces">
+            <span>Spaces</span>
+    </a>
+        </li>
+                                <li class="aui-buttons">
+            </li>
+</ul>
+</div><div class="aui-header-secondary"><ul class="aui-nav">
+                        <li>
+        <div id="search-ui" class="aui-quicksearch dont-default-focus header-quicksearch"><input id="quick-search-query" aria-label="Search" placeholder="Search" type="text" /><div id="quick-search-alert" role="alert">Hit enter to search</div><aui-spinner size="small"></aui-spinner></div>
+    </li>
+        <li>
+            
+        <a id="help-menu-link" class="aui-nav-link aui-dropdown2-trigger aui-dropdown2-trigger-arrowless" href="#" aria-haspopup="true" aria-owns="help-menu-link-content" title="Help">
+        <span class="aui-icon aui-icon-small aui-iconfont-question-filled">Help</span>
+    </a>
+    <nav id="help-menu-link-content" class="aui-dropdown2 aui-style-default" aria-hidden="true">
+                    <div class="aui-dropdown2-section">
+                                <ul  id="help-menu-link-leading" class="aui-list-truncate section-leading first">
+                                            <li>
+        
+            
+<a  id="confluence-help-link" href="https://docs.atlassian.com/confluence/docs-74/" class="    "      title="Visit the Confluence documentation home"  target="_blank"
+>
+        Online Help
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="keyboard-shortcuts-link" href="/wiki" class="    "      title="View available keyboard shortcuts" >
+        Keyboard Shortcuts
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="feed-builder-link" href="/wiki/dashboard/configurerssfeed.action" class="    "      title="Create your custom RSS feed." >
+        Feed Builder
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="whats-new-menu-link" href="https://confluence.atlassian.com/display/DOC/Confluence+7.4+Release+Notes" class="    "      title="" >
+        What’s new
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="confluence-about-link" href="/wiki/aboutconfluencepage.action" class="    "      title="Get more information about Confluence" >
+        About Confluence
+</a>
+</li>
+                                    </ul>
+            </div>
+            </nav>
+    
+    </li>
+        <li>
+                
+    
+    </li>
+        <li>
+            
+    </li>
+        <li>
+                                            <li>
+        
+            
+<a  id="login-link" href="/wiki/login.action?os_destination=%2Fdisplay%2FHOME%2FHow%2Bto%2Bdebug%2Bbackground%2Bworkflow%2Bsteps" class="   user-item login-link "      title="" >
+        Log in
+</a>
+</li>
+                        
+    </li>
+    </ul>
+</div></div><!-- .aui-header-inner--></nav><!-- .aui-header -->
+    <br class="clear">
+</header>
+    
+
+    
+    	<div class="ia-splitter">
+    		<div class="ia-splitter-left">
+    			<div class="ia-fixed-sidebar">
+                                            
+                            <div class="acs-side-bar ia-scrollable-section"><div class="acs-side-bar-space-info tipsy-enabled" data-configure-tooltip="Edit space details"><div class="avatar"><div class="space-logo" data-key="HOME" data-name="Wiki" data-entity-type="confluence.space"><div class="avatar-img-container"><div class="avatar-img-wrapper"><a href="/wiki/display/HOME/FAQ" title="Wiki"><img class="avatar-img" src="/wiki/download/attachments/389939204/global.logo?version=8&amp;modificationDate=1574181442000&amp;api=v2" alt="Wiki"></a></div></div></div></div><div class="space-information-container"><div class="name"><a href="/wiki/display/HOME/FAQ" title="Wiki">Wiki</a></div><div class="flyout-handle icon aui-icon aui-icon-small aui-iconfont-edit"></div></div></div><div class="acs-side-bar-content"><div class="acs-nav-wrapper"><div class="acs-nav" data-has-create-permission="false" data-quick-links-state="hide" data-page-tree-state="hide" data-nav-type="pages"><div class="acs-nav-sections"><div class="main-links-section "><ul class="acs-nav-list"><li class="acs-nav-item wiki current-item" data-collector-key="spacebar-pages"><a class="acs-nav-item-link tipsy-enabled" href="/wiki/collector/pages.action?key=HOME" data-collapsed-tooltip="Pages"><span class="icon"></span><span class="acs-nav-item-label">Pages</span></a></li></ul></div></div></div></div><div class="ia-secondary-container tipsy-enabled" data-tree-type="pages"></div></div><div class="hidden"><a href="/wiki/collector/pages.action?key=HOME" id="space-pages-link"></a><script type="text/x-template" title="logo-config-content"><h2>Space Details</h2><div class="personal-space-logo-hint">Your profile picture is used as the logo for your personal space. <a href="/wiki/users/profile/editmyprofilepicture.action" target="_blank">Change your profile picture</a>.</div></script></div></div><div class="space-tools-section"><div id="space-tools-menu-additional-items" class="hidden"><div data-label="Browse pages" data-class="" data-href="/wiki/pages/reorderpages.action?key=HOME">Browse pages</div></div><button id="space-tools-menu-trigger"  class=" aui-dropdown2-trigger aui-button aui-button-subtle tipsy-enabled aui-dropdown2-trigger-arrowless " aria-controls="space-tools-menu" aria-haspopup="true" role="button" data-aui-trigger><span class="aui-icon aui-icon-small aui-iconfont-configure">Configure</span><span class="aui-button-label">Space tools</span><span class="aui-icon "></span></button><div id="space-tools-menu" class="aui-dropdown2 aui-style-default space-tools-dropdown" role="menu" aria-hidden="true" data-aui-alignment="top left"><div role="application"></div></div><a class="expand-collapse-trigger aui-icon aui-icon-small aui-iconfont-chevron-double-right"></a></div>
+                    
+                        			</div>
+    		</div>
+        <!-- \#header -->
+
+            
+    
+        <div id="main" class=" aui-page-panel">
+                        <div id="main-header">
+                        
+    <div id="navigation" class="content-navigation view">
+                    <ul class="ajs-menu-bar">
+                                            
+        <li class="normal ajs-menu-item">
+        <a id="action-menu-link" class="action aui-dropdown2-trigger-arrowless aui-button aui-button-subtle ajs-menu-title aui-dropdown2-trigger" href="#" aria-haspopup="true" aria-label="More options" aria-owns="action-menu" data-container="#navigation">
+            <span>
+                                    <span class="aui-icon aui-icon-small aui-iconfont-more" aria-label="More options"></span>
+                                
+            </span>
+        </a>         <div id="action-menu" class="aui-dropdown2 aui-style-default" aria-hidden="true">
+                            <div class="aui-dropdown2-section">
+                    <ul  id="action-menu-primary"                         class="section-primary first">
+                                                    <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-attachments-link" href="/wiki/pages/viewpageattachments.action?pageId=446730140" rel="nofollow" class="action-view-attachments"  accessKey="t"  title="View Attachments" >
+                        <span>
+                                A<u>t</u>tachments (12)
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-view-history-link" href="/wiki/pages/viewpreviousversions.action?pageId=446730140" rel="nofollow" class="action-view-history"   title="" >
+                        <span>
+                                Page History
+            </span>        </a>
+    </li>
+                                        </ul>
+                </div>
+                            <div class="aui-dropdown2-section">
+                    <ul  id="action-menu-secondary"                         class="section-secondary">
+                                                    <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-page-info-link" href="/wiki/pages/viewinfo.action?pageId=446730140" rel="nofollow" class="action-view-info"   title="" >
+                        <span>
+                                Page Information
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-resolved-comments" href="/wiki" rel="nofollow" class=""   title="" >
+                        <span>
+                                Resolved comments
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-in-hierarchy-link" href="/wiki/pages/reorderpages.action?key=HOME&amp;openId=446730140#selectedPageInHierarchy" rel="nofollow" class=""   title="" >
+                        <span>
+                                View in Hierarchy
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-view-source-link" href="/wiki/plugins/viewsource/viewpagesrc.action?pageId=446730140" rel="nofollow" class="action-view-source popup-link"   title="" >
+                        <span>
+                                View Source
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-export-pdf-link" href="/wiki/spaces/flyingpdf/pdfpageexport.action?pageId=446730140" rel="nofollow" class=""   title="" >
+                        <span>
+                                Export to PDF
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-export-word-link" href="/wiki/exportword?pageId=446730140" rel="nofollow" class="action-export-word"   title="" >
+                        <span>
+                                Export to Word
+            </span>        </a>
+    </li>
+                                        </ul>
+                </div>
+                    </div>
+    </li>
+            </ul>
+    </div>
+
+            
+            <div id="title-heading" class="pagetitle with-breadcrumbs">
+                
+                                    <div id="breadcrumb-section">
+                        
+    
+    
+    <ol id="breadcrumbs">
+                                        
+                        
+        <li class="first" >
+                        
+                            <span class=""><a href="/wiki/collector/pages.action?key=HOME">Dashboard</a></span>
+                                                                                                            <li id="ellipsis" title="Show all breadcrumbs"><span><strong>&#8230;</strong></span></li>
+                                                
+                        
+        <li class="hidden-crumb" >
+                        
+                            <span class=""><a href="/wiki/display/HOME/FAQ">FAQ</a></span>
+                                                                                                    
+                        
+        <li class="hidden-crumb" >
+                        
+                            <span class=""><a href="/wiki/display/HOME/Business+Process+Management">Business Process Management</a></span>
+                                                                                                    
+                        
+        <li class="hidden-crumb" >
+                        
+                            <span class=""><a href="/wiki/display/HOME/SAP+Business+Workflow+FAQ">SAP Business Workflow FAQ</a></span>
+                                                                                    
+                        
+        <li>
+                        
+                            <span class=""><a href="/wiki/display/HOME/6.+How+to+use+certain+Workflow+functionality">6. How to use certain Workflow functionality</a></span>
+                                                                    </ol>
+
+
+                    </div>
+                
+                
+        <a href="#page-banner-end" class="assistive">Skip to end of banner</a>
+<div id="page-banner-start" class="assistive"></div>
+
+                    
+            <div id="page-metadata-banner"><ul class="banner"><li id="system-content-items" class="noprint"><a href="" title="Unrestricted" id="content-metadata-page-restrictions-hidden" class="hidden"></a><a href="/wiki/pages/viewpageattachments.action?pageId=446730140&amp;metadataLink=true" title="12 attachments" id="content-metadata-attachments" class="aui-icon aui-icon-small aui-iconfont-attachment"></a></li><li class="page-metadata-item noprinthas-button"  id="content-metadata-jira-wrapper"><a href="" title="" id="content-metadata-jira" class="aui-button aui-button-subtle content-metadata-jira tipsy-disabled hidden"><span>Jira links</span></a></li></ul></div>
+            
+
+<a href="#page-banner-start" class="assistive">Go to start of banner</a>
+<div id="page-banner-end" class="assistive"></div>
+    
+
+                <h1 id="title-text" class="with-breadcrumbs">
+                                                <a href="/wiki/display/HOME/How+to+debug+background+workflow+steps">How to debug background workflow steps</a>
+                                    </h1>
+            </div>
+        </div><!-- \#main-header -->
+        
+        
+
+        <div id="sidebar-container">
+                                                </div><!-- \#sidebar-container -->
+
+        
+    
+
+        
+
+
+
+
+            
+    
+
+                                
+    
+
+    
+    
+        
+    
+    
+                    
+    
+
+    
+
+    
+            
+        
+
+    
+    
+
+    
+            
+        
+
+
+
+    
+<div id="content" class="page view">
+    
+
+
+<div id="action-messages">
+                        </div>
+
+
+
+            <script type="text/x-template" title="searchResultsGrid">
+    <table class="aui">
+        <thead>
+            <tr class="header">
+                <th class="search-result-title">Page Title</th>
+                <th class="search-result-space">Space</th>
+                <th class="search-result-date">Updated</th>
+            </tr>
+        </thead>
+    </table>
+</script>
+<script type="text/x-template" title="searchResultsGridCount">
+    <p class="search-result-count">{0}</p>
+</script>
+<script type="text/x-template" title="searchResultsGridRow">
+    <tr class="search-result">
+        <td class="search-result-title"><a href="{1}" class="content-type-{2}"><span>{0}</span></a></td>
+        <td class="search-result-space"><a class="space" href="/wiki/display/{4}/" title="{3}">{3}</a></td>
+        <td class="search-result-date"><span class="date" title="{6}">{5}</span></td>
+    </tr>
+</script>
+        
+    
+            
+
+        
+                            
+    
+
+                    
+
+        
+        <a href="#page-metadata-end" class="assistive">Skip to end of metadata</a>
+<div id="page-metadata-start" class="assistive"></div>
+
+    <div class="page-metadata">
+        <ul>
+            <li class="page-metadata-modification-info">
+                
+        
+    
+        
+    
+        
+            
+            Created by <span class='author'>     <a href="    /wiki/display/~hv8rfh5
+"
+                       class="url fn"
+                            >Kelly Wang</a></span>, last modified by <span class='editor'>     <a href="    /wiki/display/~h4xdi60
+"
+                       class="url fn"
+                            >Laszlo Haladin</a></span> on <a class='last-modified' title='Show changes' href='/wiki/pages/diffpagesbyversion.action?pageId=446730140&amp;selectedPageVersions=3&amp;selectedPageVersions=4'>May 02, 2018</a>
+                </li>
+        </ul>
+    </div>
+
+
+<a href="#page-metadata-start" class="assistive">Go to start of metadata</a>
+<div id="page-metadata-end" class="assistive"></div>
+
+        
+                                            
+        <div id="main-content" class="wiki-content">
+                           
+        <h2 id="Howtodebugbackgroundworkflowsteps-Purpose"><a name="DRAFT-KnowledgeManagementWIKITemplate-Title" rel="nofollow"></a><a rel="nofollow"></a>Purpose</h2><p>This page is created to guide background workflow step debugging scenarios.</p><h2 id="Howtodebugbackgroundworkflowsteps-Overview"><a rel="nofollow"></a>Overview</h2><p>The following SAP Notes explained how to debug background workflow steps:</p><ul><li><a href="https://launchpad.support.sap.com/#/notes/1731777" class="external-link" rel="nofollow">1731777</a> - Debugging background work items</li><li><a href="https://launchpad.support.sap.com/#/notes/1782731" class="external-link" rel="nofollow">1782731</a> - Instructions for debugging background steps</li><li><a href="https://launchpad.support.sap.com/#/notes/2197117" class="external-link" rel="nofollow">2197117</a> - Debugging of background work items</li></ul><p>Starting from SAP Note <a href="https://launchpad.support.sap.com/#/notes/2197117" class="external-link" rel="nofollow">2197117</a>, the debugging of background becomes much easier (simply set external breakpoints and then activate by transaction SWW_BREAKPOINT).</p><div class="confluence-information-macro confluence-information-macro-information conf-macro output-block" data-hasbody="true" data-macro-name="info"><span class="aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon"> </span><div class="confluence-information-macro-body"><p><span style="color: rgb(0,0,0);">In this wiki page, we will focus on the solution from SAP Note <a href="https://launchpad.support.sap.com/#/notes/1731777" class="external-link" rel="nofollow">1731777</a>. </span></p></div></div><h2 id="Howtodebugbackgroundworkflowsteps-DebuggingScenarios"><span style="color: rgb(0,51,102);"><span style="color: rgb(0,0,0);">Debugging Scenarios</span></span></h2><h6 id="Howtodebugbackgroundworkflowsteps-Scenario1-Youhaveanexistingbackgroundstepwhichgoterror/dumpsduringexecution."><strong>Scenario 1 - You have an existing background step which got error/dumps during execution.</strong></h6><p><strong>A.</strong> Create a new RFC destination using transaction SM59. This new RFC destination has the type &quot;Logical Destination&quot;. The user field on the &quot;Logon &amp; Security&quot; tab page is initial.</p><p><strong><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="430" width="500" src="/wiki/download/attachments/446730140/RFC_DESTINATION.png?version=1&amp;modificationDate=1466416560000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/RFC_DESTINATION.png?version=1&amp;modificationDate=1466416560000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730153" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="RFC_DESTINATION.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span><br/><br/></strong></p><p><strong>B.</strong> Then call transaction SMQS. Choose &quot;Deregistration&quot; and enter the name of the new RFC destination in the dialog box.</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="86" width="500" src="/wiki/download/attachments/446730140/DEREGISTRATION%201.png?version=1&amp;modificationDate=1466416542000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/DEREGISTRATION%201.png?version=1&amp;modificationDate=1466416542000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730152" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="DEREGISTRATION 1.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span></p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="36" width="700" src="/wiki/download/attachments/446730140/DEREGISTRATION%202.png?version=1&amp;modificationDate=1466416536000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/DEREGISTRATION%202.png?version=1&amp;modificationDate=1466416536000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730151" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="DEREGISTRATION 2.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span></p><p><strong>C.</strong> Use the workflow administration to set the value of the element '_RFC_DESTINATION' in the container of the background work item. Regarding how to change container value as workflow admin, see wiki page <a href="https://wiki.scn.sap.com/wiki/x/kYmgGg" rel="nofollow">How to access workflow admin functions such as 'change container', 'Lock for execution' and so on</a>.</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="250" width="484" src="/wiki/download/attachments/446730140/Change%20container.png?version=1&amp;modificationDate=1466416530000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/Change%20container.png?version=1&amp;modificationDate=1466416530000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730150" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="Change container.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span></p><p><strong>D.</strong> Start the background work item using the workflow administration (SWIA).</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="87" width="500" src="/wiki/download/attachments/446730140/swia.png?version=1&amp;modificationDate=1466416743000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/swia.png?version=1&amp;modificationDate=1466416743000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730156" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="swia.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span></p><p>E. After you start the background work item, call transaction SM58. You can use the name of your new RFC destination as a filter. The system displays a list with at least one entry. The entry has the &quot;Transaction recorded&quot; status.</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="90" width="700" src="/wiki/download/attachments/446730140/transaction%20recorded.png?version=1&amp;modificationDate=1466416524000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/transaction%20recorded.png?version=1&amp;modificationDate=1466416524000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730149" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="transaction recorded.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span></p><p><strong>F.</strong> You can now directly navigate to the debugger using &quot;Edit -&gt; Debug LUW&quot;.</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="141" width="350" src="/wiki/download/attachments/446730140/debug%20LUW.png?version=1&amp;modificationDate=1466416519000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/debug%20LUW.png?version=1&amp;modificationDate=1466416519000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730148" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="debug LUW.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span></p><p> </p><h6 id="Howtodebugbackgroundworkflowsteps-Scenario2-Anotherwaytodebugworkitemsinscenario1."><strong>Scenario 2 - Another way to debug work items in scenario 1.</strong></h6><p><strong>A.</strong> Create a new RFC destination using transaction SM59. This new RFC destination has the type &quot;Logical Destination&quot;. The user field on the &quot;Logon &amp; Security&quot; tab page is initial.</p><p><strong><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="430" width="500" src="/wiki/download/attachments/446730140/RFC_DESTINATION.png?version=1&amp;modificationDate=1466416560000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/RFC_DESTINATION.png?version=1&amp;modificationDate=1466416560000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730153" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="RFC_DESTINATION.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span><br/><br/></strong></p><p><strong>B. </strong>Use the workflow administration to set the value of the element '_RFC_DESTINATION' in the container of the background work item. Regarding how to change container value as workflow admin, see wiki page <a href="https://wiki.scn.sap.com/wiki/x/kYmgGg" rel="nofollow">How to access workflow admin functions such as 'change container', 'Lock for execution' and so on</a>.</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="250" width="484" src="/wiki/download/attachments/446730140/Change%20container.png?version=1&amp;modificationDate=1466416530000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/Change%20container.png?version=1&amp;modificationDate=1466416530000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730150" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="Change container.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span></p><p><strong>C.</strong> Set an external break-point in the application method. If you want to set an external break-point directly in the Business Object Repository (BOR) method, you can do this by entering the value 'PGES' directly in the OK code field.</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="250" width="475" src="/wiki/download/attachments/446730140/PGES.png?version=1&amp;modificationDate=1466416514000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/PGES.png?version=1&amp;modificationDate=1466416514000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730147" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="PGES.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span></p><p>Starting from SAP Note <a href="https://launchpad.support.sap.com/#/notes/2192237" class="external-link" rel="nofollow">2192237</a> - Support of external breakpoints in BOR objects, function of setting external breakpoints is available by default.</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="250" width="500" src="/wiki/download/attachments/446730140/DEFAULT.png?version=1&amp;modificationDate=1466416504000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/DEFAULT.png?version=1&amp;modificationDate=1466416504000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730146" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="DEFAULT.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span></p><p><strong>D.</strong> Start the background work item using the workflow administration (SWIA).</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="87" width="500" src="/wiki/download/attachments/446730140/swia.png?version=1&amp;modificationDate=1466416743000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/swia.png?version=1&amp;modificationDate=1466416743000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730156" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="swia.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span></p><p><strong>E.</strong> If sufficient free sessions are available, the system now displays a debugger window.</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="419" width="500" src="/wiki/download/attachments/446730140/debugging%20window.png?version=1&amp;modificationDate=1466416499000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/debugging%20window.png?version=1&amp;modificationDate=1466416499000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730145" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="debugging window.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span></p><h6 id="Howtodebugbackgroundworkflowsteps-Scenario3-Youwanttodebugabackgroundworkitembeforethefirstexecution."><strong>Scenario 3 - You want to debug a background work item before the first execution.</strong></h6><p>For this scenario, you have the option to set the value of the RFC destination in the workflow container. The workflow runtime system transfers the value to all new work items of this workflow that are created.</p><p>You can set the container value by container operation step or binding...</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="250" width="462" src="/wiki/download/attachments/446730140/CONTAINER%20OPERATION.png?version=1&amp;modificationDate=1466416495000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/CONTAINER%20OPERATION.png?version=1&amp;modificationDate=1466416495000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730144" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="CONTAINER OPERATION.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span></p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border" height="189" width="500" src="/wiki/download/attachments/446730140/BINDING.png?version=1&amp;modificationDate=1466416491000&amp;api=v2" data-image-src="/wiki/download/attachments/446730140/BINDING.png?version=1&amp;modificationDate=1466416491000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="446730143" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="BINDING.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="446730140" data-linked-resource-container-version="4"></span></p><h1 id="Howtodebugbackgroundworkflowsteps-RelatedContent"><a rel="nofollow"></a>Related Content</h1><h2 id="Howtodebugbackgroundworkflowsteps-RelatedDocuments"><a rel="nofollow"></a>Related Documents</h2><p> SAP Community Wiki page <a href="https://wiki.scn.sap.com/wiki/x/kYmgGg" rel="nofollow">How to access workflow admin functions such as 'change container', 'Lock for execution' and so on</a></p><h2 id="Howtodebugbackgroundworkflowsteps-RelatedSAPNotes/KBAs"><a rel="nofollow"></a>Related SAP Notes/KBAs</h2><p>SAP Note <a href="https://launchpad.support.sap.com/#/notes/2192237" class="external-link" rel="nofollow">2192237</a> - Support of external breakpoints in BOR objects<br/>SAP Note <a href="https://launchpad.support.sap.com/#/notes/1731777" class="external-link" rel="nofollow">1731777</a> - Debugging background work items<br/>SAP Note <a href="https://launchpad.support.sap.com/#/notes/1782731" class="external-link" rel="nofollow">1782731</a> - Instructions for debugging background steps<br/>SAP Note <a href="https://launchpad.support.sap.com/#/notes/2197117" class="external-link" rel="nofollow">2197117</a> - Debugging of background work items</p>
+
+                
+        
+    
+        </div>
+
+                        
+    
+
+
+
+<div id="labels-section" class="pageSection group">
+    <div class="labels-section-content content-column" entityid="446730140" entitytype="page">
+	<div class="labels-content">
+		
+    <ul class="label-list label-list-right ">
+                    
+        <li class="aui-label " data-label-id="76"><a class="aui-label-split-main" href="/wiki/label/HOME/workflow" rel="tag">workflow</a></li><li class="aui-label " data-label-id="132808742"><a class="aui-label-split-main" href="/wiki/label/HOME/debugging" rel="tag">debugging</a></li><li class="aui-label " data-label-id="3963"><a class="aui-label-split-main" href="/wiki/label/HOME/debug" rel="tag">debug</a></li><li class="aui-label " data-label-id="3597"><a class="aui-label-split-main" href="/wiki/label/HOME/background" rel="tag">background</a></li><li class="aui-label " data-label-id="1102"><a class="aui-label-split-main" href="/wiki/label/HOME/steps" rel="tag">steps</a></li>
+            </ul>
+
+    </div>
+</div>
+</div>
+        
+		
+            
+
+
+
+
+            
+        
+
+
+
+
+
+
+
+
+                        
+    
+<div id="comments-section" class="pageSection group">
+        
+    
+
+
+
+</div>
+        
+
+
+                
+    
+            
+</div>
+
+    
+
+    
+
+
+
+
+    
+    
+
+    
+    
+    
+
+
+    
+<div id="space-tools-web-items" class="hidden">
+                <div data-label="Overview" data-href="/wiki/spaces/viewspacesummary.action?key=HOME">Overview</div>
+            <div data-label="Content Tools" data-href="/wiki/pages/reorderpages.action?key=HOME">Content Tools</div>
+    </div>
+        
+
+
+
+            </div><!-- \#main -->
+            
+    
+    
+        
+            
+            
+
+<div id="footer" role="contentinfo">
+    <section class="footer-body">
+
+                                                    
+        
+
+        <ul id="poweredby">
+            <li class="noprint">Powered by <a href="http://www.atlassian.com/software/confluence" class="hover-footer-link" rel="nofollow">Atlassian Confluence</a> <span id='footer-build-information'>7.4.13</span></li>
+            <li class="print-only">Printed by Atlassian Confluence 7.4.13</li>
+            <li class="noprint"><a href="https://support.atlassian.com/help/confluence" class="hover-footer-link" rel="nofollow">Report a bug</a></li>
+            <li class="noprint"><a href="https://www.atlassian.com/company" class="hover-footer-link" rel="nofollow">Atlassian News</a></li>
+        </ul>
+
+        
+
+        <div id="footer-logo"><a href="http://www.atlassian.com/" rel="nofollow">Atlassian</a></div>
+
+                    <div class="sap-footer" >
+	<ul id="sap-footer-links">
+        <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+        <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+        <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+        <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+        <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+    </ul>
+</div>
+        
+    </section>
+</div>
+
+    
+</div>
+
+</div><!-- \#full-height-container -->
+</div><!-- \#page -->
+
+    <span style="display:none;" id="confluence-server-performance">{"serverDuration": 89, "requestCorrelationId": "e2cb4a984089963c"}</span>
+</body>
+</html>
+    

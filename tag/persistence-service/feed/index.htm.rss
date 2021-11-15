@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>persistence service | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/persistence-service/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:10:43 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>ABAP Object Services &#8212; Persistence Service &#8212; часть 1.</title>
+		<link>https://abap-blog.ru/database-work/abap-object-services-persistence-service/</link>
+					<comments>https://abap-blog.ru/database-work/abap-object-services-persistence-service/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 28 May 2014 19:03:16 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<category><![CDATA[ABAP Object Services]]></category>
+		<category><![CDATA[persistence service]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1977</guid>
+
+					<description><![CDATA[<p>При разработке с использованием ABAP Objects разработчик неизбежно сталкивается с ситуацией, когда данные нужно либо загружать из каких-либо источников данных (БД, файлы и т.п.) в объекты, либо выгружать из объектов куда-либо. Системы, решающие задачу сопоставления информации из БД в объекты и обратно принято называть ORM системами. В объектно-ориентированном программировании объекты в программе представляют объекты из реального мира. В [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-persistence-service/">ABAP Object Services — Persistence Service — часть 1.</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/orm.jpg"><img loading="lazy" class="alignleft wp-image-2003 size-full" src="http://abap-blog.ru/wp-content/uploads/2014/05/orm.jpg" alt="orm" width="362" height="438" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/orm.jpg 362w, https://abap-blog.ru/wp-content/uploads/2014/05/orm-247x300.jpg 247w" sizes="(max-width: 362px) 100vw, 362px" /></a>При разработке с использованием ABAP Objects разработчик неизбежно сталкивается с ситуацией, когда данные нужно либо загружать из каких-либо источников данных (БД, файлы и т.п.) в объекты, либо выгружать из объектов куда-либо.</p>
+<p>Системы, решающие задачу сопоставления информации из БД в объекты и обратно принято называть <a href="http://ru.wikipedia.org/wiki/ORM">ORM</a> системами.</p>
+<p>В объектно-ориентированном программировании объекты в программе представляют объекты из реального мира. В качестве примера можно рассмотреть адресную книгу, которая содержит список людей с нулём или более телефонов и нулём или более адресов. В терминах объектно-ориентированного программирования они будут представляться объектами класса «Человек», которые будут содержать следующий список полей: имя, список (или массив) телефонов и список адресов.</p>
+<p>Суть задачи состоит в преобразовании таких объектов в форму, в которой они могут быть сохранены в файлах или базах данных, и которые легко могут быть извлечены в последующем, с сохранением свойств объектов и отношений между ними. Эти объекты называют «хранимыми» (англ. persistent).  В концепции SAP понятие «хранимый» объект заменено понятием «постоянный». В дальнейшем в статье будет использовано понятие «хранимый».</p>
+<p>Работа с хранимыми объектами осуществляется с помощью встроенной в AS ABAP технологии ABAP Object Services. Данный инструмент можно разделить на три составляющие:</p>
+<ul>
+<li>Инструмент загрузки и сохранения объектов (Persistence Service)</li>
+<li>Инструмент поиска в объектах по определенным критериям (Query Service)</li>
+<li>Инструмент обработки транзакций (Transaction Service)</li>
+</ul>
+<p><span id="more-1977"></span></p>
+<h2>Введение в Persistence Service</h2>
+<p>В большинстве языков программирования объекты являются временными данными и хранятся непосредственно в памяти во время выполнения программы (в ABAP до момента, когда сборщик мусора их удалит). Обычно для сохранения или загрузки данных из объектов в БД понадобится писать специальные методы преобразования данных объекта в реляционную структуру и наоборот (например, <a href="http://ru.wikipedia.org/wiki/%D0%A1%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F">сериализовать</a>/десериализовать объект в XML и сохранить в таком виде в таблице). В качестве более простой альтернативы можно использовать Persistence Service, который представляет из себя отдельный программный слой, скрывающий от разработчика большинство деталей по обработке данных.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/Persistence-service1.png"><img loading="lazy" class="size-full wp-image-1979 aligncenter" src="http://abap-blog.ru/wp-content/uploads/2014/05/Persistence-service1.png" alt="Persistence service" width="404" height="418" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/Persistence-service1.png 404w, https://abap-blog.ru/wp-content/uploads/2014/05/Persistence-service1-289x300.png 289w" sizes="(max-width: 404px) 100vw, 404px" /></a></p>
+<p>Persistence Service позволяет связывать атрибуты хранимого объекта с полями в таблице базы данных, ракурсе или структуре. Каждая отдельная запись в таблице или ракурсе будет связана с отдельным объектом.</p>
+<p>Есть несколько способов связывания хранимых объектов с данными в таблицах, ракурсах:</p>
+<ul>
+<li><strong>Связывание одного класса с одной записью в таблице (ракурсе)</strong>. Данный способ используется, когда все данные объекта хранятся в рамках одной записи таблицы/ракурса.</li>
+<li><strong>Связывание одного класса с несколькими записями в разных таблицах (ракурсах)</strong>. Применяется, когда данные класса разбросаны по нескольким таблицам (У таблиц должен быть один бизнес ключ, либо один общий GUID – глобальный идентификатор). В реальной жизни чаще встречаются связи таблиц, где есть основная таблица, например, заголовок закупочного заказа (EKKO) и таблица с позицией (EKPO). Так как бизнес ключ у них разный, (в EKPO есть ключевое поле позиция, которого нет в EKKO) данный способ связи не подойдет.</li>
+<li><strong>Связывание иерархий классов с записями в таблицах (ракурсах).</strong> Реализуется через ООП наследование. Наследование может быть двух видов: горизонтальным и вертикальным, подробное описание будет ниже.</li>
+</ul>
+<blockquote><p><span style="background-color: #ffffff;">Ракурсы используются в тех случаях, когда надо связать не все табличные поля с атрибутами хранимого класса.</span></p>
+<p><span style="background-color: #ffffff;">Связывание со структурой из словаря используется в тех случаях, когда вы сами определяете методы для связи с объектом хранения информации (БД, файлом и т.п.) и сами заполняете данными хранимые объекты.</span></p></blockquote>
+<p>Далее в статье в качестве источника данных всегда будет рассматриваться БД.</p>
+<p>Чтобы создать класс для хранимых объектов, необходимо при его создании выставить специальный флаг:­­</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/persistence-flag.png"><img loading="lazy" class="alignnone size-full wp-image-1980" src="http://abap-blog.ru/wp-content/uploads/2014/05/persistence-flag.png" alt="persistence flag" width="350" height="340" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/persistence-flag.png 350w, https://abap-blog.ru/wp-content/uploads/2014/05/persistence-flag-300x291.png 300w" sizes="(max-width: 350px) 100vw, 350px" /></a></p>
+<p>При создании хранимого класса, система автоматически генерирует код для манипуляции с объектами этого класса. Генерируемый код включает методы: чтения и изменения атрибутов объекта; загрузки объектов; сохранения объектов; удаление объектов и др. Если объект связан с БД, все эти методы генерируют SQL без участия программиста, в отдельных случаях программист может переопределить методы связывающие атрибуты хранимого объекта и базу данных.</p>
+<p>При работе с хранимыми объектами, система позволяет создать в рамках рабочего процесса только один уникальный экземпляр для каждого хранимого объекта (не может быть создано несколько одинаковых хранимых объектов с одним и тем же ключом). Если во время работы программы потребуется получить ссылку на уже инициализированный хранимый объект, Persistence Service вернет ссылку на полученный ранее объект, без использования базы данных (получит ссылку из памяти). Таким образом, мы избегаем возможной несогласованности данных, если бы мы работали с несколькими одинаковыми объектами в рамках одного рабочего процесса и избежать лишней нагрузки на БД при получении объекта из памяти.</p>
+<p>В специальном атрибуте агента класса (см. ниже), сохраняются все хранимые объекты. Объекты со статусом NOT_LOADED, хранятся только по <a href="http://ru.wikipedia.org/wiki/%D0%A1%D0%BB%D0%B0%D0%B1%D0%B0%D1%8F_%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B0">слабой ссылке</a>, что позволяет сборщику мусора в нужный ему момент их удалять (например, если не хватает памяти). Объекты с другими статусами хранятся как по слабой ссылке, так и по «сильной ссылке».</p>
+<p>Так как объекты PS всегда хранятся в системной памяти, сборщик мусора не удаляет хранимые объекты, когда на них нет ссылок внутри программы. Сделано это для того, чтобы потом не загружать объект заново.  Если Вам необходимо сократить объем выделенной в приложении памяти, можно освободить неиспользуемые более хранимые объекты вручную, вызвав специальный метод. (IF_OS_FACTORY~RELEASE см. ниже).</p>
+<p>Каждый хранимый объект имеет уникальный идентификатор, который отличает его от остальных объектов. Существует два типа идентификаторов:</p>
+<ul>
+<li><strong>Бизнес ключ</strong>, может состоять из определенных пользователем ключевых полей, всех допустимых типов кроме OS_GUID. Если вы используете бизнес ключ, вы должны связать ключевые поля из таблицы с атрибутами хранимого объекта. Если используется структура, то Вы сами решаете какое поле будет являться ключевым:<a href="http://abap-blog.ru/wp-content/uploads/2014/05/business-key.png"><img loading="lazy" class="alignnone size-full wp-image-1981" src="http://abap-blog.ru/wp-content/uploads/2014/05/business-key.png" alt="business key" width="571" height="100" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/business-key.png 571w, https://abap-blog.ru/wp-content/uploads/2014/05/business-key-300x52.png 300w" sizes="(max-width: 571px) 100vw, 571px" /></a></li>
+</ul>
+<ul>
+<li><a href="http://ru.wikipedia.org/wiki/GUID">GUID</a> (глобальный идентификатор) генерируемый Persistence Service при создании хранимого объекта. Если вы используете GUID, в таблице, с которой связан хранимый объект, должно быть поле с типом OS_GUID. Данное поле может быть как ключевым полем таблицы, так и нет. Если вдруг, по какой-то причине, понадобится генерация GUID ручным образом, можно использовать класс: <strong>cl_</strong><strong>system_</strong><strong>uuid</strong>. При работе с объектами на основе GUID, может возникать ситуация, когда в БД сохранились записи с одним идентификатором, а класс уже получил новый GUID (после удаления и создания класса заново). После чего при попытке получить по GUID ссылку на объект будет вызываться исключение CX_OS_CLASS_NOT_FOUND (класс не найден). Для решения проблемы смотрите ноту 567253.</li>
+</ul>
+<p>Persistence Service позволяет работать со ссылочными атрибутами на другие хранимые объекты. К примеру, если хранимый объект имеет атрибут А со ссылкой на хранимый объект Б, система сохранит ссылку на хранимый объект Б в базе данных. А когда объект А будет загружаться из БД, объект Б по сохраненной ранее ссылке будет восстановлен. В целях производительности Persistence Service не загружает связанные таким образом объекты (объект Б) до момента их реального использования в программе («ленивая загрузка»). Это следует запомнить т.к. в случае отладки, может возникнуть вопрос, почему объект получен, но все еще пустой.</p>
+<p>По типу хранения атрибуты могут быть двух видов:</p>
+<ul>
+<li><strong>Хранимые атрибуты</strong>. Содержимое <strong>хранимых</strong> атрибутов которые были изменены, после выполнения COMMIT WORK, сохраняется в связанной с этим атрибутом таблице, а при инициализации объекта загружается из неё. Загрузка хранимых атрибутов происходит только в момент доступа к какому-либо атрибуту через соответствующий метод. Доступ к ним возможен только через сгенерированные методы, несмотря на то, что доступ у такого атрибута будет Public.</li>
+<li><strong>Временные атрибуты</strong>. Содержимое <strong>временных</strong> атрибутов не сохраняется в БД и существует только во время выполнения программы.  При первоначальной загрузке хранимого объекта из БД, эти атрибуты имеют свое первоначальное (intial) значение. Подобные атрибуты могут использоваться, например для каких либо расчётных полей.</li>
+</ul>
+<p>Следует запомнить, что для табличных полей должен быть явно определен тип в словаре, иначе их нельзя будет связывать с атрибутами классов. Т.е. если вы захотите использовать встроенный тип в таблице:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/table-key.png"><img loading="lazy" class="alignnone size-full wp-image-1982" src="http://abap-blog.ru/wp-content/uploads/2014/05/table-key.png" alt="table key" width="587" height="201" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/table-key.png 587w, https://abap-blog.ru/wp-content/uploads/2014/05/table-key-300x102.png 300w" sizes="(max-width: 587px) 100vw, 587px" /></a></p>
+<p>Система не даст вам сделать сопоставление этого поля в атрибут класса.</p>
+<h3>Сопоставление с атрибутами хранимых классов</h3>
+<p>Далее на основе демонстрационной модели с полётами (пакет SAPBC_DATAMODEL) рассмотрим пример создания хранимого класса. Запускаем транзакцию <strong>SE24</strong> и создаем класс с именем ZCL_SFLIGHT:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/new-class.png"><img loading="lazy" class="alignnone size-full wp-image-1983" src="http://abap-blog.ru/wp-content/uploads/2014/05/new-class.png" alt="new class" width="350" height="340" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/new-class.png 350w, https://abap-blog.ru/wp-content/uploads/2014/05/new-class-300x291.png 300w" sizes="(max-width: 350px) 100vw, 350px" /></a><br />
+Переходим к связыванию данных из таблицы SFLIGHT с атрибутами нашего класса:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/sflight-connect.png"><img loading="lazy" class="alignnone size-full wp-image-1984" src="http://abap-blog.ru/wp-content/uploads/2014/05/sflight-connect.png" alt="sflight connect" width="427" height="121" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/sflight-connect.png 427w, https://abap-blog.ru/wp-content/uploads/2014/05/sflight-connect-300x85.png 300w" sizes="(max-width: 427px) 100vw, 427px" /></a></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/sflight-connect-2.png"><img loading="lazy" class="alignnone size-full wp-image-1985" src="http://abap-blog.ru/wp-content/uploads/2014/05/sflight-connect-2.png" alt="sflight connect 2" width="399" height="98" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/sflight-connect-2.png 399w, https://abap-blog.ru/wp-content/uploads/2014/05/sflight-connect-2-300x73.png 300w" sizes="(max-width: 399px) 100vw, 399px" /></a><br />
+На следующем экране необходимо связать поля из таблицы с атрибутами класса, т.к. в таблице SFLIGHT нет поля с типом OS_GUID, в качестве ключа будут использоваться ключевые поля из таблицы (бизнес ключ). Ключевые поля в классе будут доступны только для чтения. На данном этапе можно переопределить имя и описание для атрибута, видимость методов для доступа к атрибуту и необходимость создавать метод для записи атрибута (только чтение):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/sflight-attributes.png"><img loading="lazy" class="alignnone size-full wp-image-1986" src="http://abap-blog.ru/wp-content/uploads/2014/05/sflight-attributes.png" alt="sflight attributes" width="668" height="601" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/sflight-attributes.png 668w, https://abap-blog.ru/wp-content/uploads/2014/05/sflight-attributes-300x269.png 300w" sizes="(max-width: 668px) 100vw, 668px" /></a></p>
+<p>Для некоторых полей на данном диалоге можно выбрать тип присвоения (на рисунке С – Атрибут значения), все они будут рассмотрены на примерах более подробно.</p>
+<p>Для каждого отображения создается запись в системных таблицах: <strong>SEOMAPATT </strong>и <strong>SEOMAPCLS</strong>. Если в ходе разработки к таблицам, связанным с хранимыми классами, добавятся поля (не ключевые), классы по-прежнему будут активны и никаких проблем с их работой не возникнет. Но если вы хотите добавить новые поля к классу, понадобится заново перейти в диалог сопоставления и связать все новые поля с атрибутами класса, после чего активировать класс.</p>
+<p>Следующим шагом сохраняем наш класс и активируем его. После сохранения будут сгенерированы методы доступа к атрибутам класса и специальные классы для манипулирования хранимыми объектами нашего класса.</p>
+<blockquote><p>Не рекомендуется вносить изменения в SET_ и GET_ методы, т.к. повторная активация класса связанная с изменением связывания объекта приведет к их повторной генерации и все пользовательские изменения будут затерты (для добавления в эти методы каких-либо своих проверок, можно воспользоваться специальными методиками, будут рассмотрены отдельно).</p></blockquote>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/generated-methods.png"><img loading="lazy" class="alignnone size-full wp-image-1987" src="http://abap-blog.ru/wp-content/uploads/2014/05/generated-methods.png" alt="generated methods" width="708" height="439" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/generated-methods.png 708w, https://abap-blog.ru/wp-content/uploads/2014/05/generated-methods-300x186.png 300w" sizes="(max-width: 708px) 100vw, 708px" /></a></p>
+<p>Если потребуется создать временные атрибуты, их можно создать, так же, как и обычные атрибуты класса, непосредственно на закладке атрибуты.</p>
+<h3>Компоненты Persistence Service</h3>
+<p>Прежде чем работать с созданными классами, необходимо понять, каким образом с ними можно работать и что они из себя представляют.</p>
+<p>Persistence Service это программный слой состоящий из основной части (системных классов) и части относящейся непосредственно к хранимому классу (классы генерируемые на этапе сохранения/активации). На следующем изображении показаны составные части PS:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/pscomp.gif"><img loading="lazy" class="alignnone size-full wp-image-1988" src="http://abap-blog.ru/wp-content/uploads/2014/05/pscomp.gif" alt="pscomp" width="650" height="872" /></a></p>
+<h4>CL_persistent</h4>
+<p>Данный класс создается Вами в строителе классов (созданный ранее ZCL_SFLIGHT). Нельзя создать объект этого класса непосредственно через оператор CREATE OBJECT, т.к. в его свойствах выставлен параметр CREATE PRIVATE или CREATE ABSTRACT.</p>
+<p>Для создания класса необходимо будет воспользоваться специальными методами сгенерированного класса агента или актора (перевод SAP). Как было уже упомянуто выше в примере, система сама создает методы для доступа к атрибутам класса.</p>
+<p>Каждый хранимый класс реализует интерфейс <strong>IF_OS_STATE</strong>. В данном интерфейсе можно переопределить следующие методы:</p>
+<ul>
+<li><strong>HANDLE_EXCEPTION</strong>. Данный метод вызывается, если произошло исключение в методах доступа к атрибутам. В данном методе можно обработать вызванное исключение, однако обычно это делает тот, кто использует методы доступа к атрибутам.</li>
+<li><strong>INIT</strong>. Вызывается при создании временного или хранимого объекта сразу после того как были считаны хранимые атрибуты. В данном методе можно инициализировать временные атрибуты, назначить обработчики событий и т.п.</li>
+<li><strong>INVALIDATE</strong>. Вызывается при удалении хранимого объекта, обновления его хранимых атрибутов из БД. Тут вы можете вновь инициализировать временные атрибуты, переназначить обработчики событий и т.п.</li>
+</ul>
+<p>Остальные методы (SET,GET) являются системными и их нельзя переопределять. Вообще, что касается переопределения, увидеть разрешено оно или нет, можно увидеть непосредственно в коде:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/donotmodify.png"><img loading="lazy" class="alignnone size-full wp-image-1990" src="http://abap-blog.ru/wp-content/uploads/2014/05/donotmodify.png" alt="donotmodify" width="586" height="332" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/donotmodify.png 586w, https://abap-blog.ru/wp-content/uploads/2014/05/donotmodify-300x169.png 300w" sizes="(max-width: 586px) 100vw, 586px" /></a></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/modify.png"><img loading="lazy" class="alignnone size-full wp-image-1991" src="http://abap-blog.ru/wp-content/uploads/2014/05/modify.png" alt="modify" width="581" height="439" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/modify.png 581w, https://abap-blog.ru/wp-content/uploads/2014/05/modify-300x226.png 300w" sizes="(max-width: 581px) 100vw, 581px" /></a></p>
+<h4>CA_persistent и CB_persistent</h4>
+<p>Для каждого хранимого класса, среда создает еще два класса начинающихся с префикса CA_ (агент класса) и CB_ (базовый агент). Эти два класса относятся к части Persistence Service специфичной для конкретного хранимого класса. CA_ является наследником от CB_, который в свою очередь наследуется от класса <strong>CL_OS_CA_COMMON</strong>.</p>
+<p>Класс, с префиксом CA_ является так называемым агентом (актором) класса CL_, данный класс реализует шаблон одиночки (т.е. в рамках рабочего процесса может существовать всего одна его инстанция) доступ к которому можно получить через статический атрибут agent:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/agentattribute.png"><img loading="lazy" class="alignnone size-full wp-image-1992" src="http://abap-blog.ru/wp-content/uploads/2014/05/agentattribute.png" alt="agentattribute" width="740" height="187" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/agentattribute.png 740w, https://abap-blog.ru/wp-content/uploads/2014/05/agentattribute-300x75.png 300w" sizes="(max-width: 740px) 100vw, 740px" /></a></p>
+<p>Когда вы первый раз обращаетесь к этому атрибуту, в статическом конструкторе агента происходит его инициализация.</p>
+<p>Агент класса используется для управления объектами хранимого класса: созданием, удалением, обновлением и т.п. Программист может переопределять некоторые отдельные методы класса агента, в частности используется для переопределения доступа к БД. Класс CB_ не предназначен для изменения. При генерации CL_ класса в качестве его «друга» определяется автоматом класс агент:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/friendship.png"><img loading="lazy" class="alignnone size-full wp-image-1993" src="http://abap-blog.ru/wp-content/uploads/2014/05/friendship.png" alt="friendship" width="389" height="145" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/friendship.png 389w, https://abap-blog.ru/wp-content/uploads/2014/05/friendship-300x111.png 300w" sizes="(max-width: 389px) 100vw, 389px" /></a></p>
+<p>Класс агент реализует следующие интерфейсы: <strong>IF_OS_FACTORY</strong>, <strong>IF_OS_CA_SERVICE</strong>, <strong>IF_OS_CA_PERSISTENCY</strong> и <strong>IF_OS_CA_INSTANCE</strong>. Вы можете использовать как методы интерфейсов, так и методы класса.</p>
+<p>&nbsp;</p>
+<p><strong>Методы, унаследованные от класса CB_</strong></p>
+<p><strong>CREATE_</strong><strong>PERSISTENT</strong>. Инициирует создания нового хранимого объекта. Интерфейс данного метода генерируется в зависимости от настроек сопоставления в хранимом классе. Если хранимый класс управляется бизнес ключом, в интерфейсе будут соответствующие поля. Для указанного выше примера ZCL_SFLIGHT:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/sflight_keys.png"><img loading="lazy" class="alignnone size-full wp-image-1994" src="http://abap-blog.ru/wp-content/uploads/2014/05/sflight_keys.png" alt="sflight_keys" width="551" height="195" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/sflight_keys.png 551w, https://abap-blog.ru/wp-content/uploads/2014/05/sflight_keys-300x106.png 300w" sizes="(max-width: 551px) 100vw, 551px" /></a></p>
+<p>Если управление происходит через GUID, никаких дополнительных полей вы тут не увидите (т.к. GUID система генерирует самостоятельно). Когда Persistence Service инициализирует объект, система <strong>НЕ</strong> проверяет наличие объекта с теми же ключами в БД, ошибок происходить не будет до тех пор, пока вы не захотите сохранить объект, вызвав COMMIT WORK. Соответственно следует помнить, что перед созданием объекта, надо убедиться в том, что он отсутствует в БД, сделать это можно с помощью метода <strong>GET_PERSISTENT</strong>. Пример создания объекта:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_sflight TYPE REF TO zcl_sflight,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+
+TRY.
+  " Пытаемся получить объект из БД
+  go_sflight = go_sflight_agent-&gt;get_persistent(
+      i_carrid = 'AA'
+      i_connid = '0017'
+      i_fldate = '20140501'
+  ).
+
+  CATCH cx_os_object_not_found.
+    " Объект не найден, создаем новый
+    TRY.
+      go_sflight = go_sflight_agent-&gt;create_persistent(
+          i_carrid = 'AA'
+          i_connid = '0017'
+          i_fldate = '20140501'
+      ).
+      CATCH cx_os_object_existing.
+        EXIT.
+    ENDTRY.
+
+ENDTRY.
+
+go_sflight-&gt;set_price( '100' ).</pre><p>Если в памяти PS уже есть объект с таким же ключом, система вызовет исключение &#8212; <strong>CX_OS_OBJECT_EXISTING</strong>.</p>
+<p><strong>GET_</strong><strong>PERSISTENT</strong>. Загружает хранимый объект и создает экземпляр хранимого класса внутри программы. Интерфейс так же зависит от способа сопоставления в хранимом классе (может либо принимать на вход бизнес ключ, либо ничего, если используется GUID). Как уже было упомянуто выше, если объект ранее в программе уже был создан, Persistence Service вернет ссылку на него, при этом, не загружая его заново из базы данных.</p>
+<p><strong>DELETE_</strong><strong>PERSISTENT</strong>. Удаляет хранимый объект, для удаления его данных из БД, необходимо вызвать COMMIT WORK. Интерфейс так же зависит от способа сопоставления в хранимом классе (может либо принимать на вход бизнес ключ, либо ничего, если используется GUID). Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_sflight TYPE REF TO zcl_sflight,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+
+TRY.
+  go_sflight_agent-&gt;delete_persistent(
+    EXPORTING
+      i_carrid = 'AA'
+      i_connid = '0017'
+      i_fldate = '20140501'
+  ).
+CATCH cx_os_object_not_found.
+  EXIT.
+ENDTRY.</pre><p><strong>CREATE_</strong><strong>TRANSIENT</strong>. Создает временный объект хранимого класса. Интерфейс аналогичен интерфейсу <strong>CREATE_ </strong><strong>PERSISTENT</strong>. Временные объекты не связаны с каким-либо источником данных и используются только внутри программы.  Не существует способа автоматического преобразования временного объекта в постоянный объект. Чтобы сделать подобное нужно сначала сохранить данные временного объекта в каком-либо буфере, затем удалить временный объект из памяти PS, после чего создать хранимый объект и загрузить в него данные из буфера.</p>
+<p><strong>GET_TRANSIENT</strong>. Получает временный объект хранимого класса. Интерфейс аналогичен интерфейсу <strong>GET_ PERSISTENT</strong>. Объект должен быть создан с помощью метода <strong>CREATE_TRANSIENT</strong>.</p>
+<p>&nbsp;</p>
+<p><strong>Методы интерфейса IF_OS_FACTORY</strong></p>
+<p><strong>IF_OS_FACTORY~CREATE_PERSISTENT</strong>. Создает хранимый объект. Используется для хранимых объектов, идентифицируемых через GUID, его генерация происходит в данном методе.</p>
+<p><strong>IF_OS_FACTORY~CREATE_PERSISTENT_BY_KEY</strong>. Создает хранимый объект. Используется если объект хранимого класса идентифицируется через бизнес ключ. В качестве входящего параметра i_key должна передаваться либо структура (составной ключ), либо строка. Структура должна быть с полями в определённом порядке (по алфавиту), чтобы узнать, что от вас ожидает система, можно открыть класс CB_ и посмотреть определение типа TYP_BUSINESS_KEY:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/keys.png"><img loading="lazy" class="alignnone size-full wp-image-1995" src="http://abap-blog.ru/wp-content/uploads/2014/05/keys.png" alt="keys" width="460" height="244" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/keys.png 460w, https://abap-blog.ru/wp-content/uploads/2014/05/keys-300x159.png 300w" sizes="(max-width: 460px) 100vw, 460px" /></a></p>
+<p><strong>IF_OS_FACTORY~REFRESH_PERSISTENT</strong>. Метод используется для обновления хранимого объекта (считывания данных происходит заново).  В качестве входного параметра I_OBJECT необходимо передать ссылку на хранимый объект. Данные будут считаны не сразу, а только в момент работы с каким-либо хранимым атрибутом. При обновлении хранимый объект может получить либо статус OSCON_OSTATUS_LOADED при успешной загрузке, либо OSCON_OSTATUS_NOT_LOADED. Сразу после вызова метода, до момента считывания, статус объекта меняется на OSCON_OSTATUS_NOT_LOADED. Вызывать данный метод можно только для объектов со статусами: OSCON_OSTATUS_NOT_LOADED, OSCON_OSTATUS_LOADED,  для объектов со статусами: CHANGED, NEW и DELETE вызовет исключение. Чтобы обновить измененные или удаленные объекты можно воспользоваться методом UNDO для транзакции (см. описание Transaction Service).    Приведу два дополнительных метода для обновления всех объектов относительно агента и для всех активных для текущей программы агентов:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/refresh_by_agent.png"><img loading="lazy" class="alignnone size-full wp-image-1996" src="http://abap-blog.ru/wp-content/uploads/2014/05/refresh_by_agent.png" alt="refresh_by_agent" width="523" height="44" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/refresh_by_agent.png 523w, https://abap-blog.ru/wp-content/uploads/2014/05/refresh_by_agent-300x25.png 300w" sizes="(max-width: 523px) 100vw, 523px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">method REFRESH_OBJECTS_BY_AGENT.
+  DATA:
+    lt_objects TYPE ostyp_ref_tab,
+    lo_state_object TYPE REF TO if_os_state,
+    lo_object  TYPE REF TO object.
+
+  lt_objects = im_agent-&gt;if_os_ca_instance~get_loaded( ).
+
+  LOOP AT lt_objects INTO lo_object.
+    TRY.
+      lo_state_object ?= lo_object.
+    CATCH cx_sy_move_cast_error.
+      CONTINUE.
+    ENDTRY.
+
+    TRY.
+      im_agent-&gt;if_os_factory~refresh_persistent( lo_state_object ).
+    CATCH cx_os_object_not_refreshable.
+      CONTINUE.
+    ENDTRY.
+  ENDLOOP.
+endmethod.</pre><p>Обновление относительно всех активных агентов:</p><pre class="urvanov-syntax-highlighter-plain-tag">method REFRESH_ALL_OBJECTS.
+  DATA:
+    lo_agent        TYPE REF TO cl_os_ca_common,
+    ls_agent_info   TYPE ostyp_ca_info.
+
+  LOOP AT cl_os_system=&gt;active_class_agent INTO ls_agent_info.
+    TRY.
+      lo_agent ?= ls_agent_info-class_agent_ref.
+    CATCH cx_sy_move_cast_error.
+      CONTINUE.
+    ENDTRY.
+
+    zcl_po_utils=&gt;refresh_objects_by_agent( lo_agent ).
+  ENDLOOP.
+
+endmethod.</pre><p><strong>IF_OS_FACTORY~DELETE_PERSISTENT</strong>.Удаление хранимого объекта. В качестве входного параметра ожидает ссылку на хранимый объект.</p>
+<p><strong>IF_OS_FACTORY~CREATE_TRANSIENT. </strong>Если хранимый объект не идентифицируется через бизнес ключ, для создания временного объекта хранимого класса (не связанного с источником данных) можно использовать данный метод.</p>
+<p><strong>IF_OS_FACTORY~CREATE_TRANSIENT_BY_KEY. </strong>Создает временный объект хранимого класса. Используется, если хранимый объект идентифицируется через бизнес ключ. В качестве входящего параметра i_key должна передаваться либо структура (составной ключ), либо строка.</p>
+<p><strong>IF_OS_FACTORY~RELEASE. </strong>Удаляет хранимый объект из памяти Persistent Service. Может использоваться для объектов со статусами: OSCON_OSTATUS_LOADED и OSCON_OSTATUS_NOT_LOADED. При повторной инициализации хранимого объекта, он будет загружен из БД заново.</p>
+<p>&nbsp;</p>
+<p><strong>Методы интерфейса IF_OS_CA_PERSISTENCY</strong></p>
+<p><strong>IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_OID. </strong>Загружает хранимый объект и создает экземпляр хранимого класса внутри программы. Данный метод используется, когда хранимый объект не идентифицируется по бизнес ключу. Входной параметр ID объекта с типом OS_GUID:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_passkey TYPE REF TO zcl_passkey,
+  go_passkey_agent TYPE REF TO zca_passkey,
+  gv_guid TYPE os_guid VALUE '53730C660E6600D5E10080000A0000A9',
+  gv_pass TYPE char10.
+
+go_passkey_agent = zca_passkey=&gt;agent.
+go_passkey ?= go_passkey_agent-&gt;if_os_ca_persistency~get_persistent_by_oid( gv_guid ).</pre><p><strong>IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY</strong><strong>. </strong>Загружает хранимый объект и создает экземпляр хранимого класса внутри программы. Данный метод используется, когда хранимый объект идентифицируется по бизнес ключу. В качестве входящего параметра i_key должна передаваться либо структура (составной ключ), либо строка.</p>
+<p><strong>IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_OID_TAB. </strong>Аналогичен методу GET_PERSISTENT_BY_OID, за исключением того что в данном методе объекты можно загрузить массово. Использование метода возможно, только если в генераторе стоит галочка:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/mass_access.png"><img loading="lazy" class="alignnone size-full wp-image-1997" src="http://abap-blog.ru/wp-content/uploads/2014/05/mass_access.png" alt="mass_access" width="637" height="208" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/mass_access.png 637w, https://abap-blog.ru/wp-content/uploads/2014/05/mass_access-300x97.png 300w" sizes="(max-width: 637px) 100vw, 637px" /></a></p>
+<p><strong>IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY_TAB. </strong>Аналогичен методу IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY, за исключением того что в данном методе объекты загружаются массово. Использовать можно так же только если стоит вышеуказанная галочка. Данный метод вызывает исключение, если в памяти есть объект с тем же ключом и статусом: OSCON_OSTATUS_TRANSIENT  и OSCON_OSTATUS_DELETED.Если какой-либо объект по указанным ключам не будет найден, исключение не будет вызвано (будет возвращена пустая ссылка). Пример массовой инициализации объектов:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_sflight TYPE REF TO zcl_sflight,
+  go_sflight_agent TYPE REF TO zca_sflight,
+  gt_flights_keys TYPE STANDARD TABLE OF scol_flight_key,
+  gt_sflights TYPE osreftab.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+
+" 1. Получаем ключевые поля для инициализации объектов
+SELECT * FROM sflight INTO CORRESPONDING FIELDS OF TABLE gt_flights_keys.
+
+" 2. Получаем таблицу с объектами
+TRY.
+  gt_sflights = go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_key_tab( gt_flights_keys ).
+  CATCH cx_os_object_not_found.
+ENDTRY.</pre><p><strong>IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_QUERY. </strong>Данный метод используется для массового выбора объектов из базы данных по указанному в параметрах метода запросу. Запрос представлен в виде класса реализующего интерфейс <strong>IF_OS_QUERY</strong>. Данная методика относится к Query Service и будет рассматриваться далее. Объект запроса создается через метод CREATE_QUERY в классе, реализующем интерфейс <strong>IF_OS_QUERY_MANAGER</strong>.  Значения для сравнения в запросе передаются через таблицу I_PARAMETER_TAB, если для сравнения используется не более трех атрибутов, и они являются атрибутами элементарного типа, тогда можно использовать параметры I_PAR1-3. Вы можете использовать параметры I_SUBCLASSES и I_UPTO для того чтобы загружать подклассы и ограничить максимальное число возвращаемых объектов. Использовать можно, только если стоит галочка:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/query-methods.png"><img loading="lazy" class="alignnone size-full wp-image-1998" src="http://abap-blog.ru/wp-content/uploads/2014/05/query-methods.png" alt="query methods" width="637" height="208" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/query-methods.png 637w, https://abap-blog.ru/wp-content/uploads/2014/05/query-methods-300x97.png 300w" sizes="(max-width: 637px) 100vw, 637px" /></a></p>
+<p>&nbsp;</p>
+<p><strong>Методы интерфейса IF_OS_CA_INSTANCE</strong></p>
+<p><strong>IF_OS_CA_INSTANCE~GET_STATUS. </strong>Получение статуса хранимого объекта относительно переданной ссылочной переменной.<br />
+<strong>IF_OS_CA_INSTANCE~GET_NOT_LOADED. </strong>Получение всех объектов (относительно класса агента) которые имеют статус OSCON_OSTATUS_NOT_LOADED (0).<br />
+<strong>IF_OS_CA_INSTANCE~GET_CREATED. </strong>Получение всех объектов (относительно класса агента) которые имеют статус OSCON_OSTATUS_NEW (1).<br />
+<strong>IF_OS_CA_INSTANCE~GET_LOADED. </strong>Получение всех объектов (относительно класса агента) которые имеют статус OSCON_OSTATUS_LOADED (2).<br />
+<strong>IF_OS_CA_INSTANCE~GET_CHANGED. </strong>Получение всех объектов (относительно класса агента) которые имеют статус OSCON_OSTATUS_CHANGED (3).<br />
+<strong>IF_OS_CA_INSTANCE~GET_DELETED. </strong>Получение всех объектов (относительно класса агента) которые имеют статус OSCON_OSTATUS_DELETED (4).<br />
+<strong>IF_OS_CA_INSTANCE~TRANSIENT. </strong>Получение всех объектов (относительно класса агента) которые имеют статус OSCON_OSTATUS_TRANSIENT (10).</p>
+<p>&nbsp;</p>
+<p><strong>Методы интерфейса IF_OS_CA_SERVICE</strong></p>
+<p><strong>GET_</strong><strong>OID_</strong><strong>BY_</strong><strong>REF. </strong>Если для идентификации используется GUID, данный метод позволяет по ссылке на объект его получить.<br />
+<strong>GET_REF_BY_OID. </strong>Если для идентификации используется GUID, данный метод позволяет получить по GUIDссылку на объект.</p>
+<p>Одним из важнейших атрибутов агента класса является атрибут –<strong> OBJECT_INFO</strong>:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/object_info.png"><img loading="lazy" class="alignnone size-full wp-image-1999" src="http://abap-blog.ru/wp-content/uploads/2014/05/object_info.png" alt="object_info" width="550" height="97" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/object_info.png 550w, https://abap-blog.ru/wp-content/uploads/2014/05/object_info-300x52.png 300w" sizes="(max-width: 550px) 100vw, 550px" /></a></p>
+<p>Внутри этой внутренней таблицы находится информация обо всех управляемых этим агентом объектах. Основные поля таблицы:</p>
+<ul>
+<li><strong>OBJECT_ID</strong>. Идентификатор объекта, используемый для каждого класса ABAP.</li>
+<li><strong>OBJECT_IREF</strong>. Ссылка на объект ABAP</li>
+<li><strong>PM_STATUS</strong>. Статус объекта</li>
+<li><strong>PM_DBSTATUS</strong>. Статус хранимого объекта, относительно БД. OSCON_DBSTATUS_UNKNOWN (0) – нет информации о том, есть ли объект в БД. OSCON_DBSTATUS_EXISTING (1) – объект существует в БД. OSCON_DBSTATUS_NOT_EXISTING (2) – объект не существует в БД.</li>
+</ul>
+<p>&nbsp;</p>
+<h3>Статусы хранимых объектов</h3>
+<p>Статус хранимого объекта позволяет определить, например, был ли объект сохранен, изменен или удален, перенесены ли эти изменения в БД и т.п. Статус отвечает за то, какие в данный момент времени можно вызывать методы, а какие приведут к ошибкам. Существует семь различных статусов. Для получения информации о статусе хранимого объекта, можно использовать метод <strong>GET_</strong><strong>STATUS </strong>интерфейса  <strong>IF_OS_CA_INSTANCE</strong>, который реализован в агенте класса.</p>
+<p>Имеющиеся статусы (группа типов OSCON):</p>
+<table>
+<tbody>
+<tr>
+<td><strong>Константа</strong></td>
+<td><strong>Значение</strong></td>
+<td><strong>Обозначение</strong></td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_NOT_LOADED</strong></td>
+<td>0</td>
+<td>Объект создан, но данные из БД не считаны. Может возникать в случае связанных объектов (один является вложенным атрибутом другого), пример рассматривается ниже.</td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_NEW</strong></td>
+<td>1</td>
+<td>Создан новый хранимый объект</td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_LOADED</strong></td>
+<td>2</td>
+<td>Хранимый объект успешно загружен</td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_CHANGED</strong></td>
+<td>3</td>
+<td>Хранимый объект изменен</td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_DELETED</strong></td>
+<td>4</td>
+<td>Хранимый объект удален</td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_TRANSIENT</strong></td>
+<td>10</td>
+<td>Объект хранимого класса является временным, т.е. не связан с БД.</td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_LOADING</strong></td>
+<td>12</td>
+<td>Объект загружается. Данный статус может быть у объекта только в методе INITинтерфейса IF_OS_STATE.</td>
+</tr>
+</tbody>
+</table>
+<p>Ниже представлена таблица методов и возможного вызова COMMIT WORK при различных статусах хранимых объектов, и к чему они приведут, т.е. вызову исключения (exc) или новому статусу:</p>
+<table>
+<tbody>
+<tr>
+<td><span style="color: #000080;"><strong>Статус до вызова</strong></span></td>
+<td><strong>&#8212;</strong></td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td><strong>2</strong></td>
+<td><strong>3</strong></td>
+<td><strong>4</strong></td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>CREATE_PERSISTENT</strong></td>
+<td>1</td>
+<td>3</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>3</td>
+<td>exc</td>
+</tr>
+<tr>
+<td><strong>DELETE_PERSISTENT</strong></td>
+<td>&#8212;</td>
+<td>4</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>exc</td>
+</tr>
+<tr>
+<td><strong>GET_PERSISTENT</strong></td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>exc</td>
+<td>exc</td>
+</tr>
+<tr>
+<td><strong>GET_attribute</strong></td>
+<td>exc</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>exc</td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>SET_attribute</strong></td>
+<td>exc</td>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>exc</td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>REFRESH_PERSISTENT</strong></td>
+<td>exc</td>
+<td>0</td>
+<td>exc</td>
+<td>0</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+</tr>
+<tr>
+<td><strong>RELEASE</strong></td>
+<td>exc</td>
+<td>&#8212;</td>
+<td>exc</td>
+<td>&#8212;</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+</tr>
+<tr>
+<td><strong>CREATE_TRANSIENT</strong></td>
+<td>10</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+</tr>
+<tr>
+<td><strong>GET_TRANSIENT</strong></td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>COMMIT WORK</strong></td>
+<td>&#8212;</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>&#8212;</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p>Далее диаграмма изменения статуса хранимого объекта, который еще не был создан в БД, при работе с ним:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/no_in_db.gif"><img loading="lazy" class="alignnone size-full wp-image-2025" src="http://abap-blog.ru/wp-content/uploads/2014/05/no_in_db.gif" alt="no_in_db" width="626" height="516" /></a></p>
+<p>Диаграмма изменения статуса хранимого объекта, который был загружен из БД, при работе с ним:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/in_db.gif"><img loading="lazy" class="alignnone size-full wp-image-2026" src="http://abap-blog.ru/wp-content/uploads/2014/05/in_db.gif" alt="in_db" width="633" height="466" /></a></p>
+<p>Как будет рассмотрено ниже в примерах, Persistence Service при загрузке объекта, атрибут которого является ссылкой на другой хранимый объект, не загружает ссылочный объект сразу, а делает это только при его использовании. До момента использования такой объект имеет статус – NOT_LOADED.</p>
+<p>При удалении хранимого объекта, он помечается в памяти как удаленный, в БД удаление происходит только при подтверждении транзакции.</p>
+<p>После пометки объекта как удалённый, вы можете создать новый объект с тем же идентификатором, при этом его статус изменится на changed.</p>
+<p>Возможна ситуация, когда при изменении временных атрибутов хранимых объектов статус объекта изменится на <strong>OSCON_OSTATUS_CHANGED</strong>.  Таким образом, Persistence Service будет сохранять объект в БД, даже если не изменялись хранимые атрибуты, по умолчанию данное поведение отключено (Начиная с ASABAP 7.0 EhP2):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/no_transient_status.png"><img loading="lazy" class="alignnone size-full wp-image-2027" src="http://abap-blog.ru/wp-content/uploads/2014/05/no_transient_status.png" alt="no_transient_status" width="694" height="374" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/no_transient_status.png 694w, https://abap-blog.ru/wp-content/uploads/2014/05/no_transient_status-300x161.png 300w" sizes="(max-width: 694px) 100vw, 694px" /></a></p>
+<p>Ранее подобное поведение нельзя было отключить, что могло приводить к значительным нагрузкам на БД при изменении большого числа объектов.</p>
+<p>&nbsp;</p>
+<h3>Ссылочные атрибуты</h3>
+<p>Объекты зачастую внутри себя содержат ссылки на другие объекты, например: «Студент» &#8212; «Пропуск», «Покупатель» &#8212; «Продавец» и т.п.</p>
+<p>Persistence Service позволяет в качестве атрибута хранимого класса использовать ссылку на объект другого хранимого класса. Но для того чтобы иметь возможность сохранить подобный класс в базе данных, необходимо чтобы соблюдались некоторые условия:</p>
+<ul>
+<li>Чтобы Persistence Service мог найти связанный (вложенный) класс, в таблице, где он хранится, должно существовать поле с типом OS_GUID (если другого ключа нет, должно быть ключевым).</li>
+<li>В таблице, которая содержит данные вложенного объекта, должны быть два поля с типом OS_GUID, первое (ссылка на объект) поле будет идентификатором вложенного объекта, а второе (Ид. класса) идентификатором класса вложенного объекта (на одну и ту же таблицу может быть много классов).</li>
+</ul>
+<p>При связывании атрибута содержащего хранимый объект, необходимо связать два поля с типом OS_GUID с данным атрибутом (при связывании для обоих полей OS_GUID имя атрибута должно быть одинаковым).</p>
+<p>Рассмотрим пример. Таблица студентов:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/students.png"><img loading="lazy" class="alignnone size-full wp-image-2009" src="http://abap-blog.ru/wp-content/uploads/2014/05/students.png" alt="students" width="644" height="267" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/students.png 644w, https://abap-blog.ru/wp-content/uploads/2014/05/students-300x124.png 300w" sizes="(max-width: 644px) 100vw, 644px" /></a></p>
+<p>Поле PASS_INSTANCE будет хранить ссылку на идентификатор объекта. Поле PASS_CLASS будет идентификатором класса. Поле ID будет содержать ключ студента.</p>
+<p>Таблица с кодами пропуска:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/pass.png"><img loading="lazy" class="alignnone size-full wp-image-2010" src="http://abap-blog.ru/wp-content/uploads/2014/05/pass.png" alt="pass" width="653" height="219" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/pass.png 653w, https://abap-blog.ru/wp-content/uploads/2014/05/pass-300x100.png 300w" sizes="(max-width: 653px) 100vw, 653px" /></a></p>
+<p>Так как в нашем примере объект пропуск не может существовать без объекта студент, отдельного ключевого поля для идентификации пропуска нам не нужно. Считывать пропуска всегда будем через объект студента.</p>
+<p>Создаем класс ZCL_PASSKEY и связываем с таблицей ZPASSKEY.</p>
+<p>Далее создаем класс ZCL_STUDENT, связываем с таблицей ZSTUDENTS. Поле PASS_INSTANCE объявляем, как поле со ссылкой на объект:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/link_students.png"><img loading="lazy" class="alignnone size-full wp-image-2011" src="http://abap-blog.ru/wp-content/uploads/2014/05/link_students.png" alt="link_students" width="586" height="172" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/link_students.png 586w, https://abap-blog.ru/wp-content/uploads/2014/05/link_students-300x88.png 300w" sizes="(max-width: 586px) 100vw, 586px" /></a></p>
+<p>Для поля PASS_CLASSставим тип Ид. Класса и присваиваем с тем же именем:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/class_students.png"><img loading="lazy" class="alignnone size-full wp-image-2012" src="http://abap-blog.ru/wp-content/uploads/2014/05/class_students.png" alt="class_students" width="558" height="145" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/class_students.png 558w, https://abap-blog.ru/wp-content/uploads/2014/05/class_students-300x77.png 300w" sizes="(max-width: 558px) 100vw, 558px" /></a></p>
+<p>В итоге получаем следующую связь:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/class_links.png"><img loading="lazy" class="alignnone size-full wp-image-2013" src="http://abap-blog.ru/wp-content/uploads/2014/05/class_links.png" alt="class_links" width="648" height="130" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/class_links.png 648w, https://abap-blog.ru/wp-content/uploads/2014/05/class_links-300x60.png 300w" sizes="(max-width: 648px) 100vw, 648px" /></a></p>
+<p>Сохраняем класс и активируем.</p>
+<p>Создадим программу создающую объект пропуска и студента и связывающую их вместе (обратите внимание, что для краткости в примерах опущена обработка исключений. Все исключения в Object Services являются ООП исключениями, как их обрабатывать смотрите в <a href="http://abap-blog.ru/abap/abap-osnovi/obrabotka-osobyx-situacij-v-abap/">этой</a> статье.):</p><pre class="urvanov-syntax-highlighter-plain-tag">DELETE FROM ZSTUDENTS.
+DELETE FROM ZPASSKEY.
+
+COMMIT WORK.
+
+DATA:
+  go_student TYPE REF TO zcl_student,
+  go_student_agent TYPE REF TO zca_student,
+  go_passkey TYPE REF TO zcl_passkey,
+  go_passket_agent TYPE REF TO zca_passkey.
+
+go_student_agent = zca_student=&gt;agent.
+go_passket_agent = zca_passkey=&gt;agent.
+
+go_student ?= go_student_agent-&gt;create_persistent( i_id = '1' ).
+go_passkey ?= go_passket_agent-&gt;create_persistent( ).
+
+go_passkey-&gt;set_passkey( '$$FFFF123' ).
+go_student-&gt;set_name( 'MIKE' ).
+go_student-&gt;set_passkey( go_passkey ).
+
+COMMIT WORK.</pre><p>Содержимое таблицы ZPASSKEY:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/pass_tab.png"><img loading="lazy" class="alignnone size-full wp-image-2014" src="http://abap-blog.ru/wp-content/uploads/2014/05/pass_tab.png" alt="pass_tab" width="370" height="101" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/pass_tab.png 370w, https://abap-blog.ru/wp-content/uploads/2014/05/pass_tab-300x81.png 300w" sizes="(max-width: 370px) 100vw, 370px" /></a></p>
+<p>Содержимое таблицы ZSTUDENTS:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/stud_tab.png"><img loading="lazy" class="alignnone size-full wp-image-2015" src="http://abap-blog.ru/wp-content/uploads/2014/05/stud_tab.png" alt="stud_tab" width="682" height="116" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/stud_tab.png 682w, https://abap-blog.ru/wp-content/uploads/2014/05/stud_tab-300x51.png 300w" sizes="(max-width: 682px) 100vw, 682px" /></a></p>
+<p>Считывание происходит следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_student TYPE REF TO zcl_student,
+  go_student_agent TYPE REF TO zca_student,
+  go_passkey TYPE REF TO zcl_passkey,
+  gv_pass TYPE char10.
+
+go_student_agent = zca_student=&gt;agent.
+go_student ?= go_student_agent-&gt;get_persistent( i_id = 1 ).
+go_passkey = go_student-&gt;get_passkey( ).
+
+gv_pass = go_passkey-&gt;get_passkey( ).
+WRITE gv_pass.</pre><p>При удалении хранимого объекта «студент» из БД, «пропуск» не будет автоматически удаляться, если это необходимо, то вызвать удаление придётся вручную.</p>
+<p>Реализовать вложенные хранимые объекты можно и вручную, без необходимости использования специальных полей типа OS_GUID в таблицах, но это потребует дополнительной разработки, например при инициализации хранимого объекта ZCL_STUDENT нужно будет переопределить метод INIT, в котором во временный атрибут PASSKEY положить хранимый объект класса ZCL_PASSKEY.</p>
+<p>В данном примере связь между хранимыми классами осуществляется через атрибут, к сожалению, нет стандартной возможности связать с одним хранимым классом группу хранимых классов, чтобы эта группа загружалась автоматически (Например, объект заказа и объекты позиции). Подобное поведение можно реализовать только вручную.</p>
+<p>&nbsp;</p>
+<h3>Наследование</h3>
+<p>Наследование — механизм языка, позволяющий описать новый класс на основе уже существующего (родительского, базового) класса. Класс-потомок может добавить собственные методы и свойства, а также пользоваться родительскими методами и свойствами. Позволяет строить иерархии классов.</p>
+<p>Persistent Service позволяет использовать механизм наследования для хранимых классов. При наследовании наследуется и то, каким образом родительский класс был связан с объектами в БД (наследование сопоставления). При этом в дочернем классе нельзя переопределить настройки сопоставления родительского класса.</p>
+<p>Существует два способа при наследовании настроек сопоставления:</p>
+<p><strong>Вертикальное наследование</strong>. На верхнем уровне иерархии находится не абстрактный класс. В наследуемых классах можно определить новые атрибуты из других таблиц, структур или ракурсов, но при этом ключевые поля должны совпадать с ключевыми полями, объявленными в родительском классе. Обычно схема выглядит следующим образом:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/vertical_inheritence1.png"><img loading="lazy" class="alignnone size-full wp-image-2034" src="http://abap-blog.ru/wp-content/uploads/2014/05/vertical_inheritence1.png" alt="vertical_inheritence" width="774" height="446" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/vertical_inheritence1.png 774w, https://abap-blog.ru/wp-content/uploads/2014/05/vertical_inheritence1-300x172.png 300w" sizes="(max-width: 774px) 100vw, 774px" /></a></p>
+<p>Класс cl_e_ticket наследуется от класса cl_ticket. Оба хранимых класса связаны с разными таблицами, но ключевые поля в этих таблицах одинаковые.</p>
+<p>Существует особый случай вертикального сопоставления, когда атрибуты, объявленные в дочернем классе, ссылаются на ту же таблицу, ракурс или структуру что и атрибуты в родительском классе. Для того чтобы установить к какому именно классу относится запись в таблице, структуре или ракурсе, необходимо чтобы в них было специальное поле с типом OS_GUID. При сопоставлении табличного поля, атрибут в классе будет иметь тип идентификатор типа:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/type_ident.png"><img loading="lazy" class="alignnone size-full wp-image-2017" src="http://abap-blog.ru/wp-content/uploads/2014/05/type_ident.png" alt="type_ident" width="268" height="149" /></a></p>
+<p><strong>Горизонтальное наследование</strong>. Если родительский класс является абстрактным, вы можете объявлять хранимые атрибуты без необходимости их сопоставления.  Настройка сопоставления атрибутов необходима только в дочерних (не абстрактных) классах, при этом они могут быть связаны с совершенно разными таблицами.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/hor_inh1.png"><img loading="lazy" class="alignnone size-full wp-image-2035" src="http://abap-blog.ru/wp-content/uploads/2014/05/hor_inh1.png" alt="hor_inh" width="775" height="444" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/hor_inh1.png 775w, https://abap-blog.ru/wp-content/uploads/2014/05/hor_inh1-300x171.png 300w" sizes="(max-width: 775px) 100vw, 775px" /></a></p>
+<p>Как видно из рисунка могут быть не только разные таблицы, но и разные ключевые поля для наследуемых объектов.</p>
+<blockquote><p>Если при создании класса наследника, возникает проблема в том, что интерфейс IF_OS_STATE не может быть реализован дважды, просто перейдите на закладку интерфейсы и удалите лишнюю запись.</p></blockquote>
+<p>В следующей части будут рассмотрены темы: Преобразование хранимых объектов в структуры (таблицы) и обратно,  менеджер инстанций и менеджер постоянства, пользовательские проверки в методах изменения/получения атрибутов, интеграция с системой блокировок SAP, переопределение методов доступа к данным, Transaction Service и Query Service.</p><p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-persistence-service/">ABAP Object Services — Persistence Service — часть 1.</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/abap-object-services-persistence-service/feed/</wfw:commentRss>
+			<slash:comments>8</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

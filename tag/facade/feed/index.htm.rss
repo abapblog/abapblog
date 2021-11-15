@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Facade | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/facade/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:54:10 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Шаблон фасад</title>
+		<link>https://abap-blog.ru/osnovy-abap/shablon-fasad/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/shablon-fasad/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 16 Jan 2012 10:05:07 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[abap objects]]></category>
+		<category><![CDATA[Facade]]></category>
+		<category><![CDATA[шаблоны проектирования]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=237</guid>
+
+					<description><![CDATA[<p>Шаблон Facade (Фасад) — Шаблон проектирования, позволяющий скрыть сложность системы путем сведения всех возможных внешних вызовов к одному объекту, делегирующему их соответствующим объектам системы. Проблема Как обеспечить унифицированный интерфейс с набором разрозненных реализаций или интерфейсов, например, с подсистемой, если нежелательно высокое связывание с этой подсистемой или реализация подсистемы может измениться? Решение Определить одну точку взаимодействия с подсистемой — фасадный [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-fasad/">Шаблон фасад</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><strong>Шаблон Facade (Фасад)</strong> — Шаблон проектирования, позволяющий скрыть сложность системы путем сведения всех возможных внешних вызовов к одному объекту, делегирующему их соответствующим объектам системы.</p>
+<p><span id="more-237"></span></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/Facade1.gif"><img loading="lazy" class="alignnone size-full wp-image-238" title="Facade[1]" src="http://abap-blog.ru/wp-content/uploads/2012/01/Facade1.gif" alt="" width="380" height="272" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/Facade1.gif 380w, https://abap-blog.ru/wp-content/uploads/2012/01/Facade1-300x214.gif 300w" sizes="(max-width: 380px) 100vw, 380px" /></a></p>
+<h3>Проблема</h3>
+<p>Как обеспечить унифицированный интерфейс с набором разрозненных реализаций или интерфейсов, например, с подсистемой, если нежелательно высокое связывание с этой подсистемой или реализация подсистемы может измениться?</p>
+<h3>Решение</h3>
+<p>Определить одну точку взаимодействия с подсистемой — фасадный объект, обеспечивающий общий интерфейс с подсистемой и возложить на него обязанность по взаимодействию с её компонентами. Фасад — это внешний объект, обеспечивающий единственную точку входа для служб подсистемы. Реализация других компонентов подсистемы закрыта и не видна внешним компонентам. Фасадный объект обеспечивает реализацию паттерна <a title="Устойчивый к изменениям (страница отсутствует)" href="http://ru.wikipedia.org/w/index.php?title=%D0%A3%D1%81%D1%82%D0%BE%D0%B9%D1%87%D0%B8%D0%B2%D1%8B%D0%B9_%D0%BA_%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F%D0%BC&amp;action=edit&amp;redlink=1">Устойчивый к изменениям</a> (Protected Variations) с точки зрения защиты от изменений в реализации подсистемы.</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  z_np_dp_facade.
+*
+CLASS lcl_data DEFINITION.
+  PUBLIC SECTION.
+    METHODS: CONSTRUCTOR.
+ENDCLASS.                    "lcl_Data DEFINITION
+*
+INTERFACE lif_write.
+  METHODS: write_data.
+ENDINTERFACE.                    "lif_write DEFINITION
+*
+CLASS lcl_write_alv DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_write.
+ENDCLASS.                    "lcl_write_alv DEFINITION
+*
+CLASS lcl_write_log DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_write.
+ENDCLASS.                    "lcl_write_log DEFINITION
+*
+CLASS lcl_facade DEFINITION.
+  PUBLIC SECTION.
+    METHODS: process_report IMPORTING iv_write_type TYPE char1.
+ENDCLASS.                    "lcl_facade DEFINITION
+*
+CLASS lcl_data IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+    WRITE: / 'Получение данных'.
+  ENDMETHOD.                    "constructor
+ENDCLASS.                    "lcl_Data IMPLEMENTATION
+*
+CLASS lcl_write_alv IMPLEMENTATION.
+  METHOD lif_write~write_data.
+    WRITE: / 'Вывод данных в ALV'.
+  ENDMETHOD.                    "lif_write~write_Data
+ENDCLASS.                    "lcl_write_alv IMPLEMENTATION
+*
+CLASS lcl_write_log IMPLEMENTATION.
+  METHOD lif_write~write_data.
+    WRITE: / 'Вывод данных в журнал'.
+  ENDMETHOD.                    "lif_write~write_Data
+ENDCLASS.                    "lcl_write_log IMPLEMENTATION
+*
+CLASS lcl_facade IMPLEMENTATION.
+  METHOD process_report.
+    DATA: lo_data TYPE REF TO lcl_data.
+    CREATE OBJECT lo_data.
+    DATA: lo_write TYPE REF TO lif_write.
+    IF iv_write_type = 'A'.
+      CREATE OBJECT lo_write TYPE lcl_write_alv.
+    ELSE.
+      CREATE OBJECT lo_write TYPE lcl_write_log.
+    ENDIF.
+    lo_write-&gt;write_data( ).
+  ENDMETHOD.                    "process_report
+ENDCLASS.                    "lcl_facade IMPLEMENTATION
+START-OF-SELECTION.
+  DATA: lo_facade TYPE REF TO lcl_facade.
+  CREATE OBJECT lo_facade.
+  lo_facade-&gt;process_report( iv_write_type = 'A' ).</pre><p>Пример реализации был взят <a href="http://help-abap.zevolving.com/2012/01/abap-objects-design-patterns-facade/">отсюда</a>.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-fasad/">Шаблон фасад</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/shablon-fasad/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

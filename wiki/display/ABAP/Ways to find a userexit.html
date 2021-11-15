@@ -1,0 +1,687 @@
+    
+<!DOCTYPE html>
+<html>
+<head>
+                            <title>Ways to find a userexit - ABAP Development - Community Wiki</title>
+    
+        
+
+                        
+    
+                        
+    
+
+                
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE,chrome=IE7">
+<meta charset="UTF-8">
+<meta id="confluence-context-path" name="confluence-context-path" content="/wiki">
+<meta id="confluence-base-url" name="confluence-base-url" content="https://wiki.scn.sap.com/wiki">
+
+    <meta id="atlassian-token" name="atlassian-token" content="e288ae89a415b947cac88171248dba8119be8dad">
+
+
+<meta id="confluence-space-key" name="confluence-space-key" content="ABAP">
+<script type="text/javascript">
+        var contextPath = '/wiki';
+</script>
+
+    
+
+    <meta name="confluence-request-time" content="1636437427012">
+        
+    
+        
+            <style>.ia-fixed-sidebar, .ia-splitter-left {width: 285px;}.theme-default .ia-splitter #main {margin-left: 285px;}.ia-fixed-sidebar {visibility: hidden;}</style>
+            <meta name="ajs-use-keyboard-shortcuts" content="true">
+            <meta name="ajs-discovered-plugin-features" content="$discoveredList">
+            <meta name="ajs-keyboardshortcut-hash" content="c5ed35e18a787aee9028bc0e9f6ed5c7">
+            
+    
+    
+            <meta name="ajs-page-title" content="Ways to find a userexit">
+            <meta name="ajs-latest-published-page-title" content="Ways to find a userexit">
+            <meta name="ajs-space-name" content="ABAP Development">
+            <meta name="ajs-page-id" content="176390174">
+            <meta name="ajs-latest-page-id" content="176390174">
+            <meta name="ajs-content-type" content="page">
+            <meta name="ajs-parent-page-title" content="Enhancements and Modifications - BADI, Enhancement Framework, User Exits, BTE">
+            <meta name="ajs-parent-page-id" content="1759">
+            <meta name="ajs-space-key" content="ABAP">
+            <meta name="ajs-max-number-editors" content="12">
+            <meta name="ajs-macro-placeholder-timeout" content="5000">
+            <meta name="ajs-jira-metadata-count" content="-1">
+            <meta name="ajs-from-page-title" content="">
+            <meta name="ajs-can-remove-page" content="false">
+            <meta name="ajs-can-remove-page-hierarchy" content="false">
+            <meta name="ajs-browse-page-tree-mode" content="view">
+            <meta name="ajs-shared-drafts" content="true">
+            <meta name="ajs-context-path" content="/wiki">
+            <meta name="ajs-base-url" content="https://wiki.scn.sap.com/wiki">
+            <meta name="ajs-version-number" content="7.4.13">
+            <meta name="ajs-build-number" content="8402">
+            <meta name="ajs-remote-user" content="">
+            <meta name="ajs-remote-user-key" content="">
+            <meta name="ajs-remote-user-has-licensed-access" content="false">
+            <meta name="ajs-remote-user-has-browse-users-permission" content="false">
+            <meta name="ajs-current-user-fullname" content="">
+            <meta name="ajs-current-user-avatar-url" content="">
+            <meta name="ajs-current-user-avatar-uri-reference" content="/wiki/images/icons/profilepics/anonymous.svg">
+            <meta name="ajs-static-resource-url-prefix" content="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_">
+            <meta name="ajs-global-settings-attachment-max-size" content="5242880">
+            <meta name="ajs-global-settings-quick-search-enabled" content="true">
+            <meta name="ajs-user-locale" content="en_US">
+            <meta name="ajs-enabled-dark-features" content="site-wide.shared-drafts,site-wide.synchrony,clc.quick.create,confluence.view.edit.transition,cql.search.screen,confluence-inline-comments-resolved,http.session.registrar,frontend.editor.v4,nps.survey.inline.dialog,confluence.efi.onboarding.new.templates,frontend.editor.v4.compatibility,atlassian.cdn.static.assets,pdf-preview,previews.sharing,previews.versions,file-annotations,collaborative-audit-log,confluence.efi.onboarding.rich.space.content,previews.conversion-service,editor.ajax.save,graphql,read.only.mode,notification.plugin.api.enabled.com.atlassian.confluence.plugins.inlinecomments.events.InlineCommentReplyEvent,previews.trigger-all-file-types,notification.plugin.api.enabled.com.atlassian.confluence.plugins.inlinecomments.events.InlineCommentCreateEvent,lucene.caching.filter,attachment.extracted.text.extractor,confluence.table.resizable,notification.batch,previews.sharing.pushstate,confluence-inline-comments-rich-editor,site-wide.synchrony.opt-in,file-annotations.likes,gatekeeper-ui-v2,v2.content.name.searcher,mobile.supported.version,pulp,pulp.disable,confluence-inline-comments,quick-reload-inline-comments-flags,confluence-inline-comments-dangling-comment">
+            <meta name="ajs-atl-token" content="e288ae89a415b947cac88171248dba8119be8dad">
+            <meta name="ajs-confluence-flavour" content="VANILLA">
+            <meta name="ajs-user-date-pattern" content="dd MMM yyyy">
+            <meta name="ajs-access-mode" content="READ_WRITE">
+            <meta name="ajs-render-mode" content="READ_WRITE">
+            <meta name="ajs-date.format" content="MMM dd, yyyy">
+    
+    <link rel="shortcut icon" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/favicon.ico">
+
+<link rel="search" type="application/opensearchdescription+xml" href="/wiki/opensearch/osd.action" title="Community Wiki"/>
+    
+                    
+            
+
+    <script>
+window.WRM=window.WRM||{};window.WRM._unparsedData=window.WRM._unparsedData||{};window.WRM._unparsedErrors=window.WRM._unparsedErrors||{};
+WRM._unparsedData["com.atlassian.plugins.atlassian-plugins-webresource-plugin:context-path.context-path"]="\u0022\u005C/wiki\u0022";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-feature-discovery-plugin:confluence-feature-discovery-plugin-resources.test-mode"]="false";
+WRM._unparsedData["com.atlassian.analytics.analytics-client:policy-update-init.policy-update-data-provider"]="false";
+WRM._unparsedData["com.atlassian.analytics.analytics-client:programmatic-analytics-init.programmatic-analytics-data-provider"]="false";
+WRM._unparsedData["com.atlassian.confluence.plugins.synchrony-interop:synchrony-status-banner-loader.synchrony-status"]="false";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-license-banner:confluence-license-banner-resources.license-details"]="{\u0022daysBeforeLicenseExpiry\u0022:0,\u0022daysBeforeMaintenanceExpiry\u0022:0,\u0022showLicenseExpiryBanner\u0022:false,\u0022showMaintenanceExpiryBanner\u0022:false,\u0022renewUrl\u0022:null,\u0022salesUrl\u0022:null}";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-search-ui-plugin:confluence-search-ui-plugin-resources.i18n-data"]="{\u0022search.ui.recent.link.text\u0022:\u0022View more recently visited\u0022,\u0022search.ui.filter.space.category.input.label\u0022:\u0022Find space categories...\u0022,\u0022search.ui.filter.clear.selected\u0022:\u0022Clear selected items\u0022,\u0022search.ui.search.results.empty\u0022:\u0022We couldn\u005Cu0027\u005Cu0027t find anything matching \u005C\u0022{0}\u005C\u0022.\u0022,\u0022search.ui.content.name.search.items.panel.load.all.top.items.button.text\u0022:\u0022Show more app results...\u0022,\u0022search.ui.filter.space.archive.label\u0022:\u0022Search archived spaces\u0022,\u0022search.ui.filter.label\u0022:\u0022filter\u0022,\u0022search.ui.filter.contributor.button.text\u0022:\u0022Contributor\u0022,\u0022search.ui.filter.date.all.text\u0022:\u0022Any time\u0022,\u0022search.ui.filter.space.current.label\u0022:\u0022CURRENT\u0022,\u0022search.ui.clear.input.button.text\u0022:\u0022Clear text\u0022,\u0022help.search.ui.link.title\u0022:\u0022Search tips\u0022,\u0022search.ui.search.results.clear.button\u0022:\u0022clear your filters.\u0022,\u0022search.ui.filter.date.hour.text\u0022:\u0022The past day\u0022,\u0022search.ui.filters.heading\u0022:\u0022Filter by\u0022,\u0022search.ui.filter.label.input.label\u0022:\u0022Find labels...\u0022,\u0022search.ui.filter.date.month.text\u0022:\u0022The past month\u0022,\u0022search.ui.recent.items.anonymous\u0022:\u0022Start exploring. Your search results will appear here.\u0022,\u0022search.ui.input.label\u0022:\u0022Search\u0022,\u0022search.ui.search.result\u0022:\u0022{0,choice,1#{0} search result|1\u005Cu003c{0} search results}\u0022,\u0022search.ui.infinite.scroll.button.text\u0022:\u0022More results\u0022,\u0022search.ui.filter.date.button.text\u0022:\u0022Date\u0022,\u0022search.ui.filter.date.week.text\u0022:\u0022The past week\u0022,\u0022search.ui.filter.label.button.text\u0022:\u0022Label\u0022,\u0022search.ui.input.alert\u0022:\u0022Hit enter to search\u0022,\u0022search.ui.filter.no.result.text\u0022:\u0022We can\u005Cu0027\u005Cu0027t find anything matching your search\u0022,\u0022search.ui.result.subtitle.calendar\u0022:\u0022Team calendar\u0022,\u0022search.ui.filter.date.heading\u0022:\u0022Last modified within\u0022,\u0022search.ui.result.subtitle.user\u0022:\u0022User profile\u0022,\u0022search.ui.filter.contributor.input.label\u0022:\u0022Find people...\u0022,\u0022search.ui.filter.content.type.button.text\u0022:\u0022Type\u0022,\u0022search.ui.filter.space.input.label\u0022:\u0022Find spaces...\u0022,\u0022search.ui.filter.date.year.text\u0022:\u0022The past year\u0022,\u0022search.ui.filter.space.button.text\u0022:\u0022Space\u0022,\u0022search.ui.advanced.search.link.text\u0022:\u0022Advanced search\u0022,\u0022search.ui.generic.error\u0022:\u0022Something went wrong. Refresh the page, or contact your admin if this keeps happening.\u0022,\u0022search.ui.recent.spaces\u0022:\u0022Recent Spaces\u0022,\u0022search.ui.search.results.clear.line2\u0022:\u0022Try a different search term or\u0022,\u0022search.ui.filter.space.category.button.text\u0022:\u0022Space category\u0022,\u0022search.ui.search.results.clear.line1\u0022:\u0022We couldn\u005Cu0027\u005Cu0027t find anything matching your search.\u0022,\u0022search.ui.content.name.search.items.panel.load.all.top.items.admin.button.text\u0022:\u0022Show more settings and app results...\u0022,\u0022search.ui.recent.pages\u0022:\u0022Recently visited\u0022,\u0022search.ui.search.result.anonymous\u0022:\u0022{0,choice,1#{0} search result|1\u005Cu003c{0} search results}. Have an account? {1}Log in{2} to expand your search.\u0022,\u0022search.ui.recent.items.empty\u0022:\u0022Start exploring. Pages and spaces you\u005Cu0027\u005Cu0027ve visited recently will appear here.\u0022,\u0022search.ui.result.subtitle.space\u0022:\u0022Space\u0022,\u0022search.ui.filter.space.init.heading\u0022:\u0022recent spaces\u0022}";
+if(window.WRM._dataArrived)window.WRM._dataArrived();</script>
+<link type="text/css" rel="stylesheet" href="/wiki/s/64ff51b4494ddb6bd56f0bfb38c6b9ff-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/f93a1c81170760ac4fb7da71531851a9/_/download/contextbatch/css/_super/batch.css" data-wrm-key="_super" data-wrm-batch-type="context" media="all">
+<link type="text/css" rel="stylesheet" href="/wiki/s/9cfe6a86c8aace4efbeb10b6197b9db8-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/77b47d3dd1530069bc51cf3bb414587a/_/download/contextbatch/css/atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super/batch.css?gatekeeper-ui-v2=true&amp;highlightactions=true&amp;hostenabled=true" data-wrm-key="atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super" data-wrm-batch-type="context" media="all">
+<link type="text/css" rel="stylesheet" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/styles/colors.css" media="all">
+<link type="text/css" rel="stylesheet" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/styles/custom.css" media="all">
+<script type="text/javascript" src="/wiki/s/d4c8a0219030d0420604e8b5bb5c236d-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/f93a1c81170760ac4fb7da71531851a9/_/download/contextbatch/js/_super/batch.js?locale=en-US" data-wrm-key="_super" data-wrm-batch-type="context" data-initially-rendered></script>
+<script type="text/javascript" src="/wiki/s/6e3ff1bc8c546b9f23f36ba9d36e0716-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/77b47d3dd1530069bc51cf3bb414587a/_/download/contextbatch/js/atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super/batch.js?gatekeeper-ui-v2=true&amp;highlightactions=true&amp;hostenabled=true&amp;locale=en-US" data-wrm-key="atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super" data-wrm-batch-type="context" data-initially-rendered></script>
+
+    
+
+        
+    
+
+        
+        <meta name="ajs-site-title" content="Community Wiki" />
+            
+    <!-- Hide page exports on UI for anonymous users, backend restriction implemented in plugin
+    https://github.wdf.sap.corp/confluence/plugin-restrict-anonymous-actions/wiki/Documentation -->
+<!-- EWU-518 Limit/Hide the Space List in the Dashboard for Guest users out of the box -->
+<script type="text/javascript">
+    AJS.toInit(function(){
+        if (AJS.params.remoteUser == ''){
+        /* Hide page exports on UI for anonymous users*/
+          AJS.$('#action-export-pdf-link').hide();
+          AJS.$('#action-export-word-link').hide();
+
+          /* EWU-518 */
+          AJS.$('#sidebar-spaces').hide();
+        }
+    });
+</script>
+
+<!--  WDS-148 Integrate Wiki with Adobe Launch. -->
+<script src="//assets.adobedtm.com/ccc66c06b30b/563843cfec4a/launch-d6d38849b49d.min.js" async></script>
+
+    
+                <link rel="canonical" href="https://wiki.scn.sap.com/wiki/display/ABAP/Ways+to+find+a+userexit">
+        <link rel="shortlink" href="https://wiki.scn.sap.com/wiki/x/HoCDCg">
+    <meta name="wikilink" content="[ABAP:Ways to find a userexit]">
+    <meta name="page-version" content="10">
+    <meta name="ajs-page-version" content="10">
+
+</head>
+
+    
+<body      id="com-atlassian-confluence" class="theme-default  aui-layout aui-theme-default">
+
+        
+            <div id='stp-licenseStatus-banner'></div>
+    <ul id="assistive-skip-links" class="assistive">
+    <li><a href="#title-heading">Skip to content</a></li>
+    <li><a href="#breadcrumbs">Skip to breadcrumbs</a></li>
+    <li><a href="#header-menu-bar">Skip to header menu</a></li>
+    <li><a href="#navigation">Skip to action menu</a></li>
+    <li><a href="#quick-search-query">Skip to quick search</a></li>
+</ul>
+<div id="page">
+<div id="full-height-container">
+    <div id="header-precursor">
+        <div class="cell">
+            <div style="background-color:#f6f6f6;">
+<center>
+<!-- Put your site header text here, make sure tags are symmetric -->
+</center>
+</div>
+                            </div>
+    </div>
+        
+
+
+
+
+
+<header id="header" role="banner">
+    <nav class="aui-header aui-dropdown2-trigger-group" role="navigation"><div class="aui-header-inner"><div class="aui-header-primary"><h1 id="logo" class="aui-header-logo aui-header-logo-custom"><a href="/wiki/"><img src="/wiki/download/attachments/389939204/atl.site.logo?version=1&amp;modificationDate=1574179418000&amp;api=v2" alt="Community Wiki" /><span class="aui-header-logo-text">Community Wiki</span></a></h1><ul class="aui-nav">
+                            <li>
+            
+        
+        
+<a  id="space-directory-link" href="/wiki/spacedirectory/view.action"  class=" aui-nav-imagelink"   title="Spaces">
+            <span>Spaces</span>
+    </a>
+        </li>
+                                <li class="aui-buttons">
+            </li>
+</ul>
+</div><div class="aui-header-secondary"><ul class="aui-nav">
+                        <li>
+        <div id="search-ui" class="aui-quicksearch dont-default-focus header-quicksearch"><input id="quick-search-query" aria-label="Search" placeholder="Search" type="text" /><div id="quick-search-alert" role="alert">Hit enter to search</div><aui-spinner size="small"></aui-spinner></div>
+    </li>
+        <li>
+            
+        <a id="help-menu-link" class="aui-nav-link aui-dropdown2-trigger aui-dropdown2-trigger-arrowless" href="#" aria-haspopup="true" aria-owns="help-menu-link-content" title="Help">
+        <span class="aui-icon aui-icon-small aui-iconfont-question-filled">Help</span>
+    </a>
+    <nav id="help-menu-link-content" class="aui-dropdown2 aui-style-default" aria-hidden="true">
+                    <div class="aui-dropdown2-section">
+                                <ul  id="help-menu-link-leading" class="aui-list-truncate section-leading first">
+                                            <li>
+        
+            
+<a  id="confluence-help-link" href="https://docs.atlassian.com/confluence/docs-74/" class="    "      title="Visit the Confluence documentation home"  target="_blank"
+>
+        Online Help
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="keyboard-shortcuts-link" href="/wiki" class="    "      title="View available keyboard shortcuts" >
+        Keyboard Shortcuts
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="feed-builder-link" href="/wiki/dashboard/configurerssfeed.action" class="    "      title="Create your custom RSS feed." >
+        Feed Builder
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="whats-new-menu-link" href="https://confluence.atlassian.com/display/DOC/Confluence+7.4+Release+Notes" class="    "      title="" >
+        What’s new
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="confluence-about-link" href="/wiki/aboutconfluencepage.action" class="    "      title="Get more information about Confluence" >
+        About Confluence
+</a>
+</li>
+                                    </ul>
+            </div>
+            </nav>
+    
+    </li>
+        <li>
+                
+    
+    </li>
+        <li>
+            
+    </li>
+        <li>
+                                            <li>
+        
+            
+<a  id="login-link" href="/wiki/login.action?os_destination=%2Fdisplay%2FABAP%2FWays%2Bto%2Bfind%2Ba%2Buserexit%3Foriginal_fqdn%3Dwiki.sdn.sap.com" class="   user-item login-link "      title="" >
+        Log in
+</a>
+</li>
+                        
+    </li>
+    </ul>
+</div></div><!-- .aui-header-inner--></nav><!-- .aui-header -->
+    <br class="clear">
+</header>
+    
+
+    
+    	<div class="ia-splitter">
+    		<div class="ia-splitter-left">
+    			<div class="ia-fixed-sidebar">
+                                            
+                            <div class="acs-side-bar ia-scrollable-section"><div class="acs-side-bar-space-info tipsy-enabled" data-configure-tooltip="Edit space details"><div class="avatar"><div class="space-logo" data-key="ABAP" data-name="ABAP Development" data-entity-type="confluence.space"><div class="avatar-img-container"><div class="avatar-img-wrapper"><a href="/wiki/display/ABAP/ABAP+Development" title="ABAP Development"><img class="avatar-img" src="/wiki/download/attachments/389939204/global.logo?version=8&amp;modificationDate=1574181442000&amp;api=v2" alt="ABAP Development"></a></div></div></div></div><div class="space-information-container"><div class="name"><a href="/wiki/display/ABAP/ABAP+Development" title="ABAP Development">ABAP Development</a></div><div class="flyout-handle icon aui-icon aui-icon-small aui-iconfont-edit"></div></div></div><div class="acs-side-bar-content"><div class="acs-nav-wrapper"><div class="acs-nav" data-has-create-permission="false" data-quick-links-state="hide" data-page-tree-state="hide" data-nav-type="pages"><div class="acs-nav-sections"><div class="main-links-section "><ul class="acs-nav-list"><li class="acs-nav-item wiki current-item" data-collector-key="spacebar-pages"><a class="acs-nav-item-link tipsy-enabled" href="/wiki/collector/pages.action?key=ABAP" data-collapsed-tooltip="Pages"><span class="icon"></span><span class="acs-nav-item-label">Pages</span></a></li></ul></div></div></div></div><div class="ia-secondary-container tipsy-enabled" data-tree-type="pages"></div></div><div class="hidden"><a href="/wiki/collector/pages.action?key=ABAP" id="space-pages-link"></a><script type="text/x-template" title="logo-config-content"><h2>Space Details</h2><div class="personal-space-logo-hint">Your profile picture is used as the logo for your personal space. <a href="/wiki/users/profile/editmyprofilepicture.action" target="_blank">Change your profile picture</a>.</div></script></div></div><div class="space-tools-section"><div id="space-tools-menu-additional-items" class="hidden"><div data-label="Browse pages" data-class="" data-href="/wiki/pages/reorderpages.action?key=ABAP">Browse pages</div></div><button id="space-tools-menu-trigger"  class=" aui-dropdown2-trigger aui-button aui-button-subtle tipsy-enabled aui-dropdown2-trigger-arrowless " aria-controls="space-tools-menu" aria-haspopup="true" role="button" data-aui-trigger><span class="aui-icon aui-icon-small aui-iconfont-configure">Configure</span><span class="aui-button-label">Space tools</span><span class="aui-icon "></span></button><div id="space-tools-menu" class="aui-dropdown2 aui-style-default space-tools-dropdown" role="menu" aria-hidden="true" data-aui-alignment="top left"><div role="application"></div></div><a class="expand-collapse-trigger aui-icon aui-icon-small aui-iconfont-chevron-double-right"></a></div>
+                    
+                        			</div>
+    		</div>
+        <!-- \#header -->
+
+            
+    
+        <div id="main" class=" aui-page-panel">
+                        <div id="main-header">
+                        
+    <div id="navigation" class="content-navigation view">
+                    <ul class="ajs-menu-bar">
+                                            
+        <li class="normal ajs-menu-item">
+        <a id="action-menu-link" class="action aui-dropdown2-trigger-arrowless aui-button aui-button-subtle ajs-menu-title aui-dropdown2-trigger" href="#" aria-haspopup="true" aria-label="More options" aria-owns="action-menu" data-container="#navigation">
+            <span>
+                                    <span class="aui-icon aui-icon-small aui-iconfont-more" aria-label="More options"></span>
+                                
+            </span>
+        </a>         <div id="action-menu" class="aui-dropdown2 aui-style-default" aria-hidden="true">
+                            <div class="aui-dropdown2-section">
+                    <ul  id="action-menu-primary"                         class="section-primary first">
+                                                    <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-attachments-link" href="/wiki/pages/viewpageattachments.action?pageId=176390174" rel="nofollow" class="action-view-attachments"  accessKey="t"  title="View Attachments" >
+                        <span>
+                                A<u>t</u>tachments (0)
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-view-history-link" href="/wiki/pages/viewpreviousversions.action?pageId=176390174" rel="nofollow" class="action-view-history"   title="" >
+                        <span>
+                                Page History
+            </span>        </a>
+    </li>
+                                        </ul>
+                </div>
+                            <div class="aui-dropdown2-section">
+                    <ul  id="action-menu-secondary"                         class="section-secondary">
+                                                    <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-page-info-link" href="/wiki/pages/viewinfo.action?pageId=176390174" rel="nofollow" class="action-view-info"   title="" >
+                        <span>
+                                Page Information
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-resolved-comments" href="/wiki" rel="nofollow" class=""   title="" >
+                        <span>
+                                Resolved comments
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-in-hierarchy-link" href="/wiki/pages/reorderpages.action?key=ABAP&amp;openId=176390174#selectedPageInHierarchy" rel="nofollow" class=""   title="" >
+                        <span>
+                                View in Hierarchy
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-view-source-link" href="/wiki/plugins/viewsource/viewpagesrc.action?pageId=176390174" rel="nofollow" class="action-view-source popup-link"   title="" >
+                        <span>
+                                View Source
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-export-pdf-link" href="/wiki/spaces/flyingpdf/pdfpageexport.action?pageId=176390174" rel="nofollow" class=""   title="" >
+                        <span>
+                                Export to PDF
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-export-word-link" href="/wiki/exportword?pageId=176390174" rel="nofollow" class="action-export-word"   title="" >
+                        <span>
+                                Export to Word
+            </span>        </a>
+    </li>
+                                        </ul>
+                </div>
+                    </div>
+    </li>
+            </ul>
+    </div>
+
+            
+            <div id="title-heading" class="pagetitle with-breadcrumbs">
+                
+                                    <div id="breadcrumb-section">
+                        
+    
+    
+    <ol id="breadcrumbs">
+                                        
+                        
+        <li class="first" >
+                        
+                            <span class=""><a href="/wiki/collector/pages.action?key=ABAP">Dashboard</a></span>
+                                                                                    
+                        
+        <li>
+                        
+                            <span class=""><a href="/wiki/display/ABAP/Enhancements+and+Modifications+-+BADI%2C+Enhancement+Framework%2C+User+Exits%2C+BTE">Enhancements and Modifications - BADI, Enhancement Framework, User Exits, BTE</a></span>
+                                                                    </ol>
+
+
+                    </div>
+                
+                
+        <a href="#page-banner-end" class="assistive">Skip to end of banner</a>
+<div id="page-banner-start" class="assistive"></div>
+
+                    
+            <div id="page-metadata-banner"><ul class="banner"><li id="system-content-items" class="noprint"><a href="" title="Unrestricted" id="content-metadata-page-restrictions-hidden" class="hidden"></a></li><li class="page-metadata-item noprinthas-button"  id="content-metadata-jira-wrapper"><a href="" title="" id="content-metadata-jira" class="aui-button aui-button-subtle content-metadata-jira tipsy-disabled hidden"><span>Jira links</span></a></li></ul></div>
+            
+
+<a href="#page-banner-start" class="assistive">Go to start of banner</a>
+<div id="page-banner-end" class="assistive"></div>
+    
+
+                <h1 id="title-text" class="with-breadcrumbs">
+                                                <a href="/wiki/display/ABAP/Ways+to+find+a+userexit">Ways to find a userexit</a>
+                                    </h1>
+            </div>
+        </div><!-- \#main-header -->
+        
+        
+
+        <div id="sidebar-container">
+                                                </div><!-- \#sidebar-container -->
+
+        
+    
+
+        
+
+
+
+
+            
+    
+
+                                
+    
+
+    
+    
+        
+    
+    
+                    
+    
+
+    
+
+    
+            
+        
+
+    
+    
+
+    
+            
+        
+
+
+
+    
+<div id="content" class="page view">
+    
+
+
+<div id="action-messages">
+                        </div>
+
+
+
+            <script type="text/x-template" title="searchResultsGrid">
+    <table class="aui">
+        <thead>
+            <tr class="header">
+                <th class="search-result-title">Page Title</th>
+                <th class="search-result-space">Space</th>
+                <th class="search-result-date">Updated</th>
+            </tr>
+        </thead>
+    </table>
+</script>
+<script type="text/x-template" title="searchResultsGridCount">
+    <p class="search-result-count">{0}</p>
+</script>
+<script type="text/x-template" title="searchResultsGridRow">
+    <tr class="search-result">
+        <td class="search-result-title"><a href="{1}" class="content-type-{2}"><span>{0}</span></a></td>
+        <td class="search-result-space"><a class="space" href="/wiki/display/{4}/" title="{3}">{3}</a></td>
+        <td class="search-result-date"><span class="date" title="{6}">{5}</span></td>
+    </tr>
+</script>
+        
+    
+            
+
+        
+                            
+    
+
+                    
+
+        
+        <a href="#page-metadata-end" class="assistive">Skip to end of metadata</a>
+<div id="page-metadata-start" class="assistive"></div>
+
+    <div class="page-metadata">
+        <ul>
+            <li class="page-metadata-modification-info">
+                
+        
+    
+        
+    
+        
+            
+            Created by <span class='author'>     <a href="    /wiki/display/~xp4srpz
+"
+                       class="url fn"
+                            >Andrea Olivieri</a></span>, last modified by <span class='editor'>     <span class="unknown-user">Former Member</span></span> on <a class='last-modified' title='Show changes' href='/wiki/pages/diffpagesbyversion.action?pageId=176390174&amp;selectedPageVersions=9&amp;selectedPageVersions=10'>Nov 06, 2013</a>
+                </li>
+        </ul>
+    </div>
+
+
+<a href="#page-metadata-start" class="assistive">Go to start of metadata</a>
+<div id="page-metadata-end" class="assistive"></div>
+
+        
+                                            
+        <div id="main-content" class="wiki-content">
+                           
+        <h1 id="Waystofindauserexit-Waystofindauserexit">Ways to find a userexit</h1><p>This page lists some useful methods that can help while searching for the exit routines</p><h3 id="Waystofindauserexit-HowcanweFINDTHEAVAILABLEUserexits?">How can we FIND THE AVAILABLE Userexits?</h3><p><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/bf/ec07a25db911d295ae0000e82de14a/frameset.htm" class="external-link" rel="nofollow">Application- Specific User Exits (Userexit)</a></p><ul><li>SAP Reference IMG -&gt; Sales and Distribution -&gt; System Modifications -&gt; Userexits</li><li><a href="http://www.sdn.sap.com/irj/scn/index?rid=/library/uuid/208811b0-00b2-2910-c5ac-dd2c7c50c8e8" class="external-link" rel="nofollow">Locating Applications that Have Exits</a></li></ul><p><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/c8/1975cc43b111d1896f0000e8322d00/content.htm" class="external-link" rel="nofollow">Customer Exits(SMOD/CMOD)</a></p><ul><li>ABAP Workbench -&gt; Utilities -&gt; Enhancements -&gt; Definition (SMOD).</li><li>Repository Info System (SE84): Enhancements -&gt; Customer Exits -&gt; Enhancements</li></ul><p><a href="https://service.sap.com/sap/support/notes/356737" class="external-link" rel="nofollow">VOFM Routines</a></p><ul><li>SAP Reference IMG -&gt; Sales and Distribution -&gt; System Modifications -&gt; Routines</li><li>Transaction code: VOFM</li></ul><p><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/3b/7f3e8be57c11d1951f0000e82dec10/frameset.htm" class="external-link" rel="nofollow">Business Transaction Events</a></p><ul><li>SAP Reference IMG -&gt; Financial Accounting -&gt; Financial Accounting Global Settings -&gt; Business Transaction Events (FIBF)</li><li>Business Event Repository (BERE)</li></ul><p><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/e6/d54d3c596f0b26e10000000a11402f/content.htm" class="external-link" rel="nofollow">Classic BAdIs</a></p><ul><li>Repository Info System (SE84):Enhancements -&gt; Business Add-ins -&gt; Definitions</li><li>Accelerators: Find BAdI: <a href="http://searchsap.techtarget.com/tip/Find-the-BADI-related-to-your-transaction-in-minutes" class="external-link" rel="nofollow">Find the BADI related to your transaction in minutes</a></li></ul><p><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/94/9cdc40132a8531e10000000a1550b0/frameset.htm" class="external-link" rel="nofollow">Enhancement Framework</a></p><ul><li><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/29/503e423a95b36be10000000a155106/frameset.htm" class="external-link" rel="nofollow">Enhancement Information System in the Object Navigator</a> (transaction SE80).</li><li>Repository Info System (SE84): Enhancements -&gt; Enhancements Spots</li><li>Repository Info System (SE84): Enhancements -&gt; Composite Enhancements Spots</li><li>Accelerators: Find Enhancement Points/Sections: <a href="http://www.abapninja.org/" class="external-link" rel="nofollow">ABAP Ninja</a></li></ul><p><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/5b/d231a843c611d182b30000e829fbfe/content.htm" class="external-link" rel="nofollow">Validations and Substitutions exits</a></p><ul><li>Transaction code GGB0: Validation Overview</li><li>Transaction code GBB1: Substitutions Overview</li></ul><h3 id="Waystofindauserexit-HowcanweFINDTHEIMPLEMENTEDUserexits?">How can we FIND THE IMPLEMENTED Userexits?</h3><p><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/bf/ec07a25db911d295ae0000e82de14a/frameset.htm" class="external-link" rel="nofollow">Application- Specific User Exits (Userexit)</a></p><ul><li><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/60/d6ba75ceda11d1953a0000e82de14a/frameset.htm" class="external-link" rel="nofollow">Modification Browser</a> (SE95)</li></ul><p><a href="https://service.sap.com/sap/support/notes/29377" class="external-link" rel="nofollow">Field Exit</a></p><ul><li>Report RSMODPRF</li></ul><p><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/c8/1975cc43b111d1896f0000e8322d00/content.htm" class="external-link" rel="nofollow">Customer Exits(SMOD/CMOD)</a></p><ul><li>ABAP Workbench -&gt; Utilities -&gt; Enhancements -&gt; Project Management (CMOD).</li><li>Repository Info System (SE84): Enhancements -&gt; Customer Exits -&gt; Projects</li></ul><p><a href="https://service.sap.com/sap/support/notes/356737" class="external-link" rel="nofollow">VOFM Routines</a></p><ul><li>Transaction code: VOFM</li><li><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/60/d6ba75ceda11d1953a0000e82de14a/frameset.htm" class="external-link" rel="nofollow">Modification Browser</a> (SE95)</li></ul><p><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/3b/7f3e8be57c11d1951f0000e82dec10/frameset.htm" class="external-link" rel="nofollow">Business Transaction Events</a></p><ul><li>SAP Reference IMG -&gt; Financial Accounting -&gt; Financial Accounting Global Settings -&gt; Business Transaction Events (FIBF)</li><li>Business Event Repository (BERE)</li></ul><p><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/e6/d54d3c596f0b26e10000000a11402f/content.htm" class="external-link" rel="nofollow">Classic BAdIs</a></p><ul><li>Repository Info System (SE84): Enhancements -&gt; Business Add-ins -&gt; Implementations</li></ul><p><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/94/9cdc40132a8531e10000000a1550b0/frameset.htm" class="external-link" rel="nofollow">Enhancement Framework</a></p><ul><li><a href="http://help.sap.com/erp2005_ehp_04/helpdata/EN/29/503e423a95b36be10000000a155106/frameset.htm" class="external-link" rel="nofollow">Enhancement Information System</a> in the Object Navigator (transaction SE80)</li><li>Repository Info System (SE84): Enhancements -&gt; Enhancements Implementations</li><li>Repository Info System (SE84): Enhancements -&gt; Composite Enh. Implementations</li></ul><h3 id="Waystofindauserexit-BlogsandArticles">Blogs and Articles</h3><ul><li><a href="http://www.sdn.sap.com/irj/scn/weblogs?blog=/pub/wlg/13803" class="external-link" rel="nofollow">How Many Exit Routines are active in your SAP ERP system?</a></li><li><a href="http://www.sdn.sap.com/irj/scn/index?rid=/library/uuid/208811b0-00b2-2910-c5ac-dd2c7c50c8e8" class="external-link" rel="nofollow">SAP User Exits and the People Who Love Them</a></li><li><a href="https://www.sdn.sap.com/irj/sdn/weblogs?blog=/pub/wlg/3480" class="external-link" rel="nofollow">Finding BADI Using SQL Trace (TCODE-ST05)</a></li><li><a href="http://scn.sap.com/docs/DOC-33611" class="external-link" rel="nofollow">How to find BAdIs with a Function Module</a></li></ul><h3 id="Waystofindauserexit-Accelerators">Accelerators</h3><ul><li><a href="http://wiki.sdn.sap.com/wiki/display/ABAP/Scan+the+exit+routines+active+in+your+SAP+ERP+system" class="external-link" rel="nofollow">ABAP X-it Ray Eye (Scans all the exit routines active in SAP ERP)</a></li><li><a href="http://wiki.sdn.sap.com/wiki/display/ABAP/To+find+out+User+Exit%27s+and+BADI%27s+for+Any+Transaction+code" class="external-link" rel="nofollow">To find out User Exit's and BADI's for Any Transaction code</a></li><li><a href="http://wiki.sdn.sap.com/wiki/display/Snippets/Find+User-exits,+BADIs,+BTEs,+Etc+by+TCode+or+Program" class="external-link" rel="nofollow">Find User-exits, BADIs, BTEs, Etc by TCode or Program</a></li></ul><h3 id="Waystofindauserexit-BestPractices">Best Practices</h3><ul><li><a href="https://www.sdn.sap.com/irj/scn/weblogs?blog=/pub/wlg/17408" class="external-link" rel="nofollow">Best Practice for a SAP ECC Consolidation project: filter dependent BAdI to organize the user-exits and enhancements</a></li><li><a href="https://www.sdn.sap.com/irj/scn/weblogs?blog=/pub/wlg/11882" class="external-link" rel="nofollow">Dangerous Liaisons in User-Exits and How to Avoid Them</a></li><li><a href="http://www.sdn.sap.com/irj/scn/weblogs?blog=/pub/wlg/14673" class="external-link" rel="nofollow">Dangerous Liaisons in User-Exits - Revisited</a></li></ul><h3 id="Waystofindauserexit-RelevantSAPNotes">Relevant SAP Notes</h3><ul><li><a href="https://service.sap.com/sap/support/notes/381348" class="external-link" rel="nofollow">381348 - Using Userexit, Customer Exit, VOFM in SD</a></li><li><a href="https://service.sap.com/sap/support/notes/842318" class="external-link" rel="nofollow">842318 - FAQs about validations + substitutions</a></li><li><a href="https://service.sap.com/sap/support/notes/356737" class="external-link" rel="nofollow">356737 - Customer name range for VOFM routines</a></li><li><a href="https://service.sap.com/sap/support/notes/327220" class="external-link" rel="nofollow">327220 - VOFM function and its objects</a></li><li><a href="https://service.sap.com/sap/support/notes/29377" class="external-link" rel="nofollow">29377 - FAQs: Field exits (CMOD)</a></li></ul>
+
+                
+        
+    
+        </div>
+
+                        
+    
+
+
+
+<div id="labels-section" class="pageSection group">
+    <div class="labels-section-content content-column" entityid="176390174" entitytype="page">
+	<div class="labels-content">
+		
+    <ul class="label-list label-list-right ">
+                    
+        <li class="aui-label " data-label-id="160235596"><a class="aui-label-split-main" href="/wiki/label/ABAP/userexit" rel="tag">userexit</a></li><li class="aui-label " data-label-id="2981"><a class="aui-label-split-main" href="/wiki/label/ABAP/exit" rel="tag">exit</a></li><li class="aui-label " data-label-id="6399"><a class="aui-label-split-main" href="/wiki/label/ABAP/find" rel="tag">find</a></li><li class="aui-label " data-label-id="2871"><a class="aui-label-split-main" href="/wiki/label/ABAP/customer" rel="tag">customer</a></li><li class="aui-label " data-label-id="88"><a class="aui-label-split-main" href="/wiki/label/ABAP/badi" rel="tag">badi</a></li><li class="aui-label " data-label-id="2661"><a class="aui-label-split-main" href="/wiki/label/ABAP/enhancement" rel="tag">enhancement</a></li><li class="aui-label " data-label-id="2205"><a class="aui-label-split-main" href="/wiki/label/ABAP/validation" rel="tag">validation</a></li><li class="aui-label " data-label-id="1075"><a class="aui-label-split-main" href="/wiki/label/ABAP/substitution" rel="tag">substitution</a></li><li class="aui-label " data-label-id="2068"><a class="aui-label-split-main" href="/wiki/label/ABAP/bte" rel="tag">bte</a></li><li class="aui-label " data-label-id="1361"><a class="aui-label-split-main" href="/wiki/label/ABAP/search" rel="tag">search</a></li><li class="aui-label " data-label-id="70877191"><a class="aui-label-split-main" href="/wiki/label/ABAP/scan" rel="tag">scan</a></li><li class="aui-label " data-label-id="160235597"><a class="aui-label-split-main" href="/wiki/label/ABAP/vofm" rel="tag">vofm</a></li><li class="aui-label " data-label-id="2665"><a class="aui-label-split-main" href="/wiki/label/ABAP/routines" rel="tag">routines</a></li>
+            </ul>
+
+    </div>
+</div>
+</div>
+        
+		
+            
+
+
+
+
+            
+        
+
+
+
+
+
+
+
+
+                        
+    
+<div id="comments-section" class="pageSection group">
+        
+    
+
+
+
+</div>
+        
+
+
+                
+    
+            
+</div>
+
+    
+
+    
+
+
+
+
+    
+    
+
+    
+    
+    
+
+
+    
+<div id="space-tools-web-items" class="hidden">
+                <div data-label="Overview" data-href="/wiki/spaces/viewspacesummary.action?key=ABAP">Overview</div>
+            <div data-label="Content Tools" data-href="/wiki/pages/reorderpages.action?key=ABAP">Content Tools</div>
+    </div>
+        
+
+
+
+            </div><!-- \#main -->
+            
+    
+    
+        
+            
+            
+
+<div id="footer" role="contentinfo">
+    <section class="footer-body">
+
+                                                    
+        
+
+        <ul id="poweredby">
+            <li class="noprint">Powered by <a href="http://www.atlassian.com/software/confluence" class="hover-footer-link" rel="nofollow">Atlassian Confluence</a> <span id='footer-build-information'>7.4.13</span></li>
+            <li class="print-only">Printed by Atlassian Confluence 7.4.13</li>
+            <li class="noprint"><a href="https://support.atlassian.com/help/confluence" class="hover-footer-link" rel="nofollow">Report a bug</a></li>
+            <li class="noprint"><a href="https://www.atlassian.com/company" class="hover-footer-link" rel="nofollow">Atlassian News</a></li>
+        </ul>
+
+        
+
+        <div id="footer-logo"><a href="http://www.atlassian.com/" rel="nofollow">Atlassian</a></div>
+
+                    <div class="sap-footer" >
+	<ul id="sap-footer-links">
+        <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+        <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+        <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+        <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+        <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+    </ul>
+</div>
+        
+    </section>
+</div>
+
+    
+</div>
+
+</div><!-- \#full-height-container -->
+</div><!-- \#page -->
+
+    <span style="display:none;" id="confluence-server-performance">{"serverDuration": 80, "requestCorrelationId": "0d2e44adf24c3ed1"}</span>
+</body>
+</html>
+    

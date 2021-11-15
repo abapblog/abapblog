@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>шаблон прокси | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/shablon-proksi/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:55:47 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Шаблон прокси</title>
+		<link>https://abap-blog.ru/osnovy-abap/shablon-proksi/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/shablon-proksi/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 04 Feb 2012 06:35:37 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[abap objects]]></category>
+		<category><![CDATA[шаблон прокси]]></category>
+		<category><![CDATA[шаблоны проектирования]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=393</guid>
+
+					<description><![CDATA[<p>Шаблон Proxy (определяет объект-заместитель англ. surrogate иначе -заменитель англ. placeholder) — шаблон проектирования, который предоставляет объект, который контролирует доступ к другому объекту, перехватывая все вызовы (выполняет функцию контейнера). В реальной жизни можно привести следующий пример: сотрудникам одного из подразделений фирмы регулярно требуется получать информацию о том, какого числа бухгалтерия планирует выплатить зарплату. С одной стороны каждый из них может индивидуально и регулярно ездить в бухгалтерию [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-proksi/">Шаблон прокси</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><strong>Шаблон Proxy</strong> (определяет объект-заместитель англ. <em>surrogate</em> иначе -заменитель англ. <em>placeholder</em>) — шаблон проектирования, который предоставляет объект, который контролирует доступ к другому объекту, перехватывая все вызовы (выполняет функцию контейнера).</p>
+<p><span id="more-393"></span></p>
+<p>В реальной жизни можно привести следующий пример: сотрудникам одного из подразделений фирмы регулярно требуется получать информацию о том, какого числа бухгалтерия планирует выплатить зарплату. С одной стороны каждый из них может индивидуально и регулярно ездить в бухгалтерию для выяснения этого вопроса (полагаю такая ситуация не редка во многих организациях). С другой стороны, при приближении планируемой даты подразделение может выбрать одного человека, который будет выяснять эту информацию у бухгалтерии, а в последствии уже все в подразделении могут выяснить эту информацию у него (что значительно быстрее). Вот именно этот человек и будет реализованным «прокси» паттерном, который будет предоставлять специальный механизм доступа к информации из бухгалтерии.</p>
+<h3>Проблема</h3>
+<p>Необходимо управлять доступом к объекту так, чтобы создавать громоздкие объекты «по требованию».</p>
+<h3>Решение</h3>
+<p>Создать суррогат громоздкого объекта. «Заместитель» хранит ссылку, которая позволяет заместителю обратиться к реальному субъекту (объект класса «Заместитель» может обращаться к объекту класса «Субъект», если интерфейсы «Реального Субъекта» и «Субъекта» одинаковы). Поскольку интерфейс «Реального Субъекта» идентичен интерфейсу «Субъекта», так, что «Заместителя» можно подставить вместо «Реального Субъекта», контролирует доступ к «Реальному Субъекту», может отвечать за создание или удаление «Реального Субъекта». «Субъект» определяет общий для «Реального Субъекта» и «Заместителя» интерфейс, так, что «Заместитель» может быть использован везде, где ожидается «Реальный Субъект». При необходимости запросы могут быть переадресованы «Заместителем» «Реальному Субъекту».</p>
+<p><a title="Диаграмма классов шаблона проектирования Proxy" href="http://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D0%B9%D0%BB:Proxy_patt.gif"><img loading="lazy" src="http://upload.wikimedia.org/wikipedia/ru/0/08/Proxy_patt.gif" alt="Диаграмма классов шаблона проектирования Proxy" width="379" height="252" /></a></p>
+<p>Шаблон proxy бывает нескольких видов, а именно:</p>
+<ul>
+<li><strong>Удаленный заместитель</strong> (англ. <em>remote proxies</em>) : обеспечивает связь с «Субъектом», который находится в другом адресном пространстве или на удалённой машине. Так же может отвечать за кодирование запроса и его аргументов и отправку закодированного запроса реальному «Субъекту»,</li>
+<li><strong>Виртуальный заместитель</strong> (англ. <em>virtual proxies</em>): обеспечивает создание реального «Субъекта» только тогда, когда он действительно понадобится. Так же может кэшировать часть информации о реальном «Субъекте», чтобы отложить его создание,</li>
+<li><strong>Копировать-при-записи</strong>: обеспечивает копирование «субъекта» при выполнении клиентом определённых действий (частный случай «виртуального прокси»).</li>
+<li><strong>Защищающий заместитель</strong> (англ. <em>protection proxies</em>): может проверять, имеет ли вызывающий объект необходимые для выполнения запроса права.</li>
+<li><strong>Кэширующий прокси</strong>: обеспечивает временное хранение результатов расчёта до отдачи их множественным клиентам, которые могут разделить эти результаты.</li>
+<li><strong>Экранирующий прокси</strong>: защищает «Субъект» от опасных клиентов (или наоборот).</li>
+<li><strong>Синхронизирующий прокси</strong>: производит синхронизированный контроль доступа к «Субъекту» в асинхронной многопоточной среде.</li>
+<li><strong>Smart reference proxy</strong>: производит дополнительные действия, когда на «Субъект» создается ссылка, например, рассчитывает количество активных ссылок на «Субъект».</li>
+</ul>
+<h2>Преимущества и недостатки от применения</h2>
+<p>Преимущества:</p>
+<ul>
+<li> удаленный заместитель;</li>
+<li> виртуальный заместитель может выполнять оптимизацию;</li>
+<li> защищающий заместитель;</li>
+<li>&#171;умная&#187; ссылка;</li>
+</ul>
+<dl>
+<dt>Недостатки</dt>
+</dl>
+<ul>
+<li>резкое увеличение времени отклика.</li>
+</ul>
+<h2>Сфера применения</h2>
+<p>Шаблон Proxy может применяться в случаях работы с сетевым соединением, с огромным объектом в памяти (или на диске) или с любым другим ресурсом, который сложно или тяжело копировать. Хорошо известный пример применения — объект, подсчитывающий число ссылок.</p>
+<p>Пример реализации на ABAP:</p><pre class="urvanov-syntax-highlighter-plain-tag">" Определяет общий для реального объекта и прокси объекта интерфейс
+INTERFACE lif_math.
+   METHODS:
+      ADD IMPORTING X TYPE F
+                    y TYPE F
+          RETURNING VALUE(Z) TYPE F,
+      sub IMPORTING X TYPE F
+                    y TYPE F
+          RETURNING VALUE(Z) TYPE F,
+      mul IMPORTING X TYPE F
+                    y TYPE F
+          RETURNING VALUE(Z) TYPE F,
+      DIV IMPORTING X TYPE F
+                    y TYPE F
+          RETURNING VALUE(Z) TYPE F.
+ENDINTERFACE.
+
+" Определение реального объекта
+CLASS math DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_math.
+    ALIASES:
+      mul FOR lif_math~mul,
+      sub FOR lif_math~sub,
+      ADD FOR lif_math~ADD,
+      DIV FOR lif_math~DIV.
+ENDCLASS.
+
+CLASS math IMPLEMENTATION.
+  METHOD lif_math~ADD.
+    Z = X + y.
+  ENDMETHOD.
+  METHOD lif_math~sub.
+    Z = X - y.
+  ENDMETHOD.
+  METHOD lif_math~mul.
+    Z = X * y.
+  ENDMETHOD.
+  METHOD lif_math~DIV.
+    Z = X / y.
+  ENDMETHOD.
+ENDCLASS.
+
+" Прокси (заместитель), хранит ссылку которая позволяет 
+" обратиться к реальному субъекту, Так как оба класса 
+" имеют один интерфейс, прокси может всегда быть использован 
+" вместо реального субъекта.
+CLASS proxy DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_math.
+    METHODS:
+      CONSTRUCTOR.
+  PRIVATE SECTION.
+    DATA: go_math TYPE REF TO math.
+ENDCLASS.
+
+CLASS proxy IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+    CREATE OBJECT go_math.
+  ENDMETHOD.
+  " Быстрые операции не требуют обращения к реальному субъекту
+  METHOD lif_math~ADD.
+    Z = X + y.
+  ENDMETHOD.
+  METHOD lif_math~sub.
+    Z = X - y.
+  ENDMETHOD.
+  " Медленные операции требуют обращения к субъекту
+  METHOD lif_math~mul.
+    Z = go_math-&gt;mul( X = X y = y ).
+  ENDMETHOD.
+  METHOD lif_math~DIV.
+    Z = go_math-&gt;div( X = X y = y ).
+  ENDMETHOD.
+ENDCLASS.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-proksi/">Шаблон прокси</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/shablon-proksi/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

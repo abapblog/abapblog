@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+
+<!--[if gte IE 9]>
+<html class="ie" lang="en-US">
+<![endif]-->
+
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar" content="black"/>
+    <title>Installing NetWeaver AS ABAP 7.52 SP 01 Developer Edition with Vagrant and Ubuntu | SAP Blogs</title>
+    <link rel="profile" href="http://gmpg.org/xfn/11"/>
+
+    
+    
+    <!--[if lt IE 9]>
+    <script src="https://blogs.sap.com/wp-content/themes/sap-v3-neo/js/html5.min.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link rel="icon" type="image"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.png" /><link rel="shortcut icon" type="image/x-icon"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.ico" /><link rel="apple-touch-icon" href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/apple-touch-icon.png" /><meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//static.community.services.sap' />
+<link rel='dns-prefetch' href='//assets.adobedtm.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Feed" href="https://blogs.sap.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Comments Feed" href="https://blogs.sap.com/comments/feed/" />
+<meta name="type" content="Blog" /><meta name="description" content="Recently AS ABAP 7.52 dev edition has been released. There are quite a lot of articles how to install it with virtual box and docker. However, I haven&#8217;t seen any blog on how to do it with Vagrant" /><meta name="sm_tech_ids" content="833755570260738661924709785639136,01200314690800000134,279429873667587277925521334820770"/><meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" /><link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Installing NetWeaver AS ABAP 7.52 SP 01 Developer Edition with Vagrant and Ubuntu Comments Feed" href="https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/blogs.sap.com\/res1dx-135\/wp-includes\/js\/wp-emoji-release.min.js"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/style.min.css' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/css/ie.css' type='text/css' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='designmate_styles-css'  href='https://static.community.services.sap/designmate/v3/136/latest/designmate.css' type='text/css' media='all' />
+<link rel='stylesheet' id='designsystem_styles-css'  href='https://static.community.services.sap/community-ds/v1/188/main.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dist/block-library/style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='prism-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/js/tinymce/plugins/codesample/css/prism.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_custom_link_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom//include/css/sap-core-custom.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_lightbox_gallery_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='pt_style_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-primary-tag/css/pt_style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-popular-posts-css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/css/wpp.css' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery.min.js' id='jquery-core-js'></script>
+<script type='text/javascript' id='jquery-core-js-after'>
+if (jQuery !== undefined) {
+                jQuery(window).on("load", function(){
+                    var _wpWindowLoaded = document.createElement("div");
+                    _wpWindowLoaded.setAttribute("class", "hidden");
+                    _wpWindowLoaded.setAttribute("id", "wp_window_loaded");
+                    document.body.appendChild(_wpWindowLoaded);
+                });
+            }
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery-migrate.min.js' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='//assets.adobedtm.com/ccc66c06b30b/d266848b2882/launch-f095fbc32a96.min.js' id='scn_adobe_dtm-js'></script>
+<script type='text/javascript' id='wpp-js-js-extra'>
+/* <![CDATA[ */
+var wpp_params = {"sampling_active":"","sampling_rate":"100","ajax_url":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php","action":"update_views_ajax","ID":"720581","token":"938e4875d9"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/js/wpp.js' id='wpp-js-js'></script>
+<link rel="https://api.w.org/" href="https://blogs.sap.com/wp-json/" /><link rel="alternate" type="application/json" href="https://blogs.sap.com/wp-json/wp/v2/posts/720581" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.sap.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.sap.com/wp-includes/wlwmanifest.xml" /> 
+
+<link rel="canonical" href="https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/" />
+<link rel='shortlink' href='https://blogs.sap.com/?p=720581' />
+<script type="text/javascript">var ajaxurl = "https://blogs.sap.com/wp-admin/admin-ajax.php";var likePostLabel = "Like";var unLikePostLabel = "Liked";var likeCommentLabel = "Like";var unLikeCommentLabel = "Liked";</script>    <!--[if IE ]>
+    <link rel="stylesheet" id="scn-ie-styles" href="https://blogs.sap.com/wp-content/themes/sap-v3-neo/css/ie.css"
+          type="text/css" media="all">
+    <link id="ids-popup-css" href="https://accounts.sap.com/universalui/shared/stylesheets/idsPopup.css"
+          rel="stylesheet"
+          type="text/css">
+    <![endif]-->
+
+
+</head>
+
+<body class="post-template-default single single-post postid-720581 single-format-standard custom-font-enabled">
+
+
+<div class="page-wrapper">
+<b class="cn-accessibility"><a href="#main" tabindex="0" accesskey="S">Skip to Content</a></b>
+<div id="page" class="hfeed site">
+
+<header id="masthead" class="blogs-nav sap-header">
+    <header id="comm-hdr-Header" role="masthead"><div class="dm-header"><div class="dm-header__inner"><div class="dm-header__logo-wrapper"><a class="dm-logo--header" href="http://www.sap.com/" title="SAP"></a></div><nav id="comm-hdr-Navigation" class="dm-mainNav"><div class="dm-mobileSearch"><form class="dm-header__search-form" action=""><div class="dm-search-container dm-input dm-search__input"><label class="dm-input__box" aria-label="search SAP Community"><input class="dm-input__control" placeholder="Search SAP Community" name="filter-search" type="search" required="" aria-label="type here to search"><button class="dm-search__button dm-search__button-clear" type="reset" role="button" title="Reset Search"><span class="dm-search__buttonIcon dm-icon-encoded--close" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" role="button" title="Search SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form></div><ul class="dm-mainNav__menu dm-mainNav__menu--withGroups" role="menubar"><li class="dm-header__homeItem" role="none"><a class="dm-header__homeItem-link" role="menuitem" aria-label="Community Home" target="_self" href="https://community.sap.com">Community</a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/topics" aria-label="" aria-haspopup="false" role="menuitem">Topics<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://groups.sap.com" aria-label="Groups. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Groups<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://answers.sap.com/index.html" aria-label="Answers. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Answers<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://blogs.sap.com" aria-label="Blogs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Blogs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/events" aria-label="Events. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Events<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/programs" aria-label="Programs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Programs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources" aria-label="Resources. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Resources<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources/what-is-new" aria-label="" aria-haspopup="false" role="menuitem">What's New<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li></ul></nav><ul class="dm-header__actions"><li id="comm-hdr-Search" class="dm-header__actions-item dm-headerSearch"><a class="dm-search-action dm-icon-encoded dm-header__search-icon" aria-label="Search the SAP Community" href="#" role="button" aria-expanded="false" title="Search"></a><div class="dm-headerSearch__wrapper"><form class="dm-searchdropdown dm-align-center" action=""><div class="dm-search__input dm-input" role="search"><label class="dm-input__box" aria-label="search the SAP community"><input class="dm-input__control" placeholder="Search the SAP Community" name="filter-search" aria-label="type here to search" type="input"><button class="dm-search__button dm-search__button-clear" type="reset" title="Reset"><span class="dm-search__buttonIcon dm-icon-encoded--clear" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" title="Search the SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form><a class="dm-headerSearch__closeButton" type="submit" role="button" title="Close search input" href="javascript:void(0);"><span class="dm-icon-encoded dm-icon-encoded--close" role="img" aria-label="Close search input"></span></a></div></li><li id="comm-hdr-Authentication" class="dm-header__actions-item dm-header__account"><a id="comm-hdr-SignIn" class="dm-user__login-button--wrapper" aria-haspopup="true" aria-expanded="false" role="button" href="#" title="Log In" rel="IDS_login"><div id="comm-hdr-AnonymousIcon" class="dm-icon-encoded dm-icon-encoded--account dm-hidden" aria-label="click here to login"></div><div id="comm-hdr-Avatar" class="dm-user dm-header__avatar"><img class="dm-header__avatar-image dm-hidden" data-src="" src="" width="24px" height="24px"><span class="dm-header__notifications dm-hidden js-notification-indicator"></span></div></a><ul id="comm-hdr-UserProfileMenu" class="dm-header__actionsSubMenu dm-profileFlyoutMenu dm-profileMenuDropdown" role="menu" aria-label="drop down menu of people profile"><li class="dm-profileMenu__userData"><div id="comm-hdr-Username" class="dm-profileMenu__userName"></div><div id="comm-hdr-Email" class="dm-profileMenu__userEmail"></div><a id="comm-hdr-SubMenuTitleLink" class="dm-link" href="#">Manage my Account</a></li><li id="comm-hdr-ProfileMenuTopSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li id="comm-hdr-ProfileMenuMiddleSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li class="dm-profileMenu__section"><ul class="dm-profileMenu__list dm-profileMenu__logout"><li class="dm-profileMenu__item"><a id="comm-hdr-LogOut" class="dm-button dm-button--secondary" href="#" role="button"><span class="dm-button-text">Logout</span></a></li></ul></li></ul></li><li class="dm-header__actions-item dm-header__mobileMenu"><a id="comm-hdr-MobileMenuBtn" class="dm-mobileMenuButton" aria-label="Search SAP community"><span class="dm-icon-encoded dm-icon-encoded--mobile-menu"></span><span style="display:none;">Search</span></a></li></ul></div></div></header><div class="announcements" role="menubar"></div><div class="dm-wrapper dm-subheader dm-subheader--wrapper  dm-user--unauthenticated "><div class="dm-grid"><div class="dm-breadcrumb dm-user--unauthenticated" role="menubar">
+    <ul class="dm-breadcrumb-nav" role="navigation" aria-label="breadcrumb navigation to trace the path back to original landing point">
+        
+        <li><a id="comm-shdr-breadcrumb-home" href="https://www.sap.com" title="Home">Home</a></li>
+        
+        <li><a id="comm-shdr-breadcrumb-community" href="https://community.sap.com" title="Community">Community</a></li>
+        
+    </ul>
+    <ul class="dm-breadcrumb-actions" role="menu">
+        
+        <li><a id="comm-shdr-AskQuestion" href="https://answers.sap.com/questions/ask.html" title="Ask a Question">Ask a Question</a></li>
+        
+        <li><a id="comm-shdr-WriteBlogPost" href="https://blogs.sap.com/wp-admin/post-new.php" title="Write a Blog Post">Write a Blog Post</a></li>
+        
+        <li class="dm-user__login-button--wrapper"><a class="dm-button-small dm-button--primary" role="button" rel="IDS_login" aria-label="Login or Sign up. Click here to log in or sign up"><span class="dm-button-text">Login / Sign-up</span></a></li>
+        <li class="dm-breadcrumb-actions__dropdown">
+            <span id="comm-shdr-actions-opener" class="dm-breadcrumb-actions__dropdown-toggle" title="Community actions">
+                 <span class="dm-icon-encoded dm-icon-encoded--3dots"></span>
+            </span>
+            <ul id="comm-shdr-user-actions-ul" class="dm-breadcrumb-actions__dropdown-menu" role="menu">
+            </ul>
+        </li>
+    </ul>
+</div>
+</div></div>    <!-- #site-navigation -->
+
+</header>
+
+<!-- #masthead -->
+<div id="main" tabindex="0" class="wrapper">
+
+
+
+
+<div class="ds-blog-post-detail">
+<div class="ds-flexGrid">
+  <div class="ds-flexRow">
+    <div class="ds-flexCol">
+            <div class="ds-content-wrapper ds-blog-post__content-wrapper">
+        <h6 class="ds-heading ds-heading--xs ds-blog-post__sub-title"><span>Technical Articles</span></h6>
+        <div class="ds-flexRow">
+          <div class="ds-flexCol-sm-12 ds-flexCol-md-9">
+            
+<div class="ds-blog-post__body-wrapper">
+  <div class="ds-blog-post__content">
+    <div class="ds-blog-post__header-wrapper">
+      <a target="_blank" rel="noopener noreferrer" href="https://people.sap.com/atsy" class="ds-blog-post__avatar "  >
+        <img alt='Author&#039;s profile photo Alexander Tsybulsky' src='https://avatars.services.sap.com/images/atsy.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />      </a>
+      <div class="ds-blog-post__author-info-wrapper">
+        <div class="ds-user ds-blog-post__author">
+          <a class="ds-link ds-user__name " href="https://people.sap.com/atsy" target="_blank" title="Alexander Tsybulsky" aria-label="" rel="noopener noreferrer">Alexander Tsybulsky</a>
+                  </div>
+        <div class="ds-blog-post__meta-info">
+          <span class="ds-blog-post__date">September 22, 2018</span>
+          <span class="ds-blog-post__read-duration">3 minute read</span>
+        </div>
+      </div>
+    </div>
+    <h1 class="ds-heading ds-heading--m ds-blog-post__title">Installing NetWeaver AS ABAP 7.52 SP 01 Developer Edition with Vagrant and Ubuntu</h1>
+    <div class="ds-blog-post__social-stats-wrapper">
+      <div class="ds-social-stats ">
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--comments"></i>16        </span>
+        <span id="post-likes-counter" class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--likes-outline"></i>8        </span>
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--views"></i>4,073        </span>
+      </div>
+          </div>
+    <div class="ds-blog-post__body ds-editor-content">
+      <p>Recently AS ABAP 7.52 dev edition has been released. There are quite a lot of articles how to install it with virtual box and docker. However, I haven&#8217;t seen any blog on how to do it with Vagrant and Ubuntu. The only vagrant config I found was <a href="https://github.com/wechris/SAPNW75SPS02"  target="_blank" >this</a>. Also most of blog posts use OpenSUSE. So I decided to add some diversity.</p>
+<p>This is yet another guide on how to easily install NW dev edition. This time with Vagrant which make it <strong>really easy and automatic</strong>. First a few theoretical explanations and disclaimers.</p>
+<p><strong>UPD 2019-01-26</strong>: the provisioning scripts now install sapnw as a systemd service so it should autostart at boot time. See details in the repository <a href="https://github.com/sbcgua/sap-nw-abap-vagrant#how-to-use"  target="_blank" >readme</a>.</p>
+<p><strong>UPD 2019-10-19</strong>: the script also works with the newest <a href="https://blogs.sap.com/2019/07/01/as-abap-752-sp04-developer-edition-to-download" >AS ABAP 752 SP04, developer edition</a>. The latest script updates also have an option to automatically install abapGit, see my <a href="https://blogs.sap.com/2019/04/30/how-to-easily-install-sap-netweaver-developer-edition-7.52-and-abapgit-with-vagrant-in-10-man-minutes/" >other blog post</a> on this subject and the <a href="https://www.youtube.com/watch?v=-BeEF1U-cqQ"  target="_blank" >youtube video</a> 🙂</p>
+<h3>What is vagrant</h3>
+<p>It is a tool to setup virtual environments conveniently which is quite popular for deployments in other dev environments. No need to go through boring installation process which is a plus. Basic virtual machine is created within seconds (for popular flavors that exist in vagrant cloud repository).</p>
+<h3>Why not docker? (IMHO, arguable)</h3>
+<ol>
+<li>Ideologically docker is supposed to be stateless. Databases should be in volumes, not inside docker layer</li>
+<li>Besides, docker storage layer is slower than volumes</li>
+</ol>
+<p>Note: to be objective, this is not a terrible obstacle. I think /sybase directory can be mounted to a volume, logs and transports also&#8230; Just might need some more effort to make it properly with docker.</p>
+<h3>Why Ubuntu</h3>
+<p>1) Ubuntu is very popular linux flavor. The community is huge and there are a lot of materials on how to solve this or that issue<br />
+2) Bare Ubuntu server is small and just ~1 GB in size<br />
+3) &#8230; and yes, I know Ubuntu better, which might be the main reason 😉</p>
+<h3>Installation</h3>
+<p>OK, enough of theory, let&#8217;s go through installation. First check the official blog post about the installation, in particular for hardware requirements &#8211; <a href="https://blogs.sap.com/2018/09/13/as-abap-7.52-sp01-developer-edition-concise-installation-guide/" >https://blogs.sap.com/2018/09/13/as-abap-7.52-sp01-developer-edition-concise-installation-guide/</a>.<br />
+To install you will need:</p>
+<ul>
+<li>installed virtual box</li>
+<li>installed vagrant, on Windows 7 vagrant will ask for powershell 3. You get it <a href="https://github.com/wechris/SAPNW75SPS02"  target="_blank" >here</a> if needed</li>
+<li>download this repository from github &#8211; <a href="https://github.com/sbcgua/sap-nw-abap-vagrant"  target="_blank" >https://github.com/sbcgua/sap-nw-abap-vagrant</a>. You can either download it as zip or with git &#8211; <em>&#8216;git clone https://github.com/sbcgua/sap-nw-abap-vagrant.git&#8217;</em></li>
+<li>download NW752 distribution and uncompress (!) it to <span style="text-decoration: underline"><em>&#8216;distrib&#8217;</em></span> folder of the cloned repository</li>
+</ul>
+<p><img class=" ds-lightbox__img" loading="lazy" src="https://blogs.sap.com/wp-content/uploads/2018/09/dir-structure.png" width="343" height="138" data-index="1" data-id="plbox-720581" /></p>
+<ul>
+<li>open cmd or powershell in the cloned directory</li>
+<li>run <em>&#8216;vagrant up&#8217;</em></li>
+</ul>
+<p><img class=" ds-lightbox__img" loading="lazy" src="https://blogs.sap.com/wp-content/uploads/2018/09/inst-start.png" width="476" height="373" data-index="2" data-id="plbox-720581" /></p>
+<ul>
+<li>wait for installation to finish &#8230; (took ~1-1.5 hours on my laptop)</li>
+</ul>
+<p><img class=" ds-lightbox__img" loading="lazy" src="https://blogs.sap.com/wp-content/uploads/2018/09/after-1.png" width="447" height="249" data-index="3" data-id="plbox-720581" /></p>
+<ul>
+<li>That&#8217;s it, no more manual install actions ! Vagrant will do all the rest. The final fresh VM weight just around 40 GB.</li>
+</ul>
+<p>After this you can connect to the instance (127.0.0.1) and continue with post-installation steps as described in <a href="https://blogs.sap.com/2018/09/13/as-abap-7.52-sp01-developer-edition-concise-installation-guide/" >main guides</a>. No need to configure forwarding ports it is already done by Vagrant. What you actually get as the result is ready to use VM in Virtualbox.</p>
+<p><img class=" ds-lightbox__img" loading="lazy" src="https://blogs.sap.com/wp-content/uploads/2018/09/vbox.png" width="460" height="173" data-index="4" data-id="plbox-720581" /></p>
+<h3>How to use</h3>
+<ul>
+<li>To start VM
+<ul>
+<li>run cmd in the Vagrantfile directory</li>
+<li>start vm with <em>&#8216;vagrant up&#8217;</em> (this will detect that the machine was already provisioned and just start it)</li>
+<li>run <em>&#8216;vagrant ssh -c startsap.sh&#8217;</em> to run instance</li>
+</ul>
+</li>
+<li>To stop machine
+<ul>
+<li>run cmd in the Vagrantfile directory</li>
+<li>run <em>&#8216;vagrant ssh -c stopsap.sh&#8217;</em></li>
+<li>run <em>&#8216;vagrant halt&#8217;</em></li>
+</ul>
+</li>
+<li>Note: start/stopsap<strong>.sh</strong> are a shortcut scripts installed by the Vagrant config, they are not real start/stopsap. To run commands inside you have to login to the VM with <em>&#8216;vagrant ssh&#8217;</em> and then run <em>&#8216;sudo su -l npladm&#8217;</em> to switch to sap admin user</li>
+</ul>
+<p>Alternatively, you can address it just by name from any location (e.g. by running cmd with Win+R). For this check VM status with <em>&#8216;vagrant global-status&#8217;</em> and then run <em>&#8216;vagrant up <strong>sapnw</strong>&#8216;</em> and <em>&#8216;vagrant ssh <strong>sapnw</strong> &#8230;&#8217;</em> where <strong>sapnw</strong> is the VM name.</p>
+<p>Yet more alternatively you can run VM directly from virtual box, Vagrant did it&#8217;s job by now and now it is just a convenient option.</p>
+<p>Have a look at the repo README for some additional details. In particular there is some consideration regarding memory &#8211; the current config create VM with 6GB of RAM. You can optionally decrease it to 4GB + enable swap (just uncomment a couple of lines in Vagrantfile). This worked for me, however this is under the official recommendations so should not be considered as the best practice. To configure more than 6GB &#8211; change value for <em>&#8216;vb.memory =&#8217;</em> param in Vagrantfile (before the installation).</p>
+<p>I hope you find this useful !</p>
+<p>P.S. For those who doesn&#8217;t  want to use Vagrant but want to use Ubuntu &#8211; you can check &#8216;scripts&#8217; folder in the repo dir to figure out main command sequence.</p>
+    </div>
+  </div>
+  <div class="ds-blog-post__social-side-bar">
+    <div class="ds-sticky-on-scroll ">
+      <div class="ds-sticky-on-scroll__wrapper  ">
+        <div class="ds-sticky-on-scroll__content">
+          <div class="ds-blog-post__social-actions">
+            <button class="sap-button-follow ds-button ds-button--primary ds-blog-post__social-action ds-blog-post__social-action--follow" id="sap-button-follow-hdr-id" onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2018%2F09%2F22%2Finstalling-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant%2F%3Fs_action%3Dss_change_follow_status%26nonce%3D705a693f83'" rel="IDS_login"  type="button" data-content-type="blogpost" data-content-id="720581" data-nonce="705a693f83" title="Please log into the system to use follow/unfollow functionality."><span class="ds-button-text">Follow</span></button>            <button type='button' class='ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action likes-post-link dolike ' rel='IDS_login' onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2018%2F09%2F22%2Finstalling-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant%2F%3Fs_action%3Dss_change_like_status%26nonce%3D580b46d63f'" title='Like' data-nonce='580b46d63f' data-post-id='720581'><i class='ds-icon ds-icon--likes-outline ds-icon--regular ds-m-r-xs' tabindex='-1'></i><span class='ds-button-text'>Like</span></button>            <button type="button" class="ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action" title="RSS Feed" onclick="location.href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/feed/'">
+              <i class="ds-icon ds-icon--rss-feed ds-icon--regular ds-m-r-xs" tabindex="-1"></i>RSS Feed
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+            <div class="ds-blog-post__social-row">
+              <div class="ds-blog-post__social-icons">
+                <a href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.sap.com%2F2018%2F09%2F22%2Finstalling-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant%2F' title='Share on Facebook' target='_blank'><span class='ds-social-icon ds-social-icon--dark-facebook'></span></a><a href='https://twitter.com/share?url=https%3A%2F%2Fblogs.sap.com%2F2018%2F09%2F22%2Finstalling-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant%2F&text=Installing+NetWeaver+AS+ABAP+7.52+SP+01+Developer+Edition+with+Vagrant+and+Ubuntu' title='Share on Twitter' target='_blank'><span class='ds-social-icon ds-social-icon--dark-twitter'></span></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.sap.com%2F2018%2F09%2F22%2Finstalling-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant%2F&title=Installing+NetWeaver+AS+ABAP+7.52+SP+01+Developer+Edition+with+Vagrant+and+Ubuntu' title='Share on LinkedIn' target='_blank'><span class='ds-social-icon ds-social-icon--dark-linkedin'></span></a>              </div>
+              <div class='ds-tooltip__wrapper'>
+    <div class='ds-tooltip__anchor'>
+    <button
+      type="button"
+      class="ds-button ds-button--secondary ds-blog-post__alert-moderator-button ds-button--disabled"
+      aria-label="Alert Moderator"
+      data-toggle="collapse"
+      data-hide-class="ds-collapse"
+      data-triggers=".alertModerator"
+      aria-expanded="false">Alert Moderator
+    </button>
+    </div>
+    <div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Alerting is not available for unauthorized users</div>
+</div>
+            </div>
+            
+  <div class="wprc-content-v3">
+    <div class="ds-blog-post-form ds-blog-post__alert-moderator-form ds-collapse alertModerator wprc-form-v3" data-toggle="collapseComponent" data-name="alertModerator">
+          </div>
+  </div>
+          </div>
+          <div class="ds-blog-post__right-side-bar ds-flexCol-sm-12 ds-flexCol-md-3">
+            <div id="sapassignedtagswidget-v3-2" class="ds-side-bar-widget ds-assigned-tags ds-m-b-l"><h3 class="ds-side-bar-widget__heading">Assigned Tags</h3></div><div id="sap-relatedcontent-widget-v3-2" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Similar Blog Posts<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="blogpost" data-limit="3"></ul></div></div><div id="sap-relatedcontent-widget-v3-3" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Related Questions<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="question" data-limit="3"></ul></div></div>          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="content-lightbox-modal"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="plbox-720581"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="plbox-720581" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2018/09/dir-structure.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2018/09/inst-start.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2018/09/after-1.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2018/09/vbox.png" alt=""/></div><a class="lightbox-gallery-button--prev ds-lightbox__gallery-button ds-icon ds-icon--arrow-left" href="javascript:void(0);" aria-label="Show previous image"></a><a class="ds-lightbox__gallery-button lightbox-gallery-button--next ds-icon ds-icon--arrow-right" href="javascript:void(0);" aria-label="Show next image"></a></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>
+  <div class="ds-blog-post__comment-section">
+    <div class="ds-flexGrid">
+      <div class="ds-flexRow">
+        <div class="ds-flexCol-12 ds-flexCol-md-10 ds-flexCol-lg-10">
+          
+<div id="comments" class="ds-blog-post-comments">
+  
+      <div class="ds-blog-post-comments__counter" title="Number of Comments">
+      16 Comments      </div>
+              <div class="dm-section dm-align-center dm-section-header__title" title="Please log on to comment" aria-role="alert">
+                You must be <a href="https://blogs.sap.com/wp-login.php?redirect_to=2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant" class="opener js-idspopup" rel="IDS_login" title="Log On">Logged on</a> to comment or reply to a post.
+        </div>
+      
+    <div class="ds-blog-post-comments__list">
+              <div class="comment byuser comment-author-jsantos even thread-even depth-1 ds-blog-post-comment" id="li-comment-437686">
+        <div id="comment-437686" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/jsantos">
+                <img alt='Author&#039;s profile photo Jesús Antonio Santos Giraldo' src='https://avatars.services.sap.com/images/jsantos_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Jesús Antonio Santos Giraldo' href='https://people.sap.com/jsantos' rel='external nofollow' class='ds-link ds-user__name ' >Jesús Antonio Santos Giraldo</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2018-09-24T14:09:14+00:00"
+                >September 24, 2018 at 2:09 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Excellent blog.</p>
+<p>Never heard of Vagrant before but looks pretty interesting.</p>
+<p>Definitely worth to check.</p>
+<p>&nbsp;</p>
+<p>J.</p>
+              </div>
+
+            <div id="comment-actions-437686" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_437686" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-437686'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-abifsurya odd alt thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-439069">
+        <div id="comment-439069" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/abifsurya">
+                <img alt='Author&#039;s profile photo Abi Fadhillah Surya' src='https://avatars.services.sap.com/images/abifsurya_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Abi Fadhillah Surya' href='https://people.sap.com/abifsurya' rel='external nofollow' class='ds-link ds-user__name ' >Abi Fadhillah Surya</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2018-10-09T04:57:12+00:00"
+                >October 9, 2018 at 4:57 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Sorry sir, do i have to install ubuntu on virtualbox first? Or is it automatically configured by vargant?  Thank you</p>
+              </div>
+
+            <div id="comment-actions-439069" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_439069" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-439069'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-atsy bypostauthor even depth-2 ds-blog-post-comment" id="li-comment-439193">
+        <div id="comment-439193" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/atsy">
+                <img alt='Author&#039;s profile photo Alexander Tsybulsky' src='https://avatars.services.sap.com/images/atsy_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Alexander Tsybulsky' href='https://people.sap.com/atsy' rel='external nofollow' class='ds-link ds-user__name ' >Alexander Tsybulsky</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2018-10-09T20:38:39+00:00"
+                >October 9, 2018 at 8:38 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>No, it is installed automatically by vagrant. Vagrantfile has `config.vm.box` parameter which defined the base image. It is <span class="pl-s"><span class="pl-pds">“</span>ubuntu/xenial64<span class="pl-pds">“</span></span> for the moment. So Vargrant knows which image to download. For info: <span class="pl-s"><span class="pl-pds">“</span>ubuntu/xenial64<span class="pl-pds">“</span></span> is a image published (and regularly updated) by Ubuntu themselves. You can find it here - https://app.vagrantup.com/boxes/search</p>
+<p> </p>
+              </div>
+
+            <div id="comment-actions-439193" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_439193" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-439193'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-muhammadilyas odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-441018">
+        <div id="comment-441018" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/muhammad.ilyas">
+                <img alt='Author&#039;s profile photo Muhammad Ilyas' src='https://avatars.services.sap.com/images/muhammad.ilyas_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Muhammad Ilyas' href='https://people.sap.com/muhammad.ilyas' rel='external nofollow' class='ds-link ds-user__name ' >Muhammad Ilyas</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2018-10-27T11:13:11+00:00"
+                >October 27, 2018 at 11:13 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>I get this message error on 2nd day on running starting sap script. Hope this would be some user-mistake </p>
+<p>vagrant@127.0.0.1: Permission denied (publickey).</p>
+<p> </p>
+              </div>
+
+            <div id="comment-actions-441018" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_441018" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-441018'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-atsy bypostauthor even depth-2 ds-blog-post-comment" id="li-comment-441896">
+        <div id="comment-441896" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/atsy">
+                <img alt='Author&#039;s profile photo Alexander Tsybulsky' src='https://avatars.services.sap.com/images/atsy_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Alexander Tsybulsky' href='https://people.sap.com/atsy' rel='external nofollow' class='ds-link ds-user__name ' >Alexander Tsybulsky</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2018-11-05T17:50:03+00:00"
+                >November 5, 2018 at 5:50 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Seems like some error with vagrant itself or it's metadata. Did you occasionally delete the folder with Vagrantfile ? Upon first start vagrant generates a unique ssh key for the machine and keeps it near the config file (as well as some other meta). So if you delete the folder the ssh key may also be deleted. This is first what comes to my mind.</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2018/09/2018-11-05_19h41_43.png" width="265" height="121" data-index="1" data-id="clbox-441896" /></p>
+<p>Alternatively just google the error message, there are quite some links to check. E.g. check <a href="https://github.com/hashicorp/vagrant/issues/9433" rel="nofollow"  target="_blank">this</a> and <a href="https://github.com/hashicorp/vagrant/issues/9831" rel="nofollow"  target="_blank">this</a>. It is generic vagrant mistake, not sap related.</p>
+              </div>
+
+            <div id="comment-actions-441896" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_441896" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-441896'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+        <div id="content-lightbox-modal--441896"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="clbox-441896"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="clbox-441896" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2018/09/2018-11-05_19h41_43.png" alt=""/></div></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>    <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-muhammadilyas odd alt depth-3 ds-blog-post-comment" id="li-comment-441946">
+        <div id="comment-441946" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/muhammad.ilyas">
+                <img alt='Author&#039;s profile photo Muhammad Ilyas' src='https://avatars.services.sap.com/images/muhammad.ilyas_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Muhammad Ilyas' href='https://people.sap.com/muhammad.ilyas' rel='external nofollow' class='ds-link ds-user__name ' >Muhammad Ilyas</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2018-11-06T09:58:47+00:00"
+                >November 6, 2018 at 9:58 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>I think vagrant has done its job, i can start, stop sap after logging in to vm. I don't remember exactly I cleaned for space, but it looks an ongoing issue with win10 users mostly.</p>
+              </div>
+
+            <div id="comment-actions-441946" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_441946" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-441946'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-madhuribharadwaj even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-449150">
+        <div id="comment-449150" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/madhuri.bharadwaj">
+                <img alt='Author&#039;s profile photo Madhuri Bharadwaj Manjunath' src='https://avatars.services.sap.com/images/madhuri.bharadwaj_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Madhuri Bharadwaj Manjunath' href='https://people.sap.com/madhuri.bharadwaj' rel='external nofollow' class='ds-link ds-user__name ' >Madhuri Bharadwaj Manjunath</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-01-28T01:02:11+00:00"
+                >January 28, 2019 at 1:02 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>I m facing an issue when i run vagrant up. Can you please help me how to proceed.</p>
+<p>&nbsp;</p>
+<p>sapnw: Get:7 http://archive.ubuntu.com/ubuntu xenial/universe amd64 mc-data all 3:4.8.15-2 [1,202 kB]<br />
+sapnw: Get:8 http://archive.ubuntu.com/ubuntu xenial/universe amd64 mc amd64 3:4.8.15-2 [462 kB]<br />
+sapnw: Get:9 http://archive.ubuntu.com/ubuntu xenial-updates/multiverse amd64 unrar amd64 1:5.3.2-1+deb9u1build0.16.04.1 [123 kB]<br />
+<strong>sapnw: dpkg-preconfigure: unable to re-open stdin: No such file or directory</strong><br />
+sapnw: Fetched 3,215 kB in 9s (340 kB/s)<br />
+sapnw: Selecting previously unselected package csh.<br />
+sapnw: (Reading database ...<br />
+sapnw: (Reading database ... 5%<br />
+sapnw: (Reading database ... 10%<br />
+sapnw: (Reading database ... 15%<br />
+sapnw: (Reading database ... 20%<br />
+sapnw: (Reading database ... 25%<br />
+sapnw: (Reading database ... 30%<br />
+sapnw: (Reading database ... 35%<br />
+sapnw: (Reading database ... 40%<br />
+sapnw: (Reading database ... 45%<br />
+sapnw: (Reading database ... 50%<br />
+sapnw: (Reading database ... 55%<br />
+sapnw: (Reading database ... 60%<br />
+sapnw: (Reading database ... 65%<br />
+sapnw: (Reading database ... 70%<br />
+sapnw: (Reading database ... 75%<br />
+sapnw: (Reading database ... 80%<br />
+sapnw: (Reading database ... 85%<br />
+sapnw: (Reading database ... 90%<br />
+sapnw: (Reading database ... 95%<br />
+sapnw: (Reading database ... 100%<br />
+sapnw: (Reading database ...<br />
+sapnw: 54196 files and directories currently installed.)<br />
+sapnw: Preparing to unpack .../csh_20110502-2.1ubuntu1_amd64.deb ...<br />
+sapnw: Unpacking csh (20110502-2.1ubuntu1) ...<br />
+sapnw: Selecting previously unselected package libtcl8.6:amd64.<br />
+sapnw: Preparing to unpack .../libtcl8.6_8.6.5+dfsg-2_amd64.deb ...<br />
+sapnw: Unpacking libtcl8.6:amd64 (8.6.5+dfsg-2) ...<br />
+sapnw: Selecting previously unselected package tcl-expect:amd64.<br />
+sapnw: Preparing to unpack .../tcl-expect_5.45-7_amd64.deb ...<br />
+sapnw: Unpacking tcl-expect:amd64 (5.45-7) ...<br />
+sapnw: Selecting previously unselected package expect.<br />
+sapnw: Preparing to unpack .../expect_5.45-7_amd64.deb ...<br />
+sapnw: Unpacking expect (5.45-7) ...<br />
+sapnw: Selecting previously unselected package libaio1:amd64.<br />
+sapnw: Preparing to unpack .../libaio1_0.3.110-2_amd64.deb ...<br />
+sapnw: Unpacking libaio1:amd64 (0.3.110-2) ...<br />
+sapnw: Selecting previously unselected package libssh2-1:amd64.<br />
+sapnw: Preparing to unpack .../libssh2-1_1.5.0-2ubuntu0.1_amd64.deb ...<br />
+sapnw: Unpacking libssh2-1:amd64 (1.5.0-2ubuntu0.1) ...<br />
+sapnw: Selecting previously unselected package mc-data.<br />
+sapnw: Preparing to unpack .../mc-data_3%3a4.8.15-2_all.deb ...<br />
+sapnw: Unpacking mc-data (3:4.8.15-2) ...<br />
+sapnw: Selecting previously unselected package mc.<br />
+sapnw: Preparing to unpack .../mc_3%3a4.8.15-2_amd64.deb ...<br />
+sapnw: Unpacking mc (3:4.8.15-2) ...<br />
+sapnw: Selecting previously unselected package unrar.<br />
+sapnw: Preparing to unpack .../unrar_1%3a5.3.2-1+deb9u1build0.16.04.1_amd64.deb ...<br />
+sapnw: Unpacking unrar (1:5.3.2-1+deb9u1build0.16.04.1) ...<br />
+sapnw: Processing triggers for man-db (2.7.5-1) ...<br />
+sapnw: Processing triggers for libc-bin (2.23-0ubuntu10) ...<br />
+sapnw: Processing triggers for mime-support (3.59ubuntu1) ...<br />
+sapnw: Setting up csh (20110502-2.1ubuntu1) ...<br />
+sapnw: update-alternatives: using /bin/bsd-csh to provide /bin/csh (csh) in auto mode<br />
+sapnw: Setting up libtcl8.6:amd64 (8.6.5+dfsg-2) ...<br />
+sapnw: Setting up tcl-expect:amd64 (5.45-7) ...<br />
+sapnw: Setting up expect (5.45-7) ...<br />
+sapnw: Setting up libaio1:amd64 (0.3.110-2) ...<br />
+sapnw: Setting up libssh2-1:amd64 (1.5.0-2ubuntu0.1) ...<br />
+sapnw: Setting up mc-data (3:4.8.15-2) ...<br />
+sapnw: Setting up mc (3:4.8.15-2) ...<br />
+sapnw: Setting up unrar (1:5.3.2-1+deb9u1build0.16.04.1) ...<br />
+sapnw: update-alternatives: using /usr/bin/unrar-nonfree to provide /usr/bin/unrar (unrar) in auto mode<br />
+sapnw: Processing triggers for libc-bin (2.23-0ubuntu10) ...<br />
+==&gt; sapnw: Running provisioner: shell...<br />
+sapnw: Running: C:/Users/mahes/AppData/Local/Temp/vagrant-shell20190127-11192-1bw4l0r.sh<br />
+sapnw: Local start/stopsap scripts...<br />
+sapnw: Installing service...<br />
+sapnw: Created symlink from /etc/systemd/system/multi-user.target.wants/sapnw.service to /etc/systemd/system/sapnw.service.<br />
+sapnw: ● sapnw.service - SAP NW server<br />
+sapnw: Loaded: loaded (/etc/systemd/system/sapnw.service; enabled; vendor preset: enabled)<br />
+sapnw: Active: inactive (dead)<br />
+<strong>The SSH command responded with a non-zero exit status. Vagrant</strong><br />
+<strong>assumes that this means the command failed. The output for this command</strong><br />
+<strong>should be in the log above. Please read the output to determine what</strong><br />
+<strong>went wrong.</strong></p>
+              </div>
+
+            <div id="comment-actions-449150" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_449150" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-449150'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-atsy bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-450655">
+        <div id="comment-450655" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/atsy">
+                <img alt='Author&#039;s profile photo Alexander Tsybulsky' src='https://avatars.services.sap.com/images/atsy_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Alexander Tsybulsky' href='https://people.sap.com/atsy' rel='external nofollow' class='ds-link ds-user__name ' >Alexander Tsybulsky</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-02-09T20:53:29+00:00"
+                >February 9, 2019 at 8:53 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Madhuri,</p>
+<p>Sorry didn't see your question. there was a recent update to the repo which installs sapnw as a service, maybe it brought this issue. Please try the latest version of the repo. If does not work:</p>
+<ul>
+<li>I moved service installation to the very end of proviosion script ... so in fact even if it fails the sap was already istalled and you can run with with start/stopsap. And let me know if it does not work please ...</li>
+<li>try commenting final lines in scripts/startup.sh script. Final = all after `echo "Installing service..." `</li>
+</ul>
+              </div>
+
+            <div id="comment-actions-450655" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_450655" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-450655'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-eugensoydas2 even thread-even depth-1 ds-blog-post-comment" id="li-comment-451293">
+        <div id="comment-451293" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/eugen.soydas2">
+                <img alt='Author&#039;s profile photo Eugen Soydas' src='https://avatars.services.sap.com/images/eugen.soydas2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Eugen Soydas' href='https://people.sap.com/eugen.soydas2' rel='external nofollow' class='ds-link ds-user__name ' >Eugen Soydas</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-02-14T19:19:39+00:00"
+                >February 14, 2019 at 7:19 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Alexander,</p>
+<p>first of all thanks for this blog.</p>
+<p>It was a pleasure to install NW with your instruction and all without any trouble.</p>
+<p>My installation was succesful, starting the NW System is also fine but when enter the System via GUI as developer and calling SE80 for example (also the same for other transactions) i'm getting the error</p>
+<p>‘Roll in failed; ABAP session terminated’</p>
+<p>My first research results in something with wrong memory parameter settings inside the NW. But as i can’t access any transaction, i can’t check anything.</p>
+<p>I also started to search commands to change this kind of settings over the command shell, but w/o any success.</p>
+<p>Do you have any ideas?</p>
+<p> </p>
+              </div>
+
+            <div id="comment-actions-451293" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_451293" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-451293'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-atsy bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-451545">
+        <div id="comment-451545" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/atsy">
+                <img alt='Author&#039;s profile photo Alexander Tsybulsky' src='https://avatars.services.sap.com/images/atsy_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Alexander Tsybulsky' href='https://people.sap.com/atsy' rel='external nofollow' class='ds-link ds-user__name ' >Alexander Tsybulsky</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-02-18T14:06:55+00:00"
+                >February 18, 2019 at 2:06 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Eugen,</p>
+<p>Haven't met issue like this, despite of several installations so far, sorry 🙁</p>
+<p>Don't know what to suggest. In terms of VM - just check that you have at least 6GB of RAM for the VM - this definitely works for me, and I didn't test my 4GB version a lot (just in a case you adjusted the vagrant config manually - 6GB is the default).</p>
+<p>&nbsp;</p>
+              </div>
+
+            <div id="comment-actions-451545" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_451545" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-451545'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-eugensoydas2 even depth-3 ds-blog-post-comment" id="li-comment-452398">
+        <div id="comment-452398" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/eugen.soydas2">
+                <img alt='Author&#039;s profile photo Eugen Soydas' src='https://avatars.services.sap.com/images/eugen.soydas2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Eugen Soydas' href='https://people.sap.com/eugen.soydas2' rel='external nofollow' class='ds-link ds-user__name ' >Eugen Soydas</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-02-26T19:28:10+00:00"
+                >February 26, 2019 at 7:28 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Alexander,</p>
+<p>thanks for your reply.</p>
+<p>I installed the system again but this time i made two changes before:</p>
+<p>First, i changed the memory size inside the Vagrantfile to 8 GB (as you proposed)</p>
+<p>Second, inside the fille "install.sh" of the NW installation folder i found a parameter so called "PHYS_MEMSIZE" which was set up to 2 GB. I increased it to 6 GB. As i read in different posts, this parameter specifies the amount of main memory to be used by SAP instance. So maybe 2 GB was to less.</p>
+<p>Now the system runs well and the issue, i mentioned in my first commet, is gone. Unfortunately i don't now which of this parameters helped 😀</p>
+<p>Thanks again for this blog.</p>
+<p>Cheers</p>
+<p>Eugen</p>
+              </div>
+
+            <div id="comment-actions-452398" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_452398" tabindex="-1">Like 2</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-452398'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-kenchang00 odd alt thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-461077">
+        <div id="comment-461077" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/kenchang00">
+                <img alt='Author&#039;s profile photo kenjiro jaucian' src='https://avatars.services.sap.com/images/kenchang00_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name kenjiro jaucian' href='https://people.sap.com/kenchang00' rel='external nofollow' class='ds-link ds-user__name ' >kenjiro jaucian</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-05-28T01:59:13+00:00"
+                >May 28, 2019 at 1:59 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>hello,, can i know what is the preset username and password of vhcalnplci in the ubuntu? can't log in or where can i find it?</p>
+              </div>
+
+            <div id="comment-actions-461077" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_461077" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-461077'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-alban-leong even depth-2 ds-blog-post-comment" id="li-comment-488351">
+        <div id="comment-488351" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/alban-leong">
+                <img alt='Author&#039;s profile photo Alban Leong' src='https://avatars.services.sap.com/images/alban-leong_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Alban Leong' href='https://people.sap.com/alban-leong' rel='external nofollow' class='ds-link ds-user__name ' >Alban Leong</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-01-02T19:53:18+00:00"
+                >January 2, 2020 at 7:53 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Not sure if you've found the answer but the master installation password is '<strong>SapPwd1!</strong>'. You can find this in the directory scripts &gt; provision and in the file install_nw.expect.</p>
+              </div>
+
+            <div id="comment-actions-488351" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_488351" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-488351'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-mkabel odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-508158">
+        <div id="comment-508158" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/mkabel">
+                <img alt='Author&#039;s profile photo Matthias Kabel' src='https://avatars.services.sap.com/images/mkabel_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Matthias Kabel' href='https://people.sap.com/mkabel' rel='external nofollow' class='ds-link ds-user__name ' >Matthias Kabel</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-05-14T19:29:07+00:00"
+                >May 14, 2020 at 7:29 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hello,</p>
+<p>&nbsp;</p>
+<p>many thanks for this shortcut. On a linux host I had to change line 2 in the script</p>
+<p>install_nw.expect</p>
+<p>#!/usr/bin/expect -f<br />
+spawn /vagrant/distrib/install.sh -s -k</p>
+<p>with</p>
+<p>spawn  /install.sh</p>
+<p>&nbsp;</p>
+<p>install.sh was not found.</p>
+<p>&nbsp;</p>
+<p>Maybe this is useful for other linux users</p>
+<p>&nbsp;</p>
+<p>Thanks again</p>
+<p>&nbsp;</p>
+<p>Kind regards</p>
+<p>Matthias</p>
+<p>&nbsp;</p>
+              </div>
+
+            <div id="comment-actions-508158" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_508158" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-508158'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-idikurniawan2 even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-534231">
+        <div id="comment-534231" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/idi.kurniawan2">
+                <img alt='Author&#039;s profile photo Idi Kurniawan' src='https://avatars.services.sap.com/images/idi.kurniawan2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Idi Kurniawan' href='https://people.sap.com/idi.kurniawan2' rel='external nofollow' class='ds-link ds-user__name ' >Idi Kurniawan</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-10-17T17:28:39+00:00"
+                >October 17, 2020 at 5:28 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Alexander,</p>
+<p>My installation has been stuck for more than 5 hours at this :</p>
+<pre>sapnw: Now we begin with the installation.
+sapnw: Be patient, this will take a while ...
+sapnw:
+sapnw: extracting data archives...
+sapnw: extracting /vagrant/distrib/server/TAR/x86_64/dbdata.tgz-*
+sapnw: sybase/NPL/sapdata_1/
+sapnw: sybase/NPL/sapdata_1/NPL_data_001.dat</pre>
+<p>Do you have any idea of what could be the problem? Thank you.</p>
+<p>&nbsp;</p>
+              </div>
+
+            <div id="comment-actions-534231" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_534231" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-534231'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-idikurniawan2 odd alt depth-2 ds-blog-post-comment" id="li-comment-534290">
+        <div id="comment-534290" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/idi.kurniawan2">
+                <img alt='Author&#039;s profile photo Idi Kurniawan' src='https://avatars.services.sap.com/images/idi.kurniawan2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Idi Kurniawan' href='https://people.sap.com/idi.kurniawan2' rel='external nofollow' class='ds-link ds-user__name ' >Idi Kurniawan</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-10-19T00:57:31+00:00"
+                >October 19, 2020 at 12:57 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>I follow eugen’s step above, changed the memory size inside the Vagrantfile to 8 GB and parameter “PHYS_MEMSIZE”  in file install.sh to 6 GB.</p>
+<p>And the installation was successful, done in 20 minutes only.</p>
+<p>Thank you</p>
+              </div>
+
+            <div id="comment-actions-534290" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_534290" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2018/09/22/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant/#comment-534290'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+
+      
+        </div> <!-- main comments content area -->
+
+    
+            
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+                </div> <!-- #main -->
+                <div id="shared_footer" class="dm-container dm-wrapper">
+                    <footer class="dm-footer">
+    <div class="dm-footer__inner-wrapper">
+        <div class="dm-socialmedia">
+            <h5 class="dm-socialmedia__headline" id="hl-sharefollow">Find us on</h5>
+            <ul class="dm-socialmedia__links" aria-labelledby="hl-sharefollow">
+                <li><a href="https://www.facebook.com/sapcommunity" title="Facebook"><span class="dm-icon-encoded--facebook"></span></a></li>
+                <li><a href="https://twitter.com/SAPCommunity" title="Twitter"><span class="dm-icon-encoded--twitter"></span></a></li>
+                <li><a href="https://www.youtube.com/c/SAPCommunities" title="YouTube"><span class="dm-icon-encoded--youtube"></span></a></li>
+                <li><a href="https://www.linkedin.com/company/sap" title="LinkedIn"><span class="dm-icon-encoded--linkedin"></span></a></li>
+                <li><a href="https://instagram.com/sap/" title="Instagram"><span class="dm-icon-encoded--instagram"></span></a></li>
+                <li><a href="http://www.slideshare.net/SAP" title="Slideshare"><span class="dm-icon-encoded--slideshare"></span></a></li>
+                <li><a href="mailto:?subject='SAP Community'" title="Email Share"><span class="dm-icon-encoded--email"></span></a></li>
+            </ul>
+        </div>
+        <nav role="navigation" class="dm-footer__navigation">
+            <ul class="dm-footer__navigation__list" aria-label="footer navigation">
+                <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+                <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+                <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+                <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+                <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+                <li id="teconsent"></li>
+                <li><a href="https://www.sap.com/cmp/nl/sap-community-voice/index.html" target="_blank">Newsletter</a></li>
+                <li><a href="mailto:sapnetwork@sap.com" target="_blank">Support</a></li>
+            </ul>
+        </nav>
+    </div>
+</footer>                </div>
+            </div> <!-- #page -->
+            <script type="application/ld+json" data-schema="720581-post-Default">{"@context":"https:\/\/schema.org\/","@type":"BlogPosting","@id":"https:\/\/blogs.sap.com\/2018\/09\/22\/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant\/#BlogPosting","mainEntityOfPage":"https:\/\/blogs.sap.com\/2018\/09\/22\/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant\/","headline":"Installing NetWeaver AS ABAP 7.52 SP 01 Developer Edition with Vagrant and Ubuntu","name":"Installing NetWeaver AS ABAP 7.52 SP 01 Developer Edition with Vagrant and Ubuntu","description":"Recently AS ABAP 7.52 dev edition has been released. There are quite a lot of articles how to install it with virtual box and docker. However, I haven&#8217;t seen any blog on how to do","datePublished":"2018-09-22","dateModified":"2019-10-19","author":{"@type":"Person","@id":"https:\/\/blogs.sap.com\/author\/atsy\/#Person","name":"Alexander Tsybulsky","url":"https:\/\/blogs.sap.com\/author\/atsy\/","image":{"@type":"ImageObject","@id":"https:\/\/avatars.services.sap.com\/images\/atsy_small.png","url":"https:\/\/avatars.services.sap.com\/images\/atsy_small.png","height":96,"width":96}},"publisher":{"@type":"Organization","name":"SAP Community Blogs","logo":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","width":600,"height":60}},"image":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2018\/09\/dir-structure.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2018\/09\/dir-structure.png","height":"138","width":"343"},"url":"https:\/\/blogs.sap.com\/2018\/09\/22\/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant\/","about":["Technical Articles"],"wordCount":1042,"keywords":["developer edition","linux","NW752","ubuntu","vagrant"]}</script>
+<script type="application/ld+json" data-schema="Breadcrumb">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"2018","item":"https:\/\/blogs.sap.com\/2018\/#breadcrumbitem"},{"@type":"ListItem","position":2,"name":"09","item":"https:\/\/blogs.sap.com\/2018\/\/09\/#breadcrumbitem"},{"@type":"ListItem","position":3,"name":"22","item":"https:\/\/blogs.sap.com\/2018\/\/09\/\/22\/#breadcrumbitem"},{"@type":"ListItem","position":4,"name":"Installing NetWeaver AS ABAP 7.52 SP 01 Developer Edition with Vagrant and Ubuntu","item":"https:\/\/blogs.sap.com\/2018\/09\/22\/installing-netweaver-as-abap-7.52-sp-01-developer-edition-with-vagrant\/#breadcrumbitem"}]}</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/action-tooltip-handler.js' id='tooltip-handler-js'></script>
+<script type='text/javascript' id='unified_header-js-extra'>
+/* <![CDATA[ */
+var headerInitArgs = {"system":"blogs","wrapperID":"page","breadcrumbItems":[{"text":"Blogs","href":"https:\/\/blogs.sap.com"}]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/js/scn-header.min.js' id='unified_header-js'></script>
+<script type='text/javascript' id='unified_header-js-after'>
+            scnHeader.init(headerInitArgs);
+            setCookie("userArgs", headerInitArgs.user ? JSON.stringify(headerInitArgs.user) : "", { path : "/" });
+    
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/header.js' id='designmate_header_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/subheader.js' id='designmate_subheader_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/designmate.js' id='designmate_script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/comment-reply.min.js' id='comment-reply-js'></script>
+<script type='text/javascript' id='satm_handler-js-extra'>
+/* <![CDATA[ */
+var satmContentSelectors = ["div.dm-contentDetail__body-content","div.dm-list-comments__item-content","div.ds-blog-post__body","div.ds-blog-post-comment__content"];
+var satmProfileBaseUrl = "people.sap.com\/";
+var satmChangeableElementsSelectors = ["div.dm-list-comments__item-content","div.ds-blog-post-comment__content"];
+var satmPluginEnabled = "1";
+var satmApiUrl = "https:\/\/uss.api.community.sap.com";
+var satmApiCallWithCredentials = "1";
+var satmRequestDelayMs = "100";
+/* ]]> */
+</script>
+<script type='text/javascript' defer src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-at-mention/js/sap-at-mention.min.js' id='satm_handler-js'></script>
+<script type='text/javascript' id='sap-comment-validation-js-extra'>
+/* <![CDATA[ */
+var commentValidation = {"validateMaxLinks":"1","max_links_number":"7","BLOGS_PAGE":"single"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/sap-comment-validation.min.js' id='sap-comment-validation-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-post-status.min.js' id='scn_post_status_check-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/jquery-plugins.min.js' id='sap_jquery_plugins-js'></script>
+<script type='text/javascript' id='sap-login-csrf-cookie-js-extra'>
+/* <![CDATA[ */
+var sapLoginCookieConfig = {"cookieName":"SAP_BLOGS_ANONYMOUS_NONCE","sapActionName":"s_action"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-login-csrf-cookie.min.js' id='sap-login-csrf-cookie-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.js' id='sap_lightbox_gallery_js-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/choices.min.js' id='choices.js-js'></script>
+<script type='text/javascript' id='wprc-script-js-extra'>
+/* <![CDATA[ */
+var wprcajaxhandler = {"ajaxurl":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-report-content/static/js/v3/scripts.min.js' id='wprc-script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/single.min.js' id='sap_single_v3-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/onscroll-sticky.min.js' id='onscroll_sticky-js'></script>
+<script type='text/javascript' id='blog-detail-page-js-extra'>
+/* <![CDATA[ */
+var alertReasonsSelectArgs = {"selectId":"sap-blog-alert-reasons","reasons":["Incorrect Tag\/Category\r","Cross-Posting\r","Private Information\r","Unprofessional Conduct\r","Spam"]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/dist/blog-detail.min.js' id='blog-detail-page-js'></script>
+<script type='text/javascript' id='sap_assignedtags_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var assignedTagsWidgetSettings = {"maxItemsBeforeHide":"7","data":{"ABAP Development":"https:\/\/blogs.sap.com\/tags\/833755570260738661924709785639136\/","SAP NetWeaver":"https:\/\/blogs.sap.com\/tags\/01200314690800000134\/","Virtualization":"https:\/\/blogs.sap.com\/tags\/279429873667587277925521334820770\/","developer edition":"https:\/\/blogs.sap.com\/tag\/developer-edition\/","linux":"https:\/\/blogs.sap.com\/tag\/linux\/","NW752":"https:\/\/blogs.sap.com\/tag\/nw752\/","ubuntu":"https:\/\/blogs.sap.com\/tag\/ubuntu\/","vagrant":"https:\/\/blogs.sap.com\/tag\/vagrant\/"},"widgetClassname":".ds-assigned-tags"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/assigned-tags/js/sap-assigned-tags-widget.min.js' id='sap_assignedtags_widget_js_v3-js'></script>
+<script type='text/javascript' id='sap_relatedcontent_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var relatedContentWidgetSettings = {"widgetSelector":".widget_sap-relatedcontent-widget-v3","contentServiceUrl":"https:\/\/content.services.sap.com\/cse\/search\/topic","profileUrl":"https:\/\/people.sap.com","targetContentItem":{"id":720581,"type":"blogpost","title":"Installing NetWeaver AS ABAP 7.52 SP 01 Developer Edition with Vagrant and Ubuntu","primary_tag":"833755570260738661924709785639136"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/related-content/js/sap-related-content-widget.min.js' id='sap_relatedcontent_widget_js_v3-js'></script>
+<div id="wp-load_tinymce-wrap" class="wp-core-ui wp-editor-wrap html-active"><link rel='stylesheet' id='dashicons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dashicons.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='editor-buttons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/editor.min.css' type='text/css' media='all' />
+<style>#wp-load_tinymce-wrap {display:none;}</style>
+<div id="wp-load_tinymce-editor-container" class="wp-editor-container"><div id="qt_load_tinymce_toolbar" class="quicktags-toolbar"></div><textarea class="wp-editor-area" rows="20" cols="40" name="load_tinymce" id="load_tinymce"></textarea></div>
+</div>
+
+<link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/skin.min.css?wp-mce-49110-20201110' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/plugins/codesample/css/prism.css' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/content.min.css?wp-mce-49110-20201110' as='style'>
+		<script type="text/javascript">
+		tinyMCEPreInit = {
+			baseURL: "https://blogs.sap.com/wp-includes/js/tinymce",
+			suffix: ".min",
+						mceInit: {},
+			qtInit: {'load_tinymce':{id:"load_tinymce",buttons:"strong,em,link,block,del,ins,img,ul,ol,li,code,more,close"}},
+			ref: {plugins:"",theme:"modern",language:""},
+			load_ext: function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
+		};
+		</script>
+				<script type="text/javascript">
+		var ajaxurl = "/wp-admin/admin-ajax.php";
+		( function() {
+			var init, id, $wrap;
+
+			if ( typeof tinymce !== 'undefined' ) {
+				if ( tinymce.Env.ie && tinymce.Env.ie < 11 ) {
+					tinymce.$( '.wp-editor-wrap ' ).removeClass( 'tmce-active' ).addClass( 'html-active' );
+					return;
+				}
+
+				for ( id in tinyMCEPreInit.mceInit ) {
+					init = tinyMCEPreInit.mceInit[id];
+					$wrap = tinymce.$( '#wp-' + id + '-wrap' );
+
+					if ( ( $wrap.hasClass( 'tmce-active' ) || ! tinyMCEPreInit.qtInit.hasOwnProperty( id ) ) && ! init.wp_skip_init ) {
+						tinymce.init( init );
+
+						if ( ! window.wpActiveEditor ) {
+							window.wpActiveEditor = id;
+						}
+					}
+				}
+			}
+
+			if ( typeof quicktags !== 'undefined' ) {
+				for ( id in tinyMCEPreInit.qtInit ) {
+					quicktags( tinyMCEPreInit.qtInit[id] );
+
+					if ( ! window.wpActiveEditor ) {
+						window.wpActiveEditor = id;
+					}
+				}
+			}
+		}());
+		</script>
+				<div id="wp-link-backdrop" style="display: none"></div>
+		<div id="wp-link-wrap" class="wp-core-ui" style="display: none" role="dialog" aria-labelledby="link-modal-title">
+		<form id="wp-link" tabindex="-1">
+		<input type="hidden" id="_ajax_linking_nonce" name="_ajax_linking_nonce" value="d98c848450" />		<h3 id="link-modal-title">Insert/edit link</h3>
+		<button type="button" id="wp-link-close"><span class="screen-reader-text">Close</span></button>
+		<div id="link-selector">
+			<div id="link-options">
+				<p class="howto" id="wplink-enter-url">Enter the destination URL</p>
+				<div>
+					<label><span>URL</span>
+					<input id="wp-link-url" type="text" aria-describedby="wplink-enter-url" /></label>
+				</div>
+				<div class="wp-link-text-field">
+					<label><span>Link Text</span>
+					<input id="wp-link-text" type="text" /></label>
+				</div>
+				<div class="link-target">
+					<label><span></span>
+					<input type="checkbox" id="wp-link-target" /> Open link in a new tab</label>
+				</div>
+			</div>
+			<p class="howto" id="wplink-link-existing-content">Or link to existing content</p>
+			<div id="search-panel">
+				<div class="link-search-wrapper">
+					<label>
+						<span class="search-label">Search</span>
+						<input type="search" id="wp-link-search" class="link-search-field" autocomplete="off" aria-describedby="wplink-link-existing-content" />
+						<span class="spinner"></span>
+					</label>
+				</div>
+				<div id="search-results" class="query-results" tabindex="0">
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+				<div id="most-recent-results" class="query-results" tabindex="0">
+					<div class="query-notice" id="query-notice-message">
+						<em class="query-notice-default">No search term specified. Showing recent items.</em>
+						<em class="query-notice-hint screen-reader-text">Search or use up and down arrow keys to select an item.</em>
+					</div>
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="submitbox">
+			<div id="wp-link-cancel">
+				<button type="button" class="button">Cancel</button>
+			</div>
+			<div id="wp-link-update">
+				<input type="submit" value="Add Link" class="button button-primary" id="wp-link-submit" name="wp-link-submit">
+			</div>
+		</div>
+		</form>
+		</div>
+		<script type="text/javascript">jQuery(window).on("load", function() {tinymce.codesampleplugin.Prism.highlightAll();});</script><script type='text/javascript'>_satellite.pageBottom();</script>        </div> <!-- .page-wrapper -->
+    </body>
+</html>

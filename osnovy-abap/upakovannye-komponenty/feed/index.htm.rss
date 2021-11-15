@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	
+	>
+<channel>
+	<title>
+	Комментарии: Упакованные компоненты	</title>
+	<atom:link href="https://abap-blog.ru/osnovy-abap/upakovannye-komponenty/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru/osnovy-abap/upakovannye-komponenty/</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Wed, 17 Mar 2021 20:57:15 +0000</lastBuildDate>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>
+		Автор: Диман		</title>
+		<link>https://abap-blog.ru/osnovy-abap/upakovannye-komponenty/#comment-17762</link>
+
+		<dc:creator><![CDATA[Диман]]></dc:creator>
+		<pubDate>Wed, 17 May 2017 06:57:00 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1252#comment-17762</guid>
+
+					<description><![CDATA[В ответ на &lt;a href=&quot;https://abap-blog.ru/osnovy-abap/upakovannye-komponenty/#comment-17761&quot;&gt;Сидорочкин Михаил&lt;/a&gt;.
+
+Михаил, спасибо. Пример рабочий, объем используемой памяти сокращается!]]></description>
+			<content:encoded><![CDATA[<p>Михаил, спасибо. Пример рабочий, объем используемой памяти сокращается!</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Сидорочкин Михаил		</title>
+		<link>https://abap-blog.ru/osnovy-abap/upakovannye-komponenty/#comment-17761</link>
+
+		<dc:creator><![CDATA[Сидорочкин Михаил]]></dc:creator>
+		<pubDate>Tue, 16 May 2017 15:24:00 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1252#comment-17761</guid>
+
+					<description><![CDATA[В ответ на &lt;a href=&quot;https://abap-blog.ru/osnovy-abap/upakovannye-komponenty/#comment-17760&quot;&gt;Диман&lt;/a&gt;.
+
+Спасибо, пример действительно кривой, ниже более подходящий.
+
+Зайдя в инструмент анализа памяти можно увидеть как относительно не пустых записей будут созданы ссылочные переменные.
+
+TABLES: lfa1.
+
+TYPES:
+  &quot; Структура с телефонными данными поставщиков
+  BEGIN OF ty_data,
+    telf1 TYPE lfa1-telf1,
+    telf2 TYPE lfa1-telf2,
+  END OF ty_data,
+
+  &quot; Структура без упакованного компонента
+  BEGIN OF ty_customer,
+    lifnr TYPE lifnr,
+    telef TYPE ty_data,
+  END OF ty_customer,
+
+  &quot; Структура с упакованным компонентом
+  BEGIN OF ty_customer_boxed,
+    lifnr TYPE lifnr,
+    telef TYPE ty_data BOXED,
+  END OF ty_customer_boxed.
+
+DATA:
+  lt_tab    TYPE TABLE OF ty_customer,
+  lt_tab_b  TYPE TABLE OF ty_customer_boxed.
+
+SELECT lifnr telf1 telf2 FROM lfa1 INTO CORRESPONDING FIELDS OF lfa1.
+  APPEND INITIAL LINE TO lt_tab ASSIGNING FIELD-SYMBOL().
+  -lifnr = lfa1-lifnr.
+  -telef-telf1 = lfa1-telf1.
+  -telef-telf2 = lfa1-telf2.
+
+  APPEND INITIAL LINE TO lt_tab_b ASSIGNING FIELD-SYMBOL().
+  -lifnr = lfa1-lifnr.
+
+  IF lfa1-telf1 IS NOT INITIAL.
+    -telef-telf1 = lfa1-telf1.
+  ENDIF.
+
+  IF lfa1-telf2 IS NOT INITIAL.
+    -telef-telf2 = lfa1-telf2.
+  ENDIF.
+ENDSELECT.]]></description>
+			<content:encoded><![CDATA[<p>Спасибо, пример действительно кривой, ниже более подходящий.</p>
+<p>Зайдя в инструмент анализа памяти можно увидеть как относительно не пустых записей будут созданы ссылочные переменные.</p>
+<p>TABLES: lfa1.</p>
+<p>TYPES:<br />
+  &#187; Структура с телефонными данными поставщиков<br />
+  BEGIN OF ty_data,<br />
+    telf1 TYPE lfa1-telf1,<br />
+    telf2 TYPE lfa1-telf2,<br />
+  END OF ty_data,</p>
+<p>  &#187; Структура без упакованного компонента<br />
+  BEGIN OF ty_customer,<br />
+    lifnr TYPE lifnr,<br />
+    telef TYPE ty_data,<br />
+  END OF ty_customer,</p>
+<p>  &#187; Структура с упакованным компонентом<br />
+  BEGIN OF ty_customer_boxed,<br />
+    lifnr TYPE lifnr,<br />
+    telef TYPE ty_data BOXED,<br />
+  END OF ty_customer_boxed.</p>
+<p>DATA:<br />
+  lt_tab    TYPE TABLE OF ty_customer,<br />
+  lt_tab_b  TYPE TABLE OF ty_customer_boxed.</p>
+<p>SELECT lifnr telf1 telf2 FROM lfa1 INTO CORRESPONDING FIELDS OF lfa1.<br />
+  APPEND INITIAL LINE TO lt_tab ASSIGNING FIELD-SYMBOL().<br />
+  -lifnr = lfa1-lifnr.<br />
+  -telef-telf1 = lfa1-telf1.<br />
+  -telef-telf2 = lfa1-telf2.</p>
+<p>  APPEND INITIAL LINE TO lt_tab_b ASSIGNING FIELD-SYMBOL().<br />
+  -lifnr = lfa1-lifnr.</p>
+<p>  IF lfa1-telf1 IS NOT INITIAL.<br />
+    -telef-telf1 = lfa1-telf1.<br />
+  ENDIF.</p>
+<p>  IF lfa1-telf2 IS NOT INITIAL.<br />
+    -telef-telf2 = lfa1-telf2.<br />
+  ENDIF.<br />
+ENDSELECT.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Диман		</title>
+		<link>https://abap-blog.ru/osnovy-abap/upakovannye-komponenty/#comment-17760</link>
+
+		<dc:creator><![CDATA[Диман]]></dc:creator>
+		<pubDate>Tue, 16 May 2017 10:17:00 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1252#comment-17760</guid>
+
+					<description><![CDATA[Точнее не с пустыми, а в поле lifnr пишется telf*. Как это использовать на практике я не понял. А если lt_tab_b будет заполнена такими же значениями как lt_tab, то памяти она использует больше.]]></description>
+			<content:encoded><![CDATA[<p>Точнее не с пустыми, а в поле lifnr пишется telf*. Как это использовать на практике я не понял. А если lt_tab_b будет заполнена такими же значениями как lt_tab, то памяти она использует больше.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Диман		</title>
+		<link>https://abap-blog.ru/osnovy-abap/upakovannye-komponenty/#comment-17759</link>
+
+		<dc:creator><![CDATA[Диман]]></dc:creator>
+		<pubDate>Tue, 16 May 2017 10:06:00 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1252#comment-17759</guid>
+
+					<description><![CDATA[я не абапер, только учусь... но походу это неправильно работает и память меньше, потому что таблица с пустыми записями...]]></description>
+			<content:encoded><![CDATA[<p>я не абапер, только учусь&#8230; но походу это неправильно работает и память меньше, потому что таблица с пустыми записями&#8230;</p>
+]]></content:encoded>
+		
+			</item>
+	</channel>
+</rss>

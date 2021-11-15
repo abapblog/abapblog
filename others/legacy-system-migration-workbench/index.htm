@@ -1,0 +1,535 @@
+﻿<!DOCTYPE html>
+<html lang="ru-RU" id="html">
+<head>
+		<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="profile" href="../../xfn/11.html">
+	<link rel="pingback" href="https://abap-blog.ru/xmlrpc.php">
+	<title>ABAP Blog | LSMW — Инструкция</title>
+
+		<!-- All in One SEO 4.1.4.4 -->
+		<meta name="description" content="Краткое введение в использование инструмента SAP LSMW.">
+		<meta name="robots" content="max-image-preview:large">
+		<meta name="keywords" content="bapi,legacy system migration workbench,shdb,sm35,пакетный ввод,прочее">
+		<link rel="canonical" href="index.htm">
+		<script type="application/ld+json" class="aioseo-schema">
+			{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebSite","@id":"https:\/\/abap-blog.ru\/#website","url":"https:\/\/abap-blog.ru\/","name":"ABAP Blog","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445 \u043e\u0442 SAP","inLanguage":"ru-RU","publisher":{"@id":"https:\/\/abap-blog.ru\/#person"}},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/#person","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/others\/legacy-system-migration-workbench\/#personImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"BreadcrumbList","@id":"https:\/\/abap-blog.ru\/others\/legacy-system-migration-workbench\/#breadcrumblist","itemListElement":[{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/#listItem","position":1,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/","name":"\u0413\u043b\u0430\u0432\u043d\u0430\u044f","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 SAP \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445: ABAP, HANA, UI5, OData, Fiori.","url":"https:\/\/abap-blog.ru\/"},"nextItem":"https:\/\/abap-blog.ru\/others\/#listItem"},{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/others\/#listItem","position":2,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/others\/","name":"\u041f\u0440\u043e\u0447\u0435\u0435","description":"\u041a\u0440\u0430\u0442\u043a\u043e\u0435 \u0432\u0432\u0435\u0434\u0435\u043d\u0438\u0435 \u0432 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435 \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u0430 SAP LSMW.","url":"https:\/\/abap-blog.ru\/others\/"},"nextItem":"https:\/\/abap-blog.ru\/others\/legacy-system-migration-workbench\/#listItem","previousItem":"https:\/\/abap-blog.ru\/#listItem"},{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/others\/legacy-system-migration-workbench\/#listItem","position":3,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/others\/legacy-system-migration-workbench\/","name":"LSMW - \u0418\u043d\u0441\u0442\u0440\u0443\u043a\u0446\u0438\u044f","description":"\u041a\u0440\u0430\u0442\u043a\u043e\u0435 \u0432\u0432\u0435\u0434\u0435\u043d\u0438\u0435 \u0432 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435 \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u0430 SAP LSMW.","url":"https:\/\/abap-blog.ru\/others\/legacy-system-migration-workbench\/"},"previousItem":"https:\/\/abap-blog.ru\/others\/#listItem"}]},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/author\/admin\/#author","url":"https:\/\/abap-blog.ru\/author\/admin\/","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/others\/legacy-system-migration-workbench\/#authorImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/others\/legacy-system-migration-workbench\/#webpage","url":"https:\/\/abap-blog.ru\/others\/legacy-system-migration-workbench\/","name":"ABAP Blog | LSMW \u2014 \u0418\u043d\u0441\u0442\u0440\u0443\u043a\u0446\u0438\u044f","description":"\u041a\u0440\u0430\u0442\u043a\u043e\u0435 \u0432\u0432\u0435\u0434\u0435\u043d\u0438\u0435 \u0432 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435 \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u0430 SAP LSMW.","inLanguage":"ru-RU","isPartOf":{"@id":"https:\/\/abap-blog.ru\/#website"},"breadcrumb":{"@id":"https:\/\/abap-blog.ru\/others\/legacy-system-migration-workbench\/#breadcrumblist"},"author":"https:\/\/abap-blog.ru\/author\/admin\/#author","creator":"https:\/\/abap-blog.ru\/author\/admin\/#author","datePublished":"2012-01-26T10:51:34+04:00","dateModified":"2021-03-02T05:55:14+04:00"},{"@type":"Article","@id":"https:\/\/abap-blog.ru\/others\/legacy-system-migration-workbench\/#article","name":"ABAP Blog | LSMW \u2014 \u0418\u043d\u0441\u0442\u0440\u0443\u043a\u0446\u0438\u044f","description":"\u041a\u0440\u0430\u0442\u043a\u043e\u0435 \u0432\u0432\u0435\u0434\u0435\u043d\u0438\u0435 \u0432 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435 \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u0430 SAP LSMW.","inLanguage":"ru-RU","headline":"LSMW - \u0418\u043d\u0441\u0442\u0440\u0443\u043a\u0446\u0438\u044f","author":{"@id":"https:\/\/abap-blog.ru\/author\/admin\/#author"},"publisher":{"@id":"https:\/\/abap-blog.ru\/#person"},"datePublished":"2012-01-26T10:51:34+04:00","dateModified":"2021-03-02T05:55:14+04:00","articleSection":"\u041f\u0440\u043e\u0447\u0435\u0435, bapi, Legacy System Migration Workbench, shdb, sm35, \u043f\u0430\u043a\u0435\u0442\u043d\u044b\u0439 \u0432\u0432\u043e\u0434","mainEntityOfPage":{"@id":"https:\/\/abap-blog.ru\/others\/legacy-system-migration-workbench\/#webpage"},"isPartOf":{"@id":"https:\/\/abap-blog.ru\/others\/legacy-system-migration-workbench\/#webpage"},"image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/#articleImage","url":"https:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw1.png","width":574,"height":385}}]}
+		</script>
+		<script type="text/javascript">
+			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+			ga('create', "UA-150412824-1", { 'cookieDomain': 'abap-blog.ru' } );
+			ga('require', 'outboundLinkTracker');
+			ga('send', 'pageview');
+		</script>
+		<script async="" src="../../analytics.js"></script>
+		<script async="" src="../../wp-content/plugins/all-in-one-seo-pack/app/Common/Assets/js/autotrack.js?ver=4.1.4.4"></script>
+		<!-- All in One SEO -->
+
+<link rel='dns-prefetch' href='../../index-1.htm'>
+<link rel='dns-prefetch' href='//fonts.googleapis.com'>
+<link rel='dns-prefetch' href='../../index-2.htm'>
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента" href="../../feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев" href="../../comments/feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев к &laquo;LSMW &#8212; Инструкция&raquo;" href="feed/index.htm.rss">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/abap-blog.ru\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8.1"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='urvanov_syntax_highlighter-css' href='../../wp-content/plugins/urvanov-syntax-highlighter/css/min/urvanov_syntax_highlighter.min.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='wp-block-library-css' href='../../wp-includes/css/dist/block-library/style.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='arve-main-css' href='../../wp-content/plugins/advanced-responsive-video-embedder/build/main.css?ver=b809f4d4c33c91a5ae3a5099af09bdde' media='all'>
+<link rel='stylesheet' id='contact-form-7-css' href='../../wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.5.1' media='all'>
+<link rel='stylesheet' id='bg-shce-genericons-css' href='../../wp-content/plugins/show-hidecollapse-expand/assets/css/genericons/genericons.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='bg-show-hide-css' href='../../wp-content/plugins/show-hidecollapse-expand/assets/css/bg-show-hide.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='dashicons-css' href='../../wp-includes/css/dashicons.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='tooltip-css' href='../../wp-content/plugins/wp-poll/assets/tool-tip.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-cb-css' href='../../wp-content/plugins/wp-poll/assets/front/css/checkbox.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-css' href='../../wp-content/plugins/wp-poll/assets/front/css/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='flat-fonts-css' href='../../css.css?family=Lobster%7CRoboto:400,700%7CRoboto+Slab%7CRoboto%20Condensed' media='all'>
+<link rel='stylesheet' id='flat-theme-css' href='../../wp-content/themes/flat/assets/css/flat.css?ver=1.7.11' media='all'>
+<link rel='stylesheet' id='flat-style-css' href='../../wp-content/themes/flat/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='slb_core-css' href='../../wp-content/plugins/simple-lightbox/client/css/app.css?ver=2.8.1' media='all'>
+<link rel='stylesheet' id='decent-comments-widget-css' href='../../wp-content/plugins/decent-comments/css/decent-comments-widget.css' media='all'>
+<script src='../../wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script src='../../wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' id='urvanov_syntax_highlighter_js-js-extra'>
+/* <![CDATA[ */
+var UrvanovSyntaxHighlighterSyntaxSettings = {"version":"2.8.22","is_admin":"0","ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","prefix":"urvanov-syntax-highlighter-","setting":"urvanov-syntax-highlighter-setting","selected":"urvanov-syntax-highlighter-setting-selected","changed":"urvanov-syntax-highlighter-setting-changed","special":"urvanov-syntax-highlighter-setting-special","orig_value":"data-orig-value","debug":""};
+var UrvanovSyntaxHighlighterSyntaxStrings = {"copy":"\u041d\u0430\u0436\u043c\u0438\u0442\u0435 %s \u0434\u043b\u044f \u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f, %s \u0434\u043b\u044f \u0432\u0441\u0442\u0430\u0432\u043a\u0438","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/urvanov-syntax-highlighter/js/min/urvanov_syntax_highlighter.min.js?ver=2.8.22' id='urvanov_syntax_highlighter_js-js'></script>
+<script src='../../wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.7' id='regenerator-runtime-js'></script>
+<script src='../../wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
+<script async="async" src='../../wp-content/plugins/advanced-responsive-video-embedder/build/main.js?ver=b809f4d4c33c91a5ae3a5099af09bdde' id='arve-main-js'></script>
+<script src='../../wp-content/plugins/wp-poll/assets/front/js/svgcheckbx.js?ver=5.8.1' id='wpp-front-cb-js'></script>
+<script type='text/javascript' id='wpp-front-js-extra'>
+/* <![CDATA[ */
+var wpp_object = {"ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","copyText":"Copied !","voteText":"Vote(s)","tempProDownload":"https:\/\/pluginbazar.com\/my-account\/downloads\/","tempProDownloadTxt":"Download Version 1.1.0"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/wp-poll/assets/front/js/scripts.js?ver=5.8.1' id='wpp-front-js'></script>
+<script src='../../wp-content/themes/flat/assets/js/flat.js?ver=1.7.11' id='flat-js-js'></script>
+<!--[if lt IE 9]>
+<script src='https://abap-blog.ru/wp-content/themes/flat/assets/js/html5shiv.min.js?ver=3.7.2' id='html5shiv-js'></script>
+<![endif]-->
+<link rel="https://api.w.org/" href="../../wp-json/index.htm.json"><link rel="alternate" type="application/json" href="../../wp-json/wp/v2/posts/331.json"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="../../xmlrpc.php.xml?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../../wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.8.1">
+<link rel='shortlink' href='index.htm?p=331'>
+<link rel="alternate" type="application/json+oembed" href="../../wp-json/oembed/1.0/embed-343.json?url=https%3A%2F%2Fabap-blog.ru%2Fothers%2Flegacy-system-migration-workbench%2F">
+<link rel="alternate" type="text/xml+oembed" href="../../wp-json/oembed/1.0/embed-343.xml?url=https%3A%2F%2Fabap-blog.ru%2Fothers%2Flegacy-system-migration-workbench%2F&#038;format=xml">
+
+<!-- WP Youtube Player 1.7 by unijimpe -->
+<style type="text/css">#page:before, .sidebar-offcanvas, #secondary { background-color: #272727; }@media (max-width: 1199px) { #page &gt; .container { background-color: #272727; } }body { background-size: initial; }</style><style type="text/css">#masthead .site-title {font-family:Lobster}body {font-family:Roboto }h1,h2,h3,h4,h5,h6 {font-family:Roboto Slab}#masthead .site-description, .hentry .entry-meta {font-family:Roboto Condensed}</style><style type="text/css" media="screen">body{position:relative}#dynamic-to-top{display:none;overflow:hidden;width:auto;z-index:90;position:fixed;bottom:20px;right:20px;top:auto;left:auto;font-family:sans-serif;font-size:1em;color:#fff;text-decoration:none;text-shadow:0 1px 0 #333;font-weight:bold;padding:17px 16px;border:2px solid #000;background:#4c5055;-webkit-background-origin:border;-moz-background-origin:border;-icab-background-origin:border;-khtml-background-origin:border;-o-background-origin:border;background-origin:border;-webkit-background-clip:padding-box;-moz-background-clip:padding-box;-icab-background-clip:padding-box;-khtml-background-clip:padding-box;-o-background-clip:padding-box;background-clip:padding-box;-webkit-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-ms-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-moz-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-o-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-khtml-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-icab-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-webkit-border-radius:30px;-moz-border-radius:30px;-icab-border-radius:30px;-khtml-border-radius:30px;border-radius:30px}#dynamic-to-top:hover{background:#4fd650;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 255, 255, 255, .2 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );cursor:pointer}#dynamic-to-top:active{background:#4c5055;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 0, 0, 0, .3 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) )}#dynamic-to-top,#dynamic-to-top:active,#dynamic-to-top:focus,#dynamic-to-top:hover{outline:none}#dynamic-to-top span{display:block;overflow:hidden;width:14px;height:12px;background:url( ../../wp-content/plugins/dynamic-to-top/css/images/up.png )no-repeat center center}</style><style type="text/css" id="custom-background-css">
+body.custom-background { background-image: url("../../wp-content/uploads/2014/10/escheresque_ste.png"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+		</head>
+
+<body class="post-template-default single single-post postid-331 single-format-standard custom-background" itemscope="" itemtype="http://schema.org/WebPage">
+		<div id="page">
+	<div class="container">
+		<div class="row row-offcanvas row-offcanvas-left" style="background: #272727;">			
+			
+			<div id="secondary1" class="col-lg-t" style="background: #272727; display:none">
+								<header id="masthead1" class="site-headerex" role="banner">
+										<div class="hgroupex">
+						<h1 class="site-title display-title"><a href="../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+									</header>
+							</div>
+
+
+			<div id="secondary" class="col-lg-3" style="display:block">
+								<header id="masthead" class="site-header" role="banner">
+										<div class="hgroup">
+						<h1 class="site-title display-title"><a href="../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+					<button type="button" class="btn btn-link hidden-lg toggle-sidebar" data-toggle="offcanvas" aria-label="Sidebar"><i class="fa fa-gear"></i></button>
+					<button type="button" class="btn btn-link hidden-lg toggle-navigation" aria-label="Navigation Menu"><i class="fa fa-bars"></i></button>
+					<nav id="site-navigation" class="navigation main-navigation" role="navigation">
+						<ul id="menu-glavnoe-menyu" class="nav-menu"><li id="menu-item-2313" class="fa fa-home menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-2313"><a href="../../index.htm">Главная</a>
+<ul class="sub-menu">
+	<li id="menu-item-2363" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2363"><a href="../../category/osnovy-abap/index.htm">Основы ABAP</a>
+	<ul class="sub-menu">
+		<li id="menu-item-2906" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2906"><a href="../../category/osnovy-abap/oop/index.htm">ABAP Objects</a></li>
+		<li id="menu-item-2370" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2370"><a href="../../category/osnovy-abap/slovar/index.htm">ABAP Словарь</a></li>
+		<li id="menu-item-2367" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2367"><a href="../../category/osnovy-abap/files/index.htm">Работа с файлами</a></li>
+		<li id="menu-item-2364" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2364"><a href="../../category/osnovy-abap/sap-dynpro/index.htm">SAP Dynpro</a></li>
+		<li id="menu-item-6845" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6845"><a href="../../category/osnovy-abap/vnutrennie-tablicy/index.htm">Внутренние таблицы</a></li>
+		<li id="menu-item-6849" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6849"><a href="../../category/osnovy-abap/dinamicheskoe-programmirovanie/index.htm">Динамическое программирование</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2366" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2366"><a href="../../category/database-work/index.htm">Работа с БД</a>
+	<ul class="sub-menu">
+		<li id="menu-item-7303" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7303"><a href="../../category/hana/index.htm">HANA</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2368" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2368"><a href="../../category/network/index.htm">Сетевые технологии</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6328" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6328"><a href="../../category/network/ui5fiori/index.htm">UI5 &amp; Fiori</a></li>
+		<li id="menu-item-6327" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6327"><a href="../../category/network/odata-network/index.htm">OData</a></li>
+		<li id="menu-item-2907" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2907"><a href="../../category/network/web-dynpro/index.htm">Web Dynpro</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2369" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2369"><a href="../../category/enhancements/index.htm">Расширения</a></li>
+	<li id="menu-item-6329" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6329"><a href="../../category/abap-cloud/index.htm">ABAP Cloud</a></li>
+	<li id="menu-item-2365" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-2365"><a href="../../category/others/index.htm">Прочее</a></li>
+</ul>
+</li>
+<li id="menu-item-3536" class="fa fa-bell menu-item menu-item-type-post_type menu-item-object-page menu-item-3536"><a href="../../abap-the-best-practice/index.htm">ABAP Best Practice</a></li>
+<li id="menu-item-3727" class="fa fa-child menu-item menu-item-type-post_type menu-item-object-page menu-item-3727"><a href="../../vakansii/index.htm">Вакансии ABAP</a></li>
+<li id="menu-item-3885" class="fa fa-bookmark menu-item menu-item-type-post_type menu-item-object-page menu-item-3885"><a href="../../abap-notes/index.htm">Быстрые заметки</a></li>
+<li id="menu-item-2316" class="fa fa-info-circle menu-item menu-item-type-post_type menu-item-object-page menu-item-2316"><a href="../../about/index.htm">Обо мне</a></li>
+</ul>					</nav>
+									</header>
+				
+				<div class="sidebar-offcanvas">
+<div id="main-sidebar" class="widget-area" role="complementary">
+											<aside id="search-2" class="widget widget_search">
+	<form method="get" id="searchform" action="https://abap-blog.ru/">
+		<label for="s" class="assistive-text">Поиск</label>
+		<input type="text" class="field" name="s" id="s" placeholder="Поиск">
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Поиск">
+	</form>
+					</aside>
+					<aside id="linkcat-2" class="widget widget_links">
+						<h3 class='widget-title'>Ссылки</h3>
+
+	<ul class='xoxo blogroll'>
+<li><a href="../../topics/abap.html" target="_blank">ABAP Community</a></li>
+<li><a href="../../wiki/display/ABAP/ABAP Development.html" title="Wiki по ABAP" target="_blank">ABAP Development Wiki</a></li>
+<li><a href="../../doc/abapdocu_latest_index_htm/latest/en-US/index.htm" title="Последняя версия справки по ABAP" target="_blank">ABAP Help</a></li>
+<li><a href="../../doc/abapdocu_cp_index_htm/CLOUD/en-US/index.htm" target="_blank">ABAP Help (Cloud)</a></li>
+<li><a href="../../learning-journeys/overview.html?role=Developer" target="_blank">Developer Learning Journeys</a></li>
+<li><a href="../../index-3.htm" target="_blank">Open Source Projects</a></li>
+<li><a href="../../tutorial-navigator.html" target="_blank">SAP Tutorials</a></li>
+<li><a href="https://t.me/abapblog" target="_blank"><img src="../../wp-content/uploads/2020/04/telegram-1.png" alt="Канал в Telegram"> Канал в Telegram</a></li>
+
+	</ul>
+					</aside>
+
+					<aside id="endo_wrc_widget-2" class="widget widget_endo_wrc_widget">
+						<h3 class='widget-title'>Цитаты</h3>
+<p>Когда встает выбор между кратким (но непонятным) и ясным (но скучным) кодом, делайте его в пользу того кода, смысл которого понятен, даже если он менее элегантен.</p>
+<p><strong>П. Гудлиф</strong></p>
+					</aside>
+								<aside id="custom-post-type-recent-posts-3" class="widget widget_recent_entries">
+						<h3 class='widget-title'>Новое</h3>
+			<ul>
+													<li>
+										<a href="../../abap-notes/poluchenie-instancii-cl_gui_alv_grid-dlya-salv/index.htm">Получение инстанции cl_gui_alv_grid для SALV</a>
+											<span class="post-date">11.09.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-cloud/introduction-to-abap-in-the-cloud/index.htm">Introduction to ABAP in the Cloud</a>
+											<span class="post-date">18.08.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/getting-started-with-fpm-bopf-integration/index.htm">Getting Started with FPM BOPF Integration</a>
+											<span class="post-date">01.06.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/how-to-use-authority-checks-in-business-object-processing-framework/index.htm">30. How to Use Authority Checks in Business Object Processing Framework</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-extensibility/index.htm">29. BOPF Extensibility</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-enterprise-procurement-model-epm/index.htm">28. BOPF Enterprise Procurement Model (EPM)</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-integration/index.htm">27. BOPF Integration</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-business-configuration-objects/index.htm">26. BOPF Business Configuration Objects</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-performance/index.htm">25. BOPF Performance</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-supportability/index.htm">24. BOPF Supportability</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+							</ul>
+								</aside>
+					<aside id="decent_comments_widget-2" class="widget widget_decent_comments_widget">
+						<h3 class='widget-title'>Последние комментарии</h3>
+<div class="decent-comments"><ul><li><div class="comment"><span class="comment-author">Николай</span><span class="comment-date"> 27.10.2021 в 15:19</span><span class="comment-link"> на <a href="../../osnovy-abap/internal-table-as-data-source-select/index.htm#comment-17857">Внутренние таблицы как источник в SQL запросах</a></span><span class="comment-excerpt">Спасибо за статью. Если нужно сделать агрегацию внутренней таблицы то агрегация через передачу во временную таблицу на БД тоже будет работать медленней чем через loop/collect? Например таблица 100к записей, которая становится 5к после агрегации. </span></div></li><li><div class="comment"><span class="comment-author">Аноним</span><span class="comment-date"> 14.10.2021 в 13:50</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17856">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Так поведение Decorator не надо будет повторно описывать повторно в других Component. Но это возможно при изменении типа mo_component, например, на object. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 11.10.2021 в 06:50</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17854">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет:) Возможно, я не так выразил мысль. Я имел ввиду, какая ценность от класса Decorator, если можно декорировать поведение от Component и от него же наследовать конкретные декораторы? (см. первую UML диаграмму) </span></div></li><li><div class="comment"><span class="comment-author">Astrafox</span><span class="comment-date"> 10.10.2021 в 12:39</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17853">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет! Можно и так, однако конкретный компонент может иметь более широкий интерфейс, нежели тот, что нужен в декораторах. Тут скорее пример не совсем удачный, декорируемое поведение лучше вынести в отдельный интерфейс, реализуемый как компонентом, так и декораторами. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 04.10.2021 в 12:51</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17850">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">А какую роль играет базовый класс декоратора lcl_decorator? Что мешает конкретные декораторы наследовать от компонента lcl_concrete_component? Клиентский код и логика выполнения не поменяется. </span></div></li></ul></div>					</aside>
+											</div>
+				</div>
+			</div>
+
+						<div id="primary" class="content-area col-lg-9" itemprop="mainContentOfPage" style="">
+							<div id="content" class="site-content" role="main" itemscope="" itemtype="http://schema.org/Article">
+			<article id="post-331" class="post-331 post type-post status-publish format-standard hentry category-others tag-bapi tag-lsmw tag-shdb tag-sm35 tag-paketnyj-vvod">
+	<header class="entry-header">
+		<h1 class="entry-title" itemprop="name">LSMW &#8212; Инструкция</h1>
+							<div class="entry-meta"><span class="entry-date"><a href="index.htm" rel="bookmark"><time class="entry-date published" datetime="2012-01-26T14:51:34+04:00" itemprop="datepublished">26.01.2012</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="index.htm#respond" itemprop="discussionUrl">Нет комментариев</a></span></div>
+			</header>
+		
+	
+	<div class="entry-content" itemprop="articleBody">
+				<p>LSMW – инструмент для переноса данных из внешних систем в SAP систему.  Данные могут быть введены с помощью следующих технологий: Batch Input, Direct Input, BAPIs или IDocs. Далее инструкция как этим инструментом пользоваться.</p>
+<p><span id="more-331"></span></p>
+<p>Принцип работы LSMW:</p>
+<p><a href="../../wp-content/uploads/2012/01/lw1.png" data-slb-active="1" data-slb-asset="1040788142" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-332" title="lw1" src="../../wp-content/uploads/2012/01/lw1.png" alt="" width="574" height="385" srcset="../../wp-content/uploads/2012/01/lw1.png 574w, ../../wp-content/uploads/2012/01/lw1-300x201.png 300w" sizes="(max-width: 574px) 100vw, 574px"></a></p>
+<p>Преимущества:</p>
+<ul>
+<li>LSMW – часть SAP системы не зависимая от платформы</li>
+<li>Большое количество возможностей по преобразованию данных</li>
+<li>Поддержка основных технологий ввода: Bath Input, Direct Input, BAPIs, IDocs.</li>
+<li>Удобный путеводитель по миграции данных</li>
+<li>Является бесплатным инструментом для партнеров SAP</li>
+</ul>
+<p>Основные функции:</p>
+<ul>
+<li>Импорт данных (данные из файлов, электронных таблиц)</li>
+<li>Преобразование данных в необходимый формат</li>
+<li>Импорт данных в SAP систему.</li>
+</ul>
+<p>До того как применять LSMW необходимо убедиться в следующем:</p>
+<ul>
+<li>SAP система окончательно настроена и готова к вводу</li>
+<li>Решите, имеет ли смысл использовать инструмент, его использование оправдано на больших объемах данных. Скорость импорта для режима Direct Input и Bath Input примерно 10000 записей в час, величина может меняться в зависимости от аппаратной части сервера.</li>
+<li>Определитесь с транзакциями в SAP системе, через которые будете выполнять импорт данных.  Созданы ли стандартные объекты Direct Input, Batch Input, есть ли необходимые BAPI.</li>
+<li>Протестируйте выбранные транзакции вручную, определите, какие поля являются обязательными к заполнению.</li>
+<li>LSMW не извлекает данные из внешних систем, их необходимо предварительно подготовить. Формат файла должен соответствовать возможностям чтения файлов LSMW. Например: кодировка должна быть либо ASCII или IBM.</li>
+<li>Определитесь с методом импорта данных (BAPI, Direct Input и т.п.).</li>
+</ul>
+<h3>Предварительная настройка</h3>
+<p>Убедитесь что у пользователя, под которым будет происходить импорт, достаточные полномочия:</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="192"><strong>Уровень авторизации </strong></td>
+<td valign="top" width="192"><strong>Профиль</strong></td>
+<td valign="top" width="192"><strong>Функции</strong></td>
+</tr>
+<tr>
+<td valign="top" width="192">Просмотр</td>
+<td valign="top" width="192">B_LSMW_SHOW</td>
+<td valign="top" width="192">Пользователю разрешается просматривать все проекты LSMW</td>
+</tr>
+<tr>
+<td valign="top" width="192">Выполнение</td>
+<td valign="top" width="192">B_LSMW_EXEC</td>
+<td valign="top" width="192">Пользователь может выполнять и редактировать шаги проектов</td>
+</tr>
+<tr>
+<td valign="top" width="192">Изменение</td>
+<td valign="top" width="192">B_LSMW_CHG</td>
+<td valign="top" width="192">Пользователь обладает полномочиями на просмотр объекта LSMW, импорт и чтение данных.</td>
+</tr>
+<tr>
+<td valign="top" width="192">Администрирование</td>
+<td valign="top" width="192">B_LSMW_ALL</td>
+<td valign="top" width="192">Все полномочия на LSMW</td>
+</tr>
+</tbody>
+</table>
+<p>Внешний вид после запуска инструмента (транзакция LSMW):</p>
+<p><a href="../../wp-content/uploads/2012/01/lw2.png" data-slb-active="1" data-slb-asset="1406838059" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-333" title="lw2" src="../../wp-content/uploads/2012/01/lw2.png" alt="" width="816" height="285" srcset="../../wp-content/uploads/2012/01/lw2.png 816w, ../../wp-content/uploads/2012/01/lw2-300x104.png 300w" sizes="(max-width: 816px) 100vw, 816px"></a></p>
+<p>Project – имя проекта, например «Логистика»</p>
+<p>Subproject – имя подпроекта, например «Закупки»</p>
+<p>Object – имя объекта LSMW который включает все операции по переносу данных, например «Заявка».</p>
+<p>С помощью кнопок на начальном экране можно:</p>
+<ul>
+<li>Запустить проект на выполнение</li>
+<li>Создать новый проект, объект</li>
+<li>Изменить проект</li>
+<li>Просмотреть все объекты LSMW в системе</li>
+<li>Просмотреть все свои объекты</li>
+<li>Просмотреть все объекты к проекту</li>
+<li>Изменить документацию к проекту</li>
+</ul>
+<h3>Администрирование</h3>
+<p>Для копирования, изменения, удаления объектов, проектов и подпроектов необходимо перейти в администрирование: Go to -&gt; Administration.</p>
+<h3>Импорт данных шаг за шагом</h3>
+<p>После выбора (создания) проекта, подпроекта и объекта LSMW нажмите ENTER, вы попадете на экран определения шагов для объекта:</p>
+<p><strong>ВНИМАНИЕ!</strong> При авторизации в SAP GUI на английском языке названия шагов отображаются на английском языке, при авторизации на русском языке, отображаются только номера шагов. Однако при работе на EN русские названия в считываемых файлах отображаются некорректно, поэтому загрузку следует осуществлять ТОЛЬКО с авторизацией на RU(русском) языке в SAP GUI.</p>
+<p><a href="../../wp-content/uploads/2012/01/lw3.png" data-slb-active="1" data-slb-asset="539545312" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-334" title="lw3" src="../../wp-content/uploads/2012/01/lw3.png" alt="" width="908" height="662" srcset="../../wp-content/uploads/2012/01/lw3.png 908w, ../../wp-content/uploads/2012/01/lw3-300x218.png 300w" sizes="(max-width: 908px) 100vw, 908px"></a></p>
+<p>С помощью кнопки Personal Menu вы определяете, какие шаги будут использоваться в объекте. Кнопка Object Overview позволяет посмотреть всю информацию по выбранному объекту.  Action Log – просмотр истории изменений, запусков. Execute – выполнить выбранный шаг. Для изменения шагов выберите Double Click = Change.</p>
+<h4>Определение атрибута объекта (Maintain Object Attributes)</h4>
+<p><a href="../../wp-content/uploads/2012/01/lw4.png" data-slb-active="1" data-slb-asset="464565416" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-335" title="lw4" src="../../wp-content/uploads/2012/01/lw4.png" alt="" width="576" height="689" srcset="../../wp-content/uploads/2012/01/lw4.png 576w, ../../wp-content/uploads/2012/01/lw4-250x300.png 250w" sizes="(max-width: 576px) 100vw, 576px"></a></p>
+<ul>
+<li>Укажите, как будет происходить импорт данных однократно (once) или с периодичностью (periodic – в статье не рассмотрены).  При периодичном импорте необходимо настроить шаг (Frame Program for Periodic Data Transfer).</li>
+<li>Определите, какой тип импорта будете использовать: Standard Bath /Direct Input – заранее подготовленные программы, Batch Input Recording – ранее созданная запись пакетного ввода, (Для записи на начальном экране необходимо выбрать GoTo -&gt; Recordings) BAPI – использование методов бизнес объектов (BAPI), IDoc.</li>
+</ul>
+<h4>Определение пользовательских структур(Maintain Source Structures)</h4>
+<p><a href="../../wp-content/uploads/2012/01/lw5.png" data-slb-active="1" data-slb-asset="960600857" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-336" title="lw5" src="../../wp-content/uploads/2012/01/lw5.png" alt="" width="628" height="387" srcset="../../wp-content/uploads/2012/01/lw5.png 628w, ../../wp-content/uploads/2012/01/lw5-300x184.png 300w" sizes="(max-width: 628px) 100vw, 628px"></a></p>
+<p>На данном шаге определяются имена пользовательских структур их описания и иерархия. Одна структура может включать несколько других, которые в свою очередь могут включать другие и т.д. Пользовательская структура заполняется из внешних данных, после чего используется для переноса данных в SAP систему.</p>
+<h4>Определение полей для структур(Maintain Source Structures)</h4>
+<p><a href="../../wp-content/uploads/2012/01/lw6.png" data-slb-active="1" data-slb-asset="1310888922" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-337" title="lw6" src="../../wp-content/uploads/2012/01/lw6.png" alt="" width="748" height="603" srcset="../../wp-content/uploads/2012/01/lw6.png 748w, ../../wp-content/uploads/2012/01/lw6-300x241.png 300w" sizes="(max-width: 748px) 100vw, 748px"></a></p>
+<p>Этот шаг определяет, из каких полей состоят пользовательские структуры. При создании поля можно определить ее тип, длину, имя, описание. Используя параметр «<strong>Selection Parameter for Import/Convert data</strong>» мы определяем, будет ли данное поле появляться на экране в шагах чтения, конвертации данных, если да то данные из файла будут считаны в соответствии с введенным значением в эти поля. Структуру можно скопировать из внешнего файла, репозитария, другого объекта.  При копировании из внешнего файла с разделением полей табуляцией можно воспользоваться Excel структура файла будет примерно такой:</p>
+<p><a href="../../wp-content/uploads/2012/01/lw7.png" data-slb-active="1" data-slb-asset="1938277060" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-338" title="lw7" src="../../wp-content/uploads/2012/01/lw7.png" alt="" width="708" height="459" srcset="../../wp-content/uploads/2012/01/lw7.png 708w, ../../wp-content/uploads/2012/01/lw7-300x194.png 300w" sizes="(max-width: 708px) 100vw, 708px"></a></p>
+<h4>Определение связей структур (Maintain Structure Relations)</h4>
+<p><a href="../../wp-content/uploads/2012/01/lw8.png" data-slb-active="1" data-slb-asset="673309977" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-339" title="lw8" src="../../wp-content/uploads/2012/01/lw8.png" alt="" width="1024" height="768" srcset="../../wp-content/uploads/2012/01/lw8.png 1024w, ../../wp-content/uploads/2012/01/lw8-300x225.png 300w" sizes="(max-width: 1024px) 100vw, 1024px"></a></p>
+<p>На данном шаге определяется связь между структурами объекта импорта (Поля в структурах BAPI, поля для пакетного ввода и т.п.) и пользовательскими структурами. В приведенном выше примере структуры из пакетного ввода: BGR00, BKN00, BKNA1, BKNB1 будут заполнены из пользовательской структуры CUSTOMER_HEADER, структура BKNVK из CUSTOMER_CONTACTS. Обратите внимание на то, что многие программы пакетного ввода содержат структуры BGR00 и BI000, они должны быть заполнены всегда.</p>
+<h4>Определение связей и правил преобразования (Maintain Field Mapping and Conversion Rules)</h4>
+<p><a href="../../wp-content/uploads/2012/01/lw9.png" data-slb-active="1" data-slb-asset="1684362678" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-340" title="lw9" src="../../wp-content/uploads/2012/01/lw9.png" alt="" width="794" height="567" srcset="../../wp-content/uploads/2012/01/lw9.png 794w, ../../wp-content/uploads/2012/01/lw9-300x214.png 300w" sizes="(max-width: 794px) 100vw, 794px"></a></p>
+<p>На данном шаге определяется связь между полями пользовательских структур и полями структур назначения (Полями пакетного ввода, BAPI и др.), а так же правила преобразования. Все поля структур назначения, которые были заполнены на предыдущем шаге, будут отображены на этом экране. Поля содержат следующую информацию:</p>
+<ul>
+<li>Описание поля</li>
+<li>Присвоенное поле из структуры назначения</li>
+<li>Правило, по которому присваивается значение полю (Константа, пустое, присвоение и т.п.)</li>
+<li>Код программы преобразования</li>
+</ul>
+<p>Некоторые поля являются техническими и заполняются системой автоматически, правило для них присваивается как Default Settings (зеленые записи).  Изменение значений данных полей может повлиять на ход выполнения импорта.</p>
+<p>Система позволяет автоматически сделать присвоение полей, в случае если их имена совпадают: Extras -&gt; Auto-field Mapping.</p>
+<p>Правила присвоения полей:</p>
+<ul>
+<li><strong>Initial</strong>: Пустое значение для поля. Когда выбрано данное правило значение поля может принимать  следующие значения: для стандартного пакетного ввода – пустое символьное значение ‘’, для записи пакетного ввода ‘/’, для BAPI или IDoc для символьных полей ‘’, для полей числовых ‘0..00’.</li>
+<li><strong>Move</strong>: Работает так же, как и ABAP команда MOVE.</li>
+<li><strong>Constant:</strong> Значение по умолчанию.</li>
+<li><strong>Fixed value (reusable):</strong>  Присваивается значение переменной определенной на шаге <strong>Maintain Fixed Values, Translations, User-Defined Routine</strong>.</li>
+<li><strong>Translation (</strong><strong>reusable):</strong> Определяется порядок преобразования поля, само преобразование определяется в шаге <strong>Maintain Fixed Values, Translations, User-Defined Routine</strong>.</li>
+<li><strong>User-</strong><strong>written </strong><strong>routine (</strong><strong>reusable):</strong> Определяется имя кодировки для поля, сама кодировка так же определяется на шаге <strong>Maintain Fixed Values, Translations, User-Defined Routine</strong>.</li>
+<li><strong>Prefix</strong>: Задается значение, которое должно быть перед содержимым поля.</li>
+<li><strong>Suffix</strong>: Задается значение, которое должно быть после содержимого поля.</li>
+<li><strong>Concatenation</strong>: Вы можете задать объединение двух или нескольких исходных полей в одно поле назначения.</li>
+<li><strong>Transfer left-justified: </strong>записать содержимое с выравниванием по левому краю.</li>
+<li><strong>ABAP coding: </strong>задает кодировку ABAP для преобразования поля.  В кодировке можно использовать все поля исходной структуры, глобальные переменные, глобальные функции.</li>
+<li><strong>XField:</strong> специальная функция для IDocs и BAPI объектов. Функция заполняет так называемые X-структуры (структуры изменений для BAPI функций). В случае если поле было изменено, соответствующее поле X структуры должно иметь значение «Х». Следующий код генерируется автоматически:</li>
+</ul>
+<p>If not &lt;field in the data transfer structure&gt; is initial.<br>
+&lt;field in X-structure&gt; = ‘X’.<br>
+else.<br>
+&lt;field in X-structure&gt; = ‘’.<br>
+Endif.</p>
+<p>Нажав на кнопку выбора варианта и выбрав последние три галочки, вы можете определить дополнительную кодировку для событий до запуска транзакции, после запуска и т.п.</p>
+<p><a href="../../wp-content/uploads/2012/01/lw10.png" data-slb-active="1" data-slb-asset="1366574992" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-342" title="lw10" src="../../wp-content/uploads/2012/01/lw10.png" alt="" width="324" height="215" srcset="../../wp-content/uploads/2012/01/lw10.png 324w, ../../wp-content/uploads/2012/01/lw10-300x199.png 300w" sizes="(max-width: 324px) 100vw, 324px"></a></p>
+<p>Например, кодировка <strong>__</strong><strong>BEGIN_</strong><strong>OF_</strong><strong>TRANSACTION__</strong>: ее выполнение начинается до момента обработки записи, в случае создание объекта в R3 на данном этапе можно проверить его существование в системе, в случае если он уже есть, пропустить текущую запись с помощью глобальной функции &#8212; <strong>skip_transaction</strong>. Таким образом, можно уберечься от падения в дамп сессии пакетного ввода при импорте данных.</p>
+<p>Кроме того кодировки позволяют динамически менять транзакции и записи пакетного ввода манипулируя полями bkn00-tcode и TABNAME. Например, в случае если объект присутствует в системе запустить пакетный ввод на его изменение.</p>
+<p>На шаге <strong>Maintain </strong><strong>Fixed </strong><strong>Values, </strong><strong>Translations, </strong><strong>User-</strong><strong>Defined </strong><strong>Routines </strong>с помощью правил преобразования (Translations) можно определить, чем будет заменены значения из исходных структур, определять правила как для конкретных значений, так и для диапазонов. Кроме того на этом шаге определяются константы используемые на предыдущем (Fixed Values) и кодировки которые вызываются не однократно (User-written routine).</p>
+<h4>Определение файлов(Specify Files)</h4>
+<p>На данном шаге определяются файлы:</p>
+<ul>
+<li>С вашими данными (Legacy Data)</li>
+<li>Файл с правилами чтения данных …lsmw.read ставится автоматически</li>
+<li>Файл с правилами преобразования данных …lsmw.conv ставится автоматически</li>
+</ul>
+<p><a href="../../wp-content/uploads/2012/01/lw11.png" data-slb-active="1" data-slb-asset="713436841" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-343" title="lw11" src="../../wp-content/uploads/2012/01/lw11.png" alt="" width="772" height="711" srcset="../../wp-content/uploads/2012/01/lw11.png 772w, ../../wp-content/uploads/2012/01/lw11-300x276.png 300w" sizes="(max-width: 772px) 100vw, 772px"></a></p>
+<p>При присвоении файла с данными можно выбрать:</p>
+<ul>
+<li>Находится ли в файле содержимое одной структуры, либо файл содержит несколько структур (Data for one source structure или Data for multiple source structures)</li>
+<li>Определить разделители в файле между полями (; tab и др.)</li>
+<li>Содержит ли файл названия полей (Field names at start of file, необходимо чтобы имена совпадали с именами в пользовательской структуре)</li>
+<li>Совпадает ли порядок полей в файле с порядком в пользовательской структуре (Field Order Matches Source Structure Definition)</li>
+<li>Тип файла (Текстовый, бинарный) и кодовая страница по умолчанию (ASCII или IBM).</li>
+</ul>
+<p>На данном шаге можно определить шаблон для группы файлов, на рисунке ниже показано как это делается, в данном примере структура HEADER будет заполняться из набора файлов с именами файлов: PO HEADER * .txt, структура POSITION из файлов PO POSITION* .txt.  Обратите внимание что файлы с правилами чтения, преобразования так же создаются со значением «*» в имени файла, кроме того необходимо создать 2 набора (wildcards):</p>
+<p><a href="../../wp-content/uploads/2012/01/lw12.png" data-slb-active="1" data-slb-asset="1623471257" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-344" title="lw12" src="../../wp-content/uploads/2012/01/lw12.png" alt="" width="812" height="705" srcset="../../wp-content/uploads/2012/01/lw12.png 812w, ../../wp-content/uploads/2012/01/lw12-300x260.png 300w" sizes="(max-width: 812px) 100vw, 812px"></a></p>
+<h4>Присвоение файлов структурам(Assign Files)</h4>
+<p>На данном этапе задается из какого файла будет читаться структура. Если структура одна данный шаг можно пропустить.</p>
+<h4>Генерация программы считывания (Generate Read Program)</h4>
+<p>На данном этапе генерируется программа чтения данных из файла. Можно пропустить.</p>
+<h4>Просмотр программы чтения (Generate Read Program)</h4>
+<p>Просмотр исходника программы чтения файлов. Можно пропустить.</p>
+<h4>Чтение данных (Read Data)</h4>
+<p>На данном шаге определяется количество записей, которые необходимо считать (Transaction Number).  Если при определении полей структуры было указано что поле должно показываться на экране выбора чтения/конвертации данных, так же его необходимо заполнить. Так же задаются правила для преобразования чисел и дат.</p>
+<p><a href="../../wp-content/uploads/2012/01/lw13.png" data-slb-active="1" data-slb-asset="1766530191" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-345" title="lw13" src="../../wp-content/uploads/2012/01/lw13.png" alt="" width="684" height="356" srcset="../../wp-content/uploads/2012/01/lw13.png 684w, ../../wp-content/uploads/2012/01/lw13-300x156.png 300w" sizes="(max-width: 684px) 100vw, 684px"></a></p>
+<p>В данном случае при чтении файла проверяется поле CUSTOMERNUMBER.</p>
+<h4>Просмотр считанных данных (Display Read Data)</h4>
+<p>На данном шаге отображаются считанные из файлов данные.</p>
+<h4>Генерация программы преобразования (Generate Conversion Program)</h4>
+<p>На данном этапе генерируется программа по преобразованию считанных данных. Можно пропустить.</p>
+<h4>Конвертация данных (Convert Data)</h4>
+<p>На данном этапе производится преобразование считанных данных в поля объекта LSMW. (BAPI, поля Batch input и т.п.). Если в пользовательской структуре были поля указанные как поля ввода, необходимо их так же ввести.</p>
+<p><a href="../../wp-content/uploads/2012/01/lw14.png" data-slb-active="1" data-slb-asset="918461382" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-346" title="lw14" src="../../wp-content/uploads/2012/01/lw14.png" alt="" width="684" height="356" srcset="../../wp-content/uploads/2012/01/lw14.png 684w, ../../wp-content/uploads/2012/01/lw14-300x156.png 300w" sizes="(max-width: 684px) 100vw, 684px"></a></p>
+<h4>Просмотр присвоений после конвертации (Display Converted Data)</h4>
+<p>На данном шаге показываются все присвоения после конвертации данных.</p>
+<h4>Импорт данных</h4>
+<p>В зависимости от типа объекта LSMW далее будут отображены следующие шаги:</p>
+<ul>
+<li>Standard batch input or Recordings:   Generate batch input session – создание сессии пакетного ввода, Run batch input session – запуск сессии пакетного ввода.</li>
+<li>Standard direct input: start direct input session – запуск сессии direct input.</li>
+<li>BAPI или IDOCs: Start IDoc Creation, Start IDoc Processing, Create IDoc Overview, Start IDoc processing.</li>
+</ul>
+<p>После выполнения шагов по импорту данных, если все шаги были правильно определены, данные будут записаны в SAP систему.  При запуске в продуктивной системе, если расположение файлов не изменилось, выполнять пункты до определения файлов уже не нужно.</p>
+<h4>Перенос проектов LSMW.</h4>
+<p>Для переноса проекта LSMW в систему контроля качества (продуктивную систему) необходимо создать запрос на перенос. На главном экране LSMW Extras -&gt; Generate Change Request.  При переносе старый проект  удаляется и создается заново.</p>
+<h4>Экспорт/импорт проектов.</h4>
+<p>Для экспорта/импорта проектов в главном меню: Extras -&gt; Export (Import).</p>
+<h4>Запись пакетного ввода (Recordings)</h4>
+<p>Для создания записи пакетного ввода на начальном экране необходимо перейти по Go to -&gt; Recordings.  Обратите внимание, что при создании записи нет режима симуляции, т.е. все изменения которые совершите в системе, сохранятся в ней. Для объекта LSMW можно назначить несколько записей пакетного ввода.</p>
+<p><a href="../../wp-content/uploads/2012/01/lw15.png" data-slb-active="1" data-slb-asset="404884713" data-slb-internal="0" data-slb-group="331"><img loading="lazy" class="alignnone size-full wp-image-347" title="lw15" src="../../wp-content/uploads/2012/01/lw15.png" alt="" width="816" height="643" srcset="../../wp-content/uploads/2012/01/lw15.png 816w, ../../wp-content/uploads/2012/01/lw15-300x236.png 300w" sizes="(max-width: 816px) 100vw, 816px"></a></p>
+<p>Вы можете назначать полям пакетного ввода значения по умолчанию (столбец слева), поля которым присвоены имена (столбец справа &#8212; красные) на шаге «Maintain Field Mapping and Conversion Rules» будет возможно присваивать значения из пользовательской структуры (создавать привязку).</p>
+							</div>
+		<div class="tags-links"><a href="../../tag/bapi/index.htm" rel="tag">bapi</a> <a href="../../tag/lsmw/index.htm" rel="tag">Legacy System Migration Workbench</a> <a href="../../tag/shdb/index.htm" rel="tag">shdb</a> <a href="../../tag/sm35/index.htm" rel="tag">sm35</a> <a href="../../tag/paketnyj-vvod/index.htm" rel="tag">пакетный ввод</a></div></article>
+	
+	<nav class="navigation post-navigation" role="navigation" aria-label="Записи">
+		<h2 class="screen-reader-text">Навигация по записям</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="../../osnovy-abap/rabota-s-kodirovkami/index.htm" rel="prev"><span class="meta-nav" aria-hidden="true">Назад</span> <span class="screen-reader-text">Предыдущая запись:</span> <span class="post-title">Работа с кодировками</span></a></div><div class="nav-next"><a href="../../enhancements/generic-object-services-chast-1/index.htm" rel="next"><span class="meta-nav" aria-hidden="true">Далее</span> <span class="screen-reader-text">Следующая запись:</span> <span class="post-title">Generic Object Services (Часть 1 &#8212; Введение)</span></a></div></div>
+	</nav>
+
+<div id="comments" class="comments-area">
+
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Добавить комментарий <small><a rel="nofollow" id="cancel-comment-reply-link" href="index.htm#respond" style="display:none;">Отменить ответ</a></small></h3><form action="https://abap-blog.ru/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate=""><p class="comment-notes"><span id="email-notes">Ваш адрес email не будет опубликован.</span></p><p class="comment-form-comment"><label for="comment">Комментарий</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Имя</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
+<div class="anr_captcha_field"><div id="anr_captcha_field_1" class="anr_captcha_field_div"></div></div><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Отправить комментарий"> <input type='hidden' name='comment_post_ID' value='331' id='comment_post_ID'>
+<input type='hidden' name='comment_parent' id='comment_parent' value='0'>
+</p></form>	</div><!-- #respond -->
+	
+	
+</div>
+
+			</div>
+							</div>
+					</div>
+	</div>
+</div>
+<script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"api":{"root":"https:\/\/abap-blog.ru\/wp-json\/","namespace":"contact-form-7\/v1"}};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.5.1' id='contact-form-7-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect.min.js?ver=1.12.1' id='jquery-effects-core-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-slide.min.js?ver=1.12.1' id='jquery-effects-slide-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-highlight.min.js?ver=1.12.1' id='jquery-effects-highlight-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-fold.min.js?ver=1.12.1' id='jquery-effects-fold-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-blind.min.js?ver=1.12.1' id='jquery-effects-blind-js'></script>
+<script src='../../wp-content/plugins/show-hidecollapse-expand/assets/js/bg-show-hide.js?ver=5.8.1' id='bg-show-hide-script-js'></script>
+<script src='../../wp-includes/js/comment-reply.min.js?ver=5.8.1' id='comment-reply-js'></script>
+<script src='../../wp-content/plugins/dynamic-to-top/js/libs/jquery.easing.js?ver=1.3' id='jquery-easing-js'></script>
+<script type='text/javascript' id='dynamic-to-top-js-extra'>
+/* <![CDATA[ */
+var mv_dynamic_to_top = {"text":"To Top","version":"0","min":"300","speed":"1100","easing":"easeInExpo","margin":"20"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/dynamic-to-top/js/dynamic.to.top.min.js?ver=3.5' id='dynamic-to-top-js'></script>
+<script src='../../recaptcha/api.js?render=6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC&#038;ver=3.0' id='google-recaptcha-js'></script>
+<script type='text/javascript' id='wpcf7-recaptcha-js-extra'>
+/* <![CDATA[ */
+var wpcf7_recaptcha = {"sitekey":"6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC","actions":{"homepage":"homepage","contactform":"contactform"}};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.5.1' id='wpcf7-recaptcha-js'></script>
+<script src='../../wp-includes/js/wp-embed.min.js?ver=5.8.1' id='wp-embed-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/client/js/prod/lib.core.js?ver=2.8.1' id='slb_core-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/client/js/prod/lib.view.js?ver=2.8.1' id='slb_view-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/themes/baseline/js/prod/client.js?ver=2.8.1' id='slb-asset-slb_baseline-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/themes/default/js/prod/client.js?ver=2.8.1' id='slb-asset-slb_default-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/template-tags/item/js/prod/tag.item.js?ver=2.8.1' id='slb-asset-item-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/template-tags/ui/js/prod/tag.ui.js?ver=2.8.1' id='slb-asset-ui-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/content-handlers/image/js/prod/handler.image.js?ver=2.8.1' id='slb-asset-image-base-js'></script>
+<script type="text/javascript" id="slb_footer">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB && SLB.has_child('View.init') ) { SLB.View.init({"ui_autofit":true,"ui_animate":true,"slideshow_autostart":false,"slideshow_duration":"6","group_loop":true,"ui_overlay_opacity":"0.8","ui_title_default":false,"theme_default":"slb_default","ui_labels":{"loading":"\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430","close":"\u0417\u0430\u043a\u0440\u044b\u0442\u044c","nav_next":"\u0412\u043f\u0435\u0440\u0435\u0434","nav_prev":"\u041d\u0430\u0437\u0430\u0434","slideshow_start":"\u0417\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0441\u043b\u0430\u0439\u0434\u0448\u043e\u0443","slideshow_stop":"\u041e\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c \u0441\u043b\u0430\u0439\u0434\u0448\u043e\u0443","group_status":"\u0418\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435 %current%  \u0438\u0437 %total%"}}); }
+if ( !!window.SLB && SLB.has_child('View.assets') ) { {$.extend(SLB.View.assets, {"1040788142":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw1.png"},"1406838059":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw2.png"},"539545312":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw3.png"},"464565416":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw4.png"},"960600857":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw5.png"},"1310888922":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw6.png"},"1938277060":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw7.png"},"673309977":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw8.png"},"1684362678":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw9.png"},"1366574992":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw10.png"},"713436841":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw11.png"},"1623471257":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw12.png"},"1766530191":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw13.png"},"918461382":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw14.png"},"404884713":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2012\/01\/lw15.png"}});} }
+/* THM */
+if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_baseline',{"name":"\u0411\u0430\u0437\u043e\u0432\u0430\u044f \u043b\u0438\u043d\u0438\u044f","parent":"","styles":[{"handle":"base","uri":"https:\/\/abap-blog.ru\/wp-content\/plugins\/simple-lightbox\/themes\/baseline\/css\/style.css","deps":[]}],"layout_raw":"<div class=\"slb_container\"><div class=\"slb_content\">{{item.content}}<div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><div class=\"slb_controls\"><span class=\"slb_close\">{{ui.close}}<\/span><span class=\"slb_slideshow\">{{ui.slideshow_control}}<\/span><\/div><div class=\"slb_loading\">{{ui.loading}}<\/div><\/div><div class=\"slb_details\"><div class=\"inner\"><div class=\"slb_data\"><div class=\"slb_data_content\"><span class=\"slb_data_title\">{{item.title}}<\/span><span class=\"slb_group_status\">{{ui.group_status}}<\/span><div class=\"slb_data_desc\">{{item.description}}<\/div><\/div><\/div><div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><\/div><\/div><\/div>"}); }if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_default',{"name":"\u041f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e (\u0441\u0432\u0435\u0442\u043b\u044b\u0439)","parent":"slb_baseline","styles":[{"handle":"base","uri":"https:\/\/abap-blog.ru\/wp-content\/plugins\/simple-lightbox\/themes\/default\/css\/style.css","deps":[]}]}); }})})(jQuery);}/* ]]> */</script>
+<script type="text/javascript" id="slb_context">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB ) { {$.extend(SLB, {"context":["public","user_guest"]});} }})})(jQuery);}/* ]]> */</script>
+			<script type="text/javascript">
+				var anr_onloadCallback = function() {
+					for ( var i = 0; i < document.forms.length; i++ ) {
+						var form = document.forms[i];
+						var captcha_div = form.querySelector( '.anr_captcha_field_div' );
+
+						if ( null === captcha_div )
+							continue;
+						captcha_div.innerHTML = '';
+						( function( form ) {
+							var anr_captcha = grecaptcha.render( captcha_div,{
+								'sitekey' : '6LfmhbAaAAAAABBrfPpMngzFHB6qZ4ATxXd3rvOR',
+								'size'  : 'normal',
+								'theme' : 'light'
+							});
+							if ( typeof jQuery !== 'undefined' ) {
+								jQuery( document.body ).on( 'checkout_error', function(){
+									grecaptcha.reset(anr_captcha);
+								});
+							}
+							if ( typeof wpcf7 !== 'undefined' ) {
+								document.addEventListener( 'wpcf7submit', function() {
+									grecaptcha.reset(anr_captcha);
+								}, false );
+							}
+						})(form);
+					}
+				};
+			</script>
+						<script src="../../recaptcha/api-1.js?onload=anr_onloadCallback&#038;render=explicit" async="" defer="">
+			</script>
+			</body>
+</html>

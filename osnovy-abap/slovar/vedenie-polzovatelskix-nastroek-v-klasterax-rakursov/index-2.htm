@@ -1,0 +1,533 @@
+﻿<!DOCTYPE html>
+<html lang="ru-RU" id="html">
+<head>
+		<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="profile" href="../../../xfn/11.html">
+	<link rel="pingback" href="https://abap-blog.ru/xmlrpc.php">
+	<title>ABAP Blog | Ведение пользовательских настроек в кластерах ракурсов</title>
+
+		<!-- All in One SEO 4.1.4.4 -->
+		<meta name="description" content="Очень часто в процессе разработки необходимо предоставить гибкость программного решения, в зависимости от каких-либо требований, определенными теми или иными настройками. Подобная гибкость в SAP системах традиционно решается путём определения пользовательских настроек в транзакции SPRO. В статье будет рассмотрен способ определения своих настроек на базе ведения многоуровневого кластера ракурсов и создание ссылки на него в SPRO. […]">
+		<meta name="robots" content="max-image-preview:large">
+		<meta name="keywords" content="se54,sm30,кластер ракурсов,ракурс ведения,abap словарь">
+		<link rel="canonical" href="index.htm">
+		<script type="application/ld+json" class="aioseo-schema">
+			{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebSite","@id":"https:\/\/abap-blog.ru\/#website","url":"https:\/\/abap-blog.ru\/","name":"ABAP Blog","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445 \u043e\u0442 SAP","inLanguage":"ru-RU","publisher":{"@id":"https:\/\/abap-blog.ru\/#person"}},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/#person","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/slovar\/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov\/#personImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"BreadcrumbList","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/slovar\/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov\/#breadcrumblist","itemListElement":[{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/#listItem","position":1,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/","name":"\u0413\u043b\u0430\u0432\u043d\u0430\u044f","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 SAP \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445: ABAP, HANA, UI5, OData, Fiori.","url":"https:\/\/abap-blog.ru\/"},"nextItem":"https:\/\/abap-blog.ru\/osnovy-abap\/slovar\/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov\/#listItem"},{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/slovar\/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov\/#listItem","position":2,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/slovar\/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov\/","name":"\u0412\u0435\u0434\u0435\u043d\u0438\u0435 \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u0441\u043a\u0438\u0445 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a \u0432 \u043a\u043b\u0430\u0441\u0442\u0435\u0440\u0430\u0445 \u0440\u0430\u043a\u0443\u0440\u0441\u043e\u0432","description":"\u041e\u0447\u0435\u043d\u044c \u0447\u0430\u0441\u0442\u043e \u0432 \u043f\u0440\u043e\u0446\u0435\u0441\u0441\u0435 \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0438 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u043f\u0440\u0435\u0434\u043e\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u0433\u0438\u0431\u043a\u043e\u0441\u0442\u044c \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u043d\u043e\u0433\u043e \u0440\u0435\u0448\u0435\u043d\u0438\u044f, \u0432 \u0437\u0430\u0432\u0438\u0441\u0438\u043c\u043e\u0441\u0442\u0438 \u043e\u0442 \u043a\u0430\u043a\u0438\u0445-\u043b\u0438\u0431\u043e \u0442\u0440\u0435\u0431\u043e\u0432\u0430\u043d\u0438\u0439, \u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u043d\u044b\u043c\u0438 \u0442\u0435\u043c\u0438 \u0438\u043b\u0438 \u0438\u043d\u044b\u043c\u0438 \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430\u043c\u0438. \u041f\u043e\u0434\u043e\u0431\u043d\u0430\u044f \u0433\u0438\u0431\u043a\u043e\u0441\u0442\u044c \u0432 SAP \u0441\u0438\u0441\u0442\u0435\u043c\u0430\u0445 \u0442\u0440\u0430\u0434\u0438\u0446\u0438\u043e\u043d\u043d\u043e \u0440\u0435\u0448\u0430\u0435\u0442\u0441\u044f \u043f\u0443\u0442\u0451\u043c \u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u0438\u044f \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u0441\u043a\u0438\u0445 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a \u0432 \u0442\u0440\u0430\u043d\u0437\u0430\u043a\u0446\u0438\u0438 SPRO. \u0412 \u0441\u0442\u0430\u0442\u044c\u0435 \u0431\u0443\u0434\u0435\u0442 \u0440\u0430\u0441\u0441\u043c\u043e\u0442\u0440\u0435\u043d \u0441\u043f\u043e\u0441\u043e\u0431 \u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u0438\u044f \u0441\u0432\u043e\u0438\u0445 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a \u043d\u0430 \u0431\u0430\u0437\u0435 \u0432\u0435\u0434\u0435\u043d\u0438\u044f \u043c\u043d\u043e\u0433\u043e\u0443\u0440\u043e\u0432\u043d\u0435\u0432\u043e\u0433\u043e \u043a\u043b\u0430\u0441\u0442\u0435\u0440\u0430 \u0440\u0430\u043a\u0443\u0440\u0441\u043e\u0432 \u0438 \u0441\u043e\u0437\u0434\u0430\u043d\u0438\u0435 \u0441\u0441\u044b\u043b\u043a\u0438 \u043d\u0430 \u043d\u0435\u0433\u043e \u0432 SPRO. [\u2026]","url":"https:\/\/abap-blog.ru\/osnovy-abap\/slovar\/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov\/"},"previousItem":"https:\/\/abap-blog.ru\/#listItem"}]},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/author\/admin\/#author","url":"https:\/\/abap-blog.ru\/author\/admin\/","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/slovar\/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov\/#authorImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/slovar\/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov\/#webpage","url":"https:\/\/abap-blog.ru\/osnovy-abap\/slovar\/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov\/","name":"ABAP Blog | \u0412\u0435\u0434\u0435\u043d\u0438\u0435 \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u0441\u043a\u0438\u0445 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a \u0432 \u043a\u043b\u0430\u0441\u0442\u0435\u0440\u0430\u0445 \u0440\u0430\u043a\u0443\u0440\u0441\u043e\u0432","description":"\u041e\u0447\u0435\u043d\u044c \u0447\u0430\u0441\u0442\u043e \u0432 \u043f\u0440\u043e\u0446\u0435\u0441\u0441\u0435 \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0438 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u043f\u0440\u0435\u0434\u043e\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u0433\u0438\u0431\u043a\u043e\u0441\u0442\u044c \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u043d\u043e\u0433\u043e \u0440\u0435\u0448\u0435\u043d\u0438\u044f, \u0432 \u0437\u0430\u0432\u0438\u0441\u0438\u043c\u043e\u0441\u0442\u0438 \u043e\u0442 \u043a\u0430\u043a\u0438\u0445-\u043b\u0438\u0431\u043e \u0442\u0440\u0435\u0431\u043e\u0432\u0430\u043d\u0438\u0439, \u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u043d\u044b\u043c\u0438 \u0442\u0435\u043c\u0438 \u0438\u043b\u0438 \u0438\u043d\u044b\u043c\u0438 \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430\u043c\u0438. \u041f\u043e\u0434\u043e\u0431\u043d\u0430\u044f \u0433\u0438\u0431\u043a\u043e\u0441\u0442\u044c \u0432 SAP \u0441\u0438\u0441\u0442\u0435\u043c\u0430\u0445 \u0442\u0440\u0430\u0434\u0438\u0446\u0438\u043e\u043d\u043d\u043e \u0440\u0435\u0448\u0430\u0435\u0442\u0441\u044f \u043f\u0443\u0442\u0451\u043c \u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u0438\u044f \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u0441\u043a\u0438\u0445 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a \u0432 \u0442\u0440\u0430\u043d\u0437\u0430\u043a\u0446\u0438\u0438 SPRO. \u0412 \u0441\u0442\u0430\u0442\u044c\u0435 \u0431\u0443\u0434\u0435\u0442 \u0440\u0430\u0441\u0441\u043c\u043e\u0442\u0440\u0435\u043d \u0441\u043f\u043e\u0441\u043e\u0431 \u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u0438\u044f \u0441\u0432\u043e\u0438\u0445 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a \u043d\u0430 \u0431\u0430\u0437\u0435 \u0432\u0435\u0434\u0435\u043d\u0438\u044f \u043c\u043d\u043e\u0433\u043e\u0443\u0440\u043e\u0432\u043d\u0435\u0432\u043e\u0433\u043e \u043a\u043b\u0430\u0441\u0442\u0435\u0440\u0430 \u0440\u0430\u043a\u0443\u0440\u0441\u043e\u0432 \u0438 \u0441\u043e\u0437\u0434\u0430\u043d\u0438\u0435 \u0441\u0441\u044b\u043b\u043a\u0438 \u043d\u0430 \u043d\u0435\u0433\u043e \u0432 SPRO. [\u2026]","inLanguage":"ru-RU","isPartOf":{"@id":"https:\/\/abap-blog.ru\/#website"},"breadcrumb":{"@id":"https:\/\/abap-blog.ru\/osnovy-abap\/slovar\/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov\/#breadcrumblist"},"author":"https:\/\/abap-blog.ru\/author\/admin\/#author","creator":"https:\/\/abap-blog.ru\/author\/admin\/#author","datePublished":"2015-06-24T13:52:58+04:00","dateModified":"2021-03-02T06:11:51+04:00"},{"@type":"Article","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/slovar\/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov\/#article","name":"ABAP Blog | \u0412\u0435\u0434\u0435\u043d\u0438\u0435 \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u0441\u043a\u0438\u0445 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a \u0432 \u043a\u043b\u0430\u0441\u0442\u0435\u0440\u0430\u0445 \u0440\u0430\u043a\u0443\u0440\u0441\u043e\u0432","description":"\u041e\u0447\u0435\u043d\u044c \u0447\u0430\u0441\u0442\u043e \u0432 \u043f\u0440\u043e\u0446\u0435\u0441\u0441\u0435 \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0438 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e \u043f\u0440\u0435\u0434\u043e\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u0433\u0438\u0431\u043a\u043e\u0441\u0442\u044c \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u043d\u043e\u0433\u043e \u0440\u0435\u0448\u0435\u043d\u0438\u044f, \u0432 \u0437\u0430\u0432\u0438\u0441\u0438\u043c\u043e\u0441\u0442\u0438 \u043e\u0442 \u043a\u0430\u043a\u0438\u0445-\u043b\u0438\u0431\u043e \u0442\u0440\u0435\u0431\u043e\u0432\u0430\u043d\u0438\u0439, \u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u043d\u044b\u043c\u0438 \u0442\u0435\u043c\u0438 \u0438\u043b\u0438 \u0438\u043d\u044b\u043c\u0438 \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430\u043c\u0438. \u041f\u043e\u0434\u043e\u0431\u043d\u0430\u044f \u0433\u0438\u0431\u043a\u043e\u0441\u0442\u044c \u0432 SAP \u0441\u0438\u0441\u0442\u0435\u043c\u0430\u0445 \u0442\u0440\u0430\u0434\u0438\u0446\u0438\u043e\u043d\u043d\u043e \u0440\u0435\u0448\u0430\u0435\u0442\u0441\u044f \u043f\u0443\u0442\u0451\u043c \u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u0438\u044f \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u0441\u043a\u0438\u0445 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a \u0432 \u0442\u0440\u0430\u043d\u0437\u0430\u043a\u0446\u0438\u0438 SPRO. \u0412 \u0441\u0442\u0430\u0442\u044c\u0435 \u0431\u0443\u0434\u0435\u0442 \u0440\u0430\u0441\u0441\u043c\u043e\u0442\u0440\u0435\u043d \u0441\u043f\u043e\u0441\u043e\u0431 \u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u0438\u044f \u0441\u0432\u043e\u0438\u0445 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a \u043d\u0430 \u0431\u0430\u0437\u0435 \u0432\u0435\u0434\u0435\u043d\u0438\u044f \u043c\u043d\u043e\u0433\u043e\u0443\u0440\u043e\u0432\u043d\u0435\u0432\u043e\u0433\u043e \u043a\u043b\u0430\u0441\u0442\u0435\u0440\u0430 \u0440\u0430\u043a\u0443\u0440\u0441\u043e\u0432 \u0438 \u0441\u043e\u0437\u0434\u0430\u043d\u0438\u0435 \u0441\u0441\u044b\u043b\u043a\u0438 \u043d\u0430 \u043d\u0435\u0433\u043e \u0432 SPRO. [\u2026]","inLanguage":"ru-RU","headline":"\u0412\u0435\u0434\u0435\u043d\u0438\u0435 \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u0441\u043a\u0438\u0445 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a \u0432 \u043a\u043b\u0430\u0441\u0442\u0435\u0440\u0430\u0445 \u0440\u0430\u043a\u0443\u0440\u0441\u043e\u0432","author":{"@id":"https:\/\/abap-blog.ru\/author\/admin\/#author"},"publisher":{"@id":"https:\/\/abap-blog.ru\/#person"},"datePublished":"2015-06-24T13:52:58+04:00","dateModified":"2021-03-02T06:11:51+04:00","commentCount":4,"articleSection":"ABAP \u0421\u043b\u043e\u0432\u0430\u0440\u044c, SE54, SM30, \u041a\u043b\u0430\u0441\u0442\u0435\u0440 \u0440\u0430\u043a\u0443\u0440\u0441\u043e\u0432, \u0440\u0430\u043a\u0443\u0440\u0441 \u0432\u0435\u0434\u0435\u043d\u0438\u044f","mainEntityOfPage":{"@id":"https:\/\/abap-blog.ru\/osnovy-abap\/slovar\/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov\/#webpage"},"isPartOf":{"@id":"https:\/\/abap-blog.ru\/osnovy-abap\/slovar\/vedenie-polzovatelskix-nastroek-v-klasterax-rakursov\/#webpage"},"image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/#articleImage","url":"https:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/office-configuration-tool.jpg","width":420,"height":440}}]}
+		</script>
+		<script type="text/javascript">
+			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+			ga('create', "UA-150412824-1", { 'cookieDomain': 'abap-blog.ru' } );
+			ga('require', 'outboundLinkTracker');
+			ga('send', 'pageview');
+		</script>
+		<script async="" src="../../../analytics.js"></script>
+		<script async="" src="../../../wp-content/plugins/all-in-one-seo-pack/app/Common/Assets/js/autotrack.js?ver=4.1.4.4"></script>
+		<!-- All in One SEO -->
+
+<link rel='dns-prefetch' href='../../../index-1.htm'>
+<link rel='dns-prefetch' href='//fonts.googleapis.com'>
+<link rel='dns-prefetch' href='../../../index-2.htm'>
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента" href="../../../feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев" href="../../../comments/feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев к &laquo;Ведение пользовательских настроек в кластерах ракурсов&raquo;" href="feed/index.htm.rss">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/abap-blog.ru\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8.1"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='urvanov_syntax_highlighter-css' href='../../../wp-content/plugins/urvanov-syntax-highlighter/css/min/urvanov_syntax_highlighter.min.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='wp-block-library-css' href='../../../wp-includes/css/dist/block-library/style.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='arve-main-css' href='../../../wp-content/plugins/advanced-responsive-video-embedder/build/main.css?ver=b809f4d4c33c91a5ae3a5099af09bdde' media='all'>
+<link rel='stylesheet' id='contact-form-7-css' href='../../../wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.5.1' media='all'>
+<link rel='stylesheet' id='bg-shce-genericons-css' href='../../../wp-content/plugins/show-hidecollapse-expand/assets/css/genericons/genericons.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='bg-show-hide-css' href='../../../wp-content/plugins/show-hidecollapse-expand/assets/css/bg-show-hide.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='dashicons-css' href='../../../wp-includes/css/dashicons.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='tooltip-css' href='../../../wp-content/plugins/wp-poll/assets/tool-tip.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-cb-css' href='../../../wp-content/plugins/wp-poll/assets/front/css/checkbox.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-css' href='../../../wp-content/plugins/wp-poll/assets/front/css/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='flat-fonts-css' href='../../../css.css?family=Lobster%7CRoboto:400,700%7CRoboto+Slab%7CRoboto%20Condensed' media='all'>
+<link rel='stylesheet' id='flat-theme-css' href='../../../wp-content/themes/flat/assets/css/flat.css?ver=1.7.11' media='all'>
+<link rel='stylesheet' id='flat-style-css' href='../../../wp-content/themes/flat/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='slb_core-css' href='../../../wp-content/plugins/simple-lightbox/client/css/app.css?ver=2.8.1' media='all'>
+<link rel='stylesheet' id='decent-comments-widget-css' href='../../../wp-content/plugins/decent-comments/css/decent-comments-widget.css' media='all'>
+<script src='../../../wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script src='../../../wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' id='urvanov_syntax_highlighter_js-js-extra'>
+/* <![CDATA[ */
+var UrvanovSyntaxHighlighterSyntaxSettings = {"version":"2.8.22","is_admin":"0","ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","prefix":"urvanov-syntax-highlighter-","setting":"urvanov-syntax-highlighter-setting","selected":"urvanov-syntax-highlighter-setting-selected","changed":"urvanov-syntax-highlighter-setting-changed","special":"urvanov-syntax-highlighter-setting-special","orig_value":"data-orig-value","debug":""};
+var UrvanovSyntaxHighlighterSyntaxStrings = {"copy":"\u041d\u0430\u0436\u043c\u0438\u0442\u0435 %s \u0434\u043b\u044f \u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f, %s \u0434\u043b\u044f \u0432\u0441\u0442\u0430\u0432\u043a\u0438","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script src='../../../wp-content/plugins/urvanov-syntax-highlighter/js/min/urvanov_syntax_highlighter.min.js?ver=2.8.22' id='urvanov_syntax_highlighter_js-js'></script>
+<script src='../../../wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.7' id='regenerator-runtime-js'></script>
+<script src='../../../wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
+<script async="async" src='../../../wp-content/plugins/advanced-responsive-video-embedder/build/main.js?ver=b809f4d4c33c91a5ae3a5099af09bdde' id='arve-main-js'></script>
+<script src='../../../wp-content/plugins/wp-poll/assets/front/js/svgcheckbx.js?ver=5.8.1' id='wpp-front-cb-js'></script>
+<script type='text/javascript' id='wpp-front-js-extra'>
+/* <![CDATA[ */
+var wpp_object = {"ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","copyText":"Copied !","voteText":"Vote(s)","tempProDownload":"https:\/\/pluginbazar.com\/my-account\/downloads\/","tempProDownloadTxt":"Download Version 1.1.0"};
+/* ]]> */
+</script>
+<script src='../../../wp-content/plugins/wp-poll/assets/front/js/scripts.js?ver=5.8.1' id='wpp-front-js'></script>
+<script src='../../../wp-content/themes/flat/assets/js/flat.js?ver=1.7.11' id='flat-js-js'></script>
+<!--[if lt IE 9]>
+<script src='https://abap-blog.ru/wp-content/themes/flat/assets/js/html5shiv.min.js?ver=3.7.2' id='html5shiv-js'></script>
+<![endif]-->
+<link rel="https://api.w.org/" href="../../../wp-json/index.htm.json"><link rel="alternate" type="application/json" href="../../../wp-json/wp/v2/posts/2481.json"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="../../../xmlrpc.php.xml?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../../../wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.8.1">
+<link rel='shortlink' href='index.htm?p=2481'>
+<link rel="alternate" type="application/json+oembed" href="../../../wp-json/oembed/1.0/embed-48.json?url=https%3A%2F%2Fabap-blog.ru%2Fosnovy-abap%2Fslovar%2Fvedenie-polzovatelskix-nastroek-v-klasterax-rakursov%2F">
+<link rel="alternate" type="text/xml+oembed" href="../../../wp-json/oembed/1.0/embed-48.xml?url=https%3A%2F%2Fabap-blog.ru%2Fosnovy-abap%2Fslovar%2Fvedenie-polzovatelskix-nastroek-v-klasterax-rakursov%2F&#038;format=xml">
+
+<!-- WP Youtube Player 1.7 by unijimpe -->
+<style type="text/css">#page:before, .sidebar-offcanvas, #secondary { background-color: #272727; }@media (max-width: 1199px) { #page &gt; .container { background-color: #272727; } }body { background-size: initial; }</style><style type="text/css">#masthead .site-title {font-family:Lobster}body {font-family:Roboto }h1,h2,h3,h4,h5,h6 {font-family:Roboto Slab}#masthead .site-description, .hentry .entry-meta {font-family:Roboto Condensed}</style><style type="text/css" media="screen">body{position:relative}#dynamic-to-top{display:none;overflow:hidden;width:auto;z-index:90;position:fixed;bottom:20px;right:20px;top:auto;left:auto;font-family:sans-serif;font-size:1em;color:#fff;text-decoration:none;text-shadow:0 1px 0 #333;font-weight:bold;padding:17px 16px;border:2px solid #000;background:#4c5055;-webkit-background-origin:border;-moz-background-origin:border;-icab-background-origin:border;-khtml-background-origin:border;-o-background-origin:border;background-origin:border;-webkit-background-clip:padding-box;-moz-background-clip:padding-box;-icab-background-clip:padding-box;-khtml-background-clip:padding-box;-o-background-clip:padding-box;background-clip:padding-box;-webkit-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-ms-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-moz-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-o-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-khtml-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-icab-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-webkit-border-radius:30px;-moz-border-radius:30px;-icab-border-radius:30px;-khtml-border-radius:30px;border-radius:30px}#dynamic-to-top:hover{background:#4fd650;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 255, 255, 255, .2 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );cursor:pointer}#dynamic-to-top:active{background:#4c5055;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 0, 0, 0, .3 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) )}#dynamic-to-top,#dynamic-to-top:active,#dynamic-to-top:focus,#dynamic-to-top:hover{outline:none}#dynamic-to-top span{display:block;overflow:hidden;width:14px;height:12px;background:url( ../../../wp-content/plugins/dynamic-to-top/css/images/up.png )no-repeat center center}</style><style type="text/css" id="custom-background-css">
+body.custom-background { background-image: url("../../../wp-content/uploads/2014/10/escheresque_ste.png"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+		</head>
+
+<body class="post-template-default single single-post postid-2481 single-format-standard custom-background" itemscope="" itemtype="http://schema.org/WebPage">
+		<div id="page">
+	<div class="container">
+		<div class="row row-offcanvas row-offcanvas-left" style="background: #272727;">			
+			
+			<div id="secondary1" class="col-lg-t" style="background: #272727; display:none">
+								<header id="masthead1" class="site-headerex" role="banner">
+										<div class="hgroupex">
+						<h1 class="site-title display-title"><a href="../../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+									</header>
+							</div>
+
+
+			<div id="secondary" class="col-lg-3" style="display:block">
+								<header id="masthead" class="site-header" role="banner">
+										<div class="hgroup">
+						<h1 class="site-title display-title"><a href="../../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+					<button type="button" class="btn btn-link hidden-lg toggle-sidebar" data-toggle="offcanvas" aria-label="Sidebar"><i class="fa fa-gear"></i></button>
+					<button type="button" class="btn btn-link hidden-lg toggle-navigation" aria-label="Navigation Menu"><i class="fa fa-bars"></i></button>
+					<nav id="site-navigation" class="navigation main-navigation" role="navigation">
+						<ul id="menu-glavnoe-menyu" class="nav-menu"><li id="menu-item-2313" class="fa fa-home menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-2313"><a href="../../../index.htm">Главная</a>
+<ul class="sub-menu">
+	<li id="menu-item-2363" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor menu-item-has-children menu-item-2363"><a href="../../../category/osnovy-abap/index.htm">Основы ABAP</a>
+	<ul class="sub-menu">
+		<li id="menu-item-2906" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2906"><a href="../../../category/osnovy-abap/oop/index.htm">ABAP Objects</a></li>
+		<li id="menu-item-2370" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-2370"><a href="../../../category/osnovy-abap/slovar/index.htm">ABAP Словарь</a></li>
+		<li id="menu-item-2367" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2367"><a href="../../../category/osnovy-abap/files/index.htm">Работа с файлами</a></li>
+		<li id="menu-item-2364" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2364"><a href="../../../category/osnovy-abap/sap-dynpro/index.htm">SAP Dynpro</a></li>
+		<li id="menu-item-6845" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6845"><a href="../../../category/osnovy-abap/vnutrennie-tablicy/index.htm">Внутренние таблицы</a></li>
+		<li id="menu-item-6849" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6849"><a href="../../../category/osnovy-abap/dinamicheskoe-programmirovanie/index.htm">Динамическое программирование</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2366" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2366"><a href="../../../category/database-work/index.htm">Работа с БД</a>
+	<ul class="sub-menu">
+		<li id="menu-item-7303" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7303"><a href="../../../category/hana/index.htm">HANA</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2368" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2368"><a href="../../../category/network/index.htm">Сетевые технологии</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6328" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6328"><a href="../../../category/network/ui5fiori/index.htm">UI5 &amp; Fiori</a></li>
+		<li id="menu-item-6327" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6327"><a href="../../../category/network/odata-network/index.htm">OData</a></li>
+		<li id="menu-item-2907" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2907"><a href="../../../category/network/web-dynpro/index.htm">Web Dynpro</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2369" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2369"><a href="../../../category/enhancements/index.htm">Расширения</a></li>
+	<li id="menu-item-6329" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6329"><a href="../../../category/abap-cloud/index.htm">ABAP Cloud</a></li>
+	<li id="menu-item-2365" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2365"><a href="../../../category/others/index.htm">Прочее</a></li>
+</ul>
+</li>
+<li id="menu-item-3536" class="fa fa-bell menu-item menu-item-type-post_type menu-item-object-page menu-item-3536"><a href="../../../abap-the-best-practice/index.htm">ABAP Best Practice</a></li>
+<li id="menu-item-3727" class="fa fa-child menu-item menu-item-type-post_type menu-item-object-page menu-item-3727"><a href="../../../vakansii/index.htm">Вакансии ABAP</a></li>
+<li id="menu-item-3885" class="fa fa-bookmark menu-item menu-item-type-post_type menu-item-object-page menu-item-3885"><a href="../../../abap-notes/index.htm">Быстрые заметки</a></li>
+<li id="menu-item-2316" class="fa fa-info-circle menu-item menu-item-type-post_type menu-item-object-page menu-item-2316"><a href="../../../about/index.htm">Обо мне</a></li>
+</ul>					</nav>
+									</header>
+				
+				<div class="sidebar-offcanvas">
+<div id="main-sidebar" class="widget-area" role="complementary">
+											<aside id="search-2" class="widget widget_search">
+	<form method="get" id="searchform" action="https://abap-blog.ru/">
+		<label for="s" class="assistive-text">Поиск</label>
+		<input type="text" class="field" name="s" id="s" placeholder="Поиск">
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Поиск">
+	</form>
+					</aside>
+					<aside id="linkcat-2" class="widget widget_links">
+						<h3 class='widget-title'>Ссылки</h3>
+
+	<ul class='xoxo blogroll'>
+<li><a href="../../../topics/abap.html" target="_blank">ABAP Community</a></li>
+<li><a href="../../../wiki/display/ABAP/ABAP Development.html" title="Wiki по ABAP" target="_blank">ABAP Development Wiki</a></li>
+<li><a href="../../../doc/abapdocu_latest_index_htm/latest/en-US/index.htm" title="Последняя версия справки по ABAP" target="_blank">ABAP Help</a></li>
+<li><a href="../../../doc/abapdocu_cp_index_htm/CLOUD/en-US/index.htm" target="_blank">ABAP Help (Cloud)</a></li>
+<li><a href="../../../learning-journeys/overview.html?role=Developer" target="_blank">Developer Learning Journeys</a></li>
+<li><a href="../../../index-3.htm" target="_blank">Open Source Projects</a></li>
+<li><a href="../../../tutorial-navigator.html" target="_blank">SAP Tutorials</a></li>
+<li><a href="https://t.me/abapblog" target="_blank"><img src="../../../wp-content/uploads/2020/04/telegram-1.png" alt="Канал в Telegram"> Канал в Telegram</a></li>
+
+	</ul>
+					</aside>
+
+					<aside id="endo_wrc_widget-2" class="widget widget_endo_wrc_widget">
+						<h3 class='widget-title'>Цитаты</h3>
+<p>Я мог бы перечислить все признаки, присущие чистому коду, но существует один важнейший признак, из которого следуют все остальные. Чистый код всегда выглядит так, словно его автор над ним тщательно потрудился. Вы не найдете никаких очевидных возможностей для его улучшения. Все они уже были продуманы автором кода. Попытавшись представить возможные усовершенствования, вы снова придете к тому, с чего все началось: вы рассматриваете код, тщательно продуманный и написанный настоящим мастером, небезразличным к своему ремеслу.</p>
+<p><strong>М. Физерс</strong></p>
+					</aside>
+								<aside id="custom-post-type-recent-posts-3" class="widget widget_recent_entries">
+						<h3 class='widget-title'>Новое</h3>
+			<ul>
+													<li>
+										<a href="../../../abap-notes/poluchenie-instancii-cl_gui_alv_grid-dlya-salv/index.htm">Получение инстанции cl_gui_alv_grid для SALV</a>
+											<span class="post-date">11.09.2021</span>
+														</li>
+													<li>
+										<a href="../../../abap-cloud/introduction-to-abap-in-the-cloud/index.htm">Introduction to ABAP in the Cloud</a>
+											<span class="post-date">18.08.2021</span>
+														</li>
+													<li>
+										<a href="../../../abap-notes/getting-started-with-fpm-bopf-integration/index.htm">Getting Started with FPM BOPF Integration</a>
+											<span class="post-date">01.06.2021</span>
+														</li>
+													<li>
+										<a href="../../../abap-notes/how-to-use-authority-checks-in-business-object-processing-framework/index.htm">30. How to Use Authority Checks in Business Object Processing Framework</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../../abap-notes/bopf-extensibility/index.htm">29. BOPF Extensibility</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../../abap-notes/bopf-enterprise-procurement-model-epm/index.htm">28. BOPF Enterprise Procurement Model (EPM)</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../../abap-notes/bopf-integration/index.htm">27. BOPF Integration</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../../abap-notes/bopf-business-configuration-objects/index.htm">26. BOPF Business Configuration Objects</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../../abap-notes/bopf-performance/index.htm">25. BOPF Performance</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../../abap-notes/bopf-supportability/index.htm">24. BOPF Supportability</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+							</ul>
+								</aside>
+					<aside id="decent_comments_widget-2" class="widget widget_decent_comments_widget">
+						<h3 class='widget-title'>Последние комментарии</h3>
+<div class="decent-comments"><ul><li><div class="comment"><span class="comment-author">Николай</span><span class="comment-date"> 27.10.2021 в 15:19</span><span class="comment-link"> на <a href="../../internal-table-as-data-source-select/index.htm#comment-17857">Внутренние таблицы как источник в SQL запросах</a></span><span class="comment-excerpt">Спасибо за статью. Если нужно сделать агрегацию внутренней таблицы то агрегация через передачу во временную таблицу на БД тоже будет работать медленней чем через loop/collect? Например таблица 100к записей, которая становится 5к после агрегации. </span></div></li><li><div class="comment"><span class="comment-author">Аноним</span><span class="comment-date"> 14.10.2021 в 13:50</span><span class="comment-link"> на <a href="../../oop/dekorator-decorator-wrapper/index.htm#comment-17856">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Так поведение Decorator не надо будет повторно описывать повторно в других Component. Но это возможно при изменении типа mo_component, например, на object. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 11.10.2021 в 06:50</span><span class="comment-link"> на <a href="../../oop/dekorator-decorator-wrapper/index.htm#comment-17854">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет:) Возможно, я не так выразил мысль. Я имел ввиду, какая ценность от класса Decorator, если можно декорировать поведение от Component и от него же наследовать конкретные декораторы? (см. первую UML диаграмму) </span></div></li><li><div class="comment"><span class="comment-author">Astrafox</span><span class="comment-date"> 10.10.2021 в 12:39</span><span class="comment-link"> на <a href="../../oop/dekorator-decorator-wrapper/index.htm#comment-17853">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет! Можно и так, однако конкретный компонент может иметь более широкий интерфейс, нежели тот, что нужен в декораторах. Тут скорее пример не совсем удачный, декорируемое поведение лучше вынести в отдельный интерфейс, реализуемый как компонентом, так и декораторами. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 04.10.2021 в 12:51</span><span class="comment-link"> на <a href="../../oop/dekorator-decorator-wrapper/index.htm#comment-17850">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">А какую роль играет базовый класс декоратора lcl_decorator? Что мешает конкретные декораторы наследовать от компонента lcl_concrete_component? Клиентский код и логика выполнения не поменяется. </span></div></li></ul></div>					</aside>
+											</div>
+				</div>
+			</div>
+
+						<div id="primary" class="content-area col-lg-9" itemprop="mainContentOfPage" style="">
+							<div id="content" class="site-content" role="main" itemscope="" itemtype="http://schema.org/Article">
+			<article id="post-2481" class="post-2481 post type-post status-publish format-standard hentry category-slovar tag-se54 tag-sm30 tag-klaster-rakursov tag-rakurs-vedeniya">
+	<header class="entry-header">
+		<h1 class="entry-title" itemprop="name">Ведение пользовательских настроек в кластерах ракурсов</h1>
+							<div class="entry-meta"><span class="entry-date"><a href="index.htm" rel="bookmark"><time class="entry-date published" datetime="2015-06-24T17:52:58+04:00" itemprop="datepublished">24.06.2015</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="index.htm#comments" itemprop="discussionUrl">4 комментария</a></span></div>
+			</header>
+		
+	
+	<div class="entry-content" itemprop="articleBody">
+				<p><a href="../../../wp-content/uploads/2015/06/office-configuration-tool.jpg" data-slb-active="1" data-slb-asset="1510126339" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class=" wp-image-2482 alignleft" src="../../../wp-content/uploads/2015/06/office-configuration-tool.jpg" alt="office-configuration-tool" width="180" height="189" srcset="../../../wp-content/uploads/2015/06/office-configuration-tool.jpg 420w, ../../../wp-content/uploads/2015/06/office-configuration-tool-286x300.jpg 286w" sizes="(max-width: 180px) 100vw, 180px"></a></p>
+<p>Очень часто в процессе разработки необходимо предоставить гибкость программного решения, в зависимости от каких-либо требований, определенными теми или иными настройками. Подобная гибкость в SAP системах традиционно решается путём определения пользовательских настроек в транзакции SPRO.  В статье будет рассмотрен способ определения своих настроек на базе ведения многоуровневого кластера ракурсов и создание ссылки на него в SPRO.</p>
+<p><span id="more-2481"></span></p>
+<p>Транзакция SPRO открывает заранее определенную иерархическую структуру, в которой настройки разделены относительно функциональности:</p>
+<p><a href="../../../wp-content/uploads/2015/06/1.jpg" data-slb-active="1" data-slb-asset="1632876645" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2483" src="../../../wp-content/uploads/2015/06/1.jpg" alt="1" width="659" height="458" srcset="../../../wp-content/uploads/2015/06/1.jpg 659w, ../../../wp-content/uploads/2015/06/1-300x208.jpg 300w" sizes="(max-width: 659px) 100vw, 659px"></a></p>
+<p class="">Большинство настроек в SPRO представляют собой ссылки на переход к ведению данных в простом ракурсе ссылающемся на какую-либо таблицу, однако встречаются и кластеры ракурсов – набор ракурсов объединенных либо в иерархическую структуру, либо сгруппированных вместе. В качестве примера можете перейти по следующему адресу:</p>
+<p><a href="../../../wp-content/uploads/2015/06/2.png" data-slb-active="1" data-slb-asset="605890222" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2484" src="../../../wp-content/uploads/2015/06/2.png" alt="2" width="458" height="241" srcset="../../../wp-content/uploads/2015/06/2.png 458w, ../../../wp-content/uploads/2015/06/2-300x158.png 300w" sizes="(max-width: 458px) 100vw, 458px"></a></p>
+<p>Как видно из рисунка, настройка представляет собой кластер ракурсов (набор ракурсов) объединенных для ведения в рамках одной настройки:</p>
+<p><a href="../../../wp-content/uploads/2015/06/3.png" data-slb-active="1" data-slb-asset="932121218" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone wp-image-2485" src="../../../wp-content/uploads/2015/06/3.png" alt="3" width="712" height="213" srcset="../../../wp-content/uploads/2015/06/3.png 935w, ../../../wp-content/uploads/2015/06/3-300x90.png 300w" sizes="(max-width: 712px) 100vw, 712px"></a></p>
+<p>В кластере присутствует 5 вложенных ракурсов: часовые пояса, правила для часовых поясов, правила для летнего времени и др. Кластеры не связаны друг с другом иерархией, они не зависимы друг от друга.</p>
+<p>Встречаются и такие кластеры ракурсов, где один ракурс, может быть зависимым от другого ракурса, в таком случае, чтобы перейти в ведение зависимого, потребуется выбрать запись из ракурса на уровне выше, пример:</p>
+<p><a href="../../../wp-content/uploads/2015/06/4.png" data-slb-active="1" data-slb-asset="409420164" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2486" src="../../../wp-content/uploads/2015/06/4.png" alt="4" width="602" height="335" srcset="../../../wp-content/uploads/2015/06/4.png 602w, ../../../wp-content/uploads/2015/06/4-300x167.png 300w" sizes="(max-width: 602px) 100vw, 602px"></a></p>
+<p>Для того чтобы перейти на изменение в «Присвоение логический путь – физический путь» необходимо выбрать запись в ракурсе «Определение логических путей к файлу»:</p>
+<p><a href="../../../wp-content/uploads/2015/06/5.png" data-slb-active="1" data-slb-asset="659750291" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone wp-image-2487" src="../../../wp-content/uploads/2015/06/5.png" alt="5" width="719" height="194" srcset="../../../wp-content/uploads/2015/06/5.png 800w, ../../../wp-content/uploads/2015/06/5-300x81.png 300w" sizes="(max-width: 719px) 100vw, 719px"></a></p>
+<h3>Определение кластера ракурсов</h3>
+<p>В качестве простого примера создадим кластер ракурсов, состоящий из трёх ракурсов, первые два будут зависимыми, третий будет сам по себе.</p>
+<p>Предположим у нас есть система, в которой относительно одного логина могут работать сразу несколько человек, каждый из которых может быть пользователем определенного типа (администратор или рядовой пользователь) и нам необходимо настроить ведение людей относительно логина. Кроме того, нужно иметь возможность в рамках одного кластера ракурсов хранить настройку e-mail’ов для типа пользователя.</p>
+<p>Первым шагом идет определение Z таблиц (тр. SE11).</p>
+<p>Для всех таблиц проставим следующие параметры поставки:</p>
+<p><a href="../../../wp-content/uploads/2015/06/6.png" data-slb-active="1" data-slb-asset="2034691302" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2488" src="../../../wp-content/uploads/2015/06/6.png" alt="6" width="682" height="135" srcset="../../../wp-content/uploads/2015/06/6.png 682w, ../../../wp-content/uploads/2015/06/6-300x59.png 300w" sizes="(max-width: 682px) 100vw, 682px"></a></p>
+<p>Таблица ZCUST_LOGINS:</p>
+<p><a href="../../../wp-content/uploads/2015/06/7.png" data-slb-active="1" data-slb-asset="1341814057" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2489" src="../../../wp-content/uploads/2015/06/7.png" alt="7" width="616" height="203" srcset="../../../wp-content/uploads/2015/06/7.png 616w, ../../../wp-content/uploads/2015/06/7-300x99.png 300w" sizes="(max-width: 616px) 100vw, 616px"></a></p>
+<p>Определим домен ZCUSD_LOGIN_TYPE:</p>
+<p><a href="../../../wp-content/uploads/2015/06/8.png" data-slb-active="1" data-slb-asset="1194436356" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2490" src="../../../wp-content/uploads/2015/06/8.png" alt="8" width="529" height="347" srcset="../../../wp-content/uploads/2015/06/8.png 529w, ../../../wp-content/uploads/2015/06/8-300x197.png 300w" sizes="(max-width: 529px) 100vw, 529px"></a></p>
+<p>Для домена зададим диапазон значений:</p>
+<p><a href="../../../wp-content/uploads/2015/06/9.png" data-slb-active="1" data-slb-asset="781547169" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2491" src="../../../wp-content/uploads/2015/06/9.png" alt="9" width="455" height="225" srcset="../../../wp-content/uploads/2015/06/9.png 455w, ../../../wp-content/uploads/2015/06/9-300x148.png 300w" sizes="(max-width: 455px) 100vw, 455px"></a></p>
+<p>Определим элемент на базе домена:</p>
+<p><a href="../../../wp-content/uploads/2015/06/10.png" data-slb-active="1" data-slb-asset="72789340" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2492" src="../../../wp-content/uploads/2015/06/10.png" alt="10" width="590" height="214" srcset="../../../wp-content/uploads/2015/06/10.png 590w, ../../../wp-content/uploads/2015/06/10-300x109.png 300w" sizes="(max-width: 590px) 100vw, 590px"></a></p>
+<p>Таблица ZCUST_LOGIN_INFO:</p>
+<p><a href="../../../wp-content/uploads/2015/06/11.png" data-slb-active="1" data-slb-asset="2045535925" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2493" src="../../../wp-content/uploads/2015/06/11.png" alt="11" width="615" height="286" srcset="../../../wp-content/uploads/2015/06/11.png 615w, ../../../wp-content/uploads/2015/06/11-300x140.png 300w" sizes="(max-width: 615px) 100vw, 615px"></a></p>
+<p>Таблица ZCUST_ROLE_MAILS:</p>
+<p><a href="../../../wp-content/uploads/2015/06/12.png" data-slb-active="1" data-slb-asset="1104025468" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2494" src="../../../wp-content/uploads/2015/06/12.png" alt="12" width="646" height="217" srcset="../../../wp-content/uploads/2015/06/12.png 646w, ../../../wp-content/uploads/2015/06/12-300x101.png 300w" sizes="(max-width: 646px) 100vw, 646px"></a></p>
+<p>После создания таблиц и элементов данных необходимо подготовить ракурсы ведения для каждой из таблицы (тр. SE11). Но перед этим создадим группу функций, отвечающую за хранение сгенерированных к ракурсам ФМ по обновлению данных и экранов. Назовем её ZFG_UCONF. Создать группу функций можно в транзакции SE80.</p>
+<p>Ракурс ZCUST_V_LOG:</p>
+<p><a href="../../../wp-content/uploads/2015/06/13.png" data-slb-active="1" data-slb-asset="90067418" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone wp-image-2495" src="../../../wp-content/uploads/2015/06/13.png" alt="13" width="701" height="193" srcset="../../../wp-content/uploads/2015/06/13.png 756w, ../../../wp-content/uploads/2015/06/13-300x83.png 300w" sizes="(max-width: 701px) 100vw, 701px"></a></p>
+<p>Ракурс ZCUST_V_INF:</p>
+<p><a href="../../../wp-content/uploads/2015/06/14.png" data-slb-active="1" data-slb-asset="1776452115" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone wp-image-2496" src="../../../wp-content/uploads/2015/06/14.png" alt="14" width="704" height="257" srcset="../../../wp-content/uploads/2015/06/14.png 803w, ../../../wp-content/uploads/2015/06/14-300x109.png 300w" sizes="(max-width: 704px) 100vw, 704px"></a></p>
+<p>Для данного ракурса поля LOGIN и MANDT будет образовывать подмножество, т.е. перед тем как начать ведение ракурса необходимо будет задать ограничение по этим полям (можете попробовать нажать просмотр данных), необходимо проставить флаг «S».</p>
+<p>В кластере ракурсов ракурс ZCUST_V_INF будет зависимым от ракурса ZCUST_V_LOG, таким образом, поля LOGIN и MANDT через настройку зависимости будут автоматически заполняться по выбранной записи выше по иерархии.</p>
+<p>Ракурс ZCUST_V_MAILS:</p>
+<p><a href="../../../wp-content/uploads/2015/06/16.png" data-slb-active="1" data-slb-asset="1345371340" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone wp-image-2497" src="../../../wp-content/uploads/2015/06/16.png" alt="16" width="684" height="175" srcset="../../../wp-content/uploads/2015/06/16.png 872w, ../../../wp-content/uploads/2015/06/16-300x77.png 300w" sizes="(max-width: 684px) 100vw, 684px"></a></p>
+<p>Далее для всех ракурсов будем генерировать ракурс ведения, Меню -&gt; Утилиты -&gt; Генератор ведения таблиц:</p>
+<p><a href="../../../wp-content/uploads/2015/06/17.png" data-slb-active="1" data-slb-asset="1686394536" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2498" src="../../../wp-content/uploads/2015/06/17.png" alt="17" width="596" height="422" srcset="../../../wp-content/uploads/2015/06/17.png 596w, ../../../wp-content/uploads/2015/06/17-300x212.png 300w" sizes="(max-width: 596px) 100vw, 596px"></a></p>
+<p>Так как группа функций у нас будет одна, экраны должны иметь разные названия для каждого ракурса: 101 – для ZCUST_V_LOG, 102 – ZCUST_V_INF и т.д. Если наши настройки должны автоматически попадать в запрос на перенос, для этого необходимо проставить галочку – «Стандартная программа записи» (после генерации экрана).</p>
+<p>Кроме того, выберем одноуровневый тип ведения и группу полномочий без проверки на полномочия. Разница между типами ведения лишь в том, что при двухуровневом типе во время редактирования вы проваливаетесь в отдельный экран ведения выбранной записи, когда как в одноуровневом, редактирование происходит на экранной таблице.</p>
+<p>После определения всех ракурсов необходимо объединить их в кластере. Создание кластера ракурсов происходит в транзакции SE54 -&gt; Обработка кластера ракурсов. Назовем наш кластер ZCUST_VC_CONF:</p>
+<p><a href="../../../wp-content/uploads/2015/06/18.png" data-slb-active="1" data-slb-asset="809692652" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2499" src="../../../wp-content/uploads/2015/06/18.png" alt="18" width="624" height="262" srcset="../../../wp-content/uploads/2015/06/18.png 624w, ../../../wp-content/uploads/2015/06/18-300x126.png 300w" sizes="(max-width: 624px) 100vw, 624px"></a></p>
+<p>Обработка иерархической операции ведения может принимать следующие значения:</p>
+<p><strong>Показывать диалоговое окно</strong>. Если вы меняете запись в ракурсе, от которой зависят другие записи в зависимом ракурсе, будет появляться диалоговое окно, в котором необходимо будет выбрать решение того, что делать с зависимыми записями:</p>
+<p><a href="../../../wp-content/uploads/2015/06/191.png" data-slb-active="1" data-slb-asset="583714876" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2526" src="../../../wp-content/uploads/2015/06/191.png" alt="19" width="610" height="289" srcset="../../../wp-content/uploads/2015/06/191.png 610w, ../../../wp-content/uploads/2015/06/191-300x142.png 300w" sizes="(max-width: 610px) 100vw, 610px"></a></p>
+<p><strong>Без диалога с изменением зависимых записей</strong>. В этом случае все зависимые записи будут так же удалены (изменены).</p>
+<p><strong>Без диалога и без изменения зависимых записей</strong> (ограничение на один уровень). Зависимые записи не будут затронуты.</p>
+<p>Вид считывания отвечает за то, как будут считываться записи из БД. Если стоит первый вариант, все данные для всех кластеров будут считаны сразу. Если второй вариант, данные будут считаны только для первого ракурса и зависимых от него. Остальные будут считываться по мере необходимости. Обычно второй вариант выставляется для оптимизации при большом кол-ве данных в ракурсах.</p>
+<p>Перейдем в структуру объекта. В структуре кластера прописываются все ракурсы, из которых он состоит:</p>
+<p><a href="../../../wp-content/uploads/2015/06/20.png" data-slb-active="1" data-slb-asset="1011326720" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone wp-image-2501" src="../../../wp-content/uploads/2015/06/20.png" alt="20" width="718" height="163" srcset="../../../wp-content/uploads/2015/06/20.png 806w, ../../../wp-content/uploads/2015/06/20-300x68.png 300w" sizes="(max-width: 718px) 100vw, 718px"></a></p>
+<p>Кроме того указывается зависимость ракурсов, в нашем случае ракурс ZCUST_V_INF зависим от предыдущего ZCUST_V_LOG, а ракурс ZCUST_V_MAILS ни от кого не зависит. Зависимость может иметь несколько типов:</p>
+<ul>
+<li>R – Без зависимостей</li>
+<li>S – Зависимость от одной записи в главном ракурсе.</li>
+<li>M – Зависимость от нескольких записей в главном ракурсе. Этот тип применим тогда, когда относительно нескольких записей в главном ракурсе, необходимо редактировать все от них зависимые в зависимом ракурсе. Пример такого ракурса: T804.</li>
+</ul>
+<p>Для настройки зависимостей необходимо выделить строку с ракурсом ZCUST_V_INF и перейти в настройку зависимости и прописать зависимые поля (если будут прописаны внешние ключи в таблицах и на предыдущем экране нажать на кнопку «зависимость поля», выделив зависимый ракурс, система пропишет зависимость за вас):</p>
+<p><a href="../../../wp-content/uploads/2015/06/21.png" data-slb-active="1" data-slb-asset="2139972052" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone wp-image-2502" src="../../../wp-content/uploads/2015/06/21.png" alt="21" width="712" height="151" srcset="../../../wp-content/uploads/2015/06/21.png 731w, ../../../wp-content/uploads/2015/06/21-300x64.png 300w" sizes="(max-width: 712px) 100vw, 712px"></a></p>
+<p>После настройки кластера ракурса, его необходимо активировать, делается это по кнопке в определении заголовка (первый экран ведения ракурса). После активации можно выйти на предыдущий экран и протестировать наш кластер:</p>
+<p><a href="../../../wp-content/uploads/2015/06/22.png" data-slb-active="1" data-slb-asset="1212601278" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2503" src="../../../wp-content/uploads/2015/06/22.png" alt="22" width="464" height="133" srcset="../../../wp-content/uploads/2015/06/22.png 464w, ../../../wp-content/uploads/2015/06/22-300x86.png 300w" sizes="(max-width: 464px) 100vw, 464px"></a></p>
+<p>В итоге мы можем завести учётные данные (логины):</p>
+<p><a href="../../../wp-content/uploads/2015/06/23.png" data-slb-active="1" data-slb-asset="2082202941" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2504" src="../../../wp-content/uploads/2015/06/23.png" alt="23" width="328" height="117" srcset="../../../wp-content/uploads/2015/06/23.png 328w, ../../../wp-content/uploads/2015/06/23-300x107.png 300w" sizes="(max-width: 328px) 100vw, 328px"></a></p>
+<p>Относительно каждой учётной записи завести людей, которые ими пользуются и к какому типу они принадлежат:</p>
+<p><a href="../../../wp-content/uploads/2015/06/24.png" data-slb-active="1" data-slb-asset="1561396675" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2505" src="../../../wp-content/uploads/2015/06/24.png" alt="24" width="696" height="136" srcset="../../../wp-content/uploads/2015/06/24.png 696w, ../../../wp-content/uploads/2015/06/24-300x59.png 300w" sizes="(max-width: 696px) 100vw, 696px"></a></p>
+<p>Относительно типа пользователя определить в настройке почтовый адрес:</p>
+<p><a href="../../../wp-content/uploads/2015/06/25.png" data-slb-active="1" data-slb-asset="235336630" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2506" src="../../../wp-content/uploads/2015/06/25.png" alt="25" width="652" height="100" srcset="../../../wp-content/uploads/2015/06/25.png 652w, ../../../wp-content/uploads/2015/06/25-300x46.png 300w" sizes="(max-width: 652px) 100vw, 652px"></a></p>
+<h3>Создание ветки в SPRO</h3>
+<p>Так как ракурсов в рамках разных задач может быть множество, а запомнить их на память не представляется возможным, необходимо их сгруппировать в виде ветки в SPRO и желательно сопроводить необходимой документацией.</p>
+<p>Обычно создание своих веток происходит через транзакцию <strong>SIMGH</strong>, но в нашем случае мы будем расширять стандарт (транзакция SPRO отображает определенную заранее IMG структуру), поэтому воспользуемся транзакцией <strong>S_</strong><strong>IMG_</strong><strong>EXTENSION</strong>:</p>
+<p>Первым делом выбираем стандартную IMG структуру:</p>
+<p><a href="../../../wp-content/uploads/2015/06/26.png" data-slb-active="1" data-slb-asset="281720557" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2507" src="../../../wp-content/uploads/2015/06/26.png" alt="26" width="591" height="103" srcset="../../../wp-content/uploads/2015/06/26.png 591w, ../../../wp-content/uploads/2015/06/26-300x52.png 300w" sizes="(max-width: 591px) 100vw, 591px"></a></p>
+<p>Далее необходимо создать ID расширений:</p>
+<p><a href="../../../wp-content/uploads/2015/06/271.png" data-slb-active="1" data-slb-asset="1403552824" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2527" src="../../../wp-content/uploads/2015/06/271.png" alt="27" width="606" height="474" srcset="../../../wp-content/uploads/2015/06/271.png 606w, ../../../wp-content/uploads/2015/06/271-300x235.png 300w" sizes="(max-width: 606px) 100vw, 606px"></a></p>
+<p><a href="../../../wp-content/uploads/2015/06/281.png" data-slb-active="1" data-slb-asset="1887029004" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2528" src="../../../wp-content/uploads/2015/06/281.png" alt="28" width="595" height="120" srcset="../../../wp-content/uploads/2015/06/281.png 595w, ../../../wp-content/uploads/2015/06/281-300x61.png 300w" sizes="(max-width: 595px) 100vw, 595px"></a></p>
+<p>После создания ID расширения, выбираем его и нажимаем кнопку «Расширить структуру», в итоге попадаем на экран ведения стандартной структуры SPRO.</p>
+<p>Создадим узел на том же уровне:</p>
+<p><a href="../../../wp-content/uploads/2015/06/291.png" data-slb-active="1" data-slb-asset="1265697400" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone wp-image-2529" src="../../../wp-content/uploads/2015/06/291.png" alt="29" width="713" height="351" srcset="../../../wp-content/uploads/2015/06/291.png 782w, ../../../wp-content/uploads/2015/06/291-300x148.png 300w" sizes="(max-width: 713px) 100vw, 713px"></a></p>
+<p>Далее вставим новую операцию, при создании операции желательно документировать её, создав документ описания:</p>
+<p><a href="../../../wp-content/uploads/2015/06/30.png" data-slb-active="1" data-slb-asset="964749971" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2511" src="../../../wp-content/uploads/2015/06/30.png" alt="30" width="710" height="227" srcset="../../../wp-content/uploads/2015/06/30.png 710w, ../../../wp-content/uploads/2015/06/30-300x96.png 300w" sizes="(max-width: 710px) 100vw, 710px"></a></p>
+<p>Созданный документ можно будет просмотреть в описании к настройке:</p>
+<p><a href="../../../wp-content/uploads/2015/06/31.png" data-slb-active="1" data-slb-asset="537891499" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone wp-image-2512" src="../../../wp-content/uploads/2015/06/31.png" alt="31" width="708" height="202" srcset="../../../wp-content/uploads/2015/06/31.png 865w, ../../../wp-content/uploads/2015/06/31-300x86.png 300w" sizes="(max-width: 708px) 100vw, 708px"></a></p>
+<p>На закладке объекты ведения необходимо прописать наш кластер:</p>
+<p><a href="../../../wp-content/uploads/2015/06/32.png" data-slb-active="1" data-slb-asset="1936762735" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone wp-image-2513" src="../../../wp-content/uploads/2015/06/32.png" alt="32" width="710" height="425" srcset="../../../wp-content/uploads/2015/06/32.png 707w, ../../../wp-content/uploads/2015/06/32-300x179.png 300w" sizes="(max-width: 710px) 100vw, 710px"></a></p>
+<p>Сохранив операцию, выйдем и сохраним иерархию. После чего можно убедиться в наличии нашей ветки, запустив SPRO:</p>
+<p><a href="../../../wp-content/uploads/2015/06/33.png" data-slb-active="1" data-slb-asset="217582435" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2514" src="../../../wp-content/uploads/2015/06/33.png" alt="33" width="594" height="356" srcset="../../../wp-content/uploads/2015/06/33.png 594w, ../../../wp-content/uploads/2015/06/33-300x180.png 300w" sizes="(max-width: 594px) 100vw, 594px"></a></p>
+<h3></h3>
+<h3>Дополнительная информация</h3>
+<p>Если вдруг возникает желание проверить, каким образом сконфигурировано действие в IMG структуре, сделать это можно перейдя по меню к технической информации:</p>
+<p><a href="../../../wp-content/uploads/2015/06/34.png" data-slb-active="1" data-slb-asset="884721250" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2515" src="../../../wp-content/uploads/2015/06/34.png" alt="34" width="565" height="218" srcset="../../../wp-content/uploads/2015/06/34.png 565w, ../../../wp-content/uploads/2015/06/34-300x116.png 300w" sizes="(max-width: 565px) 100vw, 565px"></a></p>
+<p><a href="../../../wp-content/uploads/2015/06/35.png" data-slb-active="1" data-slb-asset="1372109835" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2516" src="../../../wp-content/uploads/2015/06/35.png" alt="35" width="715" height="425" srcset="../../../wp-content/uploads/2015/06/35.png 715w, ../../../wp-content/uploads/2015/06/35-300x178.png 300w" sizes="(max-width: 715px) 100vw, 715px"></a></p>
+<p>Одноуровневые ракурсы ведения отображают для редактирования экранную таблицу, но при большом количестве полей требуется прокручивать таблицу, так как таблица не растягивается на весь экран:</p>
+<p><a href="../../../wp-content/uploads/2015/06/36.png" data-slb-active="1" data-slb-asset="1875732460" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone wp-image-2517" src="../../../wp-content/uploads/2015/06/36.png" alt="36" width="713" height="372" srcset="../../../wp-content/uploads/2015/06/36.png 1214w, ../../../wp-content/uploads/2015/06/36-300x157.png 300w, ../../../wp-content/uploads/2015/06/36-1024x535.png 1024w" sizes="(max-width: 713px) 100vw, 713px"></a></p>
+<p>Выхода их этой ситуации 2, можно отредактировать сгенерированный экран, но это надо будет выполнять каждый раз, при его генерации. Второй способ более удобный, необходимо воспользоваться  событиями в генераторе ведения, подробнее <a href="../../../2013/08/29/sm30-change-standard-width-of-tablecontrol/index.htm">тут</a>.</p>
+<p>После создания кластера может потребоваться создание транзакции к его ведению, сделать это можно через создание транзакции с параметрами к SM34:</p>
+<p><a href="../../../wp-content/uploads/2015/06/1.png" data-slb-active="1" data-slb-asset="821099634" data-slb-internal="0" data-slb-group="2481"><img loading="lazy" class="alignnone size-full wp-image-2544" src="../../../wp-content/uploads/2015/06/1.png" alt="1" width="461" height="668" srcset="../../../wp-content/uploads/2015/06/1.png 461w, ../../../wp-content/uploads/2015/06/1-207x300.png 207w" sizes="(max-width: 461px) 100vw, 461px"></a></p>
+<p>На рисунке созданная транзакция Z01MAPT_VC будет запускать на ведение ракурс с тем же именем, прописанным в значениях по умолчанию.</p>
+<p>Официальная документация по кластерам и генератору ведения доступна по <a href="http://help.sap.com/saphelp_erp60_sp/helpdata/en/a7/5133ac407a11d1893b0000e8323c4f/content.htm?current_toc=/en/a7/5139ef407a11d1893b0000e8323c4f/plain.htm&show_children=true">ссылке</a>.</p>
+							</div>
+		<div class="tags-links"><a href="../../../tag/se54/index.htm" rel="tag">SE54</a> <a href="../../../tag/sm30/index.htm" rel="tag">SM30</a> <a href="../../../tag/klaster-rakursov/index.htm" rel="tag">Кластер ракурсов</a> <a href="../../../tag/rakurs-vedeniya/index.htm" rel="tag">ракурс ведения</a></div></article>
+	
+	<nav class="navigation post-navigation" role="navigation" aria-label="Записи">
+		<h2 class="screen-reader-text">Навигация по записям</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="../../oop/obzor-grasp-i-gof-patternov/index.htm" rel="prev"><span class="meta-nav" aria-hidden="true">Назад</span> <span class="screen-reader-text">Предыдущая запись:</span> <span class="post-title">Обзор GRASP и GoF паттернов</span></a></div><div class="nav-next"><a href="../../redaktiruemyj-simple-alv-grid/index.htm" rel="next"><span class="meta-nav" aria-hidden="true">Далее</span> <span class="screen-reader-text">Следующая запись:</span> <span class="post-title">Редактируемый Simple ALV Grid</span></a></div></div>
+	</nav>
+
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			<span itemprop="interactionCount">4</span> комментария		</h2>
+
+		<ol class="comment-list">
+					<li id="comment-17719" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-17719" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../../avatar/b8ee9a8a37a26150680f0e8a4fc5f2d2.png?s=80&#038;d=retro&#038;r=g' srcset='../../../avatar/b8ee9a8a37a26150680f0e8a4fc5f2d2-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Timofey Valetskiy</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17719"><time datetime="2016-07-18T16:23:00+04:00">18.07.2016 в 16:23</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Михаил, спасибо. Я создавал ранее кл. ракурса, но детали подзабыл. У тебя все нашел. Удачи.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-1.htm?replytocom=17719#respond' data-commentid="17719" data-postid="2481" data-belowelement="div-comment-17719" data-respondelement="respond" data-replyto="Комментарий к записи Timofey Valetskiy" aria-label='Комментарий к записи Timofey Valetskiy'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-17720" class="comment odd alt depth-2">
+			<article id="div-comment-17720" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../../avatar/47a1eb6e85596e832b844631b7c9dd09.png?s=80&#038;d=retro&#038;r=g' srcset='../../../avatar/47a1eb6e85596e832b844631b7c9dd09-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn"><a href='../../../index.htm' rel='external nofollow ugc' class='url'>Astrafox</a></b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17720"><time datetime="2016-07-18T20:57:00+04:00">18.07.2016 в 20:57</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Пожалуйста, Тимофей. Сам постоянно забываю)</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-2.htm?replytocom=17720#respond' data-commentid="17720" data-postid="2481" data-belowelement="div-comment-17720" data-respondelement="respond" data-replyto="Комментарий к записи Astrafox" aria-label='Комментарий к записи Astrafox'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-17763" class="comment even thread-odd thread-alt depth-1">
+			<article id="div-comment-17763" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../../avatar/c03cdd16d42c47135ed3331c31878a77.png?s=80&#038;d=retro&#038;r=g' srcset='../../../avatar/c03cdd16d42c47135ed3331c31878a77-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Мария</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17763"><time datetime="2017-06-25T20:19:00+04:00">25.06.2017 в 20:19</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Михаил, спасибо большое за статью, очень пригодилась.</p>
+<p>Пыталась, кстати, ещё добавить помимо кластера ракурсов свою Z-транзакцию, запускающую отчёт, но всё время получала ошибку, что моей транзакции нет в списке объектов. </p>
+<p>Выяснилось, что название транзакции нужно ещё добавить через ракурс ведения SOBJ в таблицу OBJH, чтобы она появилась в SPRO.</p>
+<p>Возможно, мой комментарий сэкономит чьё-то время)</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-3.htm?replytocom=17763#respond' data-commentid="17763" data-postid="2481" data-belowelement="div-comment-17763" data-respondelement="respond" data-replyto="Комментарий к записи Мария" aria-label='Комментарий к записи Мария'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-17810" class="comment odd alt thread-even depth-1">
+			<article id="div-comment-17810" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../../avatar/5869e11061fb51e504c3515ae2d3bb1a.png?s=80&#038;d=retro&#038;r=g' srcset='../../../avatar/5869e11061fb51e504c3515ae2d3bb1a-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">ABAP Программирование SAP YouC</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17810"><time datetime="2021-02-23T14:37:48+04:00">23.02.2021 в 14:37</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Сделал видео с подробным примером создания кластера ракурсов по шагам. Кому лучше заходит видео контент надеюсь пригодится: <a href="../../../watch-1.html" rel="nofollow ugc">Кластер ракурсов SAP</a></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-4.htm?replytocom=17810#respond' data-commentid="17810" data-postid="2481" data-belowelement="div-comment-17810" data-respondelement="respond" data-replyto="Комментарий к записи ABAP Программирование SAP YouC" aria-label='Комментарий к записи ABAP Программирование SAP YouC'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		</ol>
+
+		
+		
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Добавить комментарий для <a href="#comment-17720">Astrafox</a> <small><a rel="nofollow" id="cancel-comment-reply-link" href="index.htm#respond">Отменить ответ</a></small></h3><form action="https://abap-blog.ru/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate=""><p class="comment-notes"><span id="email-notes">Ваш адрес email не будет опубликован.</span></p><p class="comment-form-comment"><label for="comment">Комментарий</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Имя</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
+<div class="anr_captcha_field"><div id="anr_captcha_field_1" class="anr_captcha_field_div"></div></div><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Отправить комментарий"> <input type='hidden' name='comment_post_ID' value='2481' id='comment_post_ID'>
+<input type='hidden' name='comment_parent' id='comment_parent' value='17720'>
+</p></form>	</div><!-- #respond -->
+	
+	
+</div>
+
+			</div>
+							</div>
+					</div>
+	</div>
+</div>
+<script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"api":{"root":"https:\/\/abap-blog.ru\/wp-json\/","namespace":"contact-form-7\/v1"}};
+/* ]]> */
+</script>
+<script src='../../../wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.5.1' id='contact-form-7-js'></script>
+<script src='../../../wp-includes/js/jquery/ui/effect.min.js?ver=1.12.1' id='jquery-effects-core-js'></script>
+<script src='../../../wp-includes/js/jquery/ui/effect-slide.min.js?ver=1.12.1' id='jquery-effects-slide-js'></script>
+<script src='../../../wp-includes/js/jquery/ui/effect-highlight.min.js?ver=1.12.1' id='jquery-effects-highlight-js'></script>
+<script src='../../../wp-includes/js/jquery/ui/effect-fold.min.js?ver=1.12.1' id='jquery-effects-fold-js'></script>
+<script src='../../../wp-includes/js/jquery/ui/effect-blind.min.js?ver=1.12.1' id='jquery-effects-blind-js'></script>
+<script src='../../../wp-content/plugins/show-hidecollapse-expand/assets/js/bg-show-hide.js?ver=5.8.1' id='bg-show-hide-script-js'></script>
+<script src='../../../wp-includes/js/comment-reply.min.js?ver=5.8.1' id='comment-reply-js'></script>
+<script src='../../../wp-content/plugins/dynamic-to-top/js/libs/jquery.easing.js?ver=1.3' id='jquery-easing-js'></script>
+<script type='text/javascript' id='dynamic-to-top-js-extra'>
+/* <![CDATA[ */
+var mv_dynamic_to_top = {"text":"To Top","version":"0","min":"300","speed":"1100","easing":"easeInExpo","margin":"20"};
+/* ]]> */
+</script>
+<script src='../../../wp-content/plugins/dynamic-to-top/js/dynamic.to.top.min.js?ver=3.5' id='dynamic-to-top-js'></script>
+<script src='../../../recaptcha/api.js?render=6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC&#038;ver=3.0' id='google-recaptcha-js'></script>
+<script type='text/javascript' id='wpcf7-recaptcha-js-extra'>
+/* <![CDATA[ */
+var wpcf7_recaptcha = {"sitekey":"6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC","actions":{"homepage":"homepage","contactform":"contactform"}};
+/* ]]> */
+</script>
+<script src='../../../wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.5.1' id='wpcf7-recaptcha-js'></script>
+<script src='../../../wp-includes/js/wp-embed.min.js?ver=5.8.1' id='wp-embed-js'></script>
+<script src='../../../wp-content/plugins/simple-lightbox/client/js/prod/lib.core.js?ver=2.8.1' id='slb_core-js'></script>
+<script src='../../../wp-content/plugins/simple-lightbox/client/js/prod/lib.view.js?ver=2.8.1' id='slb_view-js'></script>
+<script src='../../../wp-content/plugins/simple-lightbox/themes/baseline/js/prod/client.js?ver=2.8.1' id='slb-asset-slb_baseline-base-js'></script>
+<script src='../../../wp-content/plugins/simple-lightbox/themes/default/js/prod/client.js?ver=2.8.1' id='slb-asset-slb_default-base-js'></script>
+<script src='../../../wp-content/plugins/simple-lightbox/template-tags/item/js/prod/tag.item.js?ver=2.8.1' id='slb-asset-item-base-js'></script>
+<script src='../../../wp-content/plugins/simple-lightbox/template-tags/ui/js/prod/tag.ui.js?ver=2.8.1' id='slb-asset-ui-base-js'></script>
+<script src='../../../wp-content/plugins/simple-lightbox/content-handlers/image/js/prod/handler.image.js?ver=2.8.1' id='slb-asset-image-base-js'></script>
+<script type="text/javascript" id="slb_footer">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB && SLB.has_child('View.init') ) { SLB.View.init({"ui_autofit":true,"ui_animate":true,"slideshow_autostart":false,"slideshow_duration":"6","group_loop":true,"ui_overlay_opacity":"0.8","ui_title_default":false,"theme_default":"slb_default","ui_labels":{"loading":"\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430","close":"\u0417\u0430\u043a\u0440\u044b\u0442\u044c","nav_next":"\u0412\u043f\u0435\u0440\u0435\u0434","nav_prev":"\u041d\u0430\u0437\u0430\u0434","slideshow_start":"\u0417\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0441\u043b\u0430\u0439\u0434\u0448\u043e\u0443","slideshow_stop":"\u041e\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c \u0441\u043b\u0430\u0439\u0434\u0448\u043e\u0443","group_status":"\u0418\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435 %current%  \u0438\u0437 %total%"}}); }
+if ( !!window.SLB && SLB.has_child('View.assets') ) { {$.extend(SLB.View.assets, {"1510126339":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/office-configuration-tool.jpg"},"1632876645":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/1.jpg"},"605890222":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/2.png"},"932121218":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/3.png"},"409420164":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/4.png"},"659750291":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/5.png"},"2034691302":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/6.png"},"1341814057":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/7.png"},"1194436356":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/8.png"},"781547169":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/9.png"},"72789340":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/10.png"},"2045535925":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/11.png"},"1104025468":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/12.png"},"90067418":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/13.png"},"1776452115":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/14.png"},"1345371340":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/16.png"},"1686394536":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/17.png"},"809692652":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/18.png"},"583714876":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/191.png"},"1011326720":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/20.png"},"2139972052":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/21.png"},"1212601278":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/22.png"},"2082202941":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/23.png"},"1561396675":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/24.png"},"235336630":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/25.png"},"281720557":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/26.png"},"1403552824":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/271.png"},"1887029004":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/281.png"},"1265697400":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/291.png"},"964749971":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/30.png"},"537891499":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/31.png"},"1936762735":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/32.png"},"217582435":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/33.png"},"884721250":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/34.png"},"1372109835":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/35.png"},"1875732460":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/36.png"},"821099634":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2015\/06\/1.png"}});} }
+/* THM */
+if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_baseline',{"name":"\u0411\u0430\u0437\u043e\u0432\u0430\u044f \u043b\u0438\u043d\u0438\u044f","parent":"","styles":[{"handle":"base","uri":"https:\/\/abap-blog.ru\/wp-content\/plugins\/simple-lightbox\/themes\/baseline\/css\/style.css","deps":[]}],"layout_raw":"<div class=\"slb_container\"><div class=\"slb_content\">{{item.content}}<div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><div class=\"slb_controls\"><span class=\"slb_close\">{{ui.close}}<\/span><span class=\"slb_slideshow\">{{ui.slideshow_control}}<\/span><\/div><div class=\"slb_loading\">{{ui.loading}}<\/div><\/div><div class=\"slb_details\"><div class=\"inner\"><div class=\"slb_data\"><div class=\"slb_data_content\"><span class=\"slb_data_title\">{{item.title}}<\/span><span class=\"slb_group_status\">{{ui.group_status}}<\/span><div class=\"slb_data_desc\">{{item.description}}<\/div><\/div><\/div><div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><\/div><\/div><\/div>"}); }if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_default',{"name":"\u041f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e (\u0441\u0432\u0435\u0442\u043b\u044b\u0439)","parent":"slb_baseline","styles":[{"handle":"base","uri":"https:\/\/abap-blog.ru\/wp-content\/plugins\/simple-lightbox\/themes\/default\/css\/style.css","deps":[]}]}); }})})(jQuery);}/* ]]> */</script>
+<script type="text/javascript" id="slb_context">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB ) { {$.extend(SLB, {"context":["public","user_guest"]});} }})})(jQuery);}/* ]]> */</script>
+			<script type="text/javascript">
+				var anr_onloadCallback = function() {
+					for ( var i = 0; i < document.forms.length; i++ ) {
+						var form = document.forms[i];
+						var captcha_div = form.querySelector( '.anr_captcha_field_div' );
+
+						if ( null === captcha_div )
+							continue;
+						captcha_div.innerHTML = '';
+						( function( form ) {
+							var anr_captcha = grecaptcha.render( captcha_div,{
+								'sitekey' : '6LfmhbAaAAAAABBrfPpMngzFHB6qZ4ATxXd3rvOR',
+								'size'  : 'normal',
+								'theme' : 'light'
+							});
+							if ( typeof jQuery !== 'undefined' ) {
+								jQuery( document.body ).on( 'checkout_error', function(){
+									grecaptcha.reset(anr_captcha);
+								});
+							}
+							if ( typeof wpcf7 !== 'undefined' ) {
+								document.addEventListener( 'wpcf7submit', function() {
+									grecaptcha.reset(anr_captcha);
+								}, false );
+							}
+						})(form);
+					}
+				};
+			</script>
+						<script src="../../../recaptcha/api-1.js?onload=anr_onloadCallback&#038;render=explicit" async="" defer="">
+			</script>
+			</body>
+</html>

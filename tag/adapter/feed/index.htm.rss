@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>adapter | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/adapter/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:54:21 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Шаблон адаптер</title>
+		<link>https://abap-blog.ru/osnovy-abap/adapter/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/adapter/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 18 Jan 2012 11:53:37 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[adapter]]></category>
+		<category><![CDATA[шаблон адаптер]]></category>
+		<category><![CDATA[шаблоны проектирования]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=247</guid>
+
+					<description><![CDATA[<p>Адаптер, Adapter или Wrapper/Обёртка — структурный шаблон проектирования, предназначенный для организации использования функций объекта, недоступного для модификации, через специально созданный интерфейс. Задача Система поддерживает требуемые данные и поведение, но имеет неподходящий интерфейс. Чаще всего шаблон Адаптер применяется, если необходимо создать класс, производный от вновь определяемого или уже существующего абстрактного класса. Способ решения Адаптер предусматривает создание класса-оболочки с требуемым интерфейсом. Следствия Шаблон Адаптер позволяет [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/adapter/">Шаблон адаптер</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><strong>Адаптер</strong>, <strong>Adapter</strong> или Wrapper/Обёртка — структурный шаблон проектирования, предназначенный для организации использования функций объекта, недоступного для модификации, через специально созданный интерфейс.</p>
+<p><span id="more-247"></span></p>
+<h3>Задача</h3>
+<p>Система поддерживает требуемые данные и поведение, но имеет неподходящий интерфейс. Чаще всего шаблон Адаптер применяется, если необходимо создать класс, производный от вновь определяемого или уже существующего абстрактного класса.</p>
+<h3>Способ решения</h3>
+<p>Адаптер предусматривает создание класса-оболочки с требуемым интерфейсом.</p>
+<h3>Следствия</h3>
+<p>Шаблон Адаптер позволяет включать уже существующие объекты в новые объектные структуры, независимо от различий в их интерфейсах.</p>
+<h3>Реализация</h3>
+<p>Включение уже существующего класса в другой класс. Интерфейс включающего класса приводится в соответствие с новыми требованиями, а вызовы его методов преобразуются в вызовы методов включённого класса.</p>
+<p>Пример реализации на языке ABAP:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZNP_DP_ADAPTER.
+
+* Интерфейс который необходимо поддерживать в конечном классе
+INTERFACE lif_output.
+  METHODS: generate_output.
+ENDINTERFACE.                    
+
+* Класс элементарного вывода через WRITE поддерживающий нужный интерфейс
+CLASS simple_op DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_output.
+ENDCLASS.                
+
+CLASS simple_op IMPLEMENTATION.
+  METHOD lif_output~generate_output.
+    WRITE: / 'Простой вывод с помощью write'.
+  ENDMETHOD.
+ENDCLASS.                   
+
+* Класс вывода через создание дерева, не поддерживает нужный интерфейс
+CLASS tree_output DEFINITION.
+  PUBLIC SECTION.
+    METHODS: generate_tree.
+ENDCLASS.
+*
+CLASS tree_output IMPLEMENTATION.
+  METHOD generate_tree.
+    WRITE: / 'Генерация дерева.'.
+  ENDMETHOD.
+ENDCLASS.          
+
+* Сам класс - адаптер, реализующий нужный интерфейс и являющийся 
+* оболочкой над классом выводящим дерево..
+CLASS new_complex_op DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_output.
+ENDCLASS.               
+
+CLASS new_complex_op IMPLEMENTATION.
+  METHOD lif_output~generate_output.
+    DATA: o_tree_op TYPE REF TO tree_output.
+    CREATE OBJECT o_tree_op.
+    o_tree_op-&gt;generate_tree( ).
+  ENDMETHOD.
+ENDCLASS.                    
+
+START-OF-SELECTION.
+* Ссылочная переменная на подходящий интерфейс
+  DATA: o_op TYPE REF TO lif_output.
+* Создаем объект с типом поддерживающим интерфейс
+  CREATE OBJECT o_op TYPE simple_op.
+  o_op-&gt;generate_output( ).
+* Создаем объект с типом поддерживающим интерфейс и являющимся адаптером
+* к классу выводящего вывод в виде дерева.
+  CREATE OBJECT o_op TYPE new_complex_op.
+  o_op-&gt;generate_output( ).</pre><p>Оригинальный пример находится <a href="http://help-abap.zevolving.com/2012/01/abap-objects-design-patterns-%E2%80%93-adapter/">тут</a>.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/adapter/">Шаблон адаптер</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/adapter/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

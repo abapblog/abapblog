@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>create_dynamic_table | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/create_dynamic_table/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Wed, 24 Mar 2021 04:53:47 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Динамические таблицы в ABAP</title>
+		<link>https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/dinamicheskie-tablicy-v-abap/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/dinamicheskie-tablicy-v-abap/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 19 Jan 2012 03:17:21 +0000</pubDate>
+				<category><![CDATA[Внутренние таблицы]]></category>
+		<category><![CDATA[Динамическое программирование]]></category>
+		<category><![CDATA[CL_ALV_TABLE_CREATE]]></category>
+		<category><![CDATA[create_dynamic_table]]></category>
+		<category><![CDATA[RTTS]]></category>
+		<category><![CDATA[динамические таблицы]]></category>
+		<category><![CDATA[динамическое программирование]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=256</guid>
+
+					<description><![CDATA[<p>Существует как минимум 3 способа создания динамических таблиц: Используется в старых системах, через генерацию программы (GENERATE SUBROUTINE POOL). Используя класс CL_ALV_TABLE_CREATE. Используя RTTS (Run Time Type Services). В данной статье будут рассмотрены все три, примеры максимально упрощены для понимания. GENERATE SUBROUTINE POOL В старых системах (до версии ABAP 6.40) для генерации динамической таблицы (или структуры) использовался метод [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/dinamicheskie-tablicy-v-abap/">Динамические таблицы в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Существует как минимум 3 способа создания динамических таблиц:</p>
+<ol start="1">
+<li>Используется в старых системах, через генерацию программы (<strong>GENERATE SUBROUTINE POOL</strong>).</li>
+<li>Используя класс <strong>CL_ALV_TABLE_CREATE</strong>.</li>
+<li>Используя <strong>RTTS</strong> (Run Time Type Services).</li>
+</ol>
+<p>В данной статье будут рассмотрены все три, примеры максимально упрощены для понимания.</p>
+<p><span id="more-256"></span></p>
+<h4>GENERATE SUBROUTINE POOL</h4>
+<p>В старых системах (до версии ABAP 6.40) для генерации динамической таблицы (или структуры) использовался метод динамического создания подпрограммы с использованием оператора <strong>GENERATE</strong><strong>SUBROUTINE</strong><strong>POOL</strong><strong>. </strong>Пример реализации:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  zdyn_itab_old.
+*
+DATA: dy_table TYPE REF TO DATA,
+      dy_line  TYPE REF TO DATA.
+*
+FIELD-SYMBOLS: &lt;dyn_table&gt; TYPE STANDARD TABLE,
+               &lt;dyn_wa&gt;.
+*
+FIELD-SYMBOLS: &lt;fs&gt; TYPE ANY.
+*
+DATA: ls_source TYPE STRING.
+DATA: lt_source LIKE STANDARD TABLE OF ls_source WITH HEADER LINE.
+*
+DATA: l_name LIKE sy-repid.
+DATA: l_message(240) TYPE C,
+      l_line TYPE I,
+      l_word(72) TYPE C.
+*
+DATA: l_form(30) TYPE C VALUE 'TABLE_CREATE'.
+*
+*.....................................................................
+START-OF-SELECTION.
+  lt_source = 'REPORT ZTEST_SUBROUTINE_POOL.'.
+  APPEND lt_source.
+  lt_source = 'FORM TABLE_CREATE USING I_FS TYPE ANY.'.
+  APPEND lt_source.
+* Определяем динамическую структуру таблицы
+  lt_source = 'DATA: BEGIN OF LT_GENTAB OCCURS 0.'.
+  APPEND lt_source.
+  lt_source = 'DATA: BUKRS TYPE BUKRS. '.
+  APPEND lt_source.
+  lt_source = 'DATA: BKTXT TYPE BKTXT. '.
+  APPEND lt_source.
+  lt_source = 'DATA: END OF LT_GENTAB.'.
+  APPEND lt_source.
+  lt_source = 'DATA: POINTER TYPE REF TO DATA.'.
+  APPEND lt_source.
+  lt_source = 'CREATE DATA POINTER LIKE STANDARD TABLE OF LT_GENTAB.'.
+  APPEND lt_source.
+  lt_source = 'I_FS = POINTER.'.
+  APPEND lt_source.
+  lt_source = 'ENDFORM. '.
+  APPEND lt_source.
+
+  l_name = 'ZTEST_SUBROUTINE_POOL'.
+
+  CATCH SYSTEM-EXCEPTIONS generate_subpool_dir_full = 9.
+    GENERATE SUBROUTINE POOL lt_source NAME l_name
+             MESSAGE l_message LINE l_line WORD l_word. "#EC CI_GENERATE
+  ENDCATCH.
+* В случае ошибки выведем сообщение
+  IF NOT l_message IS INITIAL.
+    MESSAGE e000(0k) WITH l_message l_line l_word.
+  ENDIF.
+
+  ASSIGN dy_table TO &lt;fs&gt;.
+* Вызываем подпрограмму из сгенерированной программы
+  PERFORM (l_form) IN PROGRAM (l_name) USING &lt;fs&gt;.
+* Получаем определение типа данных и присваиваем динамической переменной
+  ASSIGN dy_table-&gt;* TO &lt;dyn_table&gt;.
+*
+* Создаем тип данных, как строку сформированной таблицы
+  CREATE DATA dy_line LIKE LINE OF &lt;dyn_table&gt;.
+* Получем определение строки таблицы и присваеваем дин. переменной
+  ASSIGN dy_line-&gt;* TO &lt;dyn_wa&gt;.</pre><p><strong>CL_ALV_TABLE_CREATE</strong></p>
+<p>Второй способ подразумевает использование класса CL_ALV_TABLE_CREATE и его статического метода create_dynamic_table. На вход мы должны передать каталог полей (внутреняя таблица определенной структуры, описывающая из каких полей будет состоять таблица), на выходе получим  ссылочную переменную на созданный тип данных. Данный способ является по сути ООП обёрткой над предыдущим. Пример реализации:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  ztest_np_dyn.
+
+DATA:
+  lv_table   TYPE REF TO DATA,
+  lv_line    TYPE REF TO DATA,
+  ls_lvc_cat TYPE lvc_s_fcat,
+  lt_lvc_cat TYPE lvc_t_fcat.
+
+FIELD-SYMBOLS:
+  &lt;fs_table&gt;      TYPE TABLE,
+  &lt;fs_line&gt;       TYPE ANY.     
+
+DEFINE append_catalog.
+  ls_lvc_cat-fieldname = &amp;1.  " Имя поля
+  ls_lvc_cat-ref_field = &amp;2.  " Ссылочное поле
+  ls_lvc_cat-ref_table = &amp;3.  " Ссылочная таблица
+  ls_lvc_cat-domname = &amp;4. " Домен из ABAP словаря
+  APPEND ls_lvc_cat TO lt_lvc_cat.
+END-OF-DEFINITION.
+
+append_catalog 'ABMNG' 'ABMNG' 'PLAF' ''.
+append_catalog 'ISHOD' 'ABMNG' 'PLAF' ''.
+append_catalog 'MEINS' 'MEINS' 'PLAF' ''.
+append_catalog 'PSTTR' 'PSTTR' 'PLAF' ''.
+append_catalog 'PEDTR' 'PEDTR' 'PLAF' ''.
+
+CALL METHOD cl_alv_table_create=&gt;create_dynamic_table
+  EXPORTING
+    it_fieldcatalog = lt_lvc_cat
+  IMPORTING
+    ep_table        = lv_table.
+
+ASSIGN lv_table-&gt;* TO &lt;fs_table&gt;.
+CREATE DATA lv_line LIKE LINE OF &lt;fs_table&gt;.
+ASSIGN lv_line-&gt;* TO &lt;fs_line&gt;.</pre><p></p>
+<h4>RTTS</h4>
+<p>RTTS появился начиная с версии ABAP 6.40. С помощью набора классов, который предоставляет RTTS, мы можем получать информацию о типах и создавать новые динамически во время выполнения.  Пример реализации:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lo_struct   TYPE REF TO cl_abap_structdescr,
+      lo_element  TYPE REF TO cl_abap_elemdescr,
+      lo_new_type TYPE REF TO cl_abap_structdescr,
+      lo_new_tab  TYPE REF TO cl_abap_tabledescr,
+      lo_data     TYPE REF TO DATA,
+      lt_comp     TYPE cl_abap_structdescr=&gt;component_table.
+
+FIELD-SYMBOLS: &lt;fs_tab&gt;   TYPE ANY TABLE,
+               &lt;fs_line&gt;  TYPE ANY.
+
+* Получаем описание структуры из ABAP словаря
+  lo_struct ?= cl_abap_typedescr=&gt;describe_by_name( 'PLAF' ).
+  lt_comp  = lo_struct-&gt;get_components( ).
+
+* Создаем новый тип структуры по каталогу полей.
+  lo_new_type = cl_abap_structdescr=&gt;create( lt_comp ).
+
+* Создаем новую таблицу по структуре
+  lo_new_tab = cl_abap_tabledescr=&gt;create(
+                  p_line_type  = lo_new_type
+                  p_table_kind = cl_abap_tabledescr=&gt;tablekind_std
+                  p_unique     = abap_false ).
+
+* Создаем ссылочные переменные присываеваем значения
+  CREATE DATA lo_data TYPE HANDLE lo_new_type.
+  ASSIGN lo_data-&gt;* TO &lt;fs_line&gt;.
+
+  CREATE DATA lo_data TYPE HANDLE lo_new_tab.
+  ASSIGN lo_data-&gt;* TO &lt;fs_tab&gt;.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/dinamicheskie-tablicy-v-abap/">Динамические таблицы в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/vnutrennie-tablicy/dinamicheskie-tablicy-v-abap/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

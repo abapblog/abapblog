@@ -1,0 +1,1694 @@
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title> Display ALV report output in the SAME Selection Screen - ABAP Help Blog</title>
+<meta name="google-site-verification" content="Q2CNRPqLzecuqITw2LR_UDyF0nv6mNAU5wcUV_mTCLc" />
+<link rel="stylesheet" href="http://zevolving.com/wp-content/themes/new_wp/style.css" type="text/css" />
+<link href="http://zevolving.com/images/icon48.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="http://zevolving.com/images/icon48.png" rel="icon" type="image/vnd.microsoft.icon">
+<link rel="pingback" href="http://zevolving.com/xmlrpc.php" />
+<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />
+<style>
+#cse .gsc-search-box {
+display: none;
+}
+</style>
+<script>
+	var g_expand_20 = "http://zevolving.com/images/expand_20.png";
+	var g_collapse_20 = "http://zevolving.com/images/collapse2_20.png";
+	var g_select_20 = "http://zevolving.com/images/select2_20.png";
+	var g_theme_folder = "http://zevolving.com/wp-content/themes/new_wp";
+</script>
+<script type="text/javascript" src="http://zevolving.com/wp-content/themes/new_wp/js/syntaxer.js"></script>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25819257-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v16.8 - https://yoast.com/wordpress/plugins/seo/ -->
+	<meta name="description" content="Shows the way to display the report output in the same selection screen using Docking Container and SLAV 2D Table display with minimal coding Preface I" />
+	<link rel="canonical" href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Display ALV report output in the SAME Selection Screen - ABAP Help Blog" />
+	<meta property="og:description" content="Shows the way to display the report output in the same selection screen using Docking Container and SLAV 2D Table display with minimal coding Preface I" />
+	<meta property="og:url" content="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/" />
+	<meta property="og:site_name" content="ABAP Help Blog" />
+	<meta property="article:published_time" content="2008-10-23T12:19:00+00:00" />
+	<meta property="article:modified_time" content="2013-10-01T19:26:08+00:00" />
+	<meta property="og:image" content="http://3.bp.blogspot.com/_Pj9z40ys5GI/SQBshnn6H1I/AAAAAAAAAmc/DLW98omuNg0/s400/1+initial+screen.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:creator" content="@zevolving" />
+	<meta name="twitter:site" content="@zevolving" />
+	<meta name="twitter:label1" content="Written by" />
+	<meta name="twitter:data1" content="Naimesh Patel" />
+	<meta name="twitter:label2" content="Est. reading time" />
+	<meta name="twitter:data2" content="8 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"http://zevolving.com/#website","url":"http://zevolving.com/","name":"ABAP Help Blog","description":"Great Insight with Tips &amp; Tricks for ABAP","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"http://zevolving.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#primaryimage","inLanguage":"en-US","url":"http://3.bp.blogspot.com/_Pj9z40ys5GI/SQBshnn6H1I/AAAAAAAAAmc/DLW98omuNg0/s400/1+initial+screen.png","contentUrl":"http://3.bp.blogspot.com/_Pj9z40ys5GI/SQBshnn6H1I/AAAAAAAAAmc/DLW98omuNg0/s400/1+initial+screen.png"},{"@type":"WebPage","@id":"http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#webpage","url":"http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/","name":"Display ALV report output in the SAME Selection Screen - ABAP Help Blog","isPartOf":{"@id":"http://zevolving.com/#website"},"primaryImageOfPage":{"@id":"http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#primaryimage"},"datePublished":"2008-10-23T12:19:00+00:00","dateModified":"2013-10-01T19:26:08+00:00","author":{"@id":"http://zevolving.com/#/schema/person/a31f438f139d8897ad087c0cbd2e5e8a"},"description":"Shows the way to display the report output in the same selection screen using Docking Container and SLAV 2D Table display with minimal coding Preface I","breadcrumb":{"@id":"http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/"]}]},{"@type":"BreadcrumbList","@id":"http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"http://zevolving.com/"},{"@type":"ListItem","position":2,"name":"Tricks","item":"http://zevolving.com/category/tricks/"},{"@type":"ListItem","position":3,"name":"Display ALV report output in the SAME Selection Screen"}]},{"@type":"Person","@id":"http://zevolving.com/#/schema/person/a31f438f139d8897ad087c0cbd2e5e8a","name":"Naimesh Patel","image":{"@type":"ImageObject","@id":"http://zevolving.com/#personlogo","inLanguage":"en-US","url":"http://0.gravatar.com/avatar/fe97645d09e2ab21b288ea4adf01115b?s=96&d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&r=g","contentUrl":"http://0.gravatar.com/avatar/fe97645d09e2ab21b288ea4adf01115b?s=96&d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&r=g","caption":"Naimesh Patel"},"description":"I'm SAP ABAP Consultant for more than a decade. I like to experiment with ABAP especially OO. I have been SDN Top Contributor.","sameAs":["http://zevolving.com/"],"url":"http://zevolving.com/author/naimesh-patel/"}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="ABAP Help Blog &raquo; Display ALV report output in the SAME Selection Screen Comments Feed" href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/zevolving.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.7.3"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='http://zevolving.com/wp-includes/css/dist/block-library/style.min.css?ver=5.7.3' type='text/css' media='all' />
+<link rel='stylesheet' id='contact-form-7-css'  href='http://zevolving.com/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.4' type='text/css' media='all' />
+<link rel='stylesheet' id='toc-screen-css'  href='http://zevolving.com/wp-content/plugins/table-of-contents-plus/screen.min.css?ver=2002' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-polls-css'  href='http://zevolving.com/wp-content/plugins/wp-polls/polls-css.css?ver=2.75.6' type='text/css' media='all' />
+<style id='wp-polls-inline-css' type='text/css'>
+.wp-polls .pollbar {
+	margin: 1px;
+	font-size: 9px;
+	line-height: 11px;
+	height: 11px;
+	background: #dd4b39;
+	border: 1px solid #c53727;
+}
+
+</style>
+<link rel='stylesheet' id='wordpress-popular-posts-css-css'  href='http://zevolving.com/wp-content/plugins/wordpress-popular-posts/assets/css/wpp.css?ver=5.2.4' type='text/css' media='all' />
+<link rel='stylesheet' id='zabap_code-css'  href='http://zevolving.com/wp-content/plugins/zabap-code/abap_code.css?ver=5.7.3' type='text/css' media='all' />
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/jquery/jquery.min.js?ver=3.5.1' id='jquery-core-js'></script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='application/json' id='wpp-json'>
+{"sampling_active":0,"sampling_rate":100,"ajax_url":"http:\/\/zevolving.com\/wp-json\/wordpress-popular-posts\/v1\/popular-posts","ID":45,"token":"63aae473a0","lang":0,"debug":0}
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-content/plugins/wordpress-popular-posts/assets/js/wpp.min.js?ver=5.2.4' id='wpp-js-js'></script>
+<script type='text/javascript' src='http://zevolving.com/wp-content/plugins/zabap-code/ash_main.js?ver=5.7.3' id='zashjs-js'></script>
+<link rel="https://api.w.org/" href="http://zevolving.com/wp-json/" /><link rel="alternate" type="application/json" href="http://zevolving.com/wp-json/wp/v2/posts/45" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://zevolving.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://zevolving.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.7.3" />
+<link rel='shortlink' href='http://zevolving.com/?p=45' />
+<link rel="alternate" type="application/json+oembed" href="http://zevolving.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fzevolving.com%2F2008%2F10%2Fdisplay-alv-report-output-in-the-same-selection-screen%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://zevolving.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fzevolving.com%2F2008%2F10%2Fdisplay-alv-report-output-in-the-same-selection-screen%2F&#038;format=xml" />
+<style type="text/css">div#toc_container {width: 50%;}</style><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><script type="text/javascript" src="http://zevolving.com/wp-content/themes/new_wp/js/footer_hover.js"></script>
+<script type="text/javascript"  src="http://zevolving.com/wp-content/themes/new_wp/js/gacookies.js"></script>
+<script type="text/javascript"  src="http://zevolving.com/wp-content/themes/new_wp/js/ad_loading.js"></script>
+<script type="text/javascript">
+window.___gcfg = {lang: 'en'};
+(function() 
+{var po = document.createElement("script");
+po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(po, s);
+})();</script>
+<link rel="author" href="https://plus.google.com/+NaimeshPatel/posts">
+<meta name="twitter:creator" content="@naimeshpatel">
+</head>
+<body onload='ieonload(event);'> 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+			<script type="text/javascript">
+			fixedtoolactive = true;
+		        fixedSideAdsactive = false;
+		</script>
+		<script type="text/javascript">
+		fixedmegamenuactive = true;
+	</script>
+
+	
+	<div id="page-wrap">
+
+
+		<div id="main-header">
+			<header>
+  
+				<div id="header-wrapper">
+
+					<div class="header-text">
+						<div class="header-bg-wrap">
+							<div class="header-name">
+								<a href="http://zevolving.com">Zevolving</a>
+							</div>
+							<span class="hs1"></span>
+							<span class="hs2"></span>
+							<span class="hs3"></span>
+							<span class="hs4"></span>
+							<span class="hs5"></span>
+						</div>
+					</div>
+					<div class="header-ad">
+					<div class="head-search-wrap">
+					<form accept-charset="utf-8" method="get" id="searchform" action="http://zevolving.com/search">
+						<label style="display:none;" for="s">Search:</label>
+						<span class="search-form-glass"><input type="submit" id="searchsubmit" value="SEARCH"></span>
+						<input autocomplete="off" id="s" name="q" type="text" class="search-form-input" placeholder="e.g. ABAP Objects" title="search" onkeydown="if (event.keyCode == 13) document.getElementById('searchsubmit').click()">
+					</form>
+					</div>
+					</div>
+
+
+				</div>
+
+			</header>
+
+		</div>
+
+		<div class="menu-main-wrapper">
+			<div id="mmenu-wrapper" class="menu-wrapper">
+				<ul id="mega-menu">
+					<li class="icon-dis"><a href="http://zevolving.com" class="lsf-icon" title="home"></a>
+						<div class="dropdown_2columns">
+							<div class="col_2">
+								<h2>Welcome !</h2>
+							</div>
+							<div class="col_2">
+								<p>Welcome to Zevolving - place where you find one of the best articles, tutorials for ABAP</p>             
+							</div>
+						</div>
+					</li>
+					
+
+					<li ><a href="http://zevolving.com/archives/">Recent Posts</a>
+						<div class="dropdown_3columns">
+							<div class="col_3">
+							<div><h3><a href="http://zevolving.com/2020/01/write-green-programs/" title="Permanent link to Write Green Programs" >Write Green Programs</a> </h3><p> It’s not about setting the background green of your code editor or setting up all the code lines t...</p></div><div><h3><a href="http://zevolving.com/2017/01/display-alv-grid-on-list-generated-by-write/" title="Permanent link to Display ALV Grid on List Generated by WRITE " >Display ALV Grid on List Generated by WRITE </a> </h3><p> Ever wondered how to generate the ALV Grid on the list generated by WRITE statement. Lets see today ...</p></div><div><h3><a href="http://zevolving.com/2016/11/why-not-to-have-a-wrapper-around-exception-raise/" title="Permanent link to Why NOT to have a wrapper around Exception (RAISE) ?" >Why NOT to have a wrapper around Exception (RAISE) ?</a> </h3><p> Class based exception are more powerful compared to the "legacy" exceptions. But you don't want to c...</p></div>							<ul><li><a href="http://zevolving.com/archives/">More Post &#8594;</a></li></ul>
+							</div>
+						</div>
+					</li>
+
+
+					<li ><a href="http://zevolving.com/category/abapobjects/">OO Concepts</a>
+						<div class="dropdown_2columns">
+							<div class="col_2">
+							<ul>
+								<li><a href="http://zevolving.com/2012/01/abstract-class-vs-interface/">Abstract class vs Interface</a></li>
+								<li><a href="http://zevolving.com/2012/05/abap-objects-achieve-multiple-inheritance-using-interfaces/">Multiple Inheritance</a></li>
+								<li><a href="http://zevolving.com/2012/01/when-to-use-local-class-and-when-not-to/">When to use Local Class</a></li>
+								<li><a href="http://zevolving.com/2011/12/class-based-exception/">Class Based Exceptions</a></li>
+								<li><a href="http://zevolving.com/2011/02/class_constructor-and-constructor-who-comes-before-whom/">Constructors</a></li>
+							</ul>					
+							<ul><li><a href="http://zevolving.com/category/abapobjects/oo-concepts/">More &#187;</a></li></ul>
+							</div>
+						</div>
+					</li>
+					<li ><a href="http://zevolving.com/category/abapobjects/oo-design-patterns/">Design Patterns</a>
+						<div class="dropdown_2columns">
+							<div class="col_2">
+							<ul>
+								<li><a href="http://zevolving.com/2008/09/abap-object-design-patterns-singleton/">Singleton</a></li>
+								<li><a href="http://zevolving.com/2008/10/abap-objects-design-patterns-model-view-controller-mvc-part-1/">Model View Controller</a></li>
+								<li><a href="http://zevolving.com/2012/02/abap-objects-design-patterns-singleton-factory/">Singleton Factory</a></li>
+								<li><a href="http://zevolving.com/2011/10/abap-objects-design-patterns-decorator/">Decorator</a></li>
+								<li><a href="http://zevolving.com/2011/11/case-study-observer-design-pattern-usage/">Observer</a></li>
+							</ul>
+							<ul><li><a href="http://zevolving.com/category/abapobjects/oo-design-patterns/">More &#187;</a></li></ul>
+							</div>
+						</div>
+					</li>
+
+					<li ><a href="http://zevolving.com/category/performance/">Performance</a>
+						<div class="dropdown_2columns">
+							<div class="col_2">
+							<ul>
+								<li><a href="http://zevolving.com/2009/12/use-of-field-symbols-vs-work-area/">FieldSymobls vs WA</a></li>
+								<li><a href="http://zevolving.com/2009/12/parallel-cursor-to-speed-up-performance-of-nested-loop/">Parallel Cursor</a></li>
+								<li><a href="http://zevolving.com/2011/06/performance-of-itab-copy/">ITAB Copy</a></li>
+								<li><a href="http://zevolving.com/2012/05/performance-of-using-keys-in-select-with-for-all-entries/">FOR ALL Entries </a></li>
+								<li><a href="http://zevolving.com/2009/12/measure-the-performance-between-break-points-using-se30/">Between breakpoints</a></li>
+							</ul>					
+							<ul><li><a href="http://zevolving.com/category/performance/">More &#187;</a></li></ul>							
+							</div>
+						</div>
+					</li>
+					<li ><a href="http://zevolving.com/category/concepts/">Concepts</a>
+						<div class="dropdown_2columns">
+							<div class="col_2">
+							<ul>
+								<li><a href="http://zevolving.com/2013/02/what-is-new-type-category-type-boxed-in-abap/">New TYPE Category BOXED</a></li>
+								<li><a href="http://zevolving.com/2013/02/pragmas-in-abap-replacing-pseudo-comments/">Pragmas replacing Pseudo Comments</a></li>
+								<li><a href="http://zevolving.com/2013/02/abap-method-chaining-new-feature-in-abap-7-0-ehp2/">Method Chaining</a></li>
+								<li><a href="http://zevolving.com/2013/03/abap-internal-table-secondary-keys-new-in-abap-7-0-ehp2/">ITAB Secondary Keys</a></li>
+							</ul>
+							<ul><li><a href="http://zevolving.com/category/concepts/">More &#187;</a></li></ul>					
+						</div>
+					</li>
+
+					<li ><a href="http://zevolving.com/category/tutorials/">Tutorials</a>
+						<div class="dropdown_2columns align_right">
+							<div class="col_1">
+								<ul class="simple">
+									<li><a href="http://zevolving.com/category/salv-tutorial/salv-table/">SALV Table Display</a></li>
+									<li><a href="http://zevolving.com/category/salv-tutorial/salv-hs/">SALV HS Table Display</a></li>
+									<li><a href="http://zevolving.com/category/classical-alv/">Classic</a></li>									
+								</ul>   
+							</div>
+							<div class="col_1">
+								<ul class="simple">
+									<li><a href="http://zevolving.com/category/generic-object-services-gos/">Generic Object Services (GOS)</a></li>
+									<li><a href="http://zevolving.com/category/dynamic-itab/">Dynamic ITAB</a></li>
+									<li><a href="http://zevolving.com/category/case-study/">Case Studies</a></li>
+								</ul>   
+							</div>
+						</div>
+					</li>
+					<li class="icon-dis"><a href="/search" class="lsf-icon" title="search"></a>
+						<div class="dropdown_2columns align_right">
+							<div style="padding: 5px;">
+							<form accept-charset="utf-8" method="get" id="searchform" action="http://zevolving.com/search" >
+		<label style="display:none;" for="s">Search:</label>
+		<span class="search-form-glass">
+		<input type="submit" id="searchsubmit" value="SEARCH">
+		</span>
+		<input autocomplete="off" 
+			id="s"
+			name="q"
+			type="text" 
+			class="search-form-input" 
+			value="Search in Zevolving" title="search"
+			onfocus="if(this.value==this.defaultValue)this.value=''" 
+			onblur="if(this.value=='') this.value=this.defaultValue" 
+			onkeydown="if (event.keyCode == 13) document.getElementById('searchsubmit').click()">
+</form>							<ul><li><a href="http://zevolving.com/archives">Or Explore Archives</a></li></ul>
+							</div>
+						</div>
+					</li>
+					<li class="menu_right menu_hl"><a href="http://zevolving.com/category/code-snippets/">Code Snippets</a>
+					</li>
+					<!--
+					<li class="menu_right menu_hl"><a href="http://zevolving.com/category/runtime-errors/">RunTime Errors</a>
+					</li>
+					-->
+				</ul>
+			</div>
+			<div id="mmenu-wrapper-small" class="menu-wrapper">
+				<a class="mmenu-show-hide">Show / Hide Menu</a>
+				<ul id="mega-menu">
+					<li ><a href="http://zevolving.com">Home</a>
+					</li>
+					<li ><a href="http://zevolving.com/archives/">Recent Posts</a>
+					</li>
+					<li ><a href="http://zevolving.com/category/abapobjects/">OO Concepts</a>
+					</li>
+					<li ><a href="http://zevolving.com/category/abapobjects/oo-design-patterns/">Design Patterns</a>
+					</li>
+					<li ><a href="http://zevolving.com/category/performance/">Performance</a>
+					</li>
+					<li ><a href="http://zevolving.com/category/concepts/">Concepts</a>
+					</li>
+					<li ><a href="http://zevolving.com/category/tutorials/">Tutorials</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="adheaderstart"></div>
+<div id="adb_header" style="height: 130px; display: box; padding: 10px;">
+    <script type="text/javascript">adb_header_ad();</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Header_ad -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-0913661839762106"
+     data-ad-slot="1298570732"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<div id="cext-head-wrap_1"></div>
+		<div id="msg-board-wrap" class="msg-board-wrap" style="display:none;">  
+			<div id="msg-board" class="msg-board">
+				<a href="http://zevolving.com/2013/09/celebrating-5-years/">
+				<div class="m5-year-msg">
+					<span class="msg-main-text">5</span>
+					<div>
+						<p class="msg-sub-text">Celebrating 5 years - 2008 to 2013</p>
+					</div>
+				</div>
+				</a>
+			</div>
+		</div>
+	<div id="main-wrapper" class="blog-sing-page">	
+
+		<div id="main-content" >	
+	
+			<!-- Main Section Begin -->
+			<div class="main section" id="main">
+
+
+						
+													
+
+								<div class="post-header">
+									<ul class="breadcrumb"><li><span><span><a href="http://zevolving.com/">Home</a> </li><li> <span><a href="http://zevolving.com/category/tricks/">Tricks</a> </li><li> <span class="breadcrumb_last" aria-current="page">Display ALV report output in the SAME Selection Screen</span></span></span></span></li></ul>									<div class="post-title">
+										<h2><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/" rel="bookmark" title="Permanent Link to Display ALV report output in the SAME Selection Screen" class="entry-title">Display ALV report output in the SAME Selection Screen</a></h2>
+									</div>
+									<div class="post-aut-line">
+									<p><span class="post-aut-line-span">
+										By <span class="vcard author"><span class="author fn"><a href="http://zevolving.com/author/naimesh-patel/" title="Posts by Naimesh Patel" rel="author">Naimesh Patel</a><a href="mailto:naimeshvpatel@gmail.com" title="Email the Author"></a></span></span>
+										<span> | <span class="updated">October 23, 2008</span></span> 
+										<span class="post-cat"> | <a href="http://zevolving.com/category/tricks/" rel="category tag">Tricks</a></span>
+<span> | <span class="lsf-icon" title="view">73,024 </span></span><span> | <a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comments"><span class="lsf-icon" title="comment">29</span></a></span>
+									</span></p>
+									</div>
+								</div>
+
+				<!-- Blog Begin -->
+				<div class="blog1" id="Blog1">
+
+					<!-- Blogs LOOP Begin -->
+					<div class="blog-posts hfeed">
+							
+							<!-- Entire Post Begin -->
+							<div class="post hentry">
+						
+								<!-- Post Body Begin -->
+								<div class="post-body entry-content">
+
+										<!-- Blog content -->
+									
+									<div class="subtitle">Shows the way to display the report output in the same selection screen using Docking Container and SLAV 2D Table display with minimal coding</div>
+<h3>Preface</h3>
+<p>I was searching for the option to display the report output on the same selection-screen from quite a long time. SDN Forum thread <a href="https://forums.sdn.sap.com/thread.jspa?threadID=1059161&amp;tstart=0" rel="nofollow">How can i display output in the same selection screen</a> reminded me again to research on this topic.</p>
+<p>After a lot of analysis (and of course Trials-&#038;-Errors), I found the solution which requires minimal development. Before giving the solution, check out how it looks-</p><div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- InArticle -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-0913661839762106"
+     data-ad-slot="7055940664"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+									
+<p>When we start running the report, it will be a normal Selection Screen:</p>
+<div class="post-image"><a href="http://3.bp.blogspot.com/_Pj9z40ys5GI/SQBshnn6H1I/AAAAAAAAAmc/DLW98omuNg0/s1600-h/1+initial+screen.png"><img style="cursor:pointer; cursor:hand;width: 400px; height: 180px;" src="http://3.bp.blogspot.com/_Pj9z40ys5GI/SQBshnn6H1I/AAAAAAAAAmc/DLW98omuNg0/s400/1+initial+screen.png" border="0" alt="" id="BLOGGER_PHOTO_ID_5260323689596591954" /></a></div>
+<p>After executing the report, our output will overlay on the Selection Screen. And it will look like this:</p>
+<div class="post-image"><a href="http://2.bp.blogspot.com/_Pj9z40ys5GI/SQBsuBd7vRI/AAAAAAAAAmk/Gi_CWvoy4P4/s1600-h/2+with+output_s+2.png"><img style="cursor:pointer; cursor:hand;width: 400px; height: 276px;" src="http://2.bp.blogspot.com/_Pj9z40ys5GI/SQBsuBd7vRI/AAAAAAAAAmk/Gi_CWvoy4P4/s400/2+with+output_s+2.png" border="0" alt="" id="BLOGGER_PHOTO_ID_5260323902692506898" /></a></div>
+<p>Doesn&#8217;t it look good ?</p>
+<h3>Journey to find the solution:</h3>
+<p>After reading the problem in the thread, suddenly I got a strike: Why not to create a Docking Container and place the ALV inside it..!! </p>									
+<p>I have started with placing the docking container in the INITIALIZATION event and the code to generate the ALV in the START-OF-SELECTION event. In this try, I got the docking container on the selection screen but no ALV inside of that docking container. Than I realize that I missed on of the basics of report programming &#8211; as soon as control goes to INITALIZATION all memory allocation will be destroyed and global data will be initialized. That&#8217;s why I was not getting the ALV in the docking container. Selection screen was looking like this:</p>
+<div class="post-image"><a href="http://1.bp.blogspot.com/_Pj9z40ys5GI/SQBtAqJ0KqI/AAAAAAAAAms/D3Hi9MT_yEU/s1600-h/3+Only+Dock.png"><img style="cursor:pointer; cursor:hand;width: 400px; height: 194px;" src="http://1.bp.blogspot.com/_Pj9z40ys5GI/SQBtAqJ0KqI/AAAAAAAAAms/D3Hi9MT_yEU/s400/3+Only+Dock.png" border="0" alt="" id="BLOGGER_PHOTO_ID_5260324222851623586" /></a></div>
+<p>So, I moved the ALV logic in the INITALIZATION event. After this try, I got the Docking container with the empty ALV &#8211; ALV with the field catalog but no Data. Here again, I have the same problem &#8211; all my data allocation got destroyed as soon as control come to INITALIZATION event. To overcome this I used the ABAP local memory. I exported my output table and imported back it into the INITALIZATION to initialize my ALV. Selection-screen was looking like this:</p>
+<div class="post-image"><a href="http://1.bp.blogspot.com/_Pj9z40ys5GI/SQBtW9K7_fI/AAAAAAAAAm0/-bla7IS2na4/s1600-h/4+Empty+ALV.png"><img style="cursor:pointer; cursor:hand;width: 400px; height: 170px;" src="http://1.bp.blogspot.com/_Pj9z40ys5GI/SQBtW9K7_fI/AAAAAAAAAm0/-bla7IS2na4/s400/4+Empty+ALV.png" border="0" alt="" id="BLOGGER_PHOTO_ID_5260324605913726450" /></a></div>
+<h3>Code Snippet to generate ALV on Selection Screen</h3>
+<p>Here is the code which will generate the output as shown in the second picture.</p>
+<div id="mdiv081023">
+<pre id="pre081023">
+<span class="L0S31">*&amp;---------------------------------------------------------------------*</span><br>
+<span class="L0S31">*&amp;&nbsp;Generates&nbsp;the&nbsp;ALV&nbsp;on&nbsp;the&nbsp;Selection&nbsp;Screen&nbsp;itself</span><br>
+<span class="L0S31">*&amp;</span><br>
+<span class="L0S31">*&amp;---------------------------------------------------------------------*</span><br>
+<span class="L0S52">REPORT&nbsp;&nbsp;</span>zalv_on_sel_screen<span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">*----------------------------------------------------------------------*</span><br>
+<span class="L0S31">*&nbsp;&nbsp;Local&nbsp;class&nbsp;for&nbsp;report</span><br>
+<span class="L0S31">*----------------------------------------------------------------------*</span><br>
+<span class="L0S52">CLASS&nbsp;</span>lcl_report&nbsp;<span class="L0S52">DEFINITION</span><span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+&nbsp;&nbsp;<span class="L0S52">PUBLIC&nbsp;</span><span class="L0S52">SECTION</span><span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">DATA</span><span class="L0S55">:&nbsp;</span>t_data&nbsp;&nbsp;&nbsp;<span class="L0S52">TYPE&nbsp;</span><span class="L0S52">STANDARD&nbsp;</span><span class="L0S52">TABLE&nbsp;</span><span class="L0S52">OF&nbsp;</span>sflight<span class="L0S55">,&nbsp;&nbsp;</span><span class="L0S31">&quot;&nbsp;Output&nbsp;dat</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r_carrid&nbsp;<span class="L0S52">TYPE&nbsp;</span>RANGE&nbsp;<span class="L0S52">OF&nbsp;</span>sflight<span class="L0S70">-</span>carrid<span class="L0S55">.&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="L0S31">&quot;&nbsp;Select&nbsp;Option</span><br>
+<span class="L0S31">*</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">METHODS</span><span class="L0S55">:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get_data<span class="L0S55">,</span><br>
+<span class="L0S31">*</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;generate_output<span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S52">ENDCLASS</span><span class="L0S55">.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="L0S31">&quot;lcl_report&nbsp;DEFINITION</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S52">DATA</span><span class="L0S55">:&nbsp;</span>lo_report&nbsp;<span class="L0S52">TYPE&nbsp;</span><span class="L0S52">REF&nbsp;</span><span class="L0S52">TO&nbsp;</span>lcl_report<span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S52">DATA</span><span class="L0S55">:&nbsp;</span>w_carrid&nbsp;<span class="L0S52">TYPE&nbsp;</span>sflight<span class="L0S70">-</span>carrid<span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">**&nbsp;Selection&nbsp;Screen</span><br>
+SELECTION<span class="L0S70">-</span><span class="L0S52">SCREEN</span><span class="L0S55">:&nbsp;</span><span class="L0S52">BEGIN&nbsp;</span><span class="L0S52">OF&nbsp;</span><span class="L0S52">BLOCK&nbsp;</span>blk1&nbsp;<span class="L0S52">WITH&nbsp;</span><span class="L0S52">FRAME&nbsp;</span><span class="L0S52">TITLE&nbsp;</span>aaa<span class="L0S55">.</span><br>
+<span class="L0S52">SELECT</span><span class="L0S70">-</span>OPTIONS<span class="L0S55">:&nbsp;</span>s_carrid&nbsp;<span class="L0S52">FOR&nbsp;</span>w_carrid<span class="L0S55">.</span><br>
+SELECTION<span class="L0S70">-</span><span class="L0S52">SCREEN</span><span class="L0S55">:&nbsp;</span><span class="L0S52">END&nbsp;&nbsp;&nbsp;</span><span class="L0S52">OF&nbsp;</span><span class="L0S52">BLOCK&nbsp;</span>blk1<span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">**&nbsp;Initialization</span><br>
+<span class="L0S52">INITIALIZATION</span><span class="L0S55">.</span><br>
+&nbsp;&nbsp;aaa&nbsp;<span class="L0S55">=&nbsp;</span><span class="L0S33">'Selection&nbsp;Criteria'</span><span class="L0S55">.</span><br>
+<span class="L0S31">*&nbsp;object&nbsp;for&nbsp;the&nbsp;report</span><br>
+&nbsp;&nbsp;<span class="L0S52">CREATE&nbsp;</span>OBJECT&nbsp;lo_report<span class="L0S55">.</span><br>
+<span class="L0S31">*&nbsp;generate&nbsp;output</span><br>
+&nbsp;&nbsp;lo_report<span class="L0S70">-&gt;</span>generate_output<span class="L0S55">(&nbsp;</span><span class="L0S55">)</span>.<br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">**&nbsp;Start&nbsp;of&nbsp;Selection</span><br>
+START<span class="L0S70">-</span><span class="L0S52">OF</span><span class="L0S70">-</span>SELECTION<span class="L0S55">.</span><br>
+<span class="L0S31">*&nbsp;Get&nbsp;data</span><br>
+&nbsp;&nbsp;lo_report<span class="L0S70">-&gt;</span>r_carrid&nbsp;<span class="L0S55">=&nbsp;</span>s_carrid[]<span class="L0S55">.</span><br>
+&nbsp;&nbsp;lo_report<span class="L0S70">-&gt;</span>get_data<span class="L0S55">(&nbsp;</span><span class="L0S55">)</span>.<br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">*----------------------------------------------------------------------*</span><br>
+<span class="L0S31">*&nbsp;Local&nbsp;Class&nbsp;Implementation</span><br>
+<span class="L0S31">*----------------------------------------------------------------------*</span><br>
+<span class="L0S52">CLASS&nbsp;</span>lcl_report&nbsp;<span class="L0S52">IMPLEMENTATION</span><span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+&nbsp;&nbsp;<span class="L0S52">METHOD&nbsp;</span>get_data<span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;data&nbsp;selection</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">SELECT&nbsp;</span>*&nbsp;<span class="L0S52">FROM&nbsp;</span>sflight<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">INTO&nbsp;&nbsp;</span><span class="L0S52">TABLE&nbsp;</span>me<span class="L0S70">-&gt;</span>t_data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">WHERE&nbsp;</span>carrid&nbsp;<span class="L0S52">IN&nbsp;</span>s_carrid<span class="L0S55">.</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">IF&nbsp;</span>sy<span class="L0S70">-</span>dbcnt&nbsp;<span class="L0S52">IS&nbsp;</span><span class="L0S52">INITIAL</span><span class="L0S55">.</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">MESSAGE&nbsp;</span>s398<span class="L0S55">(</span><span class="L0S32">00</span><span class="L0S55">)&nbsp;</span><span class="L0S52">WITH&nbsp;</span><span class="L0S33">'No&nbsp;data&nbsp;selected'</span><span class="L0S55">.</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">ENDIF</span><span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;export&nbsp;to&nbsp;memory</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">EXPORT&nbsp;</span><span class="L0S52">data&nbsp;</span><span class="L0S55">=&nbsp;</span>me<span class="L0S70">-&gt;</span>t_data&nbsp;<span class="L0S52">TO&nbsp;</span><span class="L0S52">MEMORY&nbsp;</span><span class="L0S52">ID&nbsp;</span>sy<span class="L0S70">-</span>cprog<span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+&nbsp;&nbsp;<span class="L0S52">ENDMETHOD</span><span class="L0S55">.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="L0S31">&quot;get_data</span><br>
+<span class="L0S31">*</span><br>
+&nbsp;&nbsp;<span class="L0S52">METHOD&nbsp;</span>generate_output<span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;local&nbsp;data</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">DATA</span><span class="L0S55">:&nbsp;</span>lo_dock&nbsp;<span class="L0S52">TYPE&nbsp;</span><span class="L0S52">REF&nbsp;</span><span class="L0S52">TO&nbsp;</span>cl_gui_docking_container<span class="L0S55">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lo_cont&nbsp;<span class="L0S52">TYPE&nbsp;</span><span class="L0S52">REF&nbsp;</span><span class="L0S52">TO&nbsp;</span>cl_gui_container<span class="L0S55">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lo_alv&nbsp;&nbsp;<span class="L0S52">TYPE&nbsp;</span><span class="L0S52">REF&nbsp;</span><span class="L0S52">TO&nbsp;</span>cl_salv_table<span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;import&nbsp;output&nbsp;table&nbsp;from&nbsp;the&nbsp;memory&nbsp;and&nbsp;free&nbsp;afterwards</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">IMPORT&nbsp;</span><span class="L0S52">data&nbsp;</span><span class="L0S55">=&nbsp;</span>me<span class="L0S70">-&gt;</span>t_data&nbsp;<span class="L0S52">FROM&nbsp;</span><span class="L0S52">MEMORY&nbsp;</span><span class="L0S52">ID&nbsp;</span>sy<span class="L0S70">-</span>cprog<span class="L0S55">.</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">FREE&nbsp;</span><span class="L0S52">MEMORY&nbsp;</span><span class="L0S52">ID&nbsp;</span>sy<span class="L0S70">-</span>cprog<span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;Only&nbsp;if&nbsp;there&nbsp;is&nbsp;some&nbsp;data</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">CHECK&nbsp;</span>me<span class="L0S70">-&gt;</span>t_data&nbsp;<span class="L0S52">IS&nbsp;</span><span class="L0S52">NOT&nbsp;</span><span class="L0S52">INITIAL</span><span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;Create&nbsp;a&nbsp;docking&nbsp;control&nbsp;at&nbsp;bottom</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">CHECK&nbsp;</span>lo_dock&nbsp;<span class="L0S52">IS&nbsp;</span><span class="L0S52">INITIAL</span><span class="L0S55">.</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">CREATE&nbsp;</span>OBJECT&nbsp;lo_dock<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">EXPORTING</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;repid&nbsp;<span class="L0S55">=&nbsp;</span>sy<span class="L0S70">-</span>cprog<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dynnr&nbsp;<span class="L0S55">=&nbsp;</span>sy<span class="L0S70">-</span>dynnr<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ratio&nbsp;<span class="L0S55">=&nbsp;</span><span class="L0S32">80</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;side&nbsp;&nbsp;<span class="L0S55">=&nbsp;</span>cl_gui_docking_container<span class="L0S70">=&gt;</span>dock_at_bottom<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;&nbsp;<span class="L0S55">=&nbsp;</span><span class="L0S33">'DOCK_CONT'</span><span class="L0S55">.</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">IF&nbsp;</span>sy<span class="L0S70">-</span>subrc&nbsp;&lt;&gt;&nbsp;<span class="L0S32">0</span><span class="L0S55">.</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">MESSAGE&nbsp;</span><span class="L0S33">'Error&nbsp;in&nbsp;the&nbsp;Docking&nbsp;control'&nbsp;</span><span class="L0S52">TYPE&nbsp;</span><span class="L0S33">'S'</span><span class="L0S55">.</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">ENDIF</span><span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;Create&nbsp;a&nbsp;SALV&nbsp;for&nbsp;output</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">CHECK&nbsp;</span>lo_alv&nbsp;<span class="L0S52">IS&nbsp;</span><span class="L0S52">INITIAL</span><span class="L0S55">.</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">TRY</span><span class="L0S55">.</span><br>
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Narrow&nbsp;Casting:&nbsp;To&nbsp;initialize&nbsp;custom&nbsp;container&nbsp;from</span><br>
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docking&nbsp;container</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lo_cont&nbsp;?=&nbsp;lo_dock<span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SALV&nbsp;Table&nbsp;Display&nbsp;on&nbsp;the&nbsp;Docking&nbsp;container</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">CALL&nbsp;</span><span class="L0S52">METHOD&nbsp;</span>cl_salv_table<span class="L0S70">=&gt;</span>factory<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">EXPORTING</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list_display&nbsp;&nbsp;&nbsp;<span class="L0S55">=&nbsp;</span>if_salv_c_bool_sap<span class="L0S70">=&gt;</span>false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r_container&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S55">=&nbsp;</span>lo_cont<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container_name&nbsp;<span class="L0S55">=&nbsp;</span><span class="L0S33">'DOCK_CONT'</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">IMPORTING</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r_salv_table&nbsp;&nbsp;&nbsp;<span class="L0S55">=&nbsp;</span>lo_alv<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">CHANGING</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t_table&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S55">=&nbsp;</span>me<span class="L0S70">-&gt;</span>t_data<span class="L0S55">.</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">CATCH&nbsp;</span>cx_salv_msg&nbsp;<span class="L0S55">.</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">ENDTRY</span><span class="L0S55">.</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;Pf&nbsp;status</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">DATA</span><span class="L0S55">:&nbsp;</span>lo_functions&nbsp;<span class="L0S52">TYPE&nbsp;</span><span class="L0S52">REF&nbsp;</span><span class="L0S52">TO&nbsp;</span>cl_salv_functions_list<span class="L0S55">.</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;lo_functions&nbsp;<span class="L0S55">=&nbsp;</span>lo_alv<span class="L0S70">-&gt;</span>get_functions<span class="L0S55">(&nbsp;</span><span class="L0S55">)</span>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lo_functions<span class="L0S70">-&gt;</span>set_default<span class="L0S55">(&nbsp;</span>abap_true&nbsp;<span class="L0S55">)</span>.<br>
+<span class="L0S31">*</span><br>
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;output&nbsp;display</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;lo_alv<span class="L0S70">-&gt;</span>display<span class="L0S55">(&nbsp;</span><span class="L0S55">)</span>.<br>
+<span class="L0S31">*</span><br>
+&nbsp;&nbsp;<span class="L0S52">ENDMETHOD</span><span class="L0S55">.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="L0S31">&quot;generate_output</span><br>
+<span class="L0S31">*</span><br>
+<span class="L0S52">ENDCLASS</span><span class="L0S55">.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="L0S31">&quot;lcl_report&nbsp;IMPLEMENTATION</span>
+</pre>
+</div>
+<h3>Summary</h3>
+<p>Steps to create an ALV on the Selection Screen, in summary :</p>
+<ul>
+<li>Create docking container in the INITALIZATION event</li>
+<li>Create ALV on that Docking container</li>
+<li>After selecting all the data, export output table to ABAP memory</li>
+<li>Before generating the output, import the output table from the memroy</li>
+</ul>
+</p>								</div>
+								<!-- Post Body End -->
+								<div style="margin-left:2%;margin-right: 2%">
+
+									<div class="singpostsep"></div>
+									
+									<div id="mposttags" class="mytags">
+										<h3>Tags</h3><p><a href="http://zevolving.com/tag/alv-on-selection-screen/" rel="tag">ALV on Selection Screen</a> <a href="http://zevolving.com/tag/salv/" rel="tag">SALV</a></p>									</div>
+
+									<div class="sharingbox">
+										<div class="postshare">
+											<h3>Like It? Share!!</h3>
+											<div class="sharing justify-divs" id="newsharing">
+												<div class="share-button">
+													<a href="https://twitter.com/share" class="twitter-share-button" 
+														data-via="zevolving" 
+														data-related="zevolving" 
+														data-hashtags="SAP,ABAP"
+													   data-text="Display ALV report output in the SAME Selection Screen"
+													   data-url="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/"											   
+													   data-count="vertical"												
+														>Tweet</a>
+													<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>										
+												</div>
+												<div class="share-button">
+													<g:plusone size="tall" href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/"></g:plusone>																		
+												</div>
+												<div class="share-button">
+													<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
+													<script type="IN/Share" data-url="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/" data-counter="top"></script>
+												</div>
+												<div class="share-button">
+													<fb:like href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/" send="false" layout="box_count" width="60" show_faces="false" action="like" font="segoe ui"></fb:like>											
+												</div>
+											</div>
+										</div>
+										<div class="siteshare">
+											<h3>Don't miss an Update</h3>
+<div class="siteshare-img justify-divs">
+													<a target="_blank" title="Like on Facebook" href="http://www.facebook.com/pages/SAP-ABAP-Help/269923279701872" class="styled-button">fb/zevolving</a>
+													<a target="_blank" title="Follow on Twitter" href="http://twitter.com/#!/zevolving" class="styled-button">@zevolving</a>
+</div>
+<div class="siteshare-sub">
+			<form style="padding:3px;" 
+				  action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" 
+				  onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=SapAbapHelp', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+				<p>Get notified of the new post, right into your inbox</p>
+				<input type="text" class="styled-inputbox" name="email" placeholder="your email"/>
+				<input type="hidden" value="SapAbapHelp" name="uri"/>
+				<input type="hidden" name="loc" value="en_US"/>
+				<input type="submit" class="submitbutton styled-button" value="Subscribe" />
+			</form>
+</div>
+
+										</div>																			
+									</div>
+								
+								</div>
+							
+							</div>
+							<!-- Entire Post End -->
+
+							<div class="mabtauthor-wrap">
+								<div class="mabtauthor"><div class="mabtauthor-image"><img alt='' src='http://0.gravatar.com/avatar/fe97645d09e2ab21b288ea4adf01115b?s=100&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://0.gravatar.com/avatar/fe97645d09e2ab21b288ea4adf01115b?s=200&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-100 photo' height='100' width='100' loading='lazy'/></div><div style=""><h2 style="margin:0;margin-bottom:5px"><a href="http://zevolving.com/author/naimesh-patel/" title="Posts by Naimesh Patel">Naimesh Patel</a><span style="font-size: 60%; letter-spacing: -1pt; padding-left: 20px;"><a href="http://zevolving.com/author/naimesh-patel/">{274 articles}</a></span></h2>I'm SAP ABAP Consultant for more than a decade. I like to experiment with ABAP especially OO. I have been <a href="https://wiki.sdn.sap.com/wiki/display/Community/2007-2008"> SDN Top Contributor</a>.<br /><div class="aauth_share_buttons"> Follow : <span style="padding: 5px;"><a href="http://twitter.com/#!/naimeshpatel" title="Follow on twitter" target="_blank" class="conn-s-Twitter_24"></a></span><span style="padding: 5px;"><a href="http://www.facebook.com/naimesh45" title="Add to Facebook" target="_blank" class="conn-s-FaceBook_24"></a></span><span style="padding: 5px;"><a href="https://plus.google.com/+NaimeshPatel?rel=author" title="Add to Google +" target="_blank" class="conn-s-gplus_24"></a></span></div><p>Explore all of his <a href="http://zevolving.com/author/naimesh-patel/" title="Posts by Naimesh Patel">274</a> articles. </p></div></div>							</div>
+
+							<div class='yarpp-related'>
+<!--<h3>Related Posts</h3>-->
+<ul class="yarpp-ul">
+		<li>
+	<div id="mtdiv">Related Post</div>
+	<div id="mwdiv">
+	<a id="mlink" href="http://zevolving.com/2017/01/display-alv-grid-on-list-generated-by-write/" rel="bookmark">Display ALV Grid on List Generated by WRITE</a><!-- (3)--><br>
+<p>Ever wondered how to generate the ALV Grid on the list generated by WRITE statement. Lets see today how we can do that.</p>
+	<a href="http://zevolving.com/2017/01/display-alv-grid-on-list-generated-by-write/" class="read-more">Read Post &raquo;</a>
+	</div>
+	</li>
+		<li>
+	<div id="mtdiv">Related Post</div>
+	<div id="mwdiv">
+	<a id="mlink" href="http://zevolving.com/2013/10/conversion-exit-to-format-amounts-in-alv/" rel="bookmark">Conversion Exit to format Amounts in ALV</a><!-- (2)--><br>
+<p>Conversion exit is very powerful. It helps to represent data in a different format other than its basic format.</p>
+	<a href="http://zevolving.com/2013/10/conversion-exit-to-format-amounts-in-alv/" class="read-more">Read Post &raquo;</a>
+	</div>
+	</li>
+	</ul>
+</div>
+
+							
+<!-- You can start editing here. -->
+
+<div class="show-hide-comments">
+<div class="show-hide-comm-a">Load comments</div>
+</div>
+
+<div class="comment-wrapper">
+	<!-- <div class="singpostsep"></div> -->
+
+	<h2 id="comments">29 Comments			</h2>
+
+	<ul class="commentlist">
+
+					<li class="alt" id="comment-193">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name"><a href='http://www.blogger.com/profile/03203310203767101958' rel='external nofollow ugc' class='url'>shiva</a></div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-193" class="comm-link" title="Link to Comment"> # </a>October 31st, 2008 at 7:29 am</div>
+					</div>
+				</div>
+				<p>good awesome work</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-192">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-192" class="comm-link" title="Link to Comment"> # </a>November 12th, 2008 at 9:10 pm</div>
+					</div>
+				</div>
+				<p>too good!!!!!!!!</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-191">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-191" class="comm-link" title="Link to Comment"> # </a>February 12th, 2009 at 9:00 am</div>
+					</div>
+				</div>
+				<p>Wondful! Thanks a lot for sharing! 🙂</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-190">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name"><a href='http://www.blogger.com/profile/04525575580680965389' rel='external nofollow ugc' class='url'>Ketau</a></div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-190" class="comm-link" title="Link to Comment"> # </a>March 5th, 2009 at 7:00 am</div>
+					</div>
+				</div>
+				<p>when i run this code i face error cl_salv_table is unknown so ans me for remove this</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-189">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name"><a href='http://www.blogger.com/profile/01571575122099513430' rel='external nofollow ugc' class='url'>Naimesh Patel</a></div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-189" class="comm-link" title="Link to Comment"> # </a>March 5th, 2009 at 8:08 am</div>
+					</div>
+				</div>
+				<p>Hello Ketau,</p>
+<p><i><br />when i run this code i face error cl_salv_table is unknown so ans me for remove this</i></p>
+<p>This CL_SALV_TABLE only avliable from the ECC 5.0. If you are in the lower version than you can try it with the CL_GUI_ALV_GRID. <br />I will update this post, once I will do it.</p>
+<p>Regards,<br />Naimesh Patel</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-188">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Venkat</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-188" class="comm-link" title="Link to Comment"> # </a>March 11th, 2009 at 2:56 am</div>
+					</div>
+				</div>
+				<p>Hey i need to display two alv grids in a single screen . can u give me any suggestions?? is there any way of doing it without using Object oriented methodology ?</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-187">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-187" class="comm-link" title="Link to Comment"> # </a>April 8th, 2009 at 8:42 am</div>
+					</div>
+				</div>
+				<p>Hi,<br />I&#8217;m using CL_SALV_TABLE for the first time and I trying to find out if there is an event like the SUBTOTAL_TEXT. I have a list wherein I need to calculate the percentage on the sum of two columns, suppose the total of A is 4 and the B is 6 I need to have the total on column C to be 66.67%<br />Thanks in Advance.<br />Zala Maswanganye</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-186">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name"><a href='http://www.blogger.com/profile/14956895589230227187' rel='external nofollow ugc' class='url'>Nilesh</a></div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-186" class="comm-link" title="Link to Comment"> # </a>April 22nd, 2009 at 9:34 am</div>
+					</div>
+				</div>
+				<p>Hi naimesh&#8230;<br />I wanna show an ALV display, after pressing back i m exporting a field to ABAP MEMORY using EXPORT , and i m checking it in INITIALIZATION event..but when i leave the program and go to SE38 &#038; again execute , i want that memory to be refreshed..Also pgm is having selction screen so from selection screen i may not execute but press EXIT and go to SE38&#8230;.my pbm is this exported field value is retained (obviously as its ABAP memory) when i import in INITIALIZATION..is there any other way out ?</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-185">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name"><a href='http://www.blogger.com/profile/01571575122099513430' rel='external nofollow ugc' class='url'>Naimesh Patel</a></div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-185" class="comm-link" title="Link to Comment"> # </a>April 22nd, 2009 at 2:07 pm</div>
+					</div>
+				</div>
+				<p>Hello Nilesh,</p>
+<p><i>I wanna show an ALV display, after pressing back i m exporting a field to ABAP MEMORY using EXPORT , and i m checking it in INITIALIZATION event..but when i leave the program and go to SE38 &#038; again execute , i want that memory to be refreshed..Also pgm is having selction screen so from selection screen i may not execute but press EXIT and go to SE38&#8230;.my pbm is this exported field value is retained (obviously as its ABAP memory) when i import in INITIALIZATION..is there any other way out ? </i><br />We need to FREE the memory id. See the method GENERATE_OUTPUT and specially very first two lines in the given example. Here I do the IMPORT and just after that I refresh the memory using FREE MEMORY ID&#8230; If you have this statement than it would not come back when you run next time.</p>
+<p>Regards,<br />Naimesh Patel</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-184">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-184" class="comm-link" title="Link to Comment"> # </a>June 28th, 2009 at 6:48 pm</div>
+					</div>
+				</div>
+				<p>Hello Naimesh,<br />Thanks, this is really useful.<br />However I just have one question: Can you only use the standard pf status in this alv? If not, how do I add a button to it? I tried setting the pfStatus but it says it&#39;s not supported if the ALV isn&#39;t on fullscreen.<br />Regards,<br />Marie Quirke</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-183">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name"><a href='http://www.blogger.com/profile/01571575122099513430' rel='external nofollow ugc' class='url'>Naimesh Patel</a></div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-183" class="comm-link" title="Link to Comment"> # </a>June 29th, 2009 at 8:38 am</div>
+					</div>
+				</div>
+				<p>Hello Marie Quirke,</p>
+<p>You asked:<br />Can you only use the standard pf status in this alv? If not, how do I add a button to it? I tried setting the pfStatus but it says it&#39;s not supported if the ALV isn&#39;t on fullscreen.</p>
+<p>We can add our own defined buttons as we add the ALV created with the CL_GUI_ALV_GRID. To add your own button, Check the program SALV_DEMO_TABLE_FUNCTIONS and Subroutine D0100_PBO. </p>
+<p>We can use the method ADD_FUNCTION of reference LO_FUNCTION.</p>
+<p>Regards,<br />Naimesh Patel</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-182">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-182" class="comm-link" title="Link to Comment"> # </a>June 29th, 2009 at 8:31 pm</div>
+					</div>
+				</div>
+				<p>Too easy Naimesh! That&#39;s perfect.<br />Thanks a million for your help, and the speedy response.<br />Regards,<br />Marie</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-181">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-181" class="comm-link" title="Link to Comment"> # </a>September 17th, 2009 at 8:55 am</div>
+					</div>
+				</div>
+				<p>I wanted to display the customer information so ichanged other variable and work area accordingly.<br />But when i execute it i dont get the alv display with the customer inforamtion.</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-180">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-180" class="comm-link" title="Link to Comment"> # </a>October 14th, 2009 at 6:20 am</div>
+					</div>
+				</div>
+				<p>I want to create alv grid control report for custimmized two tables (input one table amd output another).<br />plz send this report for that mail id:yumkumarbe@gmail.com</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-179">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-179" class="comm-link" title="Link to Comment"> # </a>October 15th, 2009 at 11:36 pm</div>
+					</div>
+				</div>
+				<p>plz help me any one<br />oo-alv grid for custamized report for two or more tables.<br />send this id: <a href="mailto:yumkumarbe@gmail.com">yumkumarbe@gmail.com</a></p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-178">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-178" class="comm-link" title="Link to Comment"> # </a>December 30th, 2009 at 5:44 am</div>
+					</div>
+				</div>
+				<p>gR8</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-177">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-177" class="comm-link" title="Link to Comment"> # </a>February 25th, 2010 at 7:40 am</div>
+					</div>
+				</div>
+				<p>Hi, </p>
+<p>The coding is simply awesome. but is it going work in 4.7E version?</p>
+<p>Santosh.</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-176">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-176" class="comm-link" title="Link to Comment"> # </a>August 16th, 2010 at 1:58 am</div>
+					</div>
+				</div>
+				<p>can we generate spool request in dat??</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-175">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name"><a href='http://www.blogger.com/profile/13993043366517656359' rel='external nofollow ugc' class='url'>krishna</a></div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-175" class="comm-link" title="Link to Comment"> # </a>August 30th, 2010 at 1:16 am</div>
+					</div>
+				</div>
+				<p>i have a requirement that i have to dispaly the selection screen and header data and when we clicks the header to display the item data in the same page&#8230;</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-174">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name"><a href='http://www.blogger.com/profile/13993043366517656359' rel='external nofollow ugc' class='url'>krishna</a></div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-174" class="comm-link" title="Link to Comment"> # </a>August 30th, 2010 at 1:18 am</div>
+					</div>
+				</div>
+				<p>in the blocked display we want to display the data</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-173">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-173" class="comm-link" title="Link to Comment"> # </a>December 28th, 2010 at 7:55 pm</div>
+					</div>
+				</div>
+				<p>great work&#8230;&#8230;&#8230;..!</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-172">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-172" class="comm-link" title="Link to Comment"> # </a>April 8th, 2011 at 10:34 am</div>
+					</div>
+				</div>
+				<p>Hi,</p>
+<p>have you seen this?:</p>
+<p><a href="http://www.sdn.sap.com/irj/scn/index?rid=/library/uuid/505b9716-2143-2e10-419d-8e0ca1c1de1f" rel="nofollow ugc">http://www.sdn.sap.com/irj/scn/index?rid=/library/uuid/505b9716-2143-2e10-419d-8e0ca1c1de1f</a></p>
+<p>Best regards.</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-171">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name"><a href='http://www.blogger.com/profile/01571575122099513430' rel='external nofollow ugc' class='url'>Naimesh Patel</a></div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-171" class="comm-link" title="Link to Comment"> # </a>April 8th, 2011 at 10:55 am</div>
+					</div>
+				</div>
+				<p>Wow .. People are simply being copy-cats&#8230;! I am very much disappointed&#8230;</p>
+<p>Regards,<br />Naimesh Patel</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-170">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-170" class="comm-link" title="Link to Comment"> # </a>April 11th, 2011 at 1:01 am</div>
+					</div>
+				</div>
+				<p>Hi Maimesh Patel,</p>
+<p>         I have published an article.They have said me that it is some what similar to your work with modifications and asked me to notify you.</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-169">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-169" class="comm-link" title="Link to Comment"> # </a>April 11th, 2011 at 1:09 am</div>
+					</div>
+				</div>
+				<p>Hi,</p>
+<p>   I was not aware of this blog befor posting. Also I am new to ABAP. Am undergoing training. I was working with similar scenario. So i have posted.</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-168">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">Anonymous</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-168" class="comm-link" title="Link to Comment"> # </a>April 13th, 2011 at 2:20 am</div>
+					</div>
+				</div>
+				<p>Hi Mr.Patel,<br />I want to learn RFC function module. Pl. possible pl. send the basic step.<br />my mail address is <a href="mailto:rabindrapaul20@gmail.com">rabindrapaul20@gmail.com</a></p>
+<p>Rabindra Paul<br />india</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-167">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/41dc3e007986c35dc46763689fa93174?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name"><a href='http://www.blogger.com/profile/14420045325468514438' rel='external nofollow ugc' class='url'>Gaurav</a></div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-167" class="comm-link" title="Link to Comment"> # </a>August 16th, 2011 at 2:20 pm</div>
+					</div>
+				</div>
+				<p>Wow, Good learning. Thanks Naimesh</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-474">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://1.gravatar.com/avatar/4dfd19e0b7700be40704525aa91d9806?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://1.gravatar.com/avatar/4dfd19e0b7700be40704525aa91d9806?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name"><a href='http://bestgymequipments.com/' rel='external nofollow ugc' class='url'>Nancy</a></div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-474" class="comm-link" title="Link to Comment"> # </a>September 30th, 2011 at 3:44 am</div>
+					</div>
+				</div>
+				<p>Thanks for  the share!<br />
+Nancy.R</p>
+			</div>
+					</li>
+		
+					<li class="alt" id="comment-8418">
+			<div class="comment-int">
+				<div class="pic-c"> <img alt='' src='http://0.gravatar.com/avatar/c56b47eac2e95f81d14a446197adf21a?s=75&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g' srcset='http://0.gravatar.com/avatar/c56b47eac2e95f81d14a446197adf21a?s=150&#038;d=http%3A%2F%2Fzevolving.com%2Fimages%2Fzevolving_60_72.png&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' loading='lazy'/> </div>
+			</div>
+
+			<div class="comment-content">
+				<div>
+					<div class="comment-auth-det">
+						<div class="comment-auth-name">shiva</div>
+						<div class="comment-meta commentmetadata"><a href="http://zevolving.com/2008/10/display-alv-report-output-in-the-same-selection-screen/#comment-8418" class="comm-link" title="Link to Comment"> # </a>June 27th, 2012 at 4:04 am</div>
+					</div>
+				</div>
+				<p>Hi Naimesh,</p>
+<p>Can you please share the code how we will show the Dynamic selection screen.</p>
+<p>Here you go for my qiestion.</p>
+<p>I have two radio buttons in the selection screen .</p>
+<p>1.Sales Order<br />
+2.Purchase order </p>
+<p>If i select Sales Order Number my selection screen should call a selection screen with Sales Order Number<br />
+If i select Purchase Order my selection screen should load with Purchase Order Number.</p>
+			</div>
+					</li>
+		
+	
+	</ul>
+</div>
+ 
+
+<div class="comments-closed"><blockquote><p>Comments on this Post are now closed. If you have something important to share, you can always <a href="/suggestions">contact me</a>.</p></blockquote></div>
+
+							<div class="mprevnextpost-wrapper">
+															<a href="http://zevolving.com/2008/10/generic-object-services-gos-toolbar-part-1-add-new-option-in-the-toolbar/" class="mprevpost">
+								<div class="mdiva">&#8249;</div>
+								<div class="mdivt">Generic Object Services (GOS) Toolbar Part 1 : Add New Option in the Toolbar<p></p> </div>
+								</a>
+																							<a href="http://zevolving.com/2008/10/call-a-new-standard-table-display-se16n-from-report/" class="mnextpost"  >
+								<div class="mdiva">&#8250;</div>																				
+								<div class="mdivt">Call a New Standard Table Display (SE16N) from Report</div>
+								</a>
+															</div>
+
+
+							
+					</div>
+					<!-- Blogs LOOP End -->
+					
+				</div>
+				<!-- Blog End -->
+			
+			
+			
+			<!-- Sidebar Section Begin -->
+	<div class="sidebar1 section" id="sidebar1">
+
+		<!--NewHere-->
+		<div class="sidehorisep"></div>
+		<div id="mgreetwrapper" class="mgreetwrapper" >
+		<div id="mgreetbox" class="mgreetbox">
+			<span class="mgtext">You seem to be new here. <a href="#sidesubscribe">Subscribe</a> to stay connected.</span>
+		</div>	
+		</div>
+		
+		<!-- subscribe -->
+		<div class="sidebox" id="sidesubscribe">
+			<h2>Subscribe</h2>
+			<h3>Keep in touch. We would do great working together.</h3>
+			<ul  class="conn-side">
+					<li><a href="http://feedburner.google.com/fb/a/mailverify?uri=SapAbapHelp"><div>1400</div><span>Subscribe to Email</span> </a></li>
+					<li><div style="padding: 20px;">
+<a href="https://twitter.com/zevolving" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @zevolving</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+</li>
+			</ul>
+			<div style=" padding: 5px; margin-bottom: 10px; text-align: center; ">
+			<form style="padding:3px;" 
+				  action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" 
+				  onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=SapAbapHelp', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+				<input type="text" style="width:50%; line-height: 20px;" 
+						class="styled-inputbox"
+						name="email"
+						placeholder="your email"/>
+				<input type="hidden" value="SapAbapHelp" name="uri"/>
+				<input type="hidden" name="loc" value="en_US"/>
+				<input type="submit" class="submitbutton styled-button" value="Subscribe" />
+			</form>
+			</div>
+		</div>			
+	
+		<div id="sidebar">
+										</div>
+
+		<div class="sidebox">
+			<h2>Current Poll</h2>
+			<div id="polls-10" class="wp-polls">
+	<form id="polls_form_10" class="wp-polls-form" action="/index.php" method="post">
+		<p style="display: none;"><input type="hidden" id="poll_10_nonce" name="wp-polls-nonce" value="1dbded33ca" /></p>
+		<p style="display: none;"><input type="hidden" name="poll_id" value="10" /></p>
+		<p class="wp-polls-m-header">Do you like Quality Assurance of your Build/Design?</p><div id="polls-10-ans" class="wp-polls-ans"><ul class="wp-polls-ul">
+		<li><input type="radio" id="poll-answer-39" name="poll_10" value="39" /> <label for="poll-answer-39"><span></span>YES. I live for it!</label></li>
+		<li><input type="radio" id="poll-answer-40" name="poll_10" value="40" /> <label for="poll-answer-40"><span></span>I don't mind</label></li>
+		<li><input type="radio" id="poll-answer-41" name="poll_10" value="41" /> <label for="poll-answer-41"><span></span>NO. I hate it</label></li>
+		</ul><p style="text-align: center;"><input type="button" name="vote" value="   Vote   " class="Buttons" onclick="poll_vote(10);" /></p><p style="text-align: center;"><a href="#ViewPollResults" class="view-results" onclick="poll_result(10); return false;" title="View Results Of This Poll">View Results</a></p></div><div></div>
+	</form>
+</div>
+<div id="polls-10-loading" class="wp-polls-loading"><img src="http://zevolving.com/wp-content/plugins/wp-polls/images/loading.gif" width="16" height="16" alt="Loading ..." title="Loading ..." class="wp-polls-image" />&nbsp;Loading ...</div>
+		</div>
+
+
+		<div class="sidebox">
+			<h2>Search</h2>
+			<div class="side-search">
+				<form accept-charset="utf-8" method="get" id="searchform" action="http://zevolving.com/search" >
+		<label style="display:none;" for="s">Search:</label>
+		<span class="search-form-glass">
+		<input type="submit" id="searchsubmit" value="SEARCH">
+		</span>
+		<input autocomplete="off" 
+			id="s"
+			name="q"
+			type="text" 
+			class="search-form-input" 
+			value="Search in Zevolving" title="search"
+			onfocus="if(this.value==this.defaultValue)this.value=''" 
+			onblur="if(this.value=='') this.value=this.defaultValue" 
+			onkeydown="if (event.keyCode == 13) document.getElementById('searchsubmit').click()">
+</form>			</div>
+		</div>
+
+		
+	</div>
+	<!-- Sidebar Section End -->				
+							
+						
+
+
+			</div>
+			<!-- Main Section End -->
+
+		</div>
+
+	</div>
+	
+<div>
+</div>
+	<div id="adb_post_banner" style="height: 130px; display: box;">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- banner_footer -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-0913661839762106"
+     data-ad-slot="6127602309"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+	
+<div id="main-footer">
+
+	<footer>
+		<div class="clines">
+			<span class="f1"></span>
+			<span class="f2"></span>
+			<span class="f3"></span>
+			<span class="f4"></span>	
+			<span class="f5"></span>	
+		</div>		
+		<div class="footer-box-wrap">
+			<div class="footer-box-wrapper">
+				<div class="footer-wtd">
+					<h4 >what to do now?</h4>
+					<p>You reached here. Now, here are few more ideas!</p>
+				</div>
+				<div class="footer-box">
+					<h2>Keep in Touch</h2>
+					<p>Zevolving is on <a href="https://twitter.com/zevolving">Twitter</a>, <a href="http://www.facebook.com/pages/ABAP-Help-Blog/269923279701872">Facebook</a>, <a href="https://plus.google.com/110326532287922805782/posts">Google+</a>.</p>
+					<a href="https://twitter.com/zevolving" class="styled-button">@zevolving</a>
+					<a href="http://www.facebook.com/pages/ABAP-Help-Blog/269923279701872" class="styled-button">fb/zevolving</a>
+					<p>I'm also on <a href="https://twitter.com/naimeshpatel">@naimeshpatel</a>, <a href="https://plus.google.com/+NaimeshPatel/posts">+NaimeshPatel</a>, <a href="http://www.linkedin.com/in/naimeshpatel">LinkedIn: Naimesh Patel</a> and <a href="http://scn.sap.com/people/naimesh.patel">SCN: Naimesh Patel</a>. 
+					</p>					
+					<p>We will do better working together!</p>					
+				</div>
+				<div class="footer-box"><h2>Looking for more?</h2>
+					<p>There are tons article here. Explore.</p>				
+					<ul>
+						<li><a href="/archives/">All articles aka Archives</a></li>
+						<li><a href="/category/">Categories</a></li>
+						<li><a href="/tag/">Tags</a></li>
+						<li><a href="/recent-activities/">Recent Activities</a></li>
+					</ul>
+					<p>or Search</p>
+					<div>
+					<form accept-charset="utf-8" method="get" id="searchform" action="http://zevolving.com/search">
+						<label style="display:none;" for="s">Search:</label>
+						<span class="search-form-glass"><input type="submit" id="searchsubmit" value="SEARCH"></span>
+						<input autocomplete="off" id="s" name="q" type="text" class="search-form-input" placeholder="Search..." title="search" onkeydown="if (event.keyCode == 13) document.getElementById('searchsubmit').click()">
+					</form>
+					</div>
+				</div>	
+				<div class="footer-box">
+					<h2>Etc.</h2>
+					<p>All other goodies are here</p>
+					<ul>
+						<li><a href="/authors/">Authors</a></li>
+						<li><a href="/feed/">RSS</a> or <a href="http://feeds.feedburner.com/SapAbapHelp">Feed</a></</li>
+						<li><a href="/html-sitemap/">HTML Sitemap</a></li>
+						<li><a href="/suggestions/">Contact Me</a></li>
+						<li><a href="/write-a-post/">Write a Post</a></li>
+						<li><a href="/advertise/">Advertising</a></li>						
+					</ul>
+				</div>	
+			</div>
+		</div>
+		<div class="footer-conn-box" style="display:none;">
+			<div class="footer-conn-box-wrapper">
+<div class="footer-box-highlight">
+<a href="https://plus.google.com/+NaimeshPatel/posts">I'm on Google+. Add me to Circles</a>
+</div>
+
+			<div class="footer-conn-box-np-img-wrap">
+				<div class="footer-conn-box-np-img">
+				</div>
+			</div>
+			<ul class="footer-link-list left-links">
+				<li><a href="/suggestions/">Contact: zevolving<span></span></a></li>
+				<li class="space"><a href="/advertise/">Advertising<span></span></a></li>
+
+				<li><a href="https://twitter.com/zevolving">Twitter: zevolving<span></span></a></li>
+				<li><a href="http://www.facebook.com/pages/ABAP-Help-Blog/269923279701872">Facebook: ABAP Help Blog (zevolving)<span></span></a></li>
+				<li class="space"><a href="https://plus.google.com/110326532287922805782/posts">Google+: ABAP Help Blog (zevolving)<span></span></a></li>
+
+				<li><a href="https://twitter.com/naimeshpatel">Twitter: naimeshpatel<span></span></a></li>
+				<li><a href="https://plus.google.com/+NaimeshPatel/posts">Google+: Naimesh Patel<span></span></a></li>
+				<li><a href="http://scn.sap.com/people/naimesh.patel">SCN: Naimesh Patel<span></span></a></li>
+				<li><a href="http://www.linkedin.com/in/naimeshpatel">LinkedIn: Naimesh Patel<span></span></a></li>
+			</ul>
+
+			<ul class="footer-link-list right-links">
+				<li><a href="/archives/">Archives<span></span></a></li>
+				<li><a href="/category/polls/">Poll Archives<span></span></a></li>
+				<li><a href="/authors/">Authors<span></span></a></li>
+				<li class="space"><a href="http://zevolving.com/category/code-snippets/">Code Snippets<span></span></a></li>
+
+				<li><a href="/write-a-post/">Write A Post<span></span></a></li>
+				<li><a href="/suggestions/">Suggestion<span></span></a></li>
+
+				<li><a href="/feed/">RSS<span></span></a></li>
+				<li><a href="http://feeds.feedburner.com/SapAbapHelp">Feedburner Feed<span></span></a></li>
+				<li><a href="/html-sitemap/">HTML Sitemap<span></span></a></li>
+				<li><a id="rec-act-a" href="/recent-activities/">Recent Activity<span></span></a></li>
+			</ul>
+
+
+			</div>
+		</div>
+		<div class="footer-strip-box">
+			<div class="footer-strip">
+				<p><a href="/">zevolving.com</a> is founded by and maintained by <a href="http://www.linkedin.com/in/naimeshpatel">Naimesh Patel</a>. You can help by submitting your articles via <a href="/write-a-post/">Write a Post</a>. The site is built on <a href="http://wordpress.org/">Wordpress</a>.</p>
+				<p>Happy Designing!</p>
+				<p class="footer-strip-links">
+					<a href="/about/">About</a>
+					<a href="/subscribe/">Subscribe</a>
+					<a href="/advertise/">Advertise</a>
+					<a href="/licence/">Licence</a>
+				</p>
+				<p style="color: #888;"> All product names are trademarks of their respective companies. zevolving.com is not affiliated with SAP AG.</p>
+				<p id="back-top"><a href="#main-header"><span></span><em>TOP</em> </a></p>
+			</div>
+		</div>
+	</footer>
+</div>
+<script type="text/javascript">
+jQuery(document).ready(function($){
+
+
+$(window).scroll(function() {
+    var y_scroll_pos = window.pageYOffset;
+    var scroll_pos_test = 300;             // set to whatever you want it to be
+
+    if(y_scroll_pos > scroll_pos_test) {
+        //$("#overlay").show().delay( 3000 );
+    }
+});
+	
+
+    var gac = new gaCookies();
+
+var lvprevvisittime = new Date(gac.getPreviousVisitTime() * 1000);
+var mydate = lvprevvisittime.getFullYear() + "-" + ('0' + lvprevvisittime.getMonth()).slice(-2) + "-" + ('0' + lvprevvisittime.getDate()).slice(-2);
+	var recacta = document.getElementById('rec-act-a');
+	recacta.href = recacta.href + "?lad=" + mydate;
+
+    var lvsessioncount = gac.getSessionCounter();
+    if (lvsessioncount == null  || lvsessioncount < 2){ 
+	//$("#mgreetwrapper").show();
+	$("#mgreetwrapper").slideDown(700);
+	//$('#mgreetbox').slideDown(500);
+	//$('#mgreetbox').addClass("mfixedclass");
+	$("#mgreetclose").click(function(){
+		$("#mgreetwrapper").slideUp(1000);
+		$("#mgreetbox").slideUp(1000);
+	});
+    }
+
+    $('.mmenu-show-hide').click(function(){
+    	$("#mmenu-wrapper-small #mega-menu").slideToggle();
+    });
+
+    $('.show-hide-comm-a').click(function(){
+    	$(".comment-wrapper").show();
+    	$(".comm-form-wrap-main").show();
+	$(this).hide();
+    });
+
+
+/*	
+ 
+		var langArr = [
+						["en", "English", 	"0",	"Help",], 
+						["gu", "Gujarati",	"0",	"&#2734;&#2726;&#2726;"],
+						["de", "German", 	"0",	"Hilfe"],
+						["te", "Telugu",	"50",	"&#3128;&#3129;&#3134;&#3119;&#3074;"],
+						["ta", "Tamil",		"0",	"&#2953;&#2980;&#2997;&#3007;"],
+						["hi", "Hindi",		"0",	"&#2350;&#2342;&#2342;"],
+						["es", "Spanish", 	"0",	"ayudar"],
+						["bn", "Bengali",	"50",	"&#2488;&#2494;&#2489;&#2494;&#2479;&#2509;&#2479;"],
+						["pl", "Polish",	"50",	"pomocy"],
+						["ru", "Russian",	"50",	"&#1055;&#1086;&#1084;&#1086;&#1075;&#1080;&#1090;&#1077;"],
+						["fr", "French",	"0",	"aider"],
+					   ];
+		var langmin = 0;
+		var langmax = langArr.length - 1;
+		// and the formula is:
+		var langrandom = Math.floor(Math.random() * (langmax - langmin + 1)) + langmin;		
+		
+		var lv_curr_lang = langArr[langrandom];
+		$('.t1').html("ABAP ");
+		$('.t2').html(lv_curr_lang[3]);		
+		document.getElementById('head-title-text-a').title = 'ABAP Help - "Help" translated in ' + lv_curr_lang[1];
+		
+		if (lv_curr_lang[2] == 0){ lv_font_size = "70px" }
+		else { lv_font_size = lv_curr_lang[2] + "px" 
+		lv_font_size = '80%';
+		$('#head-title-text').css("font-size", lv_font_size);
+		};
+		
+		
+		if (lv_curr_lang[0] != 'en'){
+		var lv_a_tr_link = '<a class="link-translate" href="http://translate.google.com/#en/' + lv_curr_lang[0] + '/Help" target="_blank" ' +
+						   'title="See Translation from English to ' + lv_curr_lang[1] +' at Google Translate"></a>';
+		$("#head-title-text").append(lv_a_tr_link);
+		}
+*/
+	
+
+
+/*
+	var lvsidemoved = '';
+	var oadinpoststart = document.getElementById("adinpoststart");
+	var oadside = document.getElementById("adside");
+	if (oadinpoststart !== null){
+	    var lvadinpoststart = $("#adinpoststart").position();		
+	    var lvaiptop = lvadinpoststart.top + 10;
+	    $(".adside").offset({ top: lvaiptop, left: lvadinpoststart.left});
+	    $("#adinpoststart").addClass("adinpostfull");
+	    $("#adinpoststart").slideDown(500);
+	    $(".adside").height(0);
+	    lvsidemoved = 'X';
+	}
+
+        var lvadheader = $(".adheaderstart").position();
+        var lvtop = 0;
+*/
+	var blogdiv = document.getElementById('Blog1');
+	if (blogdiv != null){
+		var children = blogdiv.getElementsByTagName('div');
+		var vlen = children.length;
+		var tempcodedivs = new Array();;
+		var j = 0;
+		for(var i=0;i < vlen;i++){
+		if (children[i].id.substr(0,4) == "mdiv"){
+			tempcodedivs[j] = children[i].id;
+			j++;
+		}
+		}
+		vlen = tempcodedivs.length;
+		for(var i=0;i < vlen;i++)
+		{
+			addDiv(tempcodedivs[i]);
+		}
+	}
+/*
+	if (lvsidemoved === '' && oadside !== null){
+	    lvtop = lvadheader.top - 340;
+	} else {
+	    lvtop = lvadheader.top - 80;
+	}
+	$(".adforheader").offset({ top: lvtop, left: lvadheader.left});
+	$(".adheaderstart").addClass("adheader");
+	$(".adheaderstart").slideDown(500);
+
+	var lvfootermoved = '';
+	var oad2inpoststart = document.getElementById("ad2inpoststart");
+	var oadfooter = document.getElementById("adfooter");
+	if (oad2inpoststart !== null){
+	    var lvad2inpoststart = $("#ad2inpoststart").position();		
+	    var lvaip2top = lvad2inpoststart.top + 10;
+	    var lvaip2left = lvad2inpoststart.left - 20;
+	    $(".adfooter").offset({ top: lvaip2top, left: lvaip2left});
+	    $("#ad2inpoststart").addClass("ad2inpostfull");
+	    $("#ad2inpoststart").slideDown(500);
+	    $(".adfooter").height(0);
+	    lvfootermoved = 'X';
+	}
+*/
+	
+
+});
+</script>		
+</div>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	//doloading();
+	$('.scrollTop').click(function() {
+	   var elementClicked = $(this).attr("href");
+	   var destination = $(elementClicked).offset().top;
+	   $("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-30}, 500 );
+	   return false;
+	});
+	$('.mscomimg').click(function() {
+	   var elementClicked = $(this).attr("href");
+	   console.log(elementClicked);
+	   var destination = $(elementClicked).offset().top;
+	   $("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-40}, 500 );
+	   return false;
+	});
+
+	/* auto populate email id for comment subscribe */
+	$('#commentform #email').change(function(){
+     		var commemail = $('#commentform #email').val();
+		$('#comm-form-sub-form #email').val(commemail);
+	});
+
+	/*
+	$(window).scroll(function(){
+		onscroll();
+	});
+	*/
+
+	$(window).resize(function() {
+	  $('#log').append('<div>Handler for .resize() called.</div>');
+	});
+	
+	generateCaptaCode();
+
+
+	
+/*
+	var soa = $('#startofad').position();
+	$(".adwrapper").offset({ top: soa.top, left: soa.left});
+
+	var lvactaddiv = document.getElementById("actualaddiv");
+	if (lvactaddiv !== null){
+		var lvadcode = $('#adrenderer').html();
+		$('#actualaddiv').html( lvadcode );
+		$('#adrenderer').remove();
+		$('#adrenderer').hide();
+		$('#actualaddiv').addClass('addiv');
+	}
+*/	
+
+
+
+
+
+});
+
+
+
+function validateForm(){
+	var vcode = document.getElementById("expcapcode").innerHTML;
+	var expval = eval(vcode);
+	var actval = document.forms["commentform"]["capcode"].value;
+	if (expval != actval){
+		alert("Incorrect Code");
+		return false;
+	}
+	return true;
+}
+function generateCaptaCode(){
+	// randomize
+	for (var idx=0; idx<2; idx++){
+		var num1 = Math.floor(Math.random()*9);
+		var num2 = Math.floor(Math.random()*9);
+	}
+	if (num1 == 0)
+		num1 = Math.floor(Math.random()*9);
+	if (num2 == 0)
+		num2 = Math.floor(Math.random()*9);
+		
+	var op = "+";
+	var vcode = num1 + " " + op + " " +num2;
+	var vspan = document.getElementById("expcapcode");
+	if (vspan !== null){
+		vspan.innerHTML = vcode;
+	}
+}
+</script>	
+<link rel='stylesheet' id='yarppRelatedCss-css'  href='http://zevolving.com/wp-content/plugins/yet-another-related-posts-plugin/style/related.css?ver=5.7.3' type='text/css' media='all' />
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/comment-reply.min.js?ver=5.7.3' id='comment-reply-js'></script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=7.4.4' id='wp-polyfill-js'></script>
+<script type='text/javascript' id='wp-polyfill-js-after'>
+( 'fetch' in window ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?ver=2.0.2"></scr' + 'ipt>' );( 'objectFit' in document.documentElement.style ) || document.write( '<script src="http://zevolving.com/wp-includes/js/dist/vendor/wp-polyfill-object-fit.min.js?ver=2.3.4"></scr' + 'ipt>' );
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/dist/hooks.min.js?ver=d0188aa6c336f8bb426fe5318b7f5b72' id='wp-hooks-js'></script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/dist/i18n.min.js?ver=6ae7d829c963a7d8856558f3f9b32b43' id='wp-i18n-js'></script>
+<script type='text/javascript' id='wp-i18n-js-after'>
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/dist/vendor/lodash.min.js?ver=4.17.21' id='lodash-js'></script>
+<script type='text/javascript' id='lodash-js-after'>
+window.lodash = _.noConflict();
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/dist/url.min.js?ver=b2a17503b1ff42b789ce34b159a311cf' id='wp-url-js'></script>
+<script type='text/javascript' id='wp-api-fetch-js-translations'>
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "default", { "locale_data": { "messages": { "": {} } } } );
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/dist/api-fetch.min.js?ver=25cbf3644d200bdc5cab50e7966b5b03' id='wp-api-fetch-js'></script>
+<script type='text/javascript' id='wp-api-fetch-js-after'>
+wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( "http://zevolving.com/wp-json/" ) );
+wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( "63aae473a0" );
+wp.apiFetch.use( wp.apiFetch.nonceMiddleware );
+wp.apiFetch.use( wp.apiFetch.mediaUploadMiddleware );
+wp.apiFetch.nonceEndpoint = "http://zevolving.com/wp-admin/admin-ajax.php?action=rest-nonce";
+</script>
+<script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"cached":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.4' id='contact-form-7-js'></script>
+<script type='text/javascript' id='toc-front-js-extra'>
+/* <![CDATA[ */
+var tocplus = {"smooth_scroll":"1","visibility_show":"show","visibility_hide":"hide","width":"50%"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-content/plugins/table-of-contents-plus/front.min.js?ver=2002' id='toc-front-js'></script>
+<script type='text/javascript' id='wp-polls-js-extra'>
+/* <![CDATA[ */
+var pollsL10n = {"ajax_url":"http:\/\/zevolving.com\/wp-admin\/admin-ajax.php","text_wait":"Your last request is still being processed. Please wait a while ...","text_valid":"Please choose a valid poll answer.","text_multiple":"Maximum number of choices allowed: ","show_loading":"1","show_fading":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-content/plugins/wp-polls/polls-js.js?ver=2.75.6' id='wp-polls-js'></script>
+<script type='text/javascript' id='wp-postviews-cache-js-extra'>
+/* <![CDATA[ */
+var viewsCacheL10n = {"admin_ajax_url":"http:\/\/zevolving.com\/wp-admin\/admin-ajax.php","post_id":"45"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://zevolving.com/wp-content/plugins/wp-postviews/postviews-cache.js?ver=1.68' id='wp-postviews-cache-js'></script>
+<script type='text/javascript' src='http://zevolving.com/wp-includes/js/wp-embed.min.js?ver=5.7.3' id='wp-embed-js'></script>
+</body>
+</html>

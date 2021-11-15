@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+
+<!--[if gte IE 9]>
+<html class="ie" lang="en-US">
+<![endif]-->
+
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar" content="black"/>
+    <title>Running ABAP in Eclipse from a USB stick powered by SapMachine | SAP Blogs</title>
+    <link rel="profile" href="http://gmpg.org/xfn/11"/>
+
+    
+    
+    <!--[if lt IE 9]>
+    <script src="https://blogs.sap.com/wp-content/themes/sap-v3-neo/js/html5.min.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link rel="icon" type="image"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.png" /><link rel="shortcut icon" type="image/x-icon"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.ico" /><link rel="apple-touch-icon" href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/apple-touch-icon.png" /><meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//static.community.services.sap' />
+<link rel='dns-prefetch' href='//assets.adobedtm.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Feed" href="https://blogs.sap.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Comments Feed" href="https://blogs.sap.com/comments/feed/" />
+<meta name="type" content="Blog" /><meta name="description" content="&nbsp; ABAP in Eclipse powered by Updates 30.03.2020 &#8211; Added a link where to configure the location of the JVM used by ADT in case it does not reside in a local folder jre within the Eclipse installation" /><meta name="sm_tech_ids" content="833755570260738661924709785639136"/><meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" /><link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Running ABAP in Eclipse from a USB stick powered by SapMachine Comments Feed" href="https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/blogs.sap.com\/res1dx-135\/wp-includes\/js\/wp-emoji-release.min.js"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/style.min.css' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/css/ie.css' type='text/css' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='designmate_styles-css'  href='https://static.community.services.sap/designmate/v3/136/latest/designmate.css' type='text/css' media='all' />
+<link rel='stylesheet' id='designsystem_styles-css'  href='https://static.community.services.sap/community-ds/v1/188/main.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dist/block-library/style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='prism-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/js/tinymce/plugins/codesample/css/prism.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_custom_link_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom//include/css/sap-core-custom.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_lightbox_gallery_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='pt_style_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-primary-tag/css/pt_style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-popular-posts-css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/css/wpp.css' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery.min.js' id='jquery-core-js'></script>
+<script type='text/javascript' id='jquery-core-js-after'>
+if (jQuery !== undefined) {
+                jQuery(window).on("load", function(){
+                    var _wpWindowLoaded = document.createElement("div");
+                    _wpWindowLoaded.setAttribute("class", "hidden");
+                    _wpWindowLoaded.setAttribute("id", "wp_window_loaded");
+                    document.body.appendChild(_wpWindowLoaded);
+                });
+            }
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery-migrate.min.js' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='//assets.adobedtm.com/ccc66c06b30b/d266848b2882/launch-f095fbc32a96.min.js' id='scn_adobe_dtm-js'></script>
+<script type='text/javascript' id='wpp-js-js-extra'>
+/* <![CDATA[ */
+var wpp_params = {"sampling_active":"","sampling_rate":"100","ajax_url":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php","action":"update_views_ajax","ID":"886599","token":"938e4875d9"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/js/wpp.js' id='wpp-js-js'></script>
+<link rel="https://api.w.org/" href="https://blogs.sap.com/wp-json/" /><link rel="alternate" type="application/json" href="https://blogs.sap.com/wp-json/wp/v2/posts/886599" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.sap.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.sap.com/wp-includes/wlwmanifest.xml" /> 
+
+<link rel="canonical" href="https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/" />
+<link rel='shortlink' href='https://blogs.sap.com/?p=886599' />
+<script type="text/javascript">var ajaxurl = "https://blogs.sap.com/wp-admin/admin-ajax.php";var likePostLabel = "Like";var unLikePostLabel = "Liked";var likeCommentLabel = "Like";var unLikeCommentLabel = "Liked";</script>    <!--[if IE ]>
+    <link rel="stylesheet" id="scn-ie-styles" href="https://blogs.sap.com/wp-content/themes/sap-v3-neo/css/ie.css"
+          type="text/css" media="all">
+    <link id="ids-popup-css" href="https://accounts.sap.com/universalui/shared/stylesheets/idsPopup.css"
+          rel="stylesheet"
+          type="text/css">
+    <![endif]-->
+
+
+</head>
+
+<body class="post-template-default single single-post postid-886599 single-format-standard custom-font-enabled">
+
+
+<div class="page-wrapper">
+<b class="cn-accessibility"><a href="#main" tabindex="0" accesskey="S">Skip to Content</a></b>
+<div id="page" class="hfeed site">
+
+<header id="masthead" class="blogs-nav sap-header">
+    <header id="comm-hdr-Header" role="masthead"><div class="dm-header"><div class="dm-header__inner"><div class="dm-header__logo-wrapper"><a class="dm-logo--header" href="http://www.sap.com/" title="SAP"></a></div><nav id="comm-hdr-Navigation" class="dm-mainNav"><div class="dm-mobileSearch"><form class="dm-header__search-form" action=""><div class="dm-search-container dm-input dm-search__input"><label class="dm-input__box" aria-label="search SAP Community"><input class="dm-input__control" placeholder="Search SAP Community" name="filter-search" type="search" required="" aria-label="type here to search"><button class="dm-search__button dm-search__button-clear" type="reset" role="button" title="Reset Search"><span class="dm-search__buttonIcon dm-icon-encoded--close" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" role="button" title="Search SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form></div><ul class="dm-mainNav__menu dm-mainNav__menu--withGroups" role="menubar"><li class="dm-header__homeItem" role="none"><a class="dm-header__homeItem-link" role="menuitem" aria-label="Community Home" target="_self" href="https://community.sap.com">Community</a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/topics" aria-label="" aria-haspopup="false" role="menuitem">Topics<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://groups.sap.com" aria-label="Groups. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Groups<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://answers.sap.com/index.html" aria-label="Answers. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Answers<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://blogs.sap.com" aria-label="Blogs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Blogs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/events" aria-label="Events. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Events<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/programs" aria-label="Programs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Programs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources" aria-label="Resources. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Resources<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources/what-is-new" aria-label="" aria-haspopup="false" role="menuitem">What's New<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li></ul></nav><ul class="dm-header__actions"><li id="comm-hdr-Search" class="dm-header__actions-item dm-headerSearch"><a class="dm-search-action dm-icon-encoded dm-header__search-icon" aria-label="Search the SAP Community" href="#" role="button" aria-expanded="false" title="Search"></a><div class="dm-headerSearch__wrapper"><form class="dm-searchdropdown dm-align-center" action=""><div class="dm-search__input dm-input" role="search"><label class="dm-input__box" aria-label="search the SAP community"><input class="dm-input__control" placeholder="Search the SAP Community" name="filter-search" aria-label="type here to search" type="input"><button class="dm-search__button dm-search__button-clear" type="reset" title="Reset"><span class="dm-search__buttonIcon dm-icon-encoded--clear" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" title="Search the SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form><a class="dm-headerSearch__closeButton" type="submit" role="button" title="Close search input" href="javascript:void(0);"><span class="dm-icon-encoded dm-icon-encoded--close" role="img" aria-label="Close search input"></span></a></div></li><li id="comm-hdr-Authentication" class="dm-header__actions-item dm-header__account"><a id="comm-hdr-SignIn" class="dm-user__login-button--wrapper" aria-haspopup="true" aria-expanded="false" role="button" href="#" title="Log In" rel="IDS_login"><div id="comm-hdr-AnonymousIcon" class="dm-icon-encoded dm-icon-encoded--account dm-hidden" aria-label="click here to login"></div><div id="comm-hdr-Avatar" class="dm-user dm-header__avatar"><img class="dm-header__avatar-image dm-hidden" data-src="" src="" width="24px" height="24px"><span class="dm-header__notifications dm-hidden js-notification-indicator"></span></div></a><ul id="comm-hdr-UserProfileMenu" class="dm-header__actionsSubMenu dm-profileFlyoutMenu dm-profileMenuDropdown" role="menu" aria-label="drop down menu of people profile"><li class="dm-profileMenu__userData"><div id="comm-hdr-Username" class="dm-profileMenu__userName"></div><div id="comm-hdr-Email" class="dm-profileMenu__userEmail"></div><a id="comm-hdr-SubMenuTitleLink" class="dm-link" href="#">Manage my Account</a></li><li id="comm-hdr-ProfileMenuTopSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li id="comm-hdr-ProfileMenuMiddleSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li class="dm-profileMenu__section"><ul class="dm-profileMenu__list dm-profileMenu__logout"><li class="dm-profileMenu__item"><a id="comm-hdr-LogOut" class="dm-button dm-button--secondary" href="#" role="button"><span class="dm-button-text">Logout</span></a></li></ul></li></ul></li><li class="dm-header__actions-item dm-header__mobileMenu"><a id="comm-hdr-MobileMenuBtn" class="dm-mobileMenuButton" aria-label="Search SAP community"><span class="dm-icon-encoded dm-icon-encoded--mobile-menu"></span><span style="display:none;">Search</span></a></li></ul></div></div></header><div class="announcements" role="menubar"></div><div class="dm-wrapper dm-subheader dm-subheader--wrapper  dm-user--unauthenticated "><div class="dm-grid"><div class="dm-breadcrumb dm-user--unauthenticated" role="menubar">
+    <ul class="dm-breadcrumb-nav" role="navigation" aria-label="breadcrumb navigation to trace the path back to original landing point">
+        
+        <li><a id="comm-shdr-breadcrumb-home" href="https://www.sap.com" title="Home">Home</a></li>
+        
+        <li><a id="comm-shdr-breadcrumb-community" href="https://community.sap.com" title="Community">Community</a></li>
+        
+    </ul>
+    <ul class="dm-breadcrumb-actions" role="menu">
+        
+        <li><a id="comm-shdr-AskQuestion" href="https://answers.sap.com/questions/ask.html" title="Ask a Question">Ask a Question</a></li>
+        
+        <li><a id="comm-shdr-WriteBlogPost" href="https://blogs.sap.com/wp-admin/post-new.php" title="Write a Blog Post">Write a Blog Post</a></li>
+        
+        <li class="dm-user__login-button--wrapper"><a class="dm-button-small dm-button--primary" role="button" rel="IDS_login" aria-label="Login or Sign up. Click here to log in or sign up"><span class="dm-button-text">Login / Sign-up</span></a></li>
+        <li class="dm-breadcrumb-actions__dropdown">
+            <span id="comm-shdr-actions-opener" class="dm-breadcrumb-actions__dropdown-toggle" title="Community actions">
+                 <span class="dm-icon-encoded dm-icon-encoded--3dots"></span>
+            </span>
+            <ul id="comm-shdr-user-actions-ul" class="dm-breadcrumb-actions__dropdown-menu" role="menu">
+            </ul>
+        </li>
+    </ul>
+</div>
+</div></div>    <!-- #site-navigation -->
+
+</header>
+
+<!-- #masthead -->
+<div id="main" tabindex="0" class="wrapper">
+
+
+
+
+<div class="ds-blog-post-detail">
+<div class="ds-flexGrid">
+  <div class="ds-flexRow">
+    <div class="ds-flexCol">
+            <div class="ds-content-wrapper ds-blog-post__content-wrapper">
+        <h6 class="ds-heading ds-heading--xs ds-blog-post__sub-title"><span>Technical Articles</span></h6>
+        <div class="ds-flexRow">
+          <div class="ds-flexCol-sm-12 ds-flexCol-md-9">
+            
+<div class="ds-blog-post__body-wrapper">
+  <div class="ds-blog-post__content">
+    <div class="ds-blog-post__header-wrapper">
+      <a target="_blank" rel="noopener noreferrer" href="https://people.sap.com/andre.fischer" class="ds-blog-post__avatar "  >
+        <img alt='Author&#039;s profile photo Andre Fischer' src='https://avatars.services.sap.com/images/andre.fischer.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />      </a>
+      <div class="ds-blog-post__author-info-wrapper">
+        <div class="ds-user ds-blog-post__author">
+          <a class="ds-link ds-user__name " href="https://people.sap.com/andre.fischer" target="_blank" title="Andre Fischer" aria-label="" rel="noopener noreferrer">Andre Fischer</a>
+          <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i><i class="ds-user__role ds-user__role--champion" title="This user is an SAP Champion" data-role-name="SAP Champion"></i></div>        </div>
+        <div class="ds-blog-post__meta-info">
+          <span class="ds-blog-post__date">October 25, 2019</span>
+          <span class="ds-blog-post__read-duration">3 minute read</span>
+        </div>
+      </div>
+    </div>
+    <h1 class="ds-heading ds-heading--m ds-blog-post__title">Running ABAP in Eclipse from a USB stick powered by SapMachine</h1>
+    <div class="ds-blog-post__social-stats-wrapper">
+      <div class="ds-social-stats ">
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--comments"></i>17        </span>
+        <span id="post-likes-counter" class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--likes-outline"></i>35        </span>
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--views"></i>4,459        </span>
+      </div>
+          </div>
+    <div class="ds-blog-post__body ds-editor-content">
+      <p>&nbsp;</p>
+<table>
+<tbody>
+<tr>
+<td>
+<h1 style="text-align: center">ABAP in Eclipse powered by</h1>
+</td>
+<td><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2019/10/sap_machine_logo_circular.png" data-index="1" data-id="plbox-886599" /></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Updates</strong></p>
+<ul>
+<li>30.03.2020 &#8211; Added a link where to configure the location of the JVM used by ADT in case it does not reside in a local folder jre within the Eclipse installation</li>
+</ul>
+<p>&nbsp;</p>
+<p>There are several reasons why one would like to run the ABAP Development Tools (aka ABAP in Eclipse) from a USB stick or have a self-contained installation in one separate folder on your laptop.</p>
+<ul>
+<li>Your laptop has no JAVA runtime installed or your IT department has only installed a 32-bit Java runtime version</li>
+<li>You don&#8217;t have administrative rights on your laptop or are working on different computers</li>
+<li> It&#8217;s cool</li>
+</ul>
+<p>One problem that occurs very often is that IT departments have installed a 32bit Java Runtime which is not supported by Eclipse. The latest release of Eclipse requires a 64-bit JVM, and does not support a 32-bit JVM as described here <a href="https://wiki.eclipse.org/Eclipse/Installation" target="_blank" rel="noopener noreferrer" >Eclipse/Installation</a>.</p>
+<p>I have added a screen shot of such an error message at the end of this blog but did not want to use this as the first picture of my blog.</p>
+<p>With <strong><a href="https://sap.github.io/SapMachine/" target="_blank" rel="noopener noreferrer" >SapMachine</a></strong> there is now a SAP supported version of OpenJDK available for SAP customers and partners who wish to use OpenJDK to run their applications such as ABAP in Eclipse.</p>
+<p>In order to run ABAP in Eclipse you don&#8217;t need a complete JDK. The much smaller JRE 11 from SapMachine is sufficient which can be downloaded from <a href="https://sap.github.io/SapMachine/latest/11" target="_blank" rel="noopener noreferrer" >GitHub</a>.</p>
+<p><strong>Caution: </strong>Please note that SapMachine is not yet supported on the latest Mac OS Catalina.</p>
+<p>&nbsp;</p>
+<p><em>Setup steps</em></p>
+<p>&nbsp;</p>
+<ol>
+<li>Get an installation of <a href="https://www.eclipse.org/downloads/packages/release/2019-09/r" target="_blank" rel="noopener noreferrer" >Eclipse 2019-09</a> (e.g. <a href="https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-java-developers" target="_blank" rel="noopener noreferrer" >Eclipse IDE for Java Developers</a>)</li>
+<li>Unzip the files to a folder on your USB stick (for example <em>D:\2019-09\eclipse</em>)</li>
+<li>Create a subfolder called <strong>jre</strong> in the folder where your Eclipse files reside<br />
+(<em>D:\2019-09\eclipse\</em><strong><strong><strong><em>jre</em>)<br />
+</strong></strong></strong>or alternatively copy it to some other folder on your laptop and set the location where the Java Runtime that shall be used by ADT can be found as here <a href="https://wiki.eclipse.org/Eclipse.ini#Specifying_the_JVM" target="_blank" rel="noopener noreferrer" >Specifying_the_JVM</a>.<strong><strong><strong><br />
+</strong></strong></strong></li>
+<li>Download the latest Java Runtime 11 files from <a href="https://sap.github.io/SapMachine/latest/11" target="_blank" rel="noopener noreferrer" >GitHub</a><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2019/10/JRE-Download-Page.jpg" data-index="2" data-id="plbox-886599" /></li>
+<li>Unpack the files into the sub-folder <strong>jre</strong> that you have just created.<img class=" ds-lightbox__img" style="color: #444444;font-family: Arial,Helvetica,sans-serif;font-size: 14px;font-style: normal;font-variant: normal;font-weight: bold;height: auto;letter-spacing: normal;max-width: 100%;text-align: left;text-decoration: none;text-indent: 0px;text-transform: none" src="https://blogs.sap.com/wp-content/uploads/2019/10/jre-subfolder.jpg" data-index="3" data-id="plbox-886599" /></li>
+<li>Run Eclipse<img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2019/10/run-eclipse.jpg" data-index="4" data-id="plbox-886599" /></li>
+<li>Create a workspace on your USB stick (D:\eclipse-workspace_2019) or elsewhere<img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2019/10/create-workspace.jpg" data-index="5" data-id="plbox-886599" /></li>
+<li>Install the ABAP Development Tools in Eclipse <a href="https://tools.hana.ondemand.com/#abap" target="_blank" rel="noopener noreferrer" >as described here</a></li>
+</ol>
+<p>&nbsp;</p>
+<p>As already mentioned this setup can also be used to install eclipse as a self-contained setup in a separate folder on your laptop rather than using a USB stick.</p>
+<p>&nbsp;</p>
+<p><em>I am administrator and I want to build distributable packages</em></p>
+<p>&nbsp;</p>
+<p>If you want to build an Eclipse IDE package, that is based on an existing Eclipse IDE package and contains ABAP Development Tools features please check out the step-by-step guide in the <a href="https://help.sap.com/doc/2e9cf4a457d84c7a81f33d8c3fdd9694/LATEST/en-US/inst_guide_abap_development_tools.pdf" target="_blank" rel="noopener noreferrer" >Installation Guide (page 32 ff)</a> for  ABAP Development Tools.</p>
+<p>&nbsp;</p>
+<p><em>How do I check the version of my Java Runtime?</em></p>
+<p>&nbsp;</p>
+<p>You can check the version of the Java Runtime by running the command <em><strong>java -version</strong></em>. In case you only have a 32bit version installed you will see something like the following (that means you don&#8217;t see any hint that it is a 64bit version).</p>
+<pre>C:\Windows\System32&gt;java -version
+java version "1.8.0_221"
+Java(TM) SE Runtime Environment (build 1.8.0_221-b11)
+Java HotSpot(TM) Client VM (build 25.221-b11, mixed mode)</pre>
+<p>To be on the safe side you can run the following command<em><strong> java -d64 -version</strong></em> as described in this disussion at <a href="https://stackoverflow.com/questions/2062020/how-can-i-tell-if-im-running-in-64-bit-jvm-or-32-bit-jvm-from-within-a-program" target="_blank" rel="noopener noreferrer" >stackoverflow</a></p>
+<pre>C:\Windows\System32&gt;java -d64 -version
+Error: This Java instance does not support a 64-bit JVM.
+Please install the desired version.</pre>
+<p>If we do this on our USB stick in subdirectory &#8220;jre\bin&#8221; we will see that it is a 64bit version.</p>
+<pre>D:\2019-09\eclipse\jre\bin&gt;java -version
+openjdk version "11.0.5" 2019-10-16 LTS
+OpenJDK Runtime Environment (build 11.0.5+10-LTS-sapmachine)
+OpenJDK <strong>64-Bit Server VM</strong> (build 11.0.5+10-LTS-sapmachine, mixed mode)</pre>
+<p>&nbsp;</p>
+<p><em>Error message when using a 32bit Java Runtime</em></p>
+<p>For completeness I am showing here the error message you will get when you only have a 32bit Java Runtime version installed</p>
+<pre>Java was started but returned exit code=13
+
+C:\Program Files (x86)\Common Files\Oracle\Java\javapath\javaw.exe</pre>
+<p>&nbsp;</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2019/10/32bit-error.jpg" data-index="6" data-id="plbox-886599" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+    </div>
+  </div>
+  <div class="ds-blog-post__social-side-bar">
+    <div class="ds-sticky-on-scroll ">
+      <div class="ds-sticky-on-scroll__wrapper  ">
+        <div class="ds-sticky-on-scroll__content">
+          <div class="ds-blog-post__social-actions">
+            <button class="sap-button-follow ds-button ds-button--primary ds-blog-post__social-action ds-blog-post__social-action--follow" id="sap-button-follow-hdr-id" onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2019%2F10%2F25%2Frunning-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine%2F%3Fs_action%3Dss_change_follow_status%26nonce%3D705a693f83'" rel="IDS_login"  type="button" data-content-type="blogpost" data-content-id="886599" data-nonce="705a693f83" title="Please log into the system to use follow/unfollow functionality."><span class="ds-button-text">Follow</span></button>            <button type='button' class='ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action likes-post-link dolike ' rel='IDS_login' onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2019%2F10%2F25%2Frunning-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine%2F%3Fs_action%3Dss_change_like_status%26nonce%3D580b46d63f'" title='Like' data-nonce='580b46d63f' data-post-id='886599'><i class='ds-icon ds-icon--likes-outline ds-icon--regular ds-m-r-xs' tabindex='-1'></i><span class='ds-button-text'>Like</span></button>            <button type="button" class="ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action" title="RSS Feed" onclick="location.href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/feed/'">
+              <i class="ds-icon ds-icon--rss-feed ds-icon--regular ds-m-r-xs" tabindex="-1"></i>RSS Feed
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+            <div class="ds-blog-post__social-row">
+              <div class="ds-blog-post__social-icons">
+                <a href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.sap.com%2F2019%2F10%2F25%2Frunning-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine%2F' title='Share on Facebook' target='_blank'><span class='ds-social-icon ds-social-icon--dark-facebook'></span></a><a href='https://twitter.com/share?url=https%3A%2F%2Fblogs.sap.com%2F2019%2F10%2F25%2Frunning-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine%2F&text=Running+ABAP+in+Eclipse+from+a+USB+stick+powered+by+SapMachine' title='Share on Twitter' target='_blank'><span class='ds-social-icon ds-social-icon--dark-twitter'></span></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.sap.com%2F2019%2F10%2F25%2Frunning-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine%2F&title=Running+ABAP+in+Eclipse+from+a+USB+stick+powered+by+SapMachine' title='Share on LinkedIn' target='_blank'><span class='ds-social-icon ds-social-icon--dark-linkedin'></span></a>              </div>
+              <div class='ds-tooltip__wrapper'>
+    <div class='ds-tooltip__anchor'>
+    <button
+      type="button"
+      class="ds-button ds-button--secondary ds-blog-post__alert-moderator-button ds-button--disabled"
+      aria-label="Alert Moderator"
+      data-toggle="collapse"
+      data-hide-class="ds-collapse"
+      data-triggers=".alertModerator"
+      aria-expanded="false">Alert Moderator
+    </button>
+    </div>
+    <div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Alerting is not available for unauthorized users</div>
+</div>
+            </div>
+            
+  <div class="wprc-content-v3">
+    <div class="ds-blog-post-form ds-blog-post__alert-moderator-form ds-collapse alertModerator wprc-form-v3" data-toggle="collapseComponent" data-name="alertModerator">
+          </div>
+  </div>
+          </div>
+          <div class="ds-blog-post__right-side-bar ds-flexCol-sm-12 ds-flexCol-md-3">
+            <div id="sapassignedtagswidget-v3-2" class="ds-side-bar-widget ds-assigned-tags ds-m-b-l"><h3 class="ds-side-bar-widget__heading">Assigned Tags</h3></div><div id="sap-relatedcontent-widget-v3-2" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Similar Blog Posts<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="blogpost" data-limit="3"></ul></div></div><div id="sap-relatedcontent-widget-v3-3" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Related Questions<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="question" data-limit="3"></ul></div></div>          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="content-lightbox-modal"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="plbox-886599"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="plbox-886599" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2019/10/sap_machine_logo_circular.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2019/10/JRE-Download-Page.jpg" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2019/10/jre-subfolder.jpg" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2019/10/run-eclipse.jpg" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2019/10/create-workspace.jpg" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2019/10/32bit-error.jpg" alt=""/></div><a class="lightbox-gallery-button--prev ds-lightbox__gallery-button ds-icon ds-icon--arrow-left" href="javascript:void(0);" aria-label="Show previous image"></a><a class="ds-lightbox__gallery-button lightbox-gallery-button--next ds-icon ds-icon--arrow-right" href="javascript:void(0);" aria-label="Show next image"></a></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>
+  <div class="ds-blog-post__comment-section">
+    <div class="ds-flexGrid">
+      <div class="ds-flexRow">
+        <div class="ds-flexCol-12 ds-flexCol-md-10 ds-flexCol-lg-10">
+          
+<div id="comments" class="ds-blog-post-comments">
+  
+      <div class="ds-blog-post-comments__counter" title="Number of Comments">
+      17 Comments      </div>
+              <div class="dm-section dm-align-center dm-section-header__title" title="Please log on to comment" aria-role="alert">
+                You must be <a href="https://blogs.sap.com/wp-login.php?redirect_to=2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine" class="opener js-idspopup" rel="IDS_login" title="Log On">Logged on</a> to comment or reply to a post.
+        </div>
+      
+    <div class="ds-blog-post-comments__list">
+              <div class="comment byuser comment-author-matthewbillingham even thread-even depth-1 ds-blog-post-comment" id="li-comment-478393">
+        <div id="comment-478393" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/matthew.billingham">
+                <img alt='Author&#039;s profile photo Matthew Billingham' src='https://avatars.services.sap.com/images/matthew.billingham_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Matthew Billingham' href='https://people.sap.com/matthew.billingham' rel='external nofollow' class='ds-link ds-user__name ' >Matthew Billingham</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-25T11:59:05+00:00"
+                >October 25, 2019 at 11:59 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Now, why couldn't you have published this two weeks ago when I received my new work laptop...? 🙂</p>
+<p>Anyway. If people want the leanest possible Eclipse for ADT, I've documented a method here: <a href="https://blogs.sap.com/2019/06/07/installing-lean-eclipse-with-adt/">https://blogs.sap.com/2019/06/07/installing-lean-eclipse-with-adt/</a></p>
+<p>Of course, now I've done this, I've received some Java development requests...</p>
+              </div>
+
+            <div id="comment-actions-478393" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478393" tabindex="-1">Like 2</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478393'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-andrefischer bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-478397">
+        <div id="comment-478397" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/andre.fischer">
+                <img alt='Author&#039;s profile photo Andre Fischer' src='https://avatars.services.sap.com/images/andre.fischer_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Andre Fischer' href='https://people.sap.com/andre.fischer' rel='external nofollow' class='ds-link ds-user__name ' >Andre Fischer</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i><i class="ds-user__role ds-user__role--champion" title="This user is an SAP Champion" data-role-name="SAP Champion"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-25T12:10:09+00:00"
+                >October 25, 2019 at 12:10 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Sorry about not having been faster with posting this, especially for you getting now Java development requests. ?</p>
+              </div>
+
+            <div id="comment-actions-478397" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478397" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478397'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-joachimrees even depth-2 ds-blog-post-comment" id="li-comment-478423">
+        <div id="comment-478423" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/joachim.rees">
+                <img alt='Author&#039;s profile photo Joachim Rees' src='https://avatars.services.sap.com/images/joachim.rees_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Joachim Rees' href='https://people.sap.com/joachim.rees' rel='external nofollow' class='ds-link ds-user__name ' >Joachim Rees</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-25T14:16:44+00:00"
+                >October 25, 2019 at 2:16 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <blockquote><p>two weeks ago when I received my new work laptop</p></blockquote>
+<p>wow, same here!</p>
+              </div>
+
+            <div id="comment-actions-478423" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478423" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478423'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-matthewbillingham odd alt depth-3 ds-blog-post-comment" id="li-comment-478506">
+        <div id="comment-478506" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/matthew.billingham">
+                <img alt='Author&#039;s profile photo Matthew Billingham' src='https://avatars.services.sap.com/images/matthew.billingham_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Matthew Billingham' href='https://people.sap.com/matthew.billingham' rel='external nofollow' class='ds-link ds-user__name ' >Matthew Billingham</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-26T14:41:29+00:00"
+                >October 26, 2019 at 2:41 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Aha. You <em>are</em> me! 😀</p>
+              </div>
+
+            <div id="comment-actions-478506" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478506" tabindex="-1">Like 2</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478506'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-amitbacklash even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-478400">
+        <div id="comment-478400" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/amitbacklash">
+                <img alt='Author&#039;s profile photo AMIT GUPTA' src='https://avatars.services.sap.com/images/amitbacklash_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name AMIT GUPTA' href='https://people.sap.com/amitbacklash' rel='external nofollow' class='ds-link ds-user__name ' >AMIT GUPTA</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-25T12:21:44+00:00"
+                >October 25, 2019 at 12:21 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thanks Andre for posting such a detailed blog and providing the solution for developer like us who don't have admin rights on their machines. Now we can play with ABAP in Cloud even on machine where admin rights are prohibited 🙂</p>
+              </div>
+
+            <div id="comment-actions-478400" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478400" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478400'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-joachimrees odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-478421">
+        <div id="comment-478421" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/joachim.rees">
+                <img alt='Author&#039;s profile photo Joachim Rees' src='https://avatars.services.sap.com/images/joachim.rees_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Joachim Rees' href='https://people.sap.com/joachim.rees' rel='external nofollow' class='ds-link ds-user__name ' >Joachim Rees</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-25T14:15:46+00:00"
+                >October 25, 2019 at 2:15 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Sounds very cool, thanks a lot!</p>
+              </div>
+
+            <div id="comment-actions-478421" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478421" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478421'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-peterinotai even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-478594">
+        <div id="comment-478594" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/peter.inotai">
+                <img alt='Author&#039;s profile photo Peter Inotai' src='https://avatars.services.sap.com/images/peter.inotai_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Peter Inotai' href='https://people.sap.com/peter.inotai' rel='external nofollow' class='ds-link ds-user__name ' >Peter Inotai</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-28T10:32:54+00:00"
+                >October 28, 2019 at 10:32 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thanks a lot for sharing it.</p>
+<p>Do you have a trick also for the <strong>SNC_LIB_64</strong> variable and single sign on?</p>
+<p>Currently I have a bat file looks like this, but wonder if there is a better way to set this variable without having admin rights:</p>
+<pre class="language-abap"><code>set SNC_LIB_64=C:\SNC_LIB_64\gx64krb5.dll
+eclipse.exe</code></pre>
+<p>Thanks,</p>
+<p>Peter</p>
+              </div>
+
+            <div id="comment-actions-478594" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478594" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478594'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-andrefischer bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-478603">
+        <div id="comment-478603" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/andre.fischer">
+                <img alt='Author&#039;s profile photo Andre Fischer' src='https://avatars.services.sap.com/images/andre.fischer_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Andre Fischer' href='https://people.sap.com/andre.fischer' rel='external nofollow' class='ds-link ds-user__name ' >Andre Fischer</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i><i class="ds-user__role ds-user__role--champion" title="This user is an SAP Champion" data-role-name="SAP Champion"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-28T11:06:48+00:00"
+                >October 28, 2019 at 11:06 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Peter,</p>
+<p>I am not aware of a better solution.</p>
+<p>Best regards,</p>
+<p>Andre</p>
+<p>&nbsp;</p>
+              </div>
+
+            <div id="comment-actions-478603" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478603" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478603'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-peterinotai even depth-3 ds-blog-post-comment" id="li-comment-478617">
+        <div id="comment-478617" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/peter.inotai">
+                <img alt='Author&#039;s profile photo Peter Inotai' src='https://avatars.services.sap.com/images/peter.inotai_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Peter Inotai' href='https://people.sap.com/peter.inotai' rel='external nofollow' class='ds-link ds-user__name ' >Peter Inotai</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-28T12:11:27+00:00"
+                >October 28, 2019 at 12:11 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Andre,</p>
+<p>Thanks for the info.</p>
+<p>Best regards,</p>
+<p>Peter</p>
+              </div>
+
+            <div id="comment-actions-478617" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478617" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478617'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-baerbelwinkler2 odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-478811">
+        <div id="comment-478811" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/baerbel.winkler2">
+                <img alt='Author&#039;s profile photo Bärbel Winkler' src='https://avatars.services.sap.com/images/baerbel.winkler2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Bärbel Winkler' href='https://people.sap.com/baerbel.winkler2' rel='external nofollow' class='ds-link ds-user__name ' >Bärbel Winkler</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--champion" title="This user is an SAP Champion" data-role-name="SAP Champion"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-29T11:14:03+00:00"
+                >October 29, 2019 at 11:14 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p><a href="https://people.sap.com/andre.fischer" rel="nofollow">Andre Fischer</a></p>
+<p>Thanks for the write-up which I'm currently trying to follow. Everything worked as it should (if a bit slow) up to step 8. When I tried to follow the steps outlined <a href="https://tools.hana.ondemand.com/#abap" target="_blank" rel="noopener noreferrer nofollow">here</a>, I (not completely unexpectedly as it happened before for other Eclipse installations) hit the snag of "HTTP proxy authentification required":</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2019/10/InstallADT-ProxyError.jpg" width="520" height="401" data-index="1" data-id="clbox-478811" /></p>
+<p>Is there any way around this as it's rather unlikely that we'll be able to provide this authentication via our company laptops? As far as I can tell, getting the "Eclipse framework" up and running via the zip-files doesn't completely get around the problems of how the ADT can be easily put onto a company computer.</p>
+<p>Thanks much and cheers</p>
+<p>Bärbel</p>
+              </div>
+
+            <div id="comment-actions-478811" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478811" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478811'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+        <div id="content-lightbox-modal--478811"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="clbox-478811"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="clbox-478811" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2019/10/InstallADT-ProxyError.jpg" alt=""/></div></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>    <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-andrefischer bypostauthor even depth-2 ds-blog-post-comment" id="li-comment-478866">
+        <div id="comment-478866" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/andre.fischer">
+                <img alt='Author&#039;s profile photo Andre Fischer' src='https://avatars.services.sap.com/images/andre.fischer_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Andre Fischer' href='https://people.sap.com/andre.fischer' rel='external nofollow' class='ds-link ds-user__name ' >Andre Fischer</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i><i class="ds-user__role ds-user__role--champion" title="This user is an SAP Champion" data-role-name="SAP Champion"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-29T15:33:52+00:00"
+                >October 29, 2019 at 3:33 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Sounds like an Eclipse problem described here https://stackoverflow.com/questions/1940984/how-to-specify-eclipse-proxy-authentication-credentials</p>
+              </div>
+
+            <div id="comment-actions-478866" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478866" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478866'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-baerbelwinkler2 odd alt depth-3 ds-blog-post-comment" id="li-comment-478873">
+        <div id="comment-478873" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/baerbel.winkler2">
+                <img alt='Author&#039;s profile photo Bärbel Winkler' src='https://avatars.services.sap.com/images/baerbel.winkler2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Bärbel Winkler' href='https://people.sap.com/baerbel.winkler2' rel='external nofollow' class='ds-link ds-user__name ' >Bärbel Winkler</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--champion" title="This user is an SAP Champion" data-role-name="SAP Champion"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-29T16:12:15+00:00"
+                >October 29, 2019 at 4:12 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thanks for responding, Andre. I however don't think that this is something I should/could do on my office laptop. What is described in the stackoverflow discussion sounds to me like a hack to circumvent some security-related settings. In addition, I don't have a clue about the proxyname,  username and password expected for it (which I somehow doubt would be my usual credentials I use to access my laptop?). Oh, and we cannot do much in the system setting on our laptops anyway without admin access.</p>
+<p>Cheers</p>
+<p>Bärbel</p>
+              </div>
+
+            <div id="comment-actions-478873" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478873" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478873'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-andrefischer bypostauthor even depth-4 ds-blog-post-comment" id="li-comment-478888">
+        <div id="comment-478888" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/andre.fischer">
+                <img alt='Author&#039;s profile photo Andre Fischer' src='https://avatars.services.sap.com/images/andre.fischer_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Andre Fischer' href='https://people.sap.com/andre.fischer' rel='external nofollow' class='ds-link ds-user__name ' >Andre Fischer</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i><i class="ds-user__role ds-user__role--champion" title="This user is an SAP Champion" data-role-name="SAP Champion"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-29T19:13:02+00:00"
+                >October 29, 2019 at 7:13 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>H Bärbel</p>
+<p>after looking at the documentation (and the settings on my own notebook) I would propose to use the setting</p>
+<p>“Active Provider” “Native”.</p>
+<p>since in this case the settings are read from your OS.</p>
+<p>No normal user is entering username and password for a proxy and so it should not be necessary for Eclipse users to do that.</p>
+<p><a href="https://help.eclipse.org/kepler/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Freference%2Fref-net-preferences.htm" rel="nofollow"  target="_blank">https://help.eclipse.org/kepler/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Freference%2Fref-net-preferences.htm</a></p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2019/10/eclipse_network_settings-1.jpg" data-index="1" data-id="clbox-478888" /></p>
+              </div>
+
+            <div id="comment-actions-478888" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478888" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478888'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+        <div id="content-lightbox-modal--478888"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="clbox-478888"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="clbox-478888" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2019/10/eclipse_network_settings-1.jpg" alt=""/></div></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>    <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-baerbelwinkler2 odd alt depth-5 ds-blog-post-comment" id="li-comment-478919">
+        <div id="comment-478919" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/baerbel.winkler2">
+                <img alt='Author&#039;s profile photo Bärbel Winkler' src='https://avatars.services.sap.com/images/baerbel.winkler2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Bärbel Winkler' href='https://people.sap.com/baerbel.winkler2' rel='external nofollow' class='ds-link ds-user__name ' >Bärbel Winkler</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--champion" title="This user is an SAP Champion" data-role-name="SAP Champion"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-10-30T06:39:46+00:00"
+                >October 30, 2019 at 6:39 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thanks for digging into this, Andre!</p>
+<p>Unfortunately, I have one more entry in the network settings which I apparently cannot change as the relevant buttons are greyed out. It’s already set to “Native” but there’s an additional entry in the table which I cannot get rid of or update:</p>
+<p>HTTP – Dynamic – Dynamic – Native – No</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2019/10/InstallADT-ProxyError-02-1.jpg" data-index="1" data-id="clbox-478919" /></p>
+<p>I tried updating the other three entries to Auth “no” but that didn’t change the error message I got when I tried to get the ADTs (not too surprisingly as the entries are not checked).</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2019/10/InstallADT-ProxyError-03.jpg" data-index="2" data-id="clbox-478919" /></p>
+<p>Cheers</p>
+<p>Bärbel</p>
+<p> </p>
+              </div>
+
+            <div id="comment-actions-478919" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_478919" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-478919'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+        <div id="content-lightbox-modal--478919"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="clbox-478919"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="clbox-478919" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2019/10/InstallADT-ProxyError-02-1.jpg" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2019/10/InstallADT-ProxyError-03.jpg" alt=""/></div><a class="lightbox-gallery-button--prev ds-lightbox__gallery-button ds-icon ds-icon--arrow-left" href="javascript:void(0);" aria-label="Show previous image"></a><a class="ds-lightbox__gallery-button lightbox-gallery-button--next ds-icon ds-icon--arrow-right" href="javascript:void(0);" aria-label="Show next image"></a></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>    </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-mikepokraka even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-479948">
+        <div id="comment-479948" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/mike.pokraka">
+                <img alt='Author&#039;s profile photo Mike Pokraka' src='https://avatars.services.sap.com/images/mike.pokraka_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Mike Pokraka' href='https://people.sap.com/mike.pokraka' rel='external nofollow' class='ds-link ds-user__name ' >Mike Pokraka</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-11-07T07:41:43+00:00"
+                >November 7, 2019 at 7:41 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Bärbel,</p>
+<p>I had exactly the same issue at a customer. The problem is not with Eclipse but with something blocked by the corporate firewall. The "http/dynamic ..." entry has to do with your local computer's proxy settings. If you open Internet explorer and go to Internet options &gt; Connections &gt; LAN Settings you will probably see an autmatic configuration script.</p>
+<p>Unfortunately we didn't find the cause when I had this issue - we spoke to a local network chap that could point us to a different corporate proxy server that worked, so we never bothered with opening a ticket with the networks team and all the procedures that would have involved.</p>
+<p>So the gist of it is to contact your networks people, that's where something is being blocked.</p>
+<p>Hope that helps,<br />
+Mike</p>
+              </div>
+
+            <div id="comment-actions-479948" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_479948" tabindex="-1">Like 3</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-479948'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-baerbelwinkler2 odd alt depth-2 ds-blog-post-comment" id="li-comment-479952">
+        <div id="comment-479952" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/baerbel.winkler2">
+                <img alt='Author&#039;s profile photo Bärbel Winkler' src='https://avatars.services.sap.com/images/baerbel.winkler2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Bärbel Winkler' href='https://people.sap.com/baerbel.winkler2' rel='external nofollow' class='ds-link ds-user__name ' >Bärbel Winkler</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--champion" title="This user is an SAP Champion" data-role-name="SAP Champion"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-11-07T08:00:23+00:00"
+                >November 7, 2019 at 8:00 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thanks for your comment, Mike! Not sure if we'll ever manage to get rid of this kind of blocking on the network side of things and what that restriction then in turn means for really utilising Eclipse ?. If it's not easy to set up for people on "their" machines, uptake of Eclipse/ADT will be fraught with frustrations and subsequent clinging to SAP GUI.</p>
+<p>Cheers</p>
+<p>Bärbel</p>
+              </div>
+
+            <div id="comment-actions-479952" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_479952" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-479952'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-mikepokraka even depth-3 ds-blog-post-comment" id="li-comment-480136">
+        <div id="comment-480136" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/mike.pokraka">
+                <img alt='Author&#039;s profile photo Mike Pokraka' src='https://avatars.services.sap.com/images/mike.pokraka_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Mike Pokraka' href='https://people.sap.com/mike.pokraka' rel='external nofollow' class='ds-link ds-user__name ' >Mike Pokraka</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-11-08T07:29:29+00:00"
+                >November 8, 2019 at 7:29 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Bärbel,</p>
+<p>I don’t really see this as an obstacle. It’s a proxy configuration or firewall issue, raise a ticket and get your network guys to fix it. This is SAP-mandated software, there are more and more things you can only do with Eclipse so this will become necessary at some point.</p>
+<p>As I said when I encountered it the company had an alternate proxy server and since it worked on that one we never bothered following up the solution. But it’s definitely something with your corporate proxy/firewall that should be sorted out. Once it’s fixed it will work for everyone.</p>
+<p>It’s also a bit difficult for us to help as this is really something specific to your company’s internet access setup. But if you do get it sorted it would be helpful to let us know what the issue was.</p>
+<p>Regards,</p>
+<p>Mike</p>
+<p>PS, and it’s also possible to package Eclipse as a standard corporate software installation, I’ve encounter it in several organizations’ software shop / software manager or whatever you call it. It’s always been just the standard installation, but adding ADT is not a big deal.</p>
+              </div>
+
+            <div id="comment-actions-480136" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_480136" tabindex="-1">Like 2</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2019/10/25/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine/#comment-480136'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+
+      
+        </div> <!-- main comments content area -->
+
+    
+            
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+                </div> <!-- #main -->
+                <div id="shared_footer" class="dm-container dm-wrapper">
+                    <footer class="dm-footer">
+    <div class="dm-footer__inner-wrapper">
+        <div class="dm-socialmedia">
+            <h5 class="dm-socialmedia__headline" id="hl-sharefollow">Find us on</h5>
+            <ul class="dm-socialmedia__links" aria-labelledby="hl-sharefollow">
+                <li><a href="https://www.facebook.com/sapcommunity" title="Facebook"><span class="dm-icon-encoded--facebook"></span></a></li>
+                <li><a href="https://twitter.com/SAPCommunity" title="Twitter"><span class="dm-icon-encoded--twitter"></span></a></li>
+                <li><a href="https://www.youtube.com/c/SAPCommunities" title="YouTube"><span class="dm-icon-encoded--youtube"></span></a></li>
+                <li><a href="https://www.linkedin.com/company/sap" title="LinkedIn"><span class="dm-icon-encoded--linkedin"></span></a></li>
+                <li><a href="https://instagram.com/sap/" title="Instagram"><span class="dm-icon-encoded--instagram"></span></a></li>
+                <li><a href="http://www.slideshare.net/SAP" title="Slideshare"><span class="dm-icon-encoded--slideshare"></span></a></li>
+                <li><a href="mailto:?subject='SAP Community'" title="Email Share"><span class="dm-icon-encoded--email"></span></a></li>
+            </ul>
+        </div>
+        <nav role="navigation" class="dm-footer__navigation">
+            <ul class="dm-footer__navigation__list" aria-label="footer navigation">
+                <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+                <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+                <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+                <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+                <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+                <li id="teconsent"></li>
+                <li><a href="https://www.sap.com/cmp/nl/sap-community-voice/index.html" target="_blank">Newsletter</a></li>
+                <li><a href="mailto:sapnetwork@sap.com" target="_blank">Support</a></li>
+            </ul>
+        </nav>
+    </div>
+</footer>                </div>
+            </div> <!-- #page -->
+            <script type="application/ld+json" data-schema="886599-post-Default">{"@context":"https:\/\/schema.org\/","@type":"BlogPosting","@id":"https:\/\/blogs.sap.com\/2019\/10\/25\/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine\/#BlogPosting","mainEntityOfPage":"https:\/\/blogs.sap.com\/2019\/10\/25\/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine\/","headline":"Running ABAP in Eclipse from a USB stick powered by SapMachine","name":"Running ABAP in Eclipse from a USB stick powered by SapMachine","description":"&nbsp; ABAP in Eclipse powered by Updates 30.03.2020 &#8211; Added a link where to configure the location of the JVM used by ADT in case it does not reside in a local folder jre within","datePublished":"2019-10-25","dateModified":"2020-03-30","author":{"@type":"Person","@id":"https:\/\/blogs.sap.com\/author\/andre.fischer\/#Person","name":"Andre Fischer","url":"https:\/\/blogs.sap.com\/author\/andre.fischer\/","description":"Andr\u00e9 Fischer has worked in Product Management for SAP Gateway since the launch of the product in 2011. After finishing his Physics degree at RWTH Aachen University and Heidelberg University, Germany, he started this professional career in 1995 as a technology consultant for an SAP partner. From 1999 to 2000 he was responsible for setting up a data center as the co-managing director for a newly founded joint venture outsourcing company. His technical expertise contributed to the company becoming a certified SAP Hosting partner. As of 2002, Andr\u00e9 specialized in SAP security consulting and in 2004 he joined the newly created Collaboration Technology Support Center Microsoft at SAP AG. Over the last ten years at SAP, Andr\u00e9 has focused on the interoperability of SAP NetWeaver and Microsoft technologies, SAP Enterprise Search, Single Sign-On, and SAP Gateway.  Andr\u00e9 is a frequent speaker at SAP TechEd and SAP InnoJam and has published a multitude of articles and blogs in the SAP Community Network. In 2013 he became SCN Topic Leader 2012-2013 for the category SAP Gateway. He is co-author of the SAP Press Book, 'OData and SAP Gateway'. With more than 20 years\u2019 experience of various SAP technologies, Andr\u00e9 is a trusted advisor for many SAP customers and partners.","image":{"@type":"ImageObject","@id":"https:\/\/avatars.services.sap.com\/images\/andre.fischer_small.png","url":"https:\/\/avatars.services.sap.com\/images\/andre.fischer_small.png","height":96,"width":96}},"publisher":{"@type":"Organization","name":"SAP Community Blogs","logo":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","width":600,"height":60}},"image":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2019\/10\/sap_machine_logo_circular.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2019\/10\/sap_machine_logo_circular.png","height":"","width":""},"url":"https:\/\/blogs.sap.com\/2019\/10\/25\/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine\/","about":["Technical Articles"],"wordCount":1040,"keywords":["abapInEclipse"]}</script>
+<script type="application/ld+json" data-schema="Breadcrumb">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"2019","item":"https:\/\/blogs.sap.com\/2019\/#breadcrumbitem"},{"@type":"ListItem","position":2,"name":"10","item":"https:\/\/blogs.sap.com\/2019\/\/10\/#breadcrumbitem"},{"@type":"ListItem","position":3,"name":"25","item":"https:\/\/blogs.sap.com\/2019\/\/10\/\/25\/#breadcrumbitem"},{"@type":"ListItem","position":4,"name":"Running ABAP in Eclipse from a USB stick powered by SapMachine","item":"https:\/\/blogs.sap.com\/2019\/10\/25\/running-abap-in-eclipse-from-a-usb-stick-powered-by-sapmachine\/#breadcrumbitem"}]}</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/action-tooltip-handler.js' id='tooltip-handler-js'></script>
+<script type='text/javascript' id='unified_header-js-extra'>
+/* <![CDATA[ */
+var headerInitArgs = {"system":"blogs","wrapperID":"page","breadcrumbItems":[{"text":"Blogs","href":"https:\/\/blogs.sap.com"}]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/js/scn-header.min.js' id='unified_header-js'></script>
+<script type='text/javascript' id='unified_header-js-after'>
+            scnHeader.init(headerInitArgs);
+            setCookie("userArgs", headerInitArgs.user ? JSON.stringify(headerInitArgs.user) : "", { path : "/" });
+    
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/header.js' id='designmate_header_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/subheader.js' id='designmate_subheader_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/designmate.js' id='designmate_script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/comment-reply.min.js' id='comment-reply-js'></script>
+<script type='text/javascript' id='satm_handler-js-extra'>
+/* <![CDATA[ */
+var satmContentSelectors = ["div.dm-contentDetail__body-content","div.dm-list-comments__item-content","div.ds-blog-post__body","div.ds-blog-post-comment__content"];
+var satmProfileBaseUrl = "people.sap.com\/";
+var satmChangeableElementsSelectors = ["div.dm-list-comments__item-content","div.ds-blog-post-comment__content"];
+var satmPluginEnabled = "1";
+var satmApiUrl = "https:\/\/uss.api.community.sap.com";
+var satmApiCallWithCredentials = "1";
+var satmRequestDelayMs = "100";
+/* ]]> */
+</script>
+<script type='text/javascript' defer src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-at-mention/js/sap-at-mention.min.js' id='satm_handler-js'></script>
+<script type='text/javascript' id='sap-comment-validation-js-extra'>
+/* <![CDATA[ */
+var commentValidation = {"validateMaxLinks":"1","max_links_number":"7","BLOGS_PAGE":"single"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/sap-comment-validation.min.js' id='sap-comment-validation-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-post-status.min.js' id='scn_post_status_check-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/jquery-plugins.min.js' id='sap_jquery_plugins-js'></script>
+<script type='text/javascript' id='sap-login-csrf-cookie-js-extra'>
+/* <![CDATA[ */
+var sapLoginCookieConfig = {"cookieName":"SAP_BLOGS_ANONYMOUS_NONCE","sapActionName":"s_action"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-login-csrf-cookie.min.js' id='sap-login-csrf-cookie-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.js' id='sap_lightbox_gallery_js-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/choices.min.js' id='choices.js-js'></script>
+<script type='text/javascript' id='wprc-script-js-extra'>
+/* <![CDATA[ */
+var wprcajaxhandler = {"ajaxurl":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-report-content/static/js/v3/scripts.min.js' id='wprc-script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/single.min.js' id='sap_single_v3-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/onscroll-sticky.min.js' id='onscroll_sticky-js'></script>
+<script type='text/javascript' id='blog-detail-page-js-extra'>
+/* <![CDATA[ */
+var alertReasonsSelectArgs = {"selectId":"sap-blog-alert-reasons","reasons":["Incorrect Tag\/Category\r","Cross-Posting\r","Private Information\r","Unprofessional Conduct\r","Spam"]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/dist/blog-detail.min.js' id='blog-detail-page-js'></script>
+<script type='text/javascript' id='sap_assignedtags_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var assignedTagsWidgetSettings = {"maxItemsBeforeHide":"7","data":{"ABAP Development":"https:\/\/blogs.sap.com\/tags\/833755570260738661924709785639136\/","abapInEclipse":"https:\/\/blogs.sap.com\/tag\/abapineclipse\/"},"widgetClassname":".ds-assigned-tags"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/assigned-tags/js/sap-assigned-tags-widget.min.js' id='sap_assignedtags_widget_js_v3-js'></script>
+<script type='text/javascript' id='sap_relatedcontent_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var relatedContentWidgetSettings = {"widgetSelector":".widget_sap-relatedcontent-widget-v3","contentServiceUrl":"https:\/\/content.services.sap.com\/cse\/search\/topic","profileUrl":"https:\/\/people.sap.com","targetContentItem":{"id":886599,"type":"blogpost","title":"Running ABAP in Eclipse from a USB stick powered by SapMachine","primary_tag":"833755570260738661924709785639136"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/related-content/js/sap-related-content-widget.min.js' id='sap_relatedcontent_widget_js_v3-js'></script>
+<div id="wp-load_tinymce-wrap" class="wp-core-ui wp-editor-wrap html-active"><link rel='stylesheet' id='dashicons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dashicons.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='editor-buttons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/editor.min.css' type='text/css' media='all' />
+<style>#wp-load_tinymce-wrap {display:none;}</style>
+<div id="wp-load_tinymce-editor-container" class="wp-editor-container"><div id="qt_load_tinymce_toolbar" class="quicktags-toolbar"></div><textarea class="wp-editor-area" rows="20" cols="40" name="load_tinymce" id="load_tinymce"></textarea></div>
+</div>
+
+<link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/skin.min.css?wp-mce-49110-20201110' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/plugins/codesample/css/prism.css' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/content.min.css?wp-mce-49110-20201110' as='style'>
+		<script type="text/javascript">
+		tinyMCEPreInit = {
+			baseURL: "https://blogs.sap.com/wp-includes/js/tinymce",
+			suffix: ".min",
+						mceInit: {},
+			qtInit: {'load_tinymce':{id:"load_tinymce",buttons:"strong,em,link,block,del,ins,img,ul,ol,li,code,more,close"}},
+			ref: {plugins:"",theme:"modern",language:""},
+			load_ext: function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
+		};
+		</script>
+				<script type="text/javascript">
+		var ajaxurl = "/wp-admin/admin-ajax.php";
+		( function() {
+			var init, id, $wrap;
+
+			if ( typeof tinymce !== 'undefined' ) {
+				if ( tinymce.Env.ie && tinymce.Env.ie < 11 ) {
+					tinymce.$( '.wp-editor-wrap ' ).removeClass( 'tmce-active' ).addClass( 'html-active' );
+					return;
+				}
+
+				for ( id in tinyMCEPreInit.mceInit ) {
+					init = tinyMCEPreInit.mceInit[id];
+					$wrap = tinymce.$( '#wp-' + id + '-wrap' );
+
+					if ( ( $wrap.hasClass( 'tmce-active' ) || ! tinyMCEPreInit.qtInit.hasOwnProperty( id ) ) && ! init.wp_skip_init ) {
+						tinymce.init( init );
+
+						if ( ! window.wpActiveEditor ) {
+							window.wpActiveEditor = id;
+						}
+					}
+				}
+			}
+
+			if ( typeof quicktags !== 'undefined' ) {
+				for ( id in tinyMCEPreInit.qtInit ) {
+					quicktags( tinyMCEPreInit.qtInit[id] );
+
+					if ( ! window.wpActiveEditor ) {
+						window.wpActiveEditor = id;
+					}
+				}
+			}
+		}());
+		</script>
+				<div id="wp-link-backdrop" style="display: none"></div>
+		<div id="wp-link-wrap" class="wp-core-ui" style="display: none" role="dialog" aria-labelledby="link-modal-title">
+		<form id="wp-link" tabindex="-1">
+		<input type="hidden" id="_ajax_linking_nonce" name="_ajax_linking_nonce" value="d98c848450" />		<h3 id="link-modal-title">Insert/edit link</h3>
+		<button type="button" id="wp-link-close"><span class="screen-reader-text">Close</span></button>
+		<div id="link-selector">
+			<div id="link-options">
+				<p class="howto" id="wplink-enter-url">Enter the destination URL</p>
+				<div>
+					<label><span>URL</span>
+					<input id="wp-link-url" type="text" aria-describedby="wplink-enter-url" /></label>
+				</div>
+				<div class="wp-link-text-field">
+					<label><span>Link Text</span>
+					<input id="wp-link-text" type="text" /></label>
+				</div>
+				<div class="link-target">
+					<label><span></span>
+					<input type="checkbox" id="wp-link-target" /> Open link in a new tab</label>
+				</div>
+			</div>
+			<p class="howto" id="wplink-link-existing-content">Or link to existing content</p>
+			<div id="search-panel">
+				<div class="link-search-wrapper">
+					<label>
+						<span class="search-label">Search</span>
+						<input type="search" id="wp-link-search" class="link-search-field" autocomplete="off" aria-describedby="wplink-link-existing-content" />
+						<span class="spinner"></span>
+					</label>
+				</div>
+				<div id="search-results" class="query-results" tabindex="0">
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+				<div id="most-recent-results" class="query-results" tabindex="0">
+					<div class="query-notice" id="query-notice-message">
+						<em class="query-notice-default">No search term specified. Showing recent items.</em>
+						<em class="query-notice-hint screen-reader-text">Search or use up and down arrow keys to select an item.</em>
+					</div>
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="submitbox">
+			<div id="wp-link-cancel">
+				<button type="button" class="button">Cancel</button>
+			</div>
+			<div id="wp-link-update">
+				<input type="submit" value="Add Link" class="button button-primary" id="wp-link-submit" name="wp-link-submit">
+			</div>
+		</div>
+		</form>
+		</div>
+		<script type="text/javascript">jQuery(window).on("load", function() {tinymce.codesampleplugin.Prism.highlightAll();});</script><script type='text/javascript'>_satellite.pageBottom();</script>        </div> <!-- .page-wrapper -->
+    </body>
+</html>

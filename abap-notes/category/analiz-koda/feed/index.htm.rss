@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Анализ кода | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/analiz-koda/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 25 May 2021 16:59:02 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Анализ исходного кода</title>
+		<link>https://abap-blog.ru/abap-notes/analiz-isxodnogo-koda/</link>
+					<comments>https://abap-blog.ru/abap-notes/analiz-isxodnogo-koda/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 10 Oct 2020 13:35:22 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5145</guid>
+
+					<description><![CDATA[<p>Указанный ниже пример позволяет выполнить разбор заданного отчёта на выражения/токены (эти же объекты используются в SCI): [crayon-618a1e01c9ae0536348657/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/analiz-isxodnogo-koda/">Анализ исходного кода</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Указанный ниже пример позволяет выполнить разбор заданного отчёта на выражения/токены (эти же объекты используются в SCI):</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_prog TYPE trdir-name DEFAULT sy-repid.
+
+START-OF-SELECTION.
+  DATA(o_si) = cl_ci_source_include=&gt;create( p_name = p_prog ).
+  DATA(o_scan) = NEW cl_ci_scan( p_include = o_si ).
+
+  cl_demo_output=&gt;write_data( o_si-&gt;lines ).
+  cl_demo_output=&gt;write_data( o_scan-&gt;tokens ).
+  cl_demo_output=&gt;write_data( o_scan-&gt;statements ).
+
+
+  LOOP AT o_scan-&gt;statements ASSIGNING FIELD-SYMBOL(&lt;s&gt;).
+    DATA(idx) = sy-tabix.
+
+    LOOP AT o_scan-&gt;tokens ASSIGNING FIELD-SYMBOL(&lt;t&gt;) FROM &lt;s&gt;-from TO &lt;s&gt;-to.
+      cl_demo_output=&gt;write_data( value = &lt;t&gt;-str name = |Statement { idx }| ).
+    ENDLOOP.
+
+    cl_demo_output=&gt;line( ).
+  ENDLOOP.
+
+  DATA(lv_html) = cl_demo_output=&gt;get( ).
+
+  cl_abap_browser=&gt;show_html( EXPORTING
+                                title        = 'Code'
+                                html_string  = lv_html
+                                container    = cl_gui_container=&gt;default_screen ).
+
+  WRITE: space.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/analiz-isxodnogo-koda/">Анализ исходного кода</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/analiz-isxodnogo-koda/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Гайд по созданию новых проверок в SCI / ATC</title>
+		<link>https://abap-blog.ru/abap-notes/gajd-po-sozdaniyu-novyx-proverok/</link>
+					<comments>https://abap-blog.ru/abap-notes/gajd-po-sozdaniyu-novyx-proverok/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 05 Apr 2020 07:39:23 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=3943</guid>
+
+					<description><![CDATA[<p>В Cloud среде своя специфика создания проверок. Вне Cloud можно использовать данный гайд или посмотреть реализацию ABAP Open Checks.</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/gajd-po-sozdaniyu-novyx-proverok/">Гайд по созданию новых проверок в SCI / ATC</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>В Cloud среде своя <a href="https://blogs.sap.com/2021/05/25/how-to-create-your-own-atc-check-in-sap-btp-abap-environment/" rel="nofollow ">специфика</a> создания проверок.</p>
+<p>Вне Cloud можно использовать данный гайд или посмотреть реализацию <a href="https://github.com/larshp/abapOpenChecks" rel="nofollow ">ABAP Open Checks</a>.</p>
+		<style>
+                    </style>
+        	    <div id="h5vp618a1e01dcb34" class="pdfp_wrapper">
+                        <div class="cta_wrapper">
+                	            <p><a href="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/How-to-write-an-ATC-Check.pdf&#038;download=true&#038;print=on&#038;openfile=false"><button>View Fullscreen</button></a></p>
+            </div>
+            <div class="iframe_wrapper">
+                <iframe loading="lazy" width="100%" height="1122px" src="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/How-to-write-an-ATC-Check.pdf&#038;download=true&#038;print=on&#038;openfile=false"></iframe>
+            </div>
+	    </div><p>The post <a href="https://abap-blog.ru/abap-notes/gajd-po-sozdaniyu-novyx-proverok/">Гайд по созданию новых проверок в SCI / ATC</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/gajd-po-sozdaniyu-novyx-proverok/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>cl_salv_display_settings | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_salv_display_settings/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:56:44 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>SALV Table &#8212; Настройка внешнего вида</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-vneshnego-vida/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-vneshnego-vida/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 12 Feb 2012 12:12:07 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[cl_salv_display_settings]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=462</guid>
+
+					<description><![CDATA[<p>Настроить внешний вид ALV объекта можно используя класс:  cl_salv_display_settings.  C его помощью можно задать: отображение вертикальных/горизонтальных линий, заголовок таблицы, включить отображение в полоску и т.п. Пример того как с ним работать ниже: [crayon-618a23c9d99c8499847529/] Альтернативой данному способу настройки внешнего вида может служить использование форматов.</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-vneshnego-vida/">SALV Table — Настройка внешнего вида</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Настроить внешний вид ALV объекта <a href="http://abap-blog.ru/wp-content/uploads/2012/02/display_settings.png"><img loading="lazy" class="alignright size-full wp-image-463" title="display_settings" src="http://abap-blog.ru/wp-content/uploads/2012/02/display_settings.png" alt="" width="265" height="102" /></a>можно используя класс:  <strong>cl_salv_display_settings.  </strong>C его помощью можно задать: отображение вертикальных/горизонтальных линий, заголовок таблицы, включить отображение в полоску и т.п. Пример того как с ним работать ниже:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZALV_DISPLAY_SETTINGS.
+
+DATA:
+      gt_data      TYPE spfli_tab,  " Таблица с данными
+      go_settings  TYPE REF TO cl_salv_display_settings,
+      go_alv       TYPE REF TO cl_salv_table.
+
+START-OF-SELECTION.
+  SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_data.
+  TRY.
+      cl_salv_table=&gt;factory(
+         IMPORTING
+           r_salv_table = go_alv
+         CHANGING
+           t_table = gt_data ).
+    CATCH cx_salv_msg .
+      MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+  ENDTRY.
+  go_alv-&gt;set_screen_status( EXPORTING
+                              REPORT = 'SAPLSALV_METADATA_STATUS'
+                              pfstatus = 'SALV_TABLE_STANDARD'
+                              set_functions = CL_SALV_MODEL_BASE=&gt;C_FUNCTIONS_ALL ).
+  " Получение ссылки на объект
+  go_settings = go_alv-&gt;get_display_settings( ).
+  " Включение зебры
+  go_settings-&gt;set_striped_pattern( abap_true ).
+  " Установка заголовка
+  go_settings-&gt;set_list_header( 'Заголовок' ).
+  " Отключение вертикальных линий
+  go_settings-&gt;set_vertical_lines( abap_false ).
+  " Отобразить ALV представление
+  go_alv-&gt;display( ).</pre><p>Альтернативой данному способу настройки внешнего вида может служить использование форматов.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-vneshnego-vida/">SALV Table — Настройка внешнего вида</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-vneshnego-vida/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

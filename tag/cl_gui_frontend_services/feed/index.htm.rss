@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>cl_gui_frontend_services | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_gui_frontend_services/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Fri, 05 Mar 2021 14:09:49 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Просмотр файла в шестнадцатеричном виде</title>
+		<link>https://abap-blog.ru/osnovy-abap/prosmotr-fajla-v-shestnadcaterichnom-vide/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/prosmotr-fajla-v-shestnadcaterichnom-vide/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Jan 2012 08:41:36 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[cl_gui_frontend_services]]></category>
+		<category><![CDATA[cl_gui_textedit]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=307</guid>
+
+					<description><![CDATA[<p>Ниже пример того как можно посмотреть шестнадцатеричное представление файла с помощью текстового редактора реализованного через класс cl_gui_textedit. Обратите внимание что в качестве контейнера для редактора служит экран выбора программы, а ссылку на него можно получить через статическую переменную screen0 класса cl_gui_container. [crayon-618a155065983808929614/]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/prosmotr-fajla-v-shestnadcaterichnom-vide/">Просмотр файла в шестнадцатеричном виде</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Ниже пример того как можно посмотреть шестнадцатеричное представление файла с помощью текстового редактора реализованного через класс <strong>cl_gui_textedit.</strong> Обратите внимание что в качестве контейнера для редактора служит экран выбора программы, а ссылку на него можно получить через статическую переменную <strong>screen0</strong> класса <strong>cl_gui_container</strong>.<span id="more-307"></span></p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zhex_view.
+
+DATA: go_textedit TYPE REF TO cl_gui_textedit,
+      gt_exclude TYPE TABLE OF rsexfcode,
+      gs_exclude TYPE rsexfcode.
+
+PARAMETER: DUMMY(1).
+
+INITIALIZATION.
+  gs_exclude-fcode  = 'ONLI'.
+  APPEND gs_exclude TO gt_exclude.
+
+AT SELECTION-SCREEN OUTPUT.
+  PERFORM s1000_pbo.
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Form S1000_PBO
+*&amp;---------------------------------------------------------------------*
+FORM s1000_pbo.
+  IF go_textedit IS INITIAL.
+    DATA lt_filetable    TYPE filetable.
+    DATA ls_filetable    TYPE LINE OF filetable.
+    DATA l_rc           TYPE I.
+    DATA l_action       TYPE I.
+
+    CALL FUNCTION 'RS_SET_SELSCREEN_STATUS'
+      EXPORTING
+        p_status  = '%_00'
+        p_program = 'RSSYSTDB'
+      TABLES
+        p_exclude = gt_exclude.
+
+    CALL METHOD cl_gui_frontend_services=&gt;file_open_dialog
+      CHANGING
+        file_table              = lt_filetable
+        rc                      = l_rc
+        user_action             = l_action
+      EXCEPTIONS
+        file_open_dialog_failed = 1
+        cntl_error              = 2
+        error_no_gui            = 3
+        not_supported_by_gui    = 4
+        OTHERS                  = 5.
+
+    IF sy-subrc NE 0.
+      LEAVE PROGRAM.
+    ELSEIF l_action NE cl_gui_frontend_services=&gt;action_ok.
+      LEAVE PROGRAM.
+    ELSE.
+      READ TABLE lt_filetable INDEX 1 INTO ls_filetable.
+      ASSERT sy-subrc = 0.
+      DATA l_xstring TYPE XSTRING.
+      DATA l_string TYPE STRING.
+      DATA lt_textedit TYPE abaptxt255_tab.
+      PERFORM read_bin_file USING ls_filetable-filename CHANGING l_xstring.
+
+      l_string = l_xstring.
+      CALL FUNCTION 'SWA_STRING_TO_TABLE'
+        EXPORTING
+          character_string = l_string
+        IMPORTING
+          character_table  = lt_textedit[].
+      CREATE OBJECT go_textedit
+        EXPORTING
+          parent = cl_gui_container=&gt;screen0.
+      CALL METHOD go_textedit-&gt;set_wordwrap_behavior
+        EXPORTING
+          wordwrap_mode     = cl_gui_textedit=&gt;wordwrap_at_fixed_position
+          wordwrap_position = 120.
+      CALL METHOD go_textedit-&gt;set_text_as_stream
+        EXPORTING
+          text = lt_textedit.
+      CALL METHOD go_textedit-&gt;set_readonly_mode
+        EXPORTING
+          readonly_mode	= 1.
+    ENDIF.
+  ENDIF.
+  SET TITLEBAR 'TIT' OF PROGRAM 'SAPLDSYP' WITH 'File Hex Viewer'(001).
+ENDFORM.                                                    "s1000_pbo
+
+FORM read_bin_file
+      USING i_filename TYPE CLIKE
+      CHANGING e_file_xstring TYPE XSTRING.
+  DATA l_filename TYPE STRING.
+  DATA l_length TYPE I.
+  DATA lt_x255 TYPE TABLE OF x255.
+  l_filename = i_filename.
+  CALL METHOD cl_gui_frontend_services=&gt;gui_upload
+    EXPORTING
+      filename   = l_filename
+      filetype   = 'BIN'
+    IMPORTING
+      filelength = l_length
+    CHANGING
+      data_tab   = lt_x255
+    EXCEPTIONS
+      OTHERS     = 1.
+  IF sy-subrc = 0.
+    CALL METHOD cl_swf_utl_convert_xstring=&gt;table_to_xstring
+      EXPORTING
+        i_table  = lt_x255
+        i_size   = l_length
+      RECEIVING
+        r_stream = e_file_xstring
+      EXCEPTIONS
+        OTHERS   = 3.
+  ENDIF.
+ENDFORM.                    "read_bin_file</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/prosmotr-fajla-v-shestnadcaterichnom-vide/">Просмотр файла в шестнадцатеричном виде</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/prosmotr-fajla-v-shestnadcaterichnom-vide/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Взаимодействие с фронтендом</title>
+		<link>https://abap-blog.ru/osnovy-abap/frontend/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/frontend/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 03 Jan 2012 10:06:32 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[Работа с файлами]]></category>
+		<category><![CDATA[cl_gui_frontend_services]]></category>
+		<category><![CDATA[sap gui]]></category>
+		<category><![CDATA[файлы]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=22</guid>
+
+					<description><![CDATA[<p>В SAP предусмотрен один замечательный класс для работы с сервером представления, называется он: CL_GUI_FRONTEND_SERVICES. Далее я опишу применение его основных методов, которые зачастую могут пригодится в написании ABAP отчётов. Так как версии GUI клиента постоянно обновляются, и существуют разные версии GUI: под MacOS, Web, Windows необходимо проверять поддерживает ли текущая версия возможности GUI, для этого был [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/frontend/">Взаимодействие с фронтендом</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2012/01/19276499341600459971-256.png"><img loading="lazy" class="main-image alignleft wp-image-6582 size-full" src="https://abap-blog.ru/wp-content/uploads/2012/01/19276499341600459971-256.png" alt="" width="256" height="256" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/19276499341600459971-256.png 256w, https://abap-blog.ru/wp-content/uploads/2012/01/19276499341600459971-256-150x150.png 150w" sizes="(max-width: 256px) 100vw, 256px" /></a>В SAP предусмотрен один замечательный класс для работы с сервером представления, называется он: <strong>CL_GUI_FRONTEND_SERVICES.</strong> Далее я опишу применение его основных методов, которые зачастую могут пригодится в написании ABAP отчётов.<span id="more-22"></span></p>
+<p>Так как версии GUI клиента постоянно обновляются, и существуют разные версии GUI: под MacOS, Web, Windows необходимо проверять поддерживает ли текущая версия возможности GUI, для этого был создан метод: <strong>CHECK_GUI_SUPPORT.</strong> Пример использования данного метода:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/2e8877055c1e6132f3f37f95e781f9df.js"></script></p>
+<p>Следующими идут методы экспорта, импорта из буфера обмена ОС: <strong>CLIPBOARD_EXPORT, CLIPBOARD_IMPORT.</strong> Пример использования метода:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/06b7b903bba68aa056797d4668cc87c4.js"></script></p>
+<p>Где data_block внутренняя таблица, rc &#8212; код возврата ошибки.</p>
+<p>Далее идет группа методов для работы с директориями на сервере представления. Метод <strong>DIRECTORY_BROWSE. </strong>Служит для отображения диалога выбора директории. Пример использования:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/2d336087106e8edcde869155c1827db9.js"></script></p>
+<p>Метод <strong>DIRECTORY_CREATE </strong>создает папку в указанном месте. Пример использования:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/ada9753e39c136f6663c633f03a0b8a7.js"></script></p>
+<p>Метод <strong>DIRECTORY_DELETE </strong>как понятно из названия удаляет указанную директорию, в случае ошибки код возврата RC будет не пустой.  Часто приходится проверять существование директории на компьютере пользователя, для этого служит метод <strong>DIRECTORY_EXIST</strong>. Пример его использования:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/de89a06d99c5a4391c93778431ab810b.js"></script></p>
+<p>Для получения текущей директории (той что используется GUI для выгрузки отчётов и пр.)  используется метод: <strong>DIRECTORY_GET_CURRENT</strong>. Для получения списка файлов в указанной директории используется метод: <strong>DIRECTORY_LIST_FILES</strong>. Метод позволяет получить список файлов и директорий в указанной вами директории, причем с заданием фильтра &#8212; параметр <strong>FILTER</strong>, вы можете определить нужно ли вам получить только директории параметр <strong>DIRECTORIES_ONLY = &#8216;X&#8217;</strong>, или только файлы &#8212; параметр <strong>FILES_ONLY = &#8216;X&#8217;</strong>. Пример использования:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/6a7b582e5bcec679a37b17c8d24ddfb6.js"></script></p>
+<p><strong>DIRECTORY_SET_CURRENT</strong> необходим для установки текущей директории (см. выше).</p>
+<p><strong>DISABLEHISTORYFORFIELD </strong>используется когда надо запретить сохранение в истории значений указанного поля, например на экране выбора.</p>
+<p><strong>ENVIRONMENT_GET_VARIABLE </strong>используется для получения значения переменной окружения на компьютере пользователя.  Противоположный ему метод, для установки значений переменных окружения &#8212; <strong>ENVIRONMENT_SET_VARIABLE.</strong></p>
+<p>Метод <strong>EXECUTE </strong>запускает на сервере представления документ, директорию, приложение. (В Windows это обёртка над WinApi &#8212; ShellExecute, ShellExecuteEx).  Параметр <strong>DOCUMENT</strong> определяет путь к документу который необходимо запустить в приложении <strong>APPLICATION</strong>, в случае если приложение не указано будет запущено ассоциируемое приложение к данному типу файлов. <strong>DEFAULT_DIRECTORY </strong>определяет директорию из которой будет происходить файла, в случае если не указан полный путь к файлу в параметре <strong>DOCUMENT. </strong><strong>OPERATION &#8212; </strong>Может принимать одно из следующих значений: FIND, EXPLORE, EDIT, OPEN или PRINT, по умолчанию OPEN. <strong>MAXIMIZED, MINIMIZED &#8212; </strong>определяет будет ли запущенное приложение развернутым или свернутым. <strong>PARAMETER</strong> &#8212; список параметров передаваемых запускаемому приложению. <strong>SYNCHRONOUS &#8212; </strong>определяет будет ли запуск синхронным, т.е. GUI будет ждать завершения операции или нет. Пример использования метода:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/3ddf4d61978f707169e1f0e3ca2f6236.js"></script></p>
+<p>Далее идет группа методов для работы с файлами. <strong>FILE_COPY</strong> &#8212; копирует файл указанный в параметре &#8212; <strong>SOURCE</strong>, в файл в параметре &#8212; <strong>DESTINATION</strong>, в случае если нет создает, если есть и указан параметр &#8212; <strong>OVERWRITE </strong>перезаписывает.</p>
+<p><strong>FILE_DELETE </strong>удаляет указанный в параметре &#8212; <strong>FILENAME </strong>файл, в случае ошибки значение параметра <strong>RC </strong>не 0.</p>
+<p><strong>FILE_EXIST &#8212; </strong>проверяет файл на существование, в случае если файл существует параметр <strong>RESULT </strong>не пустой.</p>
+<p>Для проверки атрибутов файла служит метод <strong>FILE_GET_ATTRIBUTES</strong>, с помощью него можно определить является ли файл: архивным, только для чтения, скрытым, или нормальным, без вышеупомянутых атрибутов. Для установки атрибутов к файлу служит метод <strong>FILE_SET_ATTRIBUTES.</strong></p>
+<p><strong>FILE_GET_SIZE </strong>судя по названию должен определять размер файла в байтах, но на моей системе данный метод отказывался работать, возможно на более новой версии базиса это было исправлено.</p>
+<p><strong>FILE_GET_VERSION </strong>получает текущую версию файла.</p>
+<p><strong>FILE_OPEN_DIALOG </strong>отображает диалог выбора файлов. <strong>WINDOW_TITLE </strong>&#8212; заголовок диалога, <strong>DEFAULT_EXTENSION </strong>&#8212; расширение для файлов, <strong>DEFAULT_FILENAME</strong> &#8212; имя файлов по умолчанию, <strong>FILE_FILTER &#8212; </strong>фильтр для выбора файлов, <strong>WITH_ENCODING &#8212; </strong>возможность выбора кодировки, <strong>INITIAL_DIRECTORY</strong> &#8212; директория в которой открывается диалог, <strong>MULTISELECTION &#8212; </strong>если &#8216;Х&#8217; позволяет выбирать несколько файлов, <strong>FILE_TABLE </strong>&#8212; список выбранных файлов. <strong>USER_ACTION </strong>может принимать либо ACTION_OK либо ACTION_CANCEL в зависимости на какую кнопку диалога нажал пользователь. <strong>FILE_ENCODING </strong>&#8212; принимает значение кодировки файла. Пример использования метода:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/aedac6db52d96c887e001c69856bc721.js"></script></p>
+<p>Метод <strong>FILE_SAVE_DIALOG </strong>необходим для вызова диалога сохранения файлов, его параметры идентичны предыдущему за исключением: <strong>PROMPT_ON_OVERWRITE </strong>&#8212; запрашивать ли пользователя перезаписать файл, <strong>PATH </strong>&#8212; имя выбранного файла, <strong>FULLPATH </strong>&#8212; полный адрес выбранного файла.</p>
+<p>Далее идет группа методов для получения информации о сервере представления.</p>
+<p><strong>GET_COMPUTER_NAME &#8212; </strong>получение имени компьютера.</p>
+<p><strong>GET_DESKTOP_DIRECTORY &#8212; </strong>получение пути к рабочему столу.</p>
+<p><strong>GET_DRIVE_FREE_SPACE_MEGABYTE &#8212; </strong>получение свободного пространства на диске в MB, где <strong>DRIVE &#8212; </strong>буква необходимого диска.</p>
+<p><strong>GET_DRIVE_TYPE</strong> &#8212; определение типа диска, возвращает: FIXED, REMOTE, REMOVABLE, &#187; &#8212; в случае если не удалось определить.</p>
+<p><strong>GET_FILE_SEPARATOR &#8212; </strong>определение разделителя в файлах, зависит от платформы. Windows  &#8212; \.</p>
+<p><strong>GET_GUI_VERSION</strong> &#8212; получение полной версии GUI.</p>
+<p><strong>GET_IP_ADDRESS </strong>&#8212; получение IP адреса на котором запущен GUI.</p>
+<p><strong>GET_LF_FOR_DESTINATION_GUI &#8212; </strong>получение разделителя линий в зависимости от платформы. В случае если возвращает ошибку (sy-subrc &lt;&gt;0) &#8212; CL_ABAP_CHAR_UTILITIES=&gt;CR_LF.</p>
+<p><strong>GET_PLATFORM</strong> &#8212; получение платформы сервера представления. Возвращает один из атрибутов класса:</p>
+<p>PLATFORM_UNKNOWN<br />
+PLATFORM_WINDOWS95<br />
+PLATFORM_WINDOWS98<br />
+PLATFORM_NT351<br />
+PLATFORM_NT40<br />
+PLATFORM_NT50<br />
+PLATFORM_MAC<br />
+PLATFORM_OS2<br />
+PLATFORM_LINUX<br />
+PLATFORM_HPUX<br />
+PLATFORM_TRU64<br />
+PLATFORM_AIX<br />
+PLATFORM_SOLARIS<br />
+PLATFORM_MACOSX</p>
+<p><strong>GET_SAPGUI_DIRECTORY &#8212; </strong>директория в которой лежит SAP GUI.</p>
+<p><strong>GET_SAPGUI_WORKDIR</strong> &#8212; рабочая директория GUI клиента, как правило в документах пользователя.</p>
+<p><strong>GET_SAPLOGON_ENCODING</strong> &#8212; кодировка которая используется в GUI.</p>
+<p><strong>GET_SYSTEM_DIRECTORY</strong> &#8212; получение системной директории (С:\Windows\system32\)</p>
+<p><strong>GET_TEMP_DIRECTORY</strong> &#8212; получение директории для временных файлов.</p>
+<p><strong>GET_UPLOAD_DOWNLOAD_PATH &#8212; </strong>рабочая папка для GUI, тоже что и <strong>GET_SAPGUI_WORKDIR.</strong></p>
+<p><strong>GET_USER_NAME &#8212; </strong>имя пользователя на сервере представления.</p>
+<p><strong>GET_WINDOWS_DIRECTORY &#8212; </strong>как видно из названия директория в которой лежит Windows.</p>
+<p><strong>IS_TERMINAL_SERVER &#8212; </strong>Запущен ли GUI на терминальном клиенте.</p>
+<p>Далее идут методы для работы с реестром Windows.</p>
+<p><strong>REGISTRY_DELETE_KEY &#8212; </strong>удаляет ключ указанный в <strong>KEY</strong>, для всех методов по взаимодействию с реестром необходимо указывать корневой узел реестра ( CL_GUI_FRONTEND_SERVICES=&gt;HKEY_CLASSES_ROOT, CL_GUI_FRONTEND_SERVICES=&gt;HKEY_CURRENT_USER, CL_GUI_FRONTEND_SERVICES=&gt;HKEY_LOCAL_MACHINE, CL_GUI_FRONTEND_SERVICES=&gt;HKEY_USERS).</p>
+<p><strong>REGISTRY_DELETE_VALUE &#8212; </strong>чистит значение указанного ключа реестра.</p>
+<p><strong>REGISTRY_GET_DWORD_VALUE &#8212; </strong>получение значения ключа реестра с видом DWORD.</p>
+<p><strong>REGISTRY_SET_DWORD_VALUE &#8212; </strong>установка значения ключа с видом DWORD.</p>
+<p><strong>REGISTRY_GET_VALUE &#8212;</strong> получение значения ключа.</p>
+<p><strong>REGISTRY_SET_VALUE &#8212;</strong> установка значения ключа.</p>
+<p>Теперь еще немного об атрибутах данного класса. В тех методах где необходимо указать маску файлов (диалоги открытия, сохранения) можно воспользоваться готовыми атрибутами:</p>
+<p>FILETYPE_ALL Все файлы (*.*) *.*<br />
+FILETYPE_TEXT Текст. файлы (*.TXT) *.TXT<br />
+FILETYPE_XML XML (*.XML) *.XML<br />
+FILETYPE_HTML HTML-файлы (*.HTML, *.HTM) *.HTML;*.HTM<br />
+FILETYPE_EXCEL Excel-файлы (*.XLS;*.XLSX;*.XLSM) *.XLS;*.XLSX;*.XLSM<br />
+FILETYPE_RTF RTF-файлы (*.RTF) *.RTF<br />
+FILETYPE_WORD Word-файлы (*.DOC;*.DOCX;*.DOCM) *.DOC;*.DOCX;*.DOCM<br />
+FILETYPE_POWERPOINT Файлы Powerpoint (*PPT;*.PPTX;*.PPTM) *PPT;*.PPTX;*.PPTM</p>
+<p>Ну и наконец два пожалуй самых часто используемых метода данного класса <strong>GUI_DOWNLOAD &#8212; </strong>служит для выгрузки данных в файл на сервере представления. <strong><a title="GUI_UPLOAD" href="http://abap-blog.ru/frontend/upload_from_frontend/">GUI_UPLOAD</a> &#8212; </strong>для загрузки содержимого файла.  Описание данных методов достаточно большое и будет опубликовано в виде отдельной заметки.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/frontend/">Взаимодействие с фронтендом</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/frontend/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Коммуникация | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/kommunikaciya/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 16 Mar 2021 18:54:10 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Odata V4</title>
+		<link>https://abap-blog.ru/abap-notes/odata-v4/</link>
+					<comments>https://abap-blog.ru/abap-notes/odata-v4/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 16 Mar 2021 18:54:10 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=6717</guid>
+
+					<description><![CDATA[<p>Подробное описание того что появилось в Odata V4: https://raw.githubusercontent.com/qmacro/odata-specs/master/overview.md</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/odata-v4/">Odata V4</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Подробное описание того что появилось в Odata V4:</p>
+<ul>
+<li><a href="https://raw.githubusercontent.com/qmacro/odata-specs/master/overview.md" target="_blank" rel="noopener">https://raw.githubusercontent.com/qmacro/odata-specs/master/overview.md</a></li>
+</ul><p>The post <a href="https://abap-blog.ru/abap-notes/odata-v4/">Odata V4</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/odata-v4/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Получить XML представление IDOC-a</title>
+		<link>https://abap-blog.ru/abap-notes/poluchit-xml-predstavlenie-idoc-a/</link>
+					<comments>https://abap-blog.ru/abap-notes/poluchit-xml-predstavlenie-idoc-a/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 28 Nov 2020 12:10:46 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5736</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e1b08cf3174961452/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-xml-predstavlenie-idoc-a/">Получить XML представление IDOC-a</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_idoc TYPE edi_docnum.
+ 
+START-OF-SELECTION.
+ 
+  TRY.
+      DATA(o_idoc_xml) = NEW cl_idoc_xml1( docnum = p_idoc ).
+       DATA: lv_xml TYPE string.
+ 
+      o_idoc_xml-&gt;get_xmldata_as_string( IMPORTING data_string = lv_xml ).
+      DATA(it_xml) = VALUE stringtab( ( |{ lv_xml }| ) ).
+ 
+      DATA: lv_temp_dir TYPE string.
+      cl_gui_frontend_services=&gt;get_desktop_directory( CHANGING desktop_directory = lv_temp_dir ).
+      
+      cl_gui_cfw=&gt;flush( ).
+
+      DATA(lv_filename) = |{ lv_temp_dir }\\my_xml.xml|.
+ 
+      cl_gui_frontend_services=&gt;gui_download( EXPORTING
+                                                filename = lv_filename
+                                                filetype = 'ASC'
+                                              CHANGING
+                                                data_tab = it_xml ).
+ 
+      WRITE: / lv_filename.
+    CATCH cx_root INTO DATA(e_txt).
+      WRITE: / e_txt-&gt;get_text( ).
+  ENDTRY.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-xml-predstavlenie-idoc-a/">Получить XML представление IDOC-a</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/poluchit-xml-predstavlenie-idoc-a/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Распараллеливание вычислений в ABAP</title>
+		<link>https://abap-blog.ru/abap-notes/parallelnoe-vypolnenie-zadach-v-abap/</link>
+					<comments>https://abap-blog.ru/abap-notes/parallelnoe-vypolnenie-zadach-v-abap/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 27 Nov 2020 16:40:57 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5711</guid>
+
+					<description><![CDATA[<p>Распараллеливание вычислений в ABAP (не Cloud, в Cloud есть своё отдельное API) выполняется либо через aRFC (pRFC) модули, либо через фоновые задания. Подробное описание первого сценария можно почитать тут. Чтобы каждый раз не дублировать код с обработкой стандартных функций, можно воспользоваться простым фреймворком для распараллеливания. Демо программа (https://github.com/MikeSidorochkin/ABAP-Simple-Async-Framework/blob/main/zbc_async_demo.prog.abap): [crayon-618a1e1b0a146327456373/] Для того чтобы распараллелить любую задачу [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/parallelnoe-vypolnenie-zadach-v-abap/">Распараллеливание вычислений в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Распараллеливание вычислений в ABAP (не Cloud, в Cloud есть своё отдельное API) выполняется либо через aRFC (pRFC) модули, либо через фоновые задания. Подробное описание первого сценария можно почитать <a href="https://sapland.ru/kb/articles/stats/uskorenie-programm-cherez-parallelinoe-programmirovanie.html">тут</a>. Чтобы каждый раз не дублировать код с обработкой стандартных функций, можно воспользоваться простым фреймворком для <a href="https://github.com/MikeSidorochkin/ABAP-Simple-Async-Framework">распараллеливания</a>.</p>
+<p>Демо программа (<a href="https://github.com/MikeSidorochkin/ABAP-Simple-Async-Framework/blob/main/zbc_async_demo.prog.abap">https://github.com/MikeSidorochkin/ABAP-Simple-Async-Framework/blob/main/zbc_async_demo.prog.abap</a>):</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  zbc_async_demo.
+
+CLASS lcl_task DEFINITION INHERITING FROM zcl_bc_async_task_base.
+  PROTECTED SECTION.
+    METHODS:
+      start REDEFINITION,
+      receive REDEFINITION.
+ENDCLASS.
+
+PARAMETERS:
+  p_s_grp TYPE rzlli_apcl DEFAULT 'parallel_generators' MATCHCODE OBJECT spta_server_group,
+  p_perc  TYPE i DEFAULT 75.
+
+SELECTION-SCREEN: SKIP.
+
+PARAMETERS:
+  p_calls TYPE i DEFAULT 20.
+
+CLASS lcl_task IMPLEMENTATION.
+  METHOD start.
+    CALL FUNCTION 'ZBC_PARALELL_TEST'
+      STARTING NEW TASK mv_task_name
+      DESTINATION IN GROUP mv_server_group
+      CALLING receive_internal ON END OF TASK
+      EXCEPTIONS
+        communication_failure = 1 MESSAGE ev_message
+        system_failure        = 2 MESSAGE ev_message
+        resource_failure      = 3
+        OTHERS                = 4.
+    ev_subrc = sy-subrc.
+  ENDMETHOD.
+
+  METHOD receive.
+    RECEIVE RESULTS FROM FUNCTION 'ZBC_PARALELL_TEST'.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA(go_timer) = cl_abap_runtime=&gt;create_hr_timer( ).
+  DATA(gv_start_time) = go_timer-&gt;get_runtime( ).
+
+  TRY.
+      DATA(go_controller) = NEW zcl_bc_async_controller( it_server_groups = VALUE #( ( CONV #( p_s_grp ) ) )
+                                                         iv_max_percent   = p_perc ).
+
+      DO p_calls TIMES.
+        go_controller-&gt;add_task( NEW lcl_task( io_controller = go_controller
+                                               iv_name       = |{ sy-index }| ) ).
+      ENDDO.
+
+      go_controller-&gt;start( ).
+    CATCH zcx_bc_async_base INTO DATA(go_exception).
+      WRITE go_exception-&gt;get_text( ).
+      STOP.
+  ENDTRY.
+
+  DATA(gt_tasks) = go_controller-&gt;get_tasks( ).
+
+  WRITE: / 'Processes started: ', p_calls.
+  ULINE.
+
+  LOOP AT gt_tasks ASSIGNING FIELD-SYMBOL(&lt;ls_task&gt;).
+    WRITE: / 'Task name: ',   &lt;ls_task&gt;-name(5) ,
+             'Start time: ',  |{ &lt;ls_task&gt;-start_time TIMESTAMP = ENVIRONMENT }|,
+             'End time: ' ,   |{ &lt;ls_task&gt;-end_time TIMESTAMP = ENVIRONMENT }|.
+  ENDLOOP.
+
+  ULINE.
+
+  DATA(gv_time) = VALUE t( ).
+  gv_time = ( go_timer-&gt;get_runtime( ) - gv_start_time ) / 1000000.
+
+  WRITE: /(50) 'Total time:', |{ gv_time TIME = USER }|.</pre><p><a href="https://abap-blog.ru/wp-content/uploads/2020/11/result.png"><img loading="lazy" class="alignnone size-full wp-image-5716" src="https://abap-blog.ru/wp-content/uploads/2020/11/result.png" alt="" width="522" height="465" srcset="https://abap-blog.ru/wp-content/uploads/2020/11/result.png 522w, https://abap-blog.ru/wp-content/uploads/2020/11/result-300x267.png 300w" sizes="(max-width: 522px) 100vw, 522px" /></a></p>
+<p>Для того чтобы распараллелить любую задачу необходимо создать RFC модуль в котором будет логика обработки некоторого блока данных, разделить массив обрабатываемых данных на пакеты/задачи и добавить их в контроллер.</p>
+<p>Распараллеливание лучше запускать с опцией относительно процентной нагрузки на группу серверов. Если все таки было задано число используемых процессов и оно больше свободных на момент запуска, контроллер будет ожидать доступности ресурсов по таймауту, количество попыток задаётся отдельно.</p>
+<p>Если не передавать процент и максимальное число процессов, программа автоматически выделит безопасное с точки зрения нагрузки на систему число ресурсов.</p><p>The post <a href="https://abap-blog.ru/abap-notes/parallelnoe-vypolnenie-zadach-v-abap/">Распараллеливание вычислений в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/parallelnoe-vypolnenie-zadach-v-abap/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Получить IP адрес по заданному RFC</title>
+		<link>https://abap-blog.ru/abap-notes/poluchit-ip-adres-po-zadannomu-rfc/</link>
+					<comments>https://abap-blog.ru/abap-notes/poluchit-ip-adres-po-zadannomu-rfc/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 17:07:17 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5681</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e1b0c445217806290/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-ip-adres-po-zadannomu-rfc/">Получить IP адрес по заданному RFC</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA(lv_ip) = CONV rfcdisplay-rfchost( '&lt;none&gt;' ).
+
+CALL FUNCTION 'RFC_HOST_TO_IP'
+  EXPORTING
+    rfchost                     = CONV rfcdisplay-rfchost( sy-host )
+  IMPORTING
+    rfcip                       = lv_ip
+  EXCEPTIONS
+    host_to_ip_conversion_error = 1
+    OTHERS                      = 2.
+
+IF sy-subrc = 0.
+  WRITE: / |Host: { sy-host } ({ lv_ip })|.
+ENDIF.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-ip-adres-po-zadannomu-rfc/">Получить IP адрес по заданному RFC</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/poluchit-ip-adres-po-zadannomu-rfc/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Получить MIME тип по расширению</title>
+		<link>https://abap-blog.ru/abap-notes/poluchit-mime-tip-po-rasshireniyu/</link>
+					<comments>https://abap-blog.ru/abap-notes/poluchit-mime-tip-po-rasshireniyu/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 16:42:53 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5670</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e1b0d473215726996/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-mime-tip-po-rasshireniyu/">Получить MIME тип по расширению</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lv_file_extension TYPE w3fileext VALUE 'pdf'.
+DATA: lv_mime_type TYPE w3conttype.
+
+CALL FUNCTION 'SDOK_MIMETYPE_GET'
+  EXPORTING
+    extension = lv_file_extension
+  IMPORTING
+    mimetype  = lv_mime_type.
+
+WRITE: / lv_mime_type.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-mime-tip-po-rasshireniyu/">Получить MIME тип по расширению</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/poluchit-mime-tip-po-rasshireniyu/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Генерация Odata-сервиса к BW запросам</title>
+		<link>https://abap-blog.ru/abap-notes/generaciya-odata-servisa-k-bw-zaprosam/</link>
+					<comments>https://abap-blog.ru/abap-notes/generaciya-odata-servisa-k-bw-zaprosam/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 10 Nov 2020 05:59:17 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5526</guid>
+
+					<description><![CDATA[]]></description>
+										<content:encoded><![CDATA[<style>
+                    </style>
+        	    <div id="h5vp618a1e1b218fd" class="pdfp_wrapper">
+                        <div class="cta_wrapper">
+                	            <p><a href="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/How-to-Create-OData-Services-for-Analytic-Queries.pdf&#038;download=true&#038;print=&#038;openfile=false"><button>View Fullscreen</button></a></p>
+            </div>
+            <div class="iframe_wrapper">
+                <iframe loading="lazy" width="100%" height="1122px" src="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/How-to-Create-OData-Services-for-Analytic-Queries.pdf&#038;download=true&#038;print=&#038;openfile=false"></iframe>
+            </div>
+	    </div><p>The post <a href="https://abap-blog.ru/abap-notes/generaciya-odata-servisa-k-bw-zaprosam/">Генерация Odata-сервиса к BW запросам</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/generaciya-odata-servisa-k-bw-zaprosam/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Использование batch запросов</title>
+		<link>https://abap-blog.ru/abap-notes/ispolzovanie-batch-zaprosov/</link>
+					<comments>https://abap-blog.ru/abap-notes/ispolzovanie-batch-zaprosov/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 10 Nov 2020 05:55:15 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5518</guid>
+
+					<description><![CDATA[]]></description>
+										<content:encoded><![CDATA[<style>
+                    </style>
+        	    <div id="h5vp618a1e1b2294d" class="pdfp_wrapper">
+                        <div class="cta_wrapper">
+                	            <p><a href="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/How-to-Batchh-Multiple-Operations-Into-a-Single-Call.pdf&#038;download=true&#038;print=&#038;openfile=false"><button>View Fullscreen</button></a></p>
+            </div>
+            <div class="iframe_wrapper">
+                <iframe loading="lazy" width="100%" height="1122px" src="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/How-to-Batchh-Multiple-Operations-Into-a-Single-Call.pdf&#038;download=true&#038;print=&#038;openfile=false"></iframe>
+            </div>
+	    </div><p>The post <a href="https://abap-blog.ru/abap-notes/ispolzovanie-batch-zaprosov/">Использование batch запросов</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/ispolzovanie-batch-zaprosov/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>OData service development options</title>
+		<link>https://abap-blog.ru/abap-notes/odata-service-development-options/</link>
+					<comments>https://abap-blog.ru/abap-notes/odata-service-development-options/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 10 Nov 2020 05:50:38 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5508</guid>
+
+					<description><![CDATA[]]></description>
+										<content:encoded><![CDATA[<style>
+                    </style>
+        	    <div id="h5vp618a1e1b23d69" class="pdfp_wrapper">
+                        <div class="cta_wrapper">
+                	            <p><a href="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/2020.04.09-Overview-OData-Development-Options-On-ABAP-Platform.pdf&#038;download=true&#038;print=&#038;openfile=false"><button>View Fullscreen</button></a></p>
+            </div>
+            <div class="iframe_wrapper">
+                <iframe loading="lazy" width="100%" height="1122px" src="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/2020.04.09-Overview-OData-Development-Options-On-ABAP-Platform.pdf&#038;download=true&#038;print=&#038;openfile=false"></iframe>
+            </div>
+	    </div><p>The post <a href="https://abap-blog.ru/abap-notes/odata-service-development-options/">OData service development options</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/odata-service-development-options/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>SAP IDoc Overview</title>
+		<link>https://abap-blog.ru/abap-notes/sap-idoc-overview/</link>
+					<comments>https://abap-blog.ru/abap-notes/sap-idoc-overview/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 10 Nov 2020 05:47:03 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5502</guid>
+
+					<description><![CDATA[]]></description>
+										<content:encoded><![CDATA[<style>
+                    </style>
+        	    <div id="h5vp618a1e1b261c9" class="pdfp_wrapper">
+                        <div class="cta_wrapper">
+                	            <p><a href="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/SAP-IDoc-Overview.pdf&#038;download=true&#038;print=&#038;openfile=false"><button>View Fullscreen</button></a></p>
+            </div>
+            <div class="iframe_wrapper">
+                <iframe loading="lazy" width="100%" height="1122px" src="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/SAP-IDoc-Overview.pdf&#038;download=true&#038;print=&#038;openfile=false"></iframe>
+            </div>
+	    </div><p>The post <a href="https://abap-blog.ru/abap-notes/sap-idoc-overview/">SAP IDoc Overview</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/sap-idoc-overview/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ABAP и поддержка IOT сценариев</title>
+		<link>https://abap-blog.ru/abap-notes/iot/</link>
+					<comments>https://abap-blog.ru/abap-notes/iot/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 10 Nov 2020 05:43:42 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5494</guid>
+
+					<description><![CDATA[]]></description>
+										<content:encoded><![CDATA[<style>
+                    </style>
+        	    <div id="h5vp618a1e1b292c9" class="pdfp_wrapper">
+                        <div class="cta_wrapper">
+                	            <p><a href="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/ABAP-TCP-IP.pdf&#038;download=true&#038;print=&#038;openfile=false"><button>View Fullscreen</button></a></p>
+            </div>
+            <div class="iframe_wrapper">
+                <iframe loading="lazy" width="100%" height="1122px" src="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/ABAP-TCP-IP.pdf&#038;download=true&#038;print=&#038;openfile=false"></iframe>
+            </div>
+	    </div><p>The post <a href="https://abap-blog.ru/abap-notes/iot/">ABAP и поддержка IOT сценариев</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/iot/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

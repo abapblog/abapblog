@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>FLOAT | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/float/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:59:47 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Преобразовать FLOAT в CHAR и обратно</title>
+		<link>https://abap-blog.ru/osnovy-abap/preobrazovat-float-v-char-i-obratno/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/preobrazovat-float-v-char-i-obratno/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 04 Apr 2012 07:27:26 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[CHAR]]></category>
+		<category><![CDATA[FLOAT]]></category>
+		<category><![CDATA[Преобразование]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=676</guid>
+
+					<description><![CDATA[<p>Присвоение к CHAR типа FLOAT согласно справке возможно и напрямую, но для того чтобы задать дополнительные параметры преобразования можно использовать следующие ФМ: [crayon-618a23985112c236177211/] Или через строковые шаблоны.</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/preobrazovat-float-v-char-i-obratno/">Преобразовать FLOAT в CHAR и обратно</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Присвоение к CHAR типа FLOAT согласно справке возможно и напрямую, но для того чтобы задать дополнительные параметры преобразования можно использовать следующие ФМ:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: gv_char_val TYPE rscvp-valc2,
+      gv_float_val TYPE F VALUE '1.0324'.
+
+CALL FUNCTION 'FLTP_CHAR_CONVERSION'
+  EXPORTING
+    decim = 4   " &lt;-- количество символов после запятой
+    expon = 0   " &lt;-- количество символов экспоненты
+    ivalu = ''  " &lt;-- Если X и в INPUT пусто, в flstr запишется '0'
+    INPUT = gv_float_val
+    maskn = '_' " Выведет маску ввода если INPUT и IVALU пустые
+  IMPORTING
+    flstr = gv_char_val.
+
+WRITE gv_char_val.
+
+CLEAR gv_float_val.
+
+" Обратное преобразование
+CALL FUNCTION 'CHAR_FLTP_CONVERSION'
+  EXPORTING
+    STRING             = gv_char_val
+  IMPORTING
+    flstr              = gv_float_val
+  EXCEPTIONS
+    exponent_too_big   = 1
+    exponent_too_small = 2
+    string_not_fltp    = 3
+    too_many_decim     = 4
+    OTHERS             = 5.
+
+CHECK sy-subrc = 0.
+
+WRITE gv_float_val STYLE cl_abap_format=&gt;o_simple.</pre><p>Или через строковые шаблоны.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/preobrazovat-float-v-char-i-obratno/">Преобразовать FLOAT в CHAR и обратно</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/preobrazovat-float-v-char-i-obratno/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+
+<!--[if gte IE 9]>
+<html class="ie" lang="en-US">
+<![endif]-->
+
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar" content="black"/>
+    <title>ABAP Platform Sessions at SAP TechEd 2020 | SAP Blogs</title>
+    <link rel="profile" href="http://gmpg.org/xfn/11"/>
+
+    
+    
+    <!--[if lt IE 9]>
+    <script src="https://blogs.sap.com/wp-content/themes/sap-v3-neo/js/html5.min.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link rel="icon" type="image"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.png" /><link rel="shortcut icon" type="image/x-icon"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.ico" /><link rel="apple-touch-icon" href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/apple-touch-icon.png" /><meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//static.community.services.sap' />
+<link rel='dns-prefetch' href='//assets.adobedtm.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Feed" href="https://blogs.sap.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Comments Feed" href="https://blogs.sap.com/comments/feed/" />
+<meta name="type" content="Blog" /><meta name="description" content="Hey everyone! SAP TechEd 2020 is just around the corner, and it’s going to be a virtual and free event this time around! SAP TechEd is THE tech conference for anyone (developers, architects, consultants," /><meta name="sm_tech_ids" content="833755570260738661924709785639136,73555000100800001164,73554900100700000977,ed5c1ef6-932f-4c19-b2ba-1be375109ff5,73554900100800000266,755421404636447943131706525840948"/><meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" /><link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; ABAP Platform Sessions at SAP TechEd 2020 Comments Feed" href="https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/blogs.sap.com\/res1dx-135\/wp-includes\/js\/wp-emoji-release.min.js"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/style.min.css' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/css/ie.css' type='text/css' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='designmate_styles-css'  href='https://static.community.services.sap/designmate/v3/136/latest/designmate.css' type='text/css' media='all' />
+<link rel='stylesheet' id='designsystem_styles-css'  href='https://static.community.services.sap/community-ds/v1/188/main.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dist/block-library/style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='prism-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/js/tinymce/plugins/codesample/css/prism.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_custom_link_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom//include/css/sap-core-custom.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_lightbox_gallery_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='pt_style_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-primary-tag/css/pt_style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-popular-posts-css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/css/wpp.css' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery.min.js' id='jquery-core-js'></script>
+<script type='text/javascript' id='jquery-core-js-after'>
+if (jQuery !== undefined) {
+                jQuery(window).on("load", function(){
+                    var _wpWindowLoaded = document.createElement("div");
+                    _wpWindowLoaded.setAttribute("class", "hidden");
+                    _wpWindowLoaded.setAttribute("id", "wp_window_loaded");
+                    document.body.appendChild(_wpWindowLoaded);
+                });
+            }
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery-migrate.min.js' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='//assets.adobedtm.com/ccc66c06b30b/d266848b2882/launch-f095fbc32a96.min.js' id='scn_adobe_dtm-js'></script>
+<script type='text/javascript' id='wpp-js-js-extra'>
+/* <![CDATA[ */
+var wpp_params = {"sampling_active":"","sampling_rate":"100","ajax_url":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php","action":"update_views_ajax","ID":"1220682","token":"938e4875d9"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/js/wpp.js' id='wpp-js-js'></script>
+<link rel="https://api.w.org/" href="https://blogs.sap.com/wp-json/" /><link rel="alternate" type="application/json" href="https://blogs.sap.com/wp-json/wp/v2/posts/1220682" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.sap.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.sap.com/wp-includes/wlwmanifest.xml" /> 
+
+<link rel="canonical" href="https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/" />
+<link rel='shortlink' href='https://blogs.sap.com/?p=1220682' />
+<script type="text/javascript">var ajaxurl = "https://blogs.sap.com/wp-admin/admin-ajax.php";var likePostLabel = "Like";var unLikePostLabel = "Liked";var likeCommentLabel = "Like";var unLikeCommentLabel = "Liked";</script>    <!--[if IE ]>
+    <link rel="stylesheet" id="scn-ie-styles" href="https://blogs.sap.com/wp-content/themes/sap-v3-neo/css/ie.css"
+          type="text/css" media="all">
+    <link id="ids-popup-css" href="https://accounts.sap.com/universalui/shared/stylesheets/idsPopup.css"
+          rel="stylesheet"
+          type="text/css">
+    <![endif]-->
+
+
+</head>
+
+<body class="post-template-default single single-post postid-1220682 single-format-standard custom-font-enabled">
+
+
+<div class="page-wrapper">
+<b class="cn-accessibility"><a href="#main" tabindex="0" accesskey="S">Skip to Content</a></b>
+<div id="page" class="hfeed site">
+
+<header id="masthead" class="blogs-nav sap-header">
+    <header id="comm-hdr-Header" role="masthead"><div class="dm-header"><div class="dm-header__inner"><div class="dm-header__logo-wrapper"><a class="dm-logo--header" href="http://www.sap.com/" title="SAP"></a></div><nav id="comm-hdr-Navigation" class="dm-mainNav"><div class="dm-mobileSearch"><form class="dm-header__search-form" action=""><div class="dm-search-container dm-input dm-search__input"><label class="dm-input__box" aria-label="search SAP Community"><input class="dm-input__control" placeholder="Search SAP Community" name="filter-search" type="search" required="" aria-label="type here to search"><button class="dm-search__button dm-search__button-clear" type="reset" role="button" title="Reset Search"><span class="dm-search__buttonIcon dm-icon-encoded--close" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" role="button" title="Search SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form></div><ul class="dm-mainNav__menu dm-mainNav__menu--withGroups" role="menubar"><li class="dm-header__homeItem" role="none"><a class="dm-header__homeItem-link" role="menuitem" aria-label="Community Home" target="_self" href="https://community.sap.com">Community</a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/topics" aria-label="" aria-haspopup="false" role="menuitem">Topics<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://groups.sap.com" aria-label="Groups. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Groups<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://answers.sap.com/index.html" aria-label="Answers. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Answers<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://blogs.sap.com" aria-label="Blogs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Blogs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/events" aria-label="Events. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Events<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/programs" aria-label="Programs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Programs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources" aria-label="Resources. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Resources<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources/what-is-new" aria-label="" aria-haspopup="false" role="menuitem">What's New<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li></ul></nav><ul class="dm-header__actions"><li id="comm-hdr-Search" class="dm-header__actions-item dm-headerSearch"><a class="dm-search-action dm-icon-encoded dm-header__search-icon" aria-label="Search the SAP Community" href="#" role="button" aria-expanded="false" title="Search"></a><div class="dm-headerSearch__wrapper"><form class="dm-searchdropdown dm-align-center" action=""><div class="dm-search__input dm-input" role="search"><label class="dm-input__box" aria-label="search the SAP community"><input class="dm-input__control" placeholder="Search the SAP Community" name="filter-search" aria-label="type here to search" type="input"><button class="dm-search__button dm-search__button-clear" type="reset" title="Reset"><span class="dm-search__buttonIcon dm-icon-encoded--clear" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" title="Search the SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form><a class="dm-headerSearch__closeButton" type="submit" role="button" title="Close search input" href="javascript:void(0);"><span class="dm-icon-encoded dm-icon-encoded--close" role="img" aria-label="Close search input"></span></a></div></li><li id="comm-hdr-Authentication" class="dm-header__actions-item dm-header__account"><a id="comm-hdr-SignIn" class="dm-user__login-button--wrapper" aria-haspopup="true" aria-expanded="false" role="button" href="#" title="Log In" rel="IDS_login"><div id="comm-hdr-AnonymousIcon" class="dm-icon-encoded dm-icon-encoded--account dm-hidden" aria-label="click here to login"></div><div id="comm-hdr-Avatar" class="dm-user dm-header__avatar"><img class="dm-header__avatar-image dm-hidden" data-src="" src="" width="24px" height="24px"><span class="dm-header__notifications dm-hidden js-notification-indicator"></span></div></a><ul id="comm-hdr-UserProfileMenu" class="dm-header__actionsSubMenu dm-profileFlyoutMenu dm-profileMenuDropdown" role="menu" aria-label="drop down menu of people profile"><li class="dm-profileMenu__userData"><div id="comm-hdr-Username" class="dm-profileMenu__userName"></div><div id="comm-hdr-Email" class="dm-profileMenu__userEmail"></div><a id="comm-hdr-SubMenuTitleLink" class="dm-link" href="#">Manage my Account</a></li><li id="comm-hdr-ProfileMenuTopSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li id="comm-hdr-ProfileMenuMiddleSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li class="dm-profileMenu__section"><ul class="dm-profileMenu__list dm-profileMenu__logout"><li class="dm-profileMenu__item"><a id="comm-hdr-LogOut" class="dm-button dm-button--secondary" href="#" role="button"><span class="dm-button-text">Logout</span></a></li></ul></li></ul></li><li class="dm-header__actions-item dm-header__mobileMenu"><a id="comm-hdr-MobileMenuBtn" class="dm-mobileMenuButton" aria-label="Search SAP community"><span class="dm-icon-encoded dm-icon-encoded--mobile-menu"></span><span style="display:none;">Search</span></a></li></ul></div></div></header><div class="announcements" role="menubar"></div><div class="dm-wrapper dm-subheader dm-subheader--wrapper  dm-user--unauthenticated "><div class="dm-grid"><div class="dm-breadcrumb dm-user--unauthenticated" role="menubar">
+    <ul class="dm-breadcrumb-nav" role="navigation" aria-label="breadcrumb navigation to trace the path back to original landing point">
+        
+        <li><a id="comm-shdr-breadcrumb-home" href="https://www.sap.com" title="Home">Home</a></li>
+        
+        <li><a id="comm-shdr-breadcrumb-community" href="https://community.sap.com" title="Community">Community</a></li>
+        
+    </ul>
+    <ul class="dm-breadcrumb-actions" role="menu">
+        
+        <li><a id="comm-shdr-AskQuestion" href="https://answers.sap.com/questions/ask.html" title="Ask a Question">Ask a Question</a></li>
+        
+        <li><a id="comm-shdr-WriteBlogPost" href="https://blogs.sap.com/wp-admin/post-new.php" title="Write a Blog Post">Write a Blog Post</a></li>
+        
+        <li class="dm-user__login-button--wrapper"><a class="dm-button-small dm-button--primary" role="button" rel="IDS_login" aria-label="Login or Sign up. Click here to log in or sign up"><span class="dm-button-text">Login / Sign-up</span></a></li>
+        <li class="dm-breadcrumb-actions__dropdown">
+            <span id="comm-shdr-actions-opener" class="dm-breadcrumb-actions__dropdown-toggle" title="Community actions">
+                 <span class="dm-icon-encoded dm-icon-encoded--3dots"></span>
+            </span>
+            <ul id="comm-shdr-user-actions-ul" class="dm-breadcrumb-actions__dropdown-menu" role="menu">
+            </ul>
+        </li>
+    </ul>
+</div>
+</div></div>    <!-- #site-navigation -->
+
+</header>
+
+<!-- #masthead -->
+<div id="main" tabindex="0" class="wrapper">
+
+
+
+
+<div class="ds-blog-post-detail">
+<div class="ds-flexGrid">
+  <div class="ds-flexRow">
+    <div class="ds-flexCol">
+            <div class="ds-content-wrapper ds-blog-post__content-wrapper">
+        <h6 class="ds-heading ds-heading--xs ds-blog-post__sub-title"><span>Event Information</span></h6>
+        <div class="ds-flexRow">
+          <div class="ds-flexCol-sm-12 ds-flexCol-md-9">
+            
+<div class="ds-blog-post__body-wrapper">
+  <div class="ds-blog-post__content">
+    <div class="ds-blog-post__header-wrapper">
+      <a target="_blank" rel="noopener noreferrer" href="https://people.sap.com/carine.tchoutouodjomo" class="ds-blog-post__avatar "  >
+        <img alt='Author&#039;s profile photo Carine Tchoutouo Djomo' src='https://avatars.services.sap.com/images/carine.tchoutouodjomo.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />      </a>
+      <div class="ds-blog-post__author-info-wrapper">
+        <div class="ds-user ds-blog-post__author">
+          <a class="ds-link ds-user__name " href="https://people.sap.com/carine.tchoutouodjomo" target="_blank" title="Carine Tchoutouo Djomo" aria-label="" rel="noopener noreferrer">Carine Tchoutouo Djomo</a>
+          <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i></div>        </div>
+        <div class="ds-blog-post__meta-info">
+          <span class="ds-blog-post__date">November 18, 2020</span>
+          <span class="ds-blog-post__read-duration">8 minute read</span>
+        </div>
+      </div>
+    </div>
+    <h1 class="ds-heading ds-heading--m ds-blog-post__title">ABAP Platform Sessions at SAP TechEd 2020</h1>
+    <div class="ds-blog-post__social-stats-wrapper">
+      <div class="ds-social-stats ">
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--comments"></i>19        </span>
+        <span id="post-likes-counter" class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--likes-outline"></i>43        </span>
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--views"></i>5,059        </span>
+      </div>
+          </div>
+    <div class="ds-blog-post__body ds-editor-content">
+      <p>Hey everyone!</p>
+<p><strong>SAP TechEd 2020</strong> is just around the corner, and it’s going to be a <strong>virtual</strong> and <strong>free</strong> event this time around!</p>
+<p>SAP TechEd is THE tech conference for anyone (developers, architects, consultants, product managers, IT managers, just to name a few) who is interested in gaining a detailed understanding of SAP’s portfolio of solutions, platforms and technologies, as well as insights into their future direction &#8211; and the target audience and the technical focus remain the same this year.</p>
+<table style="border-collapse: collapse;width: 100%;background-color: #ffffff;border-color: #ffffff" border="1">
+<tbody>
+<tr>
+<td style="border-color: #ffffff" width="230">
+<p><strong>Save the date and register now!</strong></p>
+<p><a href="https://events.sapteched.com/pages/sap/sapteched2020/index"  target="_blank" >December 8—10, 2020</a></td>
+<td style="border-color: #ffffff"><iframe loading="lazy" src="https://player.vimeo.com/video/472303838?dnt=1&amp;app_id=122963" width="320" height="180" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></td>
+</tr>
+</tbody>
+</table>
+<p><strong>About the virtual SAP TechEd 2020 in a nutshell:</strong></p>
+<ul>
+<li>48-hour non-stop experience, featuring live, simulive and on-demand sessions.</li>
+<li>Keynotes, training, education, hands-on workshops and more opportunities to get SAP insights on technology, development, and future trends</li>
+<li>Hear from SAP experts, customers, and partners on tech best practices</li>
+<li>Get the big picture about the value of an integrated intelligent enterprise for your organization</li>
+<li>Sign up now and you will have exclusive access to SAP Learning Hub and the SAP Community for additional collaboration and learning opportunities</li>
+</ul>
+<p><a href="https://events.sapteched.com/pages/sap/sapteched2020/index"  target="_blank" >Read more</a></p>
+<p>You can read important SAP announcements, specially prepared for SAP TechEd 2020 in the <a href="https://www.sap.com/documents/2020/12/9ea0a307-c07d-0010-87a3-c30de2ffd8ff.html"  target="_blank" >SAP TechEd News Guide 2020</a>.</p>
+<p>Just like in the past, I want to give you an overview of the various ABAP platform- related sessions that have been prepared by the ABAP Platform and Software Logistics teams; and by SAP customers and partners – as well as some other selected sessions.</p>
+<p>You can navigate to the sessions of your choice and add them to your schedule.</p>
+<table>
+<tbody>
+<tr bgcolor="#e7f5ff">
+<td style="width: 71px" width="98"><strong>Session ID /Format</strong></td>
+<td style="width: 311px" width="236"><strong>Title / Abstract</strong></td>
+<td style="width: 111px" width="134"><strong>Speakers </strong></td>
+<td style="width: 120px" width="127"><strong>Schedules</strong></td>
+</tr>
+<tr>
+<td style="width: 613px" colspan="4" width="601">
+<h3><span style="color: #f0ab00"><strong>General</strong></span></h3>
+</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1603314875989001AsWU"  target="_blank" >DK100</a></strong></p>
+<p>&nbsp;</p>
+<p>Developer Keynote (1h)</p>
+<p>&nbsp;</td>
+<td style="width: 311px" width="236">
+<p><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1603314875989001AsWU"  target="_blank" ><strong>Developer Keynote: All Developers Welcome</strong></a></p>
+<p>In this special presentation by developers, for developers, you can join the final sprint review meeting of a fictional company. During this review, three developers of very different backgrounds walk through their code, configuration, and deployment to SAP Cloud Platform of an SAP S/4HANA extension for their company. See how developers of various skill sets and experiences can all come together to be part of the SAP ecosystem.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/rich.heilman"  target="_blank" >Rich Heilman</a><br />
+<a href="https://people.sap.com/kevin.muessig"  target="_blank" >Kevin Muessig</a><br />
+<a href="https://people.sap.com/dj.adams.sap"  target="_blank" >DJ Adams</a></td>
+<td style="width: 120px" width="127">
+<p>Wednesday, Dec 9 5:00 AM &#8211; 6:00 AM CET</p>
+<p>Wednesday, Dec 9 4:00 PM &#8211; 5:00 PM CET</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555753134001up73"  target="_blank" >DEV200</a></strong></p>
+<p>&nbsp;</p>
+<p>Lecture (40 min)</td>
+<td style="width: 311px" width="236">
+<p><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555753134001up73"  target="_blank" ><strong>ABAP Strategy</strong></a></p>
+<p>Get an overview of how ABAP platform serves applications available in SAP S/4HANA, SAP S/4HANA Cloud, and SAP Cloud Platform. We cover our main ABAP platform investment areas and explain why these new areas are relevant for all ABAP developers.</td>
+<td style="width: 111px" width="134">Boris Gebhardt<br />
+<a href="https://people.sap.com/karl.kessler"  target="_blank" >Karl Kessler</a></td>
+<td style="width: 120px" width="127">
+<p>Wednesday, Dec 9 2:20 AM &#8211; 3:00 AM CET</p>
+<p>Wednesday, Dec 9 2:20 PM &#8211; 3:00 PM CET</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555755095001u6im"  target="_blank" >DEV825</a></strong></p>
+<p>&nbsp;</p>
+<p>Road Map (30 min)</td>
+<td style="width: 311px" width="236">
+<p><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555755095001u6im"  target="_blank" ><strong>Road Map: ABAP</strong></a></p>
+<p>ABAP platform is the foundation for SAP S/4HANA and SAP S/4HANA Cloud. This session covers the capabilities of ABAP platform today and the planned innovations that will enable a successful transition from existing SAP on-premise landscapes based on the SAP NetWeaver technology platform and SAP Business Suite applications towards SAP S/4HANA and SAP Cloud Platform.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/karl.kessler"  target="_blank" >Karl Kessler</a></td>
+<td style="width: 120px" width="127">On Demand</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1603732692509001kp2j"  target="_blank" >CM102</a></strong></p>
+<p>&nbsp;</p>
+<p>Channel 1 Talk (30 min)</td>
+<td style="width: 311px" width="236">
+<p><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1603732692509001kp2j"  target="_blank" ><strong>Learning a New Skill Isn&#8217;t As Hard As It Used to Be</strong></a></p>
+<p>Gaining proficiency in a new skill doesn’t have to be a major challenge. In this session, I review the step-by-step plan and approach I took to learn about ABAP core data services (CDS). These steps can be applied to master any new skill. Hear about the missteps I’ve had along the way (such as relying on older blog posts) and the importance of links, links, and more links.</td>
+<td style="width: 111px" width="134"><em>***Customer***</em><em><br />
+</em><a href="https://people.sap.com/michelle.crapo5"  target="_blank" >Michelle Crapo</a>, Furst-McNess</td>
+<td style="width: 120px" width="127">
+<p>Tuesday, Dec 8 9:15 PM &#8211; 9:45 PM CET</p>
+<p>Wednesday, Dec 9 2:15 AM &#8211; 2:45 AM CET</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1603734625163001mas9"  target="_blank" >CM105</a></strong></p>
+<p>&nbsp;</p>
+<p>Channel 1 Talk (30 min)</td>
+<td style="width: 311px" width="236">
+<p><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1603734625163001mas9"  target="_blank" ><strong>Transitioning from ABAP Programmer to Developer</strong></a></p>
+<p>A common challenge faced by all ABAP programmers is learning about anything other than ABAP development tools. We eat, sleep, and repeat ABAP. Every SAP and non-SAP technology stack is evolving, and so should we. Make the move from ABAP programmer to developer for whom the language is just a way to express that art. We have come a long way from module pool programming to the Web Dynpro development environment and SAPUI5, so having a developer mind-set is super-important.</td>
+<td style="width: 111px" width="134"><em>***Customer***</em><em><br />
+</em><a href="https://people.sap.com/nabheetscn"  target="_blank" >Nabheet Madan</a>, Movilitas Consulting</td>
+<td style="width: 120px" width="127">
+<p>Wednesday, Dec 9 8:00 AM &#8211; 8:30 AM CET</p>
+<p>Wednesday, Dec 9 1:00 PM &#8211; 1:30 PM CET</td>
+</tr>
+<tr>
+<td style="width: 613px" colspan="4" width="601">
+<h3><span style="color: #f0ab00"><strong>Modern ABAP Application Development</strong></span></h3>
+</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555751861001uOZ1"  target="_blank" >DEV102</a></strong></p>
+<p>&nbsp;</p>
+<p>Lecture (40 min)</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555751861001uOZ1"  target="_blank" >Major Updates on ABAP RESTful Application Programming Model</a></strong></p>
+<p>The ABAP RESTful application programming model is out! Want to build apps from scratch or reuse existing business logic? Then get an overview of the latest development of THE ABAP programming model for the next decades and how it helps developers build enterprise SAP Fiori apps with draft support and services on SAP S/4HANA and SAP Cloud Platform in an ABAP environment. ABAP RESTful application programming model is based on core data services, behavior definition and implementation, and OData.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/marcel.hermanns"  target="_blank" >Marcel Hermanns</a></td>
+<td style="width: 120px" width="127">
+<p>Thursday, Dec 10 2:40 AM &#8211; 3:20 AM CET</p>
+<p>Thursday, Dec 10 1:40 PM &#8211; 2:20 PM CET</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555754077001uSLG"  target="_blank" >DEV260</a></strong></p>
+<p>&nbsp;</p>
+<p>Workshop (2h)</p>
+<p>&nbsp;</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555754077001uSLG"  target="_blank" >Build SAP Fiori Apps with the ABAP RESTful Application Programming Model</a></strong></p>
+<p>Want to learn how to efficiently develop enterprise SAP Fiori apps and REST APIs optimized for SAP HANA on the ABAP platform – on premise as well as in the cloud? Then the ABAP RESTful application programming model is what you’re looking for! Join us to create a transactional SAP Fiori elements app with draft support using the core data services technology platform, behavior definition and implementation for the transactional handling, and business services for the OData service creation.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/volker.drees"  target="_blank" >Volker Drees</a><br />
+<a href="https://people.sap.com/carine.tchoutouodjomo"  target="_blank" >Carine Tchoutouo Djomo</a></td>
+<td style="width: 120px" width="127">
+<p>Wednesday, Dec 9 7:30 PM &#8211; 9:30 PM CET</p>
+<p>Thursday, Dec 10 6:30 AM &#8211; 8:30 AM CET</td>
+</tr>
+<tr>
+<td style="width: 613px" colspan="4" width="601">
+<h3><span style="color: #f0ab00"><strong>SAP Cloud Platform, ABAP Environment</strong></span></h3>
+</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555754571001uorK"  target="_blank" >DEV300</a></strong></p>
+<p>&nbsp;</p>
+<p>Lecture (40 min)</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555754571001uorK"  target="_blank" >SAP Cloud Platform, ABAP Environment: Overview</a></strong></p>
+<p>Learn about the new platform-as-a-service offering for the ABAP developer community: SAP Cloud Platform, ABAP environment. Find out about the benefits, the value proposition, and the basic architecture of this new ABAP service.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/florian.wahl"  target="_blank" >Florian Wahl</a><br />
+<a href="https://people.sap.com/frankjentsch"  target="_blank" >Frank Jentsch </a></td>
+<td style="width: 120px" width="127">On Demand</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555754457001uf74"  target="_blank" >DEV268</a></strong></p>
+<p>&nbsp;</p>
+<p>Workshop (2h)</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555754457001uf74"  target="_blank" >SAP Cloud Platform, ABAP Environment, Connectivity and Integration</a></strong></p>
+<p>Learn how to build side-by-side extensions for SAP S/4HANA Cloud and SAP S/4HANA with the SAP Cloud Platform, ABAP environment based on protocols such as OData, HTTP(S), and RFC in an end-to-end-fashion.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/andre.fischer"  target="_blank" >Andre Fischer</a><br />
+<a href="https://people.sap.com/jens.weiler"  target="_blank" >Jens Weiler</a></td>
+<td style="width: 120px" width="127">
+<p>Tuesday, Dec 8 7:30 PM &#8211; 9:30 PM CET</p>
+<p>Wednesday, Dec 9 7:30 AM &#8211; 9:30 AM CET</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555755379001uBuu"  target="_blank" >DEV928</a></strong></p>
+<p>&nbsp;</p>
+<p>Expert Q&amp;A (20 min)</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555755379001uBuu"  target="_blank" >Expert Q&amp;A on Developing with ABAP in the Cloud</a></strong></p>
+<p>Whether you already have experience or are new to SAP Cloud Platform, ABAP environment and develop cloud ABAP applications, join this session and meet up with SAP experts to get the answers you’ve been looking for.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/jens.weiler"  target="_blank" >Jens Weiler</a><br />
+<a href="https://people.sap.com/rich.heilman"  target="_blank" >Rich Heilman</a></td>
+<td style="width: 120px" width="127">
+<p>Tuesday, Dec 8 9:30 PM &#8211; 9:50 PM CET</p>
+<p>Wednesday, Dec 9 9:30 AM &#8211; 9:50 AM CET</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1603381839446001rzFE"  target="_blank" >PAR900</a></strong></p>
+<p>&nbsp;</p>
+<p>Expert Q&amp;A (20 min)</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1603381839446001rzFE"  target="_blank" >ABAP on SAP Cloud Platform: How to Build and Certify Partner Add-Ons</a></strong></p>
+<p>Many partners have traditionally helped extend SAP solutions by providing ABAP add-ons directly running in the customer landscape. Join experts from SAP Integration and Certification Center in this live session to get answers on what criteria and best practices ABAP add-ons running on SAP Cloud Platform will need to meet to qualify for SAP certification.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/christoph.claus"  target="_blank" >Christoph Claus</a><br />
+<a href="https://people.sap.com/prashanth.kalur2"  target="_blank" >Prashanth Kalur</a></td>
+<td style="width: 120px" width="127">
+<p>Tuesday, Dec 8 9:30 PM &#8211; 9:50 PM CET</p>
+<p>Wednesday, Dec 9 11:00 AM &#8211; 11:20 AM CET</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602217232520001Kvsh"  target="_blank" >DAT208</a></strong></p>
+<p>&nbsp;</p>
+<p>Breakout (20 min)</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602217232520001Kvsh"  target="_blank" >Enterprise-Scale Applications on SAP Cloud Platform</a></strong></p>
+<p>Vistex, an SAP software partner, delivers an enterprise-scale suite of cloud applications using SAP Cloud Platform for SAP HANA and ABAP services. These cloud applications mirror industry solutions Vistex has delivered on premise through SAP NetWeaver ABAP for many years. SAP Cloud Platform enables Vistex to migrate on-premise functionality to a native cloud package, saving development time and effort. The Vistex Suite is planned as part of the SAP Solution Extension program for December 2020.</td>
+<td style="width: 111px" width="134"><em>***Partner***</em><em><br />
+</em><a href="https://people.sap.com/matthew.hays"  target="_blank" >Matthew Hays</a>, Vistex</td>
+<td style="width: 120px" width="127">
+<p>Wednesday, Dec 9 12:10 AM &#8211; 12:30 AM CET</p>
+<p>Wednesday, Dec 9 8:40 PM &#8211; 9:00 PM CET</td>
+</tr>
+<tr>
+<td style="width: 613px" colspan="4" width="601">
+<h3><span style="color: #f0ab00"><strong>System Conversion &amp; </strong></span><span style="color: #f0ab00"><strong>Custom Code Adaptation </strong></span></h3>
+</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555755744001uI3s"  target="_blank" >DT101</a></strong></p>
+<p>&nbsp;</p>
+<p>Lecture (40 min)</p>
+<p>&nbsp;</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555755744001uI3s"  target="_blank" >System Conversion (Part 1) – Get Your Road Map to SAP S/4HANA</a></strong></p>
+<p>The transition scenario for a system conversion to SAP S/4HANA shows increasing use in projects. Proper planning and knowledge of all related aspects and tools are essential to project success. This session provides an overview of the respective tools and information sources. Be sure to also attend &#8220;System Conversion (Part 2)&#8221; to learn more.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/boris.rubarth"  target="_blank" >Boris Rubarth</a></td>
+<td style="width: 120px" width="127">
+<p>Tuesday, Dec 8 11:10 PM &#8211; 11:50 PM CET</p>
+<p>Wednesday, Dec 9 11:10 AM &#8211; 11:50 AM CET</p>
+<p>&nbsp;</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555755808001uc8n"  target="_blank" >DT102</a></strong></p>
+<p>&nbsp;</p>
+<p>Lecture (40 min)</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555755808001uc8n"  target="_blank" >System Conversion (Part 2) – Latest News for Experts</a></strong></p>
+<p>Stay informed through an in-depth discussion of the latest news on tools and other topics related to system conversion. This session is designed for participants who have system conversion experience and who have attended the &#8220;System Conversion (Part 1)&#8221; session.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/boris.rubarth"  target="_blank" >Boris Rubarth</a></td>
+<td style="width: 120px" width="127">
+<p>Wednesday, Dec 9 1:20 AM &#8211; 2:00 AM CET</p>
+<p>Wednesday, Dec 9 1:20 PM &#8211; 2:00 PM CET</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555755870001uWzC"  target="_blank" >DT103</a></strong></p>
+<p>&nbsp;</p>
+<p>Lecture (40 min)</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555755870001uWzC"  target="_blank" >Reduce Downtime for a System Conversion to SAP S/4HANA</a></strong></p>
+<p>Reduction of technical downtime is a relevant aspect for most conversion projects. This session discusses possibilities and new approaches that help you to reduce the downtime.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/boris.rubarth"  target="_blank" >Boris Rubarth</a></td>
+<td style="width: 120px" width="127">
+<p>Wednesday, Dec 9 2:20 AM &#8211; 3:00 AM CET</p>
+<p>Wednesday, Dec 9 2:20 PM &#8211; 3:00 PM CET</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555755937001umSF"  target="_blank" >DT104</a></strong></p>
+<p>&nbsp;</p>
+<p>Lecture (40 min)</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555755937001umSF"  target="_blank" >Custom Code Adaptation for SAP S/4HANA</a></strong></p>
+<p>Find out how to handle your custom code when converting to SAP S/4HANA and hear about the latest innovations in ABAP-related tools for analyzing custom code. Learn how to execute SAP S/4HANA checks in just a few clicks with the SAP Fiori app &#8220;Custom Code Migration,&#8221; identify and remove unused custom code based on your collected usage data, and reduce your custom code adaptation efforts with semiautomatic adaptation by leveraging Quick Fixes in ABAP development tools (ADT) for Eclipse.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/olga.dolinskaja"  target="_blank" >Olga Dolinskaja</a></td>
+<td style="width: 120px" width="127">
+<p>Wednesday, Dec 9 3:00 AM &#8211; 3:40 AM CET</p>
+<p>Wednesday, Dec 9 3:00 PM &#8211; 3:40 PM CET</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602217241381001Khul"  target="_blank" >DT125</a></strong></p>
+<p>&nbsp;</p>
+<p>Breakout (20 min)</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602217241381001Khul"  target="_blank" >Custom Code Adaptation for SAP S/4HANA</a></strong></p>
+<p>Discover how to handle your custom code when converting to SAP S/4HANA and see the latest innovations in ABAP development tools for analyzing custom code. Experience how the SAP Fiori app &#8220;Custom Code Migration&#8221; allows you to execute SAP S/4HANA checks in just a few clicks. Identify and remove unused custom code based on your collected usage data, and optimize and automate your custom code adaptation efforts using the Quick Fixes in ADT for Eclipse.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/christopher_hermann"  target="_blank" >Christopher Hermann</a></td>
+<td style="width: 120px" width="127">
+<p>Wednesday, Dec 9 2:00 AM &#8211; 2:20 AM CET</p>
+<p>Wednesday, Dec 9 2:00 PM &#8211; 2:20 PM CET</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/16037323007010014MzZ"  target="_blank" >CM101</a></strong></p>
+<p>&nbsp;</p>
+<p>Channel 1 Talk (30 min)</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/16037323007010014MzZ"  target="_blank" >Free Tools to Support a Move to SAP S/4HANA</a></strong></p>
+<p>What no-cost things can you do to support the transition from SAP ERP to SAP S/4HANA? Find out how SAP Readiness Check for SAP S/4HANA covers important aspects of an SAP ERP 6.x conversion. Hear how the SAP S/4HANA Movement initiative helps you define your deployment strategy. Understand why cleaning master data facilitates your move to SAP S/4HANA and what tools can help do the job. Explore how SAP’s virtual boot camp and the SAP Project Coach chatbot can help ensure a smooth migration.</td>
+<td style="width: 111px" width="134"><em>***Customer***</em><em><br />
+</em><a href="https://people.sap.com/tammy.powlas3"  target="_blank" >Tammy Powlas</a></td>
+<td style="width: 120px" width="127">
+<p>Wednesday, Dec 9 9:30 PM &#8211; 10:00 PM CET</p>
+<p>Thursday, Dec 10 2:30 AM &#8211; 3:00 AM CET</td>
+</tr>
+<tr>
+<td style="width: 613px" colspan="4" width="601">
+<h3><span style="color: #f0ab00"><strong>DevOps</strong></span></h3>
+</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555751805001utlG"  target="_blank" >DEV100</a></strong></p>
+<p>&nbsp;</p>
+<p>Lecture (40 min)</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555751805001utlG"  target="_blank" >DevOps with SAP: Holistic Overview and Latest News</a></strong></p>
+<p>DevOps is a key enabler for achieving high-level agility and quality in development projects. Get the holistic picture about how you can foster DevOps principles efficiently in on-premise, cloud-native, and hybrid scenarios with SAP. Learn about the Git-enabled change and transport system and the portfolio of services on SAP Cloud Platform for DevOps and lifecycle management, including latest news and reasons why they are the right choice for your DevOps projects in SAP enterprise environments.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/boris.zarske"  target="_blank" >Boris Zarske</a></td>
+<td style="width: 120px" width="127">
+<p>Wednesday, Dec 9 3:00 AM &#8211; 3:40 AM CET</p>
+<p>Wednesday, Dec 9 3:00 PM &#8211; 3:40 PM CET</td>
+</tr>
+<tr>
+<td style="width: 71px" width="98">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555753570001uMOr"  target="_blank" >DEV208</a></strong></p>
+<p>(Lecture,40 min)</td>
+<td style="width: 311px" width="236">
+<p><strong><a href="https://events.sapteched.com/widget/sap/sapteched2020/Catalog/session/1602555753570001uMOr"  target="_blank" >DevOps for ABAP? Try the Git-Enabled Change and Transport System</a></strong></p>
+<p>The intention of the Git-enabled change and transport system (gCTS) is to support you in setting up DevOps processes for ABAP. Some scenarios can already be realized, some stuff is still missing. Have you been waiting for customizing integration? Did you miss functionality to support your scenario in ABAP development? Did you find it difficult to configure gCTS or to fix issues? gCTS has evolved. See the new stuff in action and learn how you can use it when setting up DevOps processes for ABAP.</td>
+<td style="width: 111px" width="134"><a href="https://people.sap.com/karin.spiegel"  target="_blank" >Karin Spiegel</a></td>
+<td style="width: 120px" width="127">On Demand</td>
+</tr>
+</tbody>
+</table>
+<p>We are looking forward to interacting with you in the different interactive formats.</p>
+<p>Stay healthy!</p>
+    </div>
+  </div>
+  <div class="ds-blog-post__social-side-bar">
+    <div class="ds-sticky-on-scroll ">
+      <div class="ds-sticky-on-scroll__wrapper  ">
+        <div class="ds-sticky-on-scroll__content">
+          <div class="ds-blog-post__social-actions">
+            <button class="sap-button-follow ds-button ds-button--primary ds-blog-post__social-action ds-blog-post__social-action--follow" id="sap-button-follow-hdr-id" onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2020%2F11%2F18%2Fabap-platform-sessions-at-sap-teched-2020%2F%3Fs_action%3Dss_change_follow_status%26nonce%3D705a693f83'" rel="IDS_login"  type="button" data-content-type="blogpost" data-content-id="1220682" data-nonce="705a693f83" title="Please log into the system to use follow/unfollow functionality."><span class="ds-button-text">Follow</span></button>            <button type='button' class='ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action likes-post-link dolike ' rel='IDS_login' onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2020%2F11%2F18%2Fabap-platform-sessions-at-sap-teched-2020%2F%3Fs_action%3Dss_change_like_status%26nonce%3D580b46d63f'" title='Like' data-nonce='580b46d63f' data-post-id='1220682'><i class='ds-icon ds-icon--likes-outline ds-icon--regular ds-m-r-xs' tabindex='-1'></i><span class='ds-button-text'>Like</span></button>            <button type="button" class="ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action" title="RSS Feed" onclick="location.href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/feed/'">
+              <i class="ds-icon ds-icon--rss-feed ds-icon--regular ds-m-r-xs" tabindex="-1"></i>RSS Feed
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+            <div class="ds-blog-post__social-row">
+              <div class="ds-blog-post__social-icons">
+                <a href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.sap.com%2F2020%2F11%2F18%2Fabap-platform-sessions-at-sap-teched-2020%2F' title='Share on Facebook' target='_blank'><span class='ds-social-icon ds-social-icon--dark-facebook'></span></a><a href='https://twitter.com/share?url=https%3A%2F%2Fblogs.sap.com%2F2020%2F11%2F18%2Fabap-platform-sessions-at-sap-teched-2020%2F&text=ABAP+Platform+Sessions+at+SAP+TechEd+2020' title='Share on Twitter' target='_blank'><span class='ds-social-icon ds-social-icon--dark-twitter'></span></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.sap.com%2F2020%2F11%2F18%2Fabap-platform-sessions-at-sap-teched-2020%2F&title=ABAP+Platform+Sessions+at+SAP+TechEd+2020' title='Share on LinkedIn' target='_blank'><span class='ds-social-icon ds-social-icon--dark-linkedin'></span></a>              </div>
+              <div class='ds-tooltip__wrapper'>
+    <div class='ds-tooltip__anchor'>
+    <button
+      type="button"
+      class="ds-button ds-button--secondary ds-blog-post__alert-moderator-button ds-button--disabled"
+      aria-label="Alert Moderator"
+      data-toggle="collapse"
+      data-hide-class="ds-collapse"
+      data-triggers=".alertModerator"
+      aria-expanded="false">Alert Moderator
+    </button>
+    </div>
+    <div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Alerting is not available for unauthorized users</div>
+</div>
+            </div>
+            
+  <div class="wprc-content-v3">
+    <div class="ds-blog-post-form ds-blog-post__alert-moderator-form ds-collapse alertModerator wprc-form-v3" data-toggle="collapseComponent" data-name="alertModerator">
+          </div>
+  </div>
+          </div>
+          <div class="ds-blog-post__right-side-bar ds-flexCol-sm-12 ds-flexCol-md-3">
+            <div id="sapassignedtagswidget-v3-2" class="ds-side-bar-widget ds-assigned-tags ds-m-b-l"><h3 class="ds-side-bar-widget__heading">Assigned Tags</h3></div><div id="sap-relatedcontent-widget-v3-2" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Similar Blog Posts<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="blogpost" data-limit="3"></ul></div></div><div id="sap-relatedcontent-widget-v3-3" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Related Questions<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="question" data-limit="3"></ul></div></div>          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <div class="ds-blog-post__comment-section">
+    <div class="ds-flexGrid">
+      <div class="ds-flexRow">
+        <div class="ds-flexCol-12 ds-flexCol-md-10 ds-flexCol-lg-10">
+          
+<div id="comments" class="ds-blog-post-comments">
+  
+      <div class="ds-blog-post-comments__counter" title="Number of Comments">
+      19 Comments      </div>
+              <div class="dm-section dm-align-center dm-section-header__title" title="Please log on to comment" aria-role="alert">
+                You must be <a href="https://blogs.sap.com/wp-login.php?redirect_to=2020/11/18/abap-platform-sessions-at-sap-teched-2020" class="opener js-idspopup" rel="IDS_login" title="Log On">Logged on</a> to comment or reply to a post.
+        </div>
+      
+    <div class="ds-blog-post-comments__list">
+              <div class="comment byuser comment-author-tammypowlas3 even thread-even depth-1 ds-blog-post-comment" id="li-comment-539518">
+        <div id="comment-539518" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/tammy.powlas3">
+                <img alt='Author&#039;s profile photo Tammy Powlas' src='https://avatars.services.sap.com/images/tammy.powlas3_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Tammy Powlas' href='https://people.sap.com/tammy.powlas3' rel='external nofollow' class='ds-link ds-user__name ' >Tammy Powlas</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--moderator" title="This user is an SAP Moderator" data-role-name="Moderator"></i><i class="ds-user__role ds-user__role--mentor" title="This user is an SAP Mentor" data-role-name="Mentor"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-11-18T10:59:43+00:00"
+                >November 18, 2020 at 10:59 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Carine - what a great list and thank you for listing my session.  I am looking forward to great SAP TechEd.</p>
+              </div>
+
+            <div id="comment-actions-539518" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_539518" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-539518'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-gedhurst odd alt thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-539520">
+        <div id="comment-539520" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/ged.hurst">
+                <img alt='Author&#039;s profile photo GED HURST' src='https://avatars.services.sap.com/images/ged.hurst_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name GED HURST' href='https://people.sap.com/ged.hurst' rel='external nofollow' class='ds-link ds-user__name ' >GED HURST</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-11-18T11:04:57+00:00"
+                >November 18, 2020 at 11:04 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Very useful Carine! Many thanks. I'm already getting schedule conflicts but I suppose all the sessions will be available for catch up later...?</p>
+              </div>
+
+            <div id="comment-actions-539520" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_539520" tabindex="-1">Like 4</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-539520'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-carinetchoutouodjomo bypostauthor even depth-2 ds-blog-post-comment" id="li-comment-539784">
+        <div id="comment-539784" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/carine.tchoutouodjomo">
+                <img alt='Author&#039;s profile photo Carine Tchoutouo Djomo' src='https://avatars.services.sap.com/images/carine.tchoutouodjomo_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Carine Tchoutouo Djomo' href='https://people.sap.com/carine.tchoutouodjomo' rel='external nofollow' class='ds-link ds-user__name ' >Carine Tchoutouo Djomo</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-11-19T12:15:02+00:00"
+                >November 19, 2020 at 12:15 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>I assume that some of the simulive sessions will later go on-demand - but have currently no information about that.</p>
+<p>Kind regards, Carine</p>
+              </div>
+
+            <div id="comment-actions-539784" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_539784" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-539784'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-djadamssap odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-539525">
+        <div id="comment-539525" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/dj.adams.sap">
+                <img alt='Author&#039;s profile photo DJ Adams' src='https://avatars.services.sap.com/images/dj.adams.sap_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name DJ Adams' href='https://people.sap.com/dj.adams.sap' rel='external nofollow' class='ds-link ds-user__name ' >DJ Adams</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i><i class="ds-user__role ds-user__role--developer-advocate" title="This user is an SAP Developer Advocate" data-role-name="SAP Developer Advocates"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-11-18T11:13:06+00:00"
+                >November 18, 2020 at 11:13 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Great summary, thanks Carine!</p>
+              </div>
+
+            <div id="comment-actions-539525" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_539525" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-539525'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-michellecrapo5 even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-539562">
+        <div id="comment-539562" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/michelle.crapo5">
+                <img alt='Author&#039;s profile photo Michelle Crapo' src='https://avatars.services.sap.com/images/michelle.crapo5_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Michelle Crapo' href='https://people.sap.com/michelle.crapo5' rel='external nofollow' class='ds-link ds-user__name ' >Michelle Crapo</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--champion" title="This user is an SAP Champion" data-role-name="SAP Champion"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-11-18T13:58:34+00:00"
+                >November 18, 2020 at 1:58 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Love the summary!  And thank you (like Tammy)  Thank you for mentioning my session.</p>
+<p>I'm looking forward to teched, it should be amazing!</p>
+<p>&nbsp;</p>
+              </div>
+
+            <div id="comment-actions-539562" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_539562" tabindex="-1">Like 2</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-539562'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-pvnierop odd alt depth-2 ds-blog-post-comment" id="li-comment-539641">
+        <div id="comment-539641" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/pvnierop">
+                <img alt='Author&#039;s profile photo Patrick Van Nierop' src='https://avatars.services.sap.com/images/pvnierop_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Patrick Van Nierop' href='https://people.sap.com/pvnierop' rel='external nofollow' class='ds-link ds-user__name ' >Patrick Van Nierop</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-11-18T19:40:43+00:00"
+                >November 18, 2020 at 7:40 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>I'm very curious about that session Michelle, the expectations are high!</p>
+              </div>
+
+            <div id="comment-actions-539641" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_539641" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-539641'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-michellecrapo5 even depth-3 ds-blog-post-comment" id="li-comment-539653">
+        <div id="comment-539653" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/michelle.crapo5">
+                <img alt='Author&#039;s profile photo Michelle Crapo' src='https://avatars.services.sap.com/images/michelle.crapo5_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Michelle Crapo' href='https://people.sap.com/michelle.crapo5' rel='external nofollow' class='ds-link ds-user__name ' >Michelle Crapo</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--champion" title="This user is an SAP Champion" data-role-name="SAP Champion"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-11-18T21:21:55+00:00"
+                >November 18, 2020 at 9:21 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Then I hope it will meet or exceed expectations!  Be ready to ask questions - I like these as interactive as possible.</p>
+              </div>
+
+            <div id="comment-actions-539653" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_539653" tabindex="-1">Like 2</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-539653'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-abishankar odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-539566">
+        <div id="comment-539566" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/abishankar">
+                <img alt='Author&#039;s profile photo S Abinath' src='https://avatars.services.sap.com/images/abishankar_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name S Abinath' href='https://people.sap.com/abishankar' rel='external nofollow' class='ds-link ds-user__name ' >S Abinath</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-11-18T14:13:19+00:00"
+                >November 18, 2020 at 2:13 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thanks for listing ...</p>
+              </div>
+
+            <div id="comment-actions-539566" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_539566" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-539566'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-jelenaperfiljeva2 even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-539638">
+        <div id="comment-539638" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/jelena.perfiljeva2">
+                <img alt='Author&#039;s profile photo Jelena Perfiljeva' src='https://avatars.services.sap.com/images/jelena.perfiljeva2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Jelena Perfiljeva' href='https://people.sap.com/jelena.perfiljeva2' rel='external nofollow' class='ds-link ds-user__name ' >Jelena Perfiljeva</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-11-18T19:30:15+00:00"
+                >November 18, 2020 at 7:30 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thanks for sharing, Carine! Are there major differences between DEV200 (strategy) and DEV825 (roadmap) sessions?</p>
+              </div>
+
+            <div id="comment-actions-539638" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_539638" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-539638'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-carinetchoutouodjomo bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-539776">
+        <div id="comment-539776" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/carine.tchoutouodjomo">
+                <img alt='Author&#039;s profile photo Carine Tchoutouo Djomo' src='https://avatars.services.sap.com/images/carine.tchoutouodjomo_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Carine Tchoutouo Djomo' href='https://people.sap.com/carine.tchoutouodjomo' rel='external nofollow' class='ds-link ds-user__name ' >Carine Tchoutouo Djomo</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-11-19T11:28:28+00:00"
+                >November 19, 2020 at 11:28 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>You're welcome, Jelena.</p>
+<p>DEV825 will have a greater focus on the roadmap - planned innovations - and also include a system demo about simplified RFC and custom code management setup.</p>
+<p>Kind regards, Carine</p>
+              </div>
+
+            <div id="comment-actions-539776" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_539776" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-539776'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-jan_petersen even thread-even depth-1 ds-blog-post-comment" id="li-comment-540285">
+        <div id="comment-540285" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/jan_petersen">
+                <img alt='Author&#039;s profile photo Jan Braendgaard Petersen' src='https://avatars.services.sap.com/images/jan_petersen_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Jan Braendgaard Petersen' href='https://people.sap.com/jan_petersen' rel='external nofollow' class='ds-link ds-user__name ' >Jan Braendgaard Petersen</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-11-23T13:38:25+00:00"
+                >November 23, 2020 at 1:38 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Great overview, thank you.</p>
+<p>The link for the sign-up seem to be broken?</p>
+              </div>
+
+            <div id="comment-actions-540285" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_540285" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-540285'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-carinetchoutouodjomo bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-541198">
+        <div id="comment-541198" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/carine.tchoutouodjomo">
+                <img alt='Author&#039;s profile photo Carine Tchoutouo Djomo' src='https://avatars.services.sap.com/images/carine.tchoutouodjomo_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Carine Tchoutouo Djomo' href='https://people.sap.com/carine.tchoutouodjomo' rel='external nofollow' class='ds-link ds-user__name ' >Carine Tchoutouo Djomo</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-11-27T18:57:33+00:00"
+                >November 27, 2020 at 6:57 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thank you. I've fixed the link.</p>
+<p>Kind regards, Carine.</p>
+              </div>
+
+            <div id="comment-actions-541198" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_541198" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-541198'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-mohamedyosufdeenjmh even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-543029">
+        <div id="comment-543029" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/mohamedyosufdeenjmh">
+                <img alt='Author&#039;s profile photo Mohamed Yosufdeen JMH' src='https://avatars.services.sap.com/images/mohamedyosufdeenjmh_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Mohamed Yosufdeen JMH' href='https://people.sap.com/mohamedyosufdeenjmh' rel='external nofollow' class='ds-link ds-user__name ' >Mohamed Yosufdeen JMH</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-12-08T14:42:17+00:00"
+                >December 8, 2020 at 2:42 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Unfortunately, not able to add the session "ABAP on SAP Cloud Platform: How to Build and Certify Partner Add-Ons [PAR900]" to the schedule because the waitlist is already full.</p>
+<p>It would be really helpful if the recorded videos are made available later.</p>
+              </div>
+
+            <div id="comment-actions-543029" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_543029" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-543029'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-dezmond06 odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-543033">
+        <div id="comment-543033" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/dezmond06">
+                <img alt='Author&#039;s profile photo Pavel Astashonok' src='https://avatars.services.sap.com/images/dezmond06_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Pavel Astashonok' href='https://people.sap.com/dezmond06' rel='external nofollow' class='ds-link ds-user__name ' >Pavel Astashonok</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-12-08T15:27:21+00:00"
+                >December 8, 2020 at 3:27 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>On-Demand means what? Who should demand it and how? What is the process for on-demand sessions?</p>
+              </div>
+
+            <div id="comment-actions-543033" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_543033" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-543033'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-shais even depth-2 ds-blog-post-comment" id="li-comment-543034">
+        <div id="comment-543034" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/shais">
+                <img alt='Author&#039;s profile photo Shai Sinai' src='https://avatars.services.sap.com/images/shais_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Shai Sinai' href='https://people.sap.com/shais' rel='external nofollow' class='ds-link ds-user__name ' >Shai Sinai</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-12-08T15:29:05+00:00"
+                >December 8, 2020 at 3:29 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>I think it's just their terminology for a recorded replay.</p>
+              </div>
+
+            <div id="comment-actions-543034" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_543034" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-543034'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-boriszarske odd alt depth-2 ds-blog-post-comment" id="li-comment-543047">
+        <div id="comment-543047" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/boris.zarske">
+                <img alt='Author&#039;s profile photo Boris Zarske' src='https://avatars.services.sap.com/images/boris.zarske_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Boris Zarske' href='https://people.sap.com/boris.zarske' rel='external nofollow' class='ds-link ds-user__name ' >Boris Zarske</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-12-08T15:52:47+00:00"
+                >December 8, 2020 at 3:52 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Pavel,</p>
+<p>On-demand means you will be able to access the session recording any time - in contrast to live and scheduled sessions, which you can watch the next two days at the scheduled times. Replays of the pre-recorded sessions of both types will be accessible for 12 months after the event (with the exception of live events, such as workshops and expert Q&amp;A). For more information, please see <a href="https://assets.dm.ux.sap.com/sa_te_materials/faqs_sapteched2020.pdf" rel="nofollow ugc"  target="_blank">this FAQ document</a>.</p>
+<p>Best regards,<br />
+Boris</p>
+              </div>
+
+            <div id="comment-actions-543047" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_543047" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-543047'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-dezmond06 even depth-3 ds-blog-post-comment" id="li-comment-543056">
+        <div id="comment-543056" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/dezmond06">
+                <img alt='Author&#039;s profile photo Pavel Astashonok' src='https://avatars.services.sap.com/images/dezmond06_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Pavel Astashonok' href='https://people.sap.com/dezmond06' rel='external nofollow' class='ds-link ds-user__name ' >Pavel Astashonok</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-12-08T16:42:40+00:00"
+                >December 8, 2020 at 4:42 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thanks, now it's clear.</p>
+              </div>
+
+            <div id="comment-actions-543056" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_543056" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-543056'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-pradeepupadhyay2 odd alt thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-546310">
+        <div id="comment-546310" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/pradeep.upadhyay2">
+                <img alt='Author&#039;s profile photo Pradeep Upadhyay' src='https://avatars.services.sap.com/images/pradeep.upadhyay2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Pradeep Upadhyay' href='https://people.sap.com/pradeep.upadhyay2' rel='external nofollow' class='ds-link ds-user__name ' >Pradeep Upadhyay</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-12-30T02:54:31+00:00"
+                >December 30, 2020 at 2:54 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi, Can we get recorded video of “ABAP on SAP Cloud Platform: How to Build and Certify Partner Add-Ons [PAR900]” session. Thanks</p>
+              </div>
+
+            <div id="comment-actions-546310" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_546310" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-546310'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-carinetchoutouodjomo bypostauthor even depth-2 ds-blog-post-comment" id="li-comment-547558">
+        <div id="comment-547558" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/carine.tchoutouodjomo">
+                <img alt='Author&#039;s profile photo Carine Tchoutouo Djomo' src='https://avatars.services.sap.com/images/carine.tchoutouodjomo_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Carine Tchoutouo Djomo' href='https://people.sap.com/carine.tchoutouodjomo' rel='external nofollow' class='ds-link ds-user__name ' >Carine Tchoutouo Djomo</a> <div class="ds-user__note">Blog Post Author</div> <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2021-01-08T10:10:08+00:00"
+                >January 8, 2021 at 10:10 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Pradeep,</p>
+<p>Unfortunately, no replays are provided for workshop and expert Q6A sessions (e.g. PAR900, DEV260). When available, the replays are accessible for 12 months after the event on the relevant session page. For more information, you can have a look at the <a href="https://assets.dm.ux.sap.com/sa_te_materials/faqs_sapteched2020.pdf" target="_blank" rel="nofollow noopener ugc noreferrer">SAP TechEd in 2020 FAQ document</a>.</p>
+<p>Kind regards,<br />Carine</p>
+              </div>
+
+            <div id="comment-actions-547558" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_547558" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2020/11/18/abap-platform-sessions-at-sap-teched-2020/#comment-547558'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+
+      
+        </div> <!-- main comments content area -->
+
+    
+            
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+                </div> <!-- #main -->
+                <div id="shared_footer" class="dm-container dm-wrapper">
+                    <footer class="dm-footer">
+    <div class="dm-footer__inner-wrapper">
+        <div class="dm-socialmedia">
+            <h5 class="dm-socialmedia__headline" id="hl-sharefollow">Find us on</h5>
+            <ul class="dm-socialmedia__links" aria-labelledby="hl-sharefollow">
+                <li><a href="https://www.facebook.com/sapcommunity" title="Facebook"><span class="dm-icon-encoded--facebook"></span></a></li>
+                <li><a href="https://twitter.com/SAPCommunity" title="Twitter"><span class="dm-icon-encoded--twitter"></span></a></li>
+                <li><a href="https://www.youtube.com/c/SAPCommunities" title="YouTube"><span class="dm-icon-encoded--youtube"></span></a></li>
+                <li><a href="https://www.linkedin.com/company/sap" title="LinkedIn"><span class="dm-icon-encoded--linkedin"></span></a></li>
+                <li><a href="https://instagram.com/sap/" title="Instagram"><span class="dm-icon-encoded--instagram"></span></a></li>
+                <li><a href="http://www.slideshare.net/SAP" title="Slideshare"><span class="dm-icon-encoded--slideshare"></span></a></li>
+                <li><a href="mailto:?subject='SAP Community'" title="Email Share"><span class="dm-icon-encoded--email"></span></a></li>
+            </ul>
+        </div>
+        <nav role="navigation" class="dm-footer__navigation">
+            <ul class="dm-footer__navigation__list" aria-label="footer navigation">
+                <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+                <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+                <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+                <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+                <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+                <li id="teconsent"></li>
+                <li><a href="https://www.sap.com/cmp/nl/sap-community-voice/index.html" target="_blank">Newsletter</a></li>
+                <li><a href="mailto:sapnetwork@sap.com" target="_blank">Support</a></li>
+            </ul>
+        </nav>
+    </div>
+</footer>                </div>
+            </div> <!-- #page -->
+            <script type="application/ld+json" data-schema="1220682-post-Default">{"@context":"https:\/\/schema.org\/","@type":"BlogPosting","@id":"https:\/\/blogs.sap.com\/2020\/11\/18\/abap-platform-sessions-at-sap-teched-2020\/#BlogPosting","mainEntityOfPage":"https:\/\/blogs.sap.com\/2020\/11\/18\/abap-platform-sessions-at-sap-teched-2020\/","headline":"ABAP Platform Sessions at SAP TechEd 2020","name":"ABAP Platform Sessions at SAP TechEd 2020","description":"Hey everyone! SAP TechEd 2020 is just around the corner, and it\u2019s going to be a virtual and free event this time around! SAP TechEd is THE tech conference for anyone (developers, architects, consultants, product","datePublished":"2020-11-18","dateModified":"2020-12-09","author":{"@type":"Person","@id":"https:\/\/blogs.sap.com\/author\/carine.tchoutouodjomo\/#Person","name":"Carine Tchoutouo Djomo","url":"https:\/\/blogs.sap.com\/author\/carine.tchoutouodjomo\/","image":{"@type":"ImageObject","@id":"https:\/\/avatars.services.sap.com\/images\/carine.tchoutouodjomo_small.png","url":"https:\/\/avatars.services.sap.com\/images\/carine.tchoutouodjomo_small.png","height":96,"width":96}},"publisher":{"@type":"Organization","name":"SAP Community Blogs","logo":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","width":600,"height":60}},"image":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","width":100,"height":100},"url":"https:\/\/blogs.sap.com\/2020\/11\/18\/abap-platform-sessions-at-sap-teched-2020\/","about":["Event Information"],"wordCount":3686}</script>
+<script type="application/ld+json" data-schema="Breadcrumb">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"2020","item":"https:\/\/blogs.sap.com\/2020\/#breadcrumbitem"},{"@type":"ListItem","position":2,"name":"11","item":"https:\/\/blogs.sap.com\/2020\/\/11\/#breadcrumbitem"},{"@type":"ListItem","position":3,"name":"18","item":"https:\/\/blogs.sap.com\/2020\/\/11\/\/18\/#breadcrumbitem"},{"@type":"ListItem","position":4,"name":"ABAP Platform Sessions at SAP TechEd 2020","item":"https:\/\/blogs.sap.com\/2020\/11\/18\/abap-platform-sessions-at-sap-teched-2020\/#breadcrumbitem"}]}</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/action-tooltip-handler.js' id='tooltip-handler-js'></script>
+<script type='text/javascript' id='unified_header-js-extra'>
+/* <![CDATA[ */
+var headerInitArgs = {"system":"blogs","wrapperID":"page","breadcrumbItems":[{"text":"Blogs","href":"https:\/\/blogs.sap.com"}]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/js/scn-header.min.js' id='unified_header-js'></script>
+<script type='text/javascript' id='unified_header-js-after'>
+            scnHeader.init(headerInitArgs);
+            setCookie("userArgs", headerInitArgs.user ? JSON.stringify(headerInitArgs.user) : "", { path : "/" });
+    
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/header.js' id='designmate_header_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/subheader.js' id='designmate_subheader_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/designmate.js' id='designmate_script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/comment-reply.min.js' id='comment-reply-js'></script>
+<script type='text/javascript' id='satm_handler-js-extra'>
+/* <![CDATA[ */
+var satmContentSelectors = ["div.dm-contentDetail__body-content","div.dm-list-comments__item-content","div.ds-blog-post__body","div.ds-blog-post-comment__content"];
+var satmProfileBaseUrl = "people.sap.com\/";
+var satmChangeableElementsSelectors = ["div.dm-list-comments__item-content","div.ds-blog-post-comment__content"];
+var satmPluginEnabled = "1";
+var satmApiUrl = "https:\/\/uss.api.community.sap.com";
+var satmApiCallWithCredentials = "1";
+var satmRequestDelayMs = "100";
+/* ]]> */
+</script>
+<script type='text/javascript' defer src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-at-mention/js/sap-at-mention.min.js' id='satm_handler-js'></script>
+<script type='text/javascript' id='sap-comment-validation-js-extra'>
+/* <![CDATA[ */
+var commentValidation = {"validateMaxLinks":"1","max_links_number":"7","BLOGS_PAGE":"single"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/sap-comment-validation.min.js' id='sap-comment-validation-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-post-status.min.js' id='scn_post_status_check-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/jquery-plugins.min.js' id='sap_jquery_plugins-js'></script>
+<script type='text/javascript' id='sap-login-csrf-cookie-js-extra'>
+/* <![CDATA[ */
+var sapLoginCookieConfig = {"cookieName":"SAP_BLOGS_ANONYMOUS_NONCE","sapActionName":"s_action"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-login-csrf-cookie.min.js' id='sap-login-csrf-cookie-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.js' id='sap_lightbox_gallery_js-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/choices.min.js' id='choices.js-js'></script>
+<script type='text/javascript' id='wprc-script-js-extra'>
+/* <![CDATA[ */
+var wprcajaxhandler = {"ajaxurl":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-report-content/static/js/v3/scripts.min.js' id='wprc-script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/single.min.js' id='sap_single_v3-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/onscroll-sticky.min.js' id='onscroll_sticky-js'></script>
+<script type='text/javascript' id='blog-detail-page-js-extra'>
+/* <![CDATA[ */
+var alertReasonsSelectArgs = {"selectId":"sap-blog-alert-reasons","reasons":["Incorrect Tag\/Category\r","Cross-Posting\r","Private Information\r","Unprofessional Conduct\r","Spam"]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/dist/blog-detail.min.js' id='blog-detail-page-js'></script>
+<script type='text/javascript' id='sap_assignedtags_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var assignedTagsWidgetSettings = {"maxItemsBeforeHide":"7","data":{"ABAP Development":"https:\/\/blogs.sap.com\/tags\/833755570260738661924709785639136\/","SAP BTP, ABAP environment":"https:\/\/blogs.sap.com\/tags\/73555000100800001164\/","SAP Fiori":"https:\/\/blogs.sap.com\/tags\/73554900100700000977\/","SAP Fiori Elements":"https:\/\/blogs.sap.com\/tags\/ed5c1ef6-932f-4c19-b2ba-1be375109ff5\/","SAP S\/4HANA":"https:\/\/blogs.sap.com\/tags\/73554900100800000266\/","SAP TechEd":"https:\/\/blogs.sap.com\/tags\/755421404636447943131706525840948\/"},"widgetClassname":".ds-assigned-tags"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/assigned-tags/js/sap-assigned-tags-widget.min.js' id='sap_assignedtags_widget_js_v3-js'></script>
+<script type='text/javascript' id='sap_relatedcontent_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var relatedContentWidgetSettings = {"widgetSelector":".widget_sap-relatedcontent-widget-v3","contentServiceUrl":"https:\/\/content.services.sap.com\/cse\/search\/topic","profileUrl":"https:\/\/people.sap.com","targetContentItem":{"id":1220682,"type":"blogpost","title":"ABAP Platform Sessions at SAP TechEd 2020","primary_tag":"833755570260738661924709785639136"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/related-content/js/sap-related-content-widget.min.js' id='sap_relatedcontent_widget_js_v3-js'></script>
+<div id="wp-load_tinymce-wrap" class="wp-core-ui wp-editor-wrap html-active"><link rel='stylesheet' id='dashicons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dashicons.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='editor-buttons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/editor.min.css' type='text/css' media='all' />
+<style>#wp-load_tinymce-wrap {display:none;}</style>
+<div id="wp-load_tinymce-editor-container" class="wp-editor-container"><div id="qt_load_tinymce_toolbar" class="quicktags-toolbar"></div><textarea class="wp-editor-area" rows="20" cols="40" name="load_tinymce" id="load_tinymce"></textarea></div>
+</div>
+
+<link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/skin.min.css?wp-mce-49110-20201110' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/plugins/codesample/css/prism.css' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/content.min.css?wp-mce-49110-20201110' as='style'>
+		<script type="text/javascript">
+		tinyMCEPreInit = {
+			baseURL: "https://blogs.sap.com/wp-includes/js/tinymce",
+			suffix: ".min",
+						mceInit: {},
+			qtInit: {'load_tinymce':{id:"load_tinymce",buttons:"strong,em,link,block,del,ins,img,ul,ol,li,code,more,close"}},
+			ref: {plugins:"",theme:"modern",language:""},
+			load_ext: function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
+		};
+		</script>
+				<script type="text/javascript">
+		var ajaxurl = "/wp-admin/admin-ajax.php";
+		( function() {
+			var init, id, $wrap;
+
+			if ( typeof tinymce !== 'undefined' ) {
+				if ( tinymce.Env.ie && tinymce.Env.ie < 11 ) {
+					tinymce.$( '.wp-editor-wrap ' ).removeClass( 'tmce-active' ).addClass( 'html-active' );
+					return;
+				}
+
+				for ( id in tinyMCEPreInit.mceInit ) {
+					init = tinyMCEPreInit.mceInit[id];
+					$wrap = tinymce.$( '#wp-' + id + '-wrap' );
+
+					if ( ( $wrap.hasClass( 'tmce-active' ) || ! tinyMCEPreInit.qtInit.hasOwnProperty( id ) ) && ! init.wp_skip_init ) {
+						tinymce.init( init );
+
+						if ( ! window.wpActiveEditor ) {
+							window.wpActiveEditor = id;
+						}
+					}
+				}
+			}
+
+			if ( typeof quicktags !== 'undefined' ) {
+				for ( id in tinyMCEPreInit.qtInit ) {
+					quicktags( tinyMCEPreInit.qtInit[id] );
+
+					if ( ! window.wpActiveEditor ) {
+						window.wpActiveEditor = id;
+					}
+				}
+			}
+		}());
+		</script>
+				<div id="wp-link-backdrop" style="display: none"></div>
+		<div id="wp-link-wrap" class="wp-core-ui" style="display: none" role="dialog" aria-labelledby="link-modal-title">
+		<form id="wp-link" tabindex="-1">
+		<input type="hidden" id="_ajax_linking_nonce" name="_ajax_linking_nonce" value="d98c848450" />		<h3 id="link-modal-title">Insert/edit link</h3>
+		<button type="button" id="wp-link-close"><span class="screen-reader-text">Close</span></button>
+		<div id="link-selector">
+			<div id="link-options">
+				<p class="howto" id="wplink-enter-url">Enter the destination URL</p>
+				<div>
+					<label><span>URL</span>
+					<input id="wp-link-url" type="text" aria-describedby="wplink-enter-url" /></label>
+				</div>
+				<div class="wp-link-text-field">
+					<label><span>Link Text</span>
+					<input id="wp-link-text" type="text" /></label>
+				</div>
+				<div class="link-target">
+					<label><span></span>
+					<input type="checkbox" id="wp-link-target" /> Open link in a new tab</label>
+				</div>
+			</div>
+			<p class="howto" id="wplink-link-existing-content">Or link to existing content</p>
+			<div id="search-panel">
+				<div class="link-search-wrapper">
+					<label>
+						<span class="search-label">Search</span>
+						<input type="search" id="wp-link-search" class="link-search-field" autocomplete="off" aria-describedby="wplink-link-existing-content" />
+						<span class="spinner"></span>
+					</label>
+				</div>
+				<div id="search-results" class="query-results" tabindex="0">
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+				<div id="most-recent-results" class="query-results" tabindex="0">
+					<div class="query-notice" id="query-notice-message">
+						<em class="query-notice-default">No search term specified. Showing recent items.</em>
+						<em class="query-notice-hint screen-reader-text">Search or use up and down arrow keys to select an item.</em>
+					</div>
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="submitbox">
+			<div id="wp-link-cancel">
+				<button type="button" class="button">Cancel</button>
+			</div>
+			<div id="wp-link-update">
+				<input type="submit" value="Add Link" class="button button-primary" id="wp-link-submit" name="wp-link-submit">
+			</div>
+		</div>
+		</form>
+		</div>
+		<script type="text/javascript">jQuery(window).on("load", function() {tinymce.codesampleplugin.Prism.highlightAll();});</script><script type='text/javascript'>_satellite.pageBottom();</script>        </div> <!-- .page-wrapper -->
+    </body>
+</html>

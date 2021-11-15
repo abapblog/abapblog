@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>abap objects | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/abap-objects-2/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:10:38 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Диаграмма классов UML</title>
+		<link>https://abap-blog.ru/osnovy-abap/diagramma-klassov-uml/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/diagramma-klassov-uml/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 12 May 2014 15:06:23 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[abap objects]]></category>
+		<category><![CDATA[UML]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1950</guid>
+
+					<description><![CDATA[<p>При моделировании какой-либо системы, построенной с помощью ООП, широко используется унифицированный язык моделирования UML. Взаимосвязи между классами в такой системе принято отображать в виде диаграммы классов. В данной статье рассмотрены основные взаимосвязи между классами и как они отражаются в ABAP коде. Взаимосвязь — это особый тип логических отношений между сущностями, показанных на диаграммах классов и объектов. Существуют следующие виды [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/diagramma-klassov-uml/">Диаграмма классов UML</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>При моделировании какой-либо системы, построенной с помощью ООП, широко используется унифицированный язык моделирования <a href="http://ru.wikipedia.org/wiki/UML">UML</a>. Взаимосвязи между классами в такой системе принято отображать в виде диаграммы классов. В данной статье рассмотрены основные взаимосвязи между классами и как они отражаются в ABAP коде.</p>
+<p>Взаимосвязь — это особый тип логических отношений между сущностями, показанных на диаграммах классов и объектов.</p>
+<p>Существуют следующие виды взаимосвязей:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/relations1.png"><img loading="lazy" class="size-full wp-image-1959 aligncenter" src="http://abap-blog.ru/wp-content/uploads/2014/05/relations1.png" alt="relations" width="673" height="473" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/relations1.png 673w, https://abap-blog.ru/wp-content/uploads/2014/05/relations1-300x210.png 300w" sizes="(max-width: 673px) 100vw, 673px" /></a></p>
+<p><span id="more-1950"></span></p>
+<h2>1. Обобщения</h2>
+<p>Отношение обобщения — это наследование. Диаграмма с отношением обобщения выглядит как показано на рисунке:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/Обобщение.png"><img loading="lazy" class="size-full wp-image-1961 aligncenter" src="http://abap-blog.ru/wp-content/uploads/2014/05/Обобщение.png" alt="Обобщение" width="143" height="272" /></a></p>
+<p>Класс lcl_person является более общим классом, от которого наследуется класс lcl_student, таким образом наследование отображается с помощью не закрашенного ромбика следующего от наследника.</p>
+<p>В UML классы обозначаются в виде прямоугольников. В верхней части прямоугольника указано имя класса (для абстрактных классов и методов, имя обозначается курсивом), в средней атрибуты, в нижней его методы.</p>
+<p>Для наглядности атрибуты и методы классов помечены квантором видимости, который может принимать следующие значения:</p>
+<ul>
+<li>«+» &#8212; общедоступный атрибут, метод. В описании ABAP класса, находится в области PUBLIC SECTION.</li>
+<li>«-» &#8212; атрибут, метод с закрытой областью видимости. В описании ABAP класса, находится в области PRIVATE SECTION.</li>
+<li>«#» &#8212; атрибут, метод с защищенной областью видимости. В описании ABAP класса, находится в области PROTECTED SECTION.</li>
+</ul>
+<p>Код для этой диаграммы:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_person DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      get_name RETURNING value(rv_name) TYPE string,
+      set_name IMPORTING iv_name TYPE string.
+  PRIVATE SECTION.
+    DATA:
+      gv_name TYPE string.
+ENDCLASS.
+
+CLASS lcl_person IMPLEMENTATION.
+  METHOD get_name.
+    rv_name = me-&gt;gv_name.
+  ENDMETHOD.
+
+  METHOD set_name.
+    me-&gt;gv_name = iv_name.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS lcl_student DEFINITION INHERITING FROM lcl_person FINAL.
+  PUBLIC SECTION.
+    METHODS:
+      get_class RETURNING value(rv_class) TYPE string,
+      set_class IMPORTING iv_class TYPE string.
+  PRIVATE SECTION.
+    DATA:
+      gv_class TYPE string.
+ENDCLASS.
+
+CLASS lcl_student IMPLEMENTATION.
+  METHOD get_class.
+    rv_class = me-&gt;gv_class.
+  ENDMETHOD.
+
+  METHOD set_class.
+    me-&gt;gv_class = iv_class.
+  ENDMETHOD.
+ENDCLASS.</pre><p></p>
+<h2>2. Ассоциации</h2>
+<p>Ассоциации показывают, что объекты одной сущности связаны с объектами другой сущности. Если между двумя классами определена ассоциация, то можно перемещаться от объектов одного класса к объектам другого. Вполне допустимы случаи, когда оба конца ассоциации относятся к одному и тому же классу. Это означает, что с объектом некоторого класса позволительно связать другие объекты из того же класса.</p>
+<h4>2.1. Бинарная и N-арная ассоциация</h4>
+<p>Ассоциация, связывающая два класса, называется бинарной. Можно, хотя это редко бывает необходимым, создавать ассоциации, связывающие сразу несколько классов; они называются n-арными. Графически ассоциация изображается в виде линии (со стрелкой или без неё), соединяющей класс сам с собой или с другими классами.</p>
+<p>Часто при моделировании бывает важно указать, сколько объектов может быть связано посредством одного экземпляра ассоциации. Это число называется кратностью (Multiplicity) роли ассоциации и записывается либо как выражение, значением которого является диапазон значений, либо в явном виде. Указывая кратность на одном конце ассоциации, вы тем самым говорите, что на этом конце именно столько объектов должно соответствовать каждому объекту на противоположном конце. Кратность можно задать равной единице (1), можно указать диапазон: &#171;ноль или единица&#187; (0..1), &#171;много&#187; (0..*), &#171;единица или больше&#187; (1..*). Разрешается также указывать определенное число (например, 3). С помощью списка можно задать и более сложные кратности, например 0 . . 1, 3..4, 6..*, что означает &#171;любое число объектов, кроме 2 и 5&#187;.</p>
+<p>Пример бинарной ассоциации. Предположим, что у студента должен быть пропуск, пропуск обычно имеется только в одном экземпляре. Графически взаимосвязь будет выглядеть так:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/бинарная-ассоциация.png"><img loading="lazy" class="size-full wp-image-1962 aligncenter" src="http://abap-blog.ru/wp-content/uploads/2014/05/бинарная-ассоциация.png" alt="бинарная ассоциация" width="464" height="106" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/бинарная-ассоциация.png 464w, https://abap-blog.ru/wp-content/uploads/2014/05/бинарная-ассоциация-300x68.png 300w" sizes="(max-width: 464px) 100vw, 464px" /></a></p>
+<p>Код диаграммы:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_pass DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      get_id RETURNING value(rv_id) TYPE string.
+  PRIVATE SECTION.
+    DATA:
+      gv_id TYPE string.
+ENDCLASS.
+
+CLASS lcl_pass IMPLEMENTATION.
+  METHOD get_id.
+    rv_id = me-&gt;gv_id.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS lcl_student DEFINITION INHERITING FROM lcl_person FINAL.
+  PUBLIC SECTION.
+    METHODS:
+      get_class RETURNING value(rv_class) TYPE string,
+      set_class IMPORTING iv_class TYPE string,
+      get_pass RETURNING value(ro_pass) TYPE REF TO lcl_pass,
+      set_pass IMPORTING io_pass TYPE REF TO lcl_pass.
+  PRIVATE SECTION.
+    DATA:
+      gv_class TYPE string,
+      go_pass  TYPE REF TO lcl_pass.
+ENDCLASS.
+
+CLASS lcl_student IMPLEMENTATION.
+  METHOD get_class.
+    rv_class = me-&gt;gv_class.
+  ENDMETHOD.
+
+  METHOD set_class.
+    me-&gt;gv_class = iv_class.
+  ENDMETHOD.
+
+  METHOD get_pass.
+    ro_pass = me-&gt;go_pass.
+  ENDMETHOD.
+
+  METHOD set_pass.
+    CHECK io_pass IS BOUND.
+    me-&gt;go_pass = io_pass.
+  ENDMETHOD.
+ENDCLASS.</pre><p>Класс lcl_student имеет поле go_pass, в котором содержится ссылка на объект класса lcl_pass, с помощью метода get_pass мы можем получить этот объект, соответственно взаимосвязь идет от lcl_student к  lcl_pass (направление стрелки).</p>
+<h4>2.2 Агрегации</h4>
+<p>Ранее рассмотренная простая ассоциация между двумя классами отражает структурное отношение между равноправными сущностями, когда оба класса находятся на одном концептуальном уровне и ни один не является более важным, чем другой.</p>
+<p>Специальной формой или частным случаем отношения ассоциации является отношение агрегации, которое, в свою очередь, тоже имеет специальную форму &#8212; отношение композиции.</p>
+<p>Отношение агрегации имеет место между несколькими классами в том случае, если один из классов представляет собой некоторую сущность, включающую в себя в качестве составных частей другие сущности.</p>
+<p>Данное отношение имеет фундаментальное значение для описания структуры сложных систем, поскольку применяется для представления системных взаимосвязей типа «часть-целое».</p>
+<p>Агрегирование является частным случаем ассоциации и изображается в виде простой ассоциации с не закрашенным ромбом со стороны &#171;целого&#187;.</p>
+<p>Пример:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/агрегация2.png"><img loading="lazy" class="size-full wp-image-1965 aligncenter" src="http://abap-blog.ru/wp-content/uploads/2014/05/агрегация2.png" alt="агрегация" width="464" height="151" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/агрегация2.png 464w, https://abap-blog.ru/wp-content/uploads/2014/05/агрегация2-300x97.png 300w" sizes="(max-width: 464px) 100vw, 464px" /></a></p>
+<p>Код (без реализации методов):</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_ faculty DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      add_student IMPORTING io_student TYPE REF TO lcl_student,
+      del_student IMPORTING io_student TYPE REF TO lcl_student.
+  PRIVATE SECTION.
+    DATA:
+      gt_sudents TYPE STANDARD TABLE OF REF TO lcl_student.
+ENDCLASS.
+
+CLASS lcl_ faculty IMPLEMENTATION.
+  METHOD add_student.
+    "...
+  ENDMETHOD.
+  METHOD del_student.
+    "...
+  ENDMETHOD.
+ENDCLASS.</pre><p>В данном примере класс lcl_faculty содержит внутри себя внутреннюю таблицу с обучающимися на факультете студентами (и таким образом их агрегирует) и имеет методы для манипулирования её содержимым. С точки зрения структуры факультет является целым, а студенты его составной частью.</p>
+<h4>2.3. Композиции</h4>
+<p>Композиция — более строгий вариант агрегации. Известна также как агрегация по значению. Композиция имеет жёсткую зависимость времени существования экземпляров класса контейнера и экземпляров содержащихся классов. Если контейнер будет уничтожен, то всё его содержимое будет также уничтожено.</p>
+<p>Графически представляется, как и агрегация, но с закрашенным ромбиком.</p>
+<p>Допустим, у каждого студента есть запись об оценках по предмету, оценки могут храниться до тех пор, пока есть запись о студенте, иначе данные не имеют смысла, таким образом, при удалении записи студента, должны удаляться все записи о его оценках:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/Композиция.png"><img loading="lazy" class="size-full wp-image-1966 aligncenter" src="http://abap-blog.ru/wp-content/uploads/2014/05/Композиция.png" alt="Композиция" width="518" height="223" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/Композиция.png 518w, https://abap-blog.ru/wp-content/uploads/2014/05/Композиция-300x129.png 300w" sizes="(max-width: 518px) 100vw, 518px" /></a></p>
+<p>При удалении студента из системы (факультета), будет вызываться метод clear_evals класса lcl_student, удаляющий все оценки по студенту, после чего состояние системы (факультета) может быть сохранено в БД.</p>
+<h2>3. Реализации</h2>
+<p>Реализация — отношение между двумя элементами модели, в котором один элемент (клиент) реализует поведение, заданное другим (поставщиком). Реализация — отношение целое-часть. Явное выражение реализации в ABAP это реализация классом заданного интерфейса. Графически реализация представляется так же, как и наследование, но с пунктирной линией.</p>
+<p>Изменим слегка наш первый пример, класс lcl_person будет реализовывать интерфейс lif_man с методами get_name и set_name:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/Реализация.png"><img loading="lazy" class="size-full wp-image-1967 aligncenter" src="http://abap-blog.ru/wp-content/uploads/2014/05/Реализация.png" alt="Реализация" width="453" height="96" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/Реализация.png 453w, https://abap-blog.ru/wp-content/uploads/2014/05/Реализация-300x63.png 300w" sizes="(max-width: 453px) 100vw, 453px" /></a></p>
+<p>Код диаграммы:</p><pre class="urvanov-syntax-highlighter-plain-tag">INTERFACE lif_man.
+  METHODS:
+    get_name RETURNING value(rv_name) TYPE string,
+    set_name IMPORTING iv_name TYPE string.
+ENDINTERFACE.
+
+CLASS lcl_person DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES:
+      lif_man.
+    ALIASES:
+      get_name FOR lif_man~get_name,
+      set_name FOR lif_man~set_name.
+  PRIVATE SECTION.
+    DATA:
+      gv_name TYPE string.
+ENDCLASS.
+
+CLASS lcl_person IMPLEMENTATION.
+  METHOD lif_man~get_name.
+    rv_name = me-&gt;gv_name.
+  ENDMETHOD.
+
+  METHOD lif_man~set_name.
+    me-&gt;gv_name = iv_name.
+  ENDMETHOD.
+ENDCLASS.</pre><p></p>
+<h2>3. Зависимости</h2>
+<p>Зависимость (dependency) — это слабая форма отношения использования, при котором изменение в спецификации одного влечёт за собой изменение другого, причём обратное не обязательно. Возникает, например, когда объект выступает в форме параметра или локальной переменной. Зависимость может быть между экземплярами, классами или экземпляром и классом.</p>
+<p>Графически представляется пунктирной стрелкой, идущей от зависимого элемента к тому, от которого он зависит.</p>
+<p>В качестве примера можно рассмотреть случай использования simple alv в локальном классе отчёта:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/зависимости.png"><img loading="lazy" class="size-full wp-image-1968 aligncenter" src="http://abap-blog.ru/wp-content/uploads/2014/05/зависимости.png" alt="зависимости" width="513" height="116" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/зависимости.png 513w, https://abap-blog.ru/wp-content/uploads/2014/05/зависимости-300x67.png 300w" sizes="(max-width: 513px) 100vw, 513px" /></a></p>
+<p>Код:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_report DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS:
+        show_data,
+        get_data.
+  PRIVATE SECTION.
+    CLASS-DATA:
+      gt_data      TYPE spfli_tab.  " Таблица с данными
+ENDCLASS.
+
+CLASS lcl_report IMPLEMENTATION.
+  METHOD get_data.
+    SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_data.
+  ENDMETHOD.
+
+  METHOD show_data.
+    DATA:
+      lo_alv TYPE REF TO cl_salv_table.
+
+    TRY.
+        cl_salv_table=&gt;factory(
+           IMPORTING
+             r_salv_table = lo_alv
+           CHANGING
+             t_table = gt_data ).
+      CATCH cx_salv_msg .
+        MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+    ENDTRY.
+
+    lo_alv-&gt;display( ).
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  lcl_report=&gt;get_data( ).
+  lcl_report=&gt;show_data( ).</pre><p>Локальный класс lcl_report в методе show_data вызывает метод класса cl_salv_table, если описание метода поменяется, необходимо будет изменить так же и lcl_report.</p>
+<p>Подводя итоги можно сказать, что диаграмма классов UML позволяет разработчикам лучше понимать друг друга при проектировании архитектуры системы, вне зависимости от языка программирования.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/diagramma-klassov-uml/">Диаграмма классов UML</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/diagramma-klassov-uml/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Программа генерации UML на основе ABAP классов</title>
+		<link>https://abap-blog.ru/osnovy-abap/programma-generacii-uml-na-osnove-abap-klassov/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/programma-generacii-uml-na-osnove-abap-klassov/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 26 Mar 2013 15:13:21 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[abap objects]]></category>
+		<category><![CDATA[UML]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1290</guid>
+
+					<description><![CDATA[<p>Получить UML представление классов можно воспользовавшись стандартной программой: UML_CLASS_DIAGRAM. Для того чтобы программа заработала, при установке SAP GUI необходимо установить SAP JNet ActiveX компонент: &#160; Программа в действии:</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/programma-generacii-uml-na-osnove-abap-klassov/">Программа генерации UML на основе ABAP классов</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Получить UML представление классов можно воспользовавшись стандартной программой: <strong>UML_CLASS_DIAGRAM</strong>. Для того чтобы программа заработала, при установке SAP GUI необходимо установить SAP JNet ActiveX компонент:</p>
+<p><span id="more-1290"></span></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/03/image001.png"><img loading="lazy" class="alignnone size-full wp-image-1292" src="http://abap-blog.ru/wp-content/uploads/2013/03/image001.png" alt="Установка GUI" width="654" height="501" /></a></p>
+<p>&nbsp;</p>
+<p>Программа в действии:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/03/image002.png"><img loading="lazy" class="alignnone size-full wp-image-1293" src="http://abap-blog.ru/wp-content/uploads/2013/03/image002.png" alt="image002" width="1280" height="968" /></a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/programma-generacii-uml-na-osnove-abap-klassov/">Программа генерации UML на основе ABAP классов</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/programma-generacii-uml-na-osnove-abap-klassov/feed/</wfw:commentRss>
+			<slash:comments>6</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Шаблон прокси</title>
+		<link>https://abap-blog.ru/osnovy-abap/shablon-proksi/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/shablon-proksi/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 04 Feb 2012 06:35:37 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[abap objects]]></category>
+		<category><![CDATA[шаблон прокси]]></category>
+		<category><![CDATA[шаблоны проектирования]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=393</guid>
+
+					<description><![CDATA[<p>Шаблон Proxy (определяет объект-заместитель англ. surrogate иначе -заменитель англ. placeholder) — шаблон проектирования, который предоставляет объект, который контролирует доступ к другому объекту, перехватывая все вызовы (выполняет функцию контейнера). В реальной жизни можно привести следующий пример: сотрудникам одного из подразделений фирмы регулярно требуется получать информацию о том, какого числа бухгалтерия планирует выплатить зарплату. С одной стороны каждый из них может индивидуально и регулярно ездить в бухгалтерию [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-proksi/">Шаблон прокси</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><strong>Шаблон Proxy</strong> (определяет объект-заместитель англ. <em>surrogate</em> иначе -заменитель англ. <em>placeholder</em>) — шаблон проектирования, который предоставляет объект, который контролирует доступ к другому объекту, перехватывая все вызовы (выполняет функцию контейнера).</p>
+<p><span id="more-393"></span></p>
+<p>В реальной жизни можно привести следующий пример: сотрудникам одного из подразделений фирмы регулярно требуется получать информацию о том, какого числа бухгалтерия планирует выплатить зарплату. С одной стороны каждый из них может индивидуально и регулярно ездить в бухгалтерию для выяснения этого вопроса (полагаю такая ситуация не редка во многих организациях). С другой стороны, при приближении планируемой даты подразделение может выбрать одного человека, который будет выяснять эту информацию у бухгалтерии, а в последствии уже все в подразделении могут выяснить эту информацию у него (что значительно быстрее). Вот именно этот человек и будет реализованным «прокси» паттерном, который будет предоставлять специальный механизм доступа к информации из бухгалтерии.</p>
+<h3>Проблема</h3>
+<p>Необходимо управлять доступом к объекту так, чтобы создавать громоздкие объекты «по требованию».</p>
+<h3>Решение</h3>
+<p>Создать суррогат громоздкого объекта. «Заместитель» хранит ссылку, которая позволяет заместителю обратиться к реальному субъекту (объект класса «Заместитель» может обращаться к объекту класса «Субъект», если интерфейсы «Реального Субъекта» и «Субъекта» одинаковы). Поскольку интерфейс «Реального Субъекта» идентичен интерфейсу «Субъекта», так, что «Заместителя» можно подставить вместо «Реального Субъекта», контролирует доступ к «Реальному Субъекту», может отвечать за создание или удаление «Реального Субъекта». «Субъект» определяет общий для «Реального Субъекта» и «Заместителя» интерфейс, так, что «Заместитель» может быть использован везде, где ожидается «Реальный Субъект». При необходимости запросы могут быть переадресованы «Заместителем» «Реальному Субъекту».</p>
+<p><a title="Диаграмма классов шаблона проектирования Proxy" href="http://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D0%B9%D0%BB:Proxy_patt.gif"><img loading="lazy" src="http://upload.wikimedia.org/wikipedia/ru/0/08/Proxy_patt.gif" alt="Диаграмма классов шаблона проектирования Proxy" width="379" height="252" /></a></p>
+<p>Шаблон proxy бывает нескольких видов, а именно:</p>
+<ul>
+<li><strong>Удаленный заместитель</strong> (англ. <em>remote proxies</em>) : обеспечивает связь с «Субъектом», который находится в другом адресном пространстве или на удалённой машине. Так же может отвечать за кодирование запроса и его аргументов и отправку закодированного запроса реальному «Субъекту»,</li>
+<li><strong>Виртуальный заместитель</strong> (англ. <em>virtual proxies</em>): обеспечивает создание реального «Субъекта» только тогда, когда он действительно понадобится. Так же может кэшировать часть информации о реальном «Субъекте», чтобы отложить его создание,</li>
+<li><strong>Копировать-при-записи</strong>: обеспечивает копирование «субъекта» при выполнении клиентом определённых действий (частный случай «виртуального прокси»).</li>
+<li><strong>Защищающий заместитель</strong> (англ. <em>protection proxies</em>): может проверять, имеет ли вызывающий объект необходимые для выполнения запроса права.</li>
+<li><strong>Кэширующий прокси</strong>: обеспечивает временное хранение результатов расчёта до отдачи их множественным клиентам, которые могут разделить эти результаты.</li>
+<li><strong>Экранирующий прокси</strong>: защищает «Субъект» от опасных клиентов (или наоборот).</li>
+<li><strong>Синхронизирующий прокси</strong>: производит синхронизированный контроль доступа к «Субъекту» в асинхронной многопоточной среде.</li>
+<li><strong>Smart reference proxy</strong>: производит дополнительные действия, когда на «Субъект» создается ссылка, например, рассчитывает количество активных ссылок на «Субъект».</li>
+</ul>
+<h2>Преимущества и недостатки от применения</h2>
+<p>Преимущества:</p>
+<ul>
+<li> удаленный заместитель;</li>
+<li> виртуальный заместитель может выполнять оптимизацию;</li>
+<li> защищающий заместитель;</li>
+<li>&#171;умная&#187; ссылка;</li>
+</ul>
+<dl>
+<dt>Недостатки</dt>
+</dl>
+<ul>
+<li>резкое увеличение времени отклика.</li>
+</ul>
+<h2>Сфера применения</h2>
+<p>Шаблон Proxy может применяться в случаях работы с сетевым соединением, с огромным объектом в памяти (или на диске) или с любым другим ресурсом, который сложно или тяжело копировать. Хорошо известный пример применения — объект, подсчитывающий число ссылок.</p>
+<p>Пример реализации на ABAP:</p><pre class="urvanov-syntax-highlighter-plain-tag">" Определяет общий для реального объекта и прокси объекта интерфейс
+INTERFACE lif_math.
+   METHODS:
+      ADD IMPORTING X TYPE F
+                    y TYPE F
+          RETURNING VALUE(Z) TYPE F,
+      sub IMPORTING X TYPE F
+                    y TYPE F
+          RETURNING VALUE(Z) TYPE F,
+      mul IMPORTING X TYPE F
+                    y TYPE F
+          RETURNING VALUE(Z) TYPE F,
+      DIV IMPORTING X TYPE F
+                    y TYPE F
+          RETURNING VALUE(Z) TYPE F.
+ENDINTERFACE.
+
+" Определение реального объекта
+CLASS math DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_math.
+    ALIASES:
+      mul FOR lif_math~mul,
+      sub FOR lif_math~sub,
+      ADD FOR lif_math~ADD,
+      DIV FOR lif_math~DIV.
+ENDCLASS.
+
+CLASS math IMPLEMENTATION.
+  METHOD lif_math~ADD.
+    Z = X + y.
+  ENDMETHOD.
+  METHOD lif_math~sub.
+    Z = X - y.
+  ENDMETHOD.
+  METHOD lif_math~mul.
+    Z = X * y.
+  ENDMETHOD.
+  METHOD lif_math~DIV.
+    Z = X / y.
+  ENDMETHOD.
+ENDCLASS.
+
+" Прокси (заместитель), хранит ссылку которая позволяет 
+" обратиться к реальному субъекту, Так как оба класса 
+" имеют один интерфейс, прокси может всегда быть использован 
+" вместо реального субъекта.
+CLASS proxy DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_math.
+    METHODS:
+      CONSTRUCTOR.
+  PRIVATE SECTION.
+    DATA: go_math TYPE REF TO math.
+ENDCLASS.
+
+CLASS proxy IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+    CREATE OBJECT go_math.
+  ENDMETHOD.
+  " Быстрые операции не требуют обращения к реальному субъекту
+  METHOD lif_math~ADD.
+    Z = X + y.
+  ENDMETHOD.
+  METHOD lif_math~sub.
+    Z = X - y.
+  ENDMETHOD.
+  " Медленные операции требуют обращения к субъекту
+  METHOD lif_math~mul.
+    Z = go_math-&gt;mul( X = X y = y ).
+  ENDMETHOD.
+  METHOD lif_math~DIV.
+    Z = go_math-&gt;div( X = X y = y ).
+  ENDMETHOD.
+ENDCLASS.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-proksi/">Шаблон прокси</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/shablon-proksi/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Шаблон компоновщик</title>
+		<link>https://abap-blog.ru/osnovy-abap/shablon-komponovshhik/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/shablon-komponovshhik/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 21 Jan 2012 20:00:14 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[abap objects]]></category>
+		<category><![CDATA[Composite pattern]]></category>
+		<category><![CDATA[Компоновщик]]></category>
+		<category><![CDATA[шаблоны проектирования]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=249</guid>
+
+					<description><![CDATA[<p>Компоновщик (англ. Composite pattern) — шаблон проектирования, относится к структурным паттернам, объединяет объекты в древовидную структуру для представления иерархии от частного к целому. Компоновщик позволяет клиентам обращаться к отдельным объектам и к группам объектов одинаково. Цель Шаблон определяет иерархию классов, которые одновременно могут состоять из примитивных и сложных объектов, упрощает архитектуру клиента, делает процесс добавления новых видов объекта [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-komponovshhik/">Шаблон компоновщик</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><strong>Компоновщик</strong> (англ. <em>Composite pattern</em>) — шаблон проектирования, относится к структурным паттернам, объединяет объекты в древовидную структуру для представления иерархии от частного к целому. Компоновщик позволяет клиентам обращаться к отдельным объектам и к группам объектов одинаково.</p>
+<p><span id="more-249"></span></p>
+<h2>Цель</h2>
+<p>Шаблон определяет иерархию классов, которые одновременно могут состоять из примитивных и сложных объектов, упрощает архитектуру клиента, делает процесс добавления новых видов объекта более простым.</p>
+<p>Простейшая реализация компоновщика далее в примере:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT z_composite.
+
+" Абстрактный класс
+CLASS lcl_text DEFINITION ABSTRACT.
+  PUBLIC SECTION.
+    METHODS: ADD ABSTRACT IMPORTING io_text TYPE REF TO lcl_text,
+             remove ABSTRACT IMPORTING io_text TYPE REF TO lcl_text,
+             display ABSTRACT.
+ENDCLASS.
+
+" Символ не может содержать внутри себя другие символы
+CLASS lcl_symbol DEFINITION INHERITING FROM lcl_text.
+  PUBLIC SECTION.
+    METHODS: CONSTRUCTOR IMPORTING iv_symbol TYPE char1.
+    METHODS: ADD REDEFINITION,
+             remove REDEFINITION,
+             display REDEFINITION.
+  PRIVATE SECTION.
+    DATA: gv_symbol TYPE char1.
+ENDCLASS.
+*
+CLASS lcl_symbol IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+    super-&gt;constructor( ).
+    gv_symbol = iv_symbol.
+  ENDMETHOD.                    "constructor
+  METHOD ADD. " Класс не является компоновщиком, реализация методов отсутствует.
+  ENDMETHOD.
+  METHOD remove.
+  ENDMETHOD.
+  METHOD display.
+    WRITE gv_symbol.
+  ENDMETHOD.                    "display
+ENDCLASS.                    "lcl_symbol IMPLEMENTATION
+
+" Класс компоновщик включает в себя символы, определяет метод для их вывода
+CLASS lcl_word DEFINITION INHERITING FROM lcl_text.
+  PUBLIC SECTION.
+    METHODS: ADD REDEFINITION,
+             remove REDEFINITION,
+             display REDEFINITION.
+  PRIVATE SECTION.
+    DATA: lt_messages TYPE STANDARD TABLE OF REF TO lcl_text.
+ENDCLASS.                    "lcl_text DEFINITION
+*
+CLASS lcl_word IMPLEMENTATION.
+  METHOD ADD.
+    APPEND io_text TO lt_messages.
+  ENDMETHOD.                    "ADD
+  METHOD remove.
+    DELETE lt_messages WHERE TABLE_LINE EQ io_text.
+  ENDMETHOD.                    "remove
+  METHOD display.
+    DATA: lo_message TYPE REF TO lcl_text.
+    WRITE: / ' '.
+    LOOP AT lt_messages INTO lo_message.
+      lo_message-&gt;display( ).
+    ENDLOOP.
+ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA:
+    lo_word   TYPE REF TO lcl_text,
+    lo_symbol TYPE REF TO lcl_text.
+
+  CREATE OBJECT lo_word TYPE lcl_word.
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'H'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'E'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'L'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'L'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'O'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = ' '.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'W'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'O'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'R'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'L'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'D'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = '!'.
+  lo_word-&gt;add( lo_symbol ).
+
+  lo_word-&gt;display( ).</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-komponovshhik/">Шаблон компоновщик</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/shablon-komponovshhik/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Шаблон одиночка</title>
+		<link>https://abap-blog.ru/osnovy-abap/shablon-odinochka/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/shablon-odinochka/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 16 Jan 2012 10:15:01 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[abap objects]]></category>
+		<category><![CDATA[singleton]]></category>
+		<category><![CDATA[шаблон одиночка]]></category>
+		<category><![CDATA[шаблоны проектирования]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=240</guid>
+
+					<description><![CDATA[<p>Гарантирует, что у класса есть только один экземпляр, и предоставляет к нему глобальную точку доступа. Существенно то, что можно пользоваться именно экземпляром класса, так как при этом во многих случаях становится доступной более широкая функциональность. Например, к описанным компонентам класса можно обращаться через интерфейс, если такая возможность поддерживается языком. Плюсы контролируемый доступ к единственному экземпляру; уменьшение числа имён; допускает уточнение [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-odinochka/">Шаблон одиночка</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Гарантирует, что у класса есть только один экземпляр, и предоставляет к нему глобальную точку доступа. Существенно то, что можно пользоваться именно <em>экземпляром </em>класса, так как при этом во многих случаях становится доступной более широкая функциональность. Например, к описанным компонентам класса можно обращаться через интерфейс, если такая возможность поддерживается языком.</p>
+<p><span id="more-240"></span></p>
+<h2>Плюсы</h2>
+<ul>
+<li>контролируемый доступ к единственному экземпляру;</li>
+<li>уменьшение числа имён;</li>
+<li>допускает уточнение операций и представления;</li>
+<li>допускает переменное число экземпляров;</li>
+<li>бо?льшая гибкость, чем у операций класса.</li>
+</ul>
+<h2>Минусы</h2>
+<ul>
+<li>Глобальные объекты могут быть вредны для объектного программирования, в некоторых случаях приводя к созданию немасштабируемого проекта.</li>
+<li>Усложняет написание модульных тестов и следованию TDD</li>
+</ul>
+<h2>Применение</h2>
+<ul>
+<li>должен быть ровно один экземпляр некоторого класса, легко доступный всем клиентам;</li>
+<li>единственный экземпляр должен расширяться путем порождения подклассов, и клиентам нужно иметь возможность работать с расширенным экземпляром без модификации своего кода.</li>
+</ul>
+<p>Пример реализации на ABAP:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  ztest_singleton_pattern.
+*
+*----------------------------------------------------------------------*
+* CLASS lcl_application DEFINITION
+*----------------------------------------------------------------------*
+CLASS lcl_application DEFINITION CREATE PRIVATE.*
+  PUBLIC SECTION.
+* Cтатический метод возвращающий ссылку на объект одиночку
+    CLASS-METHODS:
+      get_apps_instance
+        RETURNING
+          VALUE(ro_apps) TYPE REF TO lcl_application.*
+    METHODS:
+      set_v_name
+        IMPORTING
+          iv_name TYPE char30,
+      get_v_name
+        RETURNING
+          VALUE(rv_name) TYPE char30.*
+  PRIVATE SECTION.
+* Статическая переменная будет хранить экземпляр класса одиночки
+    CLASS-DATA: lo_apps TYPE REF TO lcl_application.
+    DATA: v_name TYPE char30.
+ENDCLASS.                    "lcl_application DEFINITION
+*
+*
+*----------------------------------------------------------------------*
+* CLASS lcl_application IMPLEMENTATION
+*----------------------------------------------------------------------*
+CLASS lcl_application IMPLEMENTATION.
+*
+* Метод возвращает экземпляр объекта одиночки
+  METHOD get_apps_instance.
+    IF lo_apps IS INITIAL.
+* Создание объекта
+      CREATE OBJECT lo_apps.
+    ENDIF.
+    ro_apps = lo_apps.
+  ENDMETHOD.                    "get_apps_instance
+*
+  METHOD set_v_name.
+    me-&gt;v_name = iv_name.
+  ENDMETHOD.                    "set_v_name
+*
+  METHOD get_v_name.
+    rv_name = me-&gt;v_name.
+  ENDMETHOD.                    "get_v_name
+*
+ENDCLASS.                    "lcl_application IMPLEMENTATION
+*
+*
+START-OF-SELECTION.
+*
+*.Создаем 1-й экземпляр объекта
+  DATA: lo_application TYPE REF TO lcl_application.
+  DATA: lv_result TYPE char30.
+*
+  WRITE: / 'Приложение 1: '.
+* CREATE OBJECT запрещен т.к. создание объекта объявлено как CREATE PRIVATE
+  lo_application = lcl_application=&gt;get_apps_instance( ).
+* Установим имя объекту 
+  lo_application-&gt;set_v_name( 'This is first Object' ).
+  lv_result = lo_application-&gt;get_v_name( ).
+  WRITE: / lv_result.
+  CLEAR lv_result.
+*
+*.Создадим вторую ссылку на объект
+  DATA: lo_2nd_apps TYPE REF TO lcl_application.
+  SKIP 2.
+  WRITE: / 'Второе приложение : '.
+* Вызывая метод получаем ранее созданный объект
+  lo_2nd_apps = lcl_application=&gt;get_apps_instance( ).
+  lv_result = lo_2nd_apps-&gt;get_v_name( ).
+  WRITE: / lv_result.
+  CLEAR lv_result.</pre><p>Оригинальный пример был взят <a href="http://help-abap.zevolving.com/2008/09/abap-object-design-patterns-singleton/">отсюда.</a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-odinochka/">Шаблон одиночка</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/shablon-odinochka/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Шаблон фасад</title>
+		<link>https://abap-blog.ru/osnovy-abap/shablon-fasad/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/shablon-fasad/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 16 Jan 2012 10:05:07 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[abap objects]]></category>
+		<category><![CDATA[Facade]]></category>
+		<category><![CDATA[шаблоны проектирования]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=237</guid>
+
+					<description><![CDATA[<p>Шаблон Facade (Фасад) — Шаблон проектирования, позволяющий скрыть сложность системы путем сведения всех возможных внешних вызовов к одному объекту, делегирующему их соответствующим объектам системы. Проблема Как обеспечить унифицированный интерфейс с набором разрозненных реализаций или интерфейсов, например, с подсистемой, если нежелательно высокое связывание с этой подсистемой или реализация подсистемы может измениться? Решение Определить одну точку взаимодействия с подсистемой — фасадный [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-fasad/">Шаблон фасад</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><strong>Шаблон Facade (Фасад)</strong> — Шаблон проектирования, позволяющий скрыть сложность системы путем сведения всех возможных внешних вызовов к одному объекту, делегирующему их соответствующим объектам системы.</p>
+<p><span id="more-237"></span></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/Facade1.gif"><img loading="lazy" class="alignnone size-full wp-image-238" title="Facade[1]" src="http://abap-blog.ru/wp-content/uploads/2012/01/Facade1.gif" alt="" width="380" height="272" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/Facade1.gif 380w, https://abap-blog.ru/wp-content/uploads/2012/01/Facade1-300x214.gif 300w" sizes="(max-width: 380px) 100vw, 380px" /></a></p>
+<h3>Проблема</h3>
+<p>Как обеспечить унифицированный интерфейс с набором разрозненных реализаций или интерфейсов, например, с подсистемой, если нежелательно высокое связывание с этой подсистемой или реализация подсистемы может измениться?</p>
+<h3>Решение</h3>
+<p>Определить одну точку взаимодействия с подсистемой — фасадный объект, обеспечивающий общий интерфейс с подсистемой и возложить на него обязанность по взаимодействию с её компонентами. Фасад — это внешний объект, обеспечивающий единственную точку входа для служб подсистемы. Реализация других компонентов подсистемы закрыта и не видна внешним компонентам. Фасадный объект обеспечивает реализацию паттерна <a title="Устойчивый к изменениям (страница отсутствует)" href="http://ru.wikipedia.org/w/index.php?title=%D0%A3%D1%81%D1%82%D0%BE%D0%B9%D1%87%D0%B8%D0%B2%D1%8B%D0%B9_%D0%BA_%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F%D0%BC&amp;action=edit&amp;redlink=1">Устойчивый к изменениям</a> (Protected Variations) с точки зрения защиты от изменений в реализации подсистемы.</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  z_np_dp_facade.
+*
+CLASS lcl_data DEFINITION.
+  PUBLIC SECTION.
+    METHODS: CONSTRUCTOR.
+ENDCLASS.                    "lcl_Data DEFINITION
+*
+INTERFACE lif_write.
+  METHODS: write_data.
+ENDINTERFACE.                    "lif_write DEFINITION
+*
+CLASS lcl_write_alv DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_write.
+ENDCLASS.                    "lcl_write_alv DEFINITION
+*
+CLASS lcl_write_log DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_write.
+ENDCLASS.                    "lcl_write_log DEFINITION
+*
+CLASS lcl_facade DEFINITION.
+  PUBLIC SECTION.
+    METHODS: process_report IMPORTING iv_write_type TYPE char1.
+ENDCLASS.                    "lcl_facade DEFINITION
+*
+CLASS lcl_data IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+    WRITE: / 'Получение данных'.
+  ENDMETHOD.                    "constructor
+ENDCLASS.                    "lcl_Data IMPLEMENTATION
+*
+CLASS lcl_write_alv IMPLEMENTATION.
+  METHOD lif_write~write_data.
+    WRITE: / 'Вывод данных в ALV'.
+  ENDMETHOD.                    "lif_write~write_Data
+ENDCLASS.                    "lcl_write_alv IMPLEMENTATION
+*
+CLASS lcl_write_log IMPLEMENTATION.
+  METHOD lif_write~write_data.
+    WRITE: / 'Вывод данных в журнал'.
+  ENDMETHOD.                    "lif_write~write_Data
+ENDCLASS.                    "lcl_write_log IMPLEMENTATION
+*
+CLASS lcl_facade IMPLEMENTATION.
+  METHOD process_report.
+    DATA: lo_data TYPE REF TO lcl_data.
+    CREATE OBJECT lo_data.
+    DATA: lo_write TYPE REF TO lif_write.
+    IF iv_write_type = 'A'.
+      CREATE OBJECT lo_write TYPE lcl_write_alv.
+    ELSE.
+      CREATE OBJECT lo_write TYPE lcl_write_log.
+    ENDIF.
+    lo_write-&gt;write_data( ).
+  ENDMETHOD.                    "process_report
+ENDCLASS.                    "lcl_facade IMPLEMENTATION
+START-OF-SELECTION.
+  DATA: lo_facade TYPE REF TO lcl_facade.
+  CREATE OBJECT lo_facade.
+  lo_facade-&gt;process_report( iv_write_type = 'A' ).</pre><p>Пример реализации был взят <a href="http://help-abap.zevolving.com/2012/01/abap-objects-design-patterns-facade/">отсюда</a>.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-fasad/">Шаблон фасад</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/shablon-fasad/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

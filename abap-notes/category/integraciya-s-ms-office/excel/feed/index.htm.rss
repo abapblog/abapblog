@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Excel | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/integraciya-s-ms-office/excel/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sun, 11 Oct 2020 09:18:35 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Выгрузка в Excel через cl_fdt_xl_spreadsheet</title>
+		<link>https://abap-blog.ru/abap-notes/vygruzka-v-excel-cherez-cl_fdt_xl_spreadsheet/</link>
+					<comments>https://abap-blog.ru/abap-notes/vygruzka-v-excel-cherez-cl_fdt_xl_spreadsheet/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 11 Oct 2020 09:18:35 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5159</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e152f344380315977/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/vygruzka-v-excel-cherez-cl_fdt_xl_spreadsheet/">Выгрузка в Excel через cl_fdt_xl_spreadsheet</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">TRY.
+    SELECT * FROM sflight INTO TABLE @DATA(lt_sflight).
+
+    IF sy-subrc = 0.
+      DATA: it_columns TYPE if_fdt_doc_spreadsheet=&gt;t_column.
+      DATA: lv_head TYPE sflight.
+      DATA(o_desc) = CAST cl_abap_structdescr( cl_abap_structdescr=&gt;describe_by_data( lv_head ) ).
+
+      LOOP AT o_desc-&gt;get_components( ) ASSIGNING FIELD-SYMBOL(&lt;c&gt;).
+        IF &lt;c&gt; IS ASSIGNED.
+          IF &lt;c&gt;-type-&gt;kind = cl_abap_typedescr=&gt;kind_elem.
+            APPEND VALUE #( id           = sy-tabix
+                            name         = &lt;c&gt;-name
+                            display_name = &lt;c&gt;-name
+                            is_result    = abap_true
+                            type         = &lt;c&gt;-type ) TO it_columns.
+          ENDIF.
+        ENDIF.
+      ENDLOOP.
+
+      DATA(lv_bin_data) = cl_fdt_xl_spreadsheet=&gt;if_fdt_doc_spreadsheet~create_document( columns      = it_columns " optional
+                                                                                         itab         = REF #( lt_sflight )
+                                                                                         iv_call_type = if_fdt_doc_spreadsheet=&gt;gc_call_dec_table ).
+      IF xstrlen( lv_bin_data ) &gt; 0.
+        DATA: lv_action TYPE i.
+        DATA: lv_filename TYPE string.
+        DATA: lv_fullpath TYPE string.
+        DATA: lv_path TYPE string.
+
+        cl_gui_frontend_services=&gt;file_save_dialog( EXPORTING
+                                                      default_file_name = 'Excel.xlsx'
+                                                      default_extension = 'xlsx'
+                                                      file_filter       = |Excel-Datei (*.xlsx)\|*.xlsx\|{ cl_gui_frontend_services=&gt;filetype_all }|
+                                                    CHANGING
+                                                      filename          = lv_filename
+                                                      path              = lv_path
+                                                      fullpath          = lv_fullpath
+                                                      user_action       = lv_action ).
+
+        IF lv_action EQ cl_gui_frontend_services=&gt;action_ok.
+          DATA(it_raw_data) = cl_bcs_convert=&gt;xstring_to_solix( EXPORTING iv_xstring = lv_bin_data ).
+          cl_gui_frontend_services=&gt;gui_download( EXPORTING
+                                                    filename     = lv_fullpath
+                                                    filetype     = 'BIN'
+                                                    bin_filesize = xstrlen( lv_bin_data )
+                                                  CHANGING
+                                                    data_tab     = it_raw_data ).
+
+
+        ENDIF.
+      ENDIF.
+    ENDIF.
+  CATCH cx_root INTO DATA(e_text).
+    MESSAGE e_text-&gt;get_text( ) TYPE 'I'.
+ENDTRY.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/vygruzka-v-excel-cherez-cl_fdt_xl_spreadsheet/">Выгрузка в Excel через cl_fdt_xl_spreadsheet</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/vygruzka-v-excel-cherez-cl_fdt_xl_spreadsheet/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Загрузка из Excel через cl_fdt_xl_spreadsheet</title>
+		<link>https://abap-blog.ru/abap-notes/zagruzka-iz-excel-cherez-cl_fdt_xl_spreadsheet/</link>
+					<comments>https://abap-blog.ru/abap-notes/zagruzka-iz-excel-cherez-cl_fdt_xl_spreadsheet/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 11 Oct 2020 09:16:23 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5156</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e152fb34916226445/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/zagruzka-iz-excel-cherez-cl_fdt_xl_spreadsheet/">Загрузка из Excel через cl_fdt_xl_spreadsheet</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">TRY.
+    DATA: lv_rc TYPE i.
+    DATA: it_files TYPE filetable.
+    DATA: lv_action TYPE i.
+
+    cl_gui_frontend_services=&gt;file_open_dialog( EXPORTING
+                                                  file_filter = |xlsx (*.xlsx)\|*.xlsx\|{ cl_gui_frontend_services=&gt;filetype_all }|
+                                                CHANGING
+                                                  file_table  = it_files
+                                                  rc          = lv_rc
+                                                  user_action = lv_action ).
+
+    IF lv_action = cl_gui_frontend_services=&gt;action_ok.
+
+      IF lines( it_files ) &gt; 0.
+        DATA: lv_filesize TYPE w3param-cont_len.
+        DATA: lv_filetype TYPE w3param-cont_type.
+        DATA: it_bin_data TYPE w3mimetabtype.
+
+        cl_gui_frontend_services=&gt;gui_upload( EXPORTING
+                                                filename   = |{ it_files[ 1 ]-filename }|
+                                                filetype   = 'BIN'
+                                              IMPORTING
+                                                filelength = lv_filesize
+                                              CHANGING
+                                                data_tab   = it_bin_data ).
+
+        DATA(lv_bin_data) = cl_bcs_convert=&gt;solix_to_xstring( it_solix = it_bin_data ).
+
+        DATA(o_excel) = NEW cl_fdt_xl_spreadsheet( document_name = CONV #( it_files[ 1 ]-filename )
+                                                   xdocument     = lv_bin_data ).
+
+        DATA: it_worksheet_names TYPE if_fdt_doc_spreadsheet=&gt;t_worksheet_names.
+        o_excel-&gt;if_fdt_doc_spreadsheet~get_worksheet_names( IMPORTING worksheet_names = it_worksheet_names ).
+
+        IF lines( it_worksheet_names ) &gt; 0.
+          DATA(o_worksheet_itab) = o_excel-&gt;if_fdt_doc_spreadsheet~get_itab_for_alv_update( ).
+
+          ASSIGN o_worksheet_itab-&gt;* TO FIELD-SYMBOL(&lt;worksheet&gt;).
+
+          TRY.
+              DATA: o_salv TYPE REF TO cl_salv_table.
+
+              cl_salv_table=&gt;factory( IMPORTING
+                                        r_salv_table   = o_salv
+                                      CHANGING
+                                        t_table        = &lt;worksheet&gt; ).
+
+              o_salv-&gt;get_functions( )-&gt;set_all( abap_true ).
+              o_salv-&gt;get_columns( )-&gt;set_optimize( abap_true ).
+              o_salv-&gt;get_display_settings( )-&gt;set_list_header( 'Worksheet' ).
+              o_salv-&gt;get_display_settings( )-&gt;set_striped_pattern( abap_true ).
+              o_salv-&gt;get_selections( )-&gt;set_selection_mode( if_salv_c_selection_mode=&gt;row_column ).
+
+              LOOP AT o_salv-&gt;get_columns( )-&gt;get( ) ASSIGNING FIELD-SYMBOL(&lt;c&gt;).
+                DATA(o_col) = &lt;c&gt;-r_column.
+                o_col-&gt;set_short_text( || ).
+                o_col-&gt;set_medium_text( || ).
+                o_col-&gt;set_long_text( |{ o_col-&gt;get_columnname( ) }| ).
+              ENDLOOP.
+
+              o_salv-&gt;display( ).
+            CATCH cx_root INTO DATA(e_txt).
+              WRITE: / e_txt-&gt;get_text( ).
+          ENDTRY.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+
+  CATCH cx_root INTO DATA(e_text).
+    MESSAGE e_text-&gt;get_text( ) TYPE 'S' DISPLAY LIKE 'E'.
+ENDTRY.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/zagruzka-iz-excel-cherez-cl_fdt_xl_spreadsheet/">Загрузка из Excel через cl_fdt_xl_spreadsheet</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/zagruzka-iz-excel-cherez-cl_fdt_xl_spreadsheet/feed/</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

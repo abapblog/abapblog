@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>CL_RECA_GUI_F4_POPUP | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_reca_gui_f4_popup/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Wed, 24 Mar 2021 04:52:05 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Удобный выбор значений из внутренних таблиц</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/udobnyj-vybor-znachenij-iz-vnutrennix-tablic/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/udobnyj-vybor-znachenij-iz-vnutrennix-tablic/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 15 Feb 2012 17:45:13 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[Внутренние таблицы]]></category>
+		<category><![CDATA[CL_RECA_GUI_F4_POPUP]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=509</guid>
+
+					<description><![CDATA[<p>Когда Вы сталкиваетесь с задачей предоставить пользователю возможность выбирать одно (или несколько) значений из внутренних таблиц на экране выбора (или на экранах) можно воспользоваться удобным классом-оберткой  CL_RECA_GUI_F4_POPUP, вместо написания например средств поиска. С помощью данного класса мы можем определить заголовок всплывающего окна с данными, фильтры, отображаемые поля, сортировки и многое другое. [crayon-618a19ca8974d323518638/]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/udobnyj-vybor-znachenij-iz-vnutrennix-tablic/">Удобный выбор значений из внутренних таблиц</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Когда Вы сталкиваетесь с задачей предоставить пользователю возможность выбирать одно (или несколько) значений из внутренних таблиц на экране выбора (или на экранах) можно воспользоваться удобным классом-оберткой  <strong>CL_RECA_GUI_F4_POPUP</strong>, вместо написания например средств поиска. С помощью данного класса мы можем определить заголовок всплывающего окна с данными, фильтры, отображаемые поля, сортировки и многое другое.</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zf4_gui_help.
+
+DATA:
+ gt_spfli TYPE spfli_tab,   " Вн. таблица из которой происходит выбор данных
+ gt_res_tab TYPE spfli_tab, " Данные с выбранными значениями
+ go_f4    TYPE REF TO CL_RECA_GUI_F4_POPUP.
+
+PARAMETERS: p_test TYPE spfli-connid.
+
+INITIALIZATION.
+  SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_spfli.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_test.
+  PERFORM get_help.
+
+FORM get_help.
+  FIELD-SYMBOLS: &lt;fs_rec&gt; TYPE spfli.
+  CLEAR gt_res_tab.
+  IF go_f4 IS NOT BOUND.
+    go_f4 = cl_reca_gui_f4_popup=&gt;factort_grid(
+      id_title   = 'Заголовок'  " Заголовок окна
+      if_multi   = abap_false   " Единичный выбор
+      it_f4value = gt_spfli     " Вн. таблица с данными
+    ).
+  ENDIF.
+  go_f4-&gt;display( IMPORTING ET_RESULT = gt_res_tab ).
+  READ TABLE gt_res_tab INDEX 1 ASSIGNING &lt;fs_rec&gt;.
+  CHECK sy-subrc EQ 0 AND &lt;fs_rec&gt; IS ASSIGNED.
+  p_test = &lt;fs_rec&gt;-connid.
+ENDFORM.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/udobnyj-vybor-znachenij-iz-vnutrennix-tablic/">Удобный выбор значений из внутренних таблиц</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/udobnyj-vybor-znachenij-iz-vnutrennix-tablic/feed/</wfw:commentRss>
+			<slash:comments>8</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

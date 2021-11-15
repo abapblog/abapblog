@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+
+<!--[if gte IE 9]>
+<html class="ie" lang="en-US">
+<![endif]-->
+
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar" content="black"/>
+    <title>SAP AS ABAP Developer Edition: Steps to fix DBACOCKPIT and extending your DB space | SAP Blogs</title>
+    <link rel="profile" href="http://gmpg.org/xfn/11"/>
+
+    
+    
+    <!--[if lt IE 9]>
+    <script src="https://blogs.sap.com/wp-content/themes/sap-v3-neo/js/html5.min.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link rel="icon" type="image"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.png" /><link rel="shortcut icon" type="image/x-icon"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.ico" /><link rel="apple-touch-icon" href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/apple-touch-icon.png" /><meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//static.community.services.sap' />
+<link rel='dns-prefetch' href='//assets.adobedtm.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Feed" href="https://blogs.sap.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Comments Feed" href="https://blogs.sap.com/comments/feed/" />
+<meta name="type" content="Blog" /><meta name="description" content="UPDATE: The steps on extending the DB space would not work if you have installed AS ABAP 7.52 SP04. Please refer to https://blogs.sap.com/2019/12/22/resize-ase-database-in-npl-7.52-sp-04/ for the explanation" /><meta name="sm_tech_ids" content="833755570260738661924709785639136,01200314690800000234"/><meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" /><link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; SAP AS ABAP Developer Edition: Steps to fix DBACOCKPIT and extending your DB space Comments Feed" href="https://blogs.sap.com/2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/blogs.sap.com\/res1dx-135\/wp-includes\/js\/wp-emoji-release.min.js"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/style.min.css' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/css/ie.css' type='text/css' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='designmate_styles-css'  href='https://static.community.services.sap/designmate/v3/136/latest/designmate.css' type='text/css' media='all' />
+<link rel='stylesheet' id='designsystem_styles-css'  href='https://static.community.services.sap/community-ds/v1/188/main.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dist/block-library/style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='prism-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/js/tinymce/plugins/codesample/css/prism.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_custom_link_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom//include/css/sap-core-custom.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_lightbox_gallery_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='pt_style_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-primary-tag/css/pt_style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-popular-posts-css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/css/wpp.css' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery.min.js' id='jquery-core-js'></script>
+<script type='text/javascript' id='jquery-core-js-after'>
+if (jQuery !== undefined) {
+                jQuery(window).on("load", function(){
+                    var _wpWindowLoaded = document.createElement("div");
+                    _wpWindowLoaded.setAttribute("class", "hidden");
+                    _wpWindowLoaded.setAttribute("id", "wp_window_loaded");
+                    document.body.appendChild(_wpWindowLoaded);
+                });
+            }
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery-migrate.min.js' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='//assets.adobedtm.com/ccc66c06b30b/d266848b2882/launch-f095fbc32a96.min.js' id='scn_adobe_dtm-js'></script>
+<script type='text/javascript' id='wpp-js-js-extra'>
+/* <![CDATA[ */
+var wpp_params = {"sampling_active":"","sampling_rate":"100","ajax_url":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php","action":"update_views_ajax","ID":"561095","token":"938e4875d9"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/js/wpp.js' id='wpp-js-js'></script>
+<link rel="https://api.w.org/" href="https://blogs.sap.com/wp-json/" /><link rel="alternate" type="application/json" href="https://blogs.sap.com/wp-json/wp/v2/posts/561095" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.sap.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.sap.com/wp-includes/wlwmanifest.xml" /> 
+
+<link rel="canonical" href="https://blogs.sap.com/2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space/" />
+<link rel='shortlink' href='https://blogs.sap.com/?p=561095' />
+<script type="text/javascript">var ajaxurl = "https://blogs.sap.com/wp-admin/admin-ajax.php";var likePostLabel = "Like";var unLikePostLabel = "Liked";var likeCommentLabel = "Like";var unLikeCommentLabel = "Liked";</script>    <!--[if IE ]>
+    <link rel="stylesheet" id="scn-ie-styles" href="https://blogs.sap.com/wp-content/themes/sap-v3-neo/css/ie.css"
+          type="text/css" media="all">
+    <link id="ids-popup-css" href="https://accounts.sap.com/universalui/shared/stylesheets/idsPopup.css"
+          rel="stylesheet"
+          type="text/css">
+    <![endif]-->
+
+
+</head>
+
+<body class="post-template-default single single-post postid-561095 single-format-standard custom-font-enabled">
+
+
+<div class="page-wrapper">
+<b class="cn-accessibility"><a href="#main" tabindex="0" accesskey="S">Skip to Content</a></b>
+<div id="page" class="hfeed site">
+
+<header id="masthead" class="blogs-nav sap-header">
+    <header id="comm-hdr-Header" role="masthead"><div class="dm-header"><div class="dm-header__inner"><div class="dm-header__logo-wrapper"><a class="dm-logo--header" href="http://www.sap.com/" title="SAP"></a></div><nav id="comm-hdr-Navigation" class="dm-mainNav"><div class="dm-mobileSearch"><form class="dm-header__search-form" action=""><div class="dm-search-container dm-input dm-search__input"><label class="dm-input__box" aria-label="search SAP Community"><input class="dm-input__control" placeholder="Search SAP Community" name="filter-search" type="search" required="" aria-label="type here to search"><button class="dm-search__button dm-search__button-clear" type="reset" role="button" title="Reset Search"><span class="dm-search__buttonIcon dm-icon-encoded--close" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" role="button" title="Search SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form></div><ul class="dm-mainNav__menu dm-mainNav__menu--withGroups" role="menubar"><li class="dm-header__homeItem" role="none"><a class="dm-header__homeItem-link" role="menuitem" aria-label="Community Home" target="_self" href="https://community.sap.com">Community</a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/topics" aria-label="" aria-haspopup="false" role="menuitem">Topics<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://groups.sap.com" aria-label="Groups. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Groups<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://answers.sap.com/index.html" aria-label="Answers. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Answers<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://blogs.sap.com" aria-label="Blogs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Blogs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/events" aria-label="Events. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Events<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/programs" aria-label="Programs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Programs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources" aria-label="Resources. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Resources<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources/what-is-new" aria-label="" aria-haspopup="false" role="menuitem">What's New<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li></ul></nav><ul class="dm-header__actions"><li id="comm-hdr-Search" class="dm-header__actions-item dm-headerSearch"><a class="dm-search-action dm-icon-encoded dm-header__search-icon" aria-label="Search the SAP Community" href="#" role="button" aria-expanded="false" title="Search"></a><div class="dm-headerSearch__wrapper"><form class="dm-searchdropdown dm-align-center" action=""><div class="dm-search__input dm-input" role="search"><label class="dm-input__box" aria-label="search the SAP community"><input class="dm-input__control" placeholder="Search the SAP Community" name="filter-search" aria-label="type here to search" type="input"><button class="dm-search__button dm-search__button-clear" type="reset" title="Reset"><span class="dm-search__buttonIcon dm-icon-encoded--clear" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" title="Search the SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form><a class="dm-headerSearch__closeButton" type="submit" role="button" title="Close search input" href="javascript:void(0);"><span class="dm-icon-encoded dm-icon-encoded--close" role="img" aria-label="Close search input"></span></a></div></li><li id="comm-hdr-Authentication" class="dm-header__actions-item dm-header__account"><a id="comm-hdr-SignIn" class="dm-user__login-button--wrapper" aria-haspopup="true" aria-expanded="false" role="button" href="#" title="Log In" rel="IDS_login"><div id="comm-hdr-AnonymousIcon" class="dm-icon-encoded dm-icon-encoded--account dm-hidden" aria-label="click here to login"></div><div id="comm-hdr-Avatar" class="dm-user dm-header__avatar"><img class="dm-header__avatar-image dm-hidden" data-src="" src="" width="24px" height="24px"><span class="dm-header__notifications dm-hidden js-notification-indicator"></span></div></a><ul id="comm-hdr-UserProfileMenu" class="dm-header__actionsSubMenu dm-profileFlyoutMenu dm-profileMenuDropdown" role="menu" aria-label="drop down menu of people profile"><li class="dm-profileMenu__userData"><div id="comm-hdr-Username" class="dm-profileMenu__userName"></div><div id="comm-hdr-Email" class="dm-profileMenu__userEmail"></div><a id="comm-hdr-SubMenuTitleLink" class="dm-link" href="#">Manage my Account</a></li><li id="comm-hdr-ProfileMenuTopSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li id="comm-hdr-ProfileMenuMiddleSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li class="dm-profileMenu__section"><ul class="dm-profileMenu__list dm-profileMenu__logout"><li class="dm-profileMenu__item"><a id="comm-hdr-LogOut" class="dm-button dm-button--secondary" href="#" role="button"><span class="dm-button-text">Logout</span></a></li></ul></li></ul></li><li class="dm-header__actions-item dm-header__mobileMenu"><a id="comm-hdr-MobileMenuBtn" class="dm-mobileMenuButton" aria-label="Search SAP community"><span class="dm-icon-encoded dm-icon-encoded--mobile-menu"></span><span style="display:none;">Search</span></a></li></ul></div></div></header><div class="announcements" role="menubar"></div><div class="dm-wrapper dm-subheader dm-subheader--wrapper  dm-user--unauthenticated "><div class="dm-grid"><div class="dm-breadcrumb dm-user--unauthenticated" role="menubar">
+    <ul class="dm-breadcrumb-nav" role="navigation" aria-label="breadcrumb navigation to trace the path back to original landing point">
+        
+        <li><a id="comm-shdr-breadcrumb-home" href="https://www.sap.com" title="Home">Home</a></li>
+        
+        <li><a id="comm-shdr-breadcrumb-community" href="https://community.sap.com" title="Community">Community</a></li>
+        
+    </ul>
+    <ul class="dm-breadcrumb-actions" role="menu">
+        
+        <li><a id="comm-shdr-AskQuestion" href="https://answers.sap.com/questions/ask.html" title="Ask a Question">Ask a Question</a></li>
+        
+        <li><a id="comm-shdr-WriteBlogPost" href="https://blogs.sap.com/wp-admin/post-new.php" title="Write a Blog Post">Write a Blog Post</a></li>
+        
+        <li class="dm-user__login-button--wrapper"><a class="dm-button-small dm-button--primary" role="button" rel="IDS_login" aria-label="Login or Sign up. Click here to log in or sign up"><span class="dm-button-text">Login / Sign-up</span></a></li>
+        <li class="dm-breadcrumb-actions__dropdown">
+            <span id="comm-shdr-actions-opener" class="dm-breadcrumb-actions__dropdown-toggle" title="Community actions">
+                 <span class="dm-icon-encoded dm-icon-encoded--3dots"></span>
+            </span>
+            <ul id="comm-shdr-user-actions-ul" class="dm-breadcrumb-actions__dropdown-menu" role="menu">
+            </ul>
+        </li>
+    </ul>
+</div>
+</div></div>    <!-- #site-navigation -->
+
+</header>
+
+<!-- #masthead -->
+<div id="main" tabindex="0" class="wrapper">
+
+
+
+
+<div class="ds-blog-post-detail">
+<div class="ds-flexGrid">
+  <div class="ds-flexRow">
+    <div class="ds-flexCol">
+            <div class="ds-content-wrapper ds-blog-post__content-wrapper">
+        <h6 class="ds-heading ds-heading--xs ds-blog-post__sub-title"><span>Technical Articles</span></h6>
+        <div class="ds-flexRow">
+          <div class="ds-flexCol-sm-12 ds-flexCol-md-9">
+            
+<div class="ds-blog-post__body-wrapper">
+  <div class="ds-blog-post__content">
+    <div class="ds-blog-post__header-wrapper">
+      <a target="_blank" rel="noopener noreferrer" href="https://people.sap.com/alban_leong" class="ds-blog-post__avatar "  >
+        <img alt='Author&#039;s profile photo Alban Leong' src='https://avatars.services.sap.com/images/alban_leong.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />      </a>
+      <div class="ds-blog-post__author-info-wrapper">
+        <div class="ds-user ds-blog-post__author">
+          <a class="ds-link ds-user__name " href="https://people.sap.com/alban_leong" target="_blank" title="Alban Leong" aria-label="" rel="noopener noreferrer">Alban Leong</a>
+                  </div>
+        <div class="ds-blog-post__meta-info">
+          <span class="ds-blog-post__date">October 12, 2017</span>
+          <span class="ds-blog-post__read-duration">5 minute read</span>
+        </div>
+      </div>
+    </div>
+    <h1 class="ds-heading ds-heading--m ds-blog-post__title">SAP AS ABAP Developer Edition: Steps to fix DBACOCKPIT and extending your DB space</h1>
+    <div class="ds-blog-post__social-stats-wrapper">
+      <div class="ds-social-stats ">
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--comments"></i>10        </span>
+        <span id="post-likes-counter" class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--likes-outline"></i>13        </span>
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--views"></i>4,141        </span>
+      </div>
+          </div>
+    <div class="ds-blog-post__body ds-editor-content">
+      <p><strong>UPDATE:</strong> The steps on extending the DB space would not work if you have installed AS ABAP 7.52 SP04. Please refer to <a href="https://blogs.sap.com/2019/12/22/resize-ase-database-in-npl-7.52-sp-04" >https://blogs.sap.com/2019/12/22/resize-ase-database-in-npl-7.52-sp-04</a>/ for the explanation why and the how-to for this release.</p>
+<p>First of all, having SAP provide these Developer Edition ABAP servers for FREE is an absolute blessing! I&#8217;m sure the entire community is absolutely grateful and appreciate it &#8211; <strong>I know I am!</strong></p>
+<p>Here&#8217;s the link to download the ABAP servers and there are also links to guides on how to install found on the same page, if you don&#8217;t already know &#8211; <a href="https://tools.hana.ondemand.com/#abap"  target="_blank" >https://tools.hana.ondemand.com/#abap</a></p>
+<p>Anyway, I did notice a couple of issues when I first installed these instances with DBACOCKPIT and would like to share some of the fixes that I&#8217;ve done to my local instance. I&#8217;ve had these fixes &#8216;documented&#8217; for a while but didn&#8217;t have the time to publish them. But, here they are and I hope these will be useful to others too.</p>
+<p>The steps below should be applicable to both the 750 SP02 and 751 SP02 versions.</p>
+<p><strong>DISCLAIMER:</strong> I am not a SAP Basis resource nor a SAP DBA, these steps below somehow worked for me and I certainly cannot guarantee that they will work for you too. <strong>Proceed at your own risk</strong> (especially the part about extending the DB)! I can not be held responsible if any of these steps below made your system unusable. <strong>If you agree, you may proceed.</strong></p>
+<p>&nbsp;</p>
+<h2>Error when executing transaction DBACOCKPIT</h2>
+<p><strong>ISSUE:</strong> If you run transaction <strong>DBACOCKPIT</strong> after installing the server, you might notice the error messages below. I believe that&#8217;s because the password for the user &#8216;sapsa&#8217; was changed to the master password that we entered during installation and needs to be updated in the system.</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/login-failed-BDAcockpit.png" data-index="1" data-id="plbox-561095" /></p>
+<p><strong>SOLUTION: </strong></p>
+<p><strong>Step 1</strong>: Switch to the SAPGUI version of the DBACOCKPIT</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/switch_to_gui_version.png" data-index="2" data-id="plbox-561095" /></p>
+<p><strong>Step 2</strong>: Navigate to <strong>System Landscape -&gt; Database Connections -&gt;</strong> Then drop-down on the folder <strong>SAP ASE</strong> and select the node <strong>+++SYBADM</strong>.</p>
+<p>If you click on the &#8220;<strong>Test</strong>&#8221; button before changing your username and password, you might see this error message below.</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/error_when_test_dbacockpit.png" data-index="3" data-id="plbox-561095" /></p>
+<p>So, go ahead and click on the button <strong>&#8216;Change User Credentials&#8217;</strong> and enter the following:</p>
+<p><strong>Username:</strong> <em>sapsa</em><br />
+<strong>Password:</strong> <em>&lt;your master password&gt;</em> &#8221; The password you entered when prompted when installing the ABAP server</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/change_user_credential.png" data-index="4" data-id="plbox-561095" /></p>
+<p>&nbsp;</p>
+<p><strong>Step 3</strong>: Validate that the username + password now works by clicking on the <strong>&#8216;Test&#8217;</strong> button</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/run_test.png" data-index="5" data-id="plbox-561095" /></p>
+<p>That&#8217;s it! Now, if you restart the <strong>DBACOCKPIT</strong> transaction again, you no longer get the error messages that you saw earlier.</p>
+<h2></h2>
+<h2>Errors in DBACOCKPIT periodic jobs</h2>
+<p>Now, if you&#8217;ve fixed the issue above, you should now be able to go into DBACOCKPIT and explore around. Then, I noticed another issue&#8230;</p>
+<p><strong>ISSUE</strong>: Data Collector and other periodic jobs are getting some sort of authentication errors as well.</p>
+<p>Go to the tab <strong>&#8216;Database NPL&#8217;</strong>, then click on the dropdown <strong>&#8216;Configuration&#8217; -&gt; DBA Cockpit Framework -&gt; Data Collectors and Admin Procedures</strong></p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/navigate_to_data_collector.png" data-index="6" data-id="plbox-561095" /></p>
+<p>Look at the &#8216;Errors&#8217; column and select on one of the rows with Errors on it.</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/sap_data_collection_errors-1.png" data-index="7" data-id="plbox-561095" /></p>
+<p>And I saw the error entries below&#8230;</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/sap_data_collection_errors_log.png" data-index="8" data-id="plbox-561095" /></p>
+<p><strong>SOLUTION:</strong> After some Googling around, looks like we just need to drop and recreate the extern login for SYB_JSTASK.</p>
+<p>For this, go to the virtual machine and run XTERM and execute the following commands.</p>
+<ol>
+<li>Switch over to user SYBNPL and enter your master password when prompted &#8211; <span style="color: #000080"><strong>su sybnpl</strong></span></li>
+<li>Then, login to the DB with isql &#8211; <span style="color: #000080"><strong>isql -SNPL -Usapsa -X</strong></span></li>
+<li>Enter password when prompted &#8211; <strong><span style="color: #000080">&lt;master password&gt; </span></strong></li>
+</ol>
+<p>Then, let&#8217;s validate to make sure that there is indeed a login for SYB_JSTASK set up in the system. To do this, execute the following commands</p>
+<ol>
+<li><span style="color: #000080"><strong>&gt; use master</strong></span></li>
+<li><span style="color: #000080"><strong>&gt; go</strong></span></li>
+<li><span style="color: #000080"><strong>&gt; sp_helpexternlogin</strong></span></li>
+<li><span style="color: #000080"><strong>&gt; go</strong></span></li>
+</ol>
+<p>You should see a return of at least 1 row with the Server SYB_JSTASK and Login/Externlogin with sapsa. Now, let&#8217;s fix the issue by dropping the Externlogin and re-creating it again.</p>
+<p>We execute <strong>sp_dropexternlogin </strong>to drop it.</p>
+<ol>
+<li><span style="color: #000080"><strong>&gt; exec sp_dropexternlogin SYB_JSTASK, sapsa</strong></span></li>
+<li><span style="color: #000080"><strong>&gt; go</strong></span></li>
+</ol>
+<p>You should then see a message that says &#8216;Remote login/alias dropped.&#8217;</p>
+<p>Finally, we execute <strong>sp_addexternlogin</strong> to recreate it again</p>
+<ol>
+<li><span style="color: #000080"><strong>&gt; exec sp_addexternlogin SYB_JSTASK, sapsa, sapsa, &#8216;&lt;master password&gt;&#8217;</strong></span></li>
+<li><span style="color: #000080"><strong>&gt; go</strong></span></li>
+</ol>
+<p>And that&#8217;s it. If you have followed the steps above, you should get a similar screen as below.</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/fix_data_collector_job_error-1.png" data-index="9" data-id="plbox-561095" /></p>
+<p>And now, if you go back into <strong>DBACOCKPIT</strong> and monitor the logs of the periodic jobs again, you should now see success entries instead of the error logs. <em>Refer to the green arrows below.</em></p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/sap_data_collection_error_fixed.png" data-index="10" data-id="plbox-561095" /></p>
+<p><strong>Success!</strong></p>
+<p>&nbsp;</p>
+<h2><span style="text-decoration: underline">OPTIONAL</span>: Add more space to database NPL by extending it</h2>
+<p>While browsing around <strong>DBACOCKPIT</strong>, I also noticed that the free space for database <strong>NPL</strong> is pretty limited. <em>There&#8217;s about 3GB of free space left for the delivered AS ABAP 751 SP02 instance.</em></p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/extend_SAP_NPL_database_003.png" data-index="11" data-id="plbox-561095" /></p>
+<p>You can find the screen-shot above in <strong>DBACOCKPIT</strong> if you click to <strong>&#8216;Database NPL&#8217;</strong> tab, then <strong>Performance -&gt; Dashboard</strong> and look under<strong> Space Usage.</strong></p>
+<p><strong>This step is completely optional.</strong> 3GB should really be sufficient for a lot of the POCs or test development that I want to perform but I wanted to see if I could extend / add more space to this database. If you do too, you can follow the steps below, but please make sure that your virtual machine has enough free space to be allocated to the database. I am going to extend the database by another 10GB of space.</p>
+<p>You need to be in the virtual machine and also be running XTERM to execute the steps below:</p>
+<ol>
+<li>Switch over to user SYBNPL and enter your master password when prompted &#8211; <strong>su sybnpl</strong></li>
+<li>Then, login to the DB with isql &#8211; <strong>isql -SNPL -Usapsa -X</strong></li>
+<li>Enter password when prompted &#8211; <strong>&lt;master password&gt;</strong></li>
+<li><strong>&gt; use master</strong></li>
+<li><strong>&gt; go</strong></li>
+<li><strong>&gt; disk init name = &#8216;NPL_data_002&#8217;, physname = &#8216;/sybase/NPL/sapdata_1/NPL_data_002.dat&#8217;, skip_alloc = true, size = &#8216;10240M&#8217;</strong></li>
+<li><strong>&gt; go</strong></li>
+<li><strong>&gt; alter database NPL on NPL_data_002 =&#8217;10240M&#8217;</strong></li>
+<li><strong>&gt; go </strong></li>
+</ol>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/extend_SAP_NPL_database_002.png" data-index="12" data-id="plbox-561095" /></p>
+<p>Done! Now, let&#8217;s head back into DBACOCKPIT and see what we&#8217;ve done there.</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/extend_SAP_NPL_database-1.png" data-index="13" data-id="plbox-561095" /></p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/extended_sap_database_npl.png" data-index="14" data-id="plbox-561095" /></p>
+<p>Ahhh.. now that&#8217;s better!</p>
+<p>That&#8217;s all folks!<strong> Good luck!</strong></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+    </div>
+  </div>
+  <div class="ds-blog-post__social-side-bar">
+    <div class="ds-sticky-on-scroll ">
+      <div class="ds-sticky-on-scroll__wrapper  ">
+        <div class="ds-sticky-on-scroll__content">
+          <div class="ds-blog-post__social-actions">
+            <button class="sap-button-follow ds-button ds-button--primary ds-blog-post__social-action ds-blog-post__social-action--follow" id="sap-button-follow-hdr-id" onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2017%2F10%2F12%2Fsap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space%2F%3Fs_action%3Dss_change_follow_status%26nonce%3D705a693f83'" rel="IDS_login"  type="button" data-content-type="blogpost" data-content-id="561095" data-nonce="705a693f83" title="Please log into the system to use follow/unfollow functionality."><span class="ds-button-text">Follow</span></button>            <button type='button' class='ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action likes-post-link dolike ' rel='IDS_login' onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2017%2F10%2F12%2Fsap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space%2F%3Fs_action%3Dss_change_like_status%26nonce%3D580b46d63f'" title='Like' data-nonce='580b46d63f' data-post-id='561095'><i class='ds-icon ds-icon--likes-outline ds-icon--regular ds-m-r-xs' tabindex='-1'></i><span class='ds-button-text'>Like</span></button>            <button type="button" class="ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action" title="RSS Feed" onclick="location.href='https://blogs.sap.com/2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space/feed/'">
+              <i class="ds-icon ds-icon--rss-feed ds-icon--regular ds-m-r-xs" tabindex="-1"></i>RSS Feed
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+            <div class="ds-blog-post__social-row">
+              <div class="ds-blog-post__social-icons">
+                <a href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.sap.com%2F2017%2F10%2F12%2Fsap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space%2F' title='Share on Facebook' target='_blank'><span class='ds-social-icon ds-social-icon--dark-facebook'></span></a><a href='https://twitter.com/share?url=https%3A%2F%2Fblogs.sap.com%2F2017%2F10%2F12%2Fsap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space%2F&text=SAP+AS+ABAP+Developer+Edition%3A+Steps+to+fix+DBACOCKPIT+and+extending+your+DB+space' title='Share on Twitter' target='_blank'><span class='ds-social-icon ds-social-icon--dark-twitter'></span></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.sap.com%2F2017%2F10%2F12%2Fsap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space%2F&title=SAP+AS+ABAP+Developer+Edition%3A+Steps+to+fix+DBACOCKPIT+and+extending+your+DB+space' title='Share on LinkedIn' target='_blank'><span class='ds-social-icon ds-social-icon--dark-linkedin'></span></a>              </div>
+              <div class='ds-tooltip__wrapper'>
+    <div class='ds-tooltip__anchor'>
+    <button
+      type="button"
+      class="ds-button ds-button--secondary ds-blog-post__alert-moderator-button ds-button--disabled"
+      aria-label="Alert Moderator"
+      data-toggle="collapse"
+      data-hide-class="ds-collapse"
+      data-triggers=".alertModerator"
+      aria-expanded="false">Alert Moderator
+    </button>
+    </div>
+    <div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Alerting is not available for unauthorized users</div>
+</div>
+            </div>
+            
+  <div class="wprc-content-v3">
+    <div class="ds-blog-post-form ds-blog-post__alert-moderator-form ds-collapse alertModerator wprc-form-v3" data-toggle="collapseComponent" data-name="alertModerator">
+          </div>
+  </div>
+          </div>
+          <div class="ds-blog-post__right-side-bar ds-flexCol-sm-12 ds-flexCol-md-3">
+            <div id="sapassignedtagswidget-v3-2" class="ds-side-bar-widget ds-assigned-tags ds-m-b-l"><h3 class="ds-side-bar-widget__heading">Assigned Tags</h3></div><div id="sap-relatedcontent-widget-v3-2" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Similar Blog Posts<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="blogpost" data-limit="3"></ul></div></div><div id="sap-relatedcontent-widget-v3-3" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Related Questions<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="question" data-limit="3"></ul></div></div>          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="content-lightbox-modal"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="plbox-561095"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="plbox-561095" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/login-failed-BDAcockpit.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/switch_to_gui_version.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/error_when_test_dbacockpit.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/change_user_credential.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/run_test.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/navigate_to_data_collector.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/sap_data_collection_errors-1.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/sap_data_collection_errors_log.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/fix_data_collector_job_error-1.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/sap_data_collection_error_fixed.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/extend_SAP_NPL_database_003.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/extend_SAP_NPL_database_002.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/extend_SAP_NPL_database-1.png" alt=""/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/extended_sap_database_npl.png" alt=""/></div><a class="lightbox-gallery-button--prev ds-lightbox__gallery-button ds-icon ds-icon--arrow-left" href="javascript:void(0);" aria-label="Show previous image"></a><a class="ds-lightbox__gallery-button lightbox-gallery-button--next ds-icon ds-icon--arrow-right" href="javascript:void(0);" aria-label="Show next image"></a></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>
+  <div class="ds-blog-post__comment-section">
+    <div class="ds-flexGrid">
+      <div class="ds-flexRow">
+        <div class="ds-flexCol-12 ds-flexCol-md-10 ds-flexCol-lg-10">
+          
+<div id="comments" class="ds-blog-post-comments">
+  
+      <div class="ds-blog-post-comments__counter" title="Number of Comments">
+      10 Comments      </div>
+              <div class="dm-section dm-align-center dm-section-header__title" title="Please log on to comment" aria-role="alert">
+                You must be <a href="https://blogs.sap.com/wp-login.php?redirect_to=2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space" class="opener js-idspopup" rel="IDS_login" title="Log On">Logged on</a> to comment or reply to a post.
+        </div>
+      
+    <div class="ds-blog-post-comments__list">
+              <div class="comment byuser comment-author-alexli even thread-even depth-1 ds-blog-post-comment" id="li-comment-394668">
+        <div id="comment-394668" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/alex.li">
+                <img alt='Author&#039;s profile photo Alex Li' src='https://avatars.services.sap.com/images/alex.li_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Alex Li' href='https://people.sap.com/alex.li' rel='external nofollow' class='ds-link ds-user__name ' >Alex Li</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2017-10-13T01:30:22+00:00"
+                >October 13, 2017 at 1:30 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Good share. Add my two cents:</p>
+<p>I'd like to do the two configuration changes for the database when setting up the DEMO server.</p>
+<p>1. Enlarge the memory of ASE database.</p>
+<p>This is controlled by ASE parameter "max memory", I'd like to set to 45% of memory of the virtual machine. e.g. if my VM memory is 8192MB then it will be 3686MB. Notice that the parameter is using 2KB as unit, so the actual value to be configured is:</p>
+<p>8192 * 45% * 1024 / 2 = 1887436</p>
+<p>Then login ASE DB with user sybnpl with isql:</p>
+<p>isql -X -W999 -SNPL -Usapsa -P&lt;master password&gt;</p>
+<p>sp_configure "max memory", 1887436</p>
+<p>go</p>
+<p>-&gt; This is a static parameter so you have to reboot ASE DB to take effect.</p>
+<p>2. Enlarge the number of user connections of ASE DB.</p>
+<p>After I installed the DEMO system I also notice that the default value of the "number of user connections" parameter is set too small (only 25) for AS ABAP application server. If I increase the number of work processes, then I got database related shortdumps to address this as well.</p>
+<p>This is controlled by ASE parameter "number of user connections". It is a dynamic parameter, just set to 500 then usually you don't need to worry about it.</p>
+<p>Then login ASE DB with user sybnpl with isql:</p>
+<p>isql -X -W999 -SNPL -Usapsa -P&lt;master password&gt;</p>
+<p>sp_configure "number of user connections", 500</p>
+<p>go</p>
+<p>-&gt; This change takes effect immediately. (As long as the configured max memory is sufficient for ASE DB).</p>
+<p>&nbsp;</p>
+<p>Best Regards,</p>
+<p>Alex</p>
+              </div>
+
+            <div id="comment-actions-394668" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_394668" tabindex="-1">Like 4</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space/#comment-394668'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-alban_leong bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-394669">
+        <div id="comment-394669" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/alban_leong">
+                <img alt='Author&#039;s profile photo Alban Leong' src='https://avatars.services.sap.com/images/alban_leong_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Alban Leong' href='https://people.sap.com/alban_leong' rel='external nofollow' class='ds-link ds-user__name ' >Alban Leong</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2017-10-13T02:43:58+00:00"
+                >October 13, 2017 at 2:43 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thanks for the tips Alex! It's certainly very helpful as well!</p>
+              </div>
+
+            <div id="comment-actions-394669" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_394669" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space/#comment-394669'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-ivangurin even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-438380">
+        <div id="comment-438380" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/ivangurin">
+                <img alt='Author&#039;s profile photo Ivan Gurin' src='https://avatars.services.sap.com/images/ivangurin_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Ivan Gurin' href='https://people.sap.com/ivangurin' rel='external nofollow' class='ds-link ds-user__name ' >Ivan Gurin</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2018-10-01T12:39:44+00:00"
+                >October 1, 2018 at 12:39 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Thank you for your input.</p>
+              </div>
+
+            <div id="comment-actions-438380" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_438380" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space/#comment-438380'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-martinenglish odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-460935">
+        <div id="comment-460935" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/martin.english">
+                <img alt='Author&#039;s profile photo Martin English' src='https://avatars.services.sap.com/images/martin.english_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Martin English' href='https://people.sap.com/martin.english' rel='external nofollow' class='ds-link ds-user__name ' >Martin English</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-05-25T08:14:33+00:00"
+                >May 25, 2019 at 8:14 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Alex,  Alban<br />Thanks for those parameter changes. It has made a bit of difference to my system’s response time.</p>
+<p>I’ve played with changing them using both <strong>isql</strong> and <strong>DBACOCKPIT –&gt; Configuration –&gt; Server Configuration</strong> and in the later it says that <em>max memory</em> is <em>dynamic</em> (meaning it takes effect immediately). I compared the memory utilization of the Linux process <strong><em>dataserver</em></strong> and it appeared to take effect immediately.</p>
+<p>In return;</p>
+<p>For more detail about your space utilisation (including the transaction logs), look in <strong>DBACOCKPIT –&gt; Space –&gt; Devices</strong></p>
+<p>I decided to try increasing the size of my transaction logs as well; from your <strong>sybnpl</strong> user:</p>
+<pre class="language-abap"><code>isql -SNPL -Usapsa -X
+Enter &lt;master password&gt; when prompted 
+use master
+go
+disk resize name = 'NPL_log_001', skip_alloc = true, size = '2048M'
+go
+alter database NPL on NPL_log_01 = '2048M' with override
+go</code></pre>
+<p>Three points;</p>
+<ul>
+<li><strong>disk resize</strong> does not use the <strong>physname</strong> parameter, as there is already one associated with the <strong>name.</strong></li>
+<li><strong>disk resize</strong> <em><span style="text-decoration: underline">adds</span> </em>the specified amount space to the disk</li>
+<li>Because you’re changing a transaction log, you need to add <strong>with override</strong> to the alter database command.</li>
+<li>Be careful when copying lines of code from the web straight into your Linux terminal; I find the that the special characters ‘ ” ` get a bit mucked up !!</li>
+</ul>
+<p>hth !!</p>
+              </div>
+
+            <div id="comment-actions-460935" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_460935" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space/#comment-460935'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-marcobeier even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-467885">
+        <div id="comment-467885" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/marco.beier">
+                <img alt='Author&#039;s profile photo Marco Beier' src='https://avatars.services.sap.com/images/marco.beier_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Marco Beier' href='https://people.sap.com/marco.beier' rel='external nofollow' class='ds-link ds-user__name ' >Marco Beier</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2019-07-29T18:11:49+00:00"
+                >July 29, 2019 at 6:11 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Even though this blog is a bit old by now, It has helped me greatly. I haven't had anything to do with SYBASE ASE (well this type of basis things in general) before and those kind of issues really got me during the installation of the ABAP "trial".</p>
+<p>&nbsp;</p>
+<p>Great Blog and thanks!</p>
+              </div>
+
+            <div id="comment-actions-467885" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_467885" tabindex="-1">Like 1</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space/#comment-467885'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-kyochoi2 odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-495440">
+        <div id="comment-495440" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/kyo.choi2">
+                <img alt='Author&#039;s profile photo kyo choi' src='https://avatars.services.sap.com/images/kyo.choi2_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name kyo choi' href='https://people.sap.com/kyo.choi2' rel='external nofollow' class='ds-link ds-user__name ' >kyo choi</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-02-21T11:43:11+00:00"
+                >February 21, 2020 at 11:43 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi, it's a great blog.  Thanks.</p>
+<p>&nbsp;</p>
+<p>Currently I am having issue as follows.  I was wondering if you can help.</p>
+<p>After the command,</p>
+<pre class="language-abap"><code>isql -SNPL -Usapsa -X​</code></pre>
+<p>&nbsp;</p>
+<p>I am getting following messages.</p>
+<p>&nbsp;</p>
+<p><img class=" ds-lightbox__img" src="https://blogs.sap.com/wp-content/uploads/2017/10/NPL-isql.jpg" data-index="1" data-id="clbox-495440" /></p>
+              </div>
+
+            <div id="comment-actions-495440" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_495440" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space/#comment-495440'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+        <div id="content-lightbox-modal--495440"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="clbox-495440"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="clbox-495440" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="https://blogs.sap.com/wp-content/uploads/2017/10/NPL-isql.jpg" alt=""/></div></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>    <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-maximkvitkov even depth-2 ds-blog-post-comment" id="li-comment-520002">
+        <div id="comment-520002" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/maxim.kvitkov">
+                <img alt='Author&#039;s profile photo Maxim Kvitkov' src='https://avatars.services.sap.com/images/maxim.kvitkov_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Maxim Kvitkov' href='https://people.sap.com/maxim.kvitkov' rel='external nofollow' class='ds-link ds-user__name ' >Maxim Kvitkov</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-07-25T05:19:25+00:00"
+                >July 25, 2020 at 5:19 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>try isql<strong>64, </strong>it helped me.</p>
+              </div>
+
+            <div id="comment-actions-520002" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_520002" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space/#comment-520002'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-julieplummer odd alt thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-500749">
+        <div id="comment-500749" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/julie.plummer">
+                <img alt='Author&#039;s profile photo Julie Plummer' src='https://avatars.services.sap.com/images/julie.plummer_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Julie Plummer' href='https://people.sap.com/julie.plummer' rel='external nofollow' class='ds-link ds-user__name ' >Julie Plummer</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-04-01T10:57:08+00:00"
+                >April 1, 2020 at 10:57 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi Alban,</p>
+<p>Once more, an excellent blog from you!</p>
+<p>Thanks - I'll add it to the FAQs.</p>
+<p>Best wishes,</p>
+<p>Julie.</p>
+              </div>
+
+            <div id="comment-actions-500749" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_500749" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space/#comment-500749'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-stephaneg even thread-even depth-1 ds-blog-post-comment" id="li-comment-505971">
+        <div id="comment-505971" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/stephane.g">
+                <img alt='Author&#039;s profile photo Stephane Gabric' src='https://avatars.services.sap.com/images/stephane.g_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Stephane Gabric' href='https://people.sap.com/stephane.g' rel='external nofollow' class='ds-link ds-user__name ' >Stephane Gabric</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-05-03T14:57:19+00:00"
+                >May 3, 2020 at 2:57 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>That solution did not work for me because there is another issue, there is a ‘hole’ in table sysusages that will prevent to access the added disk space.</p>
+<p>BUT there is another solution from Paweł Wiejkut:</p>
+<p><a href="https://blogs.sap.com/2019/12/22/resize-ase-database-in-npl-7.52-sp-04/" rel="nofollow ugc">https://blogs.sap.com/2019/12/22/resize-ase-database-in-npl-7.52-sp-04/</a></p>
+<p>Best wishes,</p>
+<p>Stephane</p>
+<p> </p>
+              </div>
+
+            <div id="comment-actions-505971" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_505971" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space/#comment-505971'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-albanleong odd alt depth-2 ds-blog-post-comment" id="li-comment-513355">
+        <div id="comment-513355" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/albanleong">
+                <img alt='Author&#039;s profile photo Alban Leong' src='https://avatars.services.sap.com/images/albanleong_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Alban Leong' href='https://people.sap.com/albanleong' rel='external nofollow' class='ds-link ds-user__name ' >Alban Leong</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2020-06-15T18:03:14+00:00"
+                >June 15, 2020 at 6:03 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <p>Hi <a href="https://people.sap.com/stephane.g" rel="nofollow ugc">Stephane Gabric</a> - Thanks for leaving a comment and yes, I did confirm that this method will not work with ABAP AS 7.52 SP04.</p>
+<p><a href="https://blogs.sap.com/2019/12/22/resize-ase-database-in-npl-7.52-sp-04/#comment-499457">https://blogs.sap.com/2019/12/22/resize-ase-database-in-npl-7.52-sp-04/#comment-499457</a></p>
+<p>However, if anyone has the older releases - eg: 7.50 / 7.51, it should work fine.</p>
+              </div>
+
+            <div id="comment-actions-513355" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_513355" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2017/10/12/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space/#comment-513355'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+
+      
+        </div> <!-- main comments content area -->
+
+    
+            
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+                </div> <!-- #main -->
+                <div id="shared_footer" class="dm-container dm-wrapper">
+                    <footer class="dm-footer">
+    <div class="dm-footer__inner-wrapper">
+        <div class="dm-socialmedia">
+            <h5 class="dm-socialmedia__headline" id="hl-sharefollow">Find us on</h5>
+            <ul class="dm-socialmedia__links" aria-labelledby="hl-sharefollow">
+                <li><a href="https://www.facebook.com/sapcommunity" title="Facebook"><span class="dm-icon-encoded--facebook"></span></a></li>
+                <li><a href="https://twitter.com/SAPCommunity" title="Twitter"><span class="dm-icon-encoded--twitter"></span></a></li>
+                <li><a href="https://www.youtube.com/c/SAPCommunities" title="YouTube"><span class="dm-icon-encoded--youtube"></span></a></li>
+                <li><a href="https://www.linkedin.com/company/sap" title="LinkedIn"><span class="dm-icon-encoded--linkedin"></span></a></li>
+                <li><a href="https://instagram.com/sap/" title="Instagram"><span class="dm-icon-encoded--instagram"></span></a></li>
+                <li><a href="http://www.slideshare.net/SAP" title="Slideshare"><span class="dm-icon-encoded--slideshare"></span></a></li>
+                <li><a href="mailto:?subject='SAP Community'" title="Email Share"><span class="dm-icon-encoded--email"></span></a></li>
+            </ul>
+        </div>
+        <nav role="navigation" class="dm-footer__navigation">
+            <ul class="dm-footer__navigation__list" aria-label="footer navigation">
+                <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+                <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+                <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+                <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+                <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+                <li id="teconsent"></li>
+                <li><a href="https://www.sap.com/cmp/nl/sap-community-voice/index.html" target="_blank">Newsletter</a></li>
+                <li><a href="mailto:sapnetwork@sap.com" target="_blank">Support</a></li>
+            </ul>
+        </nav>
+    </div>
+</footer>                </div>
+            </div> <!-- #page -->
+            <script type="application/ld+json" data-schema="561095-post-Default">{"@context":"https:\/\/schema.org\/","@type":"BlogPosting","@id":"https:\/\/blogs.sap.com\/2017\/10\/12\/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space\/#BlogPosting","mainEntityOfPage":"https:\/\/blogs.sap.com\/2017\/10\/12\/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space\/","headline":"SAP AS ABAP Developer Edition: Steps to fix DBACOCKPIT and extending your DB space","name":"SAP AS ABAP Developer Edition: Steps to fix DBACOCKPIT and extending your DB space","description":"UPDATE: The steps on extending the DB space would not work if you have installed AS ABAP 7.52 SP04. Please refer to https:\/\/blogs.sap.com\/2019\/12\/22\/resize-ase-database-in-npl-7.52-sp-04\/ for the explanation why and the how-to for this release. First of","datePublished":"2017-10-12","dateModified":"2020-06-15","author":{"@type":"Person","@id":"https:\/\/blogs.sap.com\/author\/alban_leong\/#Person","name":"Alban Leong","url":"https:\/\/blogs.sap.com\/author\/alban_leong\/","image":{"@type":"ImageObject","@id":"https:\/\/avatars.services.sap.com\/images\/alban_leong_small.png","url":"https:\/\/avatars.services.sap.com\/images\/alban_leong_small.png","height":96,"width":96}},"publisher":{"@type":"Organization","name":"SAP Community Blogs","logo":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","width":600,"height":60}},"image":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2017\/10\/login-failed-BDAcockpit.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2017\/10\/login-failed-BDAcockpit.png","height":"","width":""},"url":"https:\/\/blogs.sap.com\/2017\/10\/12\/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space\/","about":["Technical Articles"],"wordCount":1448,"keywords":["ABAP_Trial","dbacockpit","free trial"]}</script>
+<script type="application/ld+json" data-schema="Breadcrumb">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"2017","item":"https:\/\/blogs.sap.com\/2017\/#breadcrumbitem"},{"@type":"ListItem","position":2,"name":"10","item":"https:\/\/blogs.sap.com\/2017\/\/10\/#breadcrumbitem"},{"@type":"ListItem","position":3,"name":"12","item":"https:\/\/blogs.sap.com\/2017\/\/10\/\/12\/#breadcrumbitem"},{"@type":"ListItem","position":4,"name":"SAP AS ABAP Developer Edition: Steps to fix DBACOCKPIT and extending your DB space","item":"https:\/\/blogs.sap.com\/2017\/10\/12\/sap-as-abap-developer-edition-steps-to-fix-dbacockpit-and-extending-your-db-space\/#breadcrumbitem"}]}</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/action-tooltip-handler.js' id='tooltip-handler-js'></script>
+<script type='text/javascript' id='unified_header-js-extra'>
+/* <![CDATA[ */
+var headerInitArgs = {"system":"blogs","wrapperID":"page","breadcrumbItems":[{"text":"Blogs","href":"https:\/\/blogs.sap.com"}]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/js/scn-header.min.js' id='unified_header-js'></script>
+<script type='text/javascript' id='unified_header-js-after'>
+            scnHeader.init(headerInitArgs);
+            setCookie("userArgs", headerInitArgs.user ? JSON.stringify(headerInitArgs.user) : "", { path : "/" });
+    
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/header.js' id='designmate_header_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/subheader.js' id='designmate_subheader_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/designmate.js' id='designmate_script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/comment-reply.min.js' id='comment-reply-js'></script>
+<script type='text/javascript' id='satm_handler-js-extra'>
+/* <![CDATA[ */
+var satmContentSelectors = ["div.dm-contentDetail__body-content","div.dm-list-comments__item-content","div.ds-blog-post__body","div.ds-blog-post-comment__content"];
+var satmProfileBaseUrl = "people.sap.com\/";
+var satmChangeableElementsSelectors = ["div.dm-list-comments__item-content","div.ds-blog-post-comment__content"];
+var satmPluginEnabled = "1";
+var satmApiUrl = "https:\/\/uss.api.community.sap.com";
+var satmApiCallWithCredentials = "1";
+var satmRequestDelayMs = "100";
+/* ]]> */
+</script>
+<script type='text/javascript' defer src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-at-mention/js/sap-at-mention.min.js' id='satm_handler-js'></script>
+<script type='text/javascript' id='sap-comment-validation-js-extra'>
+/* <![CDATA[ */
+var commentValidation = {"validateMaxLinks":"1","max_links_number":"7","BLOGS_PAGE":"single"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/sap-comment-validation.min.js' id='sap-comment-validation-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-post-status.min.js' id='scn_post_status_check-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/jquery-plugins.min.js' id='sap_jquery_plugins-js'></script>
+<script type='text/javascript' id='sap-login-csrf-cookie-js-extra'>
+/* <![CDATA[ */
+var sapLoginCookieConfig = {"cookieName":"SAP_BLOGS_ANONYMOUS_NONCE","sapActionName":"s_action"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-login-csrf-cookie.min.js' id='sap-login-csrf-cookie-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.js' id='sap_lightbox_gallery_js-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/choices.min.js' id='choices.js-js'></script>
+<script type='text/javascript' id='wprc-script-js-extra'>
+/* <![CDATA[ */
+var wprcajaxhandler = {"ajaxurl":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-report-content/static/js/v3/scripts.min.js' id='wprc-script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/single.min.js' id='sap_single_v3-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/onscroll-sticky.min.js' id='onscroll_sticky-js'></script>
+<script type='text/javascript' id='blog-detail-page-js-extra'>
+/* <![CDATA[ */
+var alertReasonsSelectArgs = {"selectId":"sap-blog-alert-reasons","reasons":["Incorrect Tag\/Category\r","Cross-Posting\r","Private Information\r","Unprofessional Conduct\r","Spam"]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/dist/blog-detail.min.js' id='blog-detail-page-js'></script>
+<script type='text/javascript' id='sap_assignedtags_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var assignedTagsWidgetSettings = {"maxItemsBeforeHide":"7","data":{"ABAP Development":"https:\/\/blogs.sap.com\/tags\/833755570260738661924709785639136\/","SAP NetWeaver Application Server for ABAP":"https:\/\/blogs.sap.com\/tags\/01200314690800000234\/","ABAP_Trial":"https:\/\/blogs.sap.com\/tag\/abap_trial\/","dbacockpit":"https:\/\/blogs.sap.com\/tag\/dbacockpit\/","free trial":"https:\/\/blogs.sap.com\/tag\/free-trial\/"},"widgetClassname":".ds-assigned-tags"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/assigned-tags/js/sap-assigned-tags-widget.min.js' id='sap_assignedtags_widget_js_v3-js'></script>
+<script type='text/javascript' id='sap_relatedcontent_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var relatedContentWidgetSettings = {"widgetSelector":".widget_sap-relatedcontent-widget-v3","contentServiceUrl":"https:\/\/content.services.sap.com\/cse\/search\/topic","profileUrl":"https:\/\/people.sap.com","targetContentItem":{"id":561095,"type":"blogpost","title":"SAP AS ABAP Developer Edition: Steps to fix DBACOCKPIT and extending your DB space","primary_tag":"833755570260738661924709785639136"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/related-content/js/sap-related-content-widget.min.js' id='sap_relatedcontent_widget_js_v3-js'></script>
+<div id="wp-load_tinymce-wrap" class="wp-core-ui wp-editor-wrap html-active"><link rel='stylesheet' id='dashicons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dashicons.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='editor-buttons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/editor.min.css' type='text/css' media='all' />
+<style>#wp-load_tinymce-wrap {display:none;}</style>
+<div id="wp-load_tinymce-editor-container" class="wp-editor-container"><div id="qt_load_tinymce_toolbar" class="quicktags-toolbar"></div><textarea class="wp-editor-area" rows="20" cols="40" name="load_tinymce" id="load_tinymce"></textarea></div>
+</div>
+
+<link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/skin.min.css?wp-mce-49110-20201110' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/plugins/codesample/css/prism.css' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/content.min.css?wp-mce-49110-20201110' as='style'>
+		<script type="text/javascript">
+		tinyMCEPreInit = {
+			baseURL: "https://blogs.sap.com/wp-includes/js/tinymce",
+			suffix: ".min",
+						mceInit: {},
+			qtInit: {'load_tinymce':{id:"load_tinymce",buttons:"strong,em,link,block,del,ins,img,ul,ol,li,code,more,close"}},
+			ref: {plugins:"",theme:"modern",language:""},
+			load_ext: function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
+		};
+		</script>
+				<script type="text/javascript">
+		var ajaxurl = "/wp-admin/admin-ajax.php";
+		( function() {
+			var init, id, $wrap;
+
+			if ( typeof tinymce !== 'undefined' ) {
+				if ( tinymce.Env.ie && tinymce.Env.ie < 11 ) {
+					tinymce.$( '.wp-editor-wrap ' ).removeClass( 'tmce-active' ).addClass( 'html-active' );
+					return;
+				}
+
+				for ( id in tinyMCEPreInit.mceInit ) {
+					init = tinyMCEPreInit.mceInit[id];
+					$wrap = tinymce.$( '#wp-' + id + '-wrap' );
+
+					if ( ( $wrap.hasClass( 'tmce-active' ) || ! tinyMCEPreInit.qtInit.hasOwnProperty( id ) ) && ! init.wp_skip_init ) {
+						tinymce.init( init );
+
+						if ( ! window.wpActiveEditor ) {
+							window.wpActiveEditor = id;
+						}
+					}
+				}
+			}
+
+			if ( typeof quicktags !== 'undefined' ) {
+				for ( id in tinyMCEPreInit.qtInit ) {
+					quicktags( tinyMCEPreInit.qtInit[id] );
+
+					if ( ! window.wpActiveEditor ) {
+						window.wpActiveEditor = id;
+					}
+				}
+			}
+		}());
+		</script>
+				<div id="wp-link-backdrop" style="display: none"></div>
+		<div id="wp-link-wrap" class="wp-core-ui" style="display: none" role="dialog" aria-labelledby="link-modal-title">
+		<form id="wp-link" tabindex="-1">
+		<input type="hidden" id="_ajax_linking_nonce" name="_ajax_linking_nonce" value="d98c848450" />		<h3 id="link-modal-title">Insert/edit link</h3>
+		<button type="button" id="wp-link-close"><span class="screen-reader-text">Close</span></button>
+		<div id="link-selector">
+			<div id="link-options">
+				<p class="howto" id="wplink-enter-url">Enter the destination URL</p>
+				<div>
+					<label><span>URL</span>
+					<input id="wp-link-url" type="text" aria-describedby="wplink-enter-url" /></label>
+				</div>
+				<div class="wp-link-text-field">
+					<label><span>Link Text</span>
+					<input id="wp-link-text" type="text" /></label>
+				</div>
+				<div class="link-target">
+					<label><span></span>
+					<input type="checkbox" id="wp-link-target" /> Open link in a new tab</label>
+				</div>
+			</div>
+			<p class="howto" id="wplink-link-existing-content">Or link to existing content</p>
+			<div id="search-panel">
+				<div class="link-search-wrapper">
+					<label>
+						<span class="search-label">Search</span>
+						<input type="search" id="wp-link-search" class="link-search-field" autocomplete="off" aria-describedby="wplink-link-existing-content" />
+						<span class="spinner"></span>
+					</label>
+				</div>
+				<div id="search-results" class="query-results" tabindex="0">
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+				<div id="most-recent-results" class="query-results" tabindex="0">
+					<div class="query-notice" id="query-notice-message">
+						<em class="query-notice-default">No search term specified. Showing recent items.</em>
+						<em class="query-notice-hint screen-reader-text">Search or use up and down arrow keys to select an item.</em>
+					</div>
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="submitbox">
+			<div id="wp-link-cancel">
+				<button type="button" class="button">Cancel</button>
+			</div>
+			<div id="wp-link-update">
+				<input type="submit" value="Add Link" class="button button-primary" id="wp-link-submit" name="wp-link-submit">
+			</div>
+		</div>
+		</form>
+		</div>
+		<script type="text/javascript">jQuery(window).on("load", function() {tinymce.codesampleplugin.Prism.highlightAll();});</script><script type='text/javascript'>_satellite.pageBottom();</script>        </div> <!-- .page-wrapper -->
+    </body>
+</html>

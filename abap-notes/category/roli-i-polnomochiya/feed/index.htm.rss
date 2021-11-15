@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Роли и полномочия | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/roli-i-polnomochiya/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sat, 20 Mar 2021 17:46:39 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Генерация Where условий относительно полномочий</title>
+		<link>https://abap-blog.ru/abap-notes/generaciya-where-uslovij-otnositelno-polnomochij/</link>
+					<comments>https://abap-blog.ru/abap-notes/generaciya-where-uslovij-otnositelno-polnomochij/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 08 Jul 2020 18:28:02 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4404</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e44d857a607417010/] Подробнее в документации.</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/generaciya-where-uslovij-otnositelno-polnomochij/">Генерация Where условий относительно полномочий</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA(o_auth) = cl_auth_objects_to_sql=&gt;create_for_open_sql( ).
+
+o_auth-&gt;add_authorization_object( iv_authorization_object = 'S_CARRID'
+                                  it_activities = VALUE #( ( auth_field = 'ACTVT' value = '03' ) )
+                                  it_field_mapping = VALUE #( ( auth_field = 'CARRID'
+                                                                view_field = VALUE #( table_ddic_name = 'SFLIGHT'
+                                                                                      field_name      = 'CARRID'
+                                                                                    )
+                                                              )
+                                                            )
+                                ).
+
+IF abap_true = o_auth-&gt;is_authorized( ).
+
+  DATA(lv_where_cond) = o_auth-&gt;get_sql_condition( ).
+
+  IF lv_where_cond IS INITIAL.
+    cl_demo_output=&gt;write_data( 'Все полномочия' ).
+  ELSE.
+    cl_demo_output=&gt;write_data( |Ограниченные полномочия: { lv_where_cond }| ).
+  ENDIF.
+
+  SELECT *
+    INTO TABLE @DATA(it_sflight)
+    FROM sflight
+    WHERE (lv_where_cond).
+
+  cl_demo_output=&gt;write_data( it_sflight ).
+  cl_demo_output=&gt;display( ).
+
+ENDIF.</pre><p>Подробнее в <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abapauthority-check.htm">документации</a>.</p><p>The post <a href="https://abap-blog.ru/abap-notes/generaciya-where-uslovij-otnositelno-polnomochij/">Генерация Where условий относительно полномочий</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/generaciya-where-uslovij-otnositelno-polnomochij/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Native SQL | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/native-sql/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:15:02 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>ABAP Managed Database Procedures (AMDP)</title>
+		<link>https://abap-blog.ru/database-work/abap-managed-database-procedures-amdp/</link>
+					<comments>https://abap-blog.ru/database-work/abap-managed-database-procedures-amdp/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 02 Jun 2016 20:03:15 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<category><![CDATA[AMDP]]></category>
+		<category><![CDATA[Native SQL]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=3050</guid>
+
+					<description><![CDATA[<p>Все больше в настоящее время SAP систем переходят на новую платформу (СУБД) – HANA (High-Performance Analytic Appliance), в основе которой лежит технология вычислений in-memory с использованием принципа поколоночного хранения данных. Вместе с новой платформой, появляются так же и новые возможности для обработки больших объемов данных и более высокопроизводительных вычислений. Для ускорения ABAP решений на базе HANA, [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/abap-managed-database-procedures-amdp/">ABAP Managed Database Procedures (AMDP)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2016/06/sqlcode1.jpg"><img loading="lazy" class=" wp-image-3079 alignleft" src="http://abap-blog.ru/wp-content/uploads/2016/06/sqlcode1.jpg" alt="sqlcode[1]" width="365" height="274" srcset="https://abap-blog.ru/wp-content/uploads/2016/06/sqlcode1.jpg 400w, https://abap-blog.ru/wp-content/uploads/2016/06/sqlcode1-300x225.jpg 300w" sizes="(max-width: 365px) 100vw, 365px" /></a>Все больше в настоящее время SAP систем переходят на новую платформу (СУБД) – HANA (High-Performance Analytic Appliance), в основе которой лежит технология вычислений in-memory с использованием принципа поколоночного хранения данных. Вместе с новой платформой, появляются так же и новые возможности для обработки больших объемов данных и более высокопроизводительных вычислений.</p>
+<p>Для ускорения ABAP решений на базе HANA, используется перенос вычислений с уровня сервера приложений (AS ABAP) на сервер СУБД (Code-to-Data). Данную задачу можно решить несколькими способами, одним из которых является использование Native SQL и AMDP как средства его вызова.</p>
+<p>В контексте ABAP разработки, под Native SQL понимается язык SQL запросов поддерживаемый текущей или дополнительной СУБД сервера приложений.</p>
+<p>В данной статье будут рассмотрены основные моменты использования AMDP.</p>
+<p><span id="more-3050"></span></p>
+<p>SAP <a href="http://help.sap.com/abapdocu_750/en/abendatabase_access_guidl.htm">рекомендует </a>использовать Native SQL в ABAP только тогда, когда задачу оптимизации не решить стандартными средствами <a href="http://scn.sap.com/community/abap/hana/blog/2014/09/26/code-push-down-for-hana-from-abap-starts-with-open-sql">OpenSQL</a>, в частности AMDP следует использовать только если будут задействованы какие-то специфичные для HANA вещи или объем данных слишком велик чтобы переносить его между СУБД и сервером приложений.</p>
+<p>Вызывать Native SQL в ABAP напрямую можно несколькими методами, среди которых:</p>
+<ul>
+<li><a href="http://abap-blog.ru/database-work/adbc-abap-database-connectivity/">ADBC </a>классы,</li>
+<li><a href="http://help.sap.com/abapdocu_750/en/abennativesql.htm">EXEC SQL</a> (без возможности использования динамики),</li>
+<li>AMDP.</li>
+</ul>
+<p>Косвенно через:</p>
+<ul>
+<li><a href="http://help.sap.com/abapdocu_750/en/abensql_script.htm">External Procedures </a>(proxies). Рекомендуется использовать только если невозможно тоже самое сделать через AMDP (например, когда HANA подключена как дополнительная СУБД),</li>
+<li><a href="http://help.sap.com/abapdocu_750/en/abenexternal_views.htm">External views</a> (если учесть что view будет к calculation view на базе SQL Script), так же не рекомендуется к использованию если возможно тоже самое реализовать через <a href="http://abap-blog.ru/slovar/abap-cds-core-data-services/">ABAP CDS</a> или AMDP.</li>
+</ul>
+<p>Наиболее удобным и современным способом вызова Native SQL является использование AMDP, преимущества заключаются в следующем:</p>
+<ul>
+<li>Проверка синтаксиса и подсветка команд,</li>
+<li>Стандартное для ABAP объектов управление жизненным циклом (В отличие от внешних процедур и ракурсов,  где необходимо использовать HANA артефакты для переноса объекта между системами),</li>
+<li>Автодополнение и навигация к используемым объектам,</li>
+<li>Простой вызов из ABAP.</li>
+</ul>
+<p>Технически AMDP это обёртка над <a href="https://ru.wikipedia.org/wiki/%D0%A5%D1%80%D0%B0%D0%BD%D0%B8%D0%BC%D0%B0%D1%8F_%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D0%B4%D1%83%D1%80%D0%B0">хранимыми процедурами</a> в СУБД. Обёртка заворачивает Native SQL код в методы ABAP класса (AMDP методы), которые Вы можете использовать в своих программах как обычные методы обычных классов. Во время первого доступа к такому методу, на сервере БД будет создана хранимая процедура, которая создаётся в основной схеме для сервера приложений с именем SAPSid, где Sid – идентификатор системы. Доступ из хранимой процедуры можно получить к объектам БД текущей схемы (SAPSid) и объектам других схем, явно указав их имена.</p>
+<p>В настоящее время AMDP поддерживается только для HANA, однако в будущем планируется поддержка других СУБД. Проверить поддержку AMDP можно через класс CL_ABAP_DBFEATURES и его метод CALL_AMDP_METHOD (ABAP 7.5).</p>
+<p>Под Native SQL в HANA подразумеваются языки SQL Script и L, однако L доступен только для разработчиков SAP.</p>
+<h2>AMDP классы</h2>
+<p>&nbsp;</p>
+<p>Как и большинство новых объектов разработки, AMDP классы доступны для редактирования только из ADT (ABAP Development Tools for Eclipse). Создаётся AMDP класс таким же образом, как и обычные глобальные классы, единственным отличаем, является реализация классом специального интерфейса <strong>&#8212; IF_AMDP_MARKER_HDB</strong>. Данный интерфейс является своего рода меткой для системы, чтобы она понимала, что в методах этого класса может быть встроен вызов AMDP. Кроме AMDP методов такой класс может содержать и обычные методы.</p>
+<h2>AMDP методы</h2>
+<p>&nbsp;</p>
+<p>Метод AMDP может быть как статическим, так и методом инстанции с любой видимостью. По своему описанию в заголовке класса он ничем не отличается от обычных методов. Понять, что это AMDP метод можно только заглянув в исходный код.</p>
+<p>На AMDP метод накладываются определенные ограничения.</p>
+<p>Ограничения в интерфейсе:</p>
+<ul>
+<li>Нельзя использовать обобщенные типы (TYPE DATA, TYPE CSEQUENCE и др.), доступны только элементарные типы данных и табличные, компоненты которых являются элементарными.</li>
+<li>Нельзя использовать для описания типа устаревшие словарные типы &#8212; DF16_SCL и DF34_SCL.</li>
+<li>Параметры всегда должны переноситься по значению, перенос по ссылке недоступен.</li>
+<li>RETURNING параметры запрещены.</li>
+<li>Только входные параметры могут быть помечены как необязательные и для всех необязательных параметров необходимо, чтобы было задано начальное значение.</li>
+<li>Параметры с типами f, decfloat16, decfloat34, string, и xstring не могут быть со значением по умолчанию, а значит, они не могут быть необязательными.</li>
+<li>Имена параметров:
+<ul>
+<li>Не могут начинаться с префикса «%_».</li>
+<li>Нельзя использовать параметры с именами: endmethod и client.</li>
+</ul>
+</li>
+<li>Если используется параметр с именем connection, он обязательно должен иметь тип &#8212; DBCON_NAME, используется он когда AMDP вызывается через <a href="http://help.sap.com/abapdocu_750/en/abenamdp_db_connections.htm">сервисное подключение</a>, в таком случае его адрес необходимо будет передать через параметр.</li>
+<li>При описании исключений можно использовать только заранее <a href="http://help.sap.com/abapdocu_740/en/abenamdp_exceptions.htm">определенные</a> классы исключений. Классические исключения недоступны.</li>
+<li>CHANGING параметры не могут иметь тип string или xstring.</li>
+<li>Длина параметров с типом C или N не может превышать 5000 символов.</li>
+</ul>
+<p>Ограничения в рамках реализации:</p>
+<ul>
+<li>Нельзя использовать DDL синтаксис.</li>
+<li>Локальные временные объекты БД не могут быть доступны из метода.</li>
+<li>Запрещено использование rollback или commit. Транзакции должны быть обработаны в рамках ABAP программ.</li>
+<li>Доступ на запись к словарным таблицам, для которых активна буферизация &#8212; запрещен.</li>
+<li>AMDP методы не могут содержать внутри себя неявных расширений.</li>
+<li>AMDP метод не может быть пустым.</li>
+<li>Конструктор нельзя реализовать как AMDP метод.</li>
+</ul>
+<p>В ABAP 7.4. можно реализовать только метод AMDP процедуры, в 7.5 добавилась так же возможность создания метода AMDP функции. AMDP функции можно использовать для получения данных в других AMDP процедурах и функциях, в ABAP CDS и даже в OpenSQL. Для функций параметр RETURNING является обязательным. В статье реализация функций не рассматривается, подробнее о функциях смотрите в <a href="http://help.sap.com/abapdocu_750/en/abenamdp_function_methods.htm#@@ITOC@@ABENAMDP_FUNCTION_METHODS_2">документации</a>.</p>
+<p>Для AMDP методов, как и для обычных методов доступна поддержка наследования, пример использования можно посмотреть в программе &#8212; demo_amdp_polymorphism. Таким образом, можно сделать разные реализации и в зависимости от поддержки AMDP, вызывать либо их, либо обычные методы с OpenSQL.</p>
+<p>Так как AMDP это Native SQL, поддержка клиента (манданта) должна быть реализована вручную, как правило клиент предаётся внутрь AMDP как параметр. Другим способом является возможность использования специальной функции – <a href="http://help.sap.com/abapdocu_750/en/abenamdp_client_handling.htm">SESSION_CONTEXT</a>, использовать которую следует, только если ваша AMDP процедура вызывается из ABAP.</p>
+<p>Как уже говорилось выше, понять, что это AMDP метод можно только по исходному коду. Меткой для системы в таком случае служит дополнение BY DATABASE PROCEDURE у выражения – METHOD.</p>
+<p>Синтаксис этого дополнения следующий:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD meth BY DATABASE PROCEDURE 
+            FOR db 
+            LANGUAGE db_lang 
+            [OPTIONS db_options] 
+            [USING   db_entities]. 
+  ... 
+ENDMETHOD.</pre><p>Дополнение FOR определяет, для какой СУБД создана текущая AMDP процедура. В настоящее время доступно только определение для HANA:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>db</strong></td>
+<td><strong>СУБД</strong></td>
+<td><strong>Интерфейс</strong></td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>SAP HANA</td>
+<td>IF_AMDP_MARKER_HDB</td>
+</tr>
+</tbody>
+</table>
+<p>В будущем, возможно, появится поддержка других СУБД, тогда можно будет использовать несколько маркеров (интерфейсов), чтобы реализовывать методы для разных СУБД.</p>
+<p>Дополнение LANGUAGE определяет то, на каком языке будет реализация AMDP процедуры. Доступны следующие варианты:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>db</strong></td>
+<td><strong>db_lang</strong></td>
+<td><strong>Язык</strong></td>
+<td><strong>Комментарий</strong></td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>SQLSCRIPT</td>
+<td>SQLScript</td>
+<td>Доступно для всех</td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>LLANG</td>
+<td>L</td>
+<td>Доступно только внутри SAP</td>
+</tr>
+</tbody>
+</table>
+<p>Дополнение OPTIONS описывает специфичные для СУБД параметры обработки AMDP. Доступные следующие варианты:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>db</strong></td>
+<td><strong>option</strong></td>
+<td><strong>Значение</strong></td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>READ-ONLY</td>
+<td>В рамках AMDP нельзя будет изменять значения таблиц.</td>
+</tr>
+<tr>
+<td>HDB</td>
+<td>SUPPRESS SYNTAX ERRORS</td>
+<td>Для внутреннего использования SAP.</td>
+</tr>
+</tbody>
+</table>
+<p>Основным по значимости дополнением является дополнение USING. В рамках него указывается, какие объекты СУБД будут обработаны в текущей реализации AMDP. Указание объектов необходимо прежде всего для того, чтобы система могла выполнить соответствующие проверки синтаксиса.</p>
+<p>Необходимо указывать следующие объекты:</p>
+<ul>
+<li>Все таблицы и ракурсы из ABAP словаря.</li>
+<li>Все процедуры (или функции ABAP 7.5) AMDP, даже если они из одного класса.</li>
+</ul>
+<p>Все остальные объекты (не управляемые из ABAP) не могут присутствовать в дополнении USING. Указанные в USING объекты должны присутствовать в текущей схеме БД и могут использоваться без её указания. Объекты из других схем должны использоваться с указанием полного имени, в том числе имени схемы, исключением являются объекты из текущей схемы с префиксом &#8212; /1BCAMDP/.</p>
+<p>Объекты из USING должны обязательно быть использованы в реализации AMDP процедуры.</p>
+<p>Пример вызова одной AMDP процедуры из другой:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD increase_price BY DATABASE PROCEDURE 
+                      FOR HDB LANGUAGE SQLSCRIPT 
+                      USING cl_demo_amdp_call_amdp=&gt;increase_price_amdp. 
+  call "CL_DEMO_AMDP_CALL_AMDP=&gt;INCREASE_PRICE_AMDP"( 
+    CLNT =&gt; :CLNT, INCPRICE =&gt; :INCPRICE ); 
+ENDMETHOD.
+
+METHOD increase_price_amdp BY DATABASE PROCEDURE 
+                           FOR HDB LANGUAGE SQLSCRIPT 
+                           USING sflight. 
+  update sflight set price = price + incprice 
+               where mandt = clnt; 
+ENDMETHOD.</pre><p>Как видно из примера, в процедуре через дополнение USING была описана используемая в реализации другая AMDP процедура.</p>
+<p>Из-за ограничений HANA, рекурсивные и циклические вызовы в AMDP процедур запрещены.</p>
+<h2>AMDP BADI</h2>
+<p>&nbsp;</p>
+<p>AMDP классы могут быть использованы в расширениях через специальные AMDP BAdi, с определенными ограничениями в сравнении с обычными BAdi.</p>
+<p>Ограничения в определении и реализации:</p>
+<ul>
+<li>Нельзя использовать фильтры</li>
+<li>Fallback класс должен быть всегда определен (Реализация BAdi по умолчанию).</li>
+<li>Каждый метод BAdi должен быть реализован через AMDP процедуру.</li>
+</ul>
+<p>Вызываются такие AMDP BAdi так же как и стандартные Kernel BAdi через GET BADI, CALL BADI.</p>
+<p>В следующем видео подробно с примерами разобрано использование AMDP BAdi:</p>
+<div class="arve aligncenter" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-5f6elumavzm618a15bcc9817326062486" style="max-width:960px;" itemscope itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/5F6ELUmavzM?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="arve-iframe fitvidsignore" data-arve="arve-youtube-5f6elumavzm618a15bcc9817326062486" data-src-no-ap="https://www.youtube-nocookie.com/embed/5F6ELUmavzM?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="540" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="https://www.youtube-nocookie.com/embed/5F6ELUmavzM?feature=oembed&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="960"></iframe>
+
+</span>
+
+</span>
+
+</div>
+
+<h2>Отладка AMDP</h2>
+<p>&nbsp;</p>
+<p>Для отладки AMDP в ABAP 7.4. необходимо сделать предварительные настройки:</p>
+<ul>
+<li>Настроить внешнюю отладку и поставить точку останова в HANA Studio,</li>
+<li>Выдать соответствующие полномочия пользователю в HANA, под которым будет выполнена отладка.</li>
+</ul>
+<p>После чего можно использовать Procedure Debugger в HANA Studio, вызвав процедуру из ABAP.</p>
+<p>В ABAP 7.5. отладку процедур можно выполнять прямо в <a href="http://scn.sap.com/community/abap/eclipse/blog/2015/10/22/how-to-debug-abap-managed-database-procedures-using-adt--basics">ADT без HANA Studio</a>, используя новый для этой версии инструмент ADT &#8212; AMDP Debugger.</p>
+<p>На тему отладки AMDP процедур в ABAP 7.4 на SCN есть хорошая <a href="http://scn.sap.com/docs/DOC-51790">статья</a>.</p>
+<p>Так же доступно видео с полным разбором:</p>
+<div class="arve aligncenter" data-mode="normal" data-oembed="1" data-provider="youtube" id="arve-youtube-5oeuyl_s5me618a15bccad88001373071" style="max-width:960px;" itemscope itemtype="http://schema.org/VideoObject">
+<span class="arve-inner">
+<span class="arve-embed arve-embed--has-aspect-ratio arve-embed--16by9">
+<meta itemprop="embedURL" content="https://www.youtube-nocookie.com/embed/5OEuyl_s5ME?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="arve-iframe fitvidsignore" data-arve="arve-youtube-5oeuyl_s5me618a15bccad88001373071" data-src-no-ap="https://www.youtube-nocookie.com/embed/5OEuyl_s5ME?feature=oembed&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;autohide=1&amp;playsinline=0&amp;autoplay=0" frameborder="0" height="540" sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" scrolling="no" src="https://www.youtube-nocookie.com/embed/5OEuyl_s5ME?feature=oembed&#038;iv_load_policy=3&#038;modestbranding=1&#038;rel=0&#038;autohide=1&#038;playsinline=0&#038;autoplay=0" width="960"></iframe>
+
+</span>
+
+</span>
+
+</div>
+
+<h2>SQL Script</h2>
+<p>&nbsp;</p>
+<p>Синтаксис языка SQL Script описан в  соответствующей <a href="http://help.sap.com/hana/sap_hana_sql_script_reference_en.pdf">документации</a> (обратите внимание на версию HANA в документе).  В AMDP могут быть использованы CE_* функции которые работают с любыми типами View (CE_COLUMN_TABLE не будет работать, так как эта функция работает только с column store). Однако по заявлениям некоторых представителей SAP, данные функции отживают свое и возможно скоро будут считаться устаревшими.</p>
+<p>Пример использования CE_UNION_ALL:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS zcl_amdp_test_case1 DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+  PUBLIC SECTION.
+    INTERFACES: if_amdp_marker_hdb.
+    CLASS-METHODS:
+      amdp_get_aa EXPORTING VALUE(et_aa) TYPE SPFLI_TAB RAISING cx_amdp_error,
+      amdp_get_ua EXPORTING VALUE(et_ua) TYPE SPFLI_TAB RAISING cx_amdp_error,
+      amdp_get_all EXPORTING VALUE(et_all) TYPE spfli_tab RAISING cx_amdp_error.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS zcl_amdp_test_case1 IMPLEMENTATION.
+  METHOD amdp_get_aa BY DATABASE PROCEDURE FOR HDB LANGUAGE SQLSCRIPT
+                            USING spfli.
+    et_aa = SELECT * FROM spfli WHERE carrid = 'AA';
+  ENDMETHOD.
+
+  METHOD amdp_get_ua BY DATABASE PROCEDURE FOR HDB LANGUAGE SQLSCRIPT
+                            USING spfli.
+    et_ua = SELECT * FROM spfli WHERE carrid = 'UA';
+  ENDMETHOD.
+
+  METHOD amdp_get_all BY DATABASE PROCEDURE
+                      FOR HDB LANGUAGE SQLSCRIPT
+                      USING zcl_amdp_test_case1=&gt;amdp_get_aa
+                            zcl_amdp_test_case1=&gt;amdp_get_ua.
+    call "ZCL_AMDP_TEST_CASE1=&gt;AMDP_GET_AA"(
+      ET_AA =&gt; :lt_aa );
+    call "ZCL_AMDP_TEST_CASE1=&gt;AMDP_GET_UA"(
+      ET_UA =&gt; :lt_ua );
+    et_all = CE_UNION_ALL(:lt_aa, :lt_ua );
+  ENDMETHOD.
+ENDCLASS.</pre><p>Одной из типичных проблем, с которыми сталкивается разработчик при использовании AMDP – передача RANGE с экрана выбора. Решается задача путём формирования WHERE условия с помощью класса &#8212; CL_SHDB_SELTAB и его применения к выбранным данным через SQL Script функцию APPLY_FILTER, пример можно посмотреть в <a href="http://scn.sap.com/community/abap/hana/blog/2015/03/30/handling-of-select-options-parameters-within-amdp">статье</a> на SCN.</p>
+<p>Если данного класса нет в Вашей системе, он может быть установлен <a href="https://websmp130.sap-ag.de/sap(bD1ydSZjPTAwMQ==)/bc/bsp/sno/ui_entry/entry.htm?param=69765F6D6F64653D3030312669765F7361706E6F7465735F6E756D6265723D3231323436373226">нотой</a>.</p>
+<p>При обработке данных получаемых из ABAP система сопоставляет типы ABAP и HANA по следующим правилам:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>ABAP Тип</strong></td>
+<td><strong>HANA Тип</strong></td>
+<td><strong>Комментарий</strong></td>
+</tr>
+<tr>
+<td><strong>b</strong></td>
+<td>SMALLINT</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>s</strong></td>
+<td>SMALLINT</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>i</strong></td>
+<td>INTEGER</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>p</strong>, длинна <strong>leng</strong> с <strong>dec</strong> знаками после запятой</td>
+<td>DECIMAL, длинна  <strong>2 </strong><strong>leng</strong><strong>-1</strong> c <strong>dec</strong> знаками после запятой</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>decfloat16</strong></td>
+<td>VARBINARY, длинна 8</td>
+<td>Вычисления как с числовыми типами система произвести не сможет</td>
+</tr>
+<tr>
+<td><strong>decfloat34</strong></td>
+<td>VARBINARY, длинна 16</td>
+<td>Вычисления как с числовыми типами система произвести не сможет</td>
+</tr>
+<tr>
+<td><strong>f</strong></td>
+<td>DOUBLE</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>c, </strong>длинна <strong>len</strong></td>
+<td>NVARCHAR, длинна  len</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>string</strong></td>
+<td>NCLOB</td>
+<td>Не разрешено для CHANGING параметров AMDP</td>
+</tr>
+<tr>
+<td><strong>n, </strong>длинна <strong>len</strong></td>
+<td>NVARCHAR, длинна len</td>
+<td>Для использования в арифметических выражениях следует использование преобразование типа к числовому типу HANA</td>
+</tr>
+<tr>
+<td><strong>d</strong></td>
+<td>NVARCHAR, длинна 8</td>
+<td>Для использования в расчётах с датой необходимо преобразование к типу даты в HANA</td>
+</tr>
+<tr>
+<td><strong>t</strong></td>
+<td>NVARCHAR, длинна 6</td>
+<td>Для использования в расчётах с временем необходимо преобразование к типу времени в HANA</td>
+</tr>
+<tr>
+<td><strong>x, </strong>длинна <strong>len</strong></td>
+<td>VARBINARY, длинна len</td>
+<td>&#8212;</td>
+</tr>
+<tr>
+<td><strong>xstring</strong></td>
+<td>BLOB</td>
+<td>Не разрешено для CHANGING параметров AMDP</td>
+</tr>
+</tbody>
+</table>
+<p>Типы ABAP словаря сопоставляются так же как и <a href="http://help.sap.com/abapdocu_750/en/abenddic_builtin_types.htm">сопоставимые с ними ABAP типы</a>, за исключением:</p>
+<table>
+<tbody>
+<tr>
+<td width="199">DF16_DEC, длинна <strong>leng</strong> с <strong>dec</strong> знаками после запятой</td>
+<td width="210">DECIMAL, длинна <strong>2</strong><strong>len</strong><strong>-1</strong> с <strong>dec</strong> знаками после запятой</td>
+<td>Тип в HANA имеет меньший диапазон значений, чем в ABAP</td>
+</tr>
+<tr>
+<td width="199">DF34_DEC, длинна <strong>leng</strong> с <strong>dec</strong> знаками после запятой</td>
+<td width="210">DECIMAL, длинна <strong>2</strong><strong>len</strong><strong>-1</strong> с <strong>dec</strong> знаками после запятой</td>
+<td>Тип в HANA имеет меньший диапазон значений, чем в ABAP</td>
+</tr>
+<tr>
+<td width="199">DF16_SCL</td>
+<td width="210">&#8212;</td>
+<td>Устарело, не поддерживается</td>
+</tr>
+<tr>
+<td width="199">DF34_SCL</td>
+<td width="210">&#8212;</td>
+<td>Устарело, не поддерживается</td>
+</tr>
+<tr>
+<td width="199">SSTRING, длинна <strong>len</strong></td>
+<td width="210">NVARCHAR, длинна <strong>len</strong></td>
+<td>&#8212;</td>
+</tr>
+</tbody>
+</table>
+<h2>Источники</h2>
+<ul>
+<li><a href="http://help.sap.com/hana/sap_hana_sql_script_reference_en.pdf">SQL Script Reference</a>,</li>
+<li><a href="https://training.sap.com/shop/course/ha400-abap-programming-for-sap-hana-classroom-008-g-en/">HA400</a>,</li>
+<li><a href="http://help.sap.com/abapdocu_750/en/abenamdp.htm">ABAP Help</a>.</li>
+</ul><p>The post <a href="https://abap-blog.ru/database-work/abap-managed-database-procedures-amdp/">ABAP Managed Database Procedures (AMDP)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/abap-managed-database-procedures-amdp/feed/</wfw:commentRss>
+			<slash:comments>4</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

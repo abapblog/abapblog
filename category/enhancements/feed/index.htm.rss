@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Расширения | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/category/enhancements/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Wed, 31 Mar 2021 05:40:09 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>AMDP BAdI</title>
+		<link>https://abap-blog.ru/enhancements/amdp-badi/</link>
+					<comments>https://abap-blog.ru/enhancements/amdp-badi/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 30 Mar 2021 18:42:58 +0000</pubDate>
+				<category><![CDATA[Расширения]]></category>
+		<guid isPermaLink="false">https://abap-blog.ru/?p=6969</guid>
+
+					<description><![CDATA[<p>Начиная с ABAP 7.4 SP08 нам стал доступен специальный тип BAdI &#8212; AMDP BAdI, который позволяет заменить/расширить стандартную реализацию AMDP процедур реализованных SAP-ом или в Custom решениях. Основное предназначение AMDP BAdI &#8212; вызов процедур реализованных в реализации AMDP BAdI из других AMDP процедур в системе. Чтобы это стало возможным используется ключевое слово USING в определении [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/enhancements/amdp-badi/">AMDP BAdI</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Начиная с ABAP 7.4 SP08 нам стал доступен специальный тип BAdI &#8212; AMDP BAdI, который позволяет заменить/расширить стандартную реализацию <a href="https://abap-blog.ru/database-work/abap-managed-database-procedures-amdp/" target="_blank" rel="noopener">AMDP</a> процедур реализованных SAP-ом или в Custom решениях. Основное предназначение AMDP BAdI &#8212; вызов процедур реализованных в реализации AMDP BAdI из других AMDP процедур в системе. Чтобы это стало возможным используется ключевое слово USING в определении AMDP процедуры:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD some_amdp_method BY DATABASE PROCEDURE FOR HDB
+                        LANGUAGE SQLSCRIPT
+                        OPTIONS READ-ONLY
+                        USING amdp_badi_name=&gt;amdp_method_name.
+  CALL "AMDP_BADI_NAME=&gt;AMDP_METHOD_NAME"
+    (:some_parameters);
+ENDMETHOD.</pre><p>Особенности AMDP BAdI:</p>
+<ul>
+<li>Нет возможности использования BAdI фильтров</li>
+<li>Fallback класс &#8212; обязателен для реализации BAdI (данный класс определяет поведение по умолчанию, если не определена иная реализация)</li>
+<li>Каждый метод AMDP BAdI класса реализации должен быть AMDP процедурой</li>
+<li>Вызов таких BAdI может осуществляться обычным образом через GET BADI и CALL BADI</li>
+</ul>
+<p>Далее реализуем свой AMDP BAdI, реализацию к нему по умолчанию через Fallback класс, а так же дополнительную Custom реализацию.</p>
+<p><span id="more-6969"></span></p>
+<h2>Создание своего AMDP BAdI</h2>
+<p>Для создания своего AMDP BAdI необходимо перейти в транзакцию SE20 и создать новую точку расширения &#8212; Enhancement Spot:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/Enhancement_spot_creattion.png"><img loading="lazy" class="alignnone size-full wp-image-6976" src="https://abap-blog.ru/wp-content/uploads/2021/03/Enhancement_spot_creattion.png" alt="" width="610" height="290" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/Enhancement_spot_creattion.png 610w, https://abap-blog.ru/wp-content/uploads/2021/03/Enhancement_spot_creattion-300x143.png 300w" sizes="(max-width: 610px) 100vw, 610px" /></a></p>
+<blockquote><p>Native диалог в Eclipse ADT не доступен на моей системе, так или иначе перенаправит в SE20, но в самых последних версиях систем мы <a href="https://help.sap.com/viewer/5371047f1273405bb46725a417f95433/Cloud/en-US/af0f37a49fa64342bb1e19868652f6c5.html?q=AMDP%20Badi" target="_blank" rel="noopener">можем править точку расширения</a> прямо в ADT</p></blockquote>
+<p>Пускай её имя будет &#8212; ZES_CUSTOM_AMDP_BADI_SAMPLE.</p>
+<p>В следующем диалоге мы можем указать композитную точку расширения, если хотим объединить несколько точек в одну, но в примере этого делать не будем, оставляем пустым:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/Enhancement_spot_creattion_dialog.png"><img loading="lazy" class="alignnone size-full wp-image-6977" src="https://abap-blog.ru/wp-content/uploads/2021/03/Enhancement_spot_creattion_dialog.png" alt="" width="642" height="160" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/Enhancement_spot_creattion_dialog.png 642w, https://abap-blog.ru/wp-content/uploads/2021/03/Enhancement_spot_creattion_dialog-300x75.png 300w" sizes="(max-width: 642px) 100vw, 642px" /></a></p>
+<p>Далее необходимо указать запрос в рамках которого мы хотим сохранить нашу точку расширения, либо отметить её как локальный объект. После чего мы попадём на экран определения BAdI в рамках точки расширения, где можем нажать на создание нового BAdI:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/Enhancement_spot_create_badI.png"><img loading="lazy" class="alignnone size-full wp-image-6978" src="https://abap-blog.ru/wp-content/uploads/2021/03/Enhancement_spot_create_badI.png" alt="" width="612" height="150" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/Enhancement_spot_create_badI.png 612w, https://abap-blog.ru/wp-content/uploads/2021/03/Enhancement_spot_create_badI-300x74.png 300w" sizes="(max-width: 612px) 100vw, 612px" /></a></p>
+<p>В нашем демо сценарии мы создадим BAdI для поиска пользователей по заданным критериям фильтрации. Назовём BAdI следующим образом &#8212; ZBD_AMDP_USER_SEARCH:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/badi_search_user.png"><img loading="lazy" class="alignnone size-full wp-image-6979" src="https://abap-blog.ru/wp-content/uploads/2021/03/badi_search_user.png" alt="" width="529" height="118" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/badi_search_user.png 529w, https://abap-blog.ru/wp-content/uploads/2021/03/badi_search_user-300x67.png 300w" sizes="(max-width: 529px) 100vw, 529px" /></a></p>
+<p>Отметим сразу галочкой что мы создаём именно AMDP BAdI:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/amdp_badi_flag-1.png"><img loading="lazy" class="alignnone size-full wp-image-6991" src="https://abap-blog.ru/wp-content/uploads/2021/03/amdp_badi_flag-1.png" alt="" width="575" height="201" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/amdp_badi_flag-1.png 575w, https://abap-blog.ru/wp-content/uploads/2021/03/amdp_badi_flag-1-300x105.png 300w" sizes="(max-width: 575px) 100vw, 575px" /></a></p>
+<p>Следующим шагом определим имя интерфейса &#8212; ZIF_AMDP_USER_SEARCH:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/interface_create.png"><img loading="lazy" class="alignnone size-full wp-image-6982" src="https://abap-blog.ru/wp-content/uploads/2021/03/interface_create.png" alt="" width="755" height="204" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/interface_create.png 755w, https://abap-blog.ru/wp-content/uploads/2021/03/interface_create-300x81.png 300w" sizes="(max-width: 755px) 100vw, 755px" /></a></p>
+<p>После чего система сразу предложит перейти к определению методов интерфейса &#8212; согласимся.</p>
+<p>Добавим в интерфейс метод: SEARCH_USERS:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/amdp_method.png"><img loading="lazy" class="alignnone size-full wp-image-6983" src="https://abap-blog.ru/wp-content/uploads/2021/03/amdp_method.png" alt="" width="713" height="158" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/amdp_method.png 713w, https://abap-blog.ru/wp-content/uploads/2021/03/amdp_method-300x66.png 300w" sizes="(max-width: 713px) 100vw, 713px" /></a></p>
+<p>В качестве параметра у нас будет строка с фильтром и возвращать мы будем таблицу со структурой таблицы USR02:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/amdp_method_parameter-2.png"><img loading="lazy" class="alignnone size-full wp-image-6987" src="https://abap-blog.ru/wp-content/uploads/2021/03/amdp_method_parameter-2.png" alt="" width="1029" height="203" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/amdp_method_parameter-2.png 1029w, https://abap-blog.ru/wp-content/uploads/2021/03/amdp_method_parameter-2-300x59.png 300w, https://abap-blog.ru/wp-content/uploads/2021/03/amdp_method_parameter-2-1024x202.png 1024w, https://abap-blog.ru/wp-content/uploads/2021/03/amdp_method_parameter-2-768x152.png 768w" sizes="(max-width: 1029px) 100vw, 1029px" /></a></p>
+<p>Обратите внимание, так как мы создаём интерфейс для вызова AMDP процедуры, передача параметров должна быть по значению.</p>
+<p>После определения метода, сохраним интерфейс и выйдем к экрану ведения BAdI и зададим Fallback класс с именем &#8212; ZCL_BI_FB_AMDP_USER_SEARCH:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/fallback_def-1.png"><img loading="lazy" class="alignnone size-full wp-image-6990" src="https://abap-blog.ru/wp-content/uploads/2021/03/fallback_def-1.png" alt="" width="575" height="528" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/fallback_def-1.png 575w, https://abap-blog.ru/wp-content/uploads/2021/03/fallback_def-1-300x275.png 300w" sizes="(max-width: 575px) 100vw, 575px" /></a></p>
+<p>Далее система вновь предложит выбрать запрос и перейти в редактирование класса &#8212; соглашаемся, сохраняем его и активируем. Добавить реализацию AMDP метода мы не сможем в GUI транзакции, далее мы должны пользоваться Eclipse и ADT.</p>
+<p>Первым делом откроем наш BAdI интерфейс и добавим к нему маркер AMDP:</p><pre class="urvanov-syntax-highlighter-plain-tag">INTERFACE zif_amdp_user_search
+  PUBLIC .
+
+  INTERFACES if_badi_interface .
+  INTERFACES if_amdp_marker_hdb.
+
+  METHODS search_users
+    IMPORTING
+      VALUE(iv_filter) TYPE string
+    EXPORTING
+      VALUE(et_users)  TYPE tb_usr02 .
+ENDINTERFACE.</pre><p>Сохраним и активируем.</p>
+<p>Далее открываем наш Fallback класс в Eclipse и пишем реализацию поиска по умолчанию:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS zcl_bi_fb_amdp_user_search DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+  PUBLIC SECTION.
+
+    INTERFACES if_badi_interface .
+    INTERFACES zif_amdp_user_search .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS zcl_bi_fb_amdp_user_search IMPLEMENTATION.
+  METHOD zif_amdp_user_search~search_users BY DATABASE PROCEDURE FOR HDB 
+                                           LANGUAGE SQLSCRIPT 
+                                           OPTIONS READ-ONLY
+                                           USING usr02.
+
+    et_users = SELECT * FROM usr02 WHERE CONTAINS ((bname), :iv_filter) AND 
+                                         mandt = SESSION_CONTEXT( 'CLIENT' );
+  ENDMETHOD.
+ENDCLASS.</pre><p>Сохраняем, активируем класс и переходим обратно в SE20 где активируем точку расширения.</p>
+<p>На данном этапе мы создали новое Custom AMDP BAdI и Fallback класс с реализацией по умолчанию. Логика реализации по умолчанию заключается в поиске всех пользователей чьё техническое имя содержит переданный фильтр.</p>
+<h2>Вызов AMDP BAdI</h2>
+<p>Вызов AMDP BAdI возможен двумя способами:</p>
+<ul>
+<li>Через стандартные GET BADI и CALL BADI</li>
+<li>Вызов из AMDP процедуры.</li>
+</ul>
+<p>Для первого варианта напишем демо отчёт следующего вида:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zcustom_badi_caller.
+
+PARAMETERS:
+  p_search TYPE string.
+
+START-OF-SELECTION.
+  DATA: go_badi TYPE REF TO zbd_amdp_user_search.
+
+  TRY.
+      GET BADI go_badi.
+
+      CALL BADI go_badi-&gt;search_users
+        EXPORTING
+          iv_filter = p_search
+        IMPORTING
+          et_users  = DATA(gt_users).
+
+      DATA(go_alv) = NEW cl_gui_alv_grid( i_parent = cl_gui_container=&gt;default_screen ).
+
+      go_alv-&gt;set_table_for_first_display( EXPORTING
+                                             i_structure_name = 'USR02'
+                                           CHANGING
+                                             it_outtab        = gt_users ).
+      WRITE space.
+    CATCH cx_root.
+      STOP.
+  ENDTRY.</pre><p>В качестве примера строка поиска:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/search_test.png"><img loading="lazy" class="alignnone size-full wp-image-6993" src="https://abap-blog.ru/wp-content/uploads/2021/03/search_test.png" alt="" width="593" height="51" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/search_test.png 593w, https://abap-blog.ru/wp-content/uploads/2021/03/search_test-300x26.png 300w" sizes="(max-width: 593px) 100vw, 593px" /></a></p>
+<p>Результат &#8212; все пользователи с именем DEV* или S*:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/search_result-1.png"><img loading="lazy" class="alignnone size-full wp-image-6998" src="https://abap-blog.ru/wp-content/uploads/2021/03/search_result-1.png" alt="" width="325" height="104" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/search_result-1.png 325w, https://abap-blog.ru/wp-content/uploads/2021/03/search_result-1-300x96.png 300w" sizes="(max-width: 325px) 100vw, 325px" /></a></p>
+<p>Несмотря на возможность прямого вызова из ABAP кода, в основном AMDP BAdI необходимы для их вызова из AMDP процедур.</p>
+<p>Обычно в таких процедурах написана некая стандартная логика и вызывается дополнительно Custom реализация через BAdI, например чтобы обогатить массив выбираемых данных.</p>
+<p>Создадим подобный AMDP класс со стандартной логикой и следующим именем &#8212; zcl_amdp_user_search:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS zcl_amdp_user_search DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+    INTERFACES: zif_amdp_user_search.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS zcl_amdp_user_search IMPLEMENTATION.
+  METHOD zif_amdp_user_search~search_users BY DATABASE PROCEDURE 
+                                              FOR HDB LANGUAGE SQLSCRIPT 
+                                              OPTIONS READ-ONLY
+                                              USING usr02
+                                              zbd_amdp_user_search=&gt;search_users.
+
+    et_default_users = SELECT * FROM usr02 WHERE CONTAINS ((bname), :iv_filter) AND
+                                                 mandt = SESSION_CONTEXT( 'CLIENT' );
+
+    CALL "ZBD_AMDP_USER_SEARCH=&gt;SEARCH_USERS" (:iv_filter, :et_users);
+
+    et_users = SELECT * FROM :et_default_users UNION
+               SELECT * FROM :et_users;
+  ENDMETHOD.
+ENDCLASS.</pre><p>В качестве демо сценария наш AMDP класс использует свою стандартную логику поиска пользователей, дополнительно обогащая результат выборки через вызов AMDP BAdI и объединяет оба массива данных. По умолчанию логика выборки et_default_users ничем не отличается от реализованной в Fallback классе. Про оптимальность подобной дублирующей логики говорить тут не будем, все таки демо сценарий <img src="https://s.w.org/images/core/emoji/13.1.0/72x72/1f642.png" alt="🙂" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+<p>Ну и создадим демо отчёт по вызову нового AMDP класса:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zcustom_amdp_caller.
+
+PARAMETERS:
+  p_search TYPE string.
+
+START-OF-SELECTION.
+  DATA: go_amdp TYPE REF TO zcl_amdp_user_search.
+
+  TRY.
+      go_amdp = NEW #( ).
+      go_amdp-&gt;zif_amdp_user_search~search_users(
+        EXPORTING
+          iv_filter = p_search
+        IMPORTING
+          et_users  = DATA(gt_users) ).
+
+      DATA(go_alv) = NEW cl_gui_alv_grid( i_parent = cl_gui_container=&gt;default_screen ).
+
+      go_alv-&gt;set_table_for_first_display( EXPORTING
+                                             i_structure_name = 'USR02'
+                                           CHANGING
+                                             it_outtab        = gt_users ).
+      WRITE space.
+    CATCH cx_root.
+      STOP.
+  ENDTRY.</pre><p>Результат его работы будет аналогичен предыдущему отчёту.</p>
+<h2>Создание Custom реализации AMDP BAdI</h2>
+<p>Для того чтобы наши демо отчёты стали возвращать какой-то иной массив данных, создадим новую реализацию BAdI.</p>
+<p>В SE20 в разделе реализации создадим новую реализацию точки расширения с именем &#8212; ZEI_CUS_AMDP_USER_SEARCH:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/custom_impl_create-1.png"><img loading="lazy" class="alignnone size-full wp-image-7001" src="https://abap-blog.ru/wp-content/uploads/2021/03/custom_impl_create-1.png" alt="" width="353" height="184" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/custom_impl_create-1.png 353w, https://abap-blog.ru/wp-content/uploads/2021/03/custom_impl_create-1-300x156.png 300w" sizes="(max-width: 353px) 100vw, 353px" /></a></p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/ei_impl.png"><img loading="lazy" class="alignnone size-full wp-image-7002" src="https://abap-blog.ru/wp-content/uploads/2021/03/ei_impl.png" alt="" width="754" height="140" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/ei_impl.png 754w, https://abap-blog.ru/wp-content/uploads/2021/03/ei_impl-300x56.png 300w" sizes="(max-width: 754px) 100vw, 754px" /></a></p>
+<p>Реализацией &#8212; ZBI_CUSTOM_USER_SEARCH и классом реализации &#8212; ZCL_BI_CUSTOM_USER_SEARCH:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/badi_impl.png"><img loading="lazy" class="alignnone size-full wp-image-7003" src="https://abap-blog.ru/wp-content/uploads/2021/03/badi_impl.png" alt="" width="663" height="140" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/badi_impl.png 663w, https://abap-blog.ru/wp-content/uploads/2021/03/badi_impl-300x63.png 300w" sizes="(max-width: 663px) 100vw, 663px" /></a></p>
+<p>При создании система уведомит что уже есть реализация Fallback класса, скопируем его реализацию.</p>
+<p>Далее откроем класс в Eclipse и напишем обновлённую логику:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS zcl_bi_custom_user_search DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+
+    INTERFACES if_badi_interface .
+    INTERFACES if_amdp_marker_hdb .
+    INTERFACES zif_amdp_user_search .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS zcl_bi_custom_user_search IMPLEMENTATION.
+  METHOD zif_amdp_user_search~search_users BY DATABASE PROCEDURE FOR HDB 
+                                           LANGUAGE SQLSCRIPT
+                                           OPTIONS READ-ONLY
+                                           USING usr02
+                                                 usr21
+                                                 adrp.
+
+    et_users = SELECT usr02.* FROM usr02
+      INNER JOIN usr21 ON usr21.bname = usr02.bname AND
+                          usr21.mandt = usr02.mandt
+      INNER JOIN adrp  ON adrp.persnumber = usr21.persnumber AND
+                         adrp.client = usr02.mandt           AND
+                         adrp.date_from = '00010101'
+      WHERE contains ((adrp.name_text), :iv_filter) AND 
+            usr02.mandt = session_context( 'CLIENT' );
+  ENDMETHOD.
+ENDCLASS.</pre><p>В части реализации мы сделали поиск не по техническому имени пользователя, а по его фамилии и имени из адресных данных.</p>
+<p>Активируем класс, в SE20 активируем нашу BAdI реализацию, теперь она отображается в точке расширения как активная:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/active_badi_impl.png"><img loading="lazy" class="alignnone size-full wp-image-7006" src="https://abap-blog.ru/wp-content/uploads/2021/03/active_badi_impl.png" alt="" width="924" height="223" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/active_badi_impl.png 924w, https://abap-blog.ru/wp-content/uploads/2021/03/active_badi_impl-300x72.png 300w, https://abap-blog.ru/wp-content/uploads/2021/03/active_badi_impl-768x185.png 768w" sizes="(max-width: 924px) 100vw, 924px" /></a></p>
+<p>Запустим любой из наших отчётов с новой строкой поиска:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/new_search-1.png"><img loading="lazy" class="alignnone size-full wp-image-7012" src="https://abap-blog.ru/wp-content/uploads/2021/03/new_search-1.png" alt="" width="576" height="50" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/new_search-1.png 576w, https://abap-blog.ru/wp-content/uploads/2021/03/new_search-1-300x26.png 300w" sizes="(max-width: 576px) 100vw, 576px" /></a></p>
+<p>Результат:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/search_result_next.png"><img loading="lazy" class="alignnone size-full wp-image-7008" src="https://abap-blog.ru/wp-content/uploads/2021/03/search_result_next.png" alt="" width="415" height="110" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/search_result_next.png 415w, https://abap-blog.ru/wp-content/uploads/2021/03/search_result_next-300x80.png 300w" sizes="(max-width: 415px) 100vw, 415px" /></a></p>
+<p>По новой логике мы сформировали массив пользователей у которых:</p>
+<ul>
+<li>Техническое имя начинается на JANE* или DEV*</li>
+<li>Имя и фамилия содержат JANE* или DEV*</li>
+</ul>
+<p>Пользователь BWDEVELOPER имеет следующее имя:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/bwdeveloper.png"><img loading="lazy" class="alignnone size-full wp-image-7010" src="https://abap-blog.ru/wp-content/uploads/2021/03/bwdeveloper.png" alt="" width="400" height="231" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/bwdeveloper.png 400w, https://abap-blog.ru/wp-content/uploads/2021/03/bwdeveloper-300x173.png 300w" sizes="(max-width: 400px) 100vw, 400px" /></a></p>
+<p>Таким образом реализовав Custom реализацию AMDP BAdI мы расширили логику определяемую по умолчанию.</p><p>The post <a href="https://abap-blog.ru/enhancements/amdp-badi/">AMDP BAdI</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/enhancements/amdp-badi/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Оптимальное использование user (customer) exit&#8217;ов с помощью вызова BADI</title>
+		<link>https://abap-blog.ru/enhancements/optimalnoe-ispolzovanie-eser-exitov-s-pomoshhyu-vyzova-badi/</link>
+					<comments>https://abap-blog.ru/enhancements/optimalnoe-ispolzovanie-eser-exitov-s-pomoshhyu-vyzova-badi/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 30 Mar 2014 08:59:48 +0000</pubDate>
+				<category><![CDATA[Расширения]]></category>
+		<category><![CDATA[BADI]]></category>
+		<category><![CDATA[Enhancement Framework]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1869</guid>
+
+					<description><![CDATA[<p>Очень часто в коде какого-либо user (customer) exit можно встретить кучу разных ветвлений, одно вставил программист Петя по задаче X, другое вставил программист Вася по задаче Y. Со временем подобный код становится плохо читаемым. Для удобства его восприятия можно воспользоваться современными BADI, основанными на Enhancement Framework. Суть данного удобства заключается в том, что вместо кучи [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/enhancements/optimalnoe-ispolzovanie-eser-exitov-s-pomoshhyu-vyzova-badi/">Оптимальное использование user (customer) exit’ов с помощью вызова BADI</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Очень часто в коде какого-либо user (customer) exit можно встретить кучу разных ветвлений, одно вставил программист Петя по задаче X, другое вставил программист Вася по задаче Y. Со временем подобный код становится плохо читаемым. Для удобства его восприятия можно воспользоваться современными BADI, основанными на Enhancement Framework.</p>
+<p>Суть данного удобства заключается в том, что вместо кучи ветвлений и нагромождения кода в user exit вызывается свой BADI, конкретные реализации которого являются отдельными друг от друга объектами, каждый из которых ведется и описывается так же отдельно.</p>
+<p>Ниже рассмотрен небольшой пример того, как создать и вызвать реализацию BADI.</p>
+<p><span id="more-1869"></span></p>
+<ul>
+<li>Заходим в транзакцию SE18 и создаем точку расширения:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/03/1.png"><img loading="lazy" class="alignnone size-full wp-image-1870" src="http://abap-blog.ru/wp-content/uploads/2014/03/1.png" alt="1" width="417" height="129" srcset="https://abap-blog.ru/wp-content/uploads/2014/03/1.png 417w, https://abap-blog.ru/wp-content/uploads/2014/03/1-300x92.png 300w" sizes="(max-width: 417px) 100vw, 417px" /></a></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/03/2.png"><img loading="lazy" class="alignnone size-full wp-image-1871" src="http://abap-blog.ru/wp-content/uploads/2014/03/2.png" alt="2" width="644" height="164" srcset="https://abap-blog.ru/wp-content/uploads/2014/03/2.png 644w, https://abap-blog.ru/wp-content/uploads/2014/03/2-300x76.png 300w" sizes="(max-width: 644px) 100vw, 644px" /></a></p>
+<ul>
+<li>Создаем BADI для нашего user exit’a</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/03/3.png"><img loading="lazy" class="alignnone size-full wp-image-1872" src="http://abap-blog.ru/wp-content/uploads/2014/03/3.png" alt="3" width="564" height="205" srcset="https://abap-blog.ru/wp-content/uploads/2014/03/3.png 564w, https://abap-blog.ru/wp-content/uploads/2014/03/3-300x109.png 300w" sizes="(max-width: 564px) 100vw, 564px" /></a></p>
+<p>Убедимся, что создаваемое BADI является многоразовым, т.е. допускается сколько угодно его реализаций:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/03/4.png"><img loading="lazy" class="alignnone size-full wp-image-1873" src="http://abap-blog.ru/wp-content/uploads/2014/03/4.png" alt="4" width="629" height="158" srcset="https://abap-blog.ru/wp-content/uploads/2014/03/4.png 629w, https://abap-blog.ru/wp-content/uploads/2014/03/4-300x75.png 300w" sizes="(max-width: 629px) 100vw, 629px" /></a></p>
+<ul>
+<li> После создания BADI, определяем его интерфейс. В интерфейсе описываем единственный метод some_exit, метод будет получать данные из user  exit’а. Далее, когда будут создаваться реализации нашего BADI, программисты сами будут решать, что делать с этими данными.</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/03/5.png"><img loading="lazy" class="alignnone size-full wp-image-1874" src="http://abap-blog.ru/wp-content/uploads/2014/03/5.png" alt="5" width="786" height="310" srcset="https://abap-blog.ru/wp-content/uploads/2014/03/5.png 786w, https://abap-blog.ru/wp-content/uploads/2014/03/5-300x118.png 300w" sizes="(max-width: 786px) 100vw, 786px" /></a></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/03/6.png"><img loading="lazy" class="alignnone size-full wp-image-1875" src="http://abap-blog.ru/wp-content/uploads/2014/03/6.png" alt="6" width="668" height="142" srcset="https://abap-blog.ru/wp-content/uploads/2014/03/6.png 668w, https://abap-blog.ru/wp-content/uploads/2014/03/6-300x63.png 300w" sizes="(max-width: 668px) 100vw, 668px" /></a></p>
+<ul>
+<li> Добавим единственный параметр:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/03/7.png"><img loading="lazy" class="alignnone size-full wp-image-1876" src="http://abap-blog.ru/wp-content/uploads/2014/03/7.png" alt="7" width="856" height="162" srcset="https://abap-blog.ru/wp-content/uploads/2014/03/7.png 856w, https://abap-blog.ru/wp-content/uploads/2014/03/7-300x56.png 300w" sizes="(max-width: 856px) 100vw, 856px" /></a></p>
+<ul>
+<li> После определения BADI можно приступить к его вызову в коде user exit’a. Далее будет показано как вызвать BADI в тестовой программе (вместо вызова в коде user exit):</li>
+</ul>
+<p></p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZTEST_BADI.
+
+DATA:
+  go_badi_some_exit TYPE REF TO ZBADI_SOME_EXIT,
+  gv_data TYPE String.
+
+START-OF-SELECTION.
+  gv_data = 'Данные EXIT до вызова BADI'.
+
+  GET BADI go_badi_some_exit.
+
+  CALL BADI go_badi_some_exit-&gt;some_exit
+    CHANGING
+      ch_data = gv_data.
+
+  WRITE gv_data.</pre><p><a href="http://abap-blog.ru/wp-content/uploads/2014/03/8.png"><img loading="lazy" class="alignnone size-full wp-image-1877" src="http://abap-blog.ru/wp-content/uploads/2014/03/8.png" alt="8" width="229" height="65" /></a></p>
+<ul>
+<li> Как видно после запуска данные остались неизменными, создадим реализацию расширения и BADI:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/03/9.png"><img loading="lazy" class="alignnone size-full wp-image-1878" src="http://abap-blog.ru/wp-content/uploads/2014/03/9.png" alt="9" width="691" height="185" srcset="https://abap-blog.ru/wp-content/uploads/2014/03/9.png 691w, https://abap-blog.ru/wp-content/uploads/2014/03/9-300x80.png 300w" sizes="(max-width: 691px) 100vw, 691px" /></a></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/03/10.png"><img loading="lazy" class="alignnone size-full wp-image-1879" src="http://abap-blog.ru/wp-content/uploads/2014/03/10.png" alt="10" width="756" height="142" srcset="https://abap-blog.ru/wp-content/uploads/2014/03/10.png 756w, https://abap-blog.ru/wp-content/uploads/2014/03/10-300x56.png 300w" sizes="(max-width: 756px) 100vw, 756px" /></a></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/03/11.png"><img loading="lazy" class="alignnone size-full wp-image-1880" src="http://abap-blog.ru/wp-content/uploads/2014/03/11.png" alt="11" width="665" height="142" srcset="https://abap-blog.ru/wp-content/uploads/2014/03/11.png 665w, https://abap-blog.ru/wp-content/uploads/2014/03/11-300x64.png 300w" sizes="(max-width: 665px) 100vw, 665px" /></a></p>
+<ul>
+<li> Определим метод some_exit:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/03/12.png"><img loading="lazy" class="alignnone size-full wp-image-1881" src="http://abap-blog.ru/wp-content/uploads/2014/03/12.png" alt="12" width="907" height="181" srcset="https://abap-blog.ru/wp-content/uploads/2014/03/12.png 907w, https://abap-blog.ru/wp-content/uploads/2014/03/12-300x59.png 300w" sizes="(max-width: 907px) 100vw, 907px" /></a></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/03/13.png"><img loading="lazy" class="alignnone size-full wp-image-1882" src="http://abap-blog.ru/wp-content/uploads/2014/03/13.png" alt="13" width="549" height="154" srcset="https://abap-blog.ru/wp-content/uploads/2014/03/13.png 549w, https://abap-blog.ru/wp-content/uploads/2014/03/13-300x84.png 300w" sizes="(max-width: 549px) 100vw, 549px" /></a></p>
+<p>Убедимся, что все объекты были активированы, вызовем наш тестовый отчёт еще раз. Как видно из результата мы изменили данные в реализации BADI.</p><p>The post <a href="https://abap-blog.ru/enhancements/optimalnoe-ispolzovanie-eser-exitov-s-pomoshhyu-vyzova-badi/">Оптимальное использование user (customer) exit’ов с помощью вызова BADI</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/enhancements/optimalnoe-ispolzovanie-eser-exitov-s-pomoshhyu-vyzova-badi/feed/</wfw:commentRss>
+			<slash:comments>4</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Прозрачность внедрений</title>
+		<link>https://abap-blog.ru/enhancements/prozrachnost/</link>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 10 Aug 2013 17:32:47 +0000</pubDate>
+				<category><![CDATA[Расширения]]></category>
+		<category><![CDATA[юмор]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1597</guid>
+
+					<description><![CDATA[]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2013/08/oVvWNfGphVY.jpg"><img loading="lazy" class="alignnone size-full wp-image-1598" src="http://abap-blog.ru/wp-content/uploads/2013/08/oVvWNfGphVY.jpg" alt="oVvWNfGphVY" width="776" height="562" srcset="https://abap-blog.ru/wp-content/uploads/2013/08/oVvWNfGphVY.jpg 776w, https://abap-blog.ru/wp-content/uploads/2013/08/oVvWNfGphVY-300x217.jpg 300w" sizes="(max-width: 776px) 100vw, 776px" /></a></p>
+<p><span id="more-1597"></span></p><p>The post <a href="https://abap-blog.ru/enhancements/prozrachnost/">Прозрачность внедрений</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>ОЗМ &#8212; добавление экранов в транзакции MM01,MM02,MM03</title>
+		<link>https://abap-blog.ru/enhancements/ozm-dobavlenie-ekranov-v-tranzakcii-mm01mm02mm03/</link>
+					<comments>https://abap-blog.ru/enhancements/ozm-dobavlenie-ekranov-v-tranzakcii-mm01mm02mm03/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 20 Apr 2012 08:09:42 +0000</pubDate>
+				<category><![CDATA[Расширения]]></category>
+		<category><![CDATA[MM01]]></category>
+		<category><![CDATA[MM02]]></category>
+		<category><![CDATA[MM03]]></category>
+		<category><![CDATA[Расширение экранов]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=751</guid>
+
+					<description><![CDATA[<p>В данной статье будет показано каким образом через настройку системы можно расширить стандартные экраны ведения ОЗМ для транзакций MM01,MM02,MM03. Каких-либо BADI или Screen-exit&#8217;ов для расширения этих экранов не существует, но есть последовательность операций в SPRO благодаря которой мы можем их расширить. Далее  будет продемонстрировано как добавить дополнительный подэкран в в дополнительных данных MM01-MM03. 1. Перейдите [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/enhancements/ozm-dobavlenie-ekranov-v-tranzakcii-mm01mm02mm03/">ОЗМ — добавление экранов в транзакции MM01,MM02,MM03</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>В данной статье будет показано каким образом через настройку системы можно расширить стандартные экраны ведения ОЗМ для транзакций MM01,MM02,MM03.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM00.png"><img loading="lazy" class="alignnone size-full wp-image-771" title="OZM00" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM00.png" alt="" width="634" height="164" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM00.png 634w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM00-300x77.png 300w" sizes="(max-width: 634px) 100vw, 634px" /></a></p>
+<p><span id="more-751"></span></p>
+<p>Каких-либо BADI или Screen-exit&#8217;ов для расширения этих экранов не существует, но есть последовательность операций в <strong>SPRO</strong> благодаря которой мы можем их расширить.</p>
+<p>Далее  будет продемонстрировано как добавить дополнительный подэкран в в дополнительных данных MM01-MM03.</p>
+<p>1. Перейдите по следующему пути: SPRO -&gt; Общая логистика -&gt; Основные записи материалов -&gt; Конфигурация основных записей материалов -&gt; Создание программы для подэкранов пользователей.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM1.png"><img loading="lazy" class="alignnone size-full wp-image-752" title="OZM1" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM1.png" alt="" width="752" height="669" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM1.png 752w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM1-300x266.png 300w" sizes="(max-width: 752px) 100vw, 752px" /></a></p>
+<p>Далее система попросит указать Имя группы функций, которая будет отвечать за обработку подэкранов.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM21.png"><img loading="lazy" class="alignnone size-full wp-image-769" title="OZM2" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM21.png" alt="" width="455" height="179" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM21.png 455w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM21-300x118.png 300w" sizes="(max-width: 455px) 100vw, 455px" /></a></p>
+<p>2. Теперь необходимо определить структуру для последовательности экранов: SPRO -&gt; Общая логистика -&gt; Основные записи материалов -&gt; Конфигурация основных записей материалов -&gt; Определение структуры экранов данных по последовательностям экранов.</p>
+<p>Скопируйте последовательность &#8217;21&#8217; (правой кнопкой &#8212; скопировать как) и назовите ее например &#8216;ZZ&#8217;.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM3.png"><img loading="lazy" class="alignnone size-full wp-image-754" title="OZM3" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM3.png" alt="" width="787" height="505" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM3.png 787w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM3-300x192.png 300w" sizes="(max-width: 787px) 100vw, 787px" /></a></p>
+<p>Теперь выберите данную ZZ последовательность и перейдите на <strong>экраны данных</strong></p>
+<p>Создайте свою запись со следующим содержимым:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM4.png"><img loading="lazy" class="alignnone size-full wp-image-755" title="OZM4" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM4.png" alt="" width="1004" height="495" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM4.png 1004w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM4-300x147.png 300w" sizes="(max-width: 1004px) 100vw, 1004px" /></a></p>
+<p>Где тип экрана определяет каким он будет &#8212; основным (1) или дополнительным (2). Номер экрана подэкранов берем из любой записи доп.данных. Статус ведения определяет какие подразделения отвечают за эти данные, укажем все. Тип заголовка укажем такой же как у любой записи из доп. данных. Другое наименование экрана &#8212; тот текст который будет на закладке подэкрана.</p>
+<p>Далее переходим на подэкраны. И указываем в качестве первого &#8212; 1001 &#8212; экран содержащий номер ОЗМ и его описание. Для второй записи указываем программу группы функций созданную на первом шаге и номер экрана &#8212; 0001 (элементы на экране и логику обработки можно добавить позже).</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM51.png"><img loading="lazy" class="alignnone size-full wp-image-757" title="OZM5" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM51.png" alt="" width="669" height="459" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM51.png 669w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM51-300x205.png 300w" sizes="(max-width: 669px) 100vw, 669px" /></a></p>
+<p>3. Далее необходимо присвоить дополнительные экраны: SPRO -&gt; Общая логистика -&gt; Основные записи материалов -&gt; Конфигурация основных записей материалов -&gt; Присвоение дополнительных экранов. Выбирайте ZZ последовательность, теперь необходимо добавить наш экран к доп. экранам, для этого щелкнуть по кнопке, как показано ниже:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM6.png"><img loading="lazy" class="alignnone size-full wp-image-758" title="OZM6" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM6.png" alt="" width="632" height="525" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM6.png 632w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM6-300x249.png 300w" sizes="(max-width: 632px) 100vw, 632px" /></a></p>
+<p>4. Следующим шагом будет &#171;Ведение последовательностей основных и дополнительных экранов&#187;. Данный шаг не обязателен, вы можете указать на нем в какой последовательности будут выводится экраны.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM7.png"><img loading="lazy" class="alignnone size-full wp-image-759" title="OZM7" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM7.png" alt="" width="604" height="610" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM7.png 604w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM7-150x150.png 150w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM7-297x300.png 297w" sizes="(max-width: 604px) 100vw, 604px" /></a></p>
+<p>5. Следующим шагом мы заменим стандартную последовательность экранов &#8217;21&#8217; на нашу &#8216;ZZ&#8217;: SPRO -&gt; Общая логистика -&gt; Основные записи материалов -&gt; Конфигурация основных записей материалов -&gt; Присвоение последоват. экранов пользователям/ВидамМтр/транзакциям/отраслям.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM8.png"><img loading="lazy" class="alignnone size-full wp-image-760" title="OZM8" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM8.png" alt="" width="800" height="557" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM8.png 800w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM8-300x208.png 300w" sizes="(max-width: 800px) 100vw, 800px" /></a></p>
+<p>Таким образом мы получили следующее:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM93.png"><img loading="lazy" class="alignnone size-full wp-image-764" title="OZM9" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM93.png" alt="" width="642" height="309" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM93.png 642w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM93-300x144.png 300w" sizes="(max-width: 642px) 100vw, 642px" /></a></p>
+<p>Где иконка с надписью это содержимое 0001 экрана в созданной группе функций.</p>
+<p>Оригинал статьи <a href="http://scn.sap.com/community/abap/blog/2012/04/20/configuring-customized-material-master--adding-sub-screens-in-mm01-mm02-mm03" target="_blank" rel="noopener">тут</a>.</p><p>The post <a href="https://abap-blog.ru/enhancements/ozm-dobavlenie-ekranov-v-tranzakcii-mm01mm02mm03/">ОЗМ — добавление экранов в транзакции MM01,MM02,MM03</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/enhancements/ozm-dobavlenie-ekranov-v-tranzakcii-mm01mm02mm03/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Программы автоматического поиска расширений</title>
+		<link>https://abap-blog.ru/enhancements/programmy-avtomaticheskogo-poiska-rasshirenij/</link>
+					<comments>https://abap-blog.ru/enhancements/programmy-avtomaticheskogo-poiska-rasshirenij/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 17 Apr 2012 07:02:32 +0000</pubDate>
+				<category><![CDATA[Расширения]]></category>
+		<category><![CDATA[BADI]]></category>
+		<category><![CDATA[BTE]]></category>
+		<category><![CDATA[Enhancment Point]]></category>
+		<category><![CDATA[Field Exit]]></category>
+		<category><![CDATA[User Exit]]></category>
+		<category><![CDATA[расширения]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=727</guid>
+
+					<description><![CDATA[<p>Ниже небольшой обзор утилит для поиска расширений. Поиск активных пользовательских расширений SNIF Стандартный отчёт который поставляет SAP для поиска всех пользовательских расширений активных в системе. Внешний вид отчёта: ABAP X-Ray Eye Данный отчёт разработан Andrea Olivieri создан по тому же принципу что и SNIF, но позволяет искать на много больше объектов: Скачать его можно на google code [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/enhancements/programmy-avtomaticheskogo-poiska-rasshirenij/">Программы автоматического поиска расширений</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Ниже небольшой обзор утилит для поиска расширений.</p>
+<p><span id="more-727"></span></p>
+<h3>Поиск активных пользовательских расширений</h3>
+<h6>SNIF</h6>
+<p>Стандартный отчёт который поставляет SAP для поиска всех <strong>пользовательских</strong> расширений активных в системе. Внешний вид отчёта:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/SNIF.png"><img loading="lazy" class="alignnone size-full wp-image-728" title="SNIF" src="http://abap-blog.ru/wp-content/uploads/2012/04/SNIF.png" alt="" width="837" height="551" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/SNIF.png 837w, https://abap-blog.ru/wp-content/uploads/2012/04/SNIF-300x197.png 300w" sizes="(max-width: 837px) 100vw, 837px" /></a></p>
+<h6>ABAP X-Ray Eye</h6>
+<p>Данный отчёт разработан <a href="http://scn.sap.com/people/andrea.olivieri" data-containerid="-1" data-containertype="-1" data-objectid="267340" data-objecttype="3">Andrea Olivieri</a> создан по тому же принципу что и SNIF, но позволяет искать на много больше объектов:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/X-RAY.png"><img loading="lazy" class="alignnone size-full wp-image-729" title="X-RAY" src="http://abap-blog.ru/wp-content/uploads/2012/04/X-RAY.png" alt="" width="840" height="701" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/X-RAY.png 840w, https://abap-blog.ru/wp-content/uploads/2012/04/X-RAY-300x250.png 300w" sizes="(max-width: 840px) 100vw, 840px" /></a></p>
+<p>Скачать его можно на <a href="http://code.google.com/p/abapexitrayeye/" target="_blank" rel="noopener">google code project</a> и установить через SAPLink.</p>
+<h3>Поиск доступных расширений системы</h3>
+<p><a href="http://scn.sap.com/people/peter.atkin" data-containerid="-1" data-containertype="-1" data-objectid="320435" data-objecttype="3">Pete Atkin</a> разработал отчёт позволяющий искать возможные расширения в определенной программе или транзакции, отчёт можно скачать по <a href="http://wiki.sdn.sap.com/wiki/display/Snippets/Find+User-exits,+BADIs,+BTEs,+Etc+by+TCode+or+Program" target="_blank" rel="noopener">тут</a>. Пример поиска по транзакции VA02:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/ENHSC1.png"><img loading="lazy" class="alignnone size-full wp-image-730" title="ENHSC1" src="http://abap-blog.ru/wp-content/uploads/2012/04/ENHSC1.png" alt="" width="1185" height="625" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/ENHSC1.png 1185w, https://abap-blog.ru/wp-content/uploads/2012/04/ENHSC1-300x158.png 300w, https://abap-blog.ru/wp-content/uploads/2012/04/ENHSC1-1024x540.png 1024w" sizes="(max-width: 1185px) 100vw, 1185px" /></a></p>
+<h6>ZENHANCEMENT_FINDER</h6>
+<p>Проект Enhancement Finder созданный в SAP Code Exchange, позволяет так же как и предыдущий произвести поиск расширений в указанной программе или транзакции, скачать можно <a href="https://cw.sdn.sap.com/cw/groups/enhancement-finder?view=documents" target="_blank" rel="noopener">тут</a>. Для тех кто не зарегистрирован на SDN <a href="http://abap-blog.ru/ZENHANCEMENT_FINDER.txt" target="_blank" rel="noopener">тут.</a></p>
+<h6>Z_EXTENSIONS_ALV</h6>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/BigScan.png"><img loading="lazy" class="alignnone size-full wp-image-731" title="BigScan" src="http://abap-blog.ru/wp-content/uploads/2012/04/BigScan.png" alt="" width="583" height="549" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/BigScan.png 583w, https://abap-blog.ru/wp-content/uploads/2012/04/BigScan-300x282.png 300w" sizes="(max-width: 583px) 100vw, 583px" /></a></p>
+<p>Еще один интересный проект созданный  Luciano Rebuffi проводит анализ используемого исходного кода, по указанной программе (транзакции), вы можете задать глубину поиска, виды расширений которые вас интересуют и др. условия. Исходный код проекта можно найти <a href="http://www.abap-code.com/archives/find_extensions.txt" target="_blank" rel="noopener">тут.</a></p>
+<p>Полезная статья на тему поиска активных пользовательских внедрений и системных расширений на <a href="http://wiki.sdn.sap.com/wiki/display/ABAP/Ways+to+find+a+userexit" target="_blank" rel="noopener">Wiki.</a> Еще одна полезная статья на русском языке о поиске расширений в системе <a href="http://sapland.ru/articles/stats/2012/1/prakticheskie-rekomendatsii-po-poisku-user-exit-ov-polizovateliskih-rasshirenii.html" target="_blank" rel="noopener">тут</a>.</p><p>The post <a href="https://abap-blog.ru/enhancements/programmy-avtomaticheskogo-poiska-rasshirenij/">Программы автоматического поиска расширений</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/enhancements/programmy-avtomaticheskogo-poiska-rasshirenij/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Вставить картинку справа на начальном экране</title>
+		<link>https://abap-blog.ru/enhancements/vstavit-kartinku-sprava-na-nachalnom-ekrane/</link>
+					<comments>https://abap-blog.ru/enhancements/vstavit-kartinku-sprava-na-nachalnom-ekrane/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 09 Apr 2012 15:28:55 +0000</pubDate>
+				<category><![CDATA[Расширения]]></category>
+		<category><![CDATA[Изображение на начальном экране SAP]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=692</guid>
+
+					<description><![CDATA[<p>Во многих компаниях на начальный экран (тот что после авторизации) с правой стороны помещают свой логотип, делается это следующим образом: Через транзакцию SMW0 загружают новое изображение Через ведение ракурса (SM30) &#8212; SSM_CUST указывают имя загруженного изображения &#8212; START_IMAGE Устанавливают значение HIDE_START_IMAGE &#8212; в NO. В этом же ракурсе можно отключить использование SAP меню &#8212; SAP_MENU_OFF или пользовательские меню &#8212; [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/enhancements/vstavit-kartinku-sprava-na-nachalnom-ekrane/">Вставить картинку справа на начальном экране</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Во многих компаниях на начальный экран (тот что после авторизации) с правой стороны помещают свой логотип, делается это следующим образом:</p>
+<ol>
+<li>Через транзакцию <strong>SMW0 </strong>загружают новое изображение</li>
+<li>Через ведение ракурса (SM30) &#8212; <strong>SSM_CUST </strong>указывают имя загруженного изображения &#8212; START_IMAGE</li>
+<li>Устанавливают значение HIDE_START_IMAGE &#8212; в NO.</li>
+</ol>
+<p>В этом же ракурсе можно отключить использование SAP меню &#8212; SAP_MENU_OFF или пользовательские меню &#8212; ALL_USER_MENUS_OFF. Для настройки стандартного SAP меню используется транзакция &#8212; <strong>SSM2.</strong></p><p>The post <a href="https://abap-blog.ru/enhancements/vstavit-kartinku-sprava-na-nachalnom-ekrane/">Вставить картинку справа на начальном экране</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/enhancements/vstavit-kartinku-sprava-na-nachalnom-ekrane/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Generic Object Services (Часть 2 &#8212; вложения и связи)</title>
+		<link>https://abap-blog.ru/enhancements/generic-object-services-chast-2-vlozheniya-i-soedineniya/</link>
+					<comments>https://abap-blog.ru/enhancements/generic-object-services-chast-2-vlozheniya-i-soedineniya/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 30 Jan 2012 07:31:46 +0000</pubDate>
+				<category><![CDATA[Расширения]]></category>
+		<category><![CDATA[cl_binary_relation]]></category>
+		<category><![CDATA[cl_gos_service_tools]]></category>
+		<category><![CDATA[GOS]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=379</guid>
+
+					<description><![CDATA[<p>Использование соединений Между двумя бизнес объектами могут быть созданы ссылочные связи.  Например: к закупочному заказу мы можем привязать все материальные документы, которые относились к данному заказу. То в какой роли выступает объект, прописывается в ракурсе VROBJROLES.  Например, для того чтобы иметь возможность присоединять плановые заказы в виде ссылок, необходимо внести соответствующую запись в указанный выше [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/enhancements/generic-object-services-chast-2-vlozheniya-i-soedineniya/">Generic Object Services (Часть 2 — вложения и связи)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<h4>Использование соединений</h4>
+<p>Между двумя бизнес объектами могут быть созданы ссылочные связи.  Например: к закупочному заказу мы можем привязать все материальные документы, которые относились к данному заказу. То в какой роли выступает объект, прописывается в ракурсе <strong>VROBJROLES</strong>.  Например, для того чтобы иметь возможность присоединять плановые заказы в виде ссылок, необходимо внести соответствующую запись в указанный выше ракурс. Указать тип роли: <strong>REFERENZ</strong>.</p>
+<p><span id="more-379"></span></p>
+<p>Для создания соединений создан статический метод <strong>create_link</strong> (<strong>DELETE_LINK</strong> – для удаления) класса <strong>cl_binary_relation</strong>, данный метод не поддерживает все типы соединений, в этом случае необходимо воспользоваться ФМ<strong> BINARY_RELATION_CREATE</strong> (<strong>BINARY_RELATION_DELETE</strong> – для удаления).</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  zgos_relation_create.
+*
+*
+CLASS lcl_relation DEFINITION.
+  PUBLIC SECTION.
+    TYPES:
+      BEGIN OF ty_related.
+            INCLUDE TYPE sibflporb.
+    TYPES:
+        relation TYPE oblreltype,
+      END OF ty_related.
+    TYPES:
+      ty_t_related TYPE STANDARD TABLE OF ty_related.
+    METHODS:
+      CONSTRUCTOR
+        IMPORTING
+          obj_no   TYPE sibfboriid
+          obj_type TYPE sibftypeid
+          obj_cat  TYPE sibfcatid.
+    METHODS:
+      add_relation
+        IMPORTING
+          obj_no   TYPE sibfboriid
+          obj_type TYPE sibftypeid
+          obj_cat  TYPE sibfcatid
+          relation TYPE oblreltype.
+    METHODS:
+      create_relations.
+  PRIVATE SECTION.
+    DATA:
+      t_related TYPE ty_t_related,  "sibflporbt,
+      my_prop   TYPE sibflporb.
+ENDCLASS.                    "lcl_relation DEFINITION
+*
+*
+CLASS lcl_relation IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+* Установим id объекта к которому добавляем соединение
+    me-&gt;my_prop-instid = obj_no.
+    me-&gt;my_prop-typeid = obj_type.
+    me-&gt;my_prop-catid  = obj_cat.
+  ENDMETHOD.                    "constructor
+  METHOD add_relation.
+* Добавим соединение во внутреннюю таблицу
+    FIELD-SYMBOLS: &lt;lfs_relat&gt; LIKE LINE OF me-&gt;t_related.
+    APPEND INITIAL LINE TO me-&gt;t_related ASSIGNING &lt;lfs_relat&gt;.
+    &lt;lfs_relat&gt;-instid = obj_no.
+    &lt;lfs_relat&gt;-typeid = obj_type.
+    &lt;lfs_relat&gt;-catid  = obj_cat.
+    &lt;lfs_relat&gt;-relation = relation.
+  ENDMETHOD.                    "add_relation
+*
+  METHOD create_relations.
+    DATA: lwa_relate_key TYPE sibflporb.
+    FIELD-SYMBOLS: &lt;lfs_relat&gt; LIKE LINE OF me-&gt;t_related.
+*
+    DATA:
+      ls_parent   TYPE borident,
+      ls_related  TYPE borident,
+      lv_relation TYPE binreltyp,
+      lx_obl    TYPE REF TO cx_obl,
+      lp_errstr TYPE STRING,
+      lv_done TYPE flag.
+*
+    LOOP AT me-&gt;t_related ASSIGNING &lt;lfs_relat&gt;.
+      MOVE-CORRESPONDING &lt;lfs_relat&gt; TO lwa_relate_key.
+      TRY.
+          CALL METHOD cl_binary_relation=&gt;create_link
+            EXPORTING
+              is_object_a = my_prop
+              is_object_b = lwa_relate_key
+              ip_reltype  = &lt;lfs_relat&gt;-relation.
+*
+          lv_done = 'X'.
+*
+* Если соединение не может быть обработано данным классом
+* Воспользуемся ФМ
+        CATCH cx_obl_model_error.
+*
+          ls_parent-objkey  = me-&gt;my_prop-instid.
+          ls_parent-objtype = me-&gt;my_prop-typeid.
+          ls_related-objkey  = &lt;lfs_relat&gt;-instid.
+          ls_related-objtype = &lt;lfs_relat&gt;-typeid.
+          lv_relation = &lt;lfs_relat&gt;-relation.
+*
+          CALL FUNCTION 'BINARY_RELATION_CREATE'
+            EXPORTING
+              obj_rolea      = ls_parent
+              obj_roleb      = ls_related
+              relationtype   = lv_relation
+            EXCEPTIONS
+              no_model       = 1
+              internal_error = 2
+              unknown        = 3
+              OTHERS         = 4.
+          IF sy-subrc &lt;&gt; 0.
+            MESSAGE ID sy-msgid TYPE 'S' NUMBER sy-msgno
+                    WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+          ELSE.
+            lv_done = 'X'.
+          ENDIF.
+        CATCH cx_obl INTO lx_obl.
+          lp_errstr = lx_obl-&gt;get_text( ).
+          MESSAGE lp_errstr TYPE 'S'.
+      ENDTRY.
+*
+      IF lv_done = 'X'.
+        WRITE: / 'Связь создана: ', &lt;lfs_relat&gt;-instid(10), &lt;lfs_relat&gt;-relation.
+      ENDIF.
+*
+    ENDLOOP.
+*
+    COMMIT WORK.
+*
+  ENDMETHOD.
+ENDCLASS.
+*
+START-OF-SELECTION.
+  DATA: o_relation TYPE REF TO lcl_relation.
+*
+* В качестве документа к которому создаем соединение выступает сбытовой заказ
+  CREATE OBJECT o_relation
+    EXPORTING
+      obj_no   = '1000010010'
+      obj_type = 'BUS2032'
+      obj_cat  = 'BO'.
+*
+* Добавим поставку в качестве ссылки к сбытовому заказу
+  o_relation-&gt;add_relation(
+    obj_no   = '8000020000'
+    obj_type = 'LIKP'
+    obj_cat  = 'BO'
+    relation = 'LINK' ).             " Link
+*
+* Добавим IDOC в качестве ссылки к сбытовому заказу
+  o_relation-&gt;add_relation(
+    obj_no   = '1000012345'
+    obj_type = 'IDOC'
+    obj_cat  = 'BO'
+    relation = 'IDC0' ).             " IDOC
+*
+* Создаем соединения
+  o_relation-&gt;create_relations( ).</pre><p><strong>Работа с вложениями</strong></p>
+<p>Для получения списка вложений можно воспользоваться все тем же классом cl_binary_relation и его методом <strong>read_links</strong>. Для чтения содержимого вложения используется ФМ: <strong>SO_OBJECT_READ</strong>.</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  zgos_note.
+
+START-OF-SELECTION.
+  DATA: gs_lpor TYPE sibflporb,
+        lt_relat TYPE obl_t_relt,
+        la_relat LIKE LINE OF lt_relat.
+
+  gs_lpor-instid = '4500000324'.
+  gs_lpor-typeid = 'BUS2012'.
+  gs_lpor-catid  = 'BO'.
+
+  la_relat-SIGN = 'I'.
+  la_relat-OPTION = 'CP'.
+  la_relat-LOW = '*'.
+  APPEND la_relat TO lt_relat.
+
+  DATA: t_links TYPE obl_t_link,
+        la_links LIKE LINE OF t_links.
+
+  DATA: lo_root TYPE REF TO CX_ROOT.
+
+  TRY.
+      CALL METHOD cl_binary_relation=&gt;read_links
+        EXPORTING
+          is_object           = gs_lpor
+          it_relation_options = lt_relat
+        IMPORTING
+          et_links            = t_links.
+    CATCH CX_ROOT INTO lo_root.
+  ENDTRY.
+
+  DATA l_folder_id TYPE soodk.
+  DATA l_object_id TYPE soodk.
+  DATA document_id TYPE sofmk.
+
+  READ TABLE t_links INTO la_links INDEX 1.
+  document_id = la_links-instid_b.
+
+  l_folder_id-objtp = document_id-foltp.
+  l_folder_id-objyr = document_id-folyr.
+  l_folder_id-objno = document_id-folno.
+
+  l_object_id-objtp = document_id-doctp.
+  l_object_id-objyr = document_id-docyr.
+  l_object_id-objno = document_id-docno.
+
+  DATA: document_content  TYPE STANDARD TABLE OF soli,
+        SOFM2   TYPE SOOD2. " Кто и когда создал
+* Получение содержимого файла.
+  CALL FUNCTION 'SO_OBJECT_READ'
+    EXPORTING
+      folder_id                  = l_folder_id
+      object_id                  = l_object_id
+    IMPORTING
+      object_hd_display          = SOFM2
+    TABLES
+      objcont                    = document_content
+    EXCEPTIONS
+      active_user_not_exist      = 1
+      communication_failure      = 2
+      component_not_available    = 3
+      folder_not_exist           = 4
+      folder_no_authorization    = 5
+      object_not_exist           = 6
+      object_no_authorization    = 7
+      operation_no_authorization = 8
+      owner_not_exist            = 9
+      parameter_error            = 10
+      substitute_not_active      = 11
+      substitute_not_defined     = 12
+      system_failure             = 13
+      x_error                    = 14
+      OTHERS                     = 15.
+  IF sy-subrc NE 0.
+    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+            WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+  ENDIF.</pre><p>Еще один полезный метод  <strong>copy_linked_objects</strong> класса <strong>cl_gos_service_tools</strong> позволяет копировать вложения между двумя бизнес объектами.</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  Zсopy_gos_att.
+*
+*
+DATA: lt_services TYPE tgos_sels.    " Services table typ
+DATA: ls_service TYPE sgos_sels.     " Services structure type
+DATA: ls_source TYPE sibflporb,      " Source
+      ls_target TYPE sibflporb.      " Target
+*
+START-OF-SELECTION.
+*
+* Service needs to be performed
+  ls_service-SIGN   = 'I'.
+  ls_service-OPTION = 'EQ'.
+  ls_service-LOW    = 'PCATTA_CREA'.
+  APPEND ls_service TO lt_services.
+*
+* Source
+  ls_source-instid = 'CUST1'.
+  ls_source-typeid = 'KNA1'.
+  ls_source-catid  = 'BO'.
+*
+* Target
+  ls_target-instid = 'CUST2'.
+  ls_target-typeid = 'KNA1'.
+  ls_target-catid  = 'BO'.
+*
+* Copy the objects between Source and Target
+  cl_gos_service_tools=&gt;copy_linked_objects(
+      is_source            = ls_source
+      is_target            = ls_target
+      it_service_selection = lt_services
+         ).
+*
+  COMMIT WORK.</pre><p><a href="http://abap-blog.ru/others/generic-object-services-chast-1/">Предыдущая статья</a></p><p>The post <a href="https://abap-blog.ru/enhancements/generic-object-services-chast-2-vlozheniya-i-soedineniya/">Generic Object Services (Часть 2 — вложения и связи)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/enhancements/generic-object-services-chast-2-vlozheniya-i-soedineniya/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Generic Object Services (Часть 1 &#8212; Введение)</title>
+		<link>https://abap-blog.ru/enhancements/generic-object-services-chast-1/</link>
+					<comments>https://abap-blog.ru/enhancements/generic-object-services-chast-1/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 27 Jan 2012 04:40:57 +0000</pubDate>
+				<category><![CDATA[Расширения]]></category>
+		<category><![CDATA[CL_GOS_SERVICE]]></category>
+		<category><![CDATA[Generic Object Services]]></category>
+		<category><![CDATA[GOS]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=359</guid>
+
+					<description><![CDATA[<p>GOS – технология предоставляющая функции к разным приложениям SAP. Эти функции всегда относятся к объекту приложения, например: показывают связанные с ним файлы, запускают Workflow, добавляют заметки пользователя к объекту, отправляют его по почте. Под объектом понимается бизнес объект: материал, сбытовой заказ, закупочный заказ и т.п. (посмотреть можно в SWO1) Внешне это выглядит как кнопка на [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/enhancements/generic-object-services-chast-1/">Generic Object Services (Часть 1 — Введение)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>GOS – технология предоставляющая функции к разным приложениям SAP. Эти функции всегда относятся к объекту приложения, например: показывают связанные с ним файлы, запускают Workflow, добавляют заметки пользователя к объекту, отправляют его по почте.</p>
+<p><span id="more-359"></span></p>
+<p>Под объектом понимается бизнес объект: материал, сбытовой заказ, закупочный заказ и т.п. (посмотреть можно в SWO1) Внешне это выглядит как кнопка на панели инструментов с заголовком программы:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_1.png"><img loading="lazy" class="alignnone size-full wp-image-360" title="gos1_1" src="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_1.png" alt="" width="255" height="92" /></a></p>
+<p>Возможности GOS:</p>
+<ul>
+<li>Ввод личных и общих заметок к объекту</li>
+<li>Создание вложений к объекту (картинки, документы и т.п.)</li>
+<li>Создание связей между объектами (Например: к объекту закупочного заказа можно прикрепить все материальные документы, заявки).</li>
+<li>Показывает все Workflows, в которых используется объект, позволяет вести архивирование и запуск.</li>
+<li>Возможность отправки объекта во вложении в письме из одной SAP системы в другую</li>
+<li>Подписываться на объект, для уведомления обо всех изменениях, вносимых в него</li>
+<li>Добавлять в список фаворитов, для быстрого доступа к объекту (Система –&gt; Мои объекты).</li>
+</ul>
+<h2>Администрирование GOS</h2>
+<p>Необходимые роли для администрирования GOS: SAP_BC_SRV_GBT, SAP_BC_BMT_WFM_ADMIN and SAP_BC_SRV_ARL_ADMIN. Авторизация для работы с GOS зависит от авторизации со связанным бизнес объектом.  Если у пользователя нет полномочий на изменение бизнес объекта, те действия GOS, которые вносят какие либо изменения, так же не будут ему доступны.</p>
+<p>Все пользователи имеют доступ к общим вложениям и заметкам, но доступ на изменение заметки или вложения имеет пользователь, который их создал.  Только пользователь, который создал личную заметку, имеет возможность ее просматривать или изменять. Для ввода бизнес документов, штрих кодов должен быть настроен <a href="http://help.sap.com/saphelp_nw70/helpdata/EN/5e/566039b85f9443e10000000a114084/frameset.htm" target="_parent" rel="noopener noreferrer">ArchiveLink</a> (транзакции OAC1-5).</p>
+<p>Отправка бизнес объекта как вложения использует функциональность Business Workplace, для его настройки обратитесь к справке <a href="http://help.sap.com/saphelp_nw70/helpdata/EN/6c/69c302418d11d1896e0000e8322d00/frameset.htm" target="_parent" rel="noopener noreferrer">Administration of Send, Folder and Office Functions</a>.</p>
+<p>Отправка внешних писем использует SAPConnect, его администрирование рассматривается тут <a href="http://help.sap.com/saphelp_nw70/helpdata/EN/2b/d925bf4b8a11d1894c0000e8323c4f/frameset.htm" target="_parent" rel="noopener noreferrer">SAPconnect (BC-SRV-COM)</a>.</p>
+<p>Администрирование Workflow рассматривается тут <a href="http://help.sap.com/saphelp_nw70/helpdata/EN/b9/2a651eb04411d2b46f006094b9ea0d/frameset.htm" target="_parent" rel="noopener noreferrer">Workflow System Administration</a>.</p>
+<h3>Настройка подписки на изменения объектов</h3>
+<p>По умолчанию пользователь может подписываться на события или изменения объектов, но вы так же можете добавить и свои дополнительные события.</p>
+<p>Процедура настройки:</p>
+<ol start="1">
+<li>Перейдите в ведение ракурса таблицы SM30 – SGOSSUB</li>
+<li>Создайте новую запись и укажите:</li>
+</ol>
+<ul>
+<li>Тип объекта (BUS2012 – заказ на поставку, просмотреть можно в тр. SWO1)</li>
+<li>Событие, на которое будем подписываться (CHANGED – изменение заказа)</li>
+<li>Индикатор подписки, если она активна, ставим галочку</li>
+<li>Функциональный модуль для дополнительной проверки</li>
+<li>Заголовок письма (Объект &amp;OBJKEY&amp; был изменен &#8212; &amp;SY-DATUM&amp;, тип объекта – &amp;OBJTYP&amp;, атрибут &amp;ATTRIBUTE&amp;)</li>
+<li>Содержимое письма, в качестве стандартного содержимого используется текст SGBT_DEF_SUB.</li>
+<li>Нажмите сохранить.</li>
+</ul>
+<div><span style="line-height: 18px;"><a href="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_7.png"><img loading="lazy" class="alignnone size-full wp-image-366" title="gos1_7" src="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_7.png" alt="" width="599" height="335" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/gos1_7.png 599w, https://abap-blog.ru/wp-content/uploads/2012/01/gos1_7-300x167.png 300w" sizes="(max-width: 599px) 100vw, 599px" /></a></span></div>
+<p>После чего можно настроить уведомление на изменение бизнес объекта (заказа на закупку). Нажав на кнопку GOS -&gt; Мои объекты -&gt; Абонировать/сторнировать объект.</p>
+<h3>Добавление своего пункта меню в панель GOS</h3>
+<p>Перед добавлением своего пункта меню в GOS панель необходимо создать глобальный класс реализующий обработку события выбора данного пункта меню. Класс должен быть унаследован от CL_GOS_SERVICE. В качестве примера я создам пункт меню, при нажатии на который показывается пользователь, создавший закупочный заказ.</p>
+<ul>
+<li>Создадим наследуемый от CL_GOS_SERVICE глобальный класс ZCL_PO_USER_CHANGE. (тр. SE24).</li>
+<li>Логика обработки нажатия на наш элемент в GOS панели обрабатывается в методе EXECUTE. Необходимо переопределить метод, внести туда наш код.</li>
+</ul>
+<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: ERNAM TYPE EKKO-ERNAM.
+
+SELECT SINGLE ERNAM INTO (ernam) FROM EKKO WHERE EBELN EQ GS_LPORB-INSTID.
+IF sy-subrc EQ 0.
+  MESSAGE ernam TYPE 'I'.
+ENDIF.</pre><p></p>
+<ul>
+<li>Переопределить метод  CHECK_STATUS, для активации сервиса только для объекта BUS2012</li>
+</ul>
+<p></p><pre class="urvanov-syntax-highlighter-plain-tag">IF gs_lporb-typeid EQ 'BUS2012'.
+    ep_status = mp_status_active.
+  ELSE.
+    ep_status = mp_status_invisible.
+  ENDIF.</pre><p></p>
+<ul>
+<li>Для добавления к списку сервисов необходимо внести его через ведение в SM30 таблица SGOSATTR.</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_2.png"><img loading="lazy" class="alignnone size-full wp-image-361" title="gos1_2" src="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_2.png" alt="" width="593" height="410" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/gos1_2.png 593w, https://abap-blog.ru/wp-content/uploads/2012/01/gos1_2-300x207.png 300w" sizes="(max-width: 593px) 100vw, 593px" /></a></p>
+<ul>
+<li>После создания записи необходимо добавить ссылку на наш сервис в крайнем в очереди сервисе, в моем случае это справка к GOS (Можно вставить и по середине, для этого придется изменить 2 записи):</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_3.png"><img loading="lazy" class="alignnone size-full wp-image-362" title="gos1_3" src="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_3.png" alt="" width="592" height="414" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/gos1_3.png 592w, https://abap-blog.ru/wp-content/uploads/2012/01/gos1_3-300x209.png 300w" sizes="(max-width: 592px) 100vw, 592px" /></a></p>
+<p>Если этого не сделать сервис будет не активным. Флаг Управление означает, что при выполнении сервиса будет создан контейнер (параметр IO_CONTAINER в методе EXECUTE).</p>
+<p>В конечном итоге для GOS панели объекта BUS2012 (Закупочный заказ, тр. ME23n) мы создали пункт меню который дает нам информацию о пользователе, создавшем заказ.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_4.png"><img loading="lazy" class="alignnone size-full wp-image-363" title="gos1_4" src="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_4.png" alt="" width="437" height="193" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/gos1_4.png 437w, https://abap-blog.ru/wp-content/uploads/2012/01/gos1_4-300x132.png 300w" sizes="(max-width: 437px) 100vw, 437px" /></a></p><p>The post <a href="https://abap-blog.ru/enhancements/generic-object-services-chast-1/">Generic Object Services (Часть 1 — Введение)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/enhancements/generic-object-services-chast-1/feed/</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

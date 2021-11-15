@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>MESSAGE | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/message/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:09:33 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Гибкая настройка сообщений</title>
+		<link>https://abap-blog.ru/osnovy-abap/gibkaya-nastrojka-vyzyvaemyx-soobshhenij/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/gibkaya-nastrojka-vyzyvaemyx-soobshhenij/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 14 Jan 2014 16:55:41 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[MESSAGE]]></category>
+		<category><![CDATA[OBA5]]></category>
+		<category><![CDATA[OBMSG]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1751</guid>
+
+					<description><![CDATA[<p>При работе с сообщениями иногда может возникнуть необходимость настройки типов выводимых сообщений (было информационным, а захотели сделать сообщением об ошибке, либо вообще отключить вывод сообщения).  Ниже будет подробнее разобрано как это реализовать.  &#160; Рассмотрим небольшой пример. Есть следующий класс сообщений ZMESSAGES (транзакция SE91): Программа: [crayon-618a1ef118ef8710291609/] Если на экране выбора не задать входной параметр, программа сообщит нам [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/gibkaya-nastrojka-vyzyvaemyx-soobshhenij/">Гибкая настройка сообщений</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><span style="line-height: 1.5em;"><a href="http://abap-blog.ru/wp-content/uploads/2014/01/graphics-warning-sign-954409.jpg"><img loading="lazy" class=" wp-image-1752 alignleft" src="http://abap-blog.ru/wp-content/uploads/2014/01/graphics-warning-sign-954409-300x240.jpg" alt="graphics-warning-sign-954409" width="144" height="115" srcset="https://abap-blog.ru/wp-content/uploads/2014/01/graphics-warning-sign-954409-300x240.jpg 300w, https://abap-blog.ru/wp-content/uploads/2014/01/graphics-warning-sign-954409-1024x819.jpg 1024w, https://abap-blog.ru/wp-content/uploads/2014/01/graphics-warning-sign-954409.jpg 1280w" sizes="(max-width: 144px) 100vw, 144px" /></a>При работе с сообщениями иногда может возникнуть необходимость настройки типов выводимых сообщений (было информационным, а захотели сделать сообщением об ошибке, либо вообще отключить вывод сообщения).  Ниже будет подробнее разобрано как это реализовать. </span></p>
+<p>&nbsp;</p>
+<p><span id="more-1751"></span></p>
+<p>Рассмотрим небольшой пример. <span style="line-height: 1.5em;">Есть следующий класс сообщений ZMESSAGES (транзакция </span><b style="line-height: 1.5em;">SE91</b><span style="line-height: 1.5em;">):</span></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/01/message_class.png"><img loading="lazy" class="alignnone size-full wp-image-1753" src="http://abap-blog.ru/wp-content/uploads/2014/01/message_class.png" alt="message_class" width="711" height="155" srcset="https://abap-blog.ru/wp-content/uploads/2014/01/message_class.png 711w, https://abap-blog.ru/wp-content/uploads/2014/01/message_class-300x65.png 300w" sizes="(max-width: 711px) 100vw, 711px" /></a></p>
+<p><span style="line-height: 1.5em;">Программа:</span></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_param TYPE char10.
+
+START-OF-SELECTION.
+  IF p_param IS INITIAL.
+    MESSAGE e000(ZMESSAGES).
+  ENDIF.
+
+  WRITE: 'Параметр:', p_param.</pre><p>Если на экране выбора не задать входной параметр, программа сообщит нам об этом и прекратит дальнейшее выполнение:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/01/error.png"><img loading="lazy" class="alignnone size-full wp-image-1754" src="http://abap-blog.ru/wp-content/uploads/2014/01/error.png" alt="error" width="270" height="23" /></a></p>
+<p>Сделаем нашу программу более универсальной позволив настраивать тип выводимого сообщения через стандартные транзакции. Запускаем транзакцию <b>OBMSG </b>и добавляем новую прикладную область (класс сообщений):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/01/obmsg.png"><img loading="lazy" class="alignnone size-full wp-image-1755" src="http://abap-blog.ru/wp-content/uploads/2014/01/obmsg.png" alt="obmsg" width="486" height="84" srcset="https://abap-blog.ru/wp-content/uploads/2014/01/obmsg.png 486w, https://abap-blog.ru/wp-content/uploads/2014/01/obmsg-300x51.png 300w" sizes="(max-width: 486px) 100vw, 486px" /></a></p>
+<p><span style="line-height: 1.5em;">Для прикладной области настраиваем сообщение. На данном шаге необходимо указать допустимые типы сообщений (индикатор </span><b style="line-height: 1.5em;">выключить</b><span style="line-height: 1.5em;"> убирает возможность ограничения допустимых сообщений в последующей настройке OBA5):</span></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/01/obmsg2.png"><img loading="lazy" class="alignnone size-full wp-image-1756" src="http://abap-blog.ru/wp-content/uploads/2014/01/obmsg2.png" alt="obmsg2" width="679" height="79" srcset="https://abap-blog.ru/wp-content/uploads/2014/01/obmsg2.png 679w, https://abap-blog.ru/wp-content/uploads/2014/01/obmsg2-300x34.png 300w" sizes="(max-width: 679px) 100vw, 679px" /></a></p>
+<p><span style="line-height: 1.5em;">Далее необходимо переопределить сообщение в транзакции </span><b style="line-height: 1.5em;">OBA5 </b><span style="line-height: 1.5em;">(можем определить сообщение для конкретного пользователя, а так же отдельно для пакетного ввода и диалогового режима):</span></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/01/oba5.png"><img loading="lazy" class="alignnone size-full wp-image-1757" src="http://abap-blog.ru/wp-content/uploads/2014/01/oba5.png" alt="oba5" width="601" height="122" srcset="https://abap-blog.ru/wp-content/uploads/2014/01/oba5.png 601w, https://abap-blog.ru/wp-content/uploads/2014/01/oba5-300x60.png 300w" sizes="(max-width: 601px) 100vw, 601px" /></a></p>
+<p><span style="line-height: 1.5em;">Изменяем программу следующим образом:</span></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_param TYPE char10.
+
+START-OF-SELECTION.
+  IF p_param IS INITIAL.
+    CALL FUNCTION 'CUSTOMIZED_MESSAGE'
+      EXPORTING
+        i_arbgb = 'ZMESSAGES'
+        i_msgnr = '000'
+        i_dtype = 'E'.  " Необходимо указание, если не настроено в OBA5
+  ENDIF.
+
+  WRITE: 'Параметр:', p_param.</pre><p>Модуль <b>CUSTOMIZED_</b><b>MESSAGE</b> вызывает сообщение с настроенным типом, либо не вызывает вовсе если в качестве типа установлен «-». Для того чтобы определить тип сообщения, без его вызова можно использовать ФМ: <b>READ_CUSTOMIZED_MESSAGE</b>.</p>
+<p>Для того чтобы пользователь знал о том, что можно перенастроить сообщение, в подробный текст необходимо вставить следующую команду (INCLUDE &#8216;CUSTOMIZED_MESSAGE_INFO&#8217; OBJECT DOKU ID TX):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/01/message_text.png"><img loading="lazy" class="alignnone size-full wp-image-1758" src="http://abap-blog.ru/wp-content/uploads/2014/01/message_text.png" alt="message_text" width="589" height="225" srcset="https://abap-blog.ru/wp-content/uploads/2014/01/message_text.png 589w, https://abap-blog.ru/wp-content/uploads/2014/01/message_text-300x114.png 300w" sizes="(max-width: 589px) 100vw, 589px" /></a></p>
+<p>Тогда при выводе сообщения в подробном тексте пользователь увидит следующее:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/01/message_text2.png"><img loading="lazy" class="alignnone size-full wp-image-1759" src="http://abap-blog.ru/wp-content/uploads/2014/01/message_text2.png" alt="message_text2" width="1115" height="191" srcset="https://abap-blog.ru/wp-content/uploads/2014/01/message_text2.png 1115w, https://abap-blog.ru/wp-content/uploads/2014/01/message_text2-300x51.png 300w, https://abap-blog.ru/wp-content/uploads/2014/01/message_text2-1024x175.png 1024w" sizes="(max-width: 1115px) 100vw, 1115px" /></a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/gibkaya-nastrojka-vyzyvaemyx-soobshhenij/">Гибкая настройка сообщений</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/gibkaya-nastrojka-vyzyvaemyx-soobshhenij/feed/</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

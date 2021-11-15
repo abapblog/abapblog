@@ -1,0 +1,2424 @@
+<!doctype html>
+<html lang="ru" itemscope itemtype="https://schema.org/Article" prefix="og: http://ogp.me/ns#">
+    <head>
+        <title itemprop="name">Оконные функции – то, что должен знать каждый T-SQL программист. Часть 1. - Fast Reports</title>
+        <meta charset="utf-8">
+        <meta name="theme-color" content="#fff"/>
+        <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE"/>
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1.0"/>
+        <link rel="canonical" href="https://fastreport.ru/ru/blog/show/window-functions-tsql-part1/">
+        <link rel="amphtml" href="https://fastreport.ru/ru/blog/show/window-functions-tsql-part1/?amp">
+
+<meta property="og:title" content="Оконные функции – то, что должен знать каждый T-SQL программист. Часть 1."/>
+<meta property="og:description" content="Еще в Microsoft SQL Server 2005 появился интересный функционал &ndash; оконные функции. Это функции, которые позволяют осуществлять вычисления в заданном диапазоне строк внутри предложения Select. Для..."/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content= "/ru/blog/show/window-functions-tsql-part1/" />
+<meta property="og:site_name" content="Fast Reports">
+<meta property="article:published_time" content="2018-12-6 01:00" /><meta property="article:author" content="Dmitriy Fedyashov" /><meta property="article:tag" content="SQL" />
+<meta property="article:tag" content="Window function" />
+        <meta name="ahrefs-site-verification" content="1f07c17e57fe44b6257ac51fa5b6df44fe9419037a3cb0fe252803c91bdd306c">
+                    <link rel="stylesheet" type="text/css" href="/assets/main.css?10.0.44"/>
+                <link rel="stylesheet" type="text/css" href="/assets/blog-page.css?10.0.44"/>
+        <link rel="shortcut icon" href="/favicon.ico?8.6.7"/>
+                    <script>
+            var initData = {};
+            var language = 'ru';var isAuthenticated = false;
+            var user = {username: 'Guest'};</script>
+            <!-- Google Tag Manager -->
+<script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MP2V5NK');</script>
+<!-- End Google Tag Manager -->
+        
+        
+        	        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "url": "'https://fastreport.ru/ru/blog/show/window-functions-tsql-part1/",
+                                "logo": "https://fast-report.com//images/073eb0e.png?8.6.7",
+                                "name" : "Fast Reports",
+                "sameAs" : [
+                    "https://fast-report.com/",
+                    "https://www.facebook.com/FastReports/",
+                    "https://twitter.com/fastreports/",
+                    "https://vk.com/fastreport/",
+                    "https://instagram.com/fastreports/",
+                    "https://www.youtube.com/channel/UCxAO6-zSDmcWlKzL7mwiTQg/",
+                    "https://www.linkedin.com/groups/3705685/"
+                ]
+            }
+        </script>
+        
+                </head>
+    <body>
+        <div id="root">
+                    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MP2V5NK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+        <script type="text/javascript">(function(d) {var stat_url = 'stat.fastreport.ru',pkBaseURL = (("https:" == d.location.protocol) ? "https://" + stat_url + "/" : "http://" + stat_url + "/"),g=d.createElement('script');g.type='text/javascript';g.async=true;g.defer=true;g.src=pkBaseURL + 'piwik.js';var x = document.getElementsByTagName('script')[0];x.parentNode.insertBefore(g, x);g.onload = function(){try {var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);piwikTracker.setCustomVariable(1, "UserType", "Anonimus", "visit");piwikTracker.trackPageView();piwikTracker.enableLinkTracking();
+        } catch(err) {}};})(document);
+    </script>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+        window.yaid = '39860180';
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym");
+    ym(parseInt(window.yaid), "init", {clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true,trackHash:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/39860180" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+    <noscript><p><img src="https://stat.fastreport.ru/piwik.php?idsite=4" style="border:0" alt=""/></p></noscript>
+        <script type='text/javascript'>
+    window.initData = window.initData || {};window.initData.jivositeWidgetId = 'eKtECVRpd8';</script><script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-61693810-1']);
+_gaq.push(['_setDomainName', 'fast-report.com']);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+                            <div class="menu">
+    <div class="menu__wrapper">
+        <a href="/ru/" class="logo menu__logo">
+            <div class="logo__icon logo__icon_full">
+                <img src="/bundles/fastreportssite/images/svg/full-logo.svg?8.6.7" alt="logo"/>
+            </div>
+            <div class="logo__icon logo__icon_short">
+                <img src="/bundles/fastreportssite/images/svg/short-logo.svg?8.6.7" alt="small logo"/>
+            </div>
+        </a>
+        <div class="menu__navigation">
+            <nav class="menu__nav">
+                <button class="menu__btn-open" name="Open menu">
+                    <div class="menu__icon-open"></div>
+                </button>
+                <ul class="menu__nav-list">
+                    <li class="menu__nav-item menu__nav-item-close">
+                        <button class="menu__close-btn" name="Close menu">
+                            <div class="menu__icon-close"></div>
+                        </button>
+                    </li>
+                    <li class="menu__nav-item">
+                        <a href="/ru/product/list/" class="menu__link">Продукты</a>
+                    </li>
+                    <li class="menu__nav-item">
+                        <a href="/ru/buy/" class="menu__link">Купить</a>
+                    </li>
+                    <li class="menu__nav-item">
+                        <a href="/ru/support/" class="menu__link">Поддержка</a>
+                    </li>
+                    <li class="menu__nav-item">
+                        <a href="/ru/blog/" class="menu__link">Статьи</a>
+                    </li>
+                </ul>
+            </nav>
+            <aside class="menu__aside">
+                <ul class="menu__aside-list">
+                    <li class="menu__aside-item">
+                        <div class="drop-content">
+                            <button class="menu__aside-button drop-content__button menu__aside-button-search" name="Поиск">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="34.411" height="36.411" viewBox="0 0 34.411 36.411"><defs><style>.icon-search{fill:none;stroke:#444;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><g transform="translate(1 1)"><g transform="translate(0 1)"><circle class="icon-search" cx="14.5" cy="14.5" r="14.5" transform="translate(0 -1)"/><line class="icon-search" x1="7" y1="8" transform="translate(25 25)"/></g></g></svg>                                </div>
+                            </button>
+                            <form class="menu__drop-area drop-content__content" novalidate autocomplete="off" method="GET" action="/ru/search/">
+                                <div class="menu__drop-wrapper menu__search">
+                                    <div class="field field_hide-label field_type_input">
+                                        <label for="search" class="field__label">поиск</label>
+                                        <input id="search" type="search" name="q" class="field__input" placeholder="поиск...">
+                                    </div>
+                                    <input type="submit" class="button" value="поиск">
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="menu__aside-item">
+                        <div class="drop-content">
+                            <button class="menu__aside-button drop-content__button menu__aside-button-user">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="34" height="36" viewBox="0 0 34 36"><defs><style>.icon-man-user{fill:none;stroke:#444;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><g transform="translate(1 1)"><g transform="translate(0)"><path class="icon-man-user" d="M36,27V23a8,8,0,0,0-8-8H12a8,8,0,0,0-8,8v4" transform="translate(-4 7)"/><circle class="icon-man-user" cx="8" cy="8" r="8" transform="translate(8)"/></g></g></svg>                                </div>
+                            </button>
+                            <div class="menu__drop-area drop-content__content menu__authenticated js-menu-authenticated">
+        <a class="button" href="https://cpanel.fast-report.com/" target="_blank">Клиентская панель</a>
+    <a class="button js-support-counter"  href="https://support.fast-report.com/" target="_blank">Поддержка</a>
+    </div>
+                        </div>
+                    </li>
+                    <li class="menu__aside-item">
+                        <div class="drop-content">
+                            <button class="menu__aside-button drop-content__button menu__aside-button-language" name="switch language">
+                                <div>ru</div>
+                            </button>
+                            <div class="menu__drop-area drop-content__content">
+                                <div class="menu__drop-wrapper">
+                                    <ul class="menu__language-list"><li class="menu__language-item">
+            <a href="https://www.fast-report.com/en/blog/show/window-functions-tsql-part1/" class="menu__language-link ">en</a>
+        </li><li class="menu__language-item">
+            <a href="https://www.fastreport.ru/ru/blog/show/window-functions-tsql-part1/" class="menu__language-link menu__language-link--active">ru</a>
+        </li><li class="menu__language-item">
+            <a href="https://www.fast-report.com/pt/blog/show/window-functions-tsql-part1/" class="menu__language-link ">pt</a>
+        </li><li class="menu__language-item">
+            <a href="https://www.fast-report.com/es/blog/show/window-functions-tsql-part1/" class="menu__language-link ">es</a>
+        </li><li class="menu__language-item">
+            <a href="https://www.fast-report.com/de/blog/show/window-functions-tsql-part1/" class="menu__language-link ">de</a>
+        </li><li class="menu__language-item">
+            <a href="https://www.fast-report.com/pl/blog/show/window-functions-tsql-part1/" class="menu__language-link ">pl</a>
+        </li><li class="menu__language-item">
+        <a href="http://www.agtech.co.jp/products/fastreport/" class="menu__language-link" rel="noopener">JP</a>
+    </li>
+    <li class="menu__language-item">
+        <a href="http://www.fastreportcn.com/" class="menu__language-link" rel="noopener">ZH</a>
+    </li>
+</ul>                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </aside>
+        </div>
+    </div>
+</div>
+                
+<div class="blog-page">
+    <div class="breadcrumbs">
+  <nav class="breadcrumbs__wrapper" aria-label="Breadcrumb">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+                    {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://fast-report.com/ru/"
+            },                    {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Статьи",
+            "item": "https://fast-report.com/ru/blog/"
+            },                    {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Оконные функции – то, что должен знать каждый T-SQL программист. Часть 1."}                  ]
+      }
+    </script>
+    <ul id="wo-breadcrumbs">
+                        <li><a href="/ru/">Главная</a></li> /
+                                <li><a href="/ru/blog/">Статьи</a></li> /
+                                <li>Оконные функции – то, что должен знать каждый T-SQL программист. Часть 1.</li>
+                  </ul>
+  </nav>
+</div>
+    <div class="sidebar-page">
+        <div class="sidebar-page__wrapper sidebar-page__wrapper-bottom"><aside class="sidebar-page__sidebar">
+    <ul>
+        <li class="article-block article-block_minimal">
+        <div class="article-block__content">
+            <a href="/ru/blog/show/window-functions-tsql-part2/" class="article-block__box-title article-block__link">
+                <h3 class="article-block__title">Оконные функции – то, что должен знать каждый T-SQL программист. Часть 2.</h3>
+            </a>
+            <time class="article-block__date" datetime="2018-12-09">9 декабря 2018 г.</time>
+            <p class="article-block__text">
+                Во второй части статьи мы поговорим о самих функциях, которые применяются для формирования значения. Оконная
+            </p>
+            <a href="/ru/blog/show/window-functions-tsql-part2/" class="article-block__link article-block__more">Подробнее</a>
+        </div>
+    </li>
+        <li class="article-block article-block_minimal">
+        <div class="article-block__content">
+            <a href="/ru/blog/show/selecting-top-values-in-matrix/" class="article-block__box-title article-block__link">
+                <h3 class="article-block__title">Как выбрать топ значений в матрице</h3>
+            </a>
+            <time class="article-block__date" datetime="2021-04-22">22 апреля 2021 г.</time>
+            <p class="article-block__text">
+                В FastReport.NET есть прекрасный инструмент для вывода данных в виде сводной таблицы, или матрицы. Многим
+            </p>
+            <a href="/ru/blog/show/selecting-top-values-in-matrix/" class="article-block__link article-block__more">Подробнее</a>
+        </div>
+    </li>
+        <li class="article-block article-block_minimal">
+        <div class="article-block__content">
+            <a href="/ru/blog/show/stored-procedures-net/" class="article-block__box-title article-block__link">
+                <h3 class="article-block__title">Как использовать хранимые процедуры в FastReport .NET</h3>
+            </a>
+            <time class="article-block__date" datetime="2018-08-14">14 августа 2018 г.</time>
+            <p class="article-block__text">
+                В этой статье пойдет речь об использовании хранимых процедур для получения данных для отчета. На
+            </p>
+            <a href="/ru/blog/show/stored-procedures-net/" class="article-block__link article-block__more">Подробнее</a>
+        </div>
+    </li>
+        <li class="article-block article-block_minimal">
+        <div class="article-block__content">
+            <a href="/ru/blog/show/dynamic-queries-net/" class="article-block__box-title article-block__link">
+                <h3 class="article-block__title">Как использовать динамические запросы в FastReport .NET</h3>
+            </a>
+            <time class="article-block__date" datetime="2018-08-14">14 августа 2018 г.</time>
+            <p class="article-block__text">
+                Большинство пользователей FastReport .NET строят отчеты получая данные из SQL СУБД, и хотели бы пользоваться
+            </p>
+            <a href="/ru/blog/show/dynamic-queries-net/" class="article-block__link article-block__more">Подробнее</a>
+        </div>
+    </li>
+        <li class="article-block article-block_minimal">
+        <div class="article-block__content">
+            <a href="/ru/blog/show/sql-functions-net/" class="article-block__box-title article-block__link">
+                <h3 class="article-block__title">Как использовать SQL функции в FastReport .NET</h3>
+            </a>
+            <time class="article-block__date" datetime="2018-08-14">14 августа 2018 г.</time>
+            <p class="article-block__text">
+                Для получения данных в MS SQL можно использовать sql запросы, хранимые процедуры и хранимые функции.
+            </p>
+            <a href="/ru/blog/show/sql-functions-net/" class="article-block__link article-block__more">Подробнее</a>
+        </div>
+    </li>
+        </ul>
+</aside><article class="sidebar-page__section">
+                <meta itemprop="inLanguage" content="ru" />
+
+                <div class="blog-page__wrappers">
+                    <div class="title title_simple blog-page__title-box"><h1 class="title__title blog-page__title" itemprop="headline">Оконные функции – то, что должен знать каждый T-SQL программист. Часть 1.</h1>
+                        <time class="title__subtitle blog-page__subtitle" datetime="2018-12-06" itemprop="datePublished">6 декабря 2018 г.</time>
+                    </div>
+
+                    <section class="blog-page__content" itemprop="articleBody">
+                        <p>Еще в Microsoft SQL Server 2005 появился интересный функционал &ndash; оконные функции. Это функции, которые позволяют осуществлять вычисления в заданном диапазоне строк внутри предложения Select. Для тех, кто не сталкивался с этими функциями возникает вопрос &ndash; &laquo;Что значит оконные?&raquo;. Окно &ndash; значит набор строк, в рамках которого происходит вычисление. Оконная функция позволяет разбивать весь набор данных на такие окна.</p>
+<p>Конечно, все что могут оконные функции возможно реализовать и без них. Однако оконные функции обладают большим преимуществом перед регулярными агрегатными функциями: нет нужды группировать набор данных для расчетов., что позволяет сохранить все строки набора с их уникальными идентификаторами. При этом результаты работы оконных функций просто добавляются к результирующей выборке как еще одно поле.</p>
+<p>Основное преимущество использования оконных функций над регулярными агрегатными функциями заключается в следующем: оконные функции не приводят к группированию строк в одну строку вывода, строки сохраняют свои отдельные идентификаторы, а агрегированное значение добавляется к каждой строке.</p>
+<p>Окно определяется с помощью инструкции OVER(). Давайте рассмотрим синтаксис этой инструкции:</p>
+<p><strong><em>Оконная функция</em></strong><em>&nbsp;(столбец для вычислений)&nbsp;</em><strong><em>OVER</em></strong><em>&nbsp;([</em><strong><em>PARTITION BY</em></strong><em>&nbsp;столбец для группировки] [</em><strong><em>ORDER BY</em></strong><em>&nbsp;столбец для сортировки] [</em><strong><em>ROWS&nbsp;</em></strong><em>или&nbsp;</em><strong><em>RANGE</em></strong><em>&nbsp;выражение для ограничения строк в пределах группы])</em></p>
+<p>Ассортимент функций мы рассмотрим во второй части статьи. Скажу лишь, что они разделяются на: агрегирующие, ранжирующие, смещения.</p>
+<p>Для демонстрации работы оконных функций предлагаю на тестовой таблице:</p>
+<div class="rj_insertcode">
+<div class="rj_insertcode_tsql" style="overflow: auto; width: 100%; height: auto; border: 1px solid #054b6e; background: #f8f8f8;">
+<table class="tsql" style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr class="li1">
+<td style="width: 1px; background: #f0f0f0; vertical-align: top; color: #676f73; border-right: 1px dotted #dddddd; font-size: 12px; text-align: right;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">1
+2
+3
+4
+5
+6
+7
+</pre>
+</td>
+<td style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;"><span style="vertical-align: top;"><span style="color: #0000ff;">CREATE</span> <span style="color: #0000ff;">TABLE</span> ForWindowFunc <span style="color: #808080;">(</span>ID <span style="color: #0000ff;">INT</span>, GroupId <span style="color: #0000ff;">INT</span>, Amount <span style="color: #0000ff;">INT</span><span style="color: #808080;">)</span></span>
+<span style="vertical-align: top;">GO</span>
+<span style="vertical-align: top;">&nbsp;</span>
+<span style="vertical-align: top;"><span style="color: #0000ff;">INSERT</span> <span style="color: #0000ff;">INTO</span> ForWindowFunc <span style="color: #808080;">(</span>ID, GroupId, Amount<span style="color: #808080;">)</span></span>
+<span style="vertical-align: top;"> <span style="color: #0000ff;">VALUES</span><span style="color: #808080;">(</span><span style="color: #000;">1</span>, <span style="color: #000;">1</span>, <span style="color: #000;">100</span><span style="color: #808080;">)</span>, <span style="color: #808080;">(</span><span style="color: #000;">1</span>, <span style="color: #000;">1</span>, <span style="color: #000;">200</span><span style="color: #808080;">)</span>, <span style="color: #808080;">(</span><span style="color: #000;">1</span>, <span style="color: #000;">2</span>, <span style="color: #000;">150</span><span style="color: #808080;">)</span>,</span>
+<span style="vertical-align: top;"> <span style="color: #808080;">(</span><span style="color: #000;">2</span>, <span style="color: #000;">1</span>, <span style="color: #000;">100</span><span style="color: #808080;">)</span>, <span style="color: #808080;">(</span><span style="color: #000;">2</span>, <span style="color: #000;">1</span>, <span style="color: #000;">300</span><span style="color: #808080;">)</span>, <span style="color: #808080;">(</span><span style="color: #000;">2</span>, <span style="color: #000;">2</span>, <span style="color: #000;">200</span><span style="color: #808080;">)</span>, <span style="color: #808080;">(</span><span style="color: #000;">2</span>, <span style="color: #000;">2</span>, <span style="color: #000;">50</span><span style="color: #808080;">)</span>,</span>
+<span style="vertical-align: top;"> <span style="color: #808080;">(</span><span style="color: #000;">3</span>, <span style="color: #000;">1</span>, <span style="color: #000;">150</span><span style="color: #808080;">)</span>, <span style="color: #808080;">(</span><span style="color: #000;">3</span>, <span style="color: #000;">2</span>, <span style="color: #000;">200</span><span style="color: #808080;">)</span>, <span style="color: #808080;">(</span><span style="color: #000;">3</span>, <span style="color: #000;">2</span>, <span style="color: #000;">10</span><span style="color: #808080;">)</span>;</span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<table style="width: 192px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="64">
+<p>ID</p>
+</td>
+<td valign="bottom" width="64">
+<p>GroupId</p>
+</td>
+<td style="border-color: #000000; border-style: solid; border-width: 1px;">
+<p>Amount</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="64">
+<p align="right">1</p>
+</td>
+<td valign="bottom" width="64">
+<p align="right">1</p>
+</td>
+<td style="border-color: #000000; border-style: solid; border-width: 1px;">
+<p align="right">100</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="64">
+<p align="right">1</p>
+</td>
+<td valign="bottom" width="64">
+<p align="right">1</p>
+</td>
+<td style="border-color: #000000; border-style: solid; border-width: 1px;">
+<p align="right">200</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="64">
+<p align="right">1</p>
+</td>
+<td valign="bottom" width="64">
+<p align="right">2</p>
+</td>
+<td style="border-color: #000000; border-style: solid; border-width: 1px;">
+<p align="right">150</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="64">
+<p align="right">2</p>
+</td>
+<td valign="bottom" width="64">
+<p align="right">1</p>
+</td>
+<td style="border-color: #000000; border-style: solid; border-width: 1px;">
+<p align="right">100</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="64">
+<p align="right">2</p>
+</td>
+<td valign="bottom" width="64">
+<p align="right">1</p>
+</td>
+<td style="border-color: #000000; border-style: solid; border-width: 1px;">
+<p align="right">300</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="64">
+<p align="right">2</p>
+</td>
+<td valign="bottom" width="64">
+<p align="right">2</p>
+</td>
+<td style="border-color: #000000; border-style: solid; border-width: 1px;">
+<p align="right">200</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="64">
+<p align="right">2</p>
+</td>
+<td valign="bottom" width="64">
+<p align="right">2</p>
+</td>
+<td style="border-color: #000000; border-style: solid; border-width: 1px;">
+<p align="right">50</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="64">
+<p align="right">3</p>
+</td>
+<td valign="bottom" width="64">
+<p align="right">1</p>
+</td>
+<td style="border-color: #000000; border-style: solid; border-width: 1px;">
+<p align="right">150</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="64">
+<p align="right">3</p>
+</td>
+<td valign="bottom" width="64">
+<p align="right">2</p>
+</td>
+<td style="border-color: #000000; border-style: solid; border-width: 1px;">
+<p align="right">200</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Как видно, здесь три группы в колонке ID и две подгруппы в колонке GroupId с разным количеством элементов в группе.</p>
+<p>Чаще всего используется функция суммирования, поэтому демонстрацию проведем именно на ней. Давайте посмотрим, как работает инструкция OVER:</p>
+<div class="rj_insertcode">
+<div class="rj_insertcode_tsql" style="overflow: auto; width: 100%; height: auto; border: 1px solid #054b6e; background: #f8f8f8;">
+<table class="tsql" style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr class="li1">
+<td style="width: 1px; background: #f0f0f0; vertical-align: top; color: #676f73; border-right: 1px dotted #dddddd; font-size: 12px; text-align: right;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">1
+2
+3
+</pre>
+</td>
+<td style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;"><span style="vertical-align: top;"> <span style="color: #0000ff;">SELECT</span> ID,</span>
+<span style="vertical-align: top;"> Amount,</span>
+<span style="vertical-align: top;"> <span style="color: #ff00ff;">SUM</span><span style="color: #808080;">(</span>Amount<span style="color: #808080;">)</span> <span style="color: #0000ff;">OVER</span><span style="color: #808080;">(</span><span style="color: #808080;">)</span> <span style="color: #0000ff;">AS</span> <span style="color: #ff00ff;">SUM</span> <span style="color: #0000ff;">FROM</span> ForWindowFunc</span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<table style="width: 151px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="28">
+<p>ID</p>
+</td>
+<td valign="bottom" width="66">
+<p>Amount</p>
+</td>
+<td style="border-color: #fe0500; border-style: solid; border-width: 1px;">
+<p>Sum</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="28">
+<p align="right">1</p>
+</td>
+<td valign="bottom" width="66">
+<p align="right">100</p>
+</td>
+<td style="border-color: #fe0500; border-style: solid; border-width: 1px;">
+<p align="right">1310</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="28">
+<p align="right">1</p>
+</td>
+<td valign="bottom" width="66">
+<p align="right">200</p>
+</td>
+<td style="border-color: #fe0500; border-style: solid; border-width: 1px;">
+<p align="right">1310</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="28">
+<p align="right">2</p>
+</td>
+<td valign="bottom" width="66">
+<p align="right">100</p>
+</td>
+<td style="border-color: #fe0500; border-style: solid; border-width: 1px;">
+<p align="right">1310</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="28">
+<p align="right">2</p>
+</td>
+<td valign="bottom" width="66">
+<p align="right">300</p>
+</td>
+<td style="border-color: #fe0500; border-style: solid; border-width: 1px;">
+<p align="right">1310</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="28">
+<p align="right">2</p>
+</td>
+<td valign="bottom" width="66">
+<p align="right">200</p>
+</td>
+<td style="border-color: #fe0500; border-style: solid; border-width: 1px;">
+<p align="right">1310</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="28">
+<p align="right">2</p>
+</td>
+<td valign="bottom" width="66">
+<p align="right">50</p>
+</td>
+<td style="border-color: #fe0500; border-style: solid; border-width: 1px;">
+<p align="right">1310</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="28">
+<p align="right">3</p>
+</td>
+<td valign="bottom" width="66">
+<p align="right">150</p>
+</td>
+<td style="border-color: #fe0500; border-style: solid; border-width: 1px;">
+<p align="right">1310</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="28">
+<p align="right">3</p>
+</td>
+<td valign="bottom" width="66">
+<p align="right">200</p>
+</td>
+<td style="border-color: #fe0500; border-style: solid; border-width: 1px;">
+<p align="right">1310</p>
+</td>
+</tr>
+<tr style="background-color: #b0e0e6;">
+<td valign="bottom" width="28">
+<p align="right">3</p>
+</td>
+<td valign="bottom" width="66">
+<p align="right">10</p>
+</td>
+<td style="border-color: #fe0500; border-style: solid; border-width: 1px;">
+<p align="right">1310</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Мы использовали инструкцию OVER() без предложений. В таком варианте окном будет весь набор данных и никакая сортировка не применяется. Нам просто повезло, что данные вывелись в том же порядке, в котором были вставлены в таблицу, но SQL Server может поменять порядок отображения, если нет явно заданной сортировки. Поэтому инструкцию OVER() практически никогда не применяют без предложений. Но, обратим наше внимание на новый столбец SUM. Для каждой строки выводится одно и то же значение 1310. Это сквозная сумма всех значений колонки Amount.</p>
+<p><strong>Предложение </strong><strong>PARTITION </strong><strong>BY</strong></p>
+<p>Предложение <strong>PARTITION </strong><strong>BY</strong> определяет столбец, по которому будет производиться группировка, и он является ключевым в разбиении набора строк на окна.</p>
+<p>Изменим наш запрос, написанный ранее, так:</p>
+<div class="rj_insertcode">
+<div class="rj_insertcode_tsql" style="overflow: auto; width: 100%; height: auto; border: 1px solid #054b6e; background: #f8f8f8;">
+<table class="tsql" style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr class="li1">
+<td style="width: 1px; background: #f0f0f0; vertical-align: top; color: #676f73; border-right: 1px dotted #dddddd; font-size: 12px; text-align: right;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">1
+2
+3
+</pre>
+</td>
+<td style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;"><span style="vertical-align: top;"><span style="color: #0000ff;">SELECT</span> ID, </span>
+<span style="vertical-align: top;"> Amount, </span>
+<span style="vertical-align: top;"> <span style="color: #ff00ff;">SUM</span><span style="color: #808080;">(</span>Amount<span style="color: #808080;">)</span> <span style="color: #0000ff;">OVER</span><span style="color: #808080;">(</span>PARTITION <span style="color: #0000ff;">BY</span> ID<span style="color: #808080;">)</span> <span style="color: #0000ff;">AS</span> <span style="color: #ff00ff;">SUM</span> <span style="color: #0000ff;">FROM</span> ForWindowFunc</span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<table style="width: 141px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p>ID</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Amount</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Sum</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">100</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">300</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">300</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #98fb98;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #98fb98;">
+<p align="right">100</p>
+</td>
+<td style="background-color: #98fb98;">
+<p align="right">650</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #98fb98;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #98fb98;">
+<p align="right">300</p>
+</td>
+<td style="background-color: #98fb98;">
+<p align="right">650</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #98fb98;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #98fb98;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #98fb98;">
+<p align="right">650</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #98fb98;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #98fb98;">
+<p align="right">50</p>
+</td>
+<td style="background-color: #98fb98;">
+<p align="right">650</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">150</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">360</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">360</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">10</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">360</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Предложение PARTITION BY сгруппировало строки по полю ID. Теперь для каждой группы рассчитывается своя сумма значений Amount. Вы можете создавать окна по нескольким полям. Тогда в PARTITION BY нужно писать поля для группировки через запятую (например, PARTITION BY ID, Amount).</p>
+<p><strong>Предложение ORDER BY</strong></p>
+<p>Вместе с <strong>PARTITION </strong><strong>BY</strong> может применяться предложение <strong>ORDER </strong><strong>BY</strong>, которое определяет порядок сортировки внутри окна. Порядок сортировки очень важен, ведь оконная функция будет обрабатывать данные согласно этому порядку. Если вы не используете предложение <strong>PARTITION </strong><strong>BY</strong>, а только <strong>ORDER </strong><strong>BY</strong>, то окном будет весь набор данных.</p>
+<div class="rj_insertcode">
+<div class="rj_insertcode_tsql" style="overflow: auto; width: 100%; height: auto; border: 1px solid #054b6e; background: #f8f8f8;">
+<table class="tsql" style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr class="li1">
+<td style="width: 1px; background: #f0f0f0; vertical-align: top; color: #676f73; border-right: 1px dotted #dddddd; font-size: 12px; text-align: right;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">1
+2
+3
+4
+</pre>
+</td>
+<td style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;"><span style="vertical-align: top;"> <span style="color: #0000ff;">SELECT</span> ID,</span>
+<span style="vertical-align: top;"> GroupId,</span>
+<span style="vertical-align: top;"> Amount,</span>
+<span style="vertical-align: top;"> <span style="color: #ff00ff;">SUM</span><span style="color: #808080;">(</span>Amount<span style="color: #808080;">)</span> <span style="color: #0000ff;">OVER</span><span style="color: #808080;">(</span>PARTITION <span style="color: #0000ff;">BY</span> id <span style="color: #0000ff;">ORDER</span> <span style="color: #0000ff;">BY</span> Amount<span style="color: #808080;">)</span> <span style="color: #0000ff;">AS</span> <span style="color: #ff00ff;">SUM</span> <span style="color: #0000ff;">FROM</span> ForWindowFunc</span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<table style="width: 256px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p>ID</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>GroupId</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Amount</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Sum</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">100</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">100</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">150</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">250</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">450</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">50</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">50</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">100</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">150</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">350</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">300</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">650</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">10</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">10</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">150</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">160</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">360</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>К предложению PARTITION BY добавилось ORDER BY по полю Amount. Таким образом мы указали, что хотим видеть сумму не всех значений Amount в окне, а для каждого значения Amount сумму со всеми предыдущими. Такое суммирование часто называют <strong>нарастающий итог или накопительный итог</strong>.</p>
+<p>Вы заметили, что в выборке появилось поле GpoupId. Это поле позволит показать, как изменится нарастающий итог, в зависимости от сортировки. Изменим запрос:</p>
+<div class="rj_insertcode">
+<div class="rj_insertcode_tsql" style="overflow: auto; width: 100%; height: auto; border: 1px solid #054b6e; background: #f8f8f8;">
+<table class="tsql" style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr class="li1">
+<td style="width: 1px; background: #f0f0f0; vertical-align: top; color: #676f73; border-right: 1px dotted #dddddd; font-size: 12px; text-align: right;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">1
+2
+3
+4
+</pre>
+</td>
+<td style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;"><span style="vertical-align: top;"><span style="color: #0000ff;">SELECT</span> ID, </span>
+<span style="vertical-align: top;"> GroupId, </span>
+<span style="vertical-align: top;"> Amount, </span>
+<span style="vertical-align: top;"> <span style="color: #ff00ff;">SUM</span><span style="color: #808080;">(</span>Amount<span style="color: #808080;">)</span> <span style="color: #0000ff;">OVER</span><span style="color: #808080;">(</span>Partition <span style="color: #0000ff;">BY</span> id <span style="color: #0000ff;">ORDER</span> <span style="color: #0000ff;">BY</span> GroupId, Amount<span style="color: #808080;">)</span> <span style="color: #0000ff;">AS</span> <span style="color: #ff00ff;">SUM</span> <span style="color: #0000ff;">FROM</span> ForWindowFunc</span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<table style="width: 217px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p>ID</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>GroupId</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Amount</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Sum</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">100</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">100</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">300</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">150</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">450</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">100</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">100</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">300</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">400</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">50</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">450</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">650</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">150</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">150</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">10</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">160</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">360</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table style="width: 217px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="bottom" width="37">
+<p align="right">3</p>
+</td>
+<td valign="bottom" width="66">
+<p align="right">2</p>
+</td>
+<td valign="bottom" width="66">
+<p align="right">200</p>
+</td>
+<td valign="bottom" width="47">
+<p align="right">360</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>И мы получаем совсем другое поведение. И хоть в итоге для последнего значения в окне значения сходятся с предыдущим примером, но сумма для всех остальных отличается. Поэтому важно четко понимать, что вы хотите получить в итоге.</p>
+<p><strong>Предложение </strong><strong>ROWS/</strong><strong>RANG </strong></p>
+<p>Еще два предложения <strong>ROWS</strong> и <strong>RANGE</strong> применяются в инструкции <strong>OVER</strong>. &nbsp;Этот функционал появился в MS SQL Server 2012.</p>
+<p>Предложение <strong>ROWS</strong> ограничивает строки в окне, указывая фиксированное количество строк, предшествующих или следующих за текущей. Оба предложения <strong>ROWS</strong> и <strong>RANGE</strong> используются вместе с <strong>ORDER </strong><strong>BY.</strong></p>
+<p>Предложение ROWS может быть задано с помощью методов:</p>
+<ul>
+<li>CURRENT ROW&nbsp;&ndash; отображение текущей строки;</li>
+<li>UNBOUNDED FOLLOWING&nbsp;&ndash; все записи после текущей;</li>
+<li>UNBOUNDED PRECEDING&nbsp;&ndash; все предыдущие записи;</li>
+<li>&lt;целое число&gt;&nbsp;PRECEDING&nbsp;&ndash; заданное число предыдущих строк;</li>
+<li>&lt;целое число&gt;&nbsp;FOLLOWING&nbsp;&ndash; заданное число последующих записей.</li>
+</ul>
+<p>Вы можете комбинировать эти функции для достижения желаемого результата, например:</p>
+<ul>
+<li>ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING &ndash; в окно попадут текущая и одна следующая запись;</li>
+</ul>
+<div class="rj_insertcode">
+<div class="rj_insertcode_tsql" style="overflow: auto; width: 100%; height: auto; border: 1px solid #054b6e; background: #f8f8f8;">
+<table class="tsql" style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr class="li1">
+<td style="width: 1px; background: #f0f0f0; vertical-align: top; color: #676f73; border-right: 1px dotted #dddddd; font-size: 12px; text-align: right;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">1
+2
+3
+4
+</pre>
+</td>
+<td style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;"><span style="vertical-align: top;"><span style="color: #0000ff;">SELECT</span> ID, </span>
+<span style="vertical-align: top;"> GroupId, </span>
+<span style="vertical-align: top;"> Amount, </span>
+<span style="vertical-align: top;"> <span style="color: #ff00ff;">SUM</span><span style="color: #808080;">(</span>Amount<span style="color: #808080;">)</span> <span style="color: #0000ff;">OVER</span><span style="color: #808080;">(</span>Partition <span style="color: #0000ff;">BY</span> id <span style="color: #0000ff;">ORDER</span> <span style="color: #0000ff;">BY</span> GroupId, Amount <span style="color: #0000ff;">ROWS</span> <span style="color: #808080;">BETWEEN</span> <span style="color: #0000ff;">CURRENT</span> <span style="color: #0000ff;">ROW</span> <span style="color: #808080;">AND</span> <span style="color: #000;">1</span> FOLLOW<span style="color: #808080;">IN</span>G <span style="color: #808080;">)</span> <span style="color: #0000ff;">AS</span> <span style="color: #ff00ff;">SUM</span> <span style="color: #0000ff;">FROM</span> ForWindowFunc</span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<table style="width: 217px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p>ID</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>GroupId</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Amount</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Sum</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>100</strong></p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>300</strong></p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #40e0d0;">
+<p align="right"><strong>200</strong></p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">350</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">150</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">150</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">100</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">400</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">300</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">350</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">50</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">250</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">200</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">150</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">160</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">10</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">210</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">200</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Здесь, сумма рассчитывается по текущей и следующей ячейке в окне. А последняя в окне строка имеет то же значение, что и Amount. Посмотрим на первое окно, выделенное голубым цветом. Сумма 300 рассчитана сложением 100 и 200. Для следующего значения ситуация аналогичная. А последняя в окне сумма имеет значение 150, потому что текущий Amount больше не с чем складывать.</p>
+<ul>
+<li>ROWS BETWEEN 1 PRECEDING AND CURRENT ROW &ndash; одна предыдущая и текущая запись</li>
+</ul>
+<div class="rj_insertcode">
+<div class="rj_insertcode_tsql" style="overflow: auto; width: 100%; height: auto; border: 1px solid #054b6e; background: #f8f8f8;">
+<table class="tsql" style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr class="li1">
+<td style="width: 1px; background: #f0f0f0; vertical-align: top; color: #676f73; border-right: 1px dotted #dddddd; font-size: 12px; text-align: right;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">1
+2
+3
+4
+</pre>
+</td>
+<td style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;"><span style="vertical-align: top;"><span style="color: #0000ff;">SELECT</span> ID, </span>
+<span style="vertical-align: top;"> GroupId, </span>
+<span style="vertical-align: top;"> Amount, </span>
+<span style="vertical-align: top;"> <span style="color: #ff00ff;">SUM</span><span style="color: #808080;">(</span>Amount<span style="color: #808080;">)</span> <span style="color: #0000ff;">OVER</span><span style="color: #808080;">(</span>Partition <span style="color: #0000ff;">BY</span> id <span style="color: #0000ff;">ORDER</span> <span style="color: #0000ff;">BY</span> GroupId, Amount <span style="color: #0000ff;">ROWS</span> <span style="color: #808080;">BETWEEN</span> <span style="color: #000;">1</span> PRECED<span style="color: #808080;">IN</span>G <span style="color: #808080;">AND</span> <span style="color: #0000ff;">CURRENT</span> <span style="color: #0000ff;">ROW</span><span style="color: #808080;">)</span> <span style="color: #0000ff;">AS</span> <span style="color: #ff00ff;">SUM</span> <span style="color: #0000ff;">FROM</span> ForWindowFunc</span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<table style="width: 256px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p>ID</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>GroupId</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Amount</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Sum</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>100</strong></p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">100</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>200</strong></p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>300</strong></p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">150</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">350</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">100</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">100</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">300</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">400</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">50</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">350</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">250</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">150</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">150</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">10</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">160</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">210</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>В этом запросе мы получаем сумму путем сложения текущего значения Amount и предыдущего. Первая строка имеет значение 100, т.к. предыдущего значения Amount не существует.</p>
+<p>Предложение <strong>RANGE</strong> предназначено также для ограничения набора строк. В отличие от ROWS, оно работает не с физическими строками, а с диапазоном строк в предложении ORDER BY. Это означает, что одинаковые по рангу строки в контексте предложения <strong>ORDER </strong><strong>BY</strong> будут считаться как одна текущая строка для функции <strong>CURRENT </strong><strong>ROW. </strong>А в предложении <strong>ROWS</strong> текущая строка &ndash; это одна, текущая строка набора данных.</p>
+<p>Предложение <strong>RANGE</strong> может использоваться только с опциями <strong>CURRENT </strong><strong>ROW</strong>, <strong>UNBOUNDED </strong><strong>PRECEDING&nbsp;</strong>и <strong>UNBOUNDED </strong><strong>FOLLOWING</strong>.</p>
+<p>Предложение RANGE может использовать опции:</p>
+<ul>
+<li>CURRENT ROW&nbsp;&ndash; отображение текущей строки;</li>
+<li>UNBOUNDED FOLLOWING&nbsp;&ndash; все записи после текущей;</li>
+<li>UNBOUNDED PRECEDING&nbsp;&ndash; все предыдущие записи.</li>
+</ul>
+<p>И не может:</p>
+<ul>
+<li>&lt;целое число&gt;&nbsp;PRECEDING&nbsp;&ndash; заданное число предыдущих строк;</li>
+<li>&lt;целое число&gt;&nbsp;FOLLOWING&nbsp;&ndash; заданное число последующих записей.</li>
+</ul>
+<p>Примеры:</p>
+<ul>
+<li>RANGE CURRENT ROW;</li>
+</ul>
+<div class="rj_insertcode">
+<div class="rj_insertcode_tsql" style="overflow: auto; width: 100%; height: auto; border: 1px solid #054b6e; background: #f8f8f8;">
+<table class="tsql" style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr class="li1">
+<td style="width: 1px; background: #f0f0f0; vertical-align: top; color: #676f73; border-right: 1px dotted #dddddd; font-size: 12px; text-align: right;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">1
+2
+3
+4
+</pre>
+</td>
+<td style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;"><span style="vertical-align: top;"><span style="color: #0000ff;">SELECT</span> ID,</span>
+<span style="vertical-align: top;"> GroupId,</span>
+<span style="vertical-align: top;"> Amount,</span>
+<span style="vertical-align: top;"> <span style="color: #ff00ff;">SUM</span><span style="color: #808080;">(</span>Amount<span style="color: #808080;">)</span> <span style="color: #0000ff;">OVER</span><span style="color: #808080;">(</span>Partition <span style="color: #0000ff;">BY</span> id <span style="color: #0000ff;">ORDER</span> <span style="color: #0000ff;">BY</span> GroupId RANGE <span style="color: #0000ff;">CURRENT</span> <span style="color: #0000ff;">ROW</span><span style="color: #808080;">)</span> <span style="color: #0000ff;">AS</span> <span style="color: #ff00ff;">SUM</span> <span style="color: #0000ff;">FROM</span> ForWindowFunc</span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<table style="width: 256px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p>ID</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>GroupId</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Amount</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Sum</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>1</strong></p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>100</strong></p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>300</strong></p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>1</strong></p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>200</strong></p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>300</strong></p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">150</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">150</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">100</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">400</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">300</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">400</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">250</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">50</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">250</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">150</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">150</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">210</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">10</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">210</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Предложение Range настроено на текущую строку. Но, как мы помним, для Range текущая строка, это все строки, соответствующие одному значению сортировки. Сортировка в данном случае по полю GroupId. Первые две строки первого окна имеют значение GroupId равное 1 &ndash; следовательно оба эти значения удовлетворяют ограничению RANGE CURRENT ROW. Поэтому Sum для каждой из этих строк равна общей сумме Amount по ним - 300.</p>
+<ul>
+<li>RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW;</li>
+</ul>
+<div class="rj_insertcode">
+<div class="rj_insertcode_tsql" style="overflow: auto; width: 100%; height: auto; border: 1px solid #054b6e; background: #f8f8f8;">
+<table class="tsql" style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr class="li1">
+<td style="width: 1px; background: #f0f0f0; vertical-align: top; color: #676f73; border-right: 1px dotted #dddddd; font-size: 12px; text-align: right;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">1
+2
+3
+4
+</pre>
+</td>
+<td style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;"><span style="vertical-align: top;"><span style="color: #0000ff;">SELECT</span> ID,</span>
+<span style="vertical-align: top;"> GroupId,</span>
+<span style="vertical-align: top;"> Amount,</span>
+<span style="vertical-align: top;"> <span style="color: #ff00ff;">SUM</span><span style="color: #808080;">(</span>Amount<span style="color: #808080;">)</span> <span style="color: #0000ff;">OVER</span><span style="color: #808080;">(</span>Partition <span style="color: #0000ff;">BY</span> id <span style="color: #0000ff;">ORDER</span> <span style="color: #0000ff;">BY</span> GroupId RANGE <span style="color: #808080;">BETWEEN</span> UNBOUNDED PRECED<span style="color: #808080;">IN</span>G <span style="color: #808080;">AND</span> <span style="color: #0000ff;">CURRENT</span> <span style="color: #0000ff;">ROW</span><span style="color: #808080;">)</span> <span style="color: #0000ff;">AS</span> <span style="color: #ff00ff;">SUM</span> <span style="color: #0000ff;">FROM</span> ForWindowFunc</span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<table style="width: 256px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p>ID</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>GroupId</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Amount</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Sum</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>100</strong></p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">300</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>200</strong></p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">300</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>150</strong></p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>450</strong></p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">100</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">400</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">300</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">400</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">650</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">50</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">650</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">150</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">150</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">360</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">10</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">360</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>В этом случае ограничение по всем предыдущим строкам и текущей. Для первой и второй строки это правило работает как предыдущее (вспоминаем CURRENT ROW), а для третьей как сумма Amount предыдущих строк с текущей.</p>
+<ul>
+<li>RANGE BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING.</li>
+</ul>
+<div class="rj_insertcode">
+<div class="rj_insertcode_tsql" style="overflow: auto; width: 100%; height: auto; border: 1px solid #054b6e; background: #f8f8f8;">
+<table class="tsql" style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr class="li1">
+<td style="width: 1px; background: #f0f0f0; vertical-align: top; color: #676f73; border-right: 1px dotted #dddddd; font-size: 12px; text-align: right;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">1
+2
+3
+4
+</pre>
+</td>
+<td style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;"><span style="vertical-align: top;"><span style="color: #0000ff;">SELECT</span> ID, </span>
+<span style="vertical-align: top;"> GroupId, </span>
+<span style="vertical-align: top;"> Amount, </span>
+<span style="vertical-align: top;"> <span style="color: #ff00ff;">SUM</span><span style="color: #808080;">(</span>Amount<span style="color: #808080;">)</span> <span style="color: #0000ff;">OVER</span><span style="color: #808080;">(</span>Partition <span style="color: #0000ff;">BY</span> id <span style="color: #0000ff;">ORDER</span> <span style="color: #0000ff;">BY</span> GroupId RANGE <span style="color: #808080;">BETWEEN</span> <span style="color: #0000ff;">CURRENT</span> <span style="color: #0000ff;">ROW</span> <span style="color: #808080;">AND</span> UNBOUNDED FOLLOW<span style="color: #808080;">IN</span>G<span style="color: #808080;">)</span> <span style="color: #0000ff;">AS</span> <span style="color: #ff00ff;">SUM</span> <span style="color: #0000ff;">FROM</span> ForWindowFunc</span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<table style="width: 256px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p>ID</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>GroupId</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Amount</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p>Sum</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>150</strong></p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">150</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>100</strong></p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>450</strong></p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #48d1cc;">
+<p align="right"><strong>200</strong></p>
+</td>
+<td style="background-color: #b0e0e6;">
+<p align="right">450</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">250</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">50</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">250</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">100</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">650</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffc0cb;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">300</p>
+</td>
+<td style="background-color: #ffc0cb;">
+<p align="right">650</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">200</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">210</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">2</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">10</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">210</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #90ee90;">
+<p align="right">3</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">1</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">150</p>
+</td>
+<td style="background-color: #90ee90;">
+<p align="right">360</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Это ограничение позволило нам получить сумму из текущей строки и всех предыдущих в рамках одного окна. Так как вторая и третья строка у нас в одной GroupId, то эти значения и есть Current Row. Поэтому они просуммированы сразу.</p>
+<p>На этом закончим первую часть статьи. А напоследок - пример использования оконной функции из реальной практики.</p>
+<p>Лучше всего понять суть оконных функций можно на примере. Допустим у вас есть данные о платежах абонентов. Платеж поступает на договор. Но у этого договора есть дочерние договора, на которых отрицательный баланс. И мы хотим распределить поступившие средства на погашение долга дочерних договоров.</p>
+<p>Таким образом, нам нужно определить сколько же денег мы спишем со счета основного договора и сколько переведем на дочерний. Давайте посмотрим на таблицу:</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="104">
+<p><strong>ContractId</strong></p>
+</td>
+<td valign="top" width="109">
+<p><strong>ChildContractId</strong></p>
+</td>
+<td valign="top" width="104">
+<p><strong>PayId</strong></p>
+</td>
+<td valign="top" width="105">
+<p><strong>CustAccount</strong></p>
+</td>
+<td valign="top" width="103">
+<p><strong>PayAmount</strong></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="104">
+<p>1000000000</p>
+</td>
+<td valign="top" width="109">
+<p>1000000002</p>
+</td>
+<td valign="top" width="104">
+<p>1000000752</p>
+</td>
+<td valign="top" width="105">
+<p>-200,00</p>
+</td>
+<td valign="top" width="103">
+<p>800,00</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="104">
+<p>1000000000</p>
+</td>
+<td valign="top" width="109">
+<p>1000000003</p>
+</td>
+<td valign="top" width="104">
+<p>1000000753</p>
+</td>
+<td valign="top" width="105">
+<p>-1000,00</p>
+</td>
+<td valign="top" width="103">
+<p>800,00</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Где, ContractId &ndash; идентификатор основного договора,</p>
+<p>ChildContractId &ndash; идентификатор дочернего договора,</p>
+<p>PayId &ndash; идентификатор платежа,</p>
+<p>CustAccount &ndash; баланс дочернего договора,</p>
+<p>PayAmount &ndash; платеж.</p>
+<p>Из таблицы видно, что для каждого дочернего договора сумма платежа 800. Это из-за того, что платеж на родительском договоре.</p>
+<p>Так что наша задача рассчитать суммы переносов денег с родительского на дочерние договора.</p>
+<p>Для этого суммируем <strong>CustAccount</strong> и <strong>PayAmount. </strong>Однако, простая сумма баланса и платежа нас не устраивает. Ведь на погашение долга на втором дочернем договоре мы должны учитывать остаток от суммы баланса первого договора и платежа.</p>
+<p>Как мы можем действовать в этой ситуации? &nbsp;Мы могли бы выбрать:</p>
+<div class="rj_insertcode">
+<div class="rj_insertcode_tsql" style="overflow: auto; width: 100%; height: auto; border: 1px solid #054b6e; background: #f8f8f8;">
+<table class="tsql" style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr class="li1">
+<td style="width: 1px; background: #f0f0f0; vertical-align: top; color: #676f73; border-right: 1px dotted #dddddd; font-size: 12px; text-align: right;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">1
+2
+3
+4
+5
+6
+7
+8
+</pre>
+</td>
+<td style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;"><span style="vertical-align: top;"><span style="color: #0000ff;">SELECT</span></span>
+<span style="vertical-align: top;">ContractId,</span>
+<span style="vertical-align: top;">ChildContractId,</span>
+<span style="vertical-align: top;">PayId,</span>
+<span style="vertical-align: top;">CustAccount,</span>
+<span style="vertical-align: top;">PayAmount,</span>
+<span style="vertical-align: top;">PayAmount <span style="color: #808080;">+</span> <span style="color: #808080;">(</span><span style="color: #0000ff;">SELECT</span> <span style="color: #ff00ff;">SUM</span><span style="color: #808080;">(</span>CustAccount<span style="color: #808080;">)</span> <span style="color: #0000ff;">FROM</span> dbo.<span style="color: #202020;">Pays</span> p2 <span style="color: #0000ff;">WHERE</span> p1.<span style="color: #202020;">PayId</span> <span style="color: #808080;">=</span> p2.<span style="color: #202020;">PayId</span> <span style="color: #808080;">AND</span> p2.<span style="color: #202020;">ChildContractId</span> <span style="color: #808080;">&lt;=</span> p1.<span style="color: #202020;">ChildContractId</span><span style="color: #808080;">)</span> <span style="color: #0000ff;">AS</span> <span style="color: #808080;">[</span><span style="color: #ff00ff;">SUM</span><span style="color: #808080;">]</span></span>
+<span style="vertical-align: top;"><span style="color: #0000ff;">FROM</span> dbo.<span style="color: #202020;">Pays</span> p1</span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Этот запрос решает поставленную задачу, но подзапрос портит всю картину &ndash; увеличивает время выполнения запроса. Применим оконную функцию сложения:</p>
+<div class="rj_insertcode">
+<div class="rj_insertcode_tsql" style="overflow: auto; width: 100%; height: auto; border: 1px solid #054b6e; background: #f8f8f8;">
+<table class="tsql" style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr class="li1">
+<td style="width: 1px; background: #f0f0f0; vertical-align: top; color: #676f73; border-right: 1px dotted #dddddd; font-size: 12px; text-align: right;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">1
+2
+3
+4
+5
+6
+7
+8
+</pre>
+</td>
+<td style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;">
+<pre style="margin: 0; background: none; vertical-align: top; padding: 0px 4px; font-size: 12px;"><span style="vertical-align: top;"><span style="color: #0000ff;">SELECT</span></span>
+<span style="vertical-align: top;">ContractId,</span>
+<span style="vertical-align: top;">ChildContractId,</span>
+<span style="vertical-align: top;">PayId,</span>
+<span style="vertical-align: top;">CustAccount,</span>
+<span style="vertical-align: top;">PayAmount,</span>
+<span style="vertical-align: top;">PayAmount <span style="color: #808080;">+</span> <span style="color: #ff00ff;">SUM</span><span style="color: #808080;">(</span>CustAccount<span style="color: #808080;">)</span> <span style="color: #0000ff;">OVER</span> <span style="color: #808080;">(</span><span style="color: #0000ff;">ORDER</span> <span style="color: #0000ff;">BY</span> ChildContractId<span style="color: #808080;">)</span> <span style="color: #0000ff;">AS</span> <span style="color: #808080;">[</span><span style="color: #ff00ff;">SUM</span><span style="color: #808080;">]</span></span>
+<span style="vertical-align: top;"><span style="color: #0000ff;">FROM</span> dbo.<span style="color: #202020;">Pays</span> p1</span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Этот вариант работает быстрее и выглядит лаконичнее. В нашем случае мы получаем сумму по полю CustAccount в окне, которое формируется по полю ChildContractId.</p>
+<p>Результатом этих запросов будет таблица:</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="104">
+<p><strong>ContractId</strong></p>
+</td>
+<td valign="top" width="109">
+<p><strong>ChildContractId</strong></p>
+</td>
+<td valign="top" width="104">
+<p><strong>PayId</strong></p>
+</td>
+<td valign="top" width="105">
+<p><strong>CustAccount</strong></p>
+</td>
+<td valign="top" width="103">
+<p><strong>PayAmount</strong></p>
+</td>
+<td valign="top" width="103">
+<p><strong>Sum</strong></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="104">
+<p>1000000000</p>
+</td>
+<td valign="top" width="109">
+<p>1000000002</p>
+</td>
+<td valign="top" width="104">
+<p>1000000752</p>
+</td>
+<td valign="top" width="105">
+<p>-200,00</p>
+</td>
+<td valign="top" width="103">
+<p>800,00</p>
+</td>
+<td valign="top" width="103">
+<p>600</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="104">
+<p>1000000000</p>
+</td>
+<td valign="top" width="109">
+<p>1000000003</p>
+</td>
+<td valign="top" width="104">
+<p>1000000753</p>
+</td>
+<td valign="top" width="105">
+<p>-1000,00</p>
+</td>
+<td valign="top" width="103">
+<p>800,00</p>
+</td>
+<td valign="top" width="103">
+<p>-400</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Исходя из полученных данных в колонке Sum мы определяем сумму, которую нужно перенести с родительского договора на дочерний. Для договора 1000000002 мы погасили долг полностью, так что сумма платежа 200р. Для договора 1000000003 долг погашен частично &ndash; сумма платежа равна сумме баланса и остатка от платежа после расчета для первой записи (-1000 + 600 = -400р).</p>
+                    </section>                    <section class="blog-page__creator-info-box" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <div class="blog-page__creator-info-box-logo">                            <img class="blog-page__creator-info-logo" src="/uploads/cache/admin_picture_mini_thumb/uploads/admins/pictures/c274d30699e58f0c65599dd612c445ba.png" alt="avatar"/>
+                            </div>
+                        <div class="blog-page__creator-info-box-content">
+                            <div class="blog-page__creator-info-name">
+                                <a href="/ru/our-team/dmitriy1/">
+                                    <span itemprop="name">Dmitriy Fedyashov</span>
+                                </a>
+                            </div>
+                            <div class="Mt_15px">Руководитель отдела обеспечения качества</div>
+                            <div class="Mt_15px D_n">
+                                Fast Reports Team: Dmitriy Fedyashov - Head of question answering at Fast Reports
+                            </div>
+                        </div>
+                    </section>
+                                        <section class="blog-page__social">
+                        <div class="ya-share2" data-services="vkontakte,facebook,twitter,linkedin" data-title="Оконные функции – то, что должен знать каждый T-SQL программист. Часть 1." data-lang="ru"></div>
+                    </section>
+                                          <section class="blog-page__tags" itemprop="keywords">
+                                                                                <a href="/ru/blog/SQL/" class="badge">SQL</a>
+                                                                                                            <a href="/ru/blog/Window%20function/" class="badge">Window function</a>
+                                                                          </section>
+                                        <section id="blog-page__comments">
+                        <hr><a class="blog-page__comments-add js-blog-page-comments-add">Добавить комментарий</a>
+                        <form class="blog-page__comments-form js-blog-page-coments-form" action="/ru/blog/251/show/" method="post"  novalidate>
+                            <fieldset>
+                                <div class="blog-page__comments-form-body">
+                                <div id="comment"><input type="hidden" id="comment__token" name="comment[_token]" value="33f1cf8f71a78cb11f3f0d215f4c43f5bdb9f259" /><div><label for="comment_content">Напишите ваш комментарий</label><textarea id="comment_content" name="comment[content]"></textarea></div></div>
+                                <div class="Mb_10px">
+    <div class="g-recaptcha" data-sitekey="6LfMtFYUAAAAALMZQryGZw7KHPDt_UQ-Z8QcMtTV"></div>
+    </div>
+                                </div>
+                                <div class="actions">
+                                    <button type="submit" class="button" name="send">send</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                                            </section>
+                                    </div>
+
+                <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                    <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                                                <meta itemprop="url" content="https://www.fast-report.com//images/073eb0e.png?8.6.7"/>
+                                                <meta itemprop="width" content="400"/>
+                        <meta itemprop="height" content="60"/>
+                    </div>
+                    <meta itemprop="name" content="Fast Reports"/>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>                            <footer class="main-footer">
+  <div class="wrapper">
+    <div class="main-footer__column">
+      <div>
+        <a href="/ru/" class="logo main-footer__logo">
+          <div class="main-footer__icon">
+            <img src="/bundles/fastreportssite/images/svg/full-logo.svg?8.6.7" alt="logo"/>
+          </div>
+        </a>
+        <ul class="contacts main-footer__contacts">
+          <li class="contacts__phone"><a href="tel:+7(800)551-75-80">+7(800)551-75-80 </a></li><li class="contacts__email"><a href="mailto:info@fastreport.ru">info@fastreport.ru</a></li>
+          <li class="contacts__address">Ростов-на-Дону, Россия, 344082, ул.Обороны 24, офис 311</li>
+        </ul>
+      </div>
+
+      <div class="accordion accordion_footer" data-enable="phone" data-closed-start>
+        <button type="button" id="product" class="accordion__header" aria-controls="product-head">Продукты</button>
+        <div id="product-head" class="accordion__content" role="region" aria-labelledby="product">
+          <ul class="list">
+            <li class="list__item"><a href="/ru/buy/">Купить</a></li>
+            <li class="list__item"><a href="/ru/download/">Загрузить</a></li>
+                        <li class="list__item"><a href="/ru/download/documentation/">Документация</a></li>
+            <li class="list__item"><a href="/ru/testimonials/">Отзывы</a></li>
+            <li class="list__item"><a href="/ru/how-to-uninstall/">Как деинсталировать</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="accordion accordion_footer" data-enable="phone" data-closed-start>
+        <button type="button" id="accordion1id" class="accordion__header" aria-controls="support-head">Поддержка</button>
+        <div id="support-head" class="accordion__content" role="region" aria-labelledby="accordion1id">
+          <ul class="list">
+            <li class="list__item"><a href="https://support.fast-report.com/tickets/new/" target="_blank">Онлайн поддержка</a></li>
+            <li class="list__item"><a href="/ru/faq/">FAQ</a></li>
+            <li class="list__item"><a href="https://www.youtube.com/user/FastReportsInc/videos?view=1" target="_blank" rel="noopener noreferrer nofollow">Видео уроки</a></li>
+            <li class="list__item"><a href="https://forum.fast-report.com/ru/">Форум</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="accordion accordion_footer" data-enable="phone" data-closed-start>
+        <button type="button" id="accordion1id" class="accordion__header" aria-controls="company-head">Компания</button>
+        <div id="company-head" class="accordion__content" role="region" aria-labelledby="accordion1id">
+          <ul class="list">
+            <li class="list__item"><a href="/ru/blog/">Статьи</a></li>
+            <li class="list__item"><a href="/ru/news/">Наши Новости</a></li>
+            <li class="list__item"><a href="/ru/media/">Пресса о нас</a></li>
+            <li class="list__item"><a href="/ru/stories/">Пользовательские истории</a></li>
+            <li class="list__item"><a href="/ru/partners/">Реселлеры</a></li>
+                        <li class="list__item"><a href="/ru/academic/">ВУЗам</a></li>
+                        <li class="list__item"><a href="/ru/our-team/">Наша команда</a></li>
+                        <li class="list__item"><a href="/ru/fast-report-career/">Карьера</a></li>
+                        <li class="list__item"><a href="/ru/contact/">Контакты</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main-footer__bottom">
+    <div class="main-footer__bottom-content wrapper">
+      <div class="main-footer__text">
+        <p class="main-footer__copyright">&copy; 1998-2021 ООО «Фаст Репортс»</p>
+        <ul class="main-footer__additionally">
+          <li><a href="/ru/privacy/">Согласие с обработкой персональных данных</a></li>
+                    <li>Не является публичной офертой</li>
+                  </ul>
+      </div>
+      <ul class="social main-footer__social">
+        <li>
+          <a class="social__link social__link_facebook" href="https://www.facebook.com/FastReports" target="_blank" title="Facebook" rel="noopener noreferrer nofollow">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430.113 430.114"><path id="Facebook" d="M158.081,83.3c0,10.839,0,59.218,0,59.218h-43.385v72.412h43.385v215.183h89.122V214.936h59.805 c0,0,5.601-34.721,8.316-72.685c-7.784,0-67.784,0-67.784,0s0-42.127,0-49.511c0-7.4,9.717-17.354,19.321-17.354 c9.586,0,29.818,0,48.557,0c0-9.859,0-43.924,0-75.385c-25.016,0-53.476,0-66.021,0C155.878-0.004,158.081,72.48,158.081,83.3z"/></svg>          </a>
+        </li>
+        <li>
+          <a class="social__link social__link_linkedin" href="https://www.linkedin.com/groups/3705685/" target="_blank" title="Linkedin" rel="noopener noreferrer nofollow">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 310"><path id="XMLID_802_" d="M72.16,99.73H9.927c-2.762,0-5,2.239-5,5v199.928c0,2.762,2.238,5,5,5H72.16c2.762,0,5-2.238,5-5V104.73 C77.16,101.969,74.922,99.73,72.16,99.73z"/><path id="XMLID_803_" d="M41.066,0.341C18.422,0.341,0,18.743,0,41.362C0,63.991,18.422,82.4,41.066,82.4 c22.626,0,41.033-18.41,41.033-41.038C82.1,18.743,63.692,0.341,41.066,0.341z"/><path id="XMLID_804_" d="M230.454,94.761c-24.995,0-43.472,10.745-54.679,22.954V104.73c0-2.761-2.238-5-5-5h-59.599 c-2.762,0-5,2.239-5,5v199.928c0,2.762,2.238,5,5,5h62.097c2.762,0,5-2.238,5-5v-98.918c0-33.333,9.054-46.319,32.29-46.319 c25.306,0,27.317,20.818,27.317,48.034v97.204c0,2.762,2.238,5,5,5H305c2.762,0,5-2.238,5-5V194.995 C310,145.43,300.549,94.761,230.454,94.761z"/></svg>          </a>
+        </li>
+        <li>
+          <a class="social__link social__link_twitter" href="https://twitter.com/fastreports" target="_blank" title="Twitter" rel="noopener noreferrer nofollow">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.002 512.002"><path d="M512.002,97.211c-18.84,8.354-39.082,14.001-60.33,16.54c21.686-13,38.342-33.585,46.186-58.115 c-20.299,12.039-42.777,20.78-66.705,25.49c-19.16-20.415-46.461-33.17-76.674-33.17c-58.011,0-105.042,47.029-105.042,105.039 c0,8.233,0.929,16.25,2.72,23.939c-87.3-4.382-164.701-46.2-216.509-109.753c-9.042,15.514-14.223,33.558-14.223,52.809 c0,36.444,18.544,68.596,46.73,87.433c-17.219-0.546-33.416-5.271-47.577-13.139c-0.01,0.438-0.01,0.878-0.01,1.321 c0,50.894,36.209,93.348,84.261,103c-8.813,2.399-18.094,3.687-27.674,3.687c-6.769,0-13.349-0.66-19.764-1.888 c13.368,41.73,52.16,72.104,98.126,72.949c-35.95,28.176-81.243,44.967-130.458,44.967c-8.479,0-16.84-0.496-25.058-1.471 c46.486,29.807,101.701,47.197,161.021,47.197c193.211,0,298.868-160.062,298.868-298.872c0-4.554-0.104-9.084-0.305-13.59 C480.111,136.775,497.92,118.275,512.002,97.211z"/></svg>          </a>
+        </li>
+        <li>
+          <a class="social__link social__link_vk" href="https://vk.com/fastreport" target="_blank" title="VK" rel="noopener noreferrer nofollow">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 304.36 304.36"><path id="XMLID_807_" style="fill-rule:evenodd;clip-rule:evenodd;" d="M261.945,175.576c10.096,9.857,20.752,19.131,29.807,29.982 c4,4.822,7.787,9.798,10.684,15.394c4.105,7.955,0.387,16.709-6.746,17.184l-44.34-0.02c-11.436,0.949-20.559-3.655-28.23-11.474 c-6.139-6.253-11.824-12.908-17.727-19.372c-2.42-2.642-4.953-5.128-7.979-7.093c-6.053-3.929-11.307-2.726-14.766,3.587 c-3.523,6.421-4.322,13.531-4.668,20.687c-0.475,10.441-3.631,13.186-14.119,13.664c-22.414,1.057-43.686-2.334-63.447-13.641 c-17.422-9.968-30.932-24.04-42.691-39.971C34.828,153.482,17.295,119.395,1.537,84.353C-2.01,76.458,0.584,72.22,9.295,72.07 c14.465-0.281,28.928-0.261,43.41-0.02c5.879,0.086,9.771,3.458,12.041,9.012c7.826,19.243,17.402,37.551,29.422,54.521 c3.201,4.518,6.465,9.036,11.113,12.216c5.142,3.521,9.057,2.354,11.476-3.374c1.535-3.632,2.207-7.544,2.553-11.434 c1.146-13.383,1.297-26.743-0.713-40.079c-1.234-8.323-5.922-13.711-14.227-15.286c-4.238-0.803-3.607-2.38-1.555-4.799 c3.564-4.172,6.916-6.769,13.598-6.769h50.111c7.889,1.557,9.641,5.101,10.721,13.039l0.043,55.663 c-0.086,3.073,1.535,12.192,7.07,14.226c4.43,1.448,7.35-2.096,10.008-4.905c11.998-12.734,20.561-27.783,28.211-43.366 c3.395-6.852,6.314-13.968,9.143-21.078c2.096-5.276,5.385-7.872,11.328-7.757l48.229,0.043c1.43,0,2.877,0.021,4.262,0.258 c8.127,1.385,10.354,4.881,7.844,12.817c-3.955,12.451-11.65,22.827-19.174,33.251c-8.043,11.129-16.645,21.877-24.621,33.072 C252.26,161.544,252.842,166.697,261.945,175.576L261.945,175.576z M261.945,175.576"/></svg>          </a>
+        </li>
+        <li>
+          <a class="social__link social__link_instagram" href="https://www.instagram.com/fastreports/" target="_blank" title="Instagram" rel="noopener noreferrer nofollow">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M352 0H160C71.648 0 0 71.648 0 160v192c0 88.352 71.648 160 160 160h192c88.352 0 160-71.648 160-160V160C512 71.648 440.352 0 352 0zm112 352c0 61.76-50.24 112-112 112H160c-61.76 0-112-50.24-112-112V160C48 98.24 98.24 48 160 48h192c61.76 0 112 50.24 112 112v192z"/><path d="M256 128c-70.688 0-128 57.312-128 128s57.312 128 128 128 128-57.312 128-128-57.312-128-128-128zm0 208c-44.096 0-80-35.904-80-80 0-44.128 35.904-80 80-80s80 35.872 80 80c0 44.096-35.904 80-80 80z"/><circle cx="393.6" cy="118.4" r="17.056"/></svg>          </a>
+        </li>
+        <li>
+          <a class="social__link social__link_youtube" href="https://www.youtube.com/user/FastReportsInc/videos?view=1" target="_blank" title="YouTube" rel="noopener noreferrer nofollow">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 310"><path d="M297.917 64.645c-11.19-13.302-31.85-18.728-71.306-18.728H83.386c-40.359 0-61.369 5.776-72.517 19.938C0 79.663 0 100.008 0 128.166v53.669c0 54.551 12.896 82.248 83.386 82.248h143.226c34.216 0 53.176-4.788 65.442-16.527C304.633 235.518 310 215.863 310 181.835v-53.669c0-29.695-.841-50.16-12.083-63.521zm-98.896 97.765l-65.038 33.991a9.997 9.997 0 0 1-14.632-8.863v-67.764a10 10 0 0 1 14.609-8.874l65.038 33.772a10 10 0 0 1 .023 17.738z"/></svg>          </a>
+        </li>
+        <li>
+          <a class="social__link social__link_telegram" href="https://t.me/fastreports" target="_blank" title="Telegram" rel="noopener noreferrer nofollow">
+            <svg enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m9.417 15.181-.397 5.584c.568 0 .814-.244 1.109-.537l2.663-2.545 5.518 4.041c1.012.564 1.725.267 1.998-.931l3.622-16.972.001-.001c.321-1.496-.541-2.081-1.527-1.714l-21.29 8.151c-1.453.564-1.431 1.374-.247 1.741l5.443 1.693 12.643-7.911c.595-.394 1.136-.176.691.218z"/></svg>          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <br/>
+</footer>                </div>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+            <script src="/assets/runtime.js?10.0.44"></script>
+            <script src="/assets/main.js?10.0.44"></script>
+            <script src="https://api.fast-report.com:8088/client/production/fastchat_client.js"></script>
+                <script src="//yastatic.net/share2/share.js" async></script>
+<script type="text/javascript" src="https://www.google.com/recaptcha/api.js" async></script>
+<script src="/assets/blog-page.js?10.0.44"></script>
+        <div id="fastchat-insert-div"></div>
+    </body>
+</html>

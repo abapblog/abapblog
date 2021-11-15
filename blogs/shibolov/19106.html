@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><script>document.getElementsByTagName('html')[0].classList.add('js')</script>
+	<title>SAPLand — Мир решений SAP</title>
+<meta name="keywords" content="Basis, Информационные технологии, IT, Basis, ABAP, SAP Консультант, Consultant" />
+<meta name="description" content="Практика показывает, что пользователи не любят запускать фоновые задания, а упрямо предпочитают пользоваться диалоговым режимом работы для всех своих задач и операций. И я так понимаю, что пользователи во всех странах очень похожи, раз в SAP системе был реализован механизм ограничивающий работу в режиме диалога." />
+		    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700,800&display=swap&subset=cyrillic"
+          rel="stylesheet">
+	<link rel="stylesheet" href="/build/attention-block/login-article.cb663f57.css" />
+<link rel="stylesheet" href="/build/attention-block/attention-blue.23524ae8.css" />
+<link rel="stylesheet" href="/build/login.c6183aa5.css" />
+<link rel="stylesheet" href="/build/main-menu.83fc82c5.css" />
+<link rel="stylesheet" href="/build/header.fc38405f.css" />
+<link rel="stylesheet" href="/build/breadcrumbs.ff1969dd.css" />
+<link rel="stylesheet" href="/build/blogs/post-title.98abe694.css" />
+<link rel="stylesheet" href="/build/short-info.94d9a3a3.css" />
+<link rel="stylesheet" href="/build/short-info/author-statistic.53b83cff.css" />
+<link rel="stylesheet" href="/build/hovered-info.ea33fb03.css" />
+<link rel="stylesheet" href="/build/article/layout.8f67d1fe.css" />
+<link rel="stylesheet" href="/build/article-page/block-title.82fbb182.css" />
+<link rel="stylesheet" href="/build/article-page/share.321c2ae2.css" />
+<link rel="stylesheet" href="/build/comment.67a31886.css" />
+<link rel="stylesheet" href="/build/article-page/comment-article.881f89af.css" />
+<link rel="stylesheet" href="/build/article-page/note-gray.d9a735de.css" />
+<link rel="stylesheet" href="/build/page-container.0347724b.css" />
+<link rel="stylesheet" href="/build/footer.953024a7.css" />
+<link rel="stylesheet" href="/build/article-page.c568a741.css" />
+<link rel="stylesheet" href="/build/article-page/article-close.3d00c05a.css" />
+<link rel="stylesheet" href="/build/global.3974230d.css" />
+</head>
+<body>
+		
+			<header>
+	<div class="header-wrap container">
+		<div class="menu-icon"><img src="/build/images/icons/menu.svg" alt=""></div><div class="logo">
+				<a href="/publications">
+					<img src="/os/modules/material/images/logo.svg" alt="">
+				</a>
+			</div><nav class="burger-menu">
+				<ul>
+					<li><a href="/publications">Публикации</a></li>
+					<li><a href="/comments">Обсуждения</a></li>
+					<li><a href="/authors">Авторы</a></li>
+					<li><a href="/authors-columns">Колонки</a></li>
+				</ul>
+				<div class="loop"><img src="/build/images/icons/search.svg" alt=""></div>
+				<form action="/publications" method="get">
+					<div class="search"><input type="text" placeholder="Искать" name="filter[search][full-search-criterion][]"><button type="submit"><img src="/build/images/icons/search-bl.svg" alt=""></button></div>
+				</form>
+			</nav>
+<div class="person-wrap">
+	<a href="//sappro.sapland.ru/subscription" class="btn-subscribe">Подписка</a>
+			<a href="/login/" class="btn-reg">Войти</a>
+	</div>
+
+		<div class="login-wrap">
+	<div class="enter">
+		<form class="enter-box" name="login-form" method="post">
+			<input type="hidden" name="auth[csrf]" value="ijIO2jwGg1UYp79rxK3wZlSd2XxtAkjpwlBBf441TDE" />
+			<p>Добро пожаловать</p>
+			<div class="input-box">
+				<span>Адрес электронной почты</span>
+				<input type="text" placeholder="E-mail" name="auth[login]" required>
+				<span>Пароль</span>
+				<input type="password" placeholder="Password" name="auth[password]" required>
+			</div>
+			<div class="btn-box">
+				<button class="enter-btn" type="submit">Войти</button>
+				<a href="?auth[reset_password]">Забыли пароль?</a>
+			</div>
+		</form>
+	</div>
+	<div class="registration">
+		<p>Станьте участником SAPLAND и получите доступ к самым интересным публикациям SAPPRO</p>
+		<a  style="background-color: #ff9920;" href="//sapland.ru/register/">Зарегистрироваться</a>
+	</div>
+</div>
+	</div>
+	<div class="main-menu-wrap">
+	<div class="main-menu-box container">
+		<div class="logo-menu">
+			<a href="/">
+				<img src="/build/images/logo-menu.svg" alt="">
+			</a>
+			<p>Развитие в экосистеме SAP</p>
+		</div>
+		<div class="main-menu-list">
+			<div class="main-menu-item">
+			<img src="/build/images/icons/project.svg" alt="">
+			<span class="menu-click">О проекте</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="//sapland.ru/about">Концепция</a>
+					</li>
+									<li>
+						<a href="/policy">Политики</a>
+					</li>
+									<li>
+						<a href="/contacts/">Контакты</a>
+					</li>
+									<li>
+						<a href="//sapland.ru/authors/to-author">Авторам</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/SAPPRO.svg" alt="">
+			<span class="menu-click">Журнал SAPPRO</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/publications">Публикации</a>
+					</li>
+									<li>
+						<a href="/comments">Обсуждения</a>
+					</li>
+									<li>
+						<a href="/authors">Авторы</a>
+					</li>
+									<li>
+						<a href="/authors-columns">Колонки</a>
+					</li>
+									<li>
+						<a href="/compilations">Антологии</a>
+					</li>
+									<li>
+						<a href="/subscription">Подписка</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/education.svg" alt="">
+			<span class="menu-click">Учебный центр</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="//edu.sapland.ru/courses/">Курсы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/master-classes/">Мастер-классы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/webinars/?materials_filter%5Bmaterial__by-format%5D%5B%5D=935&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bfrom%5D=&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bto%5D=&filter%5Bsearch%5D%5Bfull-search-criterion%5D%5B%5D=">Вебинары</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/SAPPRO1.svg" alt="">
+			<span class="menu-click">Книги SAP Press</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/books/novelty/">Книги на английском</a>
+					</li>
+									<li>
+						<a href="/books/Knigi_na_russkom/">Книги на русском</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/lib.svg" alt="">
+			<span class="menu-click">Библиотека презентаций</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/event">Мероприятия</a>
+					</li>
+									<li>
+						<a href="/presentations/">Презентации</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/eco.svg" alt="">
+			<span class="menu-click">Экосистема SAP СНГ</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/p-events/news/">Новости</a>
+					</li>
+									<li>
+						<a href="/a-list">Анонсы</a>
+					</li>
+							</ul>
+		</div>
+	</div>
+
+		<div class="social-menu">
+			<ul>
+	<li><a target="_blank" href="#" style=" pointer-events: none;" ><img src="/build/images/icons/sn/telegram-plane.svg" alt=""></a></li><li><a target="_blank" href="https://www.facebook.com/pages/SAPLand/127114854020362"><img src="/build/images/icons/sn/facebook.svg" alt=""></a></li><li><a target="_blank" href="https://vk.com/club4419971"><img src="/build/images/icons/sn/vk.svg" alt=""></a></li><li><a target="_blank" href="https://twitter.com/SAPLand"><img src="/build/images/icons/sn/twitter.svg" alt=""></a></li><li><a target="_blank" href="https://www.linkedin.com/groups/6797279/"><img src="/build/images/icons/sn/linkedin-in.svg" alt=""></a></li></ul>
+		</div>
+		<div class="close"></div>
+	</div>
+</div>
+</header>
+			<div class="container breadcrumbs">
+						<span><a href="//sapland.ru">SAPLAND</a></span>
+								<span><a href="/">SAPPRO</a></span>
+								<span><a href="/publications">Публикации</a></span>
+								<span><a href="/blogs/">Авторские колонки</a></span>
+								<span><a href="/blogs/shibolov/">Записки SAP Basis консультанта</a></span>
+								<span>Когда возникает системный дамп TIME_OUT</span>
+			</div>
+
+	
+		<div class="container page blog-post article-closed "><div class="sidebar">
+			</div>
+	<div class="content">			
+<div class="block-title">
+	
+			<div class="article">
+		<div class="info">
+						<p class="cat">
+							</p>
+
+			<h1>Когда возникает системный дамп TIME_OUT</h1>			<a href="/author-column/6607">
+			<h2>Записки SAP Basis консультанта</h2>
+		</a>
+		
+	<div class="bottom">
+				
+				
+
+
+
+								
+																			<div class="author">
+													<a href="/profile/14879/publications">Шиболов Вячеслав Анатольевич</a>
+												<div class="hovered-info">
+										<div class="avatar">
+		<img src="https://sappro.sapland.ru/images/cache/avatar64/userfiles/user/14879.jpg" alt="">
+	</div>
+<div class="information">
+			<h3 title="Шиболов Вячеслав Анатольевич">				<a href="/profile/14879/publications">Шиболов Вячеслав Анатольевич</a>
+			</h3>
+							<p>эксперт по SAP BASIS</p>
+	</div>
+
+			<div class="stat stat_author">
+											<span class="rating">957</span>
+									
+				<a href="/profile/14879/publications"
+				><span class="pubs">149</span></a>
+
+												
+				<span class="comments" >48</span>
+								</div>
+	<div class="rhombus"></div>
+
+		
+
+	
+							</div>
+
+					</div>
+
+																																
+				
+				
+				<p class="date">30 июня 2020</p>
+							</div>
+		</div>
+	</div>
+</div>
+
+	 
+	 
+
+	<div class="article-body">
+		<div class="note-wrap gray-note pd">
+			<p>Практика показывает, что пользователи не любят запускать фоновые задания, а упрямо предпочитают пользоваться диалоговым режимом работы для всех своих задач и операций. И я так понимаю, что пользователи во всех странах очень похожи, раз в SAP системе был реализован механизм ограничивающий работу в режиме диалога.</p>
+		</div>	
+<p style="text-align:justify">Работа пользователей в ABAP-части SAP системы возможна в двух режимах:</p>
+
+<ul>
+	<li style="text-align:justify">диалоговый режим,</li>
+	<li style="text-align:justify">фоновый режим.</li>
+</ul>
+
+<p style="text-align:justify">Первый режим является основным. В этом случае пользователь работает с системой в интерактивном режиме, вводя информацию в поля транзакций и получая результаты на экране SAP GUI. За обработку запросов от диалоговых пользователей отвечают отдельные процессы SAP инстанции – диалоговые рабочие процессы (DIA).</p>
+
+<p style="text-align:justify">Второй режим, фоновый (background), служит для запуска долгих тяжелых отчетов или стандартных периодических заданий для обслуживания SAP системы (задания, собирающие различную статистику, проводящие очистку и т.п.). Фоновые задания не требуют постоянного коннекта пользователя с системой посредством SAP GUI, поэтому пользователь может запланировать задание и выйти из системы. Просмотреть результаты работы задания можно после его окончания через систему спула. За выполнение фоновых заданий в системе отвечает другой вид рабочих процессов - фоновые рабочие процессы (тип BTC).</p>
+
+<p style="text-align:justify">Количество рабочих процессов для диалоговой и фоновой обработки настраивается через следующие SAP параметры:</p>
+
+<ul>
+	<li style="text-align:justify"><em>rdisp/wp_no_dia,</em></li>
+	<li style="text-align:justify"><em>rdisp/wp_no_btc.</em></li>
+</ul>
+
+<p style="text-align:justify">Напоминаю, что про параметры SAP системы у меня уже была серия статей (<a href="https://sapland.ru/kb/blogs/konphigurirovanie-sap-sistemi.html" target="_blank">часть 1</a>, <a href="https://sapland.ru/kb/blogs/konphigurirovanie-sap-sistemi-ii.html" target="_blank">часть 2</a>).</p>
+
+<p style="text-align:justify">Вышеуказанные параметры являются статическими и считываются системой только при старте ABAP инстанции. Количество рабочих процессов в работающей системе можно просмотреть в <a href="https://sapland.ru/kb/blogs/monitoring-rabochih-protsessov-sap-sistemi.html" target="_blank">транзакции SM50</a>.</p>
+
+<p style="text-align:justify">Практика показывает, что пользователи не любят запускать фоновые задания, а упрямо предпочитают пользоваться диалоговым режимом работы для всех своих задач и операций. И я так понимаю, что пользователи во всех странах очень похожи, раз в SAP системе был реализован механизм ограничивающий работу в режиме диалога.</p>
+
+<p style="text-align:justify">Дело в том, что в любой SAP системе количество диалоговых рабочих процессов инстанции всегда меньше количества пользователей. Так же как и в любой операционной системе количество ядер центрального процессора всегда меньше количества работающих процессов. Поэтому, если найдётся группа упорных пользователей, в которой каждый запустит по тяжёлому долгому отчёту (а то и по 2-3), а отчёты займут на длительный промежуток времени большинство диалоговых рабочих процессов, то остальные пользователи будут "курить в сторонке". Для них система перестанет реагировать на любые шаги диалога, даже, если они работают в лёгких, нересурсоёмких транзакциях. Чтобы пресекать такие ситуации у ABAP инстанции есть параметр <em><strong>rdisp/max_wprun_time</strong></em>. Значение параметра - время в секундах. А если после числа добавить букву M или H, то система воспримет значение, как указанное в минутах или часах <strong>(рис. 1).</strong></p>
+
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="background-color:#ffffff; color:#111111; font-family:verdana,geneva,sans-serif; font-size:12px; margin-bottom:0.5em; margin-left:auto; margin-right:auto; padding:4px; position:relative; text-align:center">
+	<tbody>
+		<tr>
+			<td style="text-align:justify"><img alt="" height="410" src="/files/0-art/01_param.png" width="640"></td>
+		</tr>
+		<tr>
+			<td style="text-align:justify">
+<strong>Рис. 1. </strong>Параметр инстанции rdisp/max_wprun_time.</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:justify">Если диалоговый рабочий процесс работает над одним шагом диалога и интервал времени больше, чем значение, указанное в ограничивающем параметре, то система прервёт выполнение данного шага. В этом случае работающая программа останавливается, диалоговый рабочий процесс освобождается, а в системе генерируется ABAP-дамп с именем <strong>TIME_OUT</strong>.</p>
+<div class="attention blue">
+		<p class="heading">Если хотите прочитать статью полностью и оставить свои комментарии присоединяйтесь к <span>sapland</span>
+	</p>
+	<a href="//sapland.ru/register/" class="btn-login">Зарегистрироваться</a>
+	<div>
+		<p class="text">У вас уже есть учетная запись?</p>
+		<a href="#" class = "btn-reg">Войти</a>
+	</div>
+	
+</div>
+
+	
+</div>
+
+	<div class="share-wrap">
+			<a class="btn-print" onclick="window.print();" type="button"><span>Распечатать</span></a>
+</div>
+	<div class="comment-article-wrap comments-h">
+	<h2 class="ifp-h">Обсуждения <span class="count"><img src="/build/images/icons/speak.svg"
+														  alt="Количество комментариев">0</span>
+		<a class="btn rpl rpl-h inactive" href="javascript:void(0)">Написать комментарий</a>
+	</h2>
+			<div class="show-comment">
+		
+	</div>
+</div>
+
+
+
+	
+			</div></div>
+
+		<div class="footer-wrapper">
+				<footer>
+	<div class="footer-wrap container">
+		<div class="logo-wrap">
+			<a href="/">
+				<img src="/build/images/logo-footer.svg" alt="">
+			</a>
+			<ul>
+	<li><a target="_blank" href="#" style=" pointer-events: none;" ><img src="/build/images/icons/sn/telegram-plane.svg" alt=""></a></li><li><a target="_blank" href="https://www.facebook.com/pages/SAPLand/127114854020362"><img src="/build/images/icons/sn/facebook.svg" alt=""></a></li><li><a target="_blank" href="https://vk.com/club4419971"><img src="/build/images/icons/sn/vk.svg" alt=""></a></li><li><a target="_blank" href="https://twitter.com/SAPLand"><img src="/build/images/icons/sn/twitter.svg" alt=""></a></li><li><a target="_blank" href="https://www.linkedin.com/groups/6797279/"><img src="/build/images/icons/sn/linkedin-in.svg" alt=""></a></li></ul>
+		</div>
+		<div class="menu-wrap">
+			<div class="menu-item">
+			<span>О проекте</span>
+			<ul>
+									<li>
+						<a href="//sapland.ru/about">Концепция</a>
+					</li>
+									<li>
+						<a href="/policy">Политики</a>
+					</li>
+									<li>
+						<a href="/contacts/">Контакты</a>
+					</li>
+									<li>
+						<a href="//sapland.ru/authors/to-author">Авторам</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Журнал SAPPRO</span>
+			<ul>
+									<li>
+						<a href="/publications">Публикации</a>
+					</li>
+									<li>
+						<a href="/comments">Обсуждения</a>
+					</li>
+									<li>
+						<a href="/authors">Авторы</a>
+					</li>
+									<li>
+						<a href="/authors-columns">Колонки</a>
+					</li>
+									<li>
+						<a href="/compilations">Антологии</a>
+					</li>
+									<li>
+						<a href="/subscription">Подписка</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Учебный центр</span>
+			<ul>
+									<li>
+						<a href="//edu.sapland.ru/courses/">Курсы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/master-classes/">Мастер-классы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/webinars/?materials_filter%5Bmaterial__by-format%5D%5B%5D=935&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bfrom%5D=&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bto%5D=&filter%5Bsearch%5D%5Bfull-search-criterion%5D%5B%5D=">Вебинары</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Книги SAP Press</span>
+			<ul>
+									<li>
+						<a href="/books/novelty/">Книги на английском</a>
+					</li>
+									<li>
+						<a href="/books/Knigi_na_russkom/">Книги на русском</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Библиотека презентаций</span>
+			<ul>
+									<li>
+						<a href="/event">Мероприятия</a>
+					</li>
+									<li>
+						<a href="/presentations/">Презентации</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Экосистема SAP СНГ</span>
+			<ul>
+									<li>
+						<a href="/p-events/news/">Новости</a>
+					</li>
+									<li>
+						<a href="/a-list">Анонсы</a>
+					</li>
+							</ul>
+		</div>
+	</div>
+		<span class="text-info">Републикация материалов — только со ссылкой на SAPLAND.RU, с разрешения редакции сайта.
+								Редакция не несет ответственности за высказывания пользователей на сайте.</span>
+		<span class	= "writeUs">Связаться с нами:&nbsp;<a href="mailto:support@sapland.ru" class="text-mail"> support@sapland.ru</a></span>
+		<span class="text-right">18+ &copy; 2009 - 2021, Учредитель ООО «Эксперт РП». Все права защищены</span>
+	</div>
+</footer>
+	
+	</div>
+
+			
+	
+			
+	
+		<script src="/build/runtime.f011bcb1.js"></script>
+<script src="/build/5.faf5a91c.js"></script>
+<script src="/build/global.648d4089.js"></script>
+	<script src="/build/attention-block/login-article.69d7841a.js"></script>
+<script src="/build/attention-block/attention-blue.3ff74d37.js"></script>
+<script src="/build/0.1fec29ad.js"></script>
+<script src="/build/blocks/user.f97fe11c.js"></script>
+<script src="/build/login.b895675d.js"></script>
+<script src="/build/main-menu.31eac860.js"></script>
+<script src="/build/header.7fd84952.js"></script>
+<script src="/build/breadcrumbs.e36f86c3.js"></script>
+<script src="/build/blogs/post-title.e758e58c.js"></script>
+<script src="/build/short-info.76413a3a.js"></script>
+<script src="/build/short-info/author-statistic.d460c927.js"></script>
+<script src="/build/hovered-info.16280c01.js"></script>
+<script src="/build/1.32feafaf.js"></script>
+<script src="/build/article/layout.a7a2b8ff.js"></script>
+<script src="/build/article-page/block-title.a6d5d176.js"></script>
+<script src="/build/article-page/share.f5b6dade.js"></script>
+<script src="/build/comment.139721f4.js"></script>
+<script src="/build/article-page/comment-article.38d7be87.js"></script>
+<script src="/build/article-page/note-gray.e6c6d3bb.js"></script>
+<script src="/build/page-container.ef05586f.js"></script>
+<script src="/build/footer.b018aec7.js"></script>
+<script src="/build/article-page.2915c0e5.js"></script>
+<script src="/build/article-page/article-close.68bb7c2e.js"></script>
+	<style>
+        @media print {
+            header {
+                display: none !important;
+            }
+			.breadcrumbs {
+                display: none; !important;
+			}
+			.comment-article-wrap {
+                display: none; !important;
+			}
+			.books-wrap-sl {
+                display: none; !important;
+			}
+			.share-wrap {
+                display: none; !important;
+			}
+			#arrowUp {
+                display: none; !important;
+			}
+            footer {
+                display: none; !important;
+            }
+        }
+	</style>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(1375405, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        trackHash:true
+    });
+    ym(1375405,'reachGoal','NEW_DESIGN');
+
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/1375405" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-28264801-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-28264801-1');
+</script>
+</body>
+</html>

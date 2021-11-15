@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>transaction services | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/transaction-services/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:10:47 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>ABAP Object Services – Transaction Service</title>
+		<link>https://abap-blog.ru/database-work/abap-object-services-transaction-service/</link>
+					<comments>https://abap-blog.ru/database-work/abap-object-services-transaction-service/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 31 May 2014 19:21:22 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<category><![CDATA[abap objects services]]></category>
+		<category><![CDATA[transaction services]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2051</guid>
+
+					<description><![CDATA[<p>Инструмент обработки транзакций позволяет разработчику контролировать процессы записи изменений из хранимых объектах в базу данных. Transaction Service основан на классической схеме обновления данных, с небольшими дополнениями. Используя TS нет необходимости ручного вызова модулей обновлений. Кроме того, TS вводит такое понятие как ООП транзакция. Компоненты Transaction Service Рассмотрим используемые в TS компоненты. Сама по себе ООП [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-transaction-service/">ABAP Object Services – Transaction Service</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/database.png"><img loading="lazy" class="alignleft wp-image-2068 " src="http://abap-blog.ru/wp-content/uploads/2014/05/database.png" alt="database" width="305" height="229" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/database.png 380w, https://abap-blog.ru/wp-content/uploads/2014/05/database-300x225.png 300w" sizes="(max-width: 305px) 100vw, 305px" /></a>Инструмент обработки транзакций позволяет разработчику контролировать процессы записи изменений из хранимых объектах в базу данных.</p>
+<p>Transaction Service основан на <a href="http://abap-blog.ru/abap/optimizaciya_integrazia/programmirovanie-obnovlenij-bd-v-r3/">классической схеме обновления данных</a>, с небольшими дополнениями. Используя TS нет необходимости ручного вызова модулей обновлений. Кроме того, TS вводит такое понятие как ООП транзакция.<span id="more-2051"></span></p>
+<h3>Компоненты Transaction Service</h3>
+<p>Рассмотрим используемые в TS компоненты. Сама по себе ООП транзакция это ссылка на объект, созданный с помощью менеджера транзакций.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/tscomponents.gif"><img loading="lazy" class="alignnone size-full wp-image-2052" src="http://abap-blog.ru/wp-content/uploads/2014/05/tscomponents.gif" alt="tscomponents" width="651" height="757" /></a></p>
+<h4>Методы системного класса <strong>CL_OS_SYSTEM</strong></h4>
+<p><strong>GET_</strong><strong>TRANSACTION_</strong><strong>MANAGER</strong>(). Используется для получения ссылки на менеджер транзакций. Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_transaction_manager TYPE REF TO if_os_transaction_manager,
+  go_transaction TYPE REF TO if_os_transaction.
+
+go_transaction_manager = cl_os_system=&gt;get_transaction_manager( ).
+go_transaction = go_transaction_manager-&gt;create_transaction( ).
+go_transaction-&gt;start( ).
+" .. Операции над PS объектами
+go_transaction-&gt;end( ). " Завершаем транзакцию = COMMIT WORK</pre><p><strong>INIT_</strong><strong>AND_</strong><strong>SET_</strong><strong>MODES</strong>. Инициализация и установка режима для транзакций верхнего уровня. Метод вызывается всего один раз для каждой программы (явно или неявно), если вызвать повторно приведет к ошибке. Если вы хотите переопределить настройки режимов, вызывать данный метод необходимо в самом начале программы, до обращения к другим сервисам ABAP Objects.  Обычно вызывается в LOAD-OF-PROGRAM или конструкторе класса приложения (Для <strong>Web</strong><strong>Dynpro</strong> приложений в <strong>WDDOINIT</strong>) . Описание режимов даётся далее.</p>
+<p><strong>Обратите внимание на возможную ошибку при использовании данного метода</strong>:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+cl_os_system=&gt;init_and_set_modes(
+  EXPORTING
+    i_external_commit = oscon_true
+    i_update_mode     = oscon_dmode_update_task
+).
+
+go_sflight_agent = zca_sflight =&gt;agent.</pre><p>Агент класса получаем через статический атрибут, среда выполнения запускает статический конструктор в начале блока обработки, т.е. перед вызовом метода <strong>INIT_</strong><strong>AND_</strong><strong>SET_</strong><strong>MODES</strong>, что приведет к ошибке. Правильный вызов:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+LOAD-OF-PROGRAM.
+  cl_os_system=&gt;init_and_set_modes(
+    EXPORTING
+      i_external_commit = oscon_true
+      i_update_mode     = oscon_dmode_update_task
+  ).
+
+START-OF-SELECTION.
+
+  go_sflight_agent = zca_sflight =&gt;agent.</pre><p><strong>GET_</strong><strong>CLASS_</strong><strong>AGENT. </strong>Относительно имени класса получает ссылку на агент класса.</p>
+<p><strong>GET_CLASS_AGENT_INFO. </strong>Получение информации об агенте класса, структура &#8212; OSTYP_CA_INFO.</p>
+<h3></h3>
+<h4>Атрибуты класса <strong>CL_</strong><strong>OS_</strong><strong>SYSTEM</strong></h4>
+<p><strong>ACTIVE_CLASS_AGENT</strong>. Внутренняя таблица со всеми инициализированными агентами хранимых классов в рамках текущей внутренней сессии.<br />
+<strong>EXTERNAL_COMMIT</strong>. Режим транзакции.<br />
+<strong>INIT_</strong><strong>STATE</strong>. Состояние инициализации Object Services, если 0 значит Object Services не инициализирован, во время инициализации статус 1, после 2.</p>
+<p>&nbsp;</p>
+<h4>Методы менеджера транзакций (класса, реализующий интерфейс <strong>IF_OS_TRANSACTION_MANAGER</strong>)</h4>
+<p><strong>IF_OS_TRANSACTION_MANAGER~CREATE_TRANSACTION. </strong>Создаёт новую транзакцию и возвращает в качестве результата объект класса, реализующего интерфейс &#8212; <strong>IF_OS_TRANSACTION</strong>.</p>
+<p><strong>IF_OS_TRANSACTION_MANAGER~GET_CURRENT_TRANSACTION. </strong>Получение объекта текущей транзакции.</p>
+<p><strong>IF_OS_TRANSACTION_MANAGER~GET_TOP_TRANSACTION. </strong>Получение объекта на транзакцию верхнего уровня.</p>
+<p>&nbsp;</p>
+<h4>Методы транзакций (класса, реализующего интерфейс <strong>IF_OS_TRANSACTION</strong>)</h4>
+<p><strong>IF_OS_TRANSACTION~START</strong>. Начинает транзакцию, если нет транзакции верхнего уровня, стартует транзакция верхнего уровня, иначе вложенная транзакция. Нельзя запускать вложенную транзакцию, если предыдущая вложенная транзакция не была завершена. Данный метод вызывается только для транзакций со статусом <strong>OSCON_TSTATUS_NEW</strong>. Метод вызывается только один раз для транзакции. <strong>После завершения транзакции нельзя снова начать транзакцию, необходимо создать новую транзакцию (через менеджер транзакций), </strong>можно использовать ту же ссылочную переменную<strong>.</strong></p>
+<p><strong>IF_OS_TRANSACTION~END. </strong>Завершает транзакцию. Если транзакция верхнего уровня в ООП режиме, будет неявно вызван COMMIT WORK, что повлечет за собой вызов модуля обновления (CALL FUNCTION IN UPDATE TASK) и обновление хранимых объектов. Таким образом, после обращения к обновленному хранимому объекту, он вновь будет загружен из БД. Если по какой-либо причине завершение транзакции не удалось, статус транзакции останется тем, что был до вызова метода (<strong>OSCON_TSTATUS_RUNNING</strong>), разработчик должен решить, что ему делать с транзакцией.</p>
+<p><strong>IF_OS_TRANSACTION~UNDO</strong>. Завершает транзакцию. Изменения, сделанные в рамках текущей транзакции, откатываются на то состояние, в котором были объекты до старта транзакции. Если транзакция является транзакцией верхнего уровня в ООП режиме, будет неявно вызван ROLLBACK WORK. <strong>Механизм возврата отключен по умолчанию для неявно созданной транзакции верхнего уровня в режиме совместимости, т.к. система не может определить начальное состояние объектов (методы </strong><strong>START, </strong><strong>END не вызываются) Механизм возврата не возвращает в первоначальное состояние следующие объекты: Атрибуты обычных </strong><strong>ABAP объектов, статические атрибуты, временные объекты, данные вне класса – внутренние таблицы, структуры и пр. Можно переопределить механизм возврата, расширив его на перечисленные объекты.</strong> Изменения в объектах фиксируются и обрабатываются агентом хранимого класса, у каждого из хранимых объектов есть события для уведомления агента об изменениях. Для сохранения состояния хранимого объекта и возвращения его состояния используются методы SET(GET) интерфейса IF_OS_STATE, структура этих методов основана на шаблоне проектирования <a href="http://ru.wikipedia.org/wiki/%D0%A5%D1%80%D0%B0%D0%BD%D0%B8%D1%82%D0%B5%D0%BB%D1%8C_(%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD_%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F)">«хранитель»</a>, но при этом используются специальный системный вызов <a href="http://help.sap.com/abapdocu_740/en/abapsystem-call_oo.htm">SYSTEM-CALL OBJMGR GET STATE</a>, созданный специально для Object Services (SAP не рекомендует его использовать в своих объектах, данный системный вызов считывает все атрибуты класса в специально сгенерированную для этого структуру). Схема вызовов при изменении атрибута будет выглядеть следующим образом:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/tstrace1.png"><img loading="lazy" class="alignnone size-full wp-image-2054" src="http://abap-blog.ru/wp-content/uploads/2014/05/tstrace1.png" alt="tstrace" width="784" height="503" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/tstrace1.png 784w, https://abap-blog.ru/wp-content/uploads/2014/05/tstrace1-300x192.png 300w" sizes="(max-width: 784px) 100vw, 784px" /></a></p>
+<p>На первом шаге вызывается сгенерированный метод для изменения атрибута, перед основным кодом в данном методе происходит вызов макроса <strong>state_</strong><strong>write_</strong><strong>access </strong>из инклуда <strong>if_</strong><strong>os_</strong><strong>state_</strong><strong>macros</strong>. Далее внутри макроса запускается событие <strong>write_</strong><strong>access</strong>, на данное событие в агенте класса повешен обработчик, который внутри себя получает от хранимого объекта его состояние и записывает в специальную таблицу <strong>PM_UNDO_INFO</strong>.</p>
+<p>Только после того, как вся цепочка будет вызвана, хранимый атрибут будет перезаписан.</p>
+<p><strong>IF_OS_TRANSACTION~END_AND_CHAIN.</strong>Завершает транзакцию и тут же создает и начинает новую. Если транзакция верхнего уровня в ООП режиме, хранимые объекты сохраняются в БД, но при этом <strong>не загружаются повторно из БД</strong> (что может быть гораздо оптимальнее, чем просто END). Возвращает ссылочную переменную на новую транзакцию. Если по какой-либо причине завершение транзакции не удалось, статус транзакции останется тем, что был до вызова метода (<strong>OSCON_TSTATUS_RUNNING</strong>), разработчик должен решить, что ему делать с транзакцией.</p>
+<p><strong>IF_OS_TRANSACTION~UNDO_AND_CHAIN. </strong>Отменяет предыдущую и начинает новую транзакцию, объекты так же не будут загружаться из БД. Возвращает ссылочную переменную на новую транзакцию. Пример использования:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_transaction_manager TYPE REF TO if_os_transaction_manager,
+  go_transaction TYPE REF TO if_os_transaction.
+
+go_transaction_manager = cl_os_system=&gt;get_transaction_manager( ).
+go_transaction = go_transaction_manager-&gt;create_transaction( ).
+go_transaction-&gt;start( ).
+" .. Операции над PS объектами
+go_transaction = go_transaction-&gt;undo_and_chain( ).</pre><p><strong>IF_OS_TRANSACTION~REGISTER_CHECK_AGENT. </strong>Регистрирует агента проверки консистентности данных для хранимого объекта. Агент проверки — это класс, реализующий интерфейс <strong>IF_OS_CHECK</strong>. Данный интерфейс имеет метод IS_CONSISTENT, который возвращает переменную с типом OSCON_BOOLEAN. Как правило, интерфейс реализуют в классе хранимого объекта. Если проверка вернет OSCON_FALSE, изменения по объекту не будут записаны в БД. Проверка вызывается при выполнении методов END и END_AND_CHAIN, если какой-либо агент вернет ошибку, все остальные проверки не будут далее выполняться. Если агент возвращает ошибку, вызывается исключение CX_OS_AGENT_CHECK_FAILED, обработав которое можно изменить ошибочный объект и попытаться сохранить объекты заново, либо отменить изменения методом UNDO. Пример: добавим реализацию интерфейса IF_OS_CHECKв класс ZCL_SFLIGHT и реализуем его метод:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/agent_check.png"><img loading="lazy" class="alignnone size-full wp-image-2055" src="http://abap-blog.ru/wp-content/uploads/2014/05/agent_check.png" alt="agent_check" width="316" height="172" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/agent_check.png 316w, https://abap-blog.ru/wp-content/uploads/2014/05/agent_check-300x163.png 300w" sizes="(max-width: 316px) 100vw, 316px" /></a></p>
+<p>Пытаемся сохранить с нулевой ценой:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/check_error.png"><img loading="lazy" class="alignnone size-full wp-image-2056" src="http://abap-blog.ru/wp-content/uploads/2014/05/check_error.png" alt="check_error" width="555" height="437" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/check_error.png 555w, https://abap-blog.ru/wp-content/uploads/2014/05/check_error-300x236.png 300w" sizes="(max-width: 555px) 100vw, 555px" /></a></p>
+<p>Как видим при попытке завершить транзакцию, система не смогла пройти проверку класса агента.</p>
+<p>Агент можно использовать для сохранения каких-либо атрибутов, которые надо заполнить непосредственно перед записью в БД, например, дату и время изменения, пользователя, менявшего объект и т.п.</p>
+<p>Обычно регистрация агента, если он реализован в хранимом классе, происходит внутри метода INIT:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/init_check.png"><img loading="lazy" class="alignnone size-full wp-image-2057" src="http://abap-blog.ru/wp-content/uploads/2014/05/init_check.png" alt="init_check" width="603" height="459" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/init_check.png 603w, https://abap-blog.ru/wp-content/uploads/2014/05/init_check-300x228.png 300w" sizes="(max-width: 603px) 100vw, 603px" /></a></p>
+<p><strong>IF_OS_TRANSACTION~GET_STATUS. </strong>Получение статуса транзакции. Существуют следующие статусы:</p>
+<ul>
+<li><strong>OSCON_TSTATUS_NEW. </strong>Транзакция создана, но еще не начата, можно использовать только метод START.</li>
+<li><strong>OSCON_TSTATUS_RUNNING. </strong>Транзакция начата и является активной.</li>
+<li><strong>OSCON_TSTATUS_END_REQ. </strong>Транзакция была завершена вызовом метода END и ожидает окончания проверки агентом проверки или окончания обработчиков событий.</li>
+<li><strong>OSCON_TSTATUS_FIN_SUCCESS. </strong>Транзакция успешно завершена вызовом метода END.</li>
+<li><strong>OSCON_TSTATUS_FIN_UNDO. </strong>Транзакция отменена, объекты возвращены в их первоначальное состояние.</li>
+<li><strong>OSCON_</strong><strong>TSTATUS_</strong><strong>FIN_</strong><strong>ABORT. </strong>Транзакция отменена, объекты не возвращены в их первоначальное состояние.</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/tsstatus.png"><img loading="lazy" class="alignnone size-full wp-image-2058" src="http://abap-blog.ru/wp-content/uploads/2014/05/tsstatus.png" alt="tsstatus" width="653" height="396" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/tsstatus.png 653w, https://abap-blog.ru/wp-content/uploads/2014/05/tsstatus-300x181.png 300w" sizes="(max-width: 653px) 100vw, 653px" /></a></p>
+<p><strong>IF_OS_TRANSACTION~SET_MODE_UNDO_RELEVANT. </strong>Может использоваться для отключения механизма возврата объектов в первоначальное состояние (с целью оптимизации потребления памяти) после вызова метода UNDO (UNDO_AND_CHAIN). Статус транзакции в таком случае после отмены будет <strong>OSCON_</strong><strong>TSTATUS_</strong><strong>FIN_</strong><strong>ABORT.</strong></p>
+<p><strong>IF_OS_TRANSACTION~SET_MODE_UPDATE. </strong>Используется для транзакций верхнего уровня в режиме совместимости, может вызываться только один раз, устанавливает режим обновления для транзакции. Для ООП режима, режим обновления выставляется через системный класс <strong>CL_</strong><strong>OS_</strong><strong>SYSTEM</strong> (см. ниже). Если выбрать локальные или прямые обновления, неявно будет запущен оператор <b>SET UPDATE TASK LOCAL при</b> старте транзакции.</p>
+<p><strong>IF_OS_TRANSACTION~GET_MODES. </strong>Считывание вышеописанных параметров транзакции: режим обновления и т.п.</p>
+<p>События транзакций:</p>
+<p><strong>IF_OS_TRANSACTION~SAVE_REQUESTED</strong>. Событие вызывается, когда транзакция верхнего уровня завершается методом END, до момента, когда агент класса запишет изменения. Данное событие может использоваться для заполнения хранимых атрибутов (например, даты, времени изменения объекта), либо вызова каких-либо внутренних методов перед самым сохранением объекта. Обратите внимание что в обработчиках этого события нельзя вызывать методы TS, если хочется предотвратить запись в БД, необходимо использовать агента проверки.</p>
+<p><strong>IF_OS_TRANSACTION~SAVE_PREPARED</strong>.  Событие вызывается, когда ООП транзакция верхнего уровня завершается методом END, после того как хранимые атрибуты были записаны в записи обновлений, но непосредственно до вызова COMMIT WORK. Событие используется обычно для сохранения каких-либо данных не связанных с объектом, путём вызова модуля обновления и т.п.</p>
+<p><strong>IF_</strong><strong>OS_</strong><strong>TRANSACTION~</strong><strong>FINISHED</strong>. Событие срабатывает в конце транзакции, вне зависимости от того, как она была завершена (END,UNDO).</p>
+<p>Атрибуты транзакций:</p>
+<ul>
+<li><strong>SUPER_</strong><strong>TRANSACTION</strong>. Если атрибут содержит пустую ссылку, транзакция является транзакцией верхнего уровня.</li>
+<li><strong>SUBTRANSACTION</strong>. Если атрибут содержит пустую ссылку, транзакция находится на нижнем уровне.</li>
+<li><strong>CHAINED</strong>. Если abap_true, транзакция была запущена после вызова метода END_AND_CHAIN или UNDO_AND_CHAIN.</li>
+<li><strong>CHECK_</strong><strong>AGENTS. </strong>Внутреняя таблица с зарегистрированными агентами проверки.</li>
+<li><strong>UNDO_</strong><strong>RELEVANT. </strong>abap_true – механизм возврата включен.</li>
+<li><strong>TRANSACTION_STATE. </strong>Статус транзакции.</li>
+<li><strong>DATA_</strong><strong>SAVE_</strong><strong>STATE. </strong>Статус сохранения данных.</li>
+<li><strong>UPDATE_</strong><strong>MODE. </strong>Режим обновления.</li>
+<li><strong>FLAG_UPDT_MODE_CHANGED. </strong>Выставляется, если для транзакции в режиме совместимости был изменен режим обновления.</li>
+</ul>
+<p>&nbsp;</p>
+<h3>Режимы транзакций</h3>
+<p>&nbsp;</p>
+<p>Режим определяется только для транзакции верхнего уровня. Есть два режима:</p>
+<ul>
+<li><strong>Режим совместимости</strong>. Параметр в методе инициализации &#8212; <strong>E_EXTERNAL_COMMIT</strong> равен значению OSCON_TRUE (по умолчанию). В классическом ABAP приложении, при обновлении базы данных, в системе регистрируются модули обновления, после вызова COMMIT WORK происходит их выполнение (синхронно или асинхронно). При использовании PS в таком приложении, будет неявно создана объектно-ориентированная транзакция верхнего уровня, в режиме совместимости. Все обращения к хранимым объектам будут обрабатываться непосредственно в ней. При вызове COMMIT WORK, ООП транзакция верхнего уровня будет завершена и создана новая. Изменения, сделанные до текущего момента в хранимых объектах, будут перенесены в БД. Аналогичным образом при вызове ROLLBACK WORK, все изменения в объектах будут отменены. В режиме совместимости нельзя использовать методы для старта (START), завершения транзакции (END) т.к. это приведет к возникновению дампа.</li>
+<li><strong>ООП Режим</strong>. Параметр в методе инициализации &#8212; <strong>E_EXTERNAL_COMMIT</strong> равен значению OSCON_FALSE.  Если в ABAP Objects Services была явным образом создана ООП транзакция (ООП Режим), для её подтверждения надо использовать методы TS (END – COMMIT WORK, UNDO – ROLLBACK WORK), нельзя использовать COMMIT WORKили ROLLBACK WORK, т.к. это приведет к ошибке времени выполнения. Явно созданная ООП транзакция верхнего уровня, при её завершении будет вызывать неявным образом COMMIT WORK. Любая другая созданная ООП транзакция, до момента завершения предыдущей, будет считаться вложенной. Вложенная транзакция должна быть закончена до окончания родительской транзакции. Вложенные транзакции никогда не вызывают COMMIT WORK после своего завершения. Изменения, сделанные в хранимых объектах до момента создания новой транзакции верхнего уровня в ООП режиме, будут проигнорированы.</li>
+</ul>
+<p>По своему назначению, вложенные транзакции необходимы только ради того, чтобы иметь возможность откатываться в случае каких-либо проблем на то состояние, в котором были объекты до начала вложенной транзакции. Первоначальное состояние объектов берется из памяти, а не из БД. Система не позволяет использовать несколько уровней вложенности, следующая вложенная транзакция должна начинаться только тогда, когда закончила выполняться предыдущая (в противном случае возникнет ошибка времени выполнения):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/transactions1.png"><img loading="lazy" class="alignnone size-full wp-image-2060" src="http://abap-blog.ru/wp-content/uploads/2014/05/transactions1.png" alt="transactions" width="523" height="246" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/transactions1.png 523w, https://abap-blog.ru/wp-content/uploads/2014/05/transactions1-300x141.png 300w" sizes="(max-width: 523px) 100vw, 523px" /></a></p>
+<p>Кроме режима транзакции, необходимо определить режим обновления. При завершении транзакции верхнего уровня (вызов COMMIT WORK в режиме совместимости, вызов метода END в ООП транзакциях), TS начинает обновлять измененные хранимые объекты в БД, путём запуска модуля обновления.</p>
+<p>Существуют следующие режимы обновления:</p>
+<ul>
+<li>Асинхронный режим (<strong>OSCON_</strong><strong>DMODE_</strong><strong>DEFAULT</strong>или <strong>OSCON_</strong><strong>DMODE_</strong><strong>UPDATE_</strong><strong>TASK</strong>)</li>
+<li>Синхронный режим (<strong>OSCON_DMODE_UPDATE_TASK_SYNC</strong>)</li>
+<li>Прямое обновление (<strong>OSCON_DMODE_DIRECT</strong>)</li>
+<li>Локальные обновления (<strong>OSCON_DMODE_LOCAL</strong>)</li>
+</ul>
+<p>Режим обновления может быть явно задан при определении ООП транзакции SAP в SE93:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/05/se93.png"><img loading="lazy" class="alignnone size-full wp-image-2061" src="http://abap-blog.ru/wp-content/uploads/2014/05/se93.png" alt="se93" width="381" height="286" srcset="https://abap-blog.ru/wp-content/uploads/2014/05/se93.png 381w, https://abap-blog.ru/wp-content/uploads/2014/05/se93-300x225.png 300w" sizes="(max-width: 381px) 100vw, 381px" /></a></p>
+<p>Более подробно о режимах обновления читайте в <a href="http://abap-blog.ru/abap/optimizaciya_integrazia/programmirovanie-obnovlenij-bd-v-r3/">предыдущей статье</a>.</p>
+<h3></h3>
+<h3>Состояние хранимых объектов при обработке транзакций</h3>
+<p>&nbsp;</p>
+<p>Обработка ООП транзакций может влиять на статусы хранимых объектов следующим образом:</p>
+<ul>
+<li><strong>Начало транзакции</strong>. В начале транзакции верхнего уровня, все объекты откатываются до состояния NOT_LOADED. Таким образом, если вы меняли, удаляли или создавали хранимые объекты до создания транзакции верхнего уровня, все ваши изменения будут утеряны. Подобное поведение не касается временных объектов, т.к. они не связаны с БД. Создание вложенной транзакции не оказывает никакого влияния не на хранимые объекты, не на временные объекты.</li>
+<li><strong>Конец транзакции</strong>. Если транзакция верхнего уровня завершается методом END, система записывает все изменения, что были внутри неё произведены, в БД. При завершении вложенной транзакции методом END, статусы хранимых объектов никак не изменяются. При завершении транзакций методом UNDO (если механизм отката включен), как вложенных, так и дочерних, статусы объектов возвращаются в первоначальное состояние (на момент старта транзакции). Для того чтобы не загружать объекты из БД слишком часто, объекты со статусом LOADED, сохраняют свой статус, даже если их статус в начале транзакции был NOT_LOADED. Статус LOADED сохраняется, даже если вы изменяли атрибуты или удаляли объекты, все будет восстановлено. Если механизм отката не активирован, ничего не происходит.</li>
+</ul>
+<p>Классические операторы обработки SAP LUW– COMMIT WORK и ROLLBACK WORK, при обработке транзакций верхнего уровня в режиме совместимости, имеют тот же эффект, что и методы END, UNDO для ООП транзакций верхнего уровня: Всем хранимым объектам присваивается статус NOT_LOADED. Временные объекты остаются со статусом временный объект, даже после отката ROLLBACK WORK.</p>
+<p>Методы END_AND_CHAIN и UNDO_AND_CHAIN так же могут изменять состояние объектов, в зависимости от первоначального состояния объекта:</p>
+<ul>
+<li><strong>END_AND_CHAIN. </strong>NEW – объект создался во время транзакции, после вызова метода его статус будет LOADED.  DELETED – объект удален во время транзакции, после вызова метода его статус будет NOT_LOADED.</li>
+</ul>
+<ul>
+<li><strong>UNDO_AND_CHAIN.</strong> NEW – объект был создан во время транзакции, после вызова метода объект будет иметь статус NOT_LOADED. DELETED – в зависимости от того, какой был статус до начала транзакции.  NOT LOADED останется NOT_LOADED, LOADED останется LOADED.</li>
+</ul>
+<p>В процессе разработки, вы должны решить для себя, какой из методов завершения транзакции вы будете использовать END или END_AND_CHAIN и UNDOили UNDO_AND_CHAIN. Если вы хотите чтобы все загруженные ранее объекты, считались заново из БД, используйте END и UNDO, в противном случае CHAIN методы. Из-за того что загружаться заново из БД объекты не будут, использование CHAIN методов будет оптимальнее. В режиме совместимости, у вас нет такого выбора, все объекты, так или иначе, будут загружены заново для каждого нового LUW после доступа к ним.</p><p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-transaction-service/">ABAP Object Services – Transaction Service</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/abap-object-services-transaction-service/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Учётные записи | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/sistema/uchyotnye-zapisi/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Mon, 15 Mar 2021 20:07:13 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Проверить статус пароля у пользователя</title>
+		<link>https://abap-blog.ru/abap-notes/proverit-status-parolya-u-polzovatelya/</link>
+					<comments>https://abap-blog.ru/abap-notes/proverit-status-parolya-u-polzovatelya/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 28 Nov 2020 12:30:12 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5741</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e4eed6c0780738064/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/proverit-status-parolya-u-polzovatelya/">Проверить статус пароля у пользователя</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_usr TYPE sy-uname DEFAULT sy-uname.
+PARAMETERS: p_pwd TYPE rsyst-bcode.
+
+AT SELECTION-SCREEN OUTPUT.
+  LOOP AT screen INTO DATA(screen_wa).
+    IF screen_wa-name = 'P_PWD'.
+      screen_wa-invisible = 1.
+      MODIFY screen FROM screen_wa.
+    ENDIF.
+  ENDLOOP.
+
+START-OF-SELECTION.
+  CALL FUNCTION 'SUSR_LOGIN_CHECK_RFC'
+    EXPORTING
+      bname                  = p_usr
+      password               = p_pwd
+    EXCEPTIONS
+      wait                   = 1
+      user_locked            = 2
+      user_not_active        = 3
+      password_expired       = 4
+      wrong_password         = 5
+      no_check_for_this_user = 6
+      internal_error         = 7.
+
+  CASE sy-subrc.
+    WHEN 0.
+      WRITE: / 'Password OK'.
+    WHEN 1.
+      WRITE: / 'wait'.
+    WHEN 2.
+      WRITE: / 'user_locked '.
+    WHEN 3.
+      WRITE: / 'user_not_active'.
+    WHEN 4.
+      WRITE: / 'password_expired'.
+    WHEN 5.
+      WRITE: / 'wrong_password '.
+    WHEN 6.
+      WRITE: / 'no_check_for_this_user'.
+    WHEN 7.
+      WRITE: / 'internal_error'.
+    WHEN OTHERS.
+      WRITE: / 'Other error.'.
+  ENDCASE.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/proverit-status-parolya-u-polzovatelya/">Проверить статус пароля у пользователя</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/proverit-status-parolya-u-polzovatelya/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Получить параметры пользователя</title>
+		<link>https://abap-blog.ru/abap-notes/poluchit-parametry-polzovatelya/</link>
+					<comments>https://abap-blog.ru/abap-notes/poluchit-parametry-polzovatelya/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 16:49:53 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5672</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e4eede99830569208/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-parametry-polzovatelya/">Получить параметры пользователя</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2020/11/parameters.png"><img loading="lazy" class="alignnone size-full wp-image-5673" src="https://abap-blog.ru/wp-content/uploads/2020/11/parameters.png" alt="" width="855" height="249" srcset="https://abap-blog.ru/wp-content/uploads/2020/11/parameters.png 855w, https://abap-blog.ru/wp-content/uploads/2020/11/parameters-300x87.png 300w, https://abap-blog.ru/wp-content/uploads/2020/11/parameters-768x224.png 768w" sizes="(max-width: 855px) 100vw, 855px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: it_user_params TYPE ustyp_t_parameters.
+
+CALL FUNCTION 'SUSR_USER_PARAMETERS_GET'
+  EXPORTING
+    user_name           = sy-uname
+    with_text           = abap_true
+  TABLES
+    user_parameters     = it_user_params
+  EXCEPTIONS
+    user_name_not_exist = 1
+    OTHERS              = 2.
+
+IF sy-subrc = 0.
+  cl_demo_output=&gt;display( it_user_params ).
+ENDIF.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-parametry-polzovatelya/">Получить параметры пользователя</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/poluchit-parametry-polzovatelya/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Отчёт по входам в систему и смене паролей</title>
+		<link>https://abap-blog.ru/abap-notes/otchyot-po-vxodam-v-sistemu-i-smene-parolej/</link>
+					<comments>https://abap-blog.ru/abap-notes/otchyot-po-vxodam-v-sistemu-i-smene-parolej/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 05 Apr 2020 13:51:02 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=3983</guid>
+
+					<description><![CDATA[<p>Транзакция RSUSR200 позволяет увидеть кто и когда входил в систему и менял ли пароли:</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/otchyot-po-vxodam-v-sistemu-i-smene-parolej/">Отчёт по входам в систему и смене паролей</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Транзакция <strong>RSUSR200</strong> позволяет увидеть кто и когда входил в систему и менял ли пароли:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/04/last_logon.png"><img loading="lazy" class="alignnone size-full wp-image-3984" src="https://abap-blog.ru/wp-content/uploads/2020/04/last_logon.png" alt="" width="980" height="211" srcset="https://abap-blog.ru/wp-content/uploads/2020/04/last_logon.png 980w, https://abap-blog.ru/wp-content/uploads/2020/04/last_logon-300x65.png 300w, https://abap-blog.ru/wp-content/uploads/2020/04/last_logon-768x165.png 768w" sizes="(max-width: 980px) 100vw, 980px" /></a></p><p>The post <a href="https://abap-blog.ru/abap-notes/otchyot-po-vxodam-v-sistemu-i-smene-parolej/">Отчёт по входам в систему и смене паролей</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/otchyot-po-vxodam-v-sistemu-i-smene-parolej/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

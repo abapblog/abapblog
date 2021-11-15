@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="ru-RU">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="ru-RU">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="ru-RU">
+<!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Группировка в цикле ABAP LOOP GROUP Блог ABAP YouCoder</title>
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://youcoder.ru/xmlrpc.php">
+	<!--[if lt IE 9]>
+	<script src="https://youcoder.ru/wp-content/themes/twentyfourteen/js/html5.js?ver=3.7.0"></script>
+	<![endif]-->
+	<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v16.6.1 - https://yoast.com/wordpress/plugins/seo/ -->
+	<meta name="description" content="LOOP GROUP ABAP - группировка в цикле предназначена для группировки и суммирования внутренних таблиц. Конструкция появилась в новой 7.4 ABAP." />
+	<link rel="canonical" href="https://youcoder.ru/group-by/" />
+	<meta property="og:locale" content="ru_RU" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Группировка в цикле ABAP LOOP GROUP Блог ABAP YouCoder" />
+	<meta property="og:description" content="LOOP GROUP ABAP - группировка в цикле предназначена для группировки и суммирования внутренних таблиц. Конструкция появилась в новой 7.4 ABAP." />
+	<meta property="og:url" content="https://youcoder.ru/group-by/" />
+	<meta property="og:site_name" content="Блог ABAP YouCoder" />
+	<meta property="article:publisher" content="https://www.facebook.com/groups/youcoder/?source=unknown" />
+	<meta property="article:published_time" content="2020-08-26T19:17:01+00:00" />
+	<meta property="article:modified_time" content="2021-08-09T13:34:47+00:00" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:creator" content="@paV9ed3dvbNeX2H" />
+	<meta name="twitter:site" content="@paV9ed3dvbNeX2H" />
+	<meta name="twitter:label1" content="Написано автором" />
+	<meta name="twitter:data1" content="Артур" />
+	<meta name="twitter:label2" content="Примерное время для чтения" />
+	<meta name="twitter:data2" content="4 минуты" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://youcoder.ru/#website","url":"https://youcoder.ru/","name":"\u0411\u043b\u043e\u0433 ABAP YouCoder","description":"\u0421\u0430\u0439\u0442 ABAP \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 YouCoder - \u044d\u0442\u043e \u0441\u0431\u043e\u0440\u043d\u0438\u043a \u0441\u0442\u0430\u0442\u0435\u0439 \u0438 \u0432\u0438\u0434\u0435\u043e \u043e \u044f\u0437\u044b\u043a\u0435 \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f ABAP \u0438 \u0440\u0430\u0431\u043e\u0442\u0435 \u0432 SAP \u0441\u0438\u0441\u0442\u0435\u043c\u0435. \u0415\u0441\u0442\u044c \u043a\u0430\u043a \u0443\u0440\u043e\u043a\u0438 abap \u0434\u043b\u044f \u043d\u0430\u0447\u0438\u043d\u0430\u044e\u0449\u0438\u0445 \u0442\u0430\u043a \u0438 \u043d\u043e\u0432\u044b\u0439 \u0441\u0438\u043d\u0442\u0430\u043a\u0441\u0438\u0441 \u0432 ABAP \u0438 SAP \u043e\u0431\u0443\u0447\u0435\u043d\u0438\u0435 \u0434\u043b\u044f \u043a\u043e\u043d\u0441\u0443\u043b\u044c\u0442\u0430\u043d\u0442\u043e\u0432 SAP.","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://youcoder.ru/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"ru-RU"},{"@type":"WebPage","@id":"https://youcoder.ru/group-by/#webpage","url":"https://youcoder.ru/group-by/","name":"\u0413\u0440\u0443\u043f\u043f\u0438\u0440\u043e\u0432\u043a\u0430 \u0432 \u0446\u0438\u043a\u043b\u0435 ABAP LOOP GROUP \u0411\u043b\u043e\u0433 ABAP YouCoder","isPartOf":{"@id":"https://youcoder.ru/#website"},"datePublished":"2020-08-26T19:17:01+00:00","dateModified":"2021-08-09T13:34:47+00:00","author":{"@id":"https://youcoder.ru/#/schema/person/b95030273b60234431d6c259b2125897"},"description":"LOOP GROUP ABAP - \u0433\u0440\u0443\u043f\u043f\u0438\u0440\u043e\u0432\u043a\u0430 \u0432 \u0446\u0438\u043a\u043b\u0435 \u043f\u0440\u0435\u0434\u043d\u0430\u0437\u043d\u0430\u0447\u0435\u043d\u0430 \u0434\u043b\u044f \u0433\u0440\u0443\u043f\u043f\u0438\u0440\u043e\u0432\u043a\u0438 \u0438 \u0441\u0443\u043c\u043c\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f \u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0445 \u0442\u0430\u0431\u043b\u0438\u0446. \u041a\u043e\u043d\u0441\u0442\u0440\u0443\u043a\u0446\u0438\u044f \u043f\u043e\u044f\u0432\u0438\u043b\u0430\u0441\u044c \u0432 \u043d\u043e\u0432\u043e\u0439 7.4 ABAP.","breadcrumb":{"@id":"https://youcoder.ru/group-by/#breadcrumb"},"inLanguage":"ru-RU","potentialAction":[{"@type":"ReadAction","target":["https://youcoder.ru/group-by/"]}]},{"@type":"BreadcrumbList","@id":"https://youcoder.ru/group-by/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"\u0413\u043b\u0430\u0432\u043d\u0430\u044f \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0430","item":"https://youcoder.ru/"},{"@type":"ListItem","position":2,"name":"\u0413\u0440\u0443\u043f\u043f\u0438\u0440\u043e\u0432\u043a\u0430 \u0432 \u0446\u0438\u043a\u043b\u0435 ABAP LOOP GROUP"}]},{"@type":"Person","@id":"https://youcoder.ru/#/schema/person/b95030273b60234431d6c259b2125897","name":"\u0410\u0440\u0442\u0443\u0440","image":{"@type":"ImageObject","@id":"https://youcoder.ru/#personlogo","inLanguage":"ru-RU","url":"https://secure.gravatar.com/avatar/48fdc7c427b20f3170b39032ef64ae48?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/48fdc7c427b20f3170b39032ef64ae48?s=96&d=mm&r=g","caption":"\u0410\u0440\u0442\u0443\u0440"},"sameAs":["https://youcoder.ru"]}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//www.googletagmanager.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel='dns-prefetch' href='//pagead2.googlesyndication.com' />
+<link rel="alternate" type="application/rss+xml" title="Блог ABAP YouCoder &raquo; Лента" href="https://youcoder.ru/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Блог ABAP YouCoder &raquo; Лента комментариев" href="https://youcoder.ru/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Блог ABAP YouCoder &raquo; Лента комментариев к &laquo;Группировка в цикле ABAP LOOP GROUP&raquo;" href="https://youcoder.ru/group-by/feed/" />
+		<script>
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/youcoder.ru\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8.1"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style>
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='ats-privacy-css'  href='https://youcoder.ru/wp-content/plugins/ats-privacy-policy/includes/css/style-ats.css?ver=5.8.1' media='all' />
+<link rel='stylesheet' id='cnss_font_awesome_css-css'  href='https://youcoder.ru/wp-content/plugins/easy-social-icons/css/font-awesome/css/all.min.css?ver=5.7.2' media='all' />
+<link rel='stylesheet' id='cnss_font_awesome_v4_shims-css'  href='https://youcoder.ru/wp-content/plugins/easy-social-icons/css/font-awesome/css/v4-shims.min.css?ver=5.7.2' media='all' />
+<link rel='stylesheet' id='cnss_css-css'  href='https://youcoder.ru/wp-content/plugins/easy-social-icons/css/cnss.css?ver=1.0' media='all' />
+<link rel='stylesheet' id='urvanov_syntax_highlighter-css'  href='https://youcoder.ru/wp-content/plugins/urvanov-syntax-highlighter/css/min/urvanov_syntax_highlighter.min.css?ver=2.8.26' media='all' />
+<link rel='stylesheet' id='crayon-theme-classic-css'  href='https://youcoder.ru/wp-content/plugins/urvanov-syntax-highlighter/themes/classic/classic.css?ver=2.8.26' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='https://youcoder.ru/wp-content/plugins/urvanov-syntax-highlighter/fonts/monaco.css?ver=2.8.26' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://youcoder.ru/wp-includes/css/dist/block-library/style.min.css?ver=5.8.1' media='all' />
+<style id='wp-block-library-theme-inline-css'>
+#start-resizable-editor-section{display:none}.wp-block-audio figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio figcaption{color:hsla(0,0%,100%,.65)}.wp-block-code{font-family:Menlo,Consolas,monaco,monospace;color:#1e1e1e;padding:.8em 1em;border:1px solid #ddd;border-radius:4px}.wp-block-embed figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed figcaption{color:hsla(0,0%,100%,.65)}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:hsla(0,0%,100%,.65)}.wp-block-image figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-image figcaption{color:hsla(0,0%,100%,.65)}.wp-block-pullquote{border-top:4px solid;border-bottom:4px solid;margin-bottom:1.75em;color:currentColor}.wp-block-pullquote__citation,.wp-block-pullquote cite,.wp-block-pullquote footer{color:currentColor;text-transform:uppercase;font-size:.8125em;font-style:normal}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;position:relative;font-style:normal}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-group.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto;opacity:.4}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table thead{border-bottom:3px solid}.wp-block-table tfoot{border-top:3px solid}.wp-block-table td,.wp-block-table th{padding:.5em;border:1px solid;word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video figcaption{color:hsla(0,0%,100%,.65)}.wp-block-template-part.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}#end-resizable-editor-section{display:none}
+</style>
+<link rel='stylesheet' id='genericons-css'  href='https://youcoder.ru/wp-content/themes/twentyfourteen/genericons/genericons.css?ver=3.0.3' media='all' />
+<link rel='stylesheet' id='twentyfourteen-style-css'  href='https://youcoder.ru/wp-content/themes/twentyfourteen/style.css?ver=20190507' media='all' />
+<link rel='stylesheet' id='twentyfourteen-block-style-css'  href='https://youcoder.ru/wp-content/themes/twentyfourteen/css/blocks.css?ver=20190102' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentyfourteen-ie-css'  href='https://youcoder.ru/wp-content/themes/twentyfourteen/css/ie.css?ver=20140701' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='sccss_style-css'  href='https://youcoder.ru/?sccss=1&#038;ver=5.8.1' media='all' />
+<link rel='stylesheet' id='learnpress-widgets-css'  href='https://youcoder.ru/wp-content/plugins/learnpress/assets/css/widgets.css?ver=4.1.3.2' media='all' />
+<script src='https://youcoder.ru/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script src='https://youcoder.ru/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script src='https://youcoder.ru/wp-content/plugins/easy-social-icons/js/cnss.js?ver=1.0' id='cnss_js-js'></script>
+<script id='urvanov_syntax_highlighter_js-js-extra'>
+var UrvanovSyntaxHighlighterSyntaxSettings = {"version":"2.8.26","is_admin":"0","ajaxurl":"https:\/\/youcoder.ru\/wp-admin\/admin-ajax.php","prefix":"urvanov-syntax-highlighter-","setting":"urvanov-syntax-highlighter-setting","selected":"urvanov-syntax-highlighter-setting-selected","changed":"urvanov-syntax-highlighter-setting-changed","special":"urvanov-syntax-highlighter-setting-special","orig_value":"data-orig-value","debug":""};
+var UrvanovSyntaxHighlighterSyntaxStrings = {"copy":"Copied to the clipboard","minimize":"Click To Expand Code"};
+</script>
+<script src='https://youcoder.ru/wp-content/plugins/urvanov-syntax-highlighter/js/min/urvanov_syntax_highlighter.min.js?ver=2.8.26' id='urvanov_syntax_highlighter_js-js'></script>
+
+<!-- Google Analytics snippet added by Site Kit -->
+<script src='https://www.googletagmanager.com/gtag/js?id=UA-150294092-1' id='google_gtagjs-js' async></script>
+<script id='google_gtagjs-js-after'>
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag('set', 'linker', {"domains":["youcoder.ru"]} );
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "UA-150294092-1", {"anonymize_ip":true});
+</script>
+
+<!-- End Google Analytics snippet added by Site Kit -->
+<link rel="https://api.w.org/" href="https://youcoder.ru/wp-json/" /><link rel="alternate" type="application/json" href="https://youcoder.ru/wp-json/wp/v2/posts/118" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://youcoder.ru/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://youcoder.ru/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.8.1" />
+<link rel='shortlink' href='https://youcoder.ru/?p=118' />
+<link rel="alternate" type="application/json+oembed" href="https://youcoder.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fyoucoder.ru%2Fgroup-by%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://youcoder.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fyoucoder.ru%2Fgroup-by%2F&#038;format=xml" />
+<style type="text/css">
+		ul.cnss-social-icon li.cn-fa-icon a:hover{opacity: 0.7!important;color:#ffffff!important;}
+		</style><style id="fourteen-colors" type="text/css">/* Custom Contrast Color */
+		.site:before,
+		#secondary,
+		.site-header,
+		.site-footer,
+		.menu-toggle,
+		.featured-content,
+		.featured-content .entry-header,
+		.slider-direction-nav a,
+		.ie8 .featured-content,
+		.ie8 .site:before,
+		.has-black-background-color {
+			background-color: #ffffff;
+		}
+
+		.has-black-color {
+			color: #ffffff;
+		}
+
+		.grid .featured-content .entry-header,
+		.ie8 .grid .featured-content .entry-header {
+			border-color: #ffffff;
+		}
+
+		.slider-control-paging a:before {
+			background-color: rgba(255,255,255,.33);
+		}
+
+		.hentry .mejs-mediaelement,
+		.widget .mejs-mediaelement,
+ 		.hentry .mejs-container .mejs-controls,
+ 		.widget .mejs-container .mejs-controls {
+			background: #ffffff;
+		}
+
+		/* Player controls need separation from the contrast background */
+		.primary-sidebar .mejs-controls,
+		.site-footer .mejs-controls {
+			border: 1px solid;
+		}
+		
+			.site-description,
+			.secondary-navigation a,
+			.widget,
+			.widget a,
+			.widget-title,
+			.widget-title a,
+			.widget_calendar caption,
+			.site-header a,
+			.site-title a,
+			.site-title a:hover,
+			.menu-toggle:before,
+			.site-footer,
+			.site-footer a,
+			.featured-content a,
+			.featured-content .entry-meta,
+			.slider-direction-nav a:before,
+			.hentry .mejs-container .mejs-controls .mejs-time span,
+			.widget .mejs-container .mejs-controls .mejs-time span,
+			.hentry .mejs-controls .mejs-button button,
+			.widget .mejs-controls .mejs-button button {
+				color: #2b2b2b;
+			}
+
+			@media screen and (min-width: 783px) {
+				.primary-navigation ul ul a {
+					color: #fff;
+				}
+			}
+
+			@media screen and (min-width: 1008px) {
+				.secondary-navigation ul ul a,
+				.secondary-navigation li:hover > a,
+				.secondary-navigation li.focus > a {
+					color: #fff;
+				}
+			}
+
+			.widget_calendar tbody a,
+			.site-footer .widget_calendar tbody a,
+			.slider-direction-nav a:hover:before {
+				color: #fff;
+			}
+
+			.slider-control-paging a:before {
+				background-color: rgba(0, 0, 0, .33);
+			}
+
+			.featured-content {
+				background-image: url(https://youcoder.ru/wp-content/plugins/fourteen-colors/pattern-dark-inverse.svg);
+			}
+
+			.site-navigation li,
+			#secondary,
+			.secondary-navigation,
+			.secondary-navigation li,
+			.widget table,
+			.widget th,
+			.widget td,
+			.widget_archive li,
+			.widget_categories li,
+			.widget_links li,
+			.widget_meta li,
+			.widget_nav_menu li,
+			.widget_pages li,
+			.widget_recent_comments li,
+			.widget_recent_entries li,
+			.widget_text li,
+			.widget_categories li ul,
+			.widget_nav_menu li ul,
+			.widget_pages li ul,
+			.widget_text li ul,
+			.widget abbr[title] {
+				border-color: rgba(0, 0, 0, .2);
+			}
+
+			.widget input,
+			.widget textarea {
+				background-color: rgba(0, 0, 0, .02);
+				border-color: rgba(0, 0, 0, .2);
+				color: #000;
+			}
+
+			.widget input:focus, .widget textarea:focus {
+				border-color: rgba(0, 0, 0, 0.4);
+			}
+
+			.widget_twentyfourteen_ephemera .entry-meta a {
+				color: rgba(0, 0, 0, 0.7);
+			}
+
+			.widget_twentyfourteen_ephemera > ol > li {
+				border-bottom-color: rgba(0, 0, 0, 0.2);
+			}
+
+			#supplementary + .site-info {
+				border-top: 1px solid rgba(0, 0, 0, 0.2);
+			}
+
+			.hentry .mejs-controls .mejs-time-rail .mejs-time-total,
+			.widget .mejs-controls .mejs-time-rail .mejs-time-total,
+			.hentry .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-total,
+			.widget .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-total {
+				background: rgba(0,0,0,.3);
+			}
+
+			.hentry .mejs-controls .mejs-time-rail .mejs-time-loaded,
+			.widget .mejs-controls .mejs-time-rail .mejs-time-loaded,
+			.hentry .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-current,
+			.widget .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-current {
+				background-color: #2b2b2b;
+			}
+
+			/* Override the site title color option with an over-qualified selector, as the option is hidden. */
+			h1.site-title a {
+				color: #2b2b2b;
+			}
+		
+		.menu-toggle:active,
+		.menu-toggle:focus,
+		.menu-toggle:hover {
+			background-color: #ffffff;
+		}
+		/* Custom accent color. */
+		button,
+		.button,
+		.contributor-posts-link,
+		input[type="button"],
+		input[type="reset"],
+		input[type="submit"],
+		.search-toggle,
+		.hentry .mejs-controls .mejs-time-rail .mejs-time-current,
+		.widget .mejs-controls .mejs-time-rail .mejs-time-current,
+		.hentry .mejs-overlay:hover .mejs-overlay-button,
+		.widget .mejs-overlay:hover .mejs-overlay-button,
+		.widget button,
+		.widget .button,
+		.widget input[type="button"],
+		.widget input[type="reset"],
+		.widget input[type="submit"],
+		.widget_calendar tbody a,
+		.content-sidebar .widget input[type="button"],
+		.content-sidebar .widget input[type="reset"],
+		.content-sidebar .widget input[type="submit"],
+		.slider-control-paging .slider-active:before,
+		.slider-control-paging .slider-active:hover:before,
+		.slider-direction-nav a:hover,
+		.ie8 .primary-navigation ul ul,
+		.ie8 .secondary-navigation ul ul,
+		.ie8 .primary-navigation li:hover > a,
+		.ie8 .primary-navigation li.focus > a,
+		.ie8 .secondary-navigation li:hover > a,
+		.ie8 .secondary-navigation li.focus > a,
+		.wp-block-file .wp-block-file__button,
+		.wp-block-button__link,
+		.has-green-background-color {
+			background-color: #794fec;
+		}
+
+		.site-navigation a:hover,
+		.is-style-outline .wp-block-button__link:not(.has-text-color),
+		.has-green-color {
+			color: #794fec;
+		}
+
+		::-moz-selection {
+			background: #794fec;
+		}
+
+		::selection {
+			background: #794fec;
+		}
+
+		.paging-navigation .page-numbers.current {
+			border-color: #794fec;
+		}
+
+		@media screen and (min-width: 782px) {
+			.primary-navigation li:hover > a,
+			.primary-navigation li.focus > a,
+			.primary-navigation ul ul {
+				background-color: #794fec;
+			}
+		}
+
+		@media screen and (min-width: 1008px) {
+			.secondary-navigation li:hover > a,
+			.secondary-navigation li.focus > a,
+			.secondary-navigation ul ul {
+				background-color: #794fec;
+			}
+		}
+	
+			.contributor-posts-link,
+			button,
+			.button,
+			input[type="button"],
+			input[type="reset"],
+			input[type="submit"],
+			.search-toggle:before,
+			.hentry .mejs-overlay:hover .mejs-overlay-button,
+			.widget .mejs-overlay:hover .mejs-overlay-button,
+			.widget button,
+			.widget .button,
+			.widget input[type="button"],
+			.widget input[type="reset"],
+			.widget input[type="submit"],
+			.widget_calendar tbody a,
+			.widget_calendar tbody a:hover,
+			.site-footer .widget_calendar tbody a,
+			.content-sidebar .widget input[type="button"],
+			.content-sidebar .widget input[type="reset"],
+			.content-sidebar .widget input[type="submit"],
+			button:hover,
+			button:focus,
+			.button:hover,
+			.button:focus,
+			.widget a.button:hover,
+			.widget a.button:focus,
+			.widget a.button:active,
+			.content-sidebar .widget a.button,
+			.content-sidebar .widget a.button:hover,
+			.content-sidebar .widget a.button:focus,
+			.content-sidebar .widget a.button:active,
+			.contributor-posts-link:hover,
+			.contributor-posts-link:active,
+			input[type="button"]:hover,
+			input[type="button"]:focus,
+			input[type="reset"]:hover,
+			input[type="reset"]:focus,
+			input[type="submit"]:hover,
+			input[type="submit"]:focus,
+			.slider-direction-nav a:hover:before {
+				color: #fff;
+			}
+
+			@media screen and (min-width: 782px) {
+				.primary-navigation ul ul a,
+				.primary-navigation li:hover > a,
+				.primary-navigation li.focus > a,
+				.primary-navigation ul ul {
+					color: #fff;
+				}
+			}
+
+			@media screen and (min-width: 1008px) {
+				.secondary-navigation ul ul a,
+				.secondary-navigation li:hover > a,
+				.secondary-navigation li.focus > a,
+				.secondary-navigation ul ul {
+					color: #fff;
+				}
+			}
+		
+		/* Generated variants of custom accent color. */
+		a,
+		.content-sidebar .widget a {
+			color: #794fec;
+		}
+
+		.contributor-posts-link:hover,
+		.button:hover,
+		.button:focus,
+		.slider-control-paging a:hover:before,
+		.search-toggle:hover,
+		.search-toggle.active,
+		.search-box,
+		.widget_calendar tbody a:hover,
+		button:hover,
+		button:focus,
+		input[type="button"]:hover,
+		input[type="button"]:focus,
+		input[type="reset"]:hover,
+		input[type="reset"]:focus,
+		input[type="submit"]:hover,
+		input[type="submit"]:focus,
+		.widget button:hover,
+		.widget .button:hover,
+		.widget button:focus,
+		.widget .button:focus,
+		.widget input[type="button"]:hover,
+		.widget input[type="button"]:focus,
+		.widget input[type="reset"]:hover,
+		.widget input[type="reset"]:focus,
+		.widget input[type="submit"]:hover,
+		.widget input[type="submit"]:focus,
+		.content-sidebar .widget input[type="button"]:hover,
+		.content-sidebar .widget input[type="button"]:focus,
+		.content-sidebar .widget input[type="reset"]:hover,
+		.content-sidebar .widget input[type="reset"]:focus,
+		.content-sidebar .widget input[type="submit"]:hover,
+		.content-sidebar .widget input[type="submit"]:focus,
+		.ie8 .primary-navigation ul ul a:hover,
+		.ie8 .primary-navigation ul ul li.focus > a,
+		.ie8 .secondary-navigation ul ul a:hover,
+		.ie8 .secondary-navigation ul ul li.focus > a,
+		.wp-block-file .wp-block-file__button:hover,
+		.wp-block-file .wp-block-file__button:focus,
+		.wp-block-button__link:not(.has-text-color):hover,
+		.wp-block-button__link:not(.has-text-color):focus,
+		.is-style-outline .wp-block-button__link:not(.has-text-color):hover,
+		.is-style-outline .wp-block-button__link:not(.has-text-color):focus {
+			background-color: #966cff;
+		}
+
+		.featured-content a:hover,
+		.featured-content .entry-title a:hover,
+		.widget a:hover,
+		.widget-title a:hover,
+		.widget_twentyfourteen_ephemera .entry-meta a:hover,
+		.hentry .mejs-controls .mejs-button button:hover,
+		.widget .mejs-controls .mejs-button button:hover,
+		.site-info a:hover,
+		.featured-content a:hover,
+		.wp-block-latest-comments_comment-meta a:hover,
+		.wp-block-latest-comments_comment-meta a:focus {
+			color: #966cff;
+		}
+
+		a:active,
+		a:hover,
+		.entry-title a:hover,
+		.entry-meta a:hover,
+		.cat-links a:hover,
+		.entry-content .edit-link a:hover,
+		.post-navigation a:hover,
+		.image-navigation a:hover,
+		.comment-author a:hover,
+		.comment-list .pingback a:hover,
+		.comment-list .trackback a:hover,
+		.comment-metadata a:hover,
+		.comment-reply-title small a:hover,
+		.content-sidebar .widget a:hover,
+		.content-sidebar .widget .widget-title a:hover,
+		.content-sidebar .widget_twentyfourteen_ephemera .entry-meta a:hover {
+			color: #966cff;
+		}
+
+		.page-links a:hover,
+		.paging-navigation a:hover {
+			border-color: #966cff;
+		}
+
+		.entry-meta .tag-links a:hover:before {
+			border-right-color: #966cff;
+		}
+
+		.page-links a:hover,
+		.entry-meta .tag-links a:hover {
+			background-color: #966cff;
+		}
+
+		@media screen and (min-width: 782px) {
+			.primary-navigation ul ul a:hover,
+			.primary-navigation ul ul li.focus > a {
+				background-color: #966cff;
+			}
+		}
+
+		@media screen and (min-width: 1008px) {
+			.secondary-navigation ul ul a:hover,
+			.secondary-navigation ul ul li.focus > a {
+				background-color: #966cff;
+			}
+		}
+
+		button:active,
+		.button:active,
+		.contributor-posts-link:active,
+		input[type="button"]:active,
+		input[type="reset"]:active,
+		input[type="submit"]:active,
+		.widget input[type="button"]:active,
+		.widget input[type="reset"]:active,
+		.widget input[type="submit"]:active,
+		.content-sidebar .widget input[type="button"]:active,
+		.content-sidebar .widget input[type="reset"]:active,
+		.content-sidebar .widget input[type="submit"]:active,
+		.wp-block-file .wp-block-file__button:active,
+		.wp-block-button__link:active {
+			background-color: #aa80ff;
+		}
+
+		.site-navigation .current_page_item > a,
+		.site-navigation .current_page_ancestor > a,
+		.site-navigation .current-menu-item > a,
+		.site-navigation .current-menu-ancestor > a {
+			color: #aa80ff;
+		}
+	</style><meta name="generator" content="Site Kit by Google 1.43.0" />
+		<style id="learn-press-custom-css">
+			:root {
+				--lp-primary-color: #ffb606;
+				--lp-secondary-color: #442e66;
+			}
+		</style>
+
+		<script id="wpcp_disable_selection" type="text/javascript">
+var image_save_msg='You are not allowed to save images!';
+	var no_menu_msg='Context Menu disabled!';
+	var smessage = "Копирование запрещено!";
+
+function disableEnterKey(e)
+{
+	var elemtype = e.target.tagName;
+	
+	elemtype = elemtype.toUpperCase();
+	
+	if (elemtype == "TEXT" || elemtype == "TEXTAREA" || elemtype == "INPUT" || elemtype == "PASSWORD" || elemtype == "SELECT" || elemtype == "OPTION" || elemtype == "EMBED")
+	{
+		elemtype = 'TEXT';
+	}
+	
+	if (e.ctrlKey){
+     var key;
+     if(window.event)
+          key = window.event.keyCode;     //IE
+     else
+          key = e.which;     //firefox (97)
+    //if (key != 17) alert(key);
+     if (elemtype!= 'TEXT' && (key == 97 || key == 65 || key == 67 || key == 99 || key == 88 || key == 120 || key == 26 || key == 85  || key == 86 || key == 83 || key == 43 || key == 73))
+     {
+		if(wccp_free_iscontenteditable(e)) return true;
+		show_wpcp_message('You are not allowed to copy content or view source');
+		return false;
+     }else
+     	return true;
+     }
+}
+
+
+/*For contenteditable tags*/
+function wccp_free_iscontenteditable(e)
+{
+	var e = e || window.event; // also there is no e.target property in IE. instead IE uses window.event.srcElement
+  	
+	var target = e.target || e.srcElement;
+
+	var elemtype = e.target.nodeName;
+	
+	elemtype = elemtype.toUpperCase();
+	
+	var iscontenteditable = "false";
+		
+	if(typeof target.getAttribute!="undefined" ) iscontenteditable = target.getAttribute("contenteditable"); // Return true or false as string
+	
+	var iscontenteditable2 = false;
+	
+	if(typeof target.isContentEditable!="undefined" ) iscontenteditable2 = target.isContentEditable; // Return true or false as boolean
+
+	if(target.parentElement.isContentEditable) iscontenteditable2 = true;
+	
+	if (iscontenteditable == "true" || iscontenteditable2 == true)
+	{
+		if(typeof target.style!="undefined" ) target.style.cursor = "text";
+		
+		return true;
+	}
+}
+
+////////////////////////////////////
+function disable_copy(e)
+{	
+	var e = e || window.event; // also there is no e.target property in IE. instead IE uses window.event.srcElement
+	
+	var elemtype = e.target.tagName;
+	
+	elemtype = elemtype.toUpperCase();
+	
+	if (elemtype == "TEXT" || elemtype == "TEXTAREA" || elemtype == "INPUT" || elemtype == "PASSWORD" || elemtype == "SELECT" || elemtype == "OPTION" || elemtype == "EMBED")
+	{
+		elemtype = 'TEXT';
+	}
+	
+	if(wccp_free_iscontenteditable(e)) return true;
+	
+	var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+	
+	var checker_IMG = '';
+	if (elemtype == "IMG" && checker_IMG == 'checked' && e.detail >= 2) {show_wpcp_message(alertMsg_IMG);return false;}
+	if (elemtype != "TEXT")
+	{
+		if (smessage !== "" && e.detail == 2)
+			show_wpcp_message(smessage);
+		
+		if (isSafari)
+			return true;
+		else
+			return false;
+	}	
+}
+
+//////////////////////////////////////////
+function disable_copy_ie()
+{
+	var e = e || window.event;
+	var elemtype = window.event.srcElement.nodeName;
+	elemtype = elemtype.toUpperCase();
+	if(wccp_free_iscontenteditable(e)) return true;
+	if (elemtype == "IMG") {show_wpcp_message(alertMsg_IMG);return false;}
+	if (elemtype != "TEXT" && elemtype != "TEXTAREA" && elemtype != "INPUT" && elemtype != "PASSWORD" && elemtype != "SELECT" && elemtype != "OPTION" && elemtype != "EMBED")
+	{
+		return false;
+	}
+}	
+function reEnable()
+{
+	return true;
+}
+document.onkeydown = disableEnterKey;
+document.onselectstart = disable_copy_ie;
+if(navigator.userAgent.indexOf('MSIE')==-1)
+{
+	document.onmousedown = disable_copy;
+	document.onclick = reEnable;
+}
+function disableSelection(target)
+{
+    //For IE This code will work
+    if (typeof target.onselectstart!="undefined")
+    target.onselectstart = disable_copy_ie;
+    
+    //For Firefox This code will work
+    else if (typeof target.style.MozUserSelect!="undefined")
+    {target.style.MozUserSelect="none";}
+    
+    //All other  (ie: Opera) This code will work
+    else
+    target.onmousedown=function(){return false}
+    target.style.cursor = "default";
+}
+//Calling the JS function directly just after body load
+window.onload = function(){disableSelection(document.body);};
+
+//////////////////special for safari Start////////////////
+var onlongtouch;
+var timer;
+var touchduration = 1000; //length of time we want the user to touch before we do something
+
+var elemtype = "";
+function touchstart(e) {
+	var e = e || window.event;
+  // also there is no e.target property in IE.
+  // instead IE uses window.event.srcElement
+  	var target = e.target || e.srcElement;
+	
+	elemtype = window.event.srcElement.nodeName;
+	
+	elemtype = elemtype.toUpperCase();
+	
+	if(!wccp_pro_is_passive()) e.preventDefault();
+	if (!timer) {
+		timer = setTimeout(onlongtouch, touchduration);
+	}
+}
+
+function touchend() {
+    //stops short touches from firing the event
+    if (timer) {
+        clearTimeout(timer);
+        timer = null;
+    }
+	onlongtouch();
+}
+
+onlongtouch = function(e) { //this will clear the current selection if anything selected
+	
+	if (elemtype != "TEXT" && elemtype != "TEXTAREA" && elemtype != "INPUT" && elemtype != "PASSWORD" && elemtype != "SELECT" && elemtype != "EMBED" && elemtype != "OPTION")	
+	{
+		if (window.getSelection) {
+			if (window.getSelection().empty) {  // Chrome
+			window.getSelection().empty();
+			} else if (window.getSelection().removeAllRanges) {  // Firefox
+			window.getSelection().removeAllRanges();
+			}
+		} else if (document.selection) {  // IE?
+			document.selection.empty();
+		}
+		return false;
+	}
+};
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+    window.addEventListener("touchstart", touchstart, false);
+    window.addEventListener("touchend", touchend, false);
+});
+
+function wccp_pro_is_passive() {
+
+  var cold = false,
+  hike = function() {};
+
+  try {
+	  const object1 = {};
+  var aid = Object.defineProperty(object1, 'passive', {
+  get() {cold = true}
+  });
+  window.addEventListener('test', hike, aid);
+  window.removeEventListener('test', hike, aid);
+  } catch (e) {}
+
+  return cold;
+}
+/*special for safari End*/
+</script>
+<script id="wpcp_disable_Right_Click" type="text/javascript">
+document.ondragstart = function() { return false;}
+	function nocontext(e) {
+	   return false;
+	}
+	document.oncontextmenu = nocontext;
+</script>
+<style>
+.unselectable
+{
+-moz-user-select:none;
+-webkit-user-select:none;
+cursor: default;
+}
+html
+{
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+</style>
+<script id="wpcp_css_disable_selection" type="text/javascript">
+var e = document.getElementsByTagName('body')[0];
+if(e)
+{
+	e.setAttribute('unselectable',on);
+}
+</script>
+
+<!-- Google AdSense snippet added by Site Kit -->
+<meta name="google-adsense-platform-account" content="ca-host-pub-2644536267352236">
+<meta name="google-adsense-platform-domain" content="sitekit.withgoogle.com">
+<!-- End Google AdSense snippet added by Site Kit -->
+		<style type="text/css" id="twentyfourteen-header-css">
+				.site-title,
+		.site-description {
+			clip: rect(1px 1px 1px 1px); /* IE7 */
+			clip: rect(1px, 1px, 1px, 1px);
+			position: absolute;
+		}
+				</style>
+		<style id="custom-background-css">
+body.custom-background { background-color: #ffffff; }
+</style>
+	
+<!-- Google AdSense snippet added by Site Kit -->
+<script src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3170108103477091" crossorigin="anonymous"></script>
+
+<!-- End Google AdSense snippet added by Site Kit -->
+<!-- Yandex.RTB -->
+<script>window.yaContextCb=window.yaContextCb||[]</script>
+<script src="https://yandex.ru/ads/system/context.js" async></script><link rel="icon" href="https://youcoder.ru/wp-content/uploads/2020/06/Лого-150x150.ico" sizes="32x32" />
+<link rel="icon" href="https://youcoder.ru/wp-content/uploads/2020/06/Лого-200x200.ico" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://youcoder.ru/wp-content/uploads/2020/06/Лого-200x200.ico" />
+<meta name="msapplication-TileImage" content="https://youcoder.ru/wp-content/uploads/2020/06/Лого.ico" />
+		<style id="wp-custom-css">
+			.site {
+    margin: 0 auto;
+}		</style>
+		</head>
+
+<body class="post-template-default single single-post postid-118 single-format-standard custom-background wp-embed-responsive unselectable header-image footer-widgets singular">
+
+<div id="page" class="hfeed site">
+		<div id="site-header">
+		<a href="https://youcoder.ru/" rel="home">
+			<img src="https://youcoder.ru/wp-content/uploads/2020/08/cropped-Обложка-канал-ABAP-YouCode-3.png" width="1260" height="239" alt="Блог ABAP YouCoder">
+		</a>
+	</div>
+	
+	<header id="masthead" class="site-header" role="banner">
+		<div class="header-main">
+			<h1 class="site-title"><a href="https://youcoder.ru/" rel="home">Блог ABAP YouCoder</a></h1>
+
+			<div class="search-toggle">
+				<a href="#search-container" class="screen-reader-text" aria-expanded="false" aria-controls="search-container">Поиск</a>
+			</div>
+
+			<nav id="primary-navigation" class="site-navigation primary-navigation" role="navigation">
+				<button class="menu-toggle">Основное меню</button>
+				<a class="screen-reader-text skip-link" href="#content">Перейти к содержимому</a>
+				<div class="menu-%d0%be%d1%81%d0%bd%d0%be%d0%b2%d0%bd%d0%be%d0%b5-container"><ul id="primary-menu" class="nav-menu"><li id="menu-item-35" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-35"><a href="https://youcoder.ru">Главная</a></li>
+<li id="menu-item-36" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-36"><a href="https://youcoder.ru/category/abap/">ABAP</a></li>
+<li id="menu-item-37" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-37"><a href="https://www.youtube.com/channel/UCZjE99ymmXdr0u0V6rdmXeA?sub_confirmation=1">Канал YouTube</a></li>
+<li id="menu-item-39" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39"><a href="https://youcoder.ru/contacts/">Контакты</a></li>
+<li id="menu-item-40" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-40"><a href="https://vk.com/youcoder">VK</a></li>
+</ul></div>			</nav>
+		</div>
+
+		<div id="search-container" class="search-box-wrapper hide">
+			<div class="search-box">
+				<form role="search" method="get" class="search-form" action="https://youcoder.ru/">
+				<label>
+					<span class="screen-reader-text">Найти:</span>
+					<input type="search" class="search-field" placeholder="Поиск&hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Поиск" />
+			</form>			</div>
+		</div>
+	</header><!-- #masthead -->
+
+	<div id="main" class="site-main">
+
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
+			
+<article id="post-118" class="post-118 post type-post status-publish format-standard hentry category-abap tag-new">
+	
+	<header class="entry-header">
+		<h1 class="entry-title">Группировка в цикле ABAP LOOP GROUP</h1>
+		<div class="entry-meta">
+			<span class="entry-date"><a href="https://youcoder.ru/group-by/" rel="bookmark"><time class="entry-date" datetime="2020-08-26T22:17:01+03:00">26 августа, 2020</time></a></span> <span class="byline"><span class="author vcard"><a class="url fn n" href="https://youcoder.ru/author/admin/" rel="author">Артур</a></span></span>			<span class="comments-link"><a href="https://youcoder.ru/group-by/#respond">Оставить комментарий</a></span>
+						</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		
+<p>В версии&nbsp;<em>7.40</em>&nbsp;в ABAP появилась возможность группировать данные в цикле и обрабатывать эти группы. Группировка в цикле ABAP не только уменьшает количество строк кода, но и улучшает производительность. Здесь на примере разберу варианты использования этой новой конструкции языка ABAP.</p>
+
+
+
+<span id="more-118"></span>
+
+
+
+<!-- Yandex.RTB R-A-462528-20 -->
+<div id="yandex_rtb_R-A-462528-20"></div>
+<script>window.yaContextCb.push(()=>{
+  Ya.Context.AdvManager.render({
+    renderTo: 'yandex_rtb_R-A-462528-20',
+    blockId: 'R-A-462528-20'
+  })
+})</script>
+
+
+
+<h2>Группировка в цикле ABAP GROUP BY</h2>
+
+
+
+<p>В этой статье на примере задачи по суммированию в цикле и выделению промежуточных итогов разберём использование дополнения&nbsp;<em>LOOP GROUP BY</em>. Задача состоит в группировке:</p>
+
+
+
+<ul><li>По сбытовым организациям и заводам</li><li>По материалам</li><li>Так же было требование выводить и подробные записи без группировки. Поэтому нельзя было организовать группировку раньше, например на уровне базы данных.</li></ul>
+
+
+
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+<iframe loading="lazy" title="LOOP GROUP ABAP Группировка в цикле" width="474" height="267" src="https://www.youtube.com/embed/SanfWiYslKU?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div><figcaption><a rel="noreferrer noopener" target="_blank" href="https://www.youtube.com/watch?v=SanfWiYslKU">LOOP GROUP ABAP Группировка в цикле</a></figcaption></figure>
+
+
+
+<h2>Суммирование в цикле ABAP.</h2>
+
+
+
+<p>На примере подробно разберу каждую строку кода по суммированию в цикле с использованием группировки ABAP и в конце статьи приведу весь код целиком для удобства копирования.</p>
+
+
+
+<p>Цикл по основной таблице где начинаем разбивать записи по группам для дальнейшей обработки в подчинённом цикле:</p>
+
+
+
+<div class="wp-block-urvanov-syntax-highlighter-code-block"><!-- Urvanov Syntax Highlighter v2.8.26 -->
+
+		<div id="urvanov-syntax-highlighter-618a0646ed04d207925441" class="urvanov-syntax-highlighter-syntax crayon-theme-classic urvanov-syntax-highlighter-font-monaco urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button urvanov-syntax-highlighter-nums-button" title="Включить/Отключить нумерацию строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-plain-button" title="Включить/Отключить подсветку кода"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-wrap-button" title="Включить/Отключить перенос строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-expand-button" title="Expand Code"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-copy-button" title="Copy"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-popup-button" title="Показать код в новом окне"><div class="urvanov-syntax-highlighter-button-icon"></div></div><span class="crayon-language">ABAP</span></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="urvanov-syntax-highlighter-plain-wrap"><textarea wrap="soft" class="urvanov-syntax-highlighter-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+ LOOP AT lt_data INTO DATA(ls_data) "1"
+  GROUP BY ( vkorg = ls_data-vkorg werks = ls_data-werks ) "2"
+  REFERENCE INTO DATA(group_ref_werks). "3"</textarea></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed04d207925441-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed04d207925441-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed04d207925441-3">3</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed04d207925441-1"><span class="crayon-h"> </span><span class="crayon-st">LOOP AT</span><span class="crayon-h"> </span>lt<span class="crayon-sy">_</span>data<span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>ls<span class="crayon-sy">_</span>data<span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-c">"1"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed04d207925441-2"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">GROUP BY</span><span class="crayon-h"> </span><span class="crayon-o">(</span><span class="crayon-h"> </span>vkorg<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>data<span class="crayon-o">-</span>vkorg<span class="crayon-h"> </span>werks<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>data<span class="crayon-o">-</span>werks<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-c">"2"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed04d207925441-3"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-r">REFERENCE</span><span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>group<span class="crayon-sy">_</span>ref<span class="crayon-sy">_</span>werks<span class="crayon-o">)</span><span class="crayon-o">.</span><span class="crayon-h"> </span><span class="crayon-c">"3"</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0049 seconds] -->
+</div>
+
+
+
+<p>&#8220;1&#8221; &#8211;&nbsp;DATA(ls_data)&nbsp;&#8211; динамически определяем структуру.<br>&#8220;2&#8221; &#8211; Задаём поля, по которым хотим сгруппировать записи таблицы.<br>&#8220;3&#8221; &#8211; group_ref_werks &#8211; Динамически определяем переменную в которую по очереди будут помещаться группы записей с одинаковыми ключевыми полями.</p>
+
+
+
+<p>Поочерёдно в этом цикле обходим группы записей  сгруппированных по заводам с использованием подчинённого цикла:</p>
+
+
+
+<div class="wp-block-urvanov-syntax-highlighter-code-block"><!-- Urvanov Syntax Highlighter v2.8.26 -->
+
+		<div id="urvanov-syntax-highlighter-618a0646ed057494956026" class="urvanov-syntax-highlighter-syntax crayon-theme-classic urvanov-syntax-highlighter-font-monaco urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button urvanov-syntax-highlighter-nums-button" title="Включить/Отключить нумерацию строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-plain-button" title="Включить/Отключить подсветку кода"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-wrap-button" title="Включить/Отключить перенос строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-expand-button" title="Expand Code"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-copy-button" title="Copy"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-popup-button" title="Показать код в новом окне"><div class="urvanov-syntax-highlighter-button-icon"></div></div><span class="crayon-language">ABAP</span></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="urvanov-syntax-highlighter-plain-wrap"><textarea wrap="soft" class="urvanov-syntax-highlighter-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+  CLEAR ls_grp_werks.
+  LOOP AT GROUP group_ref_werks INTO DATA(ls_werks) "4"
+    GROUP BY ( matnr = ls_werks-matnr ) "5"
+    REFERENCE INTO DATA(group_ref). "6"</textarea></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed057494956026-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed057494956026-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed057494956026-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed057494956026-4">4</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed057494956026-1"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">CLEAR</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>grp<span class="crayon-sy">_</span>werks<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed057494956026-2"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">LOOP AT</span><span class="crayon-h"> </span>GROUP<span class="crayon-h"> </span>group<span class="crayon-sy">_</span>ref<span class="crayon-sy">_</span>werks<span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>ls<span class="crayon-sy">_</span>werks<span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-c">"4"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed057494956026-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">GROUP BY</span><span class="crayon-h"> </span><span class="crayon-o">(</span><span class="crayon-h"> </span>matnr<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>werks<span class="crayon-o">-</span>matnr<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-c">"5"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed057494956026-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">REFERENCE</span><span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>group<span class="crayon-sy">_</span>ref<span class="crayon-o">)</span><span class="crayon-o">.</span><span class="crayon-h"> </span><span class="crayon-c">"6"</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0004 seconds] -->
+</div>
+
+
+
+<!-- Yandex.RTB R-A-462528-22 -->
+<div id="yandex_rtb_R-A-462528-22"></div>
+<script>window.yaContextCb.push(()=>{
+  Ya.Context.AdvManager.render({
+    renderTo: 'yandex_rtb_R-A-462528-22',
+    blockId: 'R-A-462528-22'
+  })
+})</script>
+
+
+
+<p>&#8220;4&#8221; &#8211; Используя конструкцию&nbsp;<em>LOOP&nbsp;GROUP</em>&nbsp;пройдём по выделенной группе записей group_ref_werks.<br>&#8220;5&#8221; &#8211; Здесь можем обработать группу цикла и не группировать, но нам нужна дополнительная группировка ещё и по материалу.<br>&#8220;6&#8221; &#8211; Помещаем подгруппу уже по новому ключу состоящему не из двух полей, как на уровне выше, а из трёх.</p>
+
+
+
+<p>Обрабатываем записи в цикле с двойной группировкой по трём полям, производим суммирование и другие необходимые операции:</p>
+
+
+
+<div class="wp-block-urvanov-syntax-highlighter-code-block"><!-- Urvanov Syntax Highlighter v2.8.26 -->
+
+		<div id="urvanov-syntax-highlighter-618a0646ed05c477336524" class="urvanov-syntax-highlighter-syntax crayon-theme-classic urvanov-syntax-highlighter-font-monaco urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button urvanov-syntax-highlighter-nums-button" title="Включить/Отключить нумерацию строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-plain-button" title="Включить/Отключить подсветку кода"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-wrap-button" title="Включить/Отключить перенос строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-expand-button" title="Expand Code"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-copy-button" title="Copy"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-popup-button" title="Показать код в новом окне"><div class="urvanov-syntax-highlighter-button-icon"></div></div><span class="crayon-language">ABAP</span></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="urvanov-syntax-highlighter-plain-wrap"><textarea wrap="soft" class="urvanov-syntax-highlighter-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+    LOOP AT GROUP group_ref REFERENCE INTO DATA(lr_tab)."7"
+      IF ls_matnr IS INITIAL. "8"
+        MOVE-CORRESPONDING lr_tab-&gt;* TO ls_matnr.
+      ELSE. 
+        ls_matnr-menge = ls_matnr-menge + lr_tab-&gt;menge.
+      ENDIF.
+    ENDLOOP. "9"</textarea></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed05c477336524-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed05c477336524-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed05c477336524-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed05c477336524-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed05c477336524-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed05c477336524-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed05c477336524-7">7</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed05c477336524-1"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">LOOP AT</span><span class="crayon-h"> </span>GROUP<span class="crayon-h"> </span>group<span class="crayon-sy">_</span>ref<span class="crayon-h"> </span><span class="crayon-r">REFERENCE</span><span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>lr<span class="crayon-sy">_</span>tab<span class="crayon-o">)</span><span class="crayon-o">.</span><span class="crayon-c">"7"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed05c477336524-2"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">IF</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-h"> </span><span class="crayon-r">IS</span><span class="crayon-h"> </span><span class="crayon-r">INITIAL</span><span class="crayon-o">.</span><span class="crayon-h"> </span><span class="crayon-c">"8"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed05c477336524-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">MOVE-CORRESPONDING</span><span class="crayon-h"> </span>lr<span class="crayon-sy">_</span>tab<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-r">TO</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed05c477336524-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">ELSE</span><span class="crayon-o">.</span><span class="crayon-h"> </span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed05c477336524-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span>lr<span class="crayon-sy">_</span>tab<span class="crayon-o">-</span><span class="crayon-o">&gt;</span>menge<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed05c477336524-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">ENDIF</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed05c477336524-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">ENDLOOP</span><span class="crayon-o">.</span><span class="crayon-h"> </span><span class="crayon-c">"9"</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0005 seconds] -->
+</div>
+
+
+
+<p>&#8220;7&#8221; &#8211; Обрабатываем группу полученную выше и суммируем значения всех записей находящихся в ней.<br>&#8220;8&#8221; &#8211; Если это первая строка, из группы, то копируем значения.<br>&#8220;9&#8221; &#8211; Выйдя из этого цикла обработана вся первая группа с одинаковым набором трёх полей.</p>
+
+
+
+<div class="wp-block-urvanov-syntax-highlighter-code-block"><!-- Urvanov Syntax Highlighter v2.8.26 -->
+
+		<div id="urvanov-syntax-highlighter-618a0646ed05e587258442" class="urvanov-syntax-highlighter-syntax crayon-theme-classic urvanov-syntax-highlighter-font-monaco urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button urvanov-syntax-highlighter-nums-button" title="Включить/Отключить нумерацию строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-plain-button" title="Включить/Отключить подсветку кода"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-wrap-button" title="Включить/Отключить перенос строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-expand-button" title="Expand Code"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-copy-button" title="Copy"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-popup-button" title="Показать код в новом окне"><div class="urvanov-syntax-highlighter-button-icon"></div></div><span class="crayon-language">ABAP</span></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="urvanov-syntax-highlighter-plain-wrap"><textarea wrap="soft" class="urvanov-syntax-highlighter-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+    ls_matnr-menge_fr = ls_matnr-menge_to - ls_matnr-menge_r."10"
+    CLEAR ls_val.
+    MOVE-CORRESPONDING ls_matnr TO ls_val."11"
+    ls_class-menge = ls_grp_class-menge + ls_matnr-menge."12"
+  ENDLOOP."13"</textarea></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed05e587258442-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed05e587258442-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed05e587258442-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed05e587258442-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed05e587258442-5">5</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed05e587258442-1"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-sy">_</span>fr<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-sy">_</span>to<span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-sy">_</span>r<span class="crayon-o">.</span><span class="crayon-c">"10"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed05e587258442-2"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">CLEAR</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed05e587258442-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">MOVE-CORRESPONDING</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-h"> </span><span class="crayon-r">TO</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-o">.</span><span class="crayon-c">"11"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed05e587258442-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>ls<span class="crayon-sy">_</span>class<span class="crayon-o">-</span>menge<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>grp<span class="crayon-sy">_</span>class<span class="crayon-o">-</span>menge<span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-o">.</span><span class="crayon-c">"12"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed05e587258442-5"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">ENDLOOP</span><span class="crayon-o">.</span><span class="crayon-c">"13"</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0004 seconds] -->
+</div>
+
+
+
+<!-- Yandex.RTB R-A-462528-23 -->
+<div id="yandex_rtb_R-A-462528-23"></div>
+<script>window.yaContextCb.push(()=>{
+  Ya.Context.AdvManager.render({
+    renderTo: 'yandex_rtb_R-A-462528-23',
+    blockId: 'R-A-462528-23'
+  })
+})</script>
+
+
+
+<p>&#8220;10&#8221; &#8211; После этого можно произвести расчёт зависимых от суммированных полей.<br>&#8220;11&#8221; &#8211; Сохраняем полученную запись суммы в структуру результата для дальнейшего использование.<br>&#8220;12&#8221; &#8211; Далее суммируем значения уже для внешнего цикла который проходит по уникальным значениям внешней группировки.<br>&#8220;13&#8221; &#8211; После выхода из цикла так же обрабатываем необходимым образом поля сумм.</p>
+
+
+
+<div class="wp-block-urvanov-syntax-highlighter-code-block"><!-- Urvanov Syntax Highlighter v2.8.26 -->
+
+		<div id="urvanov-syntax-highlighter-618a0646ed05f032859288" class="urvanov-syntax-highlighter-syntax crayon-theme-classic urvanov-syntax-highlighter-font-monaco urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button urvanov-syntax-highlighter-nums-button" title="Включить/Отключить нумерацию строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-plain-button" title="Включить/Отключить подсветку кода"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-wrap-button" title="Включить/Отключить перенос строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-expand-button" title="Expand Code"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-copy-button" title="Copy"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-popup-button" title="Показать код в новом окне"><div class="urvanov-syntax-highlighter-button-icon"></div></div><span class="crayon-language">ABAP</span></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="urvanov-syntax-highlighter-plain-wrap"><textarea wrap="soft" class="urvanov-syntax-highlighter-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+  CLEAR ls_val.
+  MOVE-CORRESPONDING ls_grp_class TO ls_val.
+  APPEND ls_val TO lt_result."14"
+ENDLOOP.</textarea></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed05f032859288-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed05f032859288-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed05f032859288-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed05f032859288-4">4</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed05f032859288-1"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">CLEAR</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed05f032859288-2"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">MOVE-CORRESPONDING</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>grp<span class="crayon-sy">_</span>class<span class="crayon-h"> </span><span class="crayon-r">TO</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed05f032859288-3"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">APPEND</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-h"> </span><span class="crayon-r">TO</span><span class="crayon-h"> </span>lt<span class="crayon-sy">_</span>result<span class="crayon-o">.</span><span class="crayon-c">"14"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed05f032859288-4"><span class="crayon-st">ENDLOOP</span><span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0003 seconds] -->
+</div>
+
+
+
+<p>&#8220;14&#8221; &#8211; И сохраняем данные по этому проходу цикла в итоговую таблицу.</p>
+
+
+
+<p>Закрывается головной цикл и по итогу мы получили результаты суммирования в нескольких разрезах. Полный код и текст комментариев ниже:</p>
+
+
+
+<!-- Urvanov Syntax Highlighter v2.8.26 -->
+
+		<div id="urvanov-syntax-highlighter-618a0646ed063385584829" class="urvanov-syntax-highlighter-syntax crayon-theme-classic urvanov-syntax-highlighter-font-monaco urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button urvanov-syntax-highlighter-nums-button" title="Включить/Отключить нумерацию строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-plain-button" title="Включить/Отключить подсветку кода"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-wrap-button" title="Включить/Отключить перенос строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-expand-button" title="Expand Code"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-copy-button" title="Copy"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-popup-button" title="Показать код в новом окне"><div class="urvanov-syntax-highlighter-button-icon"></div></div><span class="crayon-language">ABAP</span></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="urvanov-syntax-highlighter-plain-wrap"><textarea wrap="soft" class="urvanov-syntax-highlighter-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+ LOOP AT lt_data INTO DATA(ls_data) "1"
+  GROUP BY ( vkorg = ls_data-vkorg werks = ls_data-werks ) "2"
+  REFERENCE INTO DATA(group_ref_werks). "3"
+  
+  CLEAR ls_grp_werks.
+  LOOP AT GROUP group_ref_werks INTO DATA(ls_werks) "4"
+    GROUP BY ( matnr = ls_werks-matnr ) "5"
+    REFERENCE INTO DATA(group_ref). "6"
+
+    LOOP AT GROUP group_ref REFERENCE INTO DATA(lr_tab)."7"
+      IF ls_matnr IS INITIAL. "8"
+        MOVE-CORRESPONDING lr_tab-&amp;gt;* TO ls_matnr.
+      ELSE. 
+        ls_matnr-menge = ls_matnr-menge + lr_tab-&amp;gt;menge.
+      ENDIF.
+    ENDLOOP. "9"
+
+    ls_matnr-menge_fr = ls_matnr-menge_to - ls_matnr-menge_r."10"
+    CLEAR ls_val.
+    MOVE-CORRESPONDING ls_matnr TO ls_val."11"
+    ls_class-menge = ls_grp_class-menge + ls_matnr-menge."12"
+  ENDLOOP."13"
+  CLEAR ls_val.
+  MOVE-CORRESPONDING ls_grp_class TO ls_val.
+  APPEND ls_val TO lt_result."14"
+ENDLOOP.</textarea></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-8">8</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-9">9</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-10">10</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-11">11</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-12">12</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-13">13</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-14">14</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-15">15</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-16">16</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-17">17</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-18">18</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-19">19</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-20">20</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-21">21</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-22">22</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-23">23</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-24">24</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-25">25</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed063385584829-26">26</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-1"><span class="crayon-h"> </span><span class="crayon-st">LOOP AT</span><span class="crayon-h"> </span>lt<span class="crayon-sy">_</span>data<span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>ls<span class="crayon-sy">_</span>data<span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-c">"1"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-2"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">GROUP BY</span><span class="crayon-h"> </span><span class="crayon-o">(</span><span class="crayon-h"> </span>vkorg<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>data<span class="crayon-o">-</span>vkorg<span class="crayon-h"> </span>werks<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>data<span class="crayon-o">-</span>werks<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-c">"2"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-3"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-r">REFERENCE</span><span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>group<span class="crayon-sy">_</span>ref<span class="crayon-sy">_</span>werks<span class="crayon-o">)</span><span class="crayon-o">.</span><span class="crayon-h"> </span><span class="crayon-c">"3"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-4"><span class="crayon-h">&nbsp;&nbsp;</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-5"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">CLEAR</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>grp<span class="crayon-sy">_</span>werks<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-6"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">LOOP AT</span><span class="crayon-h"> </span>GROUP<span class="crayon-h"> </span>group<span class="crayon-sy">_</span>ref<span class="crayon-sy">_</span>werks<span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>ls<span class="crayon-sy">_</span>werks<span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-c">"4"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">GROUP BY</span><span class="crayon-h"> </span><span class="crayon-o">(</span><span class="crayon-h"> </span>matnr<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>werks<span class="crayon-o">-</span>matnr<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-c">"5"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">REFERENCE</span><span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>group<span class="crayon-sy">_</span>ref<span class="crayon-o">)</span><span class="crayon-o">.</span><span class="crayon-h"> </span><span class="crayon-c">"6"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">LOOP AT</span><span class="crayon-h"> </span>GROUP<span class="crayon-h"> </span>group<span class="crayon-sy">_</span>ref<span class="crayon-h"> </span><span class="crayon-r">REFERENCE</span><span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>lr<span class="crayon-sy">_</span>tab<span class="crayon-o">)</span><span class="crayon-o">.</span><span class="crayon-c">"7"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">IF</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-h"> </span><span class="crayon-r">IS</span><span class="crayon-h"> </span><span class="crayon-r">INITIAL</span><span class="crayon-o">.</span><span class="crayon-h"> </span><span class="crayon-c">"8"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">MOVE-CORRESPONDING</span><span class="crayon-h"> </span>lr<span class="crayon-sy">_</span>tab<span class="crayon-o">-</span><span class="crayon-o">&amp;</span><span class="crayon-r">gt</span><span class="crayon-sy">;</span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-r">TO</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">ELSE</span><span class="crayon-o">.</span><span class="crayon-h"> </span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span>lr<span class="crayon-sy">_</span>tab<span class="crayon-o">-</span><span class="crayon-o">&amp;</span><span class="crayon-r">gt</span><span class="crayon-sy">;</span>menge<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">ENDIF</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">ENDLOOP</span><span class="crayon-o">.</span><span class="crayon-h"> </span><span class="crayon-c">"9"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-17">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-sy">_</span>fr<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-sy">_</span>to<span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-sy">_</span>r<span class="crayon-o">.</span><span class="crayon-c">"10"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">CLEAR</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">MOVE-CORRESPONDING</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-h"> </span><span class="crayon-r">TO</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-o">.</span><span class="crayon-c">"11"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>ls<span class="crayon-sy">_</span>class<span class="crayon-o">-</span>menge<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>grp<span class="crayon-sy">_</span>class<span class="crayon-o">-</span>menge<span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-o">.</span><span class="crayon-c">"12"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-22"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">ENDLOOP</span><span class="crayon-o">.</span><span class="crayon-c">"13"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-23"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">CLEAR</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-24"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">MOVE-CORRESPONDING</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>grp<span class="crayon-sy">_</span>class<span class="crayon-h"> </span><span class="crayon-r">TO</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-25"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">APPEND</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-h"> </span><span class="crayon-r">TO</span><span class="crayon-h"> </span>lt<span class="crayon-sy">_</span>result<span class="crayon-o">.</span><span class="crayon-c">"14"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed063385584829-26"><span class="crayon-st">ENDLOOP</span><span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0015 seconds] -->
+
+
+
+
+<h3>Итоговый код программы ABAP по группировке в цикле с комментариями</h3>
+
+
+
+<div class="wp-block-urvanov-syntax-highlighter-code-block"><!-- Urvanov Syntax Highlighter v2.8.26 -->
+
+		<div id="urvanov-syntax-highlighter-618a0646ed064220995005" class="urvanov-syntax-highlighter-syntax crayon-theme-classic urvanov-syntax-highlighter-font-monaco urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button urvanov-syntax-highlighter-nums-button" title="Включить/Отключить нумерацию строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-plain-button" title="Включить/Отключить подсветку кода"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-wrap-button" title="Включить/Отключить перенос строк"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-expand-button" title="Expand Code"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-copy-button" title="Copy"><div class="urvanov-syntax-highlighter-button-icon"></div></div><div class="crayon-button urvanov-syntax-highlighter-popup-button" title="Показать код в новом окне"><div class="urvanov-syntax-highlighter-button-icon"></div></div><span class="crayon-language">ABAP</span></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="urvanov-syntax-highlighter-plain-wrap"><textarea wrap="soft" class="urvanov-syntax-highlighter-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+ LOOP AT lt_data INTO DATA(ls_data) "1"
+  GROUP BY ( vkorg = ls_data-vkorg werks = ls_data-werks ) "2"
+  REFERENCE INTO DATA(group_ref_werks). "3"
+
+  CLEAR ls_grp_werks.
+  LOOP AT GROUP group_ref_werks INTO DATA(ls_werks) "4"
+    GROUP BY ( matnr = ls_werks-matnr ) "5"
+    REFERENCE INTO DATA(group_ref). "6"
+
+    LOOP AT GROUP group_ref REFERENCE INTO DATA(lr_tab)."7"
+      IF ls_matnr IS INITIAL. "8"
+        MOVE-CORRESPONDING lr_tab-&gt;* TO ls_matnr.
+      ELSE. 
+        ls_matnr-menge = ls_matnr-menge + lr_tab-&gt;menge.
+      ENDIF.
+    ENDLOOP. "9"
+
+    ls_matnr-menge_fr = ls_matnr-menge_to - ls_matnr-menge_r."10"
+    CLEAR ls_val.
+    MOVE-CORRESPONDING ls_matnr TO ls_val."11"
+    ls_class-menge = ls_grp_class-menge + ls_matnr-menge."12"
+  ENDLOOP."13"
+
+  CLEAR ls_val.
+  MOVE-CORRESPONDING ls_grp_class TO ls_val.
+  APPEND ls_val TO lt_result."14"
+ENDLOOP.</textarea></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-8">8</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-9">9</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-10">10</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-11">11</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-12">12</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-13">13</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-14">14</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-15">15</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-16">16</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-17">17</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-18">18</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-19">19</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-20">20</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-21">21</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-22">22</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-23">23</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-24">24</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-25">25</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-26">26</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0646ed064220995005-27">27</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-1"><span class="crayon-h"> </span><span class="crayon-st">LOOP AT</span><span class="crayon-h"> </span>lt<span class="crayon-sy">_</span>data<span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>ls<span class="crayon-sy">_</span>data<span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-c">"1"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-2"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">GROUP BY</span><span class="crayon-h"> </span><span class="crayon-o">(</span><span class="crayon-h"> </span>vkorg<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>data<span class="crayon-o">-</span>vkorg<span class="crayon-h"> </span>werks<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>data<span class="crayon-o">-</span>werks<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-c">"2"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-3"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-r">REFERENCE</span><span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>group<span class="crayon-sy">_</span>ref<span class="crayon-sy">_</span>werks<span class="crayon-o">)</span><span class="crayon-o">.</span><span class="crayon-h"> </span><span class="crayon-c">"3"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-4">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-5"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">CLEAR</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>grp<span class="crayon-sy">_</span>werks<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-6"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">LOOP AT</span><span class="crayon-h"> </span>GROUP<span class="crayon-h"> </span>group<span class="crayon-sy">_</span>ref<span class="crayon-sy">_</span>werks<span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>ls<span class="crayon-sy">_</span>werks<span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-c">"4"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">GROUP BY</span><span class="crayon-h"> </span><span class="crayon-o">(</span><span class="crayon-h"> </span>matnr<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>werks<span class="crayon-o">-</span>matnr<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-h"> </span><span class="crayon-c">"5"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">REFERENCE</span><span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>group<span class="crayon-sy">_</span>ref<span class="crayon-o">)</span><span class="crayon-o">.</span><span class="crayon-h"> </span><span class="crayon-c">"6"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">LOOP AT</span><span class="crayon-h"> </span>GROUP<span class="crayon-h"> </span>group<span class="crayon-sy">_</span>ref<span class="crayon-h"> </span><span class="crayon-r">REFERENCE</span><span class="crayon-h"> </span><span class="crayon-r">INTO</span><span class="crayon-h"> </span><span class="crayon-e">DATA</span><span class="crayon-o">(</span>lr<span class="crayon-sy">_</span>tab<span class="crayon-o">)</span><span class="crayon-o">.</span><span class="crayon-c">"7"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">IF</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-h"> </span><span class="crayon-r">IS</span><span class="crayon-h"> </span><span class="crayon-r">INITIAL</span><span class="crayon-o">.</span><span class="crayon-h"> </span><span class="crayon-c">"8"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">MOVE-CORRESPONDING</span><span class="crayon-h"> </span>lr<span class="crayon-sy">_</span>tab<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-r">TO</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">ELSE</span><span class="crayon-o">.</span><span class="crayon-h"> </span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span>lr<span class="crayon-sy">_</span>tab<span class="crayon-o">-</span><span class="crayon-o">&gt;</span>menge<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">ENDIF</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">ENDLOOP</span><span class="crayon-o">.</span><span class="crayon-h"> </span><span class="crayon-c">"9"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-17">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-sy">_</span>fr<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-sy">_</span>to<span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-sy">_</span>r<span class="crayon-o">.</span><span class="crayon-c">"10"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">CLEAR</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">MOVE-CORRESPONDING</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-h"> </span><span class="crayon-r">TO</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-o">.</span><span class="crayon-c">"11"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>ls<span class="crayon-sy">_</span>class<span class="crayon-o">-</span>menge<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>grp<span class="crayon-sy">_</span>class<span class="crayon-o">-</span>menge<span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>matnr<span class="crayon-o">-</span>menge<span class="crayon-o">.</span><span class="crayon-c">"12"</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-22"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">ENDLOOP</span><span class="crayon-o">.</span><span class="crayon-c">"13"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-23">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-24"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">CLEAR</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-25"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">MOVE-CORRESPONDING</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>grp<span class="crayon-sy">_</span>class<span class="crayon-h"> </span><span class="crayon-r">TO</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-26"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">APPEND</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>val<span class="crayon-h"> </span><span class="crayon-r">TO</span><span class="crayon-h"> </span>lt<span class="crayon-sy">_</span>result<span class="crayon-o">.</span><span class="crayon-c">"14"</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0646ed064220995005-27"><span class="crayon-st">ENDLOOP</span><span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0015 seconds] -->
+</div>
+
+
+
+<ul><li>&#8220;1&#8221; &#8211;&nbsp;<em>DATA(ls_data)</em>&nbsp;&#8211; динамически определяем структуру.</li><li>&#8220;2&#8221; &#8211; Задаём поля, по которым хотим сгруппировать записи таблицы.</li><li>&#8220;3&#8221; &#8211; group_ref_werks &#8211; Динамически определяем переменную в которую по очереди будут помещаться группы записей с одинаковыми ключевыми полями.</li><li>&#8220;4&#8221; &#8211; Используя конструкцию&nbsp;<em>LOOP&nbsp;GROUP</em>&nbsp;пройдём по выделенной группе записей group_ref_werks.</li><li>&#8220;5&#8221; &#8211; Здесь можем обработать группу цикла и не группировать, но нам нужна дополнительная группировка ещё и по материалу.</li><li>&#8220;6&#8221; &#8211; Помещаем подгруппу уже по новому ключу состоящему не из двух полей, как на уровне выше, а из трёх.</li><li>&#8220;7&#8221; &#8211; Обрабатываем группу полученную выше и суммируем значения всех записей находящихся в ней.</li><li>&#8220;8&#8221; &#8211; Если это первая строка, из группы, то копируем значения.</li><li>&#8220;9&#8221; &#8211; Выйдя из этого цикла обработана вся первая группа с одинаковым набором трёх полей.</li><li>&#8220;10&#8221; &#8211; После этого можно произвести расчёт зависимых от суммированных полей.</li><li>&#8220;11&#8221; &#8211; Сохраняем полученную запись суммы в структуру результата для дальнейшего использование.</li><li>&#8220;12&#8221; &#8211; Далее суммируем значения уже для внешнего цикла который проходит по уникальным значениям внешней группировки.</li><li>&#8220;13&#8221; &#8211; После выхода из цикла так же обрабатываем необходимым образом поля сумм.</li><li>&#8220;14&#8221; &#8211; И сохраняем данные по этому проходу цикла в итоговую таблицу.</li></ul>
+
+
+
+<h3>Пример использования группировки в цикле ABAP на реальных задачах:</h3>
+
+
+
+<ul><li>При загрузке из Excel файла данных в SAP систему удобно группировать данные по строкам с использованием LOOP AT GROUP. Пример использования можно посмотреть в статье <a href="https://youcoder.ru/abap-loading-excel-private/" target="_blank" rel="noreferrer noopener">загрузка данных из Excel</a>.</li></ul>
+
+
+
+<iframe loading="lazy" src="https://yoomoney.ru/quickpay/shop-widget?writer=seller&amp;targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82&amp;targets-hint=&amp;default-sum=100&amp;button-text=11&amp;payment-type-choice=on&amp;hint=&amp;successURL=&amp;quickpay=shop&amp;account=4100110120633189" width="423" height="260" allowtransparency="true" scrolling="no" frameborder="0"></iframe>
+	</div><!-- .entry-content -->
+	
+	<footer class="entry-meta"><span class="tag-links"><a href="https://youcoder.ru/tag/new/" rel="tag">Новый синтаксис</a></span></footer></article><!-- #post-118 -->
+		<nav class="navigation post-navigation" role="navigation">
+		<h1 class="screen-reader-text">Навигация по записям</h1>
+		<div class="nav-links">
+			<a href="https://youcoder.ru/message-log/" rel="prev"><span class="meta-nav">Предыдущая запись</span>Журнал сообщений ABAP</a><a href="https://youcoder.ru/tables-declaration/" rel="next"><span class="meta-nav">Следующая запись</span>TABLES ABAP Декларация внутренних таблиц</a>			</div><!-- .nav-links -->
+		</nav><!-- .navigation -->
+		
+<div id="comments" class="comments-area">
+
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Добавить комментарий <small><a rel="nofollow" id="cancel-comment-reply-link" href="/group-by/#respond" style="display:none;">Отменить ответ</a></small></h3><p class="must-log-in">Для отправки комментария вам необходимо <a href="https://youcoder.ru/wp-login.php?redirect_to=https%3A%2F%2Fyoucoder.ru%2Fgroup-by%2F">авторизоваться</a>.</p>	</div><!-- #respond -->
+	
+</div><!-- #comments -->
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+<div id="content-sidebar" class="content-sidebar widget-area" role="complementary">
+	<aside id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><!-- Yandex.RTB R-A-462528-16 -->
+<div id="yandex_rtb_R-A-462528-16"></div>
+<script>window.yaContextCb.push(()=>{
+  Ya.Context.AdvManager.render({
+    renderTo: 'yandex_rtb_R-A-462528-16',
+    blockId: 'R-A-462528-16'
+  })
+})</script></div></aside><aside id="cnss_widget-3" class="widget widget_cnss_widget"><ul id="" class="cnss-social-icon " style="text-align:center;"><li class="cn-fa-youtube cn-fa-icon " style="display:inline-block;"><a class="cnss-youtube" target="_blank" href="https://www.youtube.com/channel/UCZjE99ymmXdr0u0V6rdmXeA?sub_confirmation=1" title="YouTube" style="width:48px;height:48px;padding:8px 0;margin:5px;color: #ffffff;border-radius: 0%;"><i title="YouTube" style="font-size:32px;" class="fab fa-youtube"></i></a></li><li class="cn-fa-vk cn-fa-icon " style="display:inline-block;"><a class="cnss-vk" target="_blank" href="https://vk.com/youcoder" title="VK" style="width:48px;height:48px;padding:8px 0;margin:5px;color: #ffffff;border-radius: 0%;"><i title="VK" style="font-size:32px;" class="fab fa-vk"></i></a></li><li class="cn-fa-twitter cn-fa-icon " style="display:inline-block;"><a class="cnss-twitter" target="_blank" href="https://twitter.com/paV9ed3dvbNeX2H/media" title="Twitter" style="width:48px;height:48px;padding:8px 0;margin:5px;color: #ffffff;border-radius: 0%;"><i title="Twitter" style="font-size:32px;" class="fab fa-twitter"></i></a></li><li class="cn-fa----------------------" style="display:inline-block;"><a class="" target="_blank" href="https://zen.yandex.ru/id/5ea2aaa031edd23bacdabecf" title="Яндекс.Дзен" style=""><img src="https://youcoder.ru/wp-content/uploads/2021/01/orig.png" border="0" width="32" height="32" alt="Яндекс.Дзен" title="Яндекс.Дзен" style="margin:5px;" /></a></li><li class="cn-fa-facebook cn-fa-icon " style="display:inline-block;"><a class="cnss-facebook" target="_blank" href="https://www.facebook.com/groups/youcoder" title="Facebook" style="width:48px;height:48px;padding:8px 0;margin:5px;color: #ffffff;border-radius: 0%;"><i title="Facebook" style="font-size:32px;" class="fab fa-facebook"></i></a></li></ul></aside></div><!-- #content-sidebar -->
+<div id="secondary">
+		<h2 class="site-description">Сайт ABAP программирование YouCoder &#8211; это сборник статей и видео о языке программирования ABAP и работе в SAP системе. Есть как уроки abap для начинающих так и новый синтаксис в ABAP и SAP обучение для консультантов SAP.</h2>
+	
+		<nav role="navigation" class="navigation site-navigation secondary-navigation">
+		<div class="menu-%d0%b2%d0%be%d0%b9%d1%82%d0%b8-%d0%b8-%d0%b7%d0%b0%d1%80%d0%b5%d0%b3%d0%b8%d1%81%d1%82%d1%80%d0%b8%d1%80%d0%be%d0%b2%d0%b0%d1%82%d1%8c%d1%81%d1%8f-container"><ul id="menu-%d0%b2%d0%be%d0%b9%d1%82%d0%b8-%d0%b8-%d0%b7%d0%b0%d1%80%d0%b5%d0%b3%d0%b8%d1%81%d1%82%d1%80%d0%b8%d1%80%d0%be%d0%b2%d0%b0%d1%82%d1%8c%d1%81%d1%8f" class="menu"><li id="menu-item-1376" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1376"><a href="https://youcoder.ru/wp-login.php?action=register">Зарегистрироваться</a></li>
+<li id="menu-item-1378" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1378"><a href="https://youcoder.ru/wp-login.php">Войти</a></li>
+</ul></div>	</nav>
+	
+		<div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
+		<aside id="custom_html-21" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><!-- Yandex.RTB R-A-462528-19 -->
+<div id="yandex_rtb_R-A-462528-19"></div>
+<script>window.yaContextCb.push(()=>{
+  Ya.Context.AdvManager.render({
+    renderTo: 'yandex_rtb_R-A-462528-19',
+    blockId: 'R-A-462528-19'
+  })
+})</script>
+<!-- Yandex.RTB R-A-462528-19 
+<div id="yandex_rtb_R-A-462528-19"></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-462528-19",
+                renderTo: "yandex_rtb_R-A-462528-19",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script> --></div></aside><aside id="categories-4" class="widget widget_categories"><h1 class="widget-title">Разделы сайта</h1><nav role="navigation" aria-label="Разделы сайта">
+			<ul>
+					<li class="cat-item cat-item-1"><a href="https://youcoder.ru/category/abap/" title="Статьи по ABAP программированию будут полезны как ABAP разработчикам так и SAP консультантам. Разберу как ABAP с нуля так и новый синтаксис ABAP 7.4 и 7.5. Подробно опишу технические подробности с которыми столкнулся и как их решал. Так же постараюсь помочь консультантам заглянуть по ту сторону ABAP разработки, чтобы лучше понимать как всё работает.">ABAP</a> (13)
+</li>
+			</ul>
+
+			</nav></aside><aside id="block-14" class="widget widget_block widget_media_image">
+<div class="wp-block-image"><figure class="aligncenter size-full"><a href="https://www.tinkoff.ru/sl/1IKuqHy2Uz0" target="_blank"><img loading="lazy" width="283" height="434" src="https://youcoder.ru/wp-content/uploads/2021/11/Тинькофф-2.png" alt="" class="wp-image-1385" srcset="https://youcoder.ru/wp-content/uploads/2021/11/Тинькофф-2.png 283w, https://youcoder.ru/wp-content/uploads/2021/11/Тинькофф-2-196x300.png 196w" sizes="(max-width: 283px) 100vw, 283px" /></a><figcaption><a href="https://www.tinkoff.ru/sl/1IKuqHy2Uz0" data-type="URL" data-id="https://www.tinkoff.ru/sl/1IKuqHy2Uz0" target="_blank" rel="noreferrer noopener">Бонус от YouCoder и Тинькофф!</a></figcaption></figure></div>
+</aside><aside id="tag_cloud-7" class="widget widget_tag_cloud"><h1 class="widget-title">Теги</h1><nav role="navigation" aria-label="Теги"><div class="tagcloud"><ul class='wp-tag-cloud' role='list'>
+	<li><a href="https://youcoder.ru/tag/new/" class="tag-cloud-link tag-link-4 tag-link-position-1" style="font-size: 8pt;" aria-label="Новый синтаксис (3 элемента)">Новый синтаксис<span class="tag-link-count"> (3)</span></a></li>
+	<li><a href="https://youcoder.ru/tag/string/" class="tag-cloud-link tag-link-3 tag-link-position-2" style="font-size: 8pt;" aria-label="Строки (3 элемента)">Строки<span class="tag-link-count"> (3)</span></a></li>
+</ul>
+</div>
+</nav></aside><aside id="cnss_widget-5" class="widget widget_cnss_widget"><ul id="" class="cnss-social-icon " style="text-align:center;"><li class="cn-fa-youtube cn-fa-icon " style="display:inline-block;"><a class="cnss-youtube" target="_blank" href="https://www.youtube.com/channel/UCZjE99ymmXdr0u0V6rdmXeA?sub_confirmation=1" title="YouTube" style="width:24px;height:24px;padding:4px 0;margin:2px;color: #ffffff;border-radius: 0%;"><i title="YouTube" style="font-size:16px;" class="fab fa-youtube"></i></a></li><li class="cn-fa-vk cn-fa-icon " style="display:inline-block;"><a class="cnss-vk" target="_blank" href="https://vk.com/youcoder" title="VK" style="width:24px;height:24px;padding:4px 0;margin:2px;color: #ffffff;border-radius: 0%;"><i title="VK" style="font-size:16px;" class="fab fa-vk"></i></a></li><li class="cn-fa-twitter cn-fa-icon " style="display:inline-block;"><a class="cnss-twitter" target="_blank" href="https://twitter.com/paV9ed3dvbNeX2H/media" title="Twitter" style="width:24px;height:24px;padding:4px 0;margin:2px;color: #ffffff;border-radius: 0%;"><i title="Twitter" style="font-size:16px;" class="fab fa-twitter"></i></a></li><li class="cn-fa----------------------" style="display:inline-block;"><a class="" target="_blank" href="https://zen.yandex.ru/id/5ea2aaa031edd23bacdabecf" title="Яндекс.Дзен" style=""><img src="https://youcoder.ru/wp-content/uploads/2021/01/orig.png" border="0" width="16" height="16" alt="Яндекс.Дзен" title="Яндекс.Дзен" style="margin:2px;" /></a></li><li class="cn-fa-facebook cn-fa-icon " style="display:inline-block;"><a class="cnss-facebook" target="_blank" href="https://www.facebook.com/groups/youcoder" title="Facebook" style="width:24px;height:24px;padding:4px 0;margin:2px;color: #ffffff;border-radius: 0%;"><i title="Facebook" style="font-size:16px;" class="fab fa-facebook"></i></a></li></ul></aside>	</div><!-- #primary-sidebar -->
+	</div><!-- #secondary -->
+
+		</div><!-- #main -->
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+
+			
+<div id="supplementary">
+	<div id="footer-sidebar" class="footer-sidebar widget-area" role="complementary">
+		<aside id="custom_html-11" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><!-- Yandex Native Ads C-A-462528-30 -->
+<div id="id-C-A-462528-30"></div>
+<script>window.yaContextCb.push(()=>{
+  Ya.Context.AdvManager.renderWidget({
+    renderTo: 'id-C-A-462528-30',
+    blockId: 'C-A-462528-30'
+  })
+})</script>
+</div></aside>	</div><!-- #footer-sidebar -->
+</div><!-- #supplementary -->
+
+			<div class="site-info">
+												<a href="https://ru.wordpress.org/" class="imprint">
+					Сайт работает на WordPress				</a>
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- #page -->
+
+		<div id="wpcp-error-message" class="msgmsg-box-wpcp hideme"><span>error: </span>Копирование запрещено!</div>
+	<script>
+	var timeout_result;
+	function show_wpcp_message(smessage)
+	{
+		if (smessage !== "")
+			{
+			var smessage_text = '<span>Alert: </span>'+smessage;
+			document.getElementById("wpcp-error-message").innerHTML = smessage_text;
+			document.getElementById("wpcp-error-message").className = "msgmsg-box-wpcp warning-wpcp showme";
+			clearTimeout(timeout_result);
+			timeout_result = setTimeout(hide_message, 3000);
+			}
+	}
+	function hide_message()
+	{
+		document.getElementById("wpcp-error-message").className = "msgmsg-box-wpcp warning-wpcp hideme";
+	}
+	</script>
+		<style type="text/css">
+	#wpcp-error-message {
+	    direction: ltr;
+	    text-align: center;
+	    transition: opacity 900ms ease 0s;
+	    z-index: 99999999;
+	}
+	.hideme {
+    	opacity:0;
+    	visibility: hidden;
+	}
+	.showme {
+    	opacity:1;
+    	visibility: visible;
+	}
+	.msgmsg-box-wpcp {
+		border:1px solid #f5aca6;
+		border-radius: 10px;
+		color: #555;
+		font-family: Tahoma;
+		font-size: 11px;
+		margin: 10px;
+		padding: 10px 36px;
+		position: fixed;
+		width: 255px;
+		top: 50%;
+  		left: 50%;
+  		margin-top: -10px;
+  		margin-left: -130px;
+  		-webkit-box-shadow: 0px 0px 34px 2px rgba(242,191,191,1);
+		-moz-box-shadow: 0px 0px 34px 2px rgba(242,191,191,1);
+		box-shadow: 0px 0px 34px 2px rgba(242,191,191,1);
+	}
+	.msgmsg-box-wpcp span {
+		font-weight:bold;
+		text-transform:uppercase;
+	}
+		.warning-wpcp {
+		background:#ffecec url('https://youcoder.ru/wp-content/plugins/wp-content-copy-protector/images/warning.png') no-repeat 10px 50%;
+	}
+    </style>
+<script src='https://youcoder.ru/wp-includes/js/jquery/ui/core.min.js?ver=1.12.1' id='jquery-ui-core-js'></script>
+<script src='https://youcoder.ru/wp-includes/js/jquery/ui/mouse.min.js?ver=1.12.1' id='jquery-ui-mouse-js'></script>
+<script src='https://youcoder.ru/wp-includes/js/jquery/ui/sortable.min.js?ver=1.12.1' id='jquery-ui-sortable-js'></script>
+<script src='https://youcoder.ru/wp-includes/js/comment-reply.min.js?ver=5.8.1' id='comment-reply-js'></script>
+<script src='https://youcoder.ru/wp-includes/js/imagesloaded.min.js?ver=4.1.4' id='imagesloaded-js'></script>
+<script src='https://youcoder.ru/wp-includes/js/masonry.min.js?ver=4.2.2' id='masonry-js'></script>
+<script src='https://youcoder.ru/wp-includes/js/jquery/jquery.masonry.min.js?ver=3.1.2b' id='jquery-masonry-js'></script>
+<script src='https://youcoder.ru/wp-content/themes/twentyfourteen/js/functions.js?ver=20171218' id='twentyfourteen-script-js'></script>
+<script id='q2w3_fixed_widget-js-extra'>
+var q2w3_sidebar_options = [{"sidebar":"sidebar-1","margin_top":10,"margin_bottom":0,"stop_id":"","screen_max_width":0,"screen_max_height":0,"width_inherit":false,"refresh_interval":1500,"window_load_hook":false,"disable_mo_api":false,"widgets":["custom_html-21","categories-4","tag_cloud-7","cnss_widget-5"]},{"sidebar":"sidebar-2","margin_top":10,"margin_bottom":0,"stop_id":"","screen_max_width":0,"screen_max_height":0,"width_inherit":false,"refresh_interval":1500,"window_load_hook":false,"disable_mo_api":false,"widgets":["custom_html-3"]},{"sidebar":"sidebar-3","margin_top":10,"margin_bottom":0,"stop_id":"","screen_max_width":0,"screen_max_height":0,"width_inherit":false,"refresh_interval":1500,"window_load_hook":false,"disable_mo_api":false,"widgets":["custom_html-11"]}];
+</script>
+<script src='https://youcoder.ru/wp-content/plugins/q2w3-fixed-widget/js/q2w3-fixed-widget.min.js?ver=5.3.0' id='q2w3_fixed_widget-js'></script>
+<script src='https://youcoder.ru/wp-includes/js/wp-embed.min.js?ver=5.8.1' id='wp-embed-js'></script>
+
+<!--Start VDZ Yandex Metrika Plugin-->
+<!-- Yandex.Metrika counter --><script type="text/javascript" >(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");ym(48657641, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true, ecommerce:"dataLayer"});</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/48657641" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter --><!--START ADD EVENTS FROM CF7--><script type='text/javascript'>document.addEventListener( 'wpcf7submit', function( event ) {
+					  //event.detail.contactFormId;
+					  if(ym){
+				          //console.log(event.detail);
+						  ym(48657641, 'reachGoal', 'VDZ_SEND_CONTACT_FORM_7');
+						  ym(48657641, 'params', {
+						      page_url: window.location.href, 
+						      status: event.detail.status, 
+						      locale: event.detail.contactFormLocale, 
+						      form_id: event.detail.contactFormId, 
+						  });
+					  }
+					}, false );
+				</script><!--END ADD EVENTS FROM CF7-->
+<!--End VDZ Yandex Metrika Plugin-->
+</body>
+</html>

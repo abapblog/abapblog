@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Дата &amp; время | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/data-vremya/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Thu, 18 Mar 2021 04:52:49 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Модификация даты: добавить (убавить) заданный промежуток времени</title>
+		<link>https://abap-blog.ru/abap-notes/dobavit-ubavit-k-date-mesyac-god-ili-n-dnej/</link>
+					<comments>https://abap-blog.ru/abap-notes/dobavit-ubavit-k-date-mesyac-god-ili-n-dnej/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 27 Sep 2020 15:57:22 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4951</guid>
+
+					<description><![CDATA[<p>Часто встречается потребность модификации даты на определённый промежуток времени: прибавить год, отнять месяц или заданное количество дней. Последнее можно выполнить простой арифметической операцией вида: [crayon-618a1e0fb72d8537886304/] Что же касается месяца или года, можно воспользоваться стандартным ФМ-ом вида: [crayon-618a1e0fb72e6786209204/] Еще одним из стандартных вариантов &#8212; использовать класс CL_RECA_DATE и его метода (ADD_TO_DATE), если у вас присутствует RE модуль [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/dobavit-ubavit-k-date-mesyac-god-ili-n-dnej/">Модификация даты: добавить (убавить) заданный промежуток времени</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Часто встречается потребность модификации даты на определённый промежуток времени: прибавить год, отнять месяц или заданное количество дней. Последнее можно выполнить простой арифметической операцией вида:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  lv_data TYPE d TYPE sy-datum.
+
+lv_date = lv_date + 100. " Прибавить 100 дней к текущей дате</pre><p>Что же касается месяца или года, можно воспользоваться стандартным ФМ-ом вида:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: dt TYPE sy-datum.
+ 
+CALL FUNCTION 'RP_CALC_DATE_IN_INTERVAL'  
+  EXPORTING
+    date      = sy-datum                  " Дата с которой работаем
+    days      = 0                         " 0 Дней
+    months    = 0                         " 0 Месяцев
+    signum    = '-'                       " Операция вычитания
+    years     = 1                         " 1 Год
+  IMPORTING
+    calc_date = dt.                       " Результат</pre><p>Еще одним из стандартных вариантов &#8212; использовать класс<strong> CL_RECA_DATE</strong> и его метода (ADD_TO_DATE), если у вас присутствует RE модуль в системе.</p><p>The post <a href="https://abap-blog.ru/abap-notes/dobavit-ubavit-k-date-mesyac-god-ili-n-dnej/">Модификация даты: добавить (убавить) заданный промежуток времени</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/dobavit-ubavit-k-date-mesyac-god-ili-n-dnej/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Проверка корректности даты</title>
+		<link>https://abap-blog.ru/abap-notes/proverka-korrektnosti-daty/</link>
+					<comments>https://abap-blog.ru/abap-notes/proverka-korrektnosti-daty/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 05 Apr 2020 10:48:21 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=3967</guid>
+
+					<description><![CDATA[<p>Формат типа даты в ABAP имеет следующий вид: YYYYMMDD, где YYYY &#8212; год, MM &#8212; месяц, DD &#8212; день, и представлен в виде текстовой последовательности тип CHAR длинной 8 символов. В некоторых случаях требуется проверить корректность формата даты: содержит только цифровые значения, день в промежутке от 01 до 31, месяц в промежутке от 01 до [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/proverka-korrektnosti-daty/">Проверка корректности даты</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Формат типа даты в ABAP имеет следующий вид: YYYYMMDD, где YYYY &#8212; год, MM &#8212; месяц, DD &#8212; день, и представлен в виде текстовой последовательности тип CHAR длинной 8 символов.</p>
+<p>В некоторых случаях требуется проверить корректность формата даты:</p>
+<ul>
+<li>содержит только цифровые значения,</li>
+<li>день в промежутке от 01 до 31,</li>
+<li>месяц в промежутке от 01 до 12,</li>
+<li>дата действительно существует.</li>
+</ul>
+<p>Все это можно сделать с помощью ФМ-а <strong>DATE_CHECK_PLAUSIBILITY</strong>:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+    lv_datum TYPE d VALUE '20203102'.
+
+  CALL FUNCTION 'DATE_CHECK_PLAUSIBILITY'
+    EXPORTING
+      date                      = lv_datum
+    EXCEPTIONS
+      plausibility_check_failed = 1
+      OTHERS                    = 2.
+
+  IF sy-subrc &lt;&gt; 0.
+    WRITE 'Формат даты не корректный'.
+  ENDIF.</pre><p>Хотя, зная как вычисляются выражения с датами в ABAP, всегда можно воспользоваться ими для оценки корректности даты:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS:
+  p_date TYPE c LENGTH 8.
+
+WRITE COND string( LET lv_d = + CONV d( p_date ) IN 
+  WHEN lv_d IS NOT INITIAL THEN 'Дата корректна' 
+  ELSE 'Такой даты не существует' ).</pre><p>Или воспользоваться присвоением без потерь:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lv_str TYPE string.
+
+lv_str = '99992311'.
+
+IF EXACT d( lv_str ) IS INITIAL.
+  WRITE 'Wrong date'.
+ENDIF.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/proverka-korrektnosti-daty/">Проверка корректности даты</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/proverka-korrektnosti-daty/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

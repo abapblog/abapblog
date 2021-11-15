@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Формуляры | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/formulyary/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Mon, 15 Mar 2021 20:08:43 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Анализ ошибок в ADS</title>
+		<link>https://abap-blog.ru/abap-notes/analiz-oshibok-v-ads/</link>
+					<comments>https://abap-blog.ru/abap-notes/analiz-oshibok-v-ads/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 15 Mar 2021 19:11:04 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=6695</guid>
+
+					<description><![CDATA[<p>Иногда ADS выдаёт общие ошибки вроде: ADS: com.adobe.ProcessingException: com.adobe.Processin(200101) Чтобы понять что действительно происходит нужно либо включать трассировку на стороне ADS: SAP Note 846610 &#8212; How to activate ADS trace SAP Note 1128476 &#8212; How to activate ADS trace in NW7.10 and higher Либо можно поставить точку прерывания в CL_FP_PDF_OBJECT методе EXECUTE_INTERNAL:</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/analiz-oshibok-v-ads/">Анализ ошибок в ADS</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Иногда ADS выдаёт общие ошибки вроде:</p>
+<blockquote><p>ADS: com.adobe.ProcessingException: com.adobe.Processin(200101)</p></blockquote>
+<p>Чтобы понять что действительно происходит нужно либо включать трассировку на стороне ADS:</p>
+<ul>
+<li>SAP Note <a href="https://launchpad.support.sap.com/#/notes/846610" target="_blank" rel="noopener">846610</a> &#8212; How to activate ADS trace</li>
+<li>SAP Note <a href="https://launchpad.support.sap.com/#/notes/1128476" target="_blank" rel="noopener">1128476</a> &#8212; How to activate ADS trace in NW7.10 and higher</li>
+</ul>
+<p>Либо можно поставить точку прерывания в <strong>CL_FP_PDF_OBJECT </strong>методе <strong>EXECUTE_INTERNAL:</strong></p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug1-1.png"><img loading="lazy" class="alignnone size-full wp-image-6699" src="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug1-1.png" alt="" width="743" height="444" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug1-1.png 743w, https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug1-1-300x179.png 300w" sizes="(max-width: 743px) 100vw, 743px" /></a></p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-2.png"><img loading="lazy" class="alignnone size-full wp-image-6700" src="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-2.png" alt="" width="1416" height="198" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-2.png 1416w, https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-2-300x42.png 300w, https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-2-1024x143.png 1024w, https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-2-768x107.png 768w" sizes="(max-width: 1416px) 100vw, 1416px" /></a></p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-3.png"><img loading="lazy" class="alignnone size-full wp-image-6701" src="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-3.png" alt="" width="1011" height="452" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-3.png 1011w, https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-3-300x134.png 300w, https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-3-768x343.png 768w" sizes="(max-width: 1011px) 100vw, 1011px" /></a></p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-4.png"><img loading="lazy" class="alignnone size-full wp-image-6702" src="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-4.png" alt="" width="1129" height="399" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-4.png 1129w, https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-4-300x106.png 300w, https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-4-1024x362.png 1024w, https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-4-768x271.png 768w" sizes="(max-width: 1129px) 100vw, 1129px" /></a></p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-5.png"><img loading="lazy" class="alignnone size-full wp-image-6703" src="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-5.png" alt="" width="1406" height="626" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-5.png 1406w, https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-5-300x134.png 300w, https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-5-1024x456.png 1024w, https://abap-blog.ru/wp-content/uploads/2021/03/ads-debug-5-768x342.png 768w" sizes="(max-width: 1406px) 100vw, 1406px" /></a></p><p>The post <a href="https://abap-blog.ru/abap-notes/analiz-oshibok-v-ads/">Анализ ошибок в ADS</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/analiz-oshibok-v-ads/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Объединить несколько PDF файлов в один</title>
+		<link>https://abap-blog.ru/abap-notes/obedinit-neskolko-pdf-fajlov-v-odin/</link>
+					<comments>https://abap-blog.ru/abap-notes/obedinit-neskolko-pdf-fajlov-v-odin/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 11 Oct 2020 09:22:53 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5161</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e604a2b5570211237/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/obedinit-neskolko-pdf-fajlov-v-odin/">Объединить несколько PDF файлов в один</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">TRY.
+    DATA: lv_rc TYPE i.
+    DATA: it_files TYPE filetable.
+    DATA: lv_action TYPE i.
+
+    cl_gui_frontend_services=&gt;file_open_dialog( EXPORTING
+                                                  file_filter    = |pdf (*.pdf)\|*.pdf\|{ cl_gui_frontend_services=&gt;filetype_all }|
+                                                  multiselection = abap_true
+                                                CHANGING
+                                                  file_table  = it_files
+                                                  rc          = lv_rc
+                                                  user_action = lv_action ).
+
+    IF lv_action = cl_gui_frontend_services=&gt;action_ok.
+      IF lines( it_files ) &gt; 1.
+        DATA(o_pdf_merger) = NEW cl_rspo_pdf_merge( ).
+
+        LOOP AT it_files ASSIGNING FIELD-SYMBOL(&lt;f&gt;).
+
+          DATA(lv_filesize) = CONV w3param-cont_len( '0' ).
+          DATA(it_bin_data) = VALUE w3mimetabtype( ).
+
+          cl_gui_frontend_services=&gt;gui_upload( EXPORTING
+                                                  filename   = |{ it_files[ sy-tabix ]-filename }|
+                                                  filetype   = 'BIN'
+                                                IMPORTING
+                                                  filelength = lv_filesize
+                                                CHANGING
+                                                  data_tab   = it_bin_data ).
+
+          DATA(lv_bin_data) = cl_bcs_convert=&gt;solix_to_xstring( it_solix = it_bin_data ).
+          o_pdf_merger-&gt;add_document( lv_bin_data ).
+
+          WRITE: / |Hinzugefügt: { it_files[ sy-tabix ]-filename } ({ lv_filesize } Bytes)|.
+        ENDLOOP.
+
+        o_pdf_merger-&gt;merge_documents( IMPORTING merged_document = DATA(lv_merged_pdf)
+                                                 rc              = lv_rc ).
+
+        IF lv_rc = 0.
+          DATA: lv_filename TYPE string.
+          DATA: lv_fullpath TYPE string.
+          DATA: lv_path TYPE string.
+
+          cl_gui_frontend_services=&gt;file_save_dialog( EXPORTING
+                                                        default_extension   = 'pdf'
+                                                        default_file_name   = 'merged.pdf'
+                                                        file_filter         = |pdf (*.pdf)\|*.pdf\|{ cl_gui_frontend_services=&gt;filetype_all }|
+                                                        prompt_on_overwrite = abap_true
+                                                      CHANGING
+                                                        filename          = lv_filename
+                                                        path              = lv_path
+                                                        fullpath          = lv_fullpath
+                                                        user_action       = lv_action ).
+
+          IF lv_action EQ cl_gui_frontend_services=&gt;action_ok.
+            DATA(it_bin_data_merged) = cl_bcs_convert=&gt;xstring_to_solix( lv_merged_pdf ).
+
+            DATA(lv_size_merged) = xstrlen( lv_merged_pdf ).
+            cl_gui_frontend_services=&gt;gui_download( EXPORTING
+                                                      filename                = lv_fullpath
+                                                      filetype                = 'BIN'
+                                                      bin_filesize            = lv_size_merged
+                                                    CHANGING
+                                                      data_tab                = it_bin_data_merged ).
+
+            WRITE: / |Gespeichert: { lv_fullpath } ({ lv_size_merged } Bytes)|.
+
+          ENDIF.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+  CATCH cx_root INTO DATA(e_txt).
+    WRITE: / e_txt-&gt;get_text( ).
+ENDTRY.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/obedinit-neskolko-pdf-fajlov-v-odin/">Объединить несколько PDF файлов в один</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/obedinit-neskolko-pdf-fajlov-v-odin/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html class='v2' dir='ltr' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+<link href='https://www.blogger.com/static/v1/widgets/1667664774-css_bundle_v2.css' rel='stylesheet' type='text/css'/>
+<meta content='IE=EmulateIE7' http-equiv='X-UA-Compatible'/>
+<meta content='width=1100' name='viewport'/>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<meta content='blogger' name='generator'/>
+<link href='http://blog.muradovm.com/favicon.ico' rel='icon' type='image/x-icon'/>
+<link href='http://blog.muradovm.com/2012/03/solid.html' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="Code Research - Atom" href="http://blog.muradovm.com/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="Code Research - RSS" href="http://blog.muradovm.com/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="Code Research - Atom" href="https://www.blogger.com/feeds/1838664009445508485/posts/default" />
+
+<link rel="alternate" type="application/atom+xml" title="Code Research - Atom" href="http://blog.muradovm.com/feeds/8976228164508096467/comments/default" />
+<!--[if IE]><script type="text/javascript" src="https://www.blogger.com/static/v1/jsbin/403901366-ieretrofit.js"></script>
+<![endif]-->
+<link href='http://1.bp.blogspot.com/-dCzOmq_awW0/Tx_WxUx4U8I/AAAAAAAAALM/MJINkCuvlpo/s320/solid_brick_3.jpg' rel='image_src'/>
+<meta content='http://blog.muradovm.com/2012/03/solid.html' property='og:url'/>
+<meta content='Доступно о SOLID' property='og:title'/>
+<meta content='Не так давно, около месяца назад, я сделал небольшой доклад, посвященный SOLID, для своих коллег. Объяснить, что это такое оказалось не совс...' property='og:description'/>
+<meta content='http://1.bp.blogspot.com/-dCzOmq_awW0/Tx_WxUx4U8I/AAAAAAAAALM/MJINkCuvlpo/w1200-h630-p-k-no-nu/solid_brick_3.jpg' property='og:image'/>
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } try { document.execCommand('BackgroundImageCache', false, true); } catch(e) {} })(); </script> <![endif]-->
+<title>Code Research: Доступно о SOLID</title>
+<style id='page-skin-1' type='text/css'><!--
+/*-----------------------------------------------
+Blogger Template Style
+Name:     Picture Window
+Designer: Blogger
+URL:      www.blogger.com
+----------------------------------------------- */
+/* Content
+----------------------------------------------- */
+body {
+font: normal normal 15px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #000000;
+background: #d8d8d8 url(http://4.bp.blogspot.com/-EpKLjd7UozU/UkSOcMzVb_I/AAAAAAAAAow/fY-p8PZu0Ug/s0/background2.png) repeat scroll top left;
+}
+html body .region-inner {
+min-width: 0;
+max-width: 100%;
+width: auto;
+}
+.content-outer {
+font-size: 90%;
+}
+a:link {
+text-decoration:none;
+color: #0354c5;
+}
+a:visited {
+text-decoration:none;
+color: #0354c5;
+}
+a:hover {
+text-decoration:underline;
+color: #0354c5;
+}
+.content-outer {
+background: transparent url(http://www.blogblog.com/1kt/transparent/white80.png) repeat scroll top left;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+-goog-ms-border-radius: 15px;
+border-radius: 15px;
+-moz-box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+-goog-ms-box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+margin: 30px auto;
+}
+.content-inner {
+padding: 15px;
+}
+/* Header
+----------------------------------------------- */
+.header-outer {
+background: #270404 url(http://www.blogblog.com/1kt/transparent/header_gradient_shade.png) repeat-x scroll top left;
+_background-image: none;
+color: #ffffff;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+-goog-ms-border-radius: 10px;
+border-radius: 10px;
+}
+.Header img, .Header #header-inner {
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+-goog-ms-border-radius: 10px;
+border-radius: 10px;
+}
+.header-inner .Header .titlewrapper,
+.header-inner .Header .descriptionwrapper {
+padding-left: 30px;
+padding-right: 30px;
+}
+.Header h1 {
+font: normal normal 36px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+.Header h1 a {
+color: #ffffff;
+}
+.Header .description {
+font-size: 130%;
+}
+/* Tabs
+----------------------------------------------- */
+.tabs-inner {
+margin: .5em 0 0;
+padding: 0;
+}
+.tabs-inner .section {
+margin: 0;
+}
+.tabs-inner .widget ul {
+padding: 0;
+background: #f1f1f1 url(http://www.blogblog.com/1kt/transparent/tabs_gradient_shade.png) repeat scroll bottom;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+-goog-ms-border-radius: 10px;
+border-radius: 10px;
+}
+.tabs-inner .widget li {
+border: none;
+}
+.tabs-inner .widget li a {
+display: inline-block;
+padding: .5em 1em;
+margin-right: 0;
+color: #992211;
+font: normal normal 15px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+-moz-border-radius: 0 0 0 0;
+-webkit-border-top-left-radius: 0;
+-webkit-border-top-right-radius: 0;
+-goog-ms-border-radius: 0 0 0 0;
+border-radius: 0 0 0 0;
+background: transparent none no-repeat scroll top left;
+border-right: 1px solid #c7c7c7;
+}
+.tabs-inner .widget li:first-child a {
+padding-left: 1.25em;
+-moz-border-radius-topleft: 10px;
+-moz-border-radius-bottomleft: 10px;
+-webkit-border-top-left-radius: 10px;
+-webkit-border-bottom-left-radius: 10px;
+-goog-ms-border-top-left-radius: 10px;
+-goog-ms-border-bottom-left-radius: 10px;
+border-top-left-radius: 10px;
+border-bottom-left-radius: 10px;
+}
+.tabs-inner .widget li.selected a,
+.tabs-inner .widget li a:hover {
+position: relative;
+z-index: 1;
+background: #ffffff url(http://www.blogblog.com/1kt/transparent/tabs_gradient_shade.png) repeat scroll bottom;
+color: #000000;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+}
+/* Headings
+----------------------------------------------- */
+h2 {
+font: bold normal 13px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+text-transform: uppercase;
+color: #4d4d4d;
+margin: .5em 0;
+}
+/* Main
+----------------------------------------------- */
+.main-outer {
+background: transparent none repeat scroll top center;
+-moz-border-radius: 0 0 0 0;
+-webkit-border-top-left-radius: 0;
+-webkit-border-top-right-radius: 0;
+-webkit-border-bottom-left-radius: 0;
+-webkit-border-bottom-right-radius: 0;
+-goog-ms-border-radius: 0 0 0 0;
+border-radius: 0 0 0 0;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+}
+.main-inner {
+padding: 15px 5px 20px;
+}
+.main-inner .column-center-inner {
+padding: 0 0;
+}
+.main-inner .column-left-inner {
+padding-left: 0;
+}
+.main-inner .column-right-inner {
+padding-right: 0;
+}
+/* Posts
+----------------------------------------------- */
+h3.post-title {
+margin: 0;
+font: normal normal 18px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+}
+.comments h4 {
+margin: 1em 0 0;
+font: normal normal 18px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+}
+.date-header span {
+color: #000000;
+}
+.post-outer {
+background-color: #ffffff;
+border: solid 1px #d8d8d8;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+border-radius: 10px;
+-goog-ms-border-radius: 10px;
+padding: 15px 20px;
+margin: 0 -20px 20px;
+}
+.post-body {
+line-height: 1.4;
+font-size: 110%;
+position: relative;
+}
+.post-header {
+margin: 0 0 1.5em;
+color: #8f8f8f;
+line-height: 1.6;
+}
+.post-footer {
+margin: .5em 0 0;
+color: #8f8f8f;
+line-height: 1.6;
+}
+#blog-pager {
+font-size: 140%
+}
+#comments .comment-author {
+padding-top: 1.5em;
+border-top: dashed 1px #ccc;
+border-top: dashed 1px rgba(128, 128, 128, .5);
+background-position: 0 1.5em;
+}
+#comments .comment-author:first-child {
+padding-top: 0;
+border-top: none;
+}
+.avatar-image-container {
+margin: .2em 0 0;
+}
+/* Comments
+----------------------------------------------- */
+.comments .comments-content .icon.blog-author {
+background-repeat: no-repeat;
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB9sLFwMeCjjhcOMAAAD+SURBVDjLtZSvTgNBEIe/WRRnm3U8RC1neQdsm1zSBIU9VVF1FkUguQQsD9ITmD7ECZIJSE4OZo9stoVjC/zc7ky+zH9hXwVwDpTAWWLrgS3QAe8AZgaAJI5zYAmc8r0G4AHYHQKVwII8PZrZFsBFkeRCABYiMh9BRUhnSkPTNCtVXYXURi1FpBDgArj8QU1eVXUzfnjv7yP7kwu1mYrkWlU33vs1QNu2qU8pwN0UpKoqokjWwCztrMuBhEhmh8bD5UDqur75asbcX0BGUB9/HAMB+r32hznJgXy2v0sGLBcyAJ1EK3LFcbo1s91JeLwAbwGYu7TP/3ZGfnXYPgAVNngtqatUNgAAAABJRU5ErkJggg==);
+}
+.comments .comments-content .loadmore a {
+border-top: 1px solid #0354c5;
+border-bottom: 1px solid #0354c5;
+}
+.comments .continue {
+border-top: 2px solid #0354c5;
+}
+/* Widgets
+----------------------------------------------- */
+.widget ul, .widget #ArchiveList ul.flat {
+padding: 0;
+list-style: none;
+}
+.widget ul li, .widget #ArchiveList ul.flat li {
+border-top: dashed 1px #ccc;
+border-top: dashed 1px rgba(128, 128, 128, .5);
+}
+.widget ul li:first-child, .widget #ArchiveList ul.flat li:first-child {
+border-top: none;
+}
+.widget .post-body ul {
+list-style: disc;
+}
+.widget .post-body ul li {
+border: none;
+}
+/* Footer
+----------------------------------------------- */
+.footer-outer {
+color:#eaeaea;
+background: transparent url(http://www.blogblog.com/1kt/transparent/black50.png) repeat scroll top left;
+-moz-border-radius: 10px 10px 10px 10px;
+-webkit-border-top-left-radius: 10px;
+-webkit-border-top-right-radius: 10px;
+-webkit-border-bottom-left-radius: 10px;
+-webkit-border-bottom-right-radius: 10px;
+-goog-ms-border-radius: 10px 10px 10px 10px;
+border-radius: 10px 10px 10px 10px;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+}
+.footer-inner {
+padding: 10px 5px 20px;
+}
+.footer-outer a {
+color: #fff9d5;
+}
+.footer-outer a:visited {
+color: #c7c090;
+}
+.footer-outer a:hover {
+color: #ffffff;
+}
+.footer-outer .widget h2 {
+color: #b5b5b5;
+}
+/* Mobile
+----------------------------------------------- */
+html body.mobile {
+height: auto;
+}
+html body.mobile {
+min-height: 480px;
+background-size: 100% auto;
+}
+.mobile .body-fauxcolumn-outer {
+background: transparent none repeat scroll top left;
+}
+html .mobile .mobile-date-outer, html .mobile .blog-pager {
+border-bottom: none;
+background: transparent none repeat scroll top center;
+margin-bottom: 10px;
+}
+.mobile .date-outer {
+background: transparent none repeat scroll top center;
+}
+.mobile .header-outer, .mobile .main-outer,
+.mobile .post-outer, .mobile .footer-outer {
+-moz-border-radius: 0;
+-webkit-border-radius: 0;
+-goog-ms-border-radius: 0;
+border-radius: 0;
+}
+.mobile .content-outer,
+.mobile .main-outer,
+.mobile .post-outer {
+background: inherit;
+border: none;
+}
+.mobile .content-outer {
+font-size: 100%;
+}
+.mobile-link-button {
+background-color: #0354c5;
+}
+.mobile-link-button a:link, .mobile-link-button a:visited {
+color: #ffffff;
+}
+.mobile-index-contents {
+color: #000000;
+}
+.mobile .tabs-inner .PageList .widget-content {
+background: #ffffff url(http://www.blogblog.com/1kt/transparent/tabs_gradient_shade.png) repeat scroll bottom;
+color: #000000;
+}
+.mobile .tabs-inner .PageList .widget-content .pagelist-arrow {
+border-left: 1px solid #c7c7c7;
+}
+
+--></style>
+<style id='template-skin-1' type='text/css'><!--
+body {
+min-width: 1080px;
+}
+.content-outer, .content-fauxcolumn-outer, .region-inner {
+min-width: 1080px;
+max-width: 1080px;
+_width: 1080px;
+}
+.main-inner .columns {
+padding-left: 0px;
+padding-right: 290px;
+}
+.main-inner .fauxcolumn-center-outer {
+left: 0px;
+right: 290px;
+/* IE6 does not respect left and right together */
+_width: expression(this.parentNode.offsetWidth -
+parseInt("0px") -
+parseInt("290px") + 'px');
+}
+.main-inner .fauxcolumn-left-outer {
+width: 0px;
+}
+.main-inner .fauxcolumn-right-outer {
+width: 290px;
+}
+.main-inner .column-left-outer {
+width: 0px;
+right: 100%;
+margin-left: -0px;
+}
+.main-inner .column-right-outer {
+width: 290px;
+margin-right: -290px;
+}
+#layout {
+min-width: 0;
+}
+#layout .content-outer {
+min-width: 0;
+width: 800px;
+}
+#layout .region-inner {
+min-width: 0;
+width: auto;
+}
+--></style>
+<link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=1838664009445508485&amp;zx=e59bf803-e8da-4166-9a80-954284f27ffd' media='none' onload='if(media!=&#39;all&#39;)media=&#39;all&#39;' rel='stylesheet'/><noscript><link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=1838664009445508485&amp;zx=e59bf803-e8da-4166-9a80-954284f27ffd' rel='stylesheet'/></noscript>
+<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
+<meta name='google-adsense-platform-domain' content='blogspot.com'/>
+
+</head>
+<body class='loading variant-shade'>
+<div class='navbar section' id='navbar'><div class='widget Navbar' data-version='1' id='Navbar1'><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener('load',
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<div id="navbar-iframe-container"></div>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript">
+      gapi.load("gapi.iframes:gapi.iframes.style.bubble", function() {
+        if (gapi.iframes && gapi.iframes.getContext) {
+          gapi.iframes.getContext().openChild({
+              url: 'https://www.blogger.com/navbar.g?targetBlogID\x3d1838664009445508485\x26blogName\x3dCode+Research\x26publishMode\x3dPUBLISH_MODE_HOSTED\x26navbarType\x3dLIGHT\x26layoutType\x3dLAYOUTS\x26searchRoot\x3dhttp://blog.muradovm.com/search\x26blogLocale\x3dru\x26v\x3d2\x26homepageUrl\x3dhttp://blog.muradovm.com/\x26targetPostID\x3d8976228164508096467\x26blogPostOrPageUrl\x3dhttp://blog.muradovm.com/2012/03/solid.html\x26vt\x3d7082035463486311968',
+              where: document.getElementById("navbar-iframe-container"),
+              id: "navbar-iframe"
+          });
+        }
+      });
+    </script><script type="text/javascript">
+(function() {
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = '//pagead2.googlesyndication.com/pagead/js/google_top_exp.js';
+var head = document.getElementsByTagName('head')[0];
+if (head) {
+head.appendChild(script);
+}})();
+</script>
+</div></div>
+<div class='body-fauxcolumns'>
+<div class='fauxcolumn-outer body-fauxcolumn-outer'>
+<div class='cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left'>
+<div class='fauxborder-right'></div>
+<div class='fauxcolumn-inner'>
+</div>
+</div>
+<div class='cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+</div>
+<div class='content'>
+<div class='content-fauxcolumns'>
+<div class='fauxcolumn-outer content-fauxcolumn-outer'>
+<div class='cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left'>
+<div class='fauxborder-right'></div>
+<div class='fauxcolumn-inner'>
+</div>
+</div>
+<div class='cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+</div>
+<div class='content-outer'>
+<div class='content-cap-top cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left content-fauxborder-left'>
+<div class='fauxborder-right content-fauxborder-right'></div>
+<div class='content-inner'>
+<header>
+<div class='header-outer'>
+<div class='header-cap-top cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left header-fauxborder-left'>
+<div class='fauxborder-right header-fauxborder-right'></div>
+<div class='region-inner header-inner'>
+<div class='header section' id='header'><div class='widget Header' data-version='1' id='Header1'>
+<div id='header-inner'>
+<div class='titlewrapper'>
+<h1 class='title'>
+<a href='http://blog.muradovm.com/'>
+Code Research
+</a>
+</h1>
+</div>
+<div class='descriptionwrapper'>
+<p class='description'><span>
+</span></p>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class='header-cap-bottom cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+</header>
+<div class='tabs-outer'>
+<div class='tabs-cap-top cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left tabs-fauxborder-left'>
+<div class='fauxborder-right tabs-fauxborder-right'></div>
+<div class='region-inner tabs-inner'>
+<div class='tabs no-items section' id='crosscol'></div>
+<div class='tabs no-items section' id='crosscol-overflow'></div>
+</div>
+</div>
+<div class='tabs-cap-bottom cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+<div class='main-outer'>
+<div class='main-cap-top cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left main-fauxborder-left'>
+<div class='fauxborder-right main-fauxborder-right'></div>
+<div class='region-inner main-inner'>
+<div class='columns fauxcolumns'>
+<div class='fauxcolumn-outer fauxcolumn-center-outer'>
+<div class='cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left'>
+<div class='fauxborder-right'></div>
+<div class='fauxcolumn-inner'>
+</div>
+</div>
+<div class='cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+<div class='fauxcolumn-outer fauxcolumn-left-outer'>
+<div class='cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left'>
+<div class='fauxborder-right'></div>
+<div class='fauxcolumn-inner'>
+</div>
+</div>
+<div class='cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+<div class='fauxcolumn-outer fauxcolumn-right-outer'>
+<div class='cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left'>
+<div class='fauxborder-right'></div>
+<div class='fauxcolumn-inner'>
+</div>
+</div>
+<div class='cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+<!-- corrects IE6 width calculation -->
+<div class='columns-inner'>
+<div class='column-center-outer'>
+<div class='column-center-inner'>
+<div class='main section' id='main'><div class='widget Blog' data-version='1' id='Blog1'>
+<div class='blog-posts hfeed'>
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>понедельник, 5 марта 2012 г.</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry'>
+<a name='8976228164508096467'></a>
+<h3 class='post-title entry-title'>
+Доступно о SOLID
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content' id='post-body-8976228164508096467'>
+<div dir="ltr" style="text-align: left;" trbidi="on"><div style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><a href="http://1.bp.blogspot.com/-dCzOmq_awW0/Tx_WxUx4U8I/AAAAAAAAALM/MJINkCuvlpo/s1600/solid_brick_3.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://1.bp.blogspot.com/-dCzOmq_awW0/Tx_WxUx4U8I/AAAAAAAAALM/MJINkCuvlpo/s320/solid_brick_3.jpg" width="272" /></a></div><div style="text-align: justify;">Не так давно, около месяца назад, я сделал небольшой доклад, посвященный SOLID, для своих коллег. Объяснить, что это такое оказалось не совсем тривиальным делом. Поэтому, я думаю, многим моя публикация окажется полезной. В этом посте я попытался собрать самые простые и понятные объяснения по каждому принципу.<br />
+<a name='more'></a>Как известно, <a href="http://en.wikipedia.org/wiki/SOLID_(object-oriented_design)" target="_blank">SOLID</a>&nbsp;- это аббревиатура от пяти принципов проектирования, названия которых так удачно зашифровал в этом слове Роберт Мартин.<br />
+Собственно вот эти принципы:<br />
+1. Принцип единственности ответственности<br />
+2. Принцип открытости/закрытости<br />
+3. Принцип подстановки Лисков<br />
+4. Принцип разделения интерфейса<br />
+5. Принцип инверсии зависимостей<br />
+<br />
+Обо всем по порядку.<br />
+<br />
+<span style="font-size: large;"><a href="http://en.wikipedia.org/wiki/Single_responsibility_principle" target="_blank">Принцип единственности ответственности</a></span><br />
+Как показывает практика, самое сложное в этом принципе - запомнить его определение:<br />
+<div style="text-align: center;"><i>"Не должно быть более одной причины для изменения класса"</i></div><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-6vQFf5DoUQE/T1PPkPXrMwI/AAAAAAAAAL4/3Ais8-6FKR4/s1600/SingleResponsibilityPrinciple1.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="226" src="http://4.bp.blogspot.com/-6vQFf5DoUQE/T1PPkPXrMwI/AAAAAAAAAL4/3Ais8-6FKR4/s320/SingleResponsibilityPrinciple1.jpg" width="320" /></a></div><br />
+Нарушение этого принципа хорошо демонстрирует следующий пример:<br />
+<blockquote><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;"></span></code><br />
+<ol><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;">
+<li><span style="color: blue;">class</span> Email</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: #2b91af;">String</span> Theme { <span style="color: blue;">get</span>; <span style="color: blue;">set</span>; }</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: #2b91af;">String</span> From { <span style="color: blue;">get</span>; <span style="color: blue;">set</span>; }</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: #2b91af;">String</span> To { <span style="color: blue;">get</span>; <span style="color: blue;">set</span>; }</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">class</span> EmailSender</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">void</span> Send(Email email)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: green;">// ... sending...</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">Console</span>.WriteLine(<span style="color: #a31515;">"Email from '"</span> + email.From + <span style="color: #a31515;">"' to '"</span> + email.To + <span style="color: #a31515;">"' was send"</span>);</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">class</span> Program</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">static</span> <span style="color: blue;">void</span> Main(<span style="color: blue;">string</span>[] args)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Email e1 = <span style="color: blue;">new</span> Email() { From = <span style="color: #a31515;">"Me"</span>, To = <span style="color: #a31515;">"Vasya"</span>, Theme = <span style="color: #a31515;">"Who are you?"</span> };</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Email e2 = <span style="color: blue;">new</span> Email() { From = <span style="color: #a31515;">"Vasya"</span>, To = <span style="color: #a31515;">"Me"</span>, Theme = <span style="color: #a31515;">"vacuum cleaners!"</span> };</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Email e3 = <span style="color: blue;">new</span> Email() { From = <span style="color: #a31515;">"Kolya"</span>, To = <span style="color: #a31515;">"Vasya"</span>, Theme = <span style="color: #a31515;">"No! Thanks!"</span> };</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Email e4 = <span style="color: blue;">new</span> Email() { From = <span style="color: #a31515;">"Vasya"</span>, To = <span style="color: #a31515;">"Me"</span>, Theme = <span style="color: #a31515;">"washing machines!"</span> };</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Email e5 = <span style="color: blue;">new</span> Email() { From = <span style="color: #a31515;">"Me"</span>, To = <span style="color: #a31515;">"Vasya"</span>, Theme = <span style="color: #a31515;">"Yes"</span> };</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Email e6 = <span style="color: blue;">new</span> Email() { From = <span style="color: #a31515;">"Vasya"</span>, To = <span style="color: #a31515;">"Petya"</span>, Theme = <span style="color: #a31515;">"+2"</span> };</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;EmailSender es = <span style="color: blue;">new</span> EmailSender();</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;es.Send(e1);</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;es.Send(e2);</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;es.Send(e3);</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;es.Send(e4);</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;es.Send(e5);</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;es.Send(e6);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">Console</span>.ReadKey();</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+</span></code></ol><code><span style="color: grey; font-size: xx-small;">* This source code was highlighted with <a href="http://virtser.net/blog/post/source-code-highlighter.aspx"><span style="color: grey; font-size: xx-small;">Source Code Highlighter</span></a>.</span></code></blockquote>Обратите внимание на класс EmailSender. Кроме того, что при помощи метода Send, он отправляет сообщения, он еще и решает как будет вестись лог. В данном примере лог ведется через консоль.<br />
+Если случится так, что нам придется менять способ логирования, то мы будем вынуждены внести правки в класс EmailSender. Хотя, казалось бы, эти правки не касаются отправки сообщений. Очевидно, EmailSender выполняет несколько обязанностей и, чтобы класс не был привязан только к одному способу вести лог, нужно вынести выбор лога из этого класса.<br />
+<blockquote><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;"></span></code><br />
+<ol><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;">
+<li><span style="color: blue;">class</span> EmailSender</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> EmailSender(ILog log)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;_log = log;</li>
+<li>&nbsp;&nbsp;}</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">void</span> Send(Email email)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: green;">// ... sending...</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;_log.Write(<span style="color: #a31515;">"Email from '"</span> + email.From + <span style="color: #a31515;">"' to '"</span> + email.To + <span style="color: #a31515;">"' was send"</span>);</li>
+<li>&nbsp;&nbsp;}</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">private</span> ILog _log;</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">class</span> Program</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">static</span> <span style="color: blue;">void</span> Main(<span style="color: blue;">string</span>[] args)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Email e1 = <span style="color: blue;">new</span> Email() { From = <span style="color: #a31515;">"Me"</span>, To = <span style="color: #a31515;">"Vasya"</span>, Theme = <span style="color: #a31515;">"Who are you?"</span> };</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Email e2 = <span style="color: blue;">new</span> Email() { From = <span style="color: #a31515;">"Vasya"</span>, To = <span style="color: #a31515;">"Me"</span>, Theme = <span style="color: #a31515;">"vacuum cleaners!"</span> };</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Email e3 = <span style="color: blue;">new</span> Email() { From = <span style="color: #a31515;">"Kolya"</span>, To = <span style="color: #a31515;">"Vasya"</span>, Theme = <span style="color: #a31515;">"No! Thanks!"</span> };</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Email e4 = <span style="color: blue;">new</span> Email() { From = <span style="color: #a31515;">"Vasya"</span>, To = <span style="color: #a31515;">"Me"</span>, Theme = <span style="color: #a31515;">"washing machines!"</span> };</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Email e5 = <span style="color: blue;">new</span> Email() { From = <span style="color: #a31515;">"Me"</span>, To = <span style="color: #a31515;">"Vasya"</span>, Theme = <span style="color: #a31515;">"Yes"</span> };</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Email e6 = <span style="color: blue;">new</span> Email() { From = <span style="color: #a31515;">"Vasya"</span>, To = <span style="color: #a31515;">"Petya"</span>, Theme = <span style="color: #a31515;">"+2"</span> };</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;EmailSender es = <span style="color: blue;">new</span> EmailSender(<span style="color: blue;">new</span> ConsoleLog());</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;es.Send(e1);</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;es.Send(e2);</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;es.Send(e3);</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;es.Send(e4);</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;es.Send(e5);</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;es.Send(e6);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">Console</span>.ReadKey();</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">public</span> <span style="color: blue;">interface</span> ILog</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">void</span> Write(<span style="color: #2b91af;">String</span> str);</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">public</span> <span style="color: blue;">class</span> ConsoleLog: ILog</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">void</span> Write(<span style="color: blue;">string</span> str)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">Console</span>.WriteLine(str);</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+</span></code></ol><code><span style="color: grey; font-size: xx-small;">* This source code was highlighted with <a href="http://virtser.net/blog/post/source-code-highlighter.aspx"><span style="color: grey; font-size: xx-small;">Source Code Highlighter</span></a>.</span></code></blockquote>Теперь, чтобы сменить способ логирования, нужно отправить нужный экземпляр типа ILog в конструктор EmailSender.<br />
+<br />
+<span style="font-size: large;"><a href="http://en.wikipedia.org/wiki/Open/closed_principle" target="_blank">Принцип открытости/закрытости</a></span><br />
+<div style="text-align: center;"><i>"Ваши классы должны быть отрытыми для расширения и закрыты для модификации"</i></div><div style="text-align: center;"><br />
+</div><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-OxsAc0l9TT8/T1PQdHFoFKI/AAAAAAAAAMA/dr_h5JlNWuY/s1600/OpenClosedPrinciple.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="212" src="http://4.bp.blogspot.com/-OxsAc0l9TT8/T1PQdHFoFKI/AAAAAAAAAMA/dr_h5JlNWuY/s320/OpenClosedPrinciple.jpg" width="320" /></a></div><br />
+Выгода от использования такой практики очевидна. Не нужно пересматривать уже существующий код, не нужно менять уже готовые для него тесты.<br />
+Если нужно ввести какую-то дополнительную функциональность, то это не должно коснуться уже существующих классов или как-либо иначе повредить уже существующую функциональность.<br />
+Рассмотрим на примере:<br />
+<blockquote><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;"></span></code><br />
+<ol><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;">
+<li><span style="color: blue;">public</span> <span style="color: blue;">class</span> Report</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">uint</span> Total;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: #2b91af;">String</span> Name;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: #2b91af;">DateTime</span> CreateDate;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">override</span> <span style="color: blue;">string</span> ToString()</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">return</span> <span style="color: #a31515;">"Name: "</span> + Name + <span style="color: #a31515;">"\t"</span> +</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #a31515;">"Created: "</span> + CreateDate.ToLongDateString() + <span style="color: #a31515;">"\t"</span> +</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #a31515;">"Total: "</span> + Total;</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">class</span> ReportProcessor</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: #2b91af;">List</span>&lt;Report&gt; _reports;</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> ReportProcessor()</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;_reports = <span style="color: blue;">new</span> <span style="color: #2b91af;">List</span>&lt;Report&gt;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">new</span> Report { Total = 100, Name = <span style="color: #a31515;">"Average"</span>, CreateDate = <span style="color: #2b91af;">DateTime</span>.Now },</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">new</span> Report { Total = 120, Name = <span style="color: #a31515;">"Sum"</span>, CreateDate = <span style="color: #2b91af;">DateTime</span>.Now.AddDays(-1) },</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">new</span> Report { Total = 130, Name = <span style="color: #a31515;">"Average"</span>, CreateDate = <span style="color: #2b91af;">DateTime</span>.Now.AddDays(-2) },</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">new</span> Report { Total = 90, Name = <span style="color: #a31515;">"Average"</span>, CreateDate = <span style="color: #2b91af;">DateTime</span>.Now.AddDays(-3) },</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">new</span> Report { Total = 100, Name = <span style="color: #a31515;">"Sum"</span>, CreateDate = <span style="color: #2b91af;">DateTime</span>.Now.AddDays(-4) },</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">new</span> Report { Total = 110, Name = <span style="color: #a31515;">"Sum"</span>, CreateDate = <span style="color: #2b91af;">DateTime</span>.Now.AddDays(-2) },</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">new</span> Report { Total = 170, Name = <span style="color: #a31515;">"Average"</span>, CreateDate = <span style="color: #2b91af;">DateTime</span>.Now.AddDays(-1) },</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">new</span> Report { Total = 130, Name = <span style="color: #a31515;">"Sum"</span>, CreateDate = <span style="color: #2b91af;">DateTime</span>.Now.AddDays(-4) },</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">new</span> Report { Total = 120, Name = <span style="color: #a31515;">"Average"</span>, CreateDate = <span style="color: #2b91af;">DateTime</span>.Now.AddDays(-3) },</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">new</span> Report { Total = 180, Name = <span style="color: #a31515;">"Sum"</span>, CreateDate = <span style="color: #2b91af;">DateTime</span>.Now.AddDays(-7) }</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;};</li>
+<li>&nbsp;&nbsp;}</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: #2b91af;">List</span>&lt;Report&gt; GetByName(<span style="color: #2b91af;">String</span> name)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">List</span>&lt;Report&gt; rs = <span style="color: blue;">new</span> <span style="color: #2b91af;">List</span>&lt;Report&gt;();</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">foreach</span> (Report r <span style="color: blue;">in</span> _reports)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">if</span> (r.Name == name)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rs.Add(r);</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">return</span> rs;</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">class</span> Program</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">static</span> <span style="color: blue;">void</span> Main(<span style="color: blue;">string</span>[] args)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;ReportProcessor rp = <span style="color: blue;">new</span> ReportProcessor();</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">foreach</span> (Report r <span style="color: blue;">in</span> rp.GetByName(<span style="color: #a31515;">"Sum"</span>))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">Console</span>.WriteLine(r);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">Console</span>.ReadKey();</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+</span></code></ol><code><span style="color: grey; font-size: xx-small;">* This source code was highlighted with <a href="http://virtser.net/blog/post/source-code-highlighter.aspx"><span style="color: grey; font-size: xx-small;">Source Code Highlighter</span></a>.</span></code></blockquote>Есть какой-то набор отчетов, которые класс ReportProcessor может предоставить. В данном случае программа выведет на экран отчеты с названием Sum. Как вы поступите, если вам нужно будет выбирать отчеты еще и по итоговому полю? Наверняка первая мысль, это добавить такой вот метод в класс ReportProcessor<br />
+<blockquote><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;"></span></code><br />
+<ol><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;">
+<li><span style="color: blue;">public</span> <span style="color: #2b91af;">List</span>&lt;Report&gt; GetByTotal(<span style="color: blue;">uint</span> total)</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: #2b91af;">List</span>&lt;Report&gt; rs = <span style="color: blue;">new</span> <span style="color: #2b91af;">List</span>&lt;Report&gt;();</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">foreach</span> (Report r <span style="color: blue;">in</span> _reports)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">if</span> (r.Total == total)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rs.Add(r);</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">return</span> rs;</li>
+<li>}</li>
+</span></code></ol><code><span style="color: grey; font-size: xx-small;">* This source code was highlighted with <a href="http://virtser.net/blog/post/source-code-highlighter.aspx"><span style="color: grey; font-size: xx-small;">Source Code Highlighter</span></a>.</span></code></blockquote>И так при каждом добавлении новых требований?&nbsp;Если требований по фильтрации будет очень много, то нам придется добавить очень много новых методов в этот класс.<br />
+Кажется, что все-таки ничего плохого в этом все равно нет. Но добавление новых методов в класс это всегда потенциальная опасность. Ведь если класс уже реализует какую-то функциональность, то его исправление может нанести вред уже достигнутому.<br />
+Конкретно для нашего примера, чтобы избежать этих потенциальных ошибок, очень удобно использовать <a href="http://en.wikipedia.org/wiki/Specification_pattern" target="_blank">шаблон Спецификация</a>.<br />
+<blockquote><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;"></span></code><br />
+<ol><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;">
+<li><span style="color: blue;">class</span> ReportProcessor</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: green;">/// ...</span></li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: #2b91af;">List</span>&lt;Report&gt; GetReports(ISpecification spec)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">List</span>&lt;Report&gt; rs = <span style="color: blue;">new</span> <span style="color: #2b91af;">List</span>&lt;Report&gt;();</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">foreach</span> (Report r <span style="color: blue;">in</span> _reports)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">if</span> (spec.IsSatisfied(r))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rs.Add(r);</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">return</span> rs;</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">class</span> Program</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">static</span> <span style="color: blue;">void</span> Main(<span style="color: blue;">string</span>[] args)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;ReportProcessor rp = <span style="color: blue;">new</span> ReportProcessor();</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">foreach</span> (Report r <span style="color: blue;">in</span> rp.GetReports(<span style="color: blue;">new</span> NameSpecification(<span style="color: #a31515;">"Sum"</span>)))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">Console</span>.WriteLine(r);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">Console</span>.ReadKey();</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+</span></code></ol><code><span style="color: grey; font-size: xx-small;">* This source code was highlighted with <a href="http://virtser.net/blog/post/source-code-highlighter.aspx"><span style="color: grey; font-size: xx-small;">Source Code Highlighter</span></a>.</span></code></blockquote>Теперь при помощи комбинирования спецификаций фильтра, можно получить разный набор &nbsp;отчетов. Если нужно будет фильтровать каким-то иным образом, то нужно будет создать тип спецификации и использовать его в вызывающем коде.<br />
+Код самих спецификаций конкретно для нашего примера выглядит следующим образом<br />
+<blockquote><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;"></span></code><br />
+<ol><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;">
+<li><span style="color: blue;">public</span> <span style="color: blue;">interface</span> ISpecification</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">bool</span> IsSatisfied(Report r);</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">public</span> <span style="color: blue;">abstract</span> <span style="color: blue;">class</span> CompositeSpecification: ISpecification</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> ISpecification And(ISpecification spec)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">return</span> <span style="color: blue;">new</span> AndSpecification(<span style="color: blue;">this</span>, spec);</li>
+<li>&nbsp;&nbsp;}</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> ISpecification Or(ISpecification spec)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">return</span> <span style="color: blue;">new</span> OrSpecification(<span style="color: blue;">this</span>, spec);</li>
+<li>&nbsp;&nbsp;}</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> ISpecification Not(ISpecification spec)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">return</span> <span style="color: blue;">new</span> NotSpecification(<span style="color: blue;">this</span>);</li>
+<li>&nbsp;&nbsp;}</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">abstract</span> <span style="color: blue;">bool</span> IsSatisfied(Report r);</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">public</span> <span style="color: blue;">class</span> AndSpecification: ISpecification</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">private</span> ISpecification _spec1;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">private</span> ISpecification _spec2;</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> AndSpecification(ISpecification spec1, ISpecification spec2)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;_spec1 = spec1;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;_spec2 = spec2;</li>
+<li>&nbsp;&nbsp;}</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">bool</span> IsSatisfied(Report r)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">return</span> _spec1.IsSatisfied(r) &amp;&amp; _spec2.IsSatisfied(r);</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">public</span> <span style="color: blue;">class</span> OrSpecification: ISpecification</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">private</span> ISpecification _spec1;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">private</span> ISpecification _spec2;</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> OrSpecification(ISpecification spec1, ISpecification spec2)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;_spec1 = spec1;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;_spec2 = spec2;</li>
+<li>&nbsp;&nbsp;}</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">bool</span> IsSatisfied(Report r)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">return</span> _spec1.IsSatisfied(r) || _spec2.IsSatisfied(r);</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">public</span> <span style="color: blue;">class</span> NotSpecification: ISpecification</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">private</span> ISpecification _spec;</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> NotSpecification(ISpecification spec)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;_spec = spec;</li>
+<li>&nbsp;&nbsp;}</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">bool</span> IsSatisfied(Report r)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">return</span> !_spec.IsSatisfied(r);</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">public</span> <span style="color: blue;">class</span> NameSpecification: CompositeSpecification</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">private</span> <span style="color: #2b91af;">String</span> _name;</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> NameSpecification(<span style="color: #2b91af;">String</span> name)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;_name = name;</li>
+<li>&nbsp;&nbsp;}</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">override</span> <span style="color: blue;">bool</span> IsSatisfied(Report r)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">return</span> r.Name == _name;</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">public</span> <span style="color: blue;">class</span> TotalGreaterSpecification : CompositeSpecification</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">private</span> <span style="color: blue;">double</span> _total;</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> TotalGreaterSpecification(<span style="color: blue;">double</span> total)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;_total = total;</li>
+<li>&nbsp;&nbsp;}</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">override</span> <span style="color: blue;">bool</span> IsSatisfied(Report r)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">return</span> r.Total &gt; _total;</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+</span></code></ol><code><span style="color: grey; font-size: xx-small;">* This source code was highlighted with <a href="http://virtser.net/blog/post/source-code-highlighter.aspx"><span style="color: grey; font-size: xx-small;">Source Code Highlighter</span></a>.</span></code></blockquote>Выберем все отчеты Sum, в которых значение поля итого более 100.<br />
+<blockquote><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;"></span></code><br />
+<ol><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;">
+<li><span style="color: blue;">class</span> Program</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">static</span> <span style="color: blue;">void</span> Main(<span style="color: blue;">string</span>[] args)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;ReportProcessor rp = <span style="color: blue;">new</span> ReportProcessor();</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">foreach</span> (<span style="color: blue;">var</span> r <span style="color: blue;">in</span> rp.GetReports(<span style="color: blue;">new</span> NameSpecification(<span style="color: #a31515;">"Sum"</span>)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.And(<span style="color: blue;">new</span> TotalGreaterSpecification(100))))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">Console</span>.WriteLine(r);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">Console</span>.ReadKey();</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+</span></code></ol><code><span style="color: grey; font-size: xx-small;">* This source code was highlighted with <a href="http://virtser.net/blog/post/source-code-highlighter.aspx"><span style="color: grey; font-size: xx-small;">Source Code Highlighter</span></a>.</span></code></blockquote>Таким образом, новые требования фильтрации не приводят к правкам в классе ReportProcessor.<br />
+<br />
+<span style="font-size: large;"><a href="http://en.wikipedia.org/wiki/Liskov_substitution_principle" target="_blank">Принцип замещения Лисков</a></span><br />
+Следовать этому принципу очень важно при проектировании новых типов с использованием наследования.<br />
+<div style="text-align: center;"><i>"<span style="background-color: white; color: #333333; font-family: Calibri, sans-serif; font-size: 12pt; line-height: 115%; text-align: justify;">Функции, которые используют ссылки на базовые классы, должны иметь возможность использовать объекты производных классов, не зная об этом</span>"</i></div><br />
+<div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-giqavEqnZIE/T1PaGGcpIMI/AAAAAAAAAMI/HSJd7dcARak/s1600/liskovabstraction.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="228" src="http://4.bp.blogspot.com/-giqavEqnZIE/T1PaGGcpIMI/AAAAAAAAAMI/HSJd7dcARak/s320/liskovabstraction.png" width="320" /></a></div><br />
+Этот принцип предупреждает разработчика о том, что изменение унаследованного производным типом поведения очень рискованно.<br />
+Нарушение этого принципа очень наглядно демонстрирует следующий пример<br />
+<blockquote><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;"></span></code><br />
+<ol><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;">
+<li><span style="color: blue;">class</span> Rectangle</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">virtual</span> <span style="color: blue;">int</span> Width { <span style="color: blue;">get</span>; <span style="color: blue;">set</span>; }</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">virtual</span> <span style="color: blue;">int</span> Height { <span style="color: blue;">get</span>; <span style="color: blue;">set</span>; }</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">int</span> GetRectangleArea()</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">return</span> Width * Height;</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">class</span> Square: Rectangle</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">override</span> <span style="color: blue;">int</span> Width</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">get</span> { <span style="color: blue;">return</span> <span style="color: blue;">base</span>.Width; }</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">set</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">base</span>.Height = <span style="color: blue;">value</span>;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">base</span>.Width = <span style="color: blue;">value</span>;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;}</li>
+<li>&nbsp;&nbsp;}</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">public</span> <span style="color: blue;">override</span> <span style="color: blue;">int</span> Height</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">get</span> { <span style="color: blue;">return</span> <span style="color: blue;">base</span>.Height; }</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">set</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">base</span>.Height = <span style="color: blue;">value</span>;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">base</span>.Width = <span style="color: blue;">value</span>;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;}</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+</span></code></ol><code><span style="color: grey; font-size: xx-small;">* This source code was highlighted with <a href="http://virtser.net/blog/post/source-code-highlighter.aspx"><span style="color: grey; font-size: xx-small;">Source Code Highlighter</span></a>.</span></code></blockquote>Есть класс прямоугольника и класс квадрата. Как подсказывает здравый смысл, класс квадрата просто наследуется от класса прямоугольника с той лишь разницей, что поддерживает ширину и высоту эквивалентными. Кажется все в порядке.<br />
+<blockquote><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;"></span></code><br />
+<ol><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;">
+<li><span style="color: blue;">class</span> Program</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">static</span> <span style="color: blue;">void</span> Main(<span style="color: blue;">string</span>[] args)</li>
+<li>&nbsp;&nbsp;{</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Rectangle rect = <span style="color: blue;">new</span> Square();</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;rect.Width = 3;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;rect.Height = 10;</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">Console</span>.WriteLine(rect.GetRectangleArea());</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #2b91af;">Console</span>.ReadKey();</li>
+<li>&nbsp;&nbsp;}</li>
+<li>}</li>
+</span></code></ol><code><span style="color: grey; font-size: xx-small;">* This source code was highlighted with <a href="http://virtser.net/blog/post/source-code-highlighter.aspx"><span style="color: grey; font-size: xx-small;">Source Code Highlighter</span></a>.</span></code></blockquote>Такой код как ни странно выведет в консоль 100 вместо 30. Ладно, здесь мы видим, что создан был все таки квадрат, а затем использован в качестве прямоугольника. А если использование объекта класса Rectangle будет совсем не в том месте, где объект был создан? Скажем, пропущенный через несколько вызовов нескольких классов?<br />
+Очевидно, что не стоило наследовать класс прямоугольника от класса квадрата. Выход из такой ситуации только один - отказаться от наследования. Варианта исправить ситуацию в целом два:<br />
+1. Rectange и Square будут совсем разными типами<br />
+2. Square агрегирует объект типа Rectangle.<br />
+Какой вариант выбрать, это на совести разработчика. Но ясно одно - с переопределением поведения базового типа нужно быть очень аккуратным. Иначе использование проектируемого типа в качестве базового принесет очень много бед.<br />
+<br />
+<span style="font-size: large;"><a href="http://en.wikipedia.org/wiki/Interface_segregation_principle" target="_blank">Принцип разделения интерфейсов</a></span><br />
+Использование этого принципа рекомендуется очень многими заслуженными авторитетами по разработке ПО уже давно. Тот же Мейер в своей книге "50 советов по улучщению кода и архитектуры ваших систем" ревностно призывает пользоваться указанной практикой.<br />
+<div class="separator" style="clear: both; text-align: center;"><a href="http://2.bp.blogspot.com/-v2X9-6tp89I/T1PfqhJRktI/AAAAAAAAAMQ/2-lgiA8VI6g/s1600/ISp.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="217" src="http://2.bp.blogspot.com/-v2X9-6tp89I/T1PfqhJRktI/AAAAAAAAAMQ/2-lgiA8VI6g/s320/ISp.jpg" width="320" /></a></div><div style="text-align: center;"><br />
+</div>При проектировании типов нужно придерживаться минимализма в интерфейсах. Слишком толстые интерфейсы нужно разделять. Если не все методы необходимы для использования типа, то это первый звонок того, что данный принцип не выполняется.<br />
+Рассмотрим на примере<br />
+<blockquote><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;"></span></code><br />
+<ol><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;">
+<li><span style="color: blue;">public</span> <span style="color: blue;">interface</span> ICustomList&lt;T&gt; : <span style="color: #2b91af;">IEnumerable</span>&lt;T&gt;</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">void</span> Insert(<span style="color: blue;">int</span> index, T item);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">void</span> RemoveAt(<span style="color: blue;">int</span> index);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;T <span style="color: blue;">this</span>[<span style="color: blue;">int</span> index] { <span style="color: blue;">set</span>; }</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">void</span> Add(T item);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">void</span> Clear();</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">bool</span> Remove(T item);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">int</span> IndexOf(T item);</li>
+<li>&nbsp;&nbsp;</li>
+<li>&nbsp;&nbsp;T <span style="color: blue;">this</span>[<span style="color: blue;">int</span> index] { <span style="color: blue;">get</span>; }</li>
+<li>&nbsp;&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">bool</span> Contains(T item);</li>
+<li>&nbsp;&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">int</span> Count { <span style="color: blue;">get</span>; }</li>
+<li>&nbsp;&nbsp;</li>
+<li>&nbsp;&nbsp;IEnumerator&lt;T&gt; GetEnumerator();</li>
+<li>}</li>
+</span></code></ol><code><span style="color: grey; font-size: xx-small;">* This source code was highlighted with <a href="http://virtser.net/blog/post/source-code-highlighter.aspx"><span style="color: grey; font-size: xx-small;">Source Code Highlighter</span></a>.</span></code></blockquote>Вы хотите сделать какой-то класс реализующий данный интерфейс. Класс будет представлять из себя список с возможностью добавления, удаления элементов и т.д.<br />
+Однако, при использовании объектов этого типа вы можете столкнуться с проблемой. Любой объект, который получит такой список может "редактировать" его. В определенных сценариях это может оказаться нежелательным. Для того, чтобы предостеречь подобное использование списка, следует разделить интерфейс ICustomList на два: полный и только для чтения.<br />
+<blockquote><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;"></span></code><br />
+<ol><code><span style="color: black; font-family: 'Courier New'; font-size: 10pt;">
+<li><span style="color: blue;">public</span> <span style="color: blue;">interface</span> ICustomEnumerable&lt;T&gt;: <span style="color: #2b91af;">IEnumerable</span>&lt;T&gt;</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">int</span> IndexOf(T item);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;T <span style="color: blue;">this</span>[<span style="color: blue;">int</span> index] { <span style="color: blue;">get</span>; }</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">bool</span> Contains(T item);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">int</span> Count { <span style="color: blue;">get</span>; }</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;IEnumerator&lt;T&gt; GetEnumerator();</li>
+<li>}</li>
+<li>&nbsp;</li>
+<li><span style="color: blue;">public</span> <span style="color: blue;">interface</span> ICustomList&lt;T&gt; : ICustomEnumerable&lt;T&gt;</li>
+<li>{</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">void</span> Insert(<span style="color: blue;">int</span> index, T item);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">void</span> RemoveAt(<span style="color: blue;">int</span> index);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;T <span style="color: blue;">this</span>[<span style="color: blue;">int</span> index] { <span style="color: blue;">set</span>; }</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">void</span> Add(T item);</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">void</span> Clear();</li>
+<li>&nbsp;</li>
+<li>&nbsp;&nbsp;<span style="color: blue;">bool</span> Remove(T item);</li>
+<li>}</li>
+</span></code></ol><code><span style="color: grey; font-size: xx-small;">* This source code was highlighted with <a href="http://virtser.net/blog/post/source-code-highlighter.aspx"><span style="color: grey; font-size: xx-small;">Source Code Highlighter</span></a>.</span></code></blockquote>Такой прием позволит ограничить использование списков. Если какому-либо классу нежелательно "редактировать" список, то вместо ICustomList следует передавать ICustomEnumerable.<br />
+<br />
+<span style="font-size: large;"><a href="http://muradovm.blogspot.com/2012/01/blog-post.html" target="_blank">Принцип инверсии зависимости</a></span><br />
+Этот принцип я описал в своем блоге ранее. Нет смысла повторяться. Чтобы ознакомиться с ним перейдите <a href="http://muradovm.blogspot.com/2012/01/blog-post.html" target="_blank">сюда</a>.<br />
+<br />
+<span style="font-size: large;">Благодарности</span><br />
+Придумать что-то новое - не было целью моего доклада. В первую очередь я ориентировался на доступность и понятность материала. Поэтому при составлении доклада, я использовал много источников. Какие-то мысли были взяты из других блогов частично или полностью.<br />
+Я хочу выразить благодарность Александру Бындю за его <a href="http://blog.byndyu.ru/2009/10/solid.html" target="_blank">серию постов</a>&nbsp;о SOLID, а также автору вот <a href="http://igor.quatrocode.com/2008/09/solid-top-5.html" target="_blank">этого</a> блога за очень хорошие примеры кода.<br />
+<br />
+PS По поводу Принципа подстановки Лисков недавно была очень интересная дискуссия. Ознакомиться с разными мнениями и позициями можно по следующим ссылкам<br />
+<a href="http://blog.byndyu.ru/2009/10/blog-post_29.html" target="_blank">Блог Александра Бындю - Принцип замещения Лисков</a><br />
+<a href="http://blog.byndyu.ru/2012/02/lsp.html" target="_blank">Блог Александра Бындю - Дополнение к LSP</a><br />
+<a href="http://sergeyteplyakov.blogspot.com/2012/02/lsp.html" target="_blank">Блог Сергея Теплякова - Принцип замещения Лисков и контракты</a></div></div>
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'><span class='post-author vcard'>
+Автор:
+<span class='fn'>Мурадов Мурад</span>
+</span>
+<span class='post-timestamp'>
+на
+<a class='timestamp-link' href='http://blog.muradovm.com/2012/03/solid.html' rel='bookmark' title='permanent link'><abbr class='published' title='2012-03-05T04:09:00+06:00'>04:09</abbr></a>
+</span>
+<span class='post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-control blog-admin pid-661418159'>
+<a href='https://www.blogger.com/post-edit.g?blogID=1838664009445508485&postID=8976228164508096467&from=pencil' title='Изменить сообщение'>
+<img alt='' class='icon-action' height='18' src='https://resources.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+<div class='post-share-buttons goog-inline-block'>
+<a class='goog-inline-block share-button sb-email' href='https://www.blogger.com/share-post.g?blogID=1838664009445508485&postID=8976228164508096467&target=email' target='_blank' title='Отправить по электронной почте'><span class='share-button-link-text'>Отправить по электронной почте</span></a><a class='goog-inline-block share-button sb-blog' href='https://www.blogger.com/share-post.g?blogID=1838664009445508485&postID=8976228164508096467&target=blog' onclick='window.open(this.href, "_blank", "height=270,width=475"); return false;' target='_blank' title='Написать об этом в блоге'><span class='share-button-link-text'>Написать об этом в блоге</span></a><a class='goog-inline-block share-button sb-twitter' href='https://www.blogger.com/share-post.g?blogID=1838664009445508485&postID=8976228164508096467&target=twitter' target='_blank' title='Опубликовать в Twitter'><span class='share-button-link-text'>Опубликовать в Twitter</span></a><a class='goog-inline-block share-button sb-facebook' href='https://www.blogger.com/share-post.g?blogID=1838664009445508485&postID=8976228164508096467&target=facebook' onclick='window.open(this.href, "_blank", "height=430,width=640"); return false;' target='_blank' title='Опубликовать в Facebook'><span class='share-button-link-text'>Опубликовать в Facebook</span></a><a class='goog-inline-block share-button sb-pinterest' href='https://www.blogger.com/share-post.g?blogID=1838664009445508485&postID=8976228164508096467&target=pinterest' target='_blank' title='Поделиться в Pinterest'><span class='share-button-link-text'>Поделиться в Pinterest</span></a>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'><span class='post-labels'>
+Ярлыки:
+<a href='http://blog.muradovm.com/search/label/%D0%B0%D1%80%D1%85%D0%B8%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D0%B0' rel='tag'>архитектура</a>,
+<a href='http://blog.muradovm.com/search/label/%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD' rel='tag'>дизайн</a>,
+<a href='http://blog.muradovm.com/search/label/%D1%81%D0%BF%D0%B5%D1%86%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F' rel='tag'>спецификация</a>,
+<a href='http://blog.muradovm.com/search/label/ISP' rel='tag'>ISP</a>,
+<a href='http://blog.muradovm.com/search/label/LSP' rel='tag'>LSP</a>,
+<a href='http://blog.muradovm.com/search/label/OCP' rel='tag'>OCP</a>,
+<a href='http://blog.muradovm.com/search/label/SOLID' rel='tag'>SOLID</a>,
+<a href='http://blog.muradovm.com/search/label/SRP' rel='tag'>SRP</a>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-3'><span class='post-location'>
+</span>
+</div>
+</div>
+</div>
+<div class='comments' id='comments'>
+<a name='comments'></a>
+<h4>14 комментариев:</h4>
+<div class='comments-content'>
+<script async='async' src='' type='text/javascript'></script>
+<script type='text/javascript'>
+    (function() {
+      var items = null;
+      var msgs = null;
+      var config = {};
+
+// <![CDATA[
+      var cursor = null;
+      if (items && items.length > 0) {
+        cursor = parseInt(items[items.length - 1].timestamp) + 1;
+      }
+
+      var bodyFromEntry = function(entry) {
+        var text = (entry &&
+                    ((entry.content && entry.content.$t) ||
+                     (entry.summary && entry.summary.$t))) ||
+            '';
+        if (entry && entry.gd$extendedProperty) {
+          for (var k in entry.gd$extendedProperty) {
+            if (entry.gd$extendedProperty[k].name == 'blogger.contentRemoved') {
+              return '<span class="deleted-comment">' + text + '</span>';
+            }
+          }
+        }
+        return text;
+      }
+
+      var parse = function(data) {
+        cursor = null;
+        var comments = [];
+        if (data && data.feed && data.feed.entry) {
+          for (var i = 0, entry; entry = data.feed.entry[i]; i++) {
+            var comment = {};
+            // comment ID, parsed out of the original id format
+            var id = /blog-(\d+).post-(\d+)/.exec(entry.id.$t);
+            comment.id = id ? id[2] : null;
+            comment.body = bodyFromEntry(entry);
+            comment.timestamp = Date.parse(entry.published.$t) + '';
+            if (entry.author && entry.author.constructor === Array) {
+              var auth = entry.author[0];
+              if (auth) {
+                comment.author = {
+                  name: (auth.name ? auth.name.$t : undefined),
+                  profileUrl: (auth.uri ? auth.uri.$t : undefined),
+                  avatarUrl: (auth.gd$image ? auth.gd$image.src : undefined)
+                };
+              }
+            }
+            if (entry.link) {
+              if (entry.link[2]) {
+                comment.link = comment.permalink = entry.link[2].href;
+              }
+              if (entry.link[3]) {
+                var pid = /.*comments\/default\/(\d+)\?.*/.exec(entry.link[3].href);
+                if (pid && pid[1]) {
+                  comment.parentId = pid[1];
+                }
+              }
+            }
+            comment.deleteclass = 'item-control blog-admin';
+            if (entry.gd$extendedProperty) {
+              for (var k in entry.gd$extendedProperty) {
+                if (entry.gd$extendedProperty[k].name == 'blogger.itemClass') {
+                  comment.deleteclass += ' ' + entry.gd$extendedProperty[k].value;
+                } else if (entry.gd$extendedProperty[k].name == 'blogger.displayTime') {
+                  comment.displayTime = entry.gd$extendedProperty[k].value;
+                }
+              }
+            }
+            comments.push(comment);
+          }
+        }
+        return comments;
+      };
+
+      var paginator = function(callback) {
+        if (hasMore()) {
+          var url = config.feed + '?alt=json&v=2&orderby=published&reverse=false&max-results=50';
+          if (cursor) {
+            url += '&published-min=' + new Date(cursor).toISOString();
+          }
+          window.bloggercomments = function(data) {
+            var parsed = parse(data);
+            cursor = parsed.length < 50 ? null
+                : parseInt(parsed[parsed.length - 1].timestamp) + 1
+            callback(parsed);
+            window.bloggercomments = null;
+          }
+          url += '&callback=bloggercomments';
+          var script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.src = url;
+          document.getElementsByTagName('head')[0].appendChild(script);
+        }
+      };
+      var hasMore = function() {
+        return !!cursor;
+      };
+      var getMeta = function(key, comment) {
+        if ('iswriter' == key) {
+          var matches = !!comment.author
+              && comment.author.name == config.authorName
+              && comment.author.profileUrl == config.authorUrl;
+          return matches ? 'true' : '';
+        } else if ('deletelink' == key) {
+          return config.baseUri + '/delete-comment.g?blogID='
+               + config.blogId + '&postID=' + comment.id;
+        } else if ('deleteclass' == key) {
+          return comment.deleteclass;
+        }
+        return '';
+      };
+
+      var replybox = null;
+      var replyUrlParts = null;
+      var replyParent = undefined;
+
+      var onReply = function(commentId, domId) {
+        if (replybox == null) {
+          // lazily cache replybox, and adjust to suit this style:
+          replybox = document.getElementById('comment-editor');
+          if (replybox != null) {
+            replybox.height = '250px';
+            replybox.style.display = 'block';
+            replyUrlParts = replybox.src.split('#');
+          }
+        }
+        if (replybox && (commentId !== replyParent)) {
+          replybox.src = '';
+          document.getElementById(domId).insertBefore(replybox, null);
+          replybox.src = replyUrlParts[0]
+              + (commentId ? '&parentID=' + commentId : '')
+              + '#' + replyUrlParts[1];
+          replyParent = commentId;
+        }
+      };
+
+      var hash = (window.location.hash || '#').substring(1);
+      var startThread, targetComment;
+      if (/^comment-form_/.test(hash)) {
+        startThread = hash.substring('comment-form_'.length);
+      } else if (/^c[0-9]+$/.test(hash)) {
+        targetComment = hash.substring(1);
+      }
+
+      // Configure commenting API:
+      var configJso = {
+        'maxDepth': config.maxThreadDepth
+      };
+      var provider = {
+        'id': config.postId,
+        'data': items,
+        'loadNext': paginator,
+        'hasMore': hasMore,
+        'getMeta': getMeta,
+        'onReply': onReply,
+        'rendered': true,
+        'initComment': targetComment,
+        'initReplyThread': startThread,
+        'config': configJso,
+        'messages': msgs
+      };
+
+      var render = function() {
+        if (window.goog && window.goog.comments) {
+          var holder = document.getElementById('comment-holder');
+          window.goog.comments.render(holder, provider);
+        }
+      };
+
+      // render now, or queue to render when library loads:
+      if (window.goog && window.goog.comments) {
+        render();
+      } else {
+        window.goog = window.goog || {};
+        window.goog.comments = window.goog.comments || {};
+        window.goog.comments.loadQueue = window.goog.comments.loadQueue || [];
+        window.goog.comments.loadQueue.push(render);
+      }
+    })();
+// ]]>
+  </script>
+<div id='comment-holder'>
+<div class="comment-thread toplevel-thread"><ol id="top-ra"><li class="comment" id="c1793769684942988028"><div class="avatar-image-container"><img src="//www.blogger.com/img/blogger_logo_round_35.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/03514899372537911566" rel="nofollow">Артем Мурадов</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1330925787482#c1793769684942988028">5 марта 2012 г., 11:36</a></span></div><p class="comment-content">Класс. Доступно и понятно. И картинка шикарная по поводу открытости/закрытости :)</p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="1793769684942988028">Ответить</a><span class="item-control blog-admin blog-admin pid-983593758"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=1793769684942988028">Удалить</a></span></span></div><div class="comment-replies"><div id="c1793769684942988028-rt" class="comment-thread inline-thread"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c1793769684942988028-ra" class="thread-chrome thread-expanded"><div><li class="comment" id="c8890505787904516740"><div class="avatar-image-container"><img src="//3.bp.blogspot.com/-ViLcO0QoOUk/ThFkvXj6PnI/AAAAAAAAABc/kdWhGO8la8s/s35/avatar.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/06611052686208052951" rel="nofollow">Мурадов Мурад</a></cite><span class="icon user blog-author"></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1330927295742#c8890505787904516740">5 марта 2012 г., 12:01</a></span></div><p class="comment-content">Спасибо. Коллегам тоже эта картинка очень понравилась.</p><span class="comment-actions secondary-text"><span class="item-control blog-admin blog-admin pid-661418159"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=8890505787904516740">Удалить</a></span></span></div><div class="comment-replies"><div id="c8890505787904516740-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c8890505787904516740-ra" class="thread-chrome thread-expanded"><div></div><div id="c8890505787904516740-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="8890505787904516740">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c8890505787904516740-ce"></div></li></div><div id="c1793769684942988028-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="1793769684942988028">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c1793769684942988028-ce"></div></li><li class="comment" id="c5512760809158291467"><div class="avatar-image-container"><img src="//www.blogger.com/img/blogger_logo_round_35.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/00368111825500921630" rel="nofollow">eugene</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1351368803756#c5512760809158291467">28 октября 2012 г., 02:13</a></span></div><p class="comment-content">Добрый день. Интересно написали, но ИМХО, пример с разделением интерфейсов неудачен. Обычно, когда говорят, про тонкие интерфейсы, то подразумевается, что один &quot;толстый&quot; разбивается на несколько тонких с меньшим coupling. В вашем примере - ICustomList наследует ICustomEnumerable. Т.е. пользователь интерфейса ICustomList автоматически имеет доступ к ICustomEnumerable. Разделение интерфейсов подразумевает разделение на одном уровне, т.е. увеличивая cohesion и уменьшая coupling. </p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="5512760809158291467">Ответить</a><span class="item-control blog-admin blog-admin pid-1751227402"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=5512760809158291467">Удалить</a></span></span></div><div class="comment-replies"><div id="c5512760809158291467-rt" class="comment-thread inline-thread"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c5512760809158291467-ra" class="thread-chrome thread-expanded"><div><li class="comment" id="c6109811913003947155"><div class="avatar-image-container"><img src="//3.bp.blogspot.com/-ViLcO0QoOUk/ThFkvXj6PnI/AAAAAAAAABc/kdWhGO8la8s/s35/avatar.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/06611052686208052951" rel="nofollow">Мурадов Мурад</a></cite><span class="icon user blog-author"></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1351415548107#c6109811913003947155">28 октября 2012 г., 15:12</a></span></div><p class="comment-content">Добрый день!<br>Да, разделение интерфейсов применяют для уменьшения связанности. И readonly интерфейсы я включаю туда же. Потому что их использование уменьшает связанность между типами.<br>Для того, чтобы было более понятно использование этого принципа неподготовленному специалисту, я использовал пример с readonly интерфейсом как самый наглядный.</p><span class="comment-actions secondary-text"><span class="item-control blog-admin blog-admin pid-661418159"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=6109811913003947155">Удалить</a></span></span></div><div class="comment-replies"><div id="c6109811913003947155-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c6109811913003947155-ra" class="thread-chrome thread-expanded"><div></div><div id="c6109811913003947155-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="6109811913003947155">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c6109811913003947155-ce"></div></li><li class="comment" id="c858296485573216855"><div class="avatar-image-container"><img src="//www.blogger.com/img/blogger_logo_round_35.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/11652527303221628056" rel="nofollow">Lev_on</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1504628297376#c858296485573216855">5 сентября 2017 г., 21:18</a></span></div><p class="comment-content">Этот комментарий был удален автором.</p><span class="comment-actions secondary-text"><span class="item-control blog-admin blog-admin "><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=858296485573216855">Удалить</a></span></span></div><div class="comment-replies"><div id="c858296485573216855-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c858296485573216855-ra" class="thread-chrome thread-expanded"><div></div><div id="c858296485573216855-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="858296485573216855">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c858296485573216855-ce"></div></li></div><div id="c5512760809158291467-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="5512760809158291467">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c5512760809158291467-ce"></div></li><li class="comment" id="c7586776706308249435"><div class="avatar-image-container"><img src="//www.blogger.com/img/blogger_logo_round_35.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/00368111825500921630" rel="nofollow">eugene</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1351368902140#c7586776706308249435">28 октября 2012 г., 02:15</a></span></div><p class="comment-content">И еще Мурад - я не знаю, много ли вам пишут комментов - но такая капча, как у вас - надолго отбивает охоту писать в комменты хоть что-то...</p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="7586776706308249435">Ответить</a><span class="item-control blog-admin blog-admin pid-1751227402"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=7586776706308249435">Удалить</a></span></span></div><div class="comment-replies"><div id="c7586776706308249435-rt" class="comment-thread inline-thread"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c7586776706308249435-ra" class="thread-chrome thread-expanded"><div><li class="comment" id="c7561616022787370006"><div class="avatar-image-container"><img src="//3.bp.blogspot.com/-ViLcO0QoOUk/ThFkvXj6PnI/AAAAAAAAABc/kdWhGO8la8s/s35/avatar.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/06611052686208052951" rel="nofollow">Мурадов Мурад</a></cite><span class="icon user blog-author"></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1351415633853#c7561616022787370006">28 октября 2012 г., 15:13</a></span></div><p class="comment-content">eugene, у меня стоит стандартная форма ввода комментария. Ок, я посмотрю, что можно с этим поделать.</p><span class="comment-actions secondary-text"><span class="item-control blog-admin blog-admin pid-661418159"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=7561616022787370006">Удалить</a></span></span></div><div class="comment-replies"><div id="c7561616022787370006-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c7561616022787370006-ra" class="thread-chrome thread-expanded"><div></div><div id="c7561616022787370006-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="7561616022787370006">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c7561616022787370006-ce"></div></li></div><div id="c7586776706308249435-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="7586776706308249435">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c7586776706308249435-ce"></div></li><li class="comment" id="c7273794330202834296"><div class="avatar-image-container"><img src="//www.blogger.com/img/blogger_logo_round_35.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/11247055545466408394" rel="nofollow">Константин</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1402832786112#c7273794330202834296">15 июня 2014 г., 17:46</a></span></div><p class="comment-content">Классно, полезно, но жаль нет примеров на языке PHP, мало вынес из этой статьи, хотя мог бы и больше</p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="7273794330202834296">Ответить</a><span class="item-control blog-admin blog-admin pid-76429205"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=7273794330202834296">Удалить</a></span></span></div><div class="comment-replies"><div id="c7273794330202834296-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c7273794330202834296-ra" class="thread-chrome thread-expanded"><div></div><div id="c7273794330202834296-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="7273794330202834296">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c7273794330202834296-ce"></div></li><li class="comment" id="c1937374329370904812"><div class="avatar-image-container"><img src="//www.blogger.com/img/blogger_logo_round_35.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/17986440830786379102" rel="nofollow">Fushigi</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1437336023742#c1937374329370904812">20 июля 2015 г., 01:00</a></span></div><p class="comment-content">Хорошо написано. Спасибо.</p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="1937374329370904812">Ответить</a><span class="item-control blog-admin blog-admin pid-1618727140"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=1937374329370904812">Удалить</a></span></span></div><div class="comment-replies"><div id="c1937374329370904812-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c1937374329370904812-ra" class="thread-chrome thread-expanded"><div></div><div id="c1937374329370904812-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="1937374329370904812">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c1937374329370904812-ce"></div></li><li class="comment" id="c353590051954302449"><div class="avatar-image-container"><img src="//www.blogger.com/img/blogger_logo_round_35.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/12748354967186211919" rel="nofollow">RuSTer</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1451320180809#c353590051954302449">28 декабря 2015 г., 21:29</a></span></div><p class="comment-content">Thank you!</p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="353590051954302449">Ответить</a><span class="item-control blog-admin blog-admin pid-667941999"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=353590051954302449">Удалить</a></span></span></div><div class="comment-replies"><div id="c353590051954302449-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c353590051954302449-ra" class="thread-chrome thread-expanded"><div></div><div id="c353590051954302449-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="353590051954302449">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c353590051954302449-ce"></div></li><li class="comment" id="c4618605427126920495"><div class="avatar-image-container"><img src="//www.blogger.com/img/blogger_logo_round_35.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/04442243779071550650" rel="nofollow">Unknown</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1459336099963#c4618605427126920495">30 марта 2016 г., 16:08</a></span></div><p class="comment-content"><br>Такой код как ни странно выведет в консоль 100 вместо 30.(конец цитаты)<br>Так и надо, чтобы вывело 100. Пример: программа может рисовать прямоугольники и квадраты. Нажал на кнопку на панели кнопок &quot;Прямоугольник&quot;, появился прямоугольник, мышкой можно задать высоту и ширину. Нажал на кнопку &quot;Квадрат&quot;, появился квадрат. Задал ширину 30. Высота автоматически стала 30. Задал высоту 100. Ширина автоматически стала 100.<br><br>Так что нужны обоснования, что прямоугольник - базовый класс для квадрата - это плохо.</p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="4618605427126920495">Ответить</a><span class="item-control blog-admin blog-admin pid-499159051"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=4618605427126920495">Удалить</a></span></span></div><div class="comment-replies"><div id="c4618605427126920495-rt" class="comment-thread inline-thread"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c4618605427126920495-ra" class="thread-chrome thread-expanded"><div><li class="comment" id="c5734562414901825199"><div class="avatar-image-container"><img src="//www.blogger.com/img/blogger_logo_round_35.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/03001189787471511498" rel="nofollow">Максим</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1469611422071#c5734562414901825199">27 июля 2016 г., 14:23</a></span></div><p class="comment-content">ИМХО. Написав нечто вроде &quot;Rectangle rect = new Square();&quot;, и передав (для большей наглядности) переменную rect в метод, принимающий аргумент типа Rectangle, далее в этом методе мы работаем с прямоугольником. Мы не знаем, какая это фигура на самом деле, да нам и не надо, главное то, что ее можно трактовать как прямоугольник. А изменяя у прямоугольника ширину, мы совсем не ожидаем, что у него вдруг изменится еще и высота, или наоборот. В этом и проявляется странность.</p><span class="comment-actions secondary-text"><span class="item-control blog-admin blog-admin pid-1552805060"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=5734562414901825199">Удалить</a></span></span></div><div class="comment-replies"><div id="c5734562414901825199-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c5734562414901825199-ra" class="thread-chrome thread-expanded"><div></div><div id="c5734562414901825199-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="5734562414901825199">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c5734562414901825199-ce"></div></li></div><div id="c4618605427126920495-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="4618605427126920495">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c4618605427126920495-ce"></div></li><li class="comment" id="c4573356142928687948"><div class="avatar-image-container"><img src="//www.blogger.com/img/blogger_logo_round_35.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/04442243779071550650" rel="nofollow">Unknown</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1459336125886#c4573356142928687948">30 марта 2016 г., 16:08</a></span></div><p class="comment-content">Этот комментарий был удален автором.</p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="4573356142928687948">Ответить</a><span class="item-control blog-admin blog-admin "><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=4573356142928687948">Удалить</a></span></span></div><div class="comment-replies"><div id="c4573356142928687948-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c4573356142928687948-ra" class="thread-chrome thread-expanded"><div></div><div id="c4573356142928687948-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="4573356142928687948">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c4573356142928687948-ce"></div></li><li class="comment" id="c6224352257164939117"><div class="avatar-image-container"><img src="//www.blogger.com/img/blogger_logo_round_35.png" alt=""/></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/09626692698573451367" rel="nofollow">II</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="http://blog.muradovm.com/2012/03/solid.html?showComment=1505041502260#c6224352257164939117">10 сентября 2017 г., 16:05</a></span></div><p class="comment-content">&quot;Принцип замещения Лисков&quot;, а автору про полиморфизм известно? И на что он надеялся, когда создал экземпляр квадрата со сторонами 30 и 100? о_О</p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="6224352257164939117">Ответить</a><span class="item-control blog-admin blog-admin pid-448090813"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=1838664009445508485&amp;postID=6224352257164939117">Удалить</a></span></span></div><div class="comment-replies"><div id="c6224352257164939117-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self">Ответы</a></span></span><ol id="c6224352257164939117-ra" class="thread-chrome thread-expanded"><div></div><div id="c6224352257164939117-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="6224352257164939117">Ответить</a></div></ol></div></div><div class="comment-replybox-single" id="c6224352257164939117-ce"></div></li></ol><div id="top-continue" class="continue"><a class="comment-reply" target="_self">Добавить комментарий</a></div><div class="comment-replybox-thread" id="top-ce"></div><div class="loadmore hidden" data-post-id="8976228164508096467"><a target="_self">Ещё</a></div></div>
+</div>
+</div>
+<p class='comment-footer'>
+<div class='comment-form'>
+<a name='comment-form'></a>
+<p>
+</p>
+<a href='https://www.blogger.com/comment-iframe.g?blogID=1838664009445508485&postID=8976228164508096467' id='comment-editor-src'></a>
+<iframe allowtransparency='true' class='blogger-iframe-colorize blogger-comment-from-post' frameborder='0' height='410px' id='comment-editor' name='comment-editor' src='' width='100%'></iframe>
+<script src='https://www.blogger.com/static/v1/jsbin/2517944472-comment_from_post_iframe.js' type='text/javascript'></script>
+<script type='text/javascript'>
+      BLOG_CMT_createIframe('https://www.blogger.com/rpc_relay.html');
+    </script>
+</div>
+</p>
+<div id='backlinks-container'>
+<div id='Blog1_backlinks-container'>
+</div>
+</div>
+</div>
+</div>
+
+        </div></div>
+      
+</div>
+<div class='blog-pager' id='blog-pager'>
+<span id='blog-pager-newer-link'>
+<a class='blog-pager-newer-link' href='http://blog.muradovm.com/2012/03/xml.html' id='Blog1_blog-pager-newer-link' title='Следующее'>Следующее</a>
+</span>
+<span id='blog-pager-older-link'>
+<a class='blog-pager-older-link' href='http://blog.muradovm.com/2012/02/mvc.html' id='Blog1_blog-pager-older-link' title='Предыдущее'>Предыдущее</a>
+</span>
+<a class='home-link' href='http://blog.muradovm.com/'>Главная страница</a>
+</div>
+<div class='clear'></div>
+<div class='post-feeds'>
+<div class='feed-links'>
+Подписаться на:
+<a class='feed-link' href='http://blog.muradovm.com/feeds/8976228164508096467/comments/default' target='_blank' type='application/atom+xml'>Комментарии к сообщению (Atom)</a>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class='column-left-outer'>
+<div class='column-left-inner'>
+<aside>
+</aside>
+</div>
+</div>
+<div class='column-right-outer'>
+<div class='column-right-inner'>
+<aside>
+<div class='sidebar section' id='sidebar-right-1'><div class='widget BlogSearch' data-version='1' id='BlogSearch1'>
+<h2 class='title'>Поиск по этому блогу</h2>
+<div class='widget-content'>
+<div id='BlogSearch1_form'>
+<form action='http://blog.muradovm.com/search' class='gsc-search-box' target='_top'>
+<table cellpadding='0' cellspacing='0' class='gsc-search-box'>
+<tbody>
+<tr>
+<td class='gsc-input'>
+<input autocomplete='off' class='gsc-input' name='q' size='10' title='search' type='text' value=''/>
+</td>
+<td class='gsc-search-button'>
+<input class='gsc-search-button' title='search' type='submit' value='Поиск'/>
+</td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+</div>
+<div class='clear'></div>
+</div><div class='widget Profile' data-version='1' id='Profile1'>
+<h2>Обо мне кратко</h2>
+<div class='widget-content'>
+<a href='https://www.blogger.com/profile/06611052686208052951'><img alt='Моя фотография' class='profile-img' height='75' src='//4.bp.blogspot.com/-yII83P5edkY/ThFkcH-4TOI/AAAAAAAAABE/_XCrf6vEDbI/s75/avatar.png' width='73'/></a>
+<dl class='profile-datablock'>
+<dt class='profile-data'>
+<a class='profile-name-link g-profile' href='https://www.blogger.com/profile/06611052686208052951' rel='author' style='background-image: url(//www.blogger.com/img/logo-16.png);'>
+Мурадов Мурад
+</a>
+</dt>
+<dd class='profile-textblock'>Решаю интересные задачи</dd>
+</dl>
+<a class='profile-link' href='https://www.blogger.com/profile/06611052686208052951' rel='author'>Просмотреть профиль</a>
+<div class='clear'></div>
+</div>
+</div><div class='widget Followers' data-version='1' id='Followers1'>
+<h2 class='title'>Постоянные читатели</h2>
+<div class='widget-content'>
+<div id='Followers1-wrapper'>
+<div style='margin-right:2px;'>
+<div><script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<div id="followers-iframe-container"></div>
+<script type="text/javascript">
+    window.followersIframe = null;
+    function followersIframeOpen(url) {
+      gapi.load("gapi.iframes", function() {
+        if (gapi.iframes && gapi.iframes.getContext) {
+          window.followersIframe = gapi.iframes.getContext().openChild({
+            url: url,
+            where: document.getElementById("followers-iframe-container"),
+            messageHandlersFilter: gapi.iframes.CROSS_ORIGIN_IFRAMES_FILTER,
+            messageHandlers: {
+              '_ready': function(obj) {
+                window.followersIframe.getIframeEl().height = obj.height;
+              },
+              'reset': function() {
+                window.followersIframe.close();
+                followersIframeOpen("https://www.blogger.com/followers.g?blogID\x3d1838664009445508485\x26colors\x3dCgt0cmFuc3BhcmVudBILdHJhbnNwYXJlbnQaByMwMDAwMDAiByMwMzU0YzUqC3RyYW5zcGFyZW50MgcjNGQ0ZDRkOgcjMDAwMDAwQgcjMDM1NGM1SgcjMDAwMDAwUgcjMDM1NGM1Wgt0cmFuc3BhcmVudA%3D%3D\x26pageSize\x3d21\x26postID\x3d8976228164508096467\x26origin\x3dhttp://blog.muradovm.com/");
+              },
+              'open': function(url) {
+                window.followersIframe.close();
+                followersIframeOpen(url);
+              },
+              'blogger-ping': function() {
+              }
+            }
+          });
+        }
+      });
+    }
+    followersIframeOpen("https://www.blogger.com/followers.g?blogID\x3d1838664009445508485\x26colors\x3dCgt0cmFuc3BhcmVudBILdHJhbnNwYXJlbnQaByMwMDAwMDAiByMwMzU0YzUqC3RyYW5zcGFyZW50MgcjNGQ0ZDRkOgcjMDAwMDAwQgcjMDM1NGM1SgcjMDAwMDAwUgcjMDM1NGM1Wgt0cmFuc3BhcmVudA%3D%3D\x26pageSize\x3d21\x26postID\x3d8976228164508096467\x26origin\x3dhttp://blog.muradovm.com/");
+  </script></div>
+</div>
+</div>
+<div class='clear'></div>
+</div>
+</div><div class='widget Label' data-version='1' id='Label2'>
+<h2>Ярлыки</h2>
+<div class='widget-content cloud-label-widget-content'>
+<span class='label-size label-size-5'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/.net'>.net</a>
+</span>
+<span class='label-size label-size-5'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/C%23'>C#</a>
+</span>
+<span class='label-size label-size-4'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD'>дизайн</a>
+</span>
+<span class='label-size label-size-3'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/C%2B%2B'>C++</a>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/ISP'>ISP</a>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/SOLID'>SOLID</a>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/com'>com</a>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%B0%D1%80%D1%85%D0%B8%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D0%B0'>архитектура</a>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%B1%D0%B8%D0%BD%D0%B0%D1%80%D0%BD%D0%BE%D0%B5%20%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%BE'>бинарное дерево</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/C%2B%2B03'>C++03</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/CLR'>CLR</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/DataGridView'>DataGridView</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/DateTime'>DateTime</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/IDisposable'>IDisposable</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/IEnumerator'>IEnumerator</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/LSP'>LSP</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/MVC'>MVC</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/OCP'>OCP</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/SQL'>SQL</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/SRP'>SRP</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/XML'>XML</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/XSL'>XSL</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/caml'>caml</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/camlex'>camlex</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/cppunit'>cppunit</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/framework%204'>framework 4</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/java'>java</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/mef'>mef</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/sharepoint'>sharepoint</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%9D%D0%B0%D0%B1%D0%BB%D1%8E%D0%B4%D0%B0%D1%82%D0%B5%D0%BB%D1%8C'>Наблюдатель</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%B2%D0%B5%D1%80%D0%BE%D1%8F%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%8C'>вероятность</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%B2%D1%8B%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5'>выражение</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%B4%D0%B5%D0%BA%D0%BE%D1%80%D0%B0%D1%82%D0%BE%D1%80'>декоратор</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%BE'>дерево</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%B8%D0%B3%D1%80%D0%B0'>игра</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%B8%D0%BC%D0%BF%D0%BE%D1%80%D1%82'>импорт</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%B8%D0%BD%D0%BA%D0%B0%D0%BF%D1%81%D1%83%D0%BB%D1%8F%D1%86%D0%B8%D1%8F'>инкапсуляция</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%BA%D0%B5%D1%88'>кеш</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0'>команда</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%BC%D0%B0%D0%BA%D1%80%D0%BE%D1%81%D1%8B'>макросы</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%BC%D0%B0%D1%82%D0%B5%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0'>математика</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F'>операция</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D1%81%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D1%8F'>события</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D1%81%D0%BF%D0%B5%D1%86%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F'>спецификация</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B0'>строка</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85'>структуры данных</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80'>фильтр</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9%20%D0%BC%D0%B5%D1%82%D0%BE%D0%B4'>шаблонный метод</a>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://blog.muradovm.com/search/label/%D1%8D%D0%BA%D1%81%D0%BF%D0%BE%D1%80%D1%82'>экспорт</a>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget PopularPosts' data-version='1' id='PopularPosts1'>
+<h2>Популярные сообщения</h2>
+<div class='widget-content popular-posts'>
+<ul>
+<li>
+<a href='http://blog.muradovm.com/2012/03/solid.html'>Доступно о SOLID</a>
+</li>
+<li>
+<a href='http://blog.muradovm.com/2012/01/blog-post.html'>Принцип инверсии зависимости</a>
+</li>
+<li>
+<a href='http://blog.muradovm.com/2011/07/blog-post.html'>Бинарное дерево поиска</a>
+</li>
+<li>
+<a href='http://blog.muradovm.com/2011/04/blog-post.html'>Вычисление выражения из строки</a>
+</li>
+<li>
+<a href='http://blog.muradovm.com/2011/12/blog-post.html'>Продукты, цены и ценовая политика</a>
+</li>
+<li>
+<a href='http://blog.muradovm.com/2014/06/datetime.html'>Парсим DateTime</a>
+</li>
+<li>
+<a href='http://blog.muradovm.com/2015/02/blog-post.html'>Злые шутки расширяющих методов</a>
+</li>
+<li>
+<a href='http://blog.muradovm.com/2011/06/datagridview.html'>Сортировка в DataGridView</a>
+</li>
+<li>
+<a href='http://blog.muradovm.com/2011/12/c.html'>Инкапсуляция в C++</a>
+</li>
+<li>
+<a href='http://blog.muradovm.com/2011/12/blog-post_15.html'>Быстрый фильтр дерева</a>
+</li>
+</ul>
+<div class='clear'></div>
+</div>
+</div><div class='widget BlogArchive' data-version='1' id='BlogArchive1'>
+<h2>Архив блога</h2>
+<div class='widget-content'>
+<div id='ArchiveList'>
+<div id='BlogArchive1_ArchiveList'>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2015/'>
+2015
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2015/02/'>
+февраля
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2015/01/'>
+января
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2014/'>
+2014
+</a>
+<span class='post-count' dir='ltr'>(5)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2014/08/'>
+августа
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2014/06/'>
+июня
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2014/05/'>
+мая
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2014/04/'>
+апреля
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2013/'>
+2013
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2013/09/'>
+сентября
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>
+
+        &#9660;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2012/'>
+2012
+</a>
+<span class='post-count' dir='ltr'>(5)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2012/04/'>
+апреля
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>
+
+        &#9660;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2012/03/'>
+марта
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='posts'>
+<li><a href='http://blog.muradovm.com/2012/03/xml.html'>Экспорт в XML</a></li>
+<li><a href='http://blog.muradovm.com/2012/03/solid.html'>Доступно о SOLID</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2012/02/'>
+февраля
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2012/01/'>
+января
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2011/'>
+2011
+</a>
+<span class='post-count' dir='ltr'>(7)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2011/12/'>
+декабря
+</a>
+<span class='post-count' dir='ltr'>(3)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2011/07/'>
+июля
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2011/06/'>
+июня
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2011/04/'>
+апреля
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://blog.muradovm.com/2011/01/'>
+января
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class='clear'></div>
+</div>
+</div><div class='widget Stats' data-version='1' id='Stats1'>
+<h2>Количество&#183;просмотров</h2>
+<div class='widget-content'>
+<div id='Stats1_content' style='display: none;'>
+<script src='https://www.gstatic.com/charts/loader.js' type='text/javascript'></script>
+<span id='Stats1_sparklinespan' style='display:inline-block; width:75px; height:30px'></span>
+<span class='counter-wrapper text-counter-wrapper' id='Stats1_totalCount'>
+</span>
+<div class='clear'></div>
+</div>
+</div>
+</div></div>
+</aside>
+</div>
+</div>
+</div>
+<div style='clear: both'></div>
+<!-- columns -->
+</div>
+<!-- main -->
+</div>
+</div>
+<div class='main-cap-bottom cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+<footer>
+<div class='footer-outer'>
+<div class='footer-cap-top cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left footer-fauxborder-left'>
+<div class='fauxborder-right footer-fauxborder-right'></div>
+<div class='region-inner footer-inner'>
+<div class='foot no-items section' id='footer-1'></div>
+<table border='0' cellpadding='0' cellspacing='0' class='section-columns columns-2'>
+<tbody>
+<tr>
+<td class='first columns-cell'>
+<div class='foot no-items section' id='footer-2-1'></div>
+</td>
+<td class='columns-cell'>
+<div class='foot no-items section' id='footer-2-2'></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- outside of the include in order to lock Attribution widget -->
+<div class='foot section' id='footer-3'><div class='widget Attribution' data-version='1' id='Attribution1'>
+<div class='widget-content' style='text-align: center;'>
+Тема "Венецианское окно". Технологии <a href='https://www.blogger.com' target='_blank'>Blogger</a>.
+</div>
+<div class='clear'></div>
+</div></div>
+</div>
+</div>
+<div class='footer-cap-bottom cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+</footer>
+<!-- content -->
+</div>
+</div>
+<div class='content-cap-bottom cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+</div>
+<script type='text/javascript'>
+    window.setTimeout(function() {
+        document.body.className = document.body.className.replace('loading', '');
+      }, 10);
+  </script>
+<script src='https://apis.google.com/js/plusone.js' type='text/javascript'></script>
+
+<script type="text/javascript" src="https://www.blogger.com/static/v1/widgets/3746877883-widgets.js"></script>
+<script type='text/javascript'>
+window['__wavt'] = 'AOuZoY4Zh49I65zHcA-BpqI7QQl8LHTwSw:1636437868344';_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d1838664009445508485','//blog.muradovm.com/2012/03/solid.html','1838664009445508485');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '1838664009445508485', 'title': 'Code Research', 'url': 'http://blog.muradovm.com/2012/03/solid.html', 'canonicalUrl': 'http://blog.muradovm.com/2012/03/solid.html', 'homepageUrl': 'http://blog.muradovm.com/', 'searchUrl': 'http://blog.muradovm.com/search', 'canonicalHomepageUrl': 'http://blog.muradovm.com/', 'blogspotFaviconUrl': 'http://blog.muradovm.com/favicon.ico', 'bloggerUrl': 'https://www.blogger.com', 'hasCustomDomain': true, 'httpsEnabled': false, 'enabledCommentProfileImages': true, 'gPlusViewType': 'FILTERED_POSTMOD', 'adultContent': false, 'analyticsAccountNumber': '', 'encoding': 'UTF-8', 'locale': 'ru', 'localeUnderscoreDelimited': 'ru', 'languageDirection': 'ltr', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'isDynamicViewsAvailable': true, 'feedLinks': '\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Code Research - Atom\x22 href\x3d\x22http://blog.muradovm.com/feeds/posts/default\x22 /\x3e\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/rss+xml\x22 title\x3d\x22Code Research - RSS\x22 href\x3d\x22http://blog.muradovm.com/feeds/posts/default?alt\x3drss\x22 /\x3e\n\x3clink rel\x3d\x22service.post\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Code Research - Atom\x22 href\x3d\x22https://www.blogger.com/feeds/1838664009445508485/posts/default\x22 /\x3e\n\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Code Research - Atom\x22 href\x3d\x22http://blog.muradovm.com/feeds/8976228164508096467/comments/default\x22 /\x3e\n', 'meTag': '', 'adsenseHostId': 'ca-host-pub-1556223355139109', 'adsenseHasAds': false, 'adsenseAutoAds': false, 'ieCssRetrofitLinks': '\x3c!--[if IE]\x3e\x3cscript type\x3d\x22text/javascript\x22 src\x3d\x22https://www.blogger.com/static/v1/jsbin/403901366-ieretrofit.js\x22\x3e\x3c/script\x3e\n\x3c![endif]--\x3e', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/0b1c466c889dcabd', 'plusOneApiSrc': 'https://apis.google.com/js/plusone.js', 'disableGComments': true, 'sharing': {'platforms': [{'name': '\u041f\u043e\u043b\u0443\u0447\u0438\u0442\u044c \u0441\u0441\u044b\u043b\u043a\u0443', 'key': 'link', 'shareMessage': '\u041f\u043e\u043b\u0443\u0447\u0438\u0442\u044c \u0441\u0441\u044b\u043b\u043a\u0443', 'target': ''}, {'name': 'Facebook', 'key': 'facebook', 'shareMessage': '\u041f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0432 Facebook', 'target': 'facebook'}, {'name': '\u041d\u0430\u043f\u0438\u0441\u0430\u0442\u044c \u043e\u0431 \u044d\u0442\u043e\u043c \u0432 \u0431\u043b\u043e\u0433\u0435', 'key': 'blogThis', 'shareMessage': '\u041d\u0430\u043f\u0438\u0441\u0430\u0442\u044c \u043e\u0431 \u044d\u0442\u043e\u043c \u0432 \u0431\u043b\u043e\u0433\u0435', 'target': 'blog'}, {'name': 'Twitter', 'key': 'twitter', 'shareMessage': '\u041f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0432 Twitter', 'target': 'twitter'}, {'name': 'Pinterest', 'key': 'pinterest', 'shareMessage': '\u041f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0432 Pinterest', 'target': 'pinterest'}, {'name': '\u042d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u0430\u044f \u043f\u043e\u0447\u0442\u0430', 'key': 'email', 'shareMessage': '\u042d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u0430\u044f \u043f\u043e\u0447\u0442\u0430', 'target': 'email'}], 'disableGooglePlus': true, 'googlePlusShareButtonWidth': 0, 'googlePlusBootstrap': '\x3cscript type\x3d\x22text/javascript\x22\x3ewindow.___gcfg \x3d {\x27lang\x27: \x27ru\x27};\x3c/script\x3e'}, 'hasCustomJumpLinkMessage': false, 'jumpLinkMessage': '\u0414\u0430\u043b\u0435\u0435...', 'pageType': 'item', 'postId': '8976228164508096467', 'postImageThumbnailUrl': 'http://1.bp.blogspot.com/-dCzOmq_awW0/Tx_WxUx4U8I/AAAAAAAAALM/MJINkCuvlpo/s72-c/solid_brick_3.jpg', 'postImageUrl': 'http://1.bp.blogspot.com/-dCzOmq_awW0/Tx_WxUx4U8I/AAAAAAAAALM/MJINkCuvlpo/s320/solid_brick_3.jpg', 'pageName': '\u0414\u043e\u0441\u0442\u0443\u043f\u043d\u043e \u043e SOLID', 'pageTitle': 'Code Research: \u0414\u043e\u0441\u0442\u0443\u043f\u043d\u043e \u043e SOLID'}}, {'name': 'features', 'data': {'sharing_get_link_dialog': 'true', 'sharing_native': 'false'}}, {'name': 'messages', 'data': {'edit': '\u0418\u0437\u043c\u0435\u043d\u0438\u0442\u044c', 'linkCopiedToClipboard': '\u0421\u0441\u044b\u043b\u043a\u0430 \u0441\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0430 \u0432 \u0431\u0443\u0444\u0435\u0440 \u043e\u0431\u043c\u0435\u043d\u0430!', 'ok': '\u041e\u041a', 'postLink': '\u0421\u0441\u044b\u043b\u043a\u0430 \u043d\u0430 \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435'}}, {'name': 'template', 'data': {'name': 'custom', 'localizedName': '\u0414\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u043e', 'isResponsive': false, 'isAlternateRendering': false, 'isCustom': true, 'variant': 'shade', 'variantId': 'shade'}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\x3dclassic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\x3dflipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\x3dmagazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\x3dmosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\x3dsidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\x3dsnapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\x3dtimeslide'}, 'isMobile': false, 'title': '\u0414\u043e\u0441\u0442\u0443\u043f\u043d\u043e \u043e SOLID', 'description': '\u041d\u0435 \u0442\u0430\u043a \u0434\u0430\u0432\u043d\u043e, \u043e\u043a\u043e\u043b\u043e \u043c\u0435\u0441\u044f\u0446\u0430 \u043d\u0430\u0437\u0430\u0434, \u044f \u0441\u0434\u0435\u043b\u0430\u043b \u043d\u0435\u0431\u043e\u043b\u044c\u0448\u043e\u0439 \u0434\u043e\u043a\u043b\u0430\u0434, \u043f\u043e\u0441\u0432\u044f\u0449\u0435\u043d\u043d\u044b\u0439 SOLID, \u0434\u043b\u044f \u0441\u0432\u043e\u0438\u0445 \u043a\u043e\u043b\u043b\u0435\u0433. \u041e\u0431\u044a\u044f\u0441\u043d\u0438\u0442\u044c, \u0447\u0442\u043e \u044d\u0442\u043e \u0442\u0430\u043a\u043e\u0435 \u043e\u043a\u0430\u0437\u0430\u043b\u043e\u0441\u044c \u043d\u0435 \u0441\u043e\u0432\u0441...', 'featuredImage': 'http://1.bp.blogspot.com/-dCzOmq_awW0/Tx_WxUx4U8I/AAAAAAAAALM/MJINkCuvlpo/s320/solid_brick_3.jpg', 'url': 'http://blog.muradovm.com/2012/03/solid.html', 'type': 'item', 'isSingleItem': true, 'isMultipleItems': false, 'isError': false, 'isPage': false, 'isPost': true, 'isHomepage': false, 'isArchive': false, 'isLabelSearch': false, 'postId': 8976228164508096467}}]);
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar', document.getElementById('Navbar1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header', document.getElementById('Header1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/4085544540-lbx__ru.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/4076883957-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogSearchView', new _WidgetInfo('BlogSearch1', 'sidebar-right-1', document.getElementById('BlogSearch1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ProfileView', new _WidgetInfo('Profile1', 'sidebar-right-1', document.getElementById('Profile1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_FollowersView', new _WidgetInfo('Followers1', 'sidebar-right-1', document.getElementById('Followers1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LabelView', new _WidgetInfo('Label2', 'sidebar-right-1', document.getElementById('Label2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PopularPostsView', new _WidgetInfo('PopularPosts1', 'sidebar-right-1', document.getElementById('PopularPosts1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar-right-1', document.getElementById('BlogArchive1'), {'languageDirection': 'ltr', 'loadingMessage': '\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430\x26hellip;'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_StatsView', new _WidgetInfo('Stats1', 'sidebar-right-1', document.getElementById('Stats1'), {'title': '\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e\xb7\u043f\u0440\u043e\u0441\u043c\u043e\u0442\u0440\u043e\u0432', 'showGraphicalCounter': false, 'showAnimatedCounter': false, 'showSparkline': true, 'statsUrl': '//blog.muradovm.com/b/stats?style\x3dBLACK_TRANSPARENT\x26timeRange\x3dALL_TIME\x26token\x3dAPq4FmD6ofsP9d2M7SjERqwwK5R5FE85ZU-fdMxUV_LNqY_aPxBP3GX5L346NUl5089pb0JEeOPP3HgkGPNhdSw34a6BK87eNQ'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AttributionView', new _WidgetInfo('Attribution1', 'footer-3', document.getElementById('Attribution1'), {}, 'displayModeFull'));
+</script>
+</body>
+</html>

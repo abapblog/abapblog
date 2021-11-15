@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ru-RU" prefix="og: http://ogp.me/ns#">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+
+<title>Учимся применять оконные функции – This is Data</title>
+				<script>
+								</script>
+			
+<!-- This site is optimized with the Yoast SEO plugin v9.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Оконные функции в SQL — это мощнейший инструмент аналитика, который с легкостью помогает решать множество задач."/>
+<link rel="canonical" href="http://thisisdata.ru/blog/uchimsya-primenyat-okonnyye-funktsii/" />
+<meta property="og:locale" content="ru_RU" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Учимся применять оконные функции" />
+<meta property="og:description" content="Оконные функции в SQL — это мощнейший инструмент аналитика, который с легкостью помогает решать множество задач." />
+<meta property="og:url" content="http://thisisdata.ru/blog/uchimsya-primenyat-okonnyye-funktsii/" />
+<meta property="article:author" content="https://www.facebook.com/romanchukrv" />
+<meta property="article:tag" content="SQL" />
+<meta property="article:section" content="Анализ данных" />
+<meta property="article:published_time" content="2020-09-29T11:48:09+03:00" />
+<meta property="article:modified_time" content="2020-10-06T06:34:24+03:00" />
+<meta property="og:updated_time" content="2020-10-06T06:34:24+03:00" />
+<meta property="og:image" content="http://thisisdata.ru/wp-content/uploads/2020/09/window2-e1601379905695.jpg" />
+<meta property="og:image:width" content="900" />
+<meta property="og:image:height" content="450" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Оконные функции в SQL — это мощнейший инструмент аналитика, который с легкостью помогает решать множество задач." />
+<meta name="twitter:title" content="Учимся применять оконные функции – This is Data" />
+<meta name="twitter:image" content="http://thisisdata.ru/wp-content/uploads/2020/09/window2-e1601379905695.jpg" />
+<script type='application/ld+json'>{"@context":"https:\/\/schema.org","@type":"Person","url":"http:\/\/thisisdata.ru\/","sameAs":[],"@id":"#person","name":"\u0420\u043e\u043c\u0430\u043d"}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title=" &raquo; Лента" href="http://thisisdata.ru/feed/" />
+<link rel="alternate" type="application/rss+xml" title=" &raquo; Лента комментариев" href="http://thisisdata.ru/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title=" &raquo; Лента комментариев к &laquo;Учимся применять оконные функции&raquo;" href="http://thisisdata.ru/blog/uchimsya-primenyat-okonnyye-funktsii/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/thisisdata.ru\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.4.7"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='http://thisisdata.ru/wp-includes/css/dist/block-library/style.min.css?ver=5.4.7' type='text/css' media='all' />
+<link rel='stylesheet' id='contact-form-7-css'  href='http://thisisdata.ru/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.1.4' type='text/css' media='all' />
+<link rel='stylesheet' id='email-subscribers-css'  href='http://thisisdata.ru/wp-content/plugins/email-subscribers/public/css/email-subscribers-public.css' type='text/css' media='all' />
+<link rel='stylesheet' id='responsive-lightbox-fancybox-css'  href='http://thisisdata.ru/wp-content/plugins/responsive-lightbox/assets/fancybox/jquery.fancybox.min.css?ver=2.1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='css-wpautbox-tab-css'  href='http://thisisdata.ru/wp-content/plugins/wp-author-box-lite/lib/css/jquery-a-tabs.css' type='text/css' media='all' />
+<link rel='stylesheet' id='css-wpautbox-css'  href='http://thisisdata.ru/wp-content/plugins/wp-author-box-lite/lib/css/wpautbox.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wpautbox-elusive-icon-css'  href='http://thisisdata.ru/wp-content/plugins/wp-author-box-lite/includes/ReduxFramework/ReduxCore/assets/css/vendor/elusive-icons/elusive-icons.css?ver=5.4.7' type='text/css' media='all' />
+<link rel='stylesheet' id='coup-font-enqueue-css'  href='http://thisisdata.ru/wp-content/themes/coup-lite/assets/fonts/hk-grotesk/stylesheet.css?ver=5.4.7' type='text/css' media='all' />
+<link rel='stylesheet' id='coup-style-css'  href='http://thisisdata.ru/wp-content/themes/coup-lite/style.css?ver=5.4.7' type='text/css' media='all' />
+<link rel='stylesheet' id='enlighter-local-css'  href='http://thisisdata.ru/wp-content/plugins/enlighter/resources/EnlighterJS.min.css?ver=3.10.0' type='text/css' media='all' />
+<script type='text/javascript' src='http://thisisdata.ru/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var es_data = {"messages":{"es_empty_email_notice":"Please enter email address","es_rate_limit_notice":"You need to wait for sometime before subscribing again","es_single_optin_success_message":"Successfully Subscribed.","es_double_optin_success_message":"Your subscription was successful! Kindly check your mailbox and confirm your subscription. If you don't see the email within a few minutes, check the spam\/junk folder.","es_email_exists_notice":"Email Address already exists!","es_unexpected_error_notice":"Oops.. Unexpected error occurred.","es_invalid_email_notice":"Invalid email address","es_try_later_notice":"Please try after some time"},"es_ajax_url":"http:\/\/thisisdata.ru\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/plugins/email-subscribers/public/js/email-subscribers-public.js'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/plugins/responsive-lightbox/assets/fancybox/jquery.fancybox.min.js?ver=2.1.0'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/plugins/responsive-lightbox/assets/infinitescroll/infinite-scroll.pkgd.min.js?ver=5.4.7'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var rlArgs = {"script":"fancybox","selector":"lightbox","customEvents":"","activeGalleries":"1","modal":"0","showOverlay":"1","showCloseButton":"1","enableEscapeButton":"1","hideOnOverlayClick":"1","hideOnContentClick":"0","cyclic":"0","showNavArrows":"1","autoScale":"1","scrolling":"yes","centerOnScroll":"1","opacity":"1","overlayOpacity":"70","overlayColor":"#666","titleShow":"1","titlePosition":"outside","transitions":"fade","easings":"swing","speeds":"300","changeSpeed":"300","changeFade":"100","padding":"5","margin":"5","videoWidth":"1080","videoHeight":"720","woocommerce_gallery":"0","ajaxurl":"http:\/\/thisisdata.ru\/wp-admin\/admin-ajax.php","nonce":"cb98a13e58"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/plugins/responsive-lightbox/js/front.js?ver=2.1.0'></script>
+<link rel='https://api.w.org/' href='http://thisisdata.ru/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://thisisdata.ru/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://thisisdata.ru/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.4.7" />
+<link rel='shortlink' href='http://thisisdata.ru/?p=3134' />
+<link rel="alternate" type="application/json+oembed" href="http://thisisdata.ru/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fthisisdata.ru%2Fblog%2Fuchimsya-primenyat-okonnyye-funktsii%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://thisisdata.ru/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fthisisdata.ru%2Fblog%2Fuchimsya-primenyat-okonnyye-funktsii%2F&#038;format=xml" />
+<style type="text/css"></style>
+<meta property="article:author" content="https://www.facebook.com/romanchukrv" />
+<link rel="pingback" href="http://thisisdata.ru/xmlrpc.php">
+<link rel="icon" href="http://thisisdata.ru/wp-content/uploads/2018/10/cropped-238226279_363078-32x32.jpg" sizes="32x32" />
+<link rel="icon" href="http://thisisdata.ru/wp-content/uploads/2018/10/cropped-238226279_363078-192x192.jpg" sizes="192x192" />
+<link rel="apple-touch-icon" href="http://thisisdata.ru/wp-content/uploads/2018/10/cropped-238226279_363078-180x180.jpg" />
+<meta name="msapplication-TileImage" content="http://thisisdata.ru/wp-content/uploads/2018/10/cropped-238226279_363078-270x270.jpg" />
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+
+function getCookie(name) {
+  var matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+var google_client_id = getCookie('_ga') ? getCookie('_ga').slice(6) : '';
+
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter48616256 = new Ya.Metrika({
+                    id:48616256,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+					webvisor:true,
+                    trackHash:true,
+					userParams:{
+
+                               "GoogleClientID": google_client_id,
+                    }
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/48616256" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5BM22GP');</script>
+<!-- End Google Tag Manager -->
+
+</head>
+
+<body class="post-template-default single single-post postid-3134 single-format-standard wp-custom-logo group-blog">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5BM22GP"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<meta name="yandex-verification" content="3698cef755608912" />
+
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	<header id="masthead" class="site-header" role="banner">
+		<div class="site-branding">
+			<a href="http://thisisdata.ru/" class="custom-logo-link" rel="home"><img width="395" height="108" src="http://thisisdata.ru/wp-content/uploads/2018/03/Asset-1.png" class="custom-logo" alt="" srcset="http://thisisdata.ru/wp-content/uploads/2018/03/Asset-1.png 395w, http://thisisdata.ru/wp-content/uploads/2018/03/Asset-1-300x82.png 300w" sizes="(max-width: 395px) 100vw, 395px" /></a>				<div class="site-information">
+																<p class="site-title"><a href="http://thisisdata.ru/" rel="home"></a></p>
+													</div>
+						</div><!-- .site-branding -->
+
+		<div class="sidebar-nav-holder">
+
+			
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<button class="menu-toggle hide" aria-controls="primary-menu" aria-expanded="false">
+					<span class="open-menu">Меню</span>
+					<span class="close-menu">Закрыть</span>
+					<span class="hamburger">
+						<span></span>
+						<span></span>
+					</span>
+				</button>
+				<div class="menu-menu-1-container"><ul id="primary-menu" class="menu"><li id="menu-item-2077" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-2077"><a href="http://thisisdata.ru/">Блог</a></li>
+<li id="menu-item-2059" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2059"><a href="http://thisisdata.ru/courses/digital-analytics/">Курс «Digital-аналитика»</a></li>
+<li id="menu-item-1166" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1166"><a target="_blank" rel="noopener noreferrer" href="https://t.me/thisisdata">Telegram</a></li>
+<li id="menu-item-1413" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1413"><a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/thisisdata.ru">Facebook</a></li>
+</ul></div>			</nav><!-- #site-navigation -->
+		</div>
+	</header><!-- #masthead -->
+
+	<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main container container-medium" role="main">
+
+		
+<article id="post-3134" class="post-3134 post type-post status-publish format-standard has-post-thumbnail hentry category-analiz-dannykh category-khraneniye-i-obrabotka-dannykh tag-sql">
+	<header class="entry-header container container-small">
+		<h1 class="entry-title">Учимся применять оконные функции</h1>		<div class="entry-meta">
+			<span class="byline">Автор: <span class="author vcard"><a class="url fn n" href="http://thisisdata.ru/blog/author/roman-romanchuk/">Роман Романчук</a></span></span><span class="posted-on"> <time class="entry-date published" datetime="2020-09-29T14:48:09+03:00">29.09.2020</time><time class="updated" datetime="2020-10-06T09:34:24+03:00">06.10.2020</time></span>		</div><!-- .entry-meta -->
+			</header><!-- .entry-header -->
+
+	
+			<div class="featured-content featured-image horizontal-img">
+				<img width="900" height="450" src="http://thisisdata.ru/wp-content/uploads/2020/09/window2-900x450.jpg" class="attachment-coup-single-post size-coup-single-post wp-post-image" alt="" srcset="http://thisisdata.ru/wp-content/uploads/2020/09/window2-e1601379905695.jpg 900w, http://thisisdata.ru/wp-content/uploads/2020/09/window2-300x150.jpg 300w, http://thisisdata.ru/wp-content/uploads/2020/09/window2-1024x512.jpg 1024w, http://thisisdata.ru/wp-content/uploads/2020/09/window2-768x384.jpg 768w, http://thisisdata.ru/wp-content/uploads/2020/09/window2-1000x500.jpg 1000w, http://thisisdata.ru/wp-content/uploads/2020/09/window2-450x225.jpg 450w" sizes="(max-width: 900px) 100vw, 900px" />			</div>
+
+		
+	<div class="entry-content container container-small">
+		<p>Оконные функции &#8212; это мощнейший инструмент аналитика, который с легкостью помогает решать множество задач.</p>
+<p>Если вам нужно произвести вычисление над заданным набором строк, объединенных каким-то одним признаком, например идентификатором клиента, вам на помощь придут именно они.</p>
+<p><span id="more-3134"></span></p>
+<p>Можно сравнить их с агрегатными функциями, но, в отличие от обычной агрегатной функции, при использовании оконной функции несколько строк не группируются в одну, а продолжают существовать отдельно. При этом результаты работы оконных функций просто добавляются к результирующей выборке как еще одно поле.  Этот функционал очень полезен для построения аналитических отчетов, расчета скользящего среднего и нарастающих итогов, а также для расчетов различных моделей атрибуции.</p>
+<h2>Принцип работы</h2>
+<p>У вас может возникнуть вопрос – «Что значит оконные?»</p>
+<p>При обычном запросе, все множество строк обрабатывается как бы единым &#171;цельным куском&#187;, для которого считаются агрегаты. А при использовании оконных функций, запрос делится на части (окна) и уже для каждой из отдельных частей считаются свои агрегаты.</p>
+<p id="qFBPQDU"><img class="alignnone wp-image-3139 size-full" title="Принцип работы оконной функции" src="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb70b2cd8ccb.png" alt="Принцип работы оконной функции" width="495" height="276" srcset="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb70b2cd8ccb.png 495w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb70b2cd8ccb-300x167.png 300w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb70b2cd8ccb-450x251.png 450w" sizes="(max-width: 495px) 100vw, 495px" /></p>
+<h2>Синтаксис</h2>
+<p>Окно определяется с помощью обязательной инструкции OVER(). Давайте рассмотрим синтаксис этой инструкции:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">SELECT
+Название функции (столбец для вычислений) 
+OVER (
+      PARTITION BY столбец для группировки
+      ORDER BY столбец для сортировки
+      ROWS или RANGE выражение для ограничения строк в пределах группы
+      )</pre>
+<p>Теперь разберем как поведет себя множество строк при использовании того или иного ключевого слова функции. А тренироваться будем на простой табличке содержащей дату, канал с которого пришел пользователь и количество конверсий:</p>
+<p id="oegLNIw"><img class="alignnone wp-image-3166 size-full" title="Демо данные" src="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb9457e29937.png" alt="Демо данные" width="349" height="297" srcset="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb9457e29937.png 349w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb9457e29937-300x255.png 300w" sizes="(max-width: 349px) 100vw, 349px" /></p>
+<h3>OVER()</h3>
+<p>Откроем окно при помощи OVER() и просуммируем столбец &#171;Conversions&#187;:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">SELECT 
+  Date
+, Medium
+, Conversions
+, SUM(Conversions) OVER() AS 'Sum' 
+FROM Orders</pre>
+<p id="mOolYgg"><img class="alignnone wp-image-3167 size-full" title="Оконная функция" src="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb945b92fd6e.png" alt="Оконная функция" width="538" height="306" srcset="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb945b92fd6e.png 538w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb945b92fd6e-300x171.png 300w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb945b92fd6e-450x256.png 450w" sizes="(max-width: 538px) 100vw, 538px" /></p>
+<p>Мы использовали инструкцию OVER() без предложений. В таком варианте окном будет весь набор данных и никакая сортировка не применяется. Появился новый столбец &#171;Sum&#187; и для каждой строки выводится одно и то же значение 14. Это сквозная сумма всех значений колонки &#171;Conversions&#187;.</p>
+<h3>PARTITION BY</h3>
+<p>Теперь применим инструкцию PARTITION BY, которая определяет столбец, по которому будет производиться группировка и является ключевой в разделении набора строк на окна:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">SELECT 
+  Date
+, Medium
+, Conversions
+, SUM(Conversions) OVER(PARTITION BY Date) AS 'Sum' 
+FROM Orders</pre>
+<p id="CUdNMUR"><img class="alignnone wp-image-3168 size-full" title="Оконная функция PARTITION BY" src="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb94623ac7ee.png" alt="Оконная функция PARTITION BY" width="537" height="307" srcset="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb94623ac7ee.png 537w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb94623ac7ee-300x172.png 300w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb94623ac7ee-450x257.png 450w" sizes="(max-width: 537px) 100vw, 537px" /></p>
+<p>Инструкция PARTITION BY сгруппировала строки по полю &#171;Date&#187;. Теперь для каждой группы рассчитывается своя сумма значений столбца &#171;Conversions&#187;.</p>
+<h3>ORDER BY</h3>
+<p>Попробуем отсортировать значения внутри окна при помощи ORDER BY:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">SELECT 
+  Date
+, Medium
+, Conversions
+, SUM(Conversions) OVER(PARTITION BY Date ORDER BY Medium) AS 'Sum' 
+FROM Orders</pre>
+<p id="eQTkJUt"><img class="alignnone wp-image-3226 size-full" title="Оконная функция ORDER BY" src="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f5fcf69264c1.png" alt="Оконная функция ORDER BY" width="539" height="306" srcset="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f5fcf69264c1.png 539w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f5fcf69264c1-300x170.png 300w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f5fcf69264c1-450x255.png 450w" sizes="(max-width: 539px) 100vw, 539px" /></p>
+<p>К предложению PARTITION BY добавилось ORDER BY по полю &#171;Medium&#187;. Таким образом мы указали, что хотим видеть сумму не всех значений в окне, а для каждого значения &#171;Conversions&#187; сумму со всеми предыдущими. То есть мы посчитали нарастающий итог.</p>
+<h3>ROWS или RANGE</h3>
+<p>Инструкция ROWS позволяет ограничить строки в окне, указывая фиксированное количество строк, предшествующих или следующих за текущей.</p>
+<p>Инструкция RANGE, в отличие от ROWS, работает не со строками, а с диапазоном строк в инструкции ORDER BY. То есть под одной строкой для RANGE могут пониматься несколько физических строк одинаковых по рангу.</p>
+<p>Обе инструкции ROWS и RANGE всегда используются вместе с ORDER BY.</p>
+<p>В выражении для ограничения строк ROWS или RANGE также можно использовать следующие ключевые слова:</p>
+<ul>
+<li><strong>UNBOUNDED PRECEDING</strong> — указывает, что окно начинается с первой строки группы;</li>
+<li><strong>UNBOUNDED FOLLOWING</strong> – с помощью данной инструкции можно указать, что окно заканчивается на последней строке группы;</li>
+<li><strong>CURRENT ROW</strong> – инструкция указывает, что окно начинается или заканчивается на текущей строке;</li>
+<li><strong>BETWEEN</strong> <strong>«<em>граница окна</em>» AND «<em>граница окна</em>»</strong> — указывает нижнюю и верхнюю границу окна;</li>
+<li><strong>«<em>Значение</em>»</strong> <strong>PRECEDING</strong> – определяет число строк перед текущей строкой (не допускается в предложении RANGE).;</li>
+<li><strong>«<em>Значение</em>»</strong> <strong>FOLLOWING</strong> — определяет число строк после текущей строки (не допускается в предложении RANGE).</li>
+</ul>
+<p>Разберем на примере:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">SELECT 
+  Date
+, Medium
+, Conversions
+, SUM(Conversions) OVER(PARTITION BY Date ORDER BY Conversions ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING) AS 'Sum' 
+FROM Orders</pre>
+<p id="KlcHvvI"><img class="alignnone wp-image-3170 size-full" title="Оконная функция ROWS или RANGE" src="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb9465df3bc3.png" alt="Оконная функция ROWS или RANGE" width="535" height="308" srcset="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb9465df3bc3.png 535w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb9465df3bc3-300x173.png 300w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb9465df3bc3-450x259.png 450w" sizes="(max-width: 535px) 100vw, 535px" /></p>
+<p>В данном случае сумма рассчитывается по текущей и следующей ячейке в окне. А последняя строка в окне имеет то же значение, что и столбец &#171;Conversions&#187;, потому что больше не с чем складывать.</p>
+<p>Комбинируя ключевые слова, вы можете подогнать диапазон работы оконной функции под вашу специфическую задачу.</p>
+<h2>Виды функций</h2>
+<p>Оконные функции можно подразделить на следующие группы:</p>
+<ul>
+<li>Агрегатные функции;</li>
+<li>Ранжирующие функции;</li>
+<li>Функции смещения;</li>
+<li>Аналитические функции.</li>
+</ul>
+<p>В одной инструкции SELECT с одним предложением FROM можно использовать сразу несколько оконных функций. Давайте подробно разберем каждую группу и пройдемся по основным функциям.</p>
+<h3>Агрегатные функции</h3>
+<p>Агрегатные функции – это функции, которые выполняют на наборе данных арифметические вычисления и возвращают итоговое значение.</p>
+<ul>
+<li><strong>SUM</strong> – возвращает сумму значений в столбце;</li>
+<li><strong>COUNT</strong> — вычисляет количество значений в столбце (<em>значения NULL не учитываются</em>);</li>
+<li><strong>AVG</strong> — определяет среднее значение в столбце;</li>
+<li><strong>MAX</strong> — определяет максимальное значение в столбце;</li>
+<li><strong>MIN</strong> — определяет минимальное значение в столбце.</li>
+</ul>
+<p>Пример использования агрегатных функций с оконной инструкцией OVER:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">SELECT 
+  Date
+, Medium
+, Conversions
+, SUM(Conversions) OVER(PARTITION BY Date) AS 'Sum' 
+, COUNT(Conversions) OVER(PARTITION BY Date) AS 'Count' 
+, AVG(Conversions) OVER(PARTITION BY Date) AS 'Avg' 
+, MAX(Conversions) OVER(PARTITION BY Date) AS 'Max' 
+, MIN(Conversions) OVER(PARTITION BY Date) AS 'Min' 
+FROM Orders</pre>
+<p id="EfjqSof"><img class="alignnone wp-image-3174 size-full" title="Агрегатные функции" src="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb9551916172.png" alt="Агрегатные функции" width="962" height="309" srcset="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb9551916172.png 962w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb9551916172-300x96.png 300w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb9551916172-768x247.png 768w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb9551916172-900x289.png 900w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb9551916172-450x145.png 450w" sizes="(max-width: 962px) 100vw, 962px" /></p>
+<h3>Ранжирующие функции</h3>
+<p>Ранжирующие функции – это функции, которые ранжируют значение для каждой строки в окне. Например, их можно использовать для того, чтобы присвоить порядковый номер строке или составить рейтинг.</p>
+<ul>
+<li><strong>ROW_NUMBER</strong> – функция возвращает номер строки и используется для нумерации;</li>
+<li><strong>RANK</strong> — функция возвращает ранг каждой строки. В данном случае значения уже анализируются и, в случае нахождения одинаковых, возвращает одинаковый ранг с пропуском следующего значения;</li>
+<li><strong>DENSE_RANK</strong> — функция возвращает ранг каждой строки. Но в отличие от функции RANK, она для одинаковых значений возвращает ранг, не пропуская следующий;</li>
+<li><strong>NTILE</strong> – это функция, которая позволяет определить к какой группе относится текущая строка. Количество групп задается в скобках.</li>
+</ul>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">SELECT 
+  Date
+, Medium
+, Conversions
+, ROW_NUMBER() OVER(PARTITION BY Date ORDER BY Conversions) AS 'Row_number' 
+, RANK() OVER(PARTITION BY Date ORDER BY Conversions) AS 'Rank' 
+, DENSE_RANK() OVER(PARTITION BY Date ORDER BY Conversions) AS 'Dense_Rank' 
+, NTILE(3) OVER(PARTITION BY Date ORDER BY Conversions) AS 'Ntile'
+FROM Orders</pre>
+<p id="wPeUpEm"><img class="alignnone wp-image-3223 size-full" title="Ранжирующие функции" src="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f5fcba8a0a35.png" alt="Ранжирующие функции" width="988" height="308" srcset="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f5fcba8a0a35.png 988w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f5fcba8a0a35-300x94.png 300w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f5fcba8a0a35-768x239.png 768w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f5fcba8a0a35-900x281.png 900w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f5fcba8a0a35-450x140.png 450w" sizes="(max-width: 988px) 100vw, 988px" /></p>
+<h3>Функции смещения</h3>
+<p>Функции смещения – это функции, которые позволяют перемещаться и обращаться к разным строкам в окне, относительно текущей строки, а также обращаться к значениям в начале или в конце окна.</p>
+<ul>
+<li><strong>LAG или </strong><strong>LEAD </strong>– функция LAG обращается к данным из предыдущей строки окна, а LEAD к данным из следующей строки. Функцию можно использовать для того, чтобы сравнивать текущее значение строки с предыдущим или следующим. Имеет три параметра: столбец, значение которого необходимо вернуть, количество строк для смещения (<em>по умолчанию 1</em>), значение, которое необходимо вернуть если после смещения возвращается значение NULL;</li>
+<li><strong>FIRST_VALUE</strong> или <strong>LAST_VALUE </strong>— с помощью функции можно получить первое и последнее значение в окне. В качестве параметра принимает столбец, значение которого необходимо вернуть.</li>
+</ul>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">SELECT 
+  Date
+, Medium
+, Conversions
+, LAG(Conversions) OVER(PARTITION BY Date ORDER BY Date) AS 'Lag' 
+, LEAD(Conversions) OVER(PARTITION BY Date ORDER BY Date) AS 'Lead' 
+, FIRST_VALUE(Conversions) OVER(PARTITION BY Date ORDER BY Date) AS 'First_Value' 
+, LAST_VALUE(Conversions) OVER(PARTITION BY Date ORDER BY Date) AS 'Last_Value'
+FROM Orders</pre>
+<p id="GbyOdHw"><img class="alignnone wp-image-3180 size-full" title="Функции смещения" src="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb97caa15497.png" alt="Функции смещения" width="965" height="309" srcset="http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb97caa15497.png 965w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb97caa15497-300x96.png 300w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb97caa15497-768x246.png 768w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb97caa15497-900x288.png 900w, http://thisisdata.ru/wp-content/uploads/2020/05/img_5eb97caa15497-450x144.png 450w" sizes="(max-width: 965px) 100vw, 965px" /></p>
+<h3>Аналитические функции</h3>
+<p>Аналитические функции &#8212; это функции которые возвращают информацию о распределении данных и используются для статистического анализа.</p>
+<ul>
+<li><strong>CUME_DIST</strong> — вычисляет интегральное распределение (относительное положение) значений в окне;</li>
+<li><strong>PERCENT_RANK</strong> — вычисляет относительный ранг строки в окне;</li>
+<li><strong>PERCENTILE_CONT</strong> — вычисляет процентиль на основе постоянного распределения значения столбца. В качестве параметра принимает процентиль, который необходимо вычислить (в <a href="http://thisisdata.ru/blog/kak-pravilno-vychislit-sredneye-znacheniye/" target="_blank" rel="noopener noreferrer">этой статье</a> я рассказываю как посчитать медиану, благодаря этой функции);</li>
+<li><strong>PERCENTILE_DISC</strong> — вычисляет определенный процентиль для отсортированных значений в наборе данных. В качестве параметра принимает процентиль, который необходимо вычислить.</li>
+</ul>
+<p>Важно! У функций PERCENTILE_CONT и PERCENTILE_DISC, столбец, по которому будет происходить сортировка, указывается с помощью ключевого слова WITHIN GROUP.</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">SELECT 
+  Date
+, Medium
+, Conversions
+, CUME_DIST() OVER(PARTITION BY Date ORDER BY Conversions) AS 'Cume_Dist' 
+, PERCENT_RANK() OVER(PARTITION BY Date ORDER BY Conversions) AS 'Percent_Rank' 
+, PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY Conversions) OVER(PARTITION BY Date) AS 'Percentile_Cont' 
+, PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY Conversions) OVER(PARTITION BY Date) AS 'Percentile_Disc'
+FROM Orders</pre>
+<p id="tovdAeD"><img class="alignnone wp-image-3219 size-full" title="Аналитические функции" src="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f594b2f97b3b.png" alt="Аналитические функции" width="991" height="314" srcset="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f594b2f97b3b.png 991w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f594b2f97b3b-300x95.png 300w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f594b2f97b3b-768x243.png 768w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f594b2f97b3b-900x285.png 900w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f594b2f97b3b-450x143.png 450w" sizes="(max-width: 991px) 100vw, 991px" /></p>
+<h2>Кейс. Модели атрибуции</h2>
+<p>Благодаря модели атрибуции можно обоснованно оценить вклад каждого канала в достижение конверсии. Давайте попробуем посчитать две разных модели атрибуции с помощью оконных функций.</p>
+<p>У нас есть таблица с id посетителя (им может быть <a href="http://thisisdata.ru/blog/chto-takoye-client-id-v-google-analytics/" target="_blank" rel="noopener noreferrer">Client ID</a>, номер телефона и тп.), датами и количеством посещений сайта, а также с информацией о достигнутых конверсиях.</p>
+<p id="ykfXRHW"><img class="alignnone wp-image-3249 size-full" title="Демо данные" src="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f724e0244ec0.png" alt="Демо данные" width="701" height="298" srcset="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f724e0244ec0.png 701w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f724e0244ec0-300x128.png 300w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f724e0244ec0-450x191.png 450w" sizes="(max-width: 701px) 100vw, 701px" /></p>
+<h3>Первый клик</h3>
+<p>В Google Analytics стандартной моделью атрибуции является последний непрямой клик. И в данном случае 100% ценности конверсии присваивается последнему каналу в цепочке взаимодействий.</p>
+<p>Попробуем посчитать модель по первому взаимодействию, когда 100% ценности конверсии присваивается первому каналу в цепочке при помощи функции FIRST_VALUE.</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">SELECT 
+  Date
+, Client_ID
+, Medium
+, FIRST_VALUE(Medium) OVER(PARTITION BY Client_ID ORDER BY Date) AS 'First_Click'
+, Sessions
+, Conversions
+FROM Orders</pre>
+<p id="ZGrBioL"><img class="alignnone wp-image-3250 size-full" title="Первый клик" src="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f724ec8c62d5.png" alt="Первый клик" width="815" height="299" srcset="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f724ec8c62d5.png 815w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f724ec8c62d5-300x110.png 300w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f724ec8c62d5-768x282.png 768w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f724ec8c62d5-450x165.png 450w" sizes="(max-width: 815px) 100vw, 815px" /></p>
+<p>Рядом со столбцом &#171;Medium&#187; появился новый столбец &#171;First_Click&#187;, в котором указан канал в первый раз приведший посетителя к нам на сайт и вся ценность зачтена данному каналу.</p>
+<p>Произведем агрегацию и получим отчет.</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">WITH First AS (
+SELECT 
+  Date 
+, Client_ID 
+, Medium 
+, FIRST_VALUE(Medium) OVER(PARTITION BY Client_ID ORDER BY Date) AS 'First_Click' 
+, Sessions 
+, Conversions
+FROM Orders
+)
+
+SELECT
+  First_Click
+, SUM(Conversions) AS 'Conversions'
+FROM First
+GROUP BY First_Click</pre>
+<p id="GvBrTQr"><img class="alignnone wp-image-3252 size-full" title="First_Click" src="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f725154e7d7c.png" alt="First_Click" width="242" height="62" /></p>
+<h3>С учетом давности взаимодействий</h3>
+<p>В этом случае работает правило: чем ближе к конверсии находится точка взаимодействия, тем более ценной она считается. Попробуем рассчитать эту модель при помощи функции DENSE_RANK.</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">SELECT 
+  Date
+, Client_ID
+, Medium
+-- Присваиваем ранг в зависимости от близости к дате конверсии
+, DENSE_RANK() OVER(PARTITION BY Client_ID ORDER BY Date) AS 'Ranks'
+, Sessions
+, Conversions
+FROM Orders</pre>
+<p id="TViKIsb"><img class="alignnone wp-image-3245 size-full" title="С учетом давности взаимодействий" src="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f7242c280e7e.png" alt="С учетом давности взаимодействий" width="817" height="297" srcset="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f7242c280e7e.png 817w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f7242c280e7e-300x109.png 300w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f7242c280e7e-768x279.png 768w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f7242c280e7e-450x164.png 450w" sizes="(max-width: 817px) 100vw, 817px" /></p>
+<p>Рядом со столбцом &#171;Medium&#187; появился новый столбец &#171;Ranks&#187;, в котором указан ранг каждой строки в зависимости от близости к дате конверсии.</p>
+<p>Теперь используем этот запрос для того, чтобы распределить ценность равную 1 (100%) по всем точкам на пути к конверсии.</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">SELECT 
+  Date
+, Client_ID
+, Medium
+-- Делим ранг определенной строки на сумму рангов по пользователю
+, ROUND(CAST(DENSE_RANK() OVER(PARTITION BY Client_ID ORDER BY Date) AS FLOAT) / CAST(SUM(ranks) OVER(PARTITION BY Client_ID) AS FLOAT), 2) AS 'Time_Decay' 
+, Sessions
+, Conversions
+FROM (
+      SELECT 
+      Date
+    , Client_ID
+    , Medium
+    -- Присваиваем ранг в зависимости от близости к дате конверсии
+    , DENSE_RANK() OVER(PARTITION BY Client_ID ORDER BY Date) AS 'Ranks'
+    , Sessions
+    , Conversions
+      FROM Orders
+     ) rank_table</pre>
+<p id="mGnLRVp"><img class="alignnone wp-image-3244 size-full" title="С учетом давности взаимодействий" src="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f72424f1301c.png" alt="С учетом давности взаимодействий" width="816" height="300" srcset="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f72424f1301c.png 816w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f72424f1301c-300x110.png 300w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f72424f1301c-768x282.png 768w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f72424f1301c-450x165.png 450w" sizes="(max-width: 816px) 100vw, 816px" /></p>
+<p>Рядом со столбцом &#171;Medium&#187; появился новый столбец &#171;Time_Decay&#187; с распределенной ценностью.</p>
+<p>И теперь, если сделать агрегацию, можно увидеть как распределилась ценность по каналам.</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="sql">WITH Ranks AS (
+SELECT 
+  Date
+, Client_ID
+, Medium
+-- Делим ранг определенной строки на сумму рангов по пользователю
+, ROUND(CAST(DENSE_RANK() OVER(PARTITION BY Client_ID ORDER BY Date) AS FLOAT) / CAST(SUM(ranks) OVER(PARTITION BY Client_ID) AS FLOAT), 2) AS 'Time_Decay' 
+, Sessions
+, Conversions
+FROM (
+      SELECT 
+      Date
+    , Client_ID
+    , Medium
+  -- Присваиваем ранг в зависимости от близости к дате конверсии
+    , DENSE_RANK() OVER(PARTITION BY Client_ID ORDER BY Date) AS 'Ranks'
+    , Sessions
+    , Conversions
+      FROM Orders
+     ) rank_table
+)
+
+SELECT 
+  Medium
+, SUM(Time_Decay) AS 'Value'
+, SUM(Conversions) AS 'Conversions'
+FROM Ranks
+GROUP BY Medium
+ORDER BY Value DESC</pre>
+<p id="lKhTfBm"><img class="alignnone wp-image-3251 size-full" title="С учетом давности взаимодействий" src="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f7250c9391e8.png" alt="С учетом давности взаимодействий" width="358" height="125" srcset="http://thisisdata.ru/wp-content/uploads/2020/09/img_5f7250c9391e8.png 358w, http://thisisdata.ru/wp-content/uploads/2020/09/img_5f7250c9391e8-300x105.png 300w" sizes="(max-width: 358px) 100vw, 358px" /></p>
+<p>Из получившегося отчета видно, что самым весомым каналом является канал &#171;cpc&#187;, а канал &#171;cpa&#187;, который был бы исключен при применении стандартной модели атрибуции, тоже получил свою долю при распределении ценности.</p>
+<p><strong>Полезные ссылки:</strong></p>
+<ul>
+<li><a href="https://docs.microsoft.com/ru-ru/sql/t-sql/queries/select-over-clause-transact-sql?view=sql-server-ver15" target="_blank" rel="noopener noreferrer">SELECT — предложение OVER (Transact-SQL)</a></li>
+<li><a href="https://netpeak.net/ru/blog/kak-rabotat-s-okonnymi-funktsiyami-v-google-bigquery-podrobnoe-rukovodstvo/" target="_blank" rel="noopener noreferrer">Как работать с оконными функциями в Google BigQuery — подробное руководство</a></li>
+<li><a href="https://medium.com/@dmitriilin/custom-attribution-using-google-bigquery-online-offline-data-af3f5cdb77ad" target="_blank" rel="noopener noreferrer">Модель атрибуции на основе онлайн/офлайн данных в Google BigQuery</a></li>
+</ul>
+<div id="wpautbox-below"><ul class="a-tab-nav"><li class="a-tab-active"><a href="#wpautbox_about"><i class="el-icon-user wpautbox-icon"></i> Об авторе</a></li><li><a href="#wpautbox_latest-post"><i class="el-icon-list wpautbox-icon"></i> Свежие записи</a></li></ul><div class="a-tab-container"><div class="a-tab-content" id="wpautbox_about"><div class="wpautbox-avatar"><img alt='' src='http://0.gravatar.com/avatar/629402a0712f1f964c951cbed309c8ee?s=80&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/629402a0712f1f964c951cbed309c8ee?s=160&#038;d=mm&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' /></div><div class="wpautbox-author-meta"><h4 class="wpautbox-name"> Роман Романчук</h4>Digital-аналитик и иногда спортсмен.</div></div><div class="a-tab-content" id="wpautbox_latest-post"><ul class="wpautbox-post_type-list wpautbox-latest-post"><li><a href="http://thisisdata.ru/blog/uchimsya-primenyat-okonnyye-funktsii/">Учимся применять оконные функции</a> <span class="wpautbox-date">- 29.09.2020</span></li><li><a href="http://thisisdata.ru/blog/avtomatizatsiya-otchetnosti-pri-pomoshchi-sql-i-power-bi/">Автоматизация отчетности при помощи SQL и Power BI</a> <span class="wpautbox-date">- 05.04.2020</span></li><li><a href="http://thisisdata.ru/blog/zachem-analitiku-nuzhno-programmirovaniye-na-sql/">Зачем аналитику нужно программирование на SQL?</a> <span class="wpautbox-date">- 22.10.2019</span></li></ul></div><div class="wpautbox-socials wpautbox-socials-square wpautbox-socials-colored"><a href="https://www.facebook.com/romanchukrv" target="_blank" class="wpautbox-facebook" data-toggle="tooltip" data-original-title="Facebook" ><span class="wpautbox-icon wpautbox-icon-facebook"></span></a> </div></div></div>	</div><!-- .entry-content -->
+
+	<footer class="entry-footer container container-small">
+		<span class="cat-links"><span class="meta-text">Рубрика: </span><a href="http://thisisdata.ru/category/analiz-dannykh/" rel="category tag">Анализ данных</a>, <a href="http://thisisdata.ru/category/khraneniye-i-obrabotka-dannykh/" rel="category tag">Хранение и обработка данных</a></span><span class="cat-tags-connector meta-text"> | </span><span class="tags-links"><span class="meta-text">Тег: </span><a href="http://thisisdata.ru/tag/sql/" rel="tag">SQL</a></span>	</footer><!-- .entry-footer -->
+
+	</article><!-- #post-## -->
+
+<div id="comments" class="comments-area container container-medium">
+
+			<h5 class="comments-title">
+			7 replies on <span> &ldquo; Учимся применять оконные функции &rdquo;</span>		</h5><!-- .comments-title -->
+
+		<ol class="comment-list">
+					<li id="comment-527" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-527" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='http://1.gravatar.com/avatar/49d46fa6bbabca970c1724ecf8d1b4bd?s=50&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/49d46fa6bbabca970c1724ecf8d1b4bd?s=100&#038;d=mm&#038;r=g 2x' class='avatar avatar-50 photo' height='50' width='50' />						<b class="fn">Slava</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://thisisdata.ru/blog/uchimsya-primenyat-okonnyye-funktsii/#comment-527">
+							<time datetime="2020-10-14T11:30:00+03:00">
+								14.10.2020 в 11:30							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Хорошая статья. Начинающим аналитикам точно будет полезной.<br />
+Было бы круто добавить кейс с использованием IGNORE NULLS, иногда без него никак 🙂</p>
+<p>Еще, есть особенность в функциях FIRST_VALUE и LAST_VALUE, о которой редко пишут, они не всегда выдают ожидаемый результат. Тут подробно расписано почему так происходит &#8212; <a href="https://stackoverflow.com/questions/35096414/why-doesnt-last-value-return-the-last-value" rel="nofollow ugc">https://stackoverflow.com/questions/35096414/why-doesnt-last-value-return-the-last-value</a><br />
+Поэтому, я всегда в них использую ORDER BY field ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-527' data-commentid="527" data-postid="3134" data-belowelement="div-comment-527" data-respondelement="respond" aria-label='Комментарий к записи Slava'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-528" class="comment odd alt depth-2">
+			<article id="div-comment-528" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='http://2.gravatar.com/avatar/e241f182fc51c17b3abfa8f474f5b299?s=50&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e241f182fc51c17b3abfa8f474f5b299?s=100&#038;d=mm&#038;r=g 2x' class='avatar avatar-50 photo' height='50' width='50' />						<b class="fn"><a href='http://thisisdata.ru' rel='external nofollow ugc' class='url'>Roman  Romanchuk</a></b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://thisisdata.ru/blog/uchimsya-primenyat-okonnyye-funktsii/#comment-528">
+							<time datetime="2020-10-15T16:35:29+03:00">
+								15.10.2020 в 16:35							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Спасибо за дельные замечания)</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-528' data-commentid="528" data-postid="3134" data-belowelement="div-comment-528" data-respondelement="respond" aria-label='Комментарий к записи Roman  Romanchuk'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-545" class="comment even thread-odd thread-alt depth-1">
+			<article id="div-comment-545" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='http://2.gravatar.com/avatar/23e84d22e4d1ba30abe6768e701afec5?s=50&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/23e84d22e4d1ba30abe6768e701afec5?s=100&#038;d=mm&#038;r=g 2x' class='avatar avatar-50 photo' height='50' width='50' />						<b class="fn">Антон Коляда</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://thisisdata.ru/blog/uchimsya-primenyat-okonnyye-funktsii/#comment-545">
+							<time datetime="2021-01-22T03:17:39+03:00">
+								22.01.2021 в 03:17							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Супер статья! Написано очень просто и наглядно.<br />
+Отправил сыну изучать.<br />
+Роман, спасибо! Пиши еще)</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-545' data-commentid="545" data-postid="3134" data-belowelement="div-comment-545" data-respondelement="respond" aria-label='Комментарий к записи Антон Коляда'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-720" class="comment odd alt thread-even depth-1">
+			<article id="div-comment-720" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='http://1.gravatar.com/avatar/78efae28d6d54e9884681d9c5061e2bc?s=50&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/78efae28d6d54e9884681d9c5061e2bc?s=100&#038;d=mm&#038;r=g 2x' class='avatar avatar-50 photo' height='50' width='50' />						<b class="fn">Ринат</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://thisisdata.ru/blog/uchimsya-primenyat-okonnyye-funktsii/#comment-720">
+							<time datetime="2021-07-06T13:23:27+03:00">
+								06.07.2021 в 13:23							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Отличная статья! Единственная статья, из которой понял как работают оконные функции. Добавил в закладки.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-720' data-commentid="720" data-postid="3134" data-belowelement="div-comment-720" data-respondelement="respond" aria-label='Комментарий к записи Ринат'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-771" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-771" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='http://0.gravatar.com/avatar/cfda0f7258f7b1cc2c2a42209267140b?s=50&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/cfda0f7258f7b1cc2c2a42209267140b?s=100&#038;d=mm&#038;r=g 2x' class='avatar avatar-50 photo' height='50' width='50' />						<b class="fn">Эмиль</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://thisisdata.ru/blog/uchimsya-primenyat-okonnyye-funktsii/#comment-771">
+							<time datetime="2021-07-21T16:27:53+03:00">
+								21.07.2021 в 16:27							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>&gt; «Значение» PRECEDING – определяет число строк перед текущей строкой (не допускается в предложении RANGE)</p>
+<p>В некоторых СУБД (например, Oracle) допускается. Только там для RANGE &#171;значение&#187; &#8212; это величина поля, по которому сортируем, на которую надо отступить. Например, сортируем по дате, и можно написать RANGE BETWEEN INTERVAL &#8216;1&#8217; MONTH PRECEDING AND INTERVAL &#8216;1&#8217; DAY FOLLOWING</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-771' data-commentid="771" data-postid="3134" data-belowelement="div-comment-771" data-respondelement="respond" aria-label='Комментарий к записи Эмиль'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-772" class="comment odd alt depth-2 parent">
+			<article id="div-comment-772" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='http://0.gravatar.com/avatar/cfda0f7258f7b1cc2c2a42209267140b?s=50&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/cfda0f7258f7b1cc2c2a42209267140b?s=100&#038;d=mm&#038;r=g 2x' class='avatar avatar-50 photo' height='50' width='50' />						<b class="fn">Эмиль</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://thisisdata.ru/blog/uchimsya-primenyat-okonnyye-funktsii/#comment-772">
+							<time datetime="2021-07-21T16:28:36+03:00">
+								21.07.2021 в 16:28							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Пример:<br />
+<a href="https://docs.oracle.com/cd/E11882_01/server.112/e25554/analysis.htm#DWHSG021" rel="nofollow ugc">https://docs.oracle.com/cd/E11882_01/server.112/e25554/analysis.htm#DWHSG021</a></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-772' data-commentid="772" data-postid="3134" data-belowelement="div-comment-772" data-respondelement="respond" aria-label='Комментарий к записи Эмиль'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-773" class="comment even depth-3">
+			<article id="div-comment-773" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='http://0.gravatar.com/avatar/cfda0f7258f7b1cc2c2a42209267140b?s=50&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/cfda0f7258f7b1cc2c2a42209267140b?s=100&#038;d=mm&#038;r=g 2x' class='avatar avatar-50 photo' height='50' width='50' />						<b class="fn">Эмиль</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://thisisdata.ru/blog/uchimsya-primenyat-okonnyye-funktsii/#comment-773">
+							<time datetime="2021-07-21T16:30:45+03:00">
+								21.07.2021 в 16:30							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Собственно, это, на мой взгляд, основная фишка опции RANGE &#8212; что можно задать окно по диапазону. Например &#8212; посчитать сумму по всем банковским операциям в окне последнего месяца.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-773' data-commentid="773" data-postid="3134" data-belowelement="div-comment-773" data-respondelement="respond" aria-label='Комментарий к записи Эмиль'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+			<div id="respond" class="comment-respond">
+		<h5 id="reply-title" class="comment-reply-title">Добавить комментарий <small><a rel="nofollow" id="cancel-comment-reply-link" href="/blog/uchimsya-primenyat-okonnyye-funktsii/#respond" style="display:none;">Отменить ответ</a></small></h5><form action="http://thisisdata.ru/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><p class="comment-notes"><span id="email-notes">Ваш адрес email не будет опубликован.</span> Обязательные поля помечены <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Комментарий</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Имя <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
+<p class="comment-form-url"><label for="url">Сайт</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200" /></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /> <label for="wp-comment-cookies-consent">Сохранить моё имя, email и адрес сайта в этом браузере для последующих моих комментариев.</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Отправить комментарий" /> <input type='hidden' name='comment_post_ID' value='3134' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="9307ba0d10" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="249"/></p></form>	</div><!-- #respond -->
+	
+</div><!-- #comments -->
+
+		</main><!-- #main -->
+	</div><!-- #primary -->
+	<aside class="side-nav">
+		<!-- Search form -->
+		<div class="search-wrap">
+			
+
+<form role="search" method="get" class="search-form" action="http://thisisdata.ru/">
+	<label for="search-form-6189c4d5656a9">
+		<span class="screen-reader-text">Поиск: '</span>
+	</label>
+	<input type="search" id="search-form-6189c4d5656a9" class="search-field" placeholder="Поиск" value="" name="s" />
+	<button type="submit" class="search-submit">
+		<i class="icon-search"></i>
+		<span class="screen-reader-text">
+			Поиск			</span>
+		</button>
+</form>
+		</div>
+
+		<!-- insert sharedaddy if enabled here -->
+		
+		<!-- Post navigation -->
+		
+	<nav class="navigation posts-navigation" role="navigation" aria-label="Навигация по записям">
+		<h2 class="screen-reader-text">Навигация по записям</h2>
+		<div class="nav-links"><div class="nav-next"><a href="http://thisisdata.ru/blog/chto-takoye-sistemnyy-refaktoring/"><span class="next-trig">След. пост<i class="icon-right"></i></span><div class="next-title"><span class="post-title">Что такое системный рефакторинг?</span></div></a></div><div class="nav-previous"><a href="http://thisisdata.ru/blog/avtomatizatsiya-otchetnosti-pri-pomoshchi-sql-i-power-bi/"><span class="prev-trig">Пред. пост<i class="icon-left"></i></span><div class="prev-title"><span class="post-title">Автоматизация отчетности при помощи SQL и Power BI</span></div></a></div></div>
+	</nav>
+	</aside>
+
+
+
+	</div><!-- #content -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		
+			<div class="footer-widget-holder container">
+				
+			<div class="widget-area">
+				<section id="custom_html-17" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><a target="_blank" href="https://t.me/thisisdata" rel="noopener noreferrer"><img alt="Telegram канал @thisisdata" width="344px" src="http://thisisdata.ru/wp-content/uploads/2019/11/telegram2.png"></a></div></section><section id="custom_html-18" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fthisisdata.ru&tabs&width=346&height=154&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="346" height="154" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></div></section>			</div>
+
+		
+			<div class="widget-area">
+				<section id="custom_html-19" class="widget_text widget widget_custom_html"><h6 class="widget-title">Будь в курсе</h6><div class="textwidget custom-html-widget"><div id="rainmaker_form_210" class="rm_form_container rainmaker_form rm-form-style " data-type="rm_subscription" data-form-id="210"><form action="/blog/uchimsya-primenyat-okonnyye-funktsii/#rainmaker_form_210"><div class="rm_form_el_set rm_form_el_name "><label class="rm_form_label" >Имя</label><input class="rm_form_field" type="text" name="name"  required placeholder="Имя"/></div><div class="rm_form_el_set rm_form_el_email "><label class="rm_form_label" >E-mail</label><input class="rm_form_field" type="email" name="email"  required placeholder="E-mail"/></div><div class="rm_form_el_set rm_form_el_button "><input class="rm_form_field rm_button" type="submit" name="button"   value="Подписаться на рассылку"/></div></form><div class="rm-loader"></div></div><div id="rm_form_message_210" class="rm_form_message" style="display:none">Вы успешно подписались на рассылку!
+Пожалуйста, подтвердите свой e-mail перейдя по ссылке из письма.</div></div></section><section id="tag_cloud-4" class="widget widget_tag_cloud"><h6 class="widget-title">Теги</h6><div class="tagcloud"><a href="http://thisisdata.ru/tag/google-analytics/" class="tag-cloud-link tag-link-41 tag-link-position-1" style="font-size: 14px;">Google Analytics</a>
+<a href="http://thisisdata.ru/tag/google-bigquery/" class="tag-cloud-link tag-link-46 tag-link-position-2" style="font-size: 14px;">Google BigQuery</a>
+<a href="http://thisisdata.ru/tag/data-studio/" class="tag-cloud-link tag-link-43 tag-link-position-3" style="font-size: 14px;">Google Data Studio</a>
+<a href="http://thisisdata.ru/tag/google-tag-manager/" class="tag-cloud-link tag-link-42 tag-link-position-4" style="font-size: 14px;">Google Tag Manager</a>
+<a href="http://thisisdata.ru/tag/ms-excel/" class="tag-cloud-link tag-link-48 tag-link-position-5" style="font-size: 14px;">MS Excel</a>
+<a href="http://thisisdata.ru/tag/ms-power-bi/" class="tag-cloud-link tag-link-60 tag-link-position-6" style="font-size: 14px;">MS Power BI</a>
+<a href="http://thisisdata.ru/tag/r/" class="tag-cloud-link tag-link-44 tag-link-position-7" style="font-size: 14px;">R</a>
+<a href="http://thisisdata.ru/tag/sql/" class="tag-cloud-link tag-link-45 tag-link-position-8" style="font-size: 14px;">SQL</a>
+<a href="http://thisisdata.ru/tag/yandex-metrika/" class="tag-cloud-link tag-link-47 tag-link-position-9" style="font-size: 14px;">Яндекс Метрика</a></div>
+</section>			</div>
+
+					</div>
+
+		
+
+		<div class="site-info">
+© This is Data, 2016 - ∞
+			<!--a href="https://wordpress.org/">
+				Proudly powered by WordPress			</a>
+			<span class="sep"> - </span>
+			<a href="https://themeskingdom.com/" target="_blank">
+				Theme: Coup Lite by Themes Kingdom			</a-->
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+<span class="overlay"></span>
+<button class="back-to-top hide"><i class="icon-top"></i></button>
+<link rel='stylesheet' id='rainmaker_form_style-css'  href='http://thisisdata.ru/wp-content/plugins/icegram-rainmaker/classes/../assets/css/form.css?ver=0.37' type='text/css' media='all' />
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wpcf7 = {"apiSettings":{"root":"http:\/\/thisisdata.ru\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"cached":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=5.1.4'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/plugins/wp-author-box-lite/lib/js/jquery.a-tab.js?ver=5.4.7'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/plugins/wp-author-box-lite/lib/js/jquery.wpautbox.js?ver=5.4.7'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/themes/coup-lite/js/navigation.js?ver=20151215'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/themes/coup-lite/js/skip-link-focus-fix.js?ver=20151215'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/themes/coup-lite/js/slick.js?ver=20151215'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/themes/coup-lite/js/jquery.mCustomScrollbar.js?ver=20151215'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-includes/js/comment-reply.min.js?ver=5.4.7'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-includes/js/imagesloaded.min.js?ver=3.2.0'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-includes/js/masonry.min.js?ver=3.3.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var thickboxL10n = {"next":"\u0414\u0430\u043b\u0435\u0435 \u2192","prev":"\u2190 \u041d\u0430\u0437\u0430\u0434","image":"\u0418\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435","of":"\u0438\u0437","close":"\u0417\u0430\u043a\u0440\u044b\u0442\u044c","noiframes":"\u042d\u0442\u0430 \u0444\u0443\u043d\u043a\u0446\u0438\u044f \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u043f\u043e\u0434\u0434\u0435\u0440\u0436\u043a\u0438 \u043f\u043b\u0430\u0432\u0430\u044e\u0449\u0438\u0445 \u0444\u0440\u0435\u0439\u043c\u043e\u0432. \u0423 \u0432\u0430\u0441 \u043e\u0442\u043a\u043b\u044e\u0447\u0435\u043d\u044b \u0442\u0435\u0433\u0438 iframe, \u043b\u0438\u0431\u043e \u0432\u0430\u0448 \u0431\u0440\u0430\u0443\u0437\u0435\u0440 \u0438\u0445 \u043d\u0435 \u043f\u043e\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442.","loadingAnimation":"http:\/\/thisisdata.ru\/wp-includes\/js\/thickbox\/loadingAnimation.gif"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-includes/js/thickbox/thickbox.js?ver=3.1-20121105'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/themes/coup-lite/js/common.js?ver=5.4.7'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/plugins/enlighter/resources/mootools-core-yc.js?ver=3.10.0'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/plugins/enlighter/resources/EnlighterJS.min.js?ver=3.10.0'></script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-includes/js/wp-embed.min.js?ver=5.4.7'></script>
+<script async="async" type='text/javascript' src='http://thisisdata.ru/wp-content/plugins/akismet/_inc/form.js?ver=4.1.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var rm_pre_data = {"ajax_url":"http:\/\/thisisdata.ru\/wp-admin\/admin-ajax.php","rm_nonce_field":"a2332d5ba1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://thisisdata.ru/wp-content/plugins/icegram-rainmaker/classes/../assets/js/main.js?ver=0.37'></script>
+<script type="text/javascript">/* <![CDATA[ */EnlighterJS_Config = {"selector":{"block":"pre.EnlighterJSRAW","inline":"code.EnlighterJSRAW"},"language":"js","theme":"droide","indent":2,"hover":"hoverEnabled","showLinenumbers":true,"rawButton":true,"infoButton":true,"windowButton":true,"rawcodeDoubleclick":false,"grouping":true,"cryptex":{"enabled":false,"email":"mail@example.tld"}};!function(){var a=function(a){var b="Enlighter Error: ";console.error?console.error(b+a):console.log&&console.log(b+a)};return window.addEvent?"undefined"==typeof EnlighterJS?void a("Javascript Resources not loaded yet!"):"undefined"==typeof EnlighterJS_Config?void a("Configuration not loaded yet!"):void window.addEvent("domready",function(){EnlighterJS.Util.Init(EnlighterJS_Config.selector.block,EnlighterJS_Config.selector.inline,EnlighterJS_Config)}):void a("MooTools Framework not loaded yet!")}();;/* ]]> */</script>
+<!-- Shortcodes Ultimate custom CSS - start -->
+<style type="text/css">
+.break {
+  word-break: break-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: inline-block;
+}
+</style>
+<!-- Shortcodes Ultimate custom CSS - end -->
+
+</body>
+</html>
+
+<!-- Dynamic page generated in 0.102 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2021-11-09 03:46:13 -->
+
+<!-- Compression = gzip -->

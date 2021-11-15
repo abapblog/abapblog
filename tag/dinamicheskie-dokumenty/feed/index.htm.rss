@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>cl_dd_document | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/dinamicheskie-dokumenty/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:53:16 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Динамические документы (часть 2)</title>
+		<link>https://abap-blog.ru/osnovy-abap/dinamicheskie-dokumenty-chast-2/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/dinamicheskie-dokumenty-chast-2/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 13 Jan 2012 02:47:34 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[cl_dd_document]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=195</guid>
+
+					<description><![CDATA[<p>В предыдущей статье были рассмотрены основы работы с динамическими документами, в этой части я рассмотрю работу с таблицами и формами. Добавление таблиц Для добавления таблиц в DD необходимо воспользоваться методом add_table. [crayon-618a1f77bae0b117607287/] Параметр Необ. Описание no_of_columns Количество столбцов в таблице with_heading X Если Х – будет отображен заголовок таблицы cell_background_transparent X Если Х – фон [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/dinamicheskie-dokumenty-chast-2/">Динамические документы (часть 2)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>В <a href="http://abap-blog.ru/abap-objects/dinamicheskie-dokumenty/">предыдущей статье</a> были рассмотрены основы работы с динамическими документами, в этой части я рассмотрю работу с таблицами и формами.</p>
+<p><span id="more-195"></span></p>
+<p><strong>Добавление таблиц</strong></p>
+<p>Для добавления таблиц в DD необходимо воспользоваться методом add_table.</p><pre class="urvanov-syntax-highlighter-plain-tag">dd_document-&gt;add_table(
+    EXPORTING
+      no_of_columns               = 3
+      with_heading                = 'X'
+      cell_background_transparent = 'X'
+      border                      = '1'
+      WIDTH                       = '100%'
+    IMPORTING
+      TABLE                       = TABLE
+      tablearea                   = tablearea ).</pre><p></p>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="23%"><strong>Параметр</strong></td>
+<td valign="top" width="8%"><strong>Необ.</strong></td>
+<td valign="top" width="68%"><strong>Описание</strong></td>
+</tr>
+<tr>
+<td valign="top" width="23%">no_of_columns</td>
+<td valign="top" width="8%"></td>
+<td valign="top" width="68%">Количество столбцов в таблице</td>
+</tr>
+<tr>
+<td valign="top" width="23%">with_heading</td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="68%">Если Х – будет отображен заголовок таблицы</td>
+</tr>
+<tr>
+<td valign="top" width="23%">cell_background_transparent</td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="68%">Если Х – фон ячеек таблицы прозрачный</td>
+</tr>
+<tr>
+<td valign="top" width="23%">border</td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="68%">Если ‘’ – рамку не выводить</td>
+</tr>
+<tr>
+<td valign="top" width="23%">width</td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="68%">Размер в html формате (100px, 100%..)</td>
+</tr>
+<tr>
+<td valign="top" width="23%">table</td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="68%">Возвращает класс инкапсулирующий таблицу &#8212; cl_dd_table_element</td>
+</tr>
+<tr>
+<td valign="top" width="23%">tablearea</td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="68%">Возвращает класс инкапсулирующий таблицу – cl_dd_table_area. Различия с предыдущим в том, что данный класс более упрощает работу с таблицей. См. пример.</td>
+</tr>
+</tbody>
+</table>
+<p>Пример создания стандартной DD таблицы:</p><pre class="urvanov-syntax-highlighter-plain-tag">....
+  dd_document-&gt;add_table( EXPORTING no_of_columns = 2 WIDTH = '100%' IMPORTING TABLE = TABLE ).
+  table-&gt;add_column( EXPORTING WIDTH = '50%' IMPORTING COLUMN = column1 ).
+  table-&gt;add_column( EXPORTING WIDTH = '50%' IMPORTING COLUMN = column2 ).
+  column1-&gt;add_text( text = 'Ячейка 1' ).
+  column2-&gt;add_text( text = 'Ячейка 2' ).
+  table-&gt;new_row( ).
+  column1-&gt;add_text( text = 'Ячейка 3' ).
+  column2-&gt;add_text( text = 'Ячейка 4' ).</pre><p>Пример упрощённой работы с DD таблицей:</p><pre class="urvanov-syntax-highlighter-plain-tag">dd_document-&gt;add_table( EXPORTING no_of_columns = 2 WIDTH = '100%' IMPORTING tablearea = table_area ).
+  table_area-&gt;add_text( text = 'Ячейка 1' ).
+  table_area-&gt;add_text( text = 'Ячейка 2' ).
+  table_area-&gt;new_row( ).
+  table_area-&gt;add_text( text = 'Ячейка 3' ).
+  table_area-&gt;add_text( text = 'Ячейка 4' ).
+  table_area-&gt;new_row( ).</pre><p><strong>Работа с формами</strong></p>
+<p>Формы DD позволяют размещать на них такие элементы как: поля ввода  &#8212; cl_dd_input_element, списки – cl_dd_select_element, кнопки – cl_dd_button_element.</p>
+<p>Пример создания формы и кнопки на ней:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lo_btn  TYPE REF TO cl_dd_button_element,
+      lo_form TYPE REF TO cl_dd_form_area.
+ ...
+   dd_document-&gt;add_form( IMPORTING formarea = lo_form ).
+   lo_form-&gt;add_button( EXPORTING sap_icon = 'ICON_EXECUTE_OBJECT' NAME = 'BUT1' IMPORTING button = lo_btn ).</pre><p>Элементы формы имеют свои события, на которые можно повесить обработчики. Например, у кнопки событие щелчка – CLICKED, для поля ввода можно обработать события нажатия на F1,F4 и т.д. Самый частый пример формы DD который вы видите это выбор типа объекта в SE80.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/dinamicheskie-dokumenty-chast-2/">Динамические документы (часть 2)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/dinamicheskie-dokumenty-chast-2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Динамические документы (часть 1)</title>
+		<link>https://abap-blog.ru/osnovy-abap/dinamicheskie-dokumenty/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/dinamicheskie-dokumenty/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 12 Jan 2012 01:52:10 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[cl_dd_document]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=188</guid>
+
+					<description><![CDATA[<p>Динамические документы являются логическим приемником стандартного в R/3 вывода списков. Они отображаются в виде HTML – документов, обеспечивают поддержку вывода различных графических элементов.  Используя классы DD, вы тем самым генерируете HTML код, который будет отображен в ходе выполнения программы. Вам не обязательно знать HTML. Общая схема форматирования гарантирует, что документы во всей системе будут отображены [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/dinamicheskie-dokumenty/">Динамические документы (часть 1)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Динамические документы являются логическим приемником стандартного в R/3 вывода списков. Они отображаются в виде HTML – документов, обеспечивают поддержку вывода различных графических элементов.  Используя классы DD, вы тем самым генерируете HTML код, который будет отображен в ходе выполнения программы. Вам не обязательно знать HTML. Общая схема форматирования гарантирует, что документы во всей системе будут отображены однотипно. Цветовые схемы автоматически добавляются в зависимости от цветов настроенных в GUI.</p>
+<p><span id="more-188"></span></p>
+<p><strong>Интеграция</strong></p>
+<p>DD отображаются в R3, используя SAP Control Framework и SAP HTML Viewer. Вы можете отобразить их на любом контейнере: в определенной области экрана, в диалоговом режиме. <a href="http://help.sap.com/saphelp_nw04/helpdata/en/b6/ab3a8103ac11d4a73f0000e83dd863/frameset.htm" target="_blank" rel="noopener">Справка SAP.</a></p>
+<p><strong>Возможности.</strong></p>
+<p>DD поддерживают обработку следующих элементов:</p>
+<ul>
+<li>Тексты</li>
+<li>Ссылки</li>
+<li>Кнопки</li>
+<li>Поля ввода</li>
+<li>Выпадающие списки</li>
+<li>Иконки</li>
+<li>Картинки</li>
+<li>Таблицы</li>
+</ul>
+<p>Примеры программ по работе с DD лежат в пакете <strong>SDYNAMICDOCUMENTS</strong>.</p>
+<p>Динамичный документ представлен экземпляр класса cl_dd_document. Вы можете использовать его методы для добавления элементов в документе.</p>
+<p>В документе, вы можете создавать формы и таблицы. Формы позволяют включать поля ввода, кнопки, выпадающие списки. Таблицы обеспечивают простой способ отображения данных в структурированном виде.</p>
+<p>Прежде чем приступать к созданию DD, убедитесь, что вы знаете основы ABAP Objects и SAP Control Framework.</p>
+<p>И так для отображения документа необходимо:</p>
+<ol start="1">
+<li>Создать экран и область на экране для вывода контейнера.</li>
+<li>Создать инстанцию DD определив для него контейнер.</li>
+<li>Создать элементы DD.</li>
+</ol>
+<p>Пример простой программы для вывода бегущей строки (100 экран с контейнером HTML, статус PFMAIN с определенными для выхода командами):</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+      ok_code TYPE sy-ucomm,
+      go_document  TYPE REF TO cl_dd_document.
+
+START-OF-SELECTION.
+  CALL SCREEN 100.
+
+MODULE pbo OUTPUT.
+  SET PF-STATUS 'PFMAIN'.
+  IF go_document IS NOT BOUND.
+    CREATE OBJECT go_document.
+    go_document-&gt;add_static_html( EXPORTING string_with_html = '&lt;body marginheight="0" topmargin="0" borders = "0"&gt;' ).
+    go_document-&gt;add_static_html( EXPORTING string_with_html = '&lt;marquee&gt;бегущая строка с какой-нибудь фигней&lt;/marquee&gt;' ).
+    go_document-&gt;display_document( EXPORTING container = 'HTML' ).
+  ENDIF.
+ENDMODULE.                 " PBO OUTPUT
+
+MODULE pai INPUT.
+  CASE ok_code.
+    WHEN 'EXIT' OR 'BACK'.
+      LEAVE PROGRAM.
+  ENDCASE.
+ENDMODULE.                 " PAI INPUT</pre><p><strong>Добавление</strong><strong> текста</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">go_document-&gt;add_text(
+      EXPORTING
+        text = text
+        text_table = text_table
+        fix_lines = fix_lines
+        sap_style = sap_style
+        sap_color = sap_color
+        sap_fontsize = sap_fontsize
+        sap_emphasis = sap_emphasis ).</pre><p></p>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="23%"><strong>Параметр и его тип</strong></td>
+<td valign="top" width="8%"><strong>Необ.</strong></td>
+<td valign="top" width="67%"><strong>Описание</strong></td>
+</tr>
+<tr>
+<td valign="top" width="23%">text<br />
+<strong>TYPE SDYDO_TEXT_<br />
+ELEMENT</strong></td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="67%">Текст длинной до 255 символов</td>
+</tr>
+<tr>
+<td valign="top" width="23%">text_table<br />
+<strong>TYPE SDYDO_TEXT_<br />
+TABLE</strong></td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="67%">Внутренняя таблица с текстами</td>
+</tr>
+<tr>
+<td valign="top" width="23%">fix_lines<br />
+<strong>TYPE SDYDO_FLAG</strong></td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="67%">Индикатор задает, как должна отображаться таблица</p>
+<ul>
+<li><strong>&#8216;</strong><strong>X</strong><strong>&#8216;</strong> : Отображать каждую запись в новой строке</li>
+<li><strong>&#8216; &#8216;</strong> : Отобразить всю таблицу как один текст</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td valign="top" width="23%">sap_style<br />
+<strong>TYPE SDYDO_ATTRIBUTE</strong></td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="67%">Стиль вывода текста, может принимать значения: HEADING, KEY SUCCESS, WARNING, TABLE_HEADING</td>
+</tr>
+<tr>
+<td valign="top" width="23%">sap_color<br />
+<strong>TYPE SDYDO_ATTRIBUTE</strong></td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="67%">Цвет вывода: LIST_BACKGROUNDLIST_BACKGROUND_INTLIST_BACKGROUND_INVLIST_GROUPLIST_GROUP_INT</p>
+<p>LIST_GROUP_INV</p>
+<p>LIST_HEADING</p>
+<p>LIST_HEADING_INT</p>
+<p>LIST_HEADING_INV</p>
+<p>LIST_KEY</p>
+<p>LIST_KEY_INT</p>
+<p>LIST_KEY_INV</p>
+<p>LIST_NEGATIVE</p>
+<p>LIST_NEGATIVE_INT</p>
+<p>LIST_NEGATIVE_INV</p>
+<p>LIST_NORMAL</p>
+<p>LIST_NORMAL_INT</p>
+<p>LIST_POSITIVE</p>
+<p>LIST_POSITIVE_INT</p>
+<p>LIST_POSITIVE_INV</p>
+<p>LIST_TOTAL</p>
+<p>LIST_TOTAL_INT</p>
+<p>LIST_TOTAL_INV</td>
+</tr>
+<tr>
+<td valign="top" width="23%">sap_fontsize<br />
+<strong>TYPE SDYDO_ATTRIBUTE</strong></td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="67%">Размер шрифта. Возможные значения:</p>
+<ul>
+<li><strong>cl_dd_area=&gt;small</strong></li>
+<li><strong>cl_dd_area=&gt;medium</strong></li>
+<li><strong>cl_dd_area=&gt;large</strong></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td valign="top" width="23%">sap_emphasis<br />
+<strong>TYPE SDYDO_ATTRIBUTE</strong></td>
+<td valign="top" width="8%"> X</td>
+<td valign="top" width="67%">Выделение текста</p>
+<ul>
+<li><strong>cl_dd_area=&gt;strong</strong> : Жирный</li>
+<li><strong>cl_dd_area=&gt;emphasis</strong> : Курсив</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td valign="top" width="23%">sap_fontstyle<br />
+<strong>TYPE SDYDO_ATTRIBUTE</strong></td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="67%">SERIF, SANS_SERIF, STANDARD</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p><strong>Добавление ссылок</strong></p>
+<p>Ссылки добавляются в документ с помощью метода add_link. Вы можете определить одно из трех поведений для ссылок: 1. Ссылка на внешний адрес (например: интернет страницу) 2. Ссылка на закладку внутри документа. 3. Ссылку, не имеющую  адреса, для навешивания на нее определенного события программно.</p>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="24%"><strong>Параметр и его тип</strong></td>
+<td valign="top" width="6%"><strong>Необ.</strong></td>
+<td valign="top" width="68%"><strong>Описание</strong></td>
+</tr>
+<tr>
+<td valign="top" width="24%">name<br />
+<strong>TYPE SDYDO_<br />
+ELEMENT_NAME</strong></td>
+<td valign="top" width="6%">X</td>
+<td valign="top" width="68%">Имя ссылки</td>
+</tr>
+<tr>
+<td valign="top" width="24%">URL<br />
+<strong>TYPE STRING</strong></td>
+<td valign="top" width="6%">X</td>
+<td valign="top" width="68%">Внешний URL адрес</td>
+</tr>
+<tr>
+<td valign="top" width="24%">Tooltip<br />
+<strong>TYPE STRING</strong></td>
+<td valign="top" width="6%">X</td>
+<td valign="top" width="68%">Всплывающая подсказка к ссылке</td>
+</tr>
+<tr>
+<td valign="top" width="24%">text<br />
+<strong>TYPE SDYDO_TEXT_<br />
+ELEMENT</strong></td>
+<td valign="top" width="6%">X</td>
+<td valign="top" width="68%">Текст ссылки в документе</td>
+</tr>
+<tr>
+<td valign="top" width="24%">destination_in_doc_set<br />
+<strong>TYPE STRING</strong></td>
+<td valign="top" width="6%">X</td>
+<td valign="top" width="68%">Определяет закладку на которую будет ссылаться ссылка</td>
+</tr>
+<tr>
+<td valign="top" width="24%">destination_in_doc_pos<br />
+<strong>TYPE STRING</strong></td>
+<td valign="top" width="6%">X</td>
+<td valign="top" width="68%">Имя для создания новой закладки</td>
+</tr>
+<tr>
+<td valign="top" width="24%">link<br />
+<strong>TYPE REF TO<br />
+CL_DD_LINK_<br />
+ELEMENT</strong></td>
+<td valign="top" width="6%"></td>
+<td valign="top" width="68%">Возвращает инстанцию объекта инкапсулирующего ссылку. Необходимо для установки обработчиков событий. См. пример ниже.</td>
+</tr>
+</tbody>
+</table>
+<p>Для того чтобы установить ссылку на закладку в документе необходимо вызвать параметр с заполненным полем destination_in_doc_set. Для создания новой закладки необходимо вызвать метод с заполненным параметром destination_in_doc_pos.</p>
+<p>Пример части программы, добавляющей ссылку в документ  и обработки ее щелчка.</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_event_handler DEFINITION.
+PUBLIC SECTION.
+  METHODS: clicked FOR EVENT CLICKED OF CL_DD_LINK_ELEMENT.
+ENDCLASS.
+
+CLASS lcl_event_handler IMPLEMENTATION.
+  METHOD clicked.
+    MESSAGE 'Clicked' TYPE 'S'.
+  ENDMETHOD.
+ENDCLASS.
+
+DATA: go_handler TYPE REF TO lcl_event_handler,
+      go_link    TYPE REF TO CL_DD_LINK_ELEMENT.
+
+MODULE pbo OUTPUT.
+  SET PF-STATUS 'PFMAIN'.
+  IF go_document IS NOT BOUND.
+    CREATE OBJECT go_document.
+    CREATE OBJECT go_handler.
+
+    go_document-&gt;add_link( EXPORTING text = 'Ссылка' IMPORTING link = go_link ).
+    SET HANDLER go_handler-&gt;clicked FOR go_link.
+
+    go_document-&gt;display_document( EXPORTING container = 'HTML' ).
+  ENDIF.
+ENDMODULE.                 " PBO OUTPUT</pre><p><strong>Добавление иконок</strong></p>
+<p>Для добавления иконок в DD служит метод add_icon. Описание его параметров:</p>
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="23%"><strong>Параметр и его тип</strong></td>
+<td valign="top" width="8%"><strong>Необ.</strong></td>
+<td valign="top" width="68%"><strong>Описание</strong></td>
+</tr>
+<tr>
+<td valign="top" width="23%">sap_icon<br />
+<strong>TYPE ICONNAME</strong></td>
+<td valign="top" width="8%"></td>
+<td valign="top" width="68%">Имя иконки, зачем то в текстовом формате не совместимом с пулом типов &lt;icon&gt;.</td>
+</tr>
+<tr>
+<td valign="top" width="23%">sap_size<br />
+<strong>TYPE SDYDO_ATTRIBUTE</strong></td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="68%">Размер иконки: LARGE (20х20), EXTRALARGE (30&#215;30)</td>
+</tr>
+<tr>
+<td valign="top" width="23%">sap_style<br />
+<strong>TYPE SDYDO_ATTRIBUTE</strong></td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="68%">См. описание выше</td>
+</tr>
+<tr>
+<td valign="top" width="23%">sap_color<br />
+<strong>TYPE SDYDO_ATTRIBUTE</strong></td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="68%">См. описание выше</td>
+</tr>
+<tr>
+<td valign="top" width="23%">alternative_text<br />
+<strong>TYPE STRING</strong></td>
+<td valign="top" width="8%">X</td>
+<td valign="top" width="68%">Подсказка к иконке</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Добавление картинок</strong></p>
+<p>Картинки добавляются с помощью метода add_picture. Основной параметр picture_id – ключ бизнес документа с типом OT и классом PICTURES см. тр. OAOR.</p>
+<p><strong>Дополнительные методы работы с документом: </strong></p>
+<p>Вставка пустых строк:</p><pre class="urvanov-syntax-highlighter-plain-tag">go_document-&gt;NEW_LINE( REPEAT = 2 ).  "Где repeat – количество пустых строк.</pre><p>Подчёркивание:</p><pre class="urvanov-syntax-highlighter-plain-tag">go_document-&gt;UNDERLINE( ).</pre><p>Для того чтобы все вновь добавляемые в документ элементы находились в одной линии, необходимо перед их добавлением вызвать метод:</p><pre class="urvanov-syntax-highlighter-plain-tag">go_document-&gt;line_with_layout( START = 'X' ).</pre><p>После их добавления:</p><pre class="urvanov-syntax-highlighter-plain-tag">go_document-&gt;line_with_layout( END = 'X' ).</pre><p>Пропуск позиций в документе, добавить пробелы:</p>
+<p>go_document-&gt;add_gap( WIDTH = 10 width_like = &#8216;____&#8217; ). Где width – длинна в пикселях, width_like – задает вместо пробела &amp;nbsp; другой шаблон, т.е. вместо длинны пробела, будет использована длинна заданного символа (набора символов).</p>
+<p>Добавление HTML кода к документу, хоть и написано что для внутреннего использования, но применять можно:</p><pre class="urvanov-syntax-highlighter-plain-tag">go_document-&gt;add_static_html( string_with_html  = '&lt;p&gt;Тест&lt;/p&gt;' ).</pre><p>Где table_with_html – таблица с HTML кодом, string_with_html – строка с html кодом. HTML_FROM_DYNAMIC_DOCUMENT  &#8212; означает, что html код из table_with_html получен из другого дд. bds_pictures – таблица с BDS изображениями (см. описание add_picture).</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/dinamicheskie-dokumenty/">Динамические документы (часть 1)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/dinamicheskie-dokumenty/feed/</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

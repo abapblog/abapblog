@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>файлы | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/%D1%84%D0%B0%D0%B9%D0%BB%D1%8B/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Fri, 05 Mar 2021 14:09:49 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Считывание файлов с фронтенда</title>
+		<link>https://abap-blog.ru/osnovy-abap/files/upload_from_frontend/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/files/upload_from_frontend/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 07 Jan 2012 06:48:11 +0000</pubDate>
+				<category><![CDATA[Работа с файлами]]></category>
+		<category><![CDATA[sap gui]]></category>
+		<category><![CDATA[файлы]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=120</guid>
+
+					<description><![CDATA[<p>Загрузку файлов с фронтенда рекомендуется делать с помощью статического метода: cl_gui_frontend_services=&#62;gui_upload. Данный метод имеет множество параметров, описание которых я приведу далее. FILENAME &#8212; собственно имя файла из которого хотим считать информацию. FILETYPE &#8212; Тип файла, может принимать значения BIN, ASC, DAT. BIN &#8212; используется при считывании файла в байтовую последовательность. ASC &#8212; считывание как из текстового файла, [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/files/upload_from_frontend/">Считывание файлов с фронтенда</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Загрузку файлов с фронтенда рекомендуется делать с помощью статического метода: <strong>cl_gui_frontend_services=&gt;gui_upload. </strong>Данный метод имеет множество параметров, описание которых я приведу далее.</p>
+<p><span id="more-120"></span></p>
+<p><strong>FILENAME </strong>&#8212; собственно имя файла из которого хотим считать информацию.</p>
+<p><strong>FILETYPE </strong>&#8212; Тип файла, может принимать значения BIN, ASC, DAT. BIN &#8212; используется при считывании файла в байтовую последовательность. ASC &#8212; считывание как из текстового файла, DAT &#8212; тоже самое что и ASC, но при этом параметры has_field_separator, dat_mode  выставляются в &#8216;X&#8217;.</p>
+<p><strong>HAS_FIELD_SEPARATOR </strong>&#8212; Параметр отвечает за разделение между строками текстового файла. Например если файл имеет следующую структуру и значение параметра &#8216;X&#8217;:</p>
+<p>1 2 3 (tab) 4 5 6<br />
+1 2 3 4 5 6</p>
+<p>то дойдя до символа табуляции (cl_abap_char_utilities=&gt;horizontal_tab) программа решит что это конец строки и начнет считывать следующую строку. Если параметр пустой строка будет считана полностью пока не встретит разделителя строки (cl_abap_char_utilities=&gt;cr_lf), либо пока размер строки не превысит максимальный размер строки в таблице в которую происходит считывание &#8212; параметр <strong>DATA_TAB</strong>. Актуально для режимов ASC и DAT.</p>
+<p><strong>HEADER_LENGTH</strong> &#8212; используется при бинарном считывании файла, указывает количество байтов заголовка файла, для его пропуска. Сам заголовок будет находится в параметре <strong>HEADER.</strong> Актуально для режима BIN.</p>
+<p><strong>READ_BY_LINE</strong> &#8212; параметр &#8216;X&#8217; указывает на то что считывание происходит построчно, т.е. не в структуру. Таблица в которую считываем файл должна состоять из одного компонента (например char255). Актуально для режимов ASC и DAT.</p>
+<p><strong>CODEPAGE &#8212; </strong>параметр указывает на то какую кодовую страницу необходимо использовать при считывании файла, если параметр пустой кодовая страница берется по умолчанию та в которой вошел пользователь &#8212; CL_GUI_FRONTEND_SERVICES=&gt;GET_SAPLOGON_ENCODING. Например для считывания файла в кодировке UTF-8 (Без BOM) необходимо использовать кодовую страницу &#8216;4110&#8217;. Актуально для режимов ASC и DAT.</p>
+<p><strong>DAT_MODE </strong>&#8212; отвечает за считывание из файла компонентов структуры с типом D. В случае когда один компонентов имеет тип D необходимо выставлять параметр в &#8216;X&#8217;. Актуально для режимов ASC и DAT.</p>
+<p><strong>IGNORE_CERR </strong>&#8212; В случае когда &#8216;X&#8217; ошибки связанные с конвертацией кодировки игнорируются. Актуально для режимов ASC и DAT.</p>
+<p><strong>REPLACEMENT &#8212; </strong>Символ в который преобразуются символы которые не получилось преобразовать при перекодировании. Актуально для режимов ASC и DAT.</p>
+<p><strong>VIRUS_SCAN_PROFILE &#8212; </strong>Указывает на профиль сканирования на вирусы, подробнее о сканировании на вирусы см в соответствующем разделе справки SAP.</p>
+<p><strong>FILELENGTH &#8212; </strong>Передает размер файла в байтах.</p>
+<p><strong>HEADER &#8212; </strong>см. параметр <strong>HEADER_LENGTH</strong> выше.</p>
+<p><strong>DATA_TAB &#8212; </strong>собственно таблица в которую будут попадать считываемые данные из файла. Структура таблицы определяется в зависимости от структуры файла или задачи.</p>
+<p>Помните! Данный метод нельзя использовать в фоновом режиме. Ну и напоследок пример с которым все это дело проверялось:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ztest.
+
+PARAMETER p_file TYPE STRING LOWER CASE OBLIGATORY DEFAULT 'C:TempDemo.txt'.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.
+  cl_salv_test_data=&gt;select_file( IMPORTING filename = p_file ).
+
+START-OF-SELECTION.
+  TYPES: BEGIN OF ty_tab,
+          col1 TYPE char1,
+          col2 TYPE D,
+         END OF ty_tab.
+
+  DATA: lt_tab TYPE STANDARD TABLE OF ty_tab,
+        lv_length TYPE I,
+        lv_header TYPE XSTRING.
+
+  FIELD-SYMBOLS: &lt;fs&gt; TYPE ty_tab.
+
+  cl_gui_frontend_services=&gt;gui_upload(
+    EXPORTING
+      filename                = p_file
+      filetype                = 'ASC'
+      codepage                = '4110'
+      dat_mode                = 'X'
+    IMPORTING
+      filelength              = lv_length
+      header                  = lv_header
+    CHANGING
+      data_tab                = lt_tab
+    EXCEPTIONS
+      OTHERS                  = 99 ).
+  IF sy-subrc &lt;&gt; 0.
+   MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+              WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+  ENDIF.
+
+  WRITE: / 'Размер файла: ', lv_length,' Содержимое файла:'.
+  LOOP AT lt_tab ASSIGNING &lt;fs&gt;.
+    WRITE: / sy-tabix,':', 'Col1:', &lt;fs&gt;-col1,' Col2:', &lt;fs&gt;-col2 MMDDYY.
+  ENDLOOP.</pre><p>Содержимое файла:<br />
+А16.12.1986<br />
+В16.12.1986</p>
+<p>Пример считывания файла в RAW, последовательность байтов:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: l_filename TYPE STRING,
+        l_rawtab   TYPE STANDARD TABLE OF raw255,
+        l_len      TYPE I.
+
+  MOVE p_filename TO l_filename.
+  CALL METHOD cl_gui_frontend_services=&gt;gui_upload
+    EXPORTING
+      filename                = l_filename
+      filetype                = 'BIN'
+    IMPORTING
+      filelength              = l_len
+    CHANGING
+      data_tab                = l_rawtab
+    EXCEPTIONS
+      OTHERS                  = 99.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/files/upload_from_frontend/">Считывание файлов с фронтенда</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/files/upload_from_frontend/feed/</wfw:commentRss>
+			<slash:comments>4</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Выбор файлов на экране выбора</title>
+		<link>https://abap-blog.ru/osnovy-abap/files/vibor-fajlov-na-ekrane/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/files/vibor-fajlov-na-ekrane/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 06 Jan 2012 05:37:25 +0000</pubDate>
+				<category><![CDATA[Работа с файлами]]></category>
+		<category><![CDATA[sap gui]]></category>
+		<category><![CDATA[сервер приложений]]></category>
+		<category><![CDATA[средство поиска]]></category>
+		<category><![CDATA[файлы]]></category>
+		<category><![CDATA[экран выбора]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=109</guid>
+
+					<description><![CDATA[<p>При работе с файлами в ABAP встает необходимость предоставить пользователю возможность выбора файла на экране выбора, для выбора файла на стороне клиента можно воспользоваться методом класса cl_gui_frontend_services=&#62;file_open_dialog или простой обёрткой над ним cl_salv_test_data=&#62;select_file. Далее будет продемонстрировано как предоставить пользователю выбор файла как на стороне клиента, так и на сервере приложений. [crayon-618a1557058bd072732609/] Еще один способ выбора файла на сервере [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/files/vibor-fajlov-na-ekrane/">Выбор файлов на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>При работе с файлами в ABAP встает необходимость предоставить пользователю возможность выбора файла на экране выбора, для выбора файла на стороне клиента можно воспользоваться методом класса <strong>cl_gui_frontend_services=&gt;file_open_dialog</strong> или простой обёрткой над ним <strong>cl_salv_test_data=&gt;select_file.</strong> Далее будет продемонстрировано как предоставить пользователю выбор файла как на стороне клиента, так и на сервере приложений.</p>
+<p><span id="more-109"></span></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: l_true TYPE btch0000-char1.
+DATA: v_file TYPE STRING,
+      l_path TYPE dxlpath,
+      l_abend_flag TYPE dxxabend,
+      file TYPE filename,
+      flag1 TYPE C.
+
+DATA: it_fieldvalues TYPE STANDARD TABLE OF dynpread,
+      wa_fieldvalues TYPE dynpread.
+
+*----------------------------------------------------------------------*
+* SELECTION- SCREEN
+*----------------------------------------------------------------------*
+
+SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE text-001.
+PARAMETERS: p_file(120) LOWER CASE OBLIGATORY.
+PARAMETERS: p_appl RADIOBUTTON GROUP g1,
+            p_pres RADIOBUTTON GROUP g1.
+SELECTION-SCREEN END OF BLOCK b1.
+
+*----------------------------------------------------------------------*
+* AT SELECTION- SCREEN ( F4 functionality )
+*----------------------------------------------------------------------*
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.
+  PERFORM f4_file_name.
+
+*----------------------------------------------------------------------*
+* START-OF-SELECTION.
+*----------------------------------------------------------------------*
+
+START-OF-SELECTION.
+  IF p_appl = 'X'.
+    PERFORM validate_server_file.
+  ELSE.
+    PERFORM validate_presentation_server.
+  ENDIF.
+
+*----------------------------------------------------------------------*
+* END-OF-SELECTION
+*----------------------------------------------------------------------*
+
+END-OF-SELECTION.
+  IF flag1 = 'X'.
+    MESSAGE s777(hk) WITH 'Файл не существует'.
+    CLEAR flag1.
+  ELSE.
+    WRITE 'Файл успешно выбран'.
+  ENDIF.
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Проверка существования файла на сервере приложений
+*&amp;---------------------------------------------------------------------*
+FORM validate_server_file.
+  DATA: l_file TYPE tpfht-pffile.
+  CLEAR l_file.
+  l_file = p_file.
+
+  CALL FUNCTION 'PFL_CHECK_OS_FILE_EXISTENCE'
+    EXPORTING
+      fully_qualified_filename = l_file
+    IMPORTING
+      file_exists              = l_true.
+
+  IF l_true = SPACE.
+    flag1 = 'X'.
+    STOP.
+  ENDIF.
+
+ENDFORM.                    " validate_server_file
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Проверка существования файла на сервере представления (фронтенде)
+*&amp;---------------------------------------------------------------------*
+FORM validate_presentation_server .
+  DATA: RESULT,
+        xfile TYPE STRING.
+  xfile = p_file.
+
+  CALL METHOD cl_gui_frontend_services=&gt;file_exist
+    EXPORTING
+      file   = xfile
+    RECEIVING
+      RESULT = RESULT.
+  IF RESULT NE 'X'.
+    flag1 = 'X'.
+    STOP.
+  ENDIF.
+
+ENDFORM.                    "validate_presentation_server
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Обработка F4 для поля с именем файла
+*&amp;---------------------------------------------------------------------*
+FORM f4_file_name .
+
+  wa_fieldvalues-fieldname = 'P_PRES'.
+  APPEND wa_fieldvalues TO it_fieldvalues.
+  CLEAR wa_fieldvalues.
+
+  wa_fieldvalues-fieldname = 'P_APPL'.
+  APPEND wa_fieldvalues TO it_fieldvalues.
+  CLEAR wa_fieldvalues.
+
+  " Считаем значения экрана выбора
+  CALL FUNCTION 'DYNP_VALUES_READ'
+    EXPORTING
+      dyname               = sy-repid
+      dynumb               = sy-dynnr
+    TABLES
+      dynpfields           = it_fieldvalues
+    EXCEPTIONS
+      invalid_abapworkarea = 1
+      invalid_dynprofield  = 2
+      invalid_dynproname   = 3
+      invalid_dynpronummer = 4
+      invalid_request      = 5
+      no_fielddescription  = 6
+      invalid_parameter    = 7
+      undefind_error       = 8
+      double_conversion    = 9
+      stepl_not_found      = 10
+      OTHERS               = 11.
+
+  READ TABLE it_fieldvalues INTO wa_fieldvalues WITH KEY fieldname = 'P_APPL'.
+
+  " В зависимости от того что выбрано на экране выбора, будем запрашивать
+  " либо файл на стороне сервера, либо на клиенте.
+  IF wa_fieldvalues-fieldvalue = 'X'.
+    PERFORM get_f4_application.
+  ELSE.
+    PERFORM get_f4_presentation.
+  ENDIF.
+
+ENDFORM.                    " f4_file_name
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Открыть диалог выбора файла на клиенте
+*&amp;---------------------------------------------------------------------*
+FORM get_f4_presentation .
+
+*-- F4 functionality for file name on Presentation Server
+  DATA: l_file TYPE STRING.
+  CALL METHOD cl_salv_test_data=&gt;select_file
+    IMPORTING
+      filename = l_file.
+
+  p_file = l_file.
+
+ENDFORM.                    " get_f4_presentation
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Диалог выбора файлов на сервере
+*&amp;---------------------------------------------------------------------*
+FORM get_f4_application .
+
+*-- F4 functionality for filename on Application Server
+  CALL FUNCTION 'F4_DXFILENAME_TOPRECURSION'
+    EXPORTING
+      i_location_flag       = 'A'
+      i_server              = ' '
+      i_path                = '/secure_data/data_mig/dev'
+    IMPORTING
+      o_path                = l_path
+      abend_flag            = l_abend_flag
+    EXCEPTIONS
+      communication_failure = 1
+      system_failure        = 2
+      rfc_error             = 3.
+  IF sy-subrc EQ 0.
+    p_file = l_path.
+  ENDIF.
+  IF l_abend_flag = 'X'.
+    EXIT.  ENDIF.
+
+ENDFORM.                    " get_f4_application</pre><p>Еще один способ выбора файла на сервере приложений:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECTION-SCREEN BEGIN OF BLOCK 002 WITH FRAME TITLE text-002.
+PARAMETERS : p_aps LIKE rlgrap-filename MODIF ID pth .
+SELECTION-SCREEN END OF BLOCK 002.
+DATA : path_name(150) TYPE C.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_aps.
+
+SUBMIT rs_get_f4_dir_from_applserv AND RETURN.
+IMPORT path_name FROM MEMORY ID 'PATH_NAME_SDL'.
+ p_aps = path_name.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/files/vibor-fajlov-na-ekrane/">Выбор файлов на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/files/vibor-fajlov-na-ekrane/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Взаимодействие с фронтендом</title>
+		<link>https://abap-blog.ru/osnovy-abap/frontend/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/frontend/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 03 Jan 2012 10:06:32 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[Работа с файлами]]></category>
+		<category><![CDATA[cl_gui_frontend_services]]></category>
+		<category><![CDATA[sap gui]]></category>
+		<category><![CDATA[файлы]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=22</guid>
+
+					<description><![CDATA[<p>В SAP предусмотрен один замечательный класс для работы с сервером представления, называется он: CL_GUI_FRONTEND_SERVICES. Далее я опишу применение его основных методов, которые зачастую могут пригодится в написании ABAP отчётов. Так как версии GUI клиента постоянно обновляются, и существуют разные версии GUI: под MacOS, Web, Windows необходимо проверять поддерживает ли текущая версия возможности GUI, для этого был [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/frontend/">Взаимодействие с фронтендом</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2012/01/19276499341600459971-256.png"><img loading="lazy" class="main-image alignleft wp-image-6582 size-full" src="https://abap-blog.ru/wp-content/uploads/2012/01/19276499341600459971-256.png" alt="" width="256" height="256" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/19276499341600459971-256.png 256w, https://abap-blog.ru/wp-content/uploads/2012/01/19276499341600459971-256-150x150.png 150w" sizes="(max-width: 256px) 100vw, 256px" /></a>В SAP предусмотрен один замечательный класс для работы с сервером представления, называется он: <strong>CL_GUI_FRONTEND_SERVICES.</strong> Далее я опишу применение его основных методов, которые зачастую могут пригодится в написании ABAP отчётов.<span id="more-22"></span></p>
+<p>Так как версии GUI клиента постоянно обновляются, и существуют разные версии GUI: под MacOS, Web, Windows необходимо проверять поддерживает ли текущая версия возможности GUI, для этого был создан метод: <strong>CHECK_GUI_SUPPORT.</strong> Пример использования данного метода:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/2e8877055c1e6132f3f37f95e781f9df.js"></script></p>
+<p>Следующими идут методы экспорта, импорта из буфера обмена ОС: <strong>CLIPBOARD_EXPORT, CLIPBOARD_IMPORT.</strong> Пример использования метода:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/06b7b903bba68aa056797d4668cc87c4.js"></script></p>
+<p>Где data_block внутренняя таблица, rc &#8212; код возврата ошибки.</p>
+<p>Далее идет группа методов для работы с директориями на сервере представления. Метод <strong>DIRECTORY_BROWSE. </strong>Служит для отображения диалога выбора директории. Пример использования:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/2d336087106e8edcde869155c1827db9.js"></script></p>
+<p>Метод <strong>DIRECTORY_CREATE </strong>создает папку в указанном месте. Пример использования:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/ada9753e39c136f6663c633f03a0b8a7.js"></script></p>
+<p>Метод <strong>DIRECTORY_DELETE </strong>как понятно из названия удаляет указанную директорию, в случае ошибки код возврата RC будет не пустой.  Часто приходится проверять существование директории на компьютере пользователя, для этого служит метод <strong>DIRECTORY_EXIST</strong>. Пример его использования:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/de89a06d99c5a4391c93778431ab810b.js"></script></p>
+<p>Для получения текущей директории (той что используется GUI для выгрузки отчётов и пр.)  используется метод: <strong>DIRECTORY_GET_CURRENT</strong>. Для получения списка файлов в указанной директории используется метод: <strong>DIRECTORY_LIST_FILES</strong>. Метод позволяет получить список файлов и директорий в указанной вами директории, причем с заданием фильтра &#8212; параметр <strong>FILTER</strong>, вы можете определить нужно ли вам получить только директории параметр <strong>DIRECTORIES_ONLY = &#8216;X&#8217;</strong>, или только файлы &#8212; параметр <strong>FILES_ONLY = &#8216;X&#8217;</strong>. Пример использования:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/6a7b582e5bcec679a37b17c8d24ddfb6.js"></script></p>
+<p><strong>DIRECTORY_SET_CURRENT</strong> необходим для установки текущей директории (см. выше).</p>
+<p><strong>DISABLEHISTORYFORFIELD </strong>используется когда надо запретить сохранение в истории значений указанного поля, например на экране выбора.</p>
+<p><strong>ENVIRONMENT_GET_VARIABLE </strong>используется для получения значения переменной окружения на компьютере пользователя.  Противоположный ему метод, для установки значений переменных окружения &#8212; <strong>ENVIRONMENT_SET_VARIABLE.</strong></p>
+<p>Метод <strong>EXECUTE </strong>запускает на сервере представления документ, директорию, приложение. (В Windows это обёртка над WinApi &#8212; ShellExecute, ShellExecuteEx).  Параметр <strong>DOCUMENT</strong> определяет путь к документу который необходимо запустить в приложении <strong>APPLICATION</strong>, в случае если приложение не указано будет запущено ассоциируемое приложение к данному типу файлов. <strong>DEFAULT_DIRECTORY </strong>определяет директорию из которой будет происходить файла, в случае если не указан полный путь к файлу в параметре <strong>DOCUMENT. </strong><strong>OPERATION &#8212; </strong>Может принимать одно из следующих значений: FIND, EXPLORE, EDIT, OPEN или PRINT, по умолчанию OPEN. <strong>MAXIMIZED, MINIMIZED &#8212; </strong>определяет будет ли запущенное приложение развернутым или свернутым. <strong>PARAMETER</strong> &#8212; список параметров передаваемых запускаемому приложению. <strong>SYNCHRONOUS &#8212; </strong>определяет будет ли запуск синхронным, т.е. GUI будет ждать завершения операции или нет. Пример использования метода:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/3ddf4d61978f707169e1f0e3ca2f6236.js"></script></p>
+<p>Далее идет группа методов для работы с файлами. <strong>FILE_COPY</strong> &#8212; копирует файл указанный в параметре &#8212; <strong>SOURCE</strong>, в файл в параметре &#8212; <strong>DESTINATION</strong>, в случае если нет создает, если есть и указан параметр &#8212; <strong>OVERWRITE </strong>перезаписывает.</p>
+<p><strong>FILE_DELETE </strong>удаляет указанный в параметре &#8212; <strong>FILENAME </strong>файл, в случае ошибки значение параметра <strong>RC </strong>не 0.</p>
+<p><strong>FILE_EXIST &#8212; </strong>проверяет файл на существование, в случае если файл существует параметр <strong>RESULT </strong>не пустой.</p>
+<p>Для проверки атрибутов файла служит метод <strong>FILE_GET_ATTRIBUTES</strong>, с помощью него можно определить является ли файл: архивным, только для чтения, скрытым, или нормальным, без вышеупомянутых атрибутов. Для установки атрибутов к файлу служит метод <strong>FILE_SET_ATTRIBUTES.</strong></p>
+<p><strong>FILE_GET_SIZE </strong>судя по названию должен определять размер файла в байтах, но на моей системе данный метод отказывался работать, возможно на более новой версии базиса это было исправлено.</p>
+<p><strong>FILE_GET_VERSION </strong>получает текущую версию файла.</p>
+<p><strong>FILE_OPEN_DIALOG </strong>отображает диалог выбора файлов. <strong>WINDOW_TITLE </strong>&#8212; заголовок диалога, <strong>DEFAULT_EXTENSION </strong>&#8212; расширение для файлов, <strong>DEFAULT_FILENAME</strong> &#8212; имя файлов по умолчанию, <strong>FILE_FILTER &#8212; </strong>фильтр для выбора файлов, <strong>WITH_ENCODING &#8212; </strong>возможность выбора кодировки, <strong>INITIAL_DIRECTORY</strong> &#8212; директория в которой открывается диалог, <strong>MULTISELECTION &#8212; </strong>если &#8216;Х&#8217; позволяет выбирать несколько файлов, <strong>FILE_TABLE </strong>&#8212; список выбранных файлов. <strong>USER_ACTION </strong>может принимать либо ACTION_OK либо ACTION_CANCEL в зависимости на какую кнопку диалога нажал пользователь. <strong>FILE_ENCODING </strong>&#8212; принимает значение кодировки файла. Пример использования метода:</p>
+<p><script src="https://gist.github.com/MikeSidorochkin/aedac6db52d96c887e001c69856bc721.js"></script></p>
+<p>Метод <strong>FILE_SAVE_DIALOG </strong>необходим для вызова диалога сохранения файлов, его параметры идентичны предыдущему за исключением: <strong>PROMPT_ON_OVERWRITE </strong>&#8212; запрашивать ли пользователя перезаписать файл, <strong>PATH </strong>&#8212; имя выбранного файла, <strong>FULLPATH </strong>&#8212; полный адрес выбранного файла.</p>
+<p>Далее идет группа методов для получения информации о сервере представления.</p>
+<p><strong>GET_COMPUTER_NAME &#8212; </strong>получение имени компьютера.</p>
+<p><strong>GET_DESKTOP_DIRECTORY &#8212; </strong>получение пути к рабочему столу.</p>
+<p><strong>GET_DRIVE_FREE_SPACE_MEGABYTE &#8212; </strong>получение свободного пространства на диске в MB, где <strong>DRIVE &#8212; </strong>буква необходимого диска.</p>
+<p><strong>GET_DRIVE_TYPE</strong> &#8212; определение типа диска, возвращает: FIXED, REMOTE, REMOVABLE, &#187; &#8212; в случае если не удалось определить.</p>
+<p><strong>GET_FILE_SEPARATOR &#8212; </strong>определение разделителя в файлах, зависит от платформы. Windows  &#8212; \.</p>
+<p><strong>GET_GUI_VERSION</strong> &#8212; получение полной версии GUI.</p>
+<p><strong>GET_IP_ADDRESS </strong>&#8212; получение IP адреса на котором запущен GUI.</p>
+<p><strong>GET_LF_FOR_DESTINATION_GUI &#8212; </strong>получение разделителя линий в зависимости от платформы. В случае если возвращает ошибку (sy-subrc &lt;&gt;0) &#8212; CL_ABAP_CHAR_UTILITIES=&gt;CR_LF.</p>
+<p><strong>GET_PLATFORM</strong> &#8212; получение платформы сервера представления. Возвращает один из атрибутов класса:</p>
+<p>PLATFORM_UNKNOWN<br />
+PLATFORM_WINDOWS95<br />
+PLATFORM_WINDOWS98<br />
+PLATFORM_NT351<br />
+PLATFORM_NT40<br />
+PLATFORM_NT50<br />
+PLATFORM_MAC<br />
+PLATFORM_OS2<br />
+PLATFORM_LINUX<br />
+PLATFORM_HPUX<br />
+PLATFORM_TRU64<br />
+PLATFORM_AIX<br />
+PLATFORM_SOLARIS<br />
+PLATFORM_MACOSX</p>
+<p><strong>GET_SAPGUI_DIRECTORY &#8212; </strong>директория в которой лежит SAP GUI.</p>
+<p><strong>GET_SAPGUI_WORKDIR</strong> &#8212; рабочая директория GUI клиента, как правило в документах пользователя.</p>
+<p><strong>GET_SAPLOGON_ENCODING</strong> &#8212; кодировка которая используется в GUI.</p>
+<p><strong>GET_SYSTEM_DIRECTORY</strong> &#8212; получение системной директории (С:\Windows\system32\)</p>
+<p><strong>GET_TEMP_DIRECTORY</strong> &#8212; получение директории для временных файлов.</p>
+<p><strong>GET_UPLOAD_DOWNLOAD_PATH &#8212; </strong>рабочая папка для GUI, тоже что и <strong>GET_SAPGUI_WORKDIR.</strong></p>
+<p><strong>GET_USER_NAME &#8212; </strong>имя пользователя на сервере представления.</p>
+<p><strong>GET_WINDOWS_DIRECTORY &#8212; </strong>как видно из названия директория в которой лежит Windows.</p>
+<p><strong>IS_TERMINAL_SERVER &#8212; </strong>Запущен ли GUI на терминальном клиенте.</p>
+<p>Далее идут методы для работы с реестром Windows.</p>
+<p><strong>REGISTRY_DELETE_KEY &#8212; </strong>удаляет ключ указанный в <strong>KEY</strong>, для всех методов по взаимодействию с реестром необходимо указывать корневой узел реестра ( CL_GUI_FRONTEND_SERVICES=&gt;HKEY_CLASSES_ROOT, CL_GUI_FRONTEND_SERVICES=&gt;HKEY_CURRENT_USER, CL_GUI_FRONTEND_SERVICES=&gt;HKEY_LOCAL_MACHINE, CL_GUI_FRONTEND_SERVICES=&gt;HKEY_USERS).</p>
+<p><strong>REGISTRY_DELETE_VALUE &#8212; </strong>чистит значение указанного ключа реестра.</p>
+<p><strong>REGISTRY_GET_DWORD_VALUE &#8212; </strong>получение значения ключа реестра с видом DWORD.</p>
+<p><strong>REGISTRY_SET_DWORD_VALUE &#8212; </strong>установка значения ключа с видом DWORD.</p>
+<p><strong>REGISTRY_GET_VALUE &#8212;</strong> получение значения ключа.</p>
+<p><strong>REGISTRY_SET_VALUE &#8212;</strong> установка значения ключа.</p>
+<p>Теперь еще немного об атрибутах данного класса. В тех методах где необходимо указать маску файлов (диалоги открытия, сохранения) можно воспользоваться готовыми атрибутами:</p>
+<p>FILETYPE_ALL Все файлы (*.*) *.*<br />
+FILETYPE_TEXT Текст. файлы (*.TXT) *.TXT<br />
+FILETYPE_XML XML (*.XML) *.XML<br />
+FILETYPE_HTML HTML-файлы (*.HTML, *.HTM) *.HTML;*.HTM<br />
+FILETYPE_EXCEL Excel-файлы (*.XLS;*.XLSX;*.XLSM) *.XLS;*.XLSX;*.XLSM<br />
+FILETYPE_RTF RTF-файлы (*.RTF) *.RTF<br />
+FILETYPE_WORD Word-файлы (*.DOC;*.DOCX;*.DOCM) *.DOC;*.DOCX;*.DOCM<br />
+FILETYPE_POWERPOINT Файлы Powerpoint (*PPT;*.PPTX;*.PPTM) *PPT;*.PPTX;*.PPTM</p>
+<p>Ну и наконец два пожалуй самых часто используемых метода данного класса <strong>GUI_DOWNLOAD &#8212; </strong>служит для выгрузки данных в файл на сервере представления. <strong><a title="GUI_UPLOAD" href="http://abap-blog.ru/frontend/upload_from_frontend/">GUI_UPLOAD</a> &#8212; </strong>для загрузки содержимого файла.  Описание данных методов достаточно большое и будет опубликовано в виде отдельной заметки.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/frontend/">Взаимодействие с фронтендом</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/frontend/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

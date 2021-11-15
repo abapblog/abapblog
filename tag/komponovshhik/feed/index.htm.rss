@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Компоновщик | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/komponovshhik/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:54:40 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Шаблон компоновщик</title>
+		<link>https://abap-blog.ru/osnovy-abap/shablon-komponovshhik/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/shablon-komponovshhik/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 21 Jan 2012 20:00:14 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[abap objects]]></category>
+		<category><![CDATA[Composite pattern]]></category>
+		<category><![CDATA[Компоновщик]]></category>
+		<category><![CDATA[шаблоны проектирования]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=249</guid>
+
+					<description><![CDATA[<p>Компоновщик (англ. Composite pattern) — шаблон проектирования, относится к структурным паттернам, объединяет объекты в древовидную структуру для представления иерархии от частного к целому. Компоновщик позволяет клиентам обращаться к отдельным объектам и к группам объектов одинаково. Цель Шаблон определяет иерархию классов, которые одновременно могут состоять из примитивных и сложных объектов, упрощает архитектуру клиента, делает процесс добавления новых видов объекта [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-komponovshhik/">Шаблон компоновщик</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><strong>Компоновщик</strong> (англ. <em>Composite pattern</em>) — шаблон проектирования, относится к структурным паттернам, объединяет объекты в древовидную структуру для представления иерархии от частного к целому. Компоновщик позволяет клиентам обращаться к отдельным объектам и к группам объектов одинаково.</p>
+<p><span id="more-249"></span></p>
+<h2>Цель</h2>
+<p>Шаблон определяет иерархию классов, которые одновременно могут состоять из примитивных и сложных объектов, упрощает архитектуру клиента, делает процесс добавления новых видов объекта более простым.</p>
+<p>Простейшая реализация компоновщика далее в примере:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT z_composite.
+
+" Абстрактный класс
+CLASS lcl_text DEFINITION ABSTRACT.
+  PUBLIC SECTION.
+    METHODS: ADD ABSTRACT IMPORTING io_text TYPE REF TO lcl_text,
+             remove ABSTRACT IMPORTING io_text TYPE REF TO lcl_text,
+             display ABSTRACT.
+ENDCLASS.
+
+" Символ не может содержать внутри себя другие символы
+CLASS lcl_symbol DEFINITION INHERITING FROM lcl_text.
+  PUBLIC SECTION.
+    METHODS: CONSTRUCTOR IMPORTING iv_symbol TYPE char1.
+    METHODS: ADD REDEFINITION,
+             remove REDEFINITION,
+             display REDEFINITION.
+  PRIVATE SECTION.
+    DATA: gv_symbol TYPE char1.
+ENDCLASS.
+*
+CLASS lcl_symbol IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+    super-&gt;constructor( ).
+    gv_symbol = iv_symbol.
+  ENDMETHOD.                    "constructor
+  METHOD ADD. " Класс не является компоновщиком, реализация методов отсутствует.
+  ENDMETHOD.
+  METHOD remove.
+  ENDMETHOD.
+  METHOD display.
+    WRITE gv_symbol.
+  ENDMETHOD.                    "display
+ENDCLASS.                    "lcl_symbol IMPLEMENTATION
+
+" Класс компоновщик включает в себя символы, определяет метод для их вывода
+CLASS lcl_word DEFINITION INHERITING FROM lcl_text.
+  PUBLIC SECTION.
+    METHODS: ADD REDEFINITION,
+             remove REDEFINITION,
+             display REDEFINITION.
+  PRIVATE SECTION.
+    DATA: lt_messages TYPE STANDARD TABLE OF REF TO lcl_text.
+ENDCLASS.                    "lcl_text DEFINITION
+*
+CLASS lcl_word IMPLEMENTATION.
+  METHOD ADD.
+    APPEND io_text TO lt_messages.
+  ENDMETHOD.                    "ADD
+  METHOD remove.
+    DELETE lt_messages WHERE TABLE_LINE EQ io_text.
+  ENDMETHOD.                    "remove
+  METHOD display.
+    DATA: lo_message TYPE REF TO lcl_text.
+    WRITE: / ' '.
+    LOOP AT lt_messages INTO lo_message.
+      lo_message-&gt;display( ).
+    ENDLOOP.
+ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA:
+    lo_word   TYPE REF TO lcl_text,
+    lo_symbol TYPE REF TO lcl_text.
+
+  CREATE OBJECT lo_word TYPE lcl_word.
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'H'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'E'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'L'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'L'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'O'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = ' '.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'W'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'O'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'R'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'L'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = 'D'.
+  lo_word-&gt;add( lo_symbol ).
+  CREATE OBJECT lo_symbol TYPE lcl_symbol EXPORTING iv_symbol = '!'.
+  lo_word-&gt;add( lo_symbol ).
+
+  lo_word-&gt;display( ).</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/shablon-komponovshhik/">Шаблон компоновщик</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/shablon-komponovshhik/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

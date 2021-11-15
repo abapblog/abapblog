@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>UI5 &amp; Fiori | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/ui5-fiori/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sun, 22 Nov 2020 13:25:12 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Открыть FIori приложение в Dynpro</title>
+		<link>https://abap-blog.ru/abap-notes/otkryt-fiori-prilozhenie-v-dynpro/</link>
+					<comments>https://abap-blog.ru/abap-notes/otkryt-fiori-prilozhenie-v-dynpro/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 13:25:12 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5657</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dfa3b195541308909/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/otkryt-fiori-prilozhenie-v-dynpro/">Открыть FIori приложение в Dynpro</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_semobj TYPE /ui2/v_semobj-sem_obj LOWER CASE DEFAULT 'SalesOrder'.
+PARAMETERS: p_semact TYPE char80 LOWER CASE DEFAULT 'displayFactSheet'.
+PARAMETERS: p_sempar TYPE char80 LOWER CASE DEFAULT 'SalesOrder'.
+PARAMETERS: p_parval TYPE char80 LOWER CASE DEFAULT '1'.
+
+START-OF-SELECTION.
+
+  DATA(it_parameters) = VALUE tihttpnvp( ( name = 'sap-client'      value = sy-mandt )
+                                         ( name = 'sap-ui-language' value = 'DE' )
+                                         ( name = 'sap-ui-appcache' value = 'false' ) ).
+
+  DATA(lv_url) = /ui5/cl_theme_util=&gt;get_server_url( path         = |/sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchpad.html|
+                                                     parameters   = it_parameters
+                                                     always_https = abap_false  ).
+
+* Шаблон для указания параметров семантического объекта:
+*    #&lt;semantic object&gt;-&lt;action&gt;?&lt;semantic object parameter&gt;=&lt;value1&gt;
+* Пример:
+*    #SalesOrder-displayFactSheet?SalesOrder=1
+  lv_url = |{ lv_url }#{ p_semobj }-{ p_semact }?{ p_sempar }={ p_parval }|.
+
+  cl_abap_list_layout=&gt;suppress_toolbar( ).
+
+  DATA(o_hv) = NEW cl_gui_html_viewer( parent = cl_gui_container=&gt;default_screen ).
+  o_hv-&gt;show_url( url = CONV swk_url( lv_url )
+                  in_place = abap_true ).
+
+  WRITE: space.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/otkryt-fiori-prilozhenie-v-dynpro/">Открыть FIori приложение в Dynpro</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/otkryt-fiori-prilozhenie-v-dynpro/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

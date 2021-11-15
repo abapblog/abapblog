@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Настройки | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/nastrojki/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Fri, 01 May 2020 18:23:52 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Хранилище данных персонализации</title>
+		<link>https://abap-blog.ru/abap-notes/xranilishhe-dannyx-personalizacii/</link>
+					<comments>https://abap-blog.ru/abap-notes/xranilishhe-dannyx-personalizacii/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 01 May 2020 14:23:28 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4180</guid>
+
+					<description><![CDATA[<p>В стандарте есть такой функционал как центральный репозиторий для данных персонализации. Основная его идея- предоставить унифицированный интерфейс для хранения каких-либо данных на нескольких уровнях: На уровне пользователя (на рисунке транзакция SU01) На уровне роли (на рисунке транзакция PCFG) На глобальном уровне (вне зависимости от роли/пользователя) Используя данный функционал, мы можем сохранять данные как в общем [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/xranilishhe-dannyx-personalizacii/">Хранилище данных персонализации</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>В стандарте есть такой функционал как <a href="https://help.sap.com/viewer/6f323fd26c4b1014996399b1f02898ae/7.01.22/en-US/abe70538389511d5974400a0c930dcc1.html">центральный репозиторий для данных персонализации</a><a href="https://help.sap.com/viewer/6f323fd26c4b1014996399b1f02898ae/7.01.22/en-US/abe70538389511d5974400a0c930dcc1.html">.</a> Основная его идея- предоставить унифицированный интерфейс для хранения каких-либо данных на нескольких уровнях:</p>
+<ul>
+<li>На уровне пользователя (на рисунке транзакция SU01)</li>
+</ul>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/05/userspecific.png"><img loading="lazy" class="alignnone size-full wp-image-4181" src="https://abap-blog.ru/wp-content/uploads/2020/05/userspecific.png" alt="" width="858" height="322" srcset="https://abap-blog.ru/wp-content/uploads/2020/05/userspecific.png 858w, https://abap-blog.ru/wp-content/uploads/2020/05/userspecific-300x113.png 300w, https://abap-blog.ru/wp-content/uploads/2020/05/userspecific-768x288.png 768w" sizes="(max-width: 858px) 100vw, 858px" /></a></p>
+<ul>
+<li>На уровне роли (на рисунке транзакция PCFG)</li>
+</ul>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/05/rolespecific.png"><img loading="lazy" class="alignnone size-full wp-image-4182" src="https://abap-blog.ru/wp-content/uploads/2020/05/rolespecific.png" alt="" width="761" height="347" srcset="https://abap-blog.ru/wp-content/uploads/2020/05/rolespecific.png 761w, https://abap-blog.ru/wp-content/uploads/2020/05/rolespecific-300x137.png 300w" sizes="(max-width: 761px) 100vw, 761px" /></a></p>
+<ul>
+<li>На глобальном уровне (вне зависимости от роли/пользователя)</li>
+</ul>
+<p>Используя данный функционал, мы можем сохранять данные как в общем репозитарии (набор заранее созданных в системе таблиц), так и переключать его работу на собственные таблицы. Заранее предоставляется и интерфейс ведения этих данных.</p>
+<h3><strong>Ключ персонализации</strong></h3>
+<p>Для того чтобы что-то куда-то сохранить, мы должны зарегистрировать объект персонализации (ключ), делается это в транзакции <strong>PERSREG</strong>.</p>
+<p>На рисунке ниже демо пример объекта персонализации:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/05/persobject.png"><img loading="lazy" class="alignnone size-full wp-image-4183" src="https://abap-blog.ru/wp-content/uploads/2020/05/persobject.png" alt="" width="716" height="649" srcset="https://abap-blog.ru/wp-content/uploads/2020/05/persobject.png 716w, https://abap-blog.ru/wp-content/uploads/2020/05/persobject-300x272.png 300w" sizes="(max-width: 716px) 100vw, 716px" /></a></p>
+<p>Тут мы отмечаем что хотим использовать общий репозитарий (не свои таблицы), объект персонализации должен быть виден в транзакции ведения пользователей, а так же указываем тип данных.</p>
+<p>Типы данных могут быть: элементарные, структуры без вложенных таблиц и других структур, табличный тип с простыми структурами.</p>
+<p>В нашем случае это простая структура вида:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/05/demostruct.png"><img loading="lazy" class="alignnone size-full wp-image-4184" src="https://abap-blog.ru/wp-content/uploads/2020/05/demostruct.png" alt="" width="800" height="230" srcset="https://abap-blog.ru/wp-content/uploads/2020/05/demostruct.png 800w, https://abap-blog.ru/wp-content/uploads/2020/05/demostruct-300x86.png 300w, https://abap-blog.ru/wp-content/uploads/2020/05/demostruct-768x221.png 768w" sizes="(max-width: 800px) 100vw, 800px" /></a></p>
+<p>После сохранения объекта персонализации, мы уже можем вести данные на уровне пользователя, тр. SU01:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/05/demodata.png"><img loading="lazy" class="alignnone size-full wp-image-4185" src="https://abap-blog.ru/wp-content/uploads/2020/05/demodata.png" alt="" width="838" height="767" srcset="https://abap-blog.ru/wp-content/uploads/2020/05/demodata.png 838w, https://abap-blog.ru/wp-content/uploads/2020/05/demodata-300x275.png 300w, https://abap-blog.ru/wp-content/uploads/2020/05/demodata-768x703.png 768w" sizes="(max-width: 838px) 100vw, 838px" /></a></p>
+<h3><strong>API для работы с данными персонализации</strong></h3>
+<p>На уровне кода работать с объектами персонализации мы можем через класс &#8212; <strong>cl_pers_admin.</strong></p>
+<p>Простой пример для записи/чтения данных:</p><pre class="urvanov-syntax-highlighter-plain-tag">CONSTANTS:
+  gc_pers_key TYPE spers_key VALUE 'ZDEMO_KEY'.
+
+DATA:
+  ls_data TYPE zsm_some_data.
+
+ls_data-carrid = 'DD'.
+
+cl_pers_admin=&gt;set_data(
+  EXPORTING
+    p_pers_key          = gc_pers_key
+    p_pers_data         = ls_data
+    p_uname             = ''
+    p_write_through     = 'X'
+  EXCEPTIONS
+    OTHERS              = 0 ).
+
+cl_pers_admin=&gt;get_data(
+  EXPORTING
+    p_pers_key          = gc_pers_key
+  IMPORTING
+    p_pers_data         = ls_data
+  EXCEPTIONS
+    OTHERS              = 0 ).
+
+WRITE ls_data-carrid.</pre><p>Для того чтобы реализовать собственный диалог ведения данных, необходимо разработать ФМ с заранее определённым интерфейсом &#8212; как у ФМ <strong>BMENU_SETTINGS_EDIT </strong>и указать его в объекте персонализации.</p>
+<p>Для того чтобы данные сохранялись не в общем репозитарии, а в каких-либо других таблицах, необходимо создать класс с поддержкой интерфейса <strong>IF_PERS_EXTERNAL_TABLE</strong> и так же указать в объекте.</p>
+<p>Примеры можно посмотреть в других объектах персонализации.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/xranilishhe-dannyx-personalizacii/">Хранилище данных персонализации</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/xranilishhe-dannyx-personalizacii/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

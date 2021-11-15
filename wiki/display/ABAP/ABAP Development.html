@@ -1,0 +1,1946 @@
+    
+<!DOCTYPE html>
+<html>
+<head>
+                            <title>ABAP Development - ABAP Development - Community Wiki</title>
+    
+        
+
+                        
+    
+                        
+    
+
+                
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE,chrome=IE7">
+<meta charset="UTF-8">
+<meta id="confluence-context-path" name="confluence-context-path" content="/wiki">
+<meta id="confluence-base-url" name="confluence-base-url" content="https://wiki.scn.sap.com/wiki">
+
+    <meta id="atlassian-token" name="atlassian-token" content="e288ae89a415b947cac88171248dba8119be8dad">
+
+
+<meta id="confluence-space-key" name="confluence-space-key" content="ABAP">
+<script type="text/javascript">
+        var contextPath = '/wiki';
+</script>
+
+    
+
+    <meta name="confluence-request-time" content="1636435038319">
+        
+    
+        
+            <style>.ia-fixed-sidebar, .ia-splitter-left {width: 285px;}.theme-default .ia-splitter #main {margin-left: 285px;}.ia-fixed-sidebar {visibility: hidden;}</style>
+            <meta name="ajs-use-keyboard-shortcuts" content="true">
+            <meta name="ajs-discovered-plugin-features" content="$discoveredList">
+            <meta name="ajs-keyboardshortcut-hash" content="c5ed35e18a787aee9028bc0e9f6ed5c7">
+            
+    
+    
+            <meta name="ajs-page-title" content="ABAP Development">
+            <meta name="ajs-latest-published-page-title" content="ABAP Development">
+            <meta name="ajs-space-name" content="ABAP Development">
+            <meta name="ajs-page-id" content="1710">
+            <meta name="ajs-latest-page-id" content="1710">
+            <meta name="ajs-content-type" content="page">
+            <meta name="ajs-parent-page-id" content="">
+            <meta name="ajs-space-key" content="ABAP">
+            <meta name="ajs-max-number-editors" content="12">
+            <meta name="ajs-macro-placeholder-timeout" content="5000">
+            <meta name="ajs-jira-metadata-count" content="-1">
+            <meta name="ajs-from-page-title" content="">
+            <meta name="ajs-can-remove-page" content="false">
+            <meta name="ajs-can-remove-page-hierarchy" content="false">
+            <meta name="ajs-browse-page-tree-mode" content="view">
+            <meta name="ajs-shared-drafts" content="true">
+            <meta name="ajs-context-path" content="/wiki">
+            <meta name="ajs-base-url" content="https://wiki.scn.sap.com/wiki">
+            <meta name="ajs-version-number" content="7.4.13">
+            <meta name="ajs-build-number" content="8402">
+            <meta name="ajs-remote-user" content="">
+            <meta name="ajs-remote-user-key" content="">
+            <meta name="ajs-remote-user-has-licensed-access" content="false">
+            <meta name="ajs-remote-user-has-browse-users-permission" content="false">
+            <meta name="ajs-current-user-fullname" content="">
+            <meta name="ajs-current-user-avatar-url" content="">
+            <meta name="ajs-current-user-avatar-uri-reference" content="/wiki/images/icons/profilepics/anonymous.svg">
+            <meta name="ajs-static-resource-url-prefix" content="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_">
+            <meta name="ajs-global-settings-attachment-max-size" content="5242880">
+            <meta name="ajs-global-settings-quick-search-enabled" content="true">
+            <meta name="ajs-user-locale" content="en_US">
+            <meta name="ajs-enabled-dark-features" content="site-wide.shared-drafts,site-wide.synchrony,clc.quick.create,confluence.view.edit.transition,cql.search.screen,confluence-inline-comments-resolved,http.session.registrar,frontend.editor.v4,nps.survey.inline.dialog,confluence.efi.onboarding.new.templates,frontend.editor.v4.compatibility,atlassian.cdn.static.assets,pdf-preview,previews.sharing,previews.versions,file-annotations,collaborative-audit-log,confluence.efi.onboarding.rich.space.content,previews.conversion-service,editor.ajax.save,graphql,read.only.mode,notification.plugin.api.enabled.com.atlassian.confluence.plugins.inlinecomments.events.InlineCommentReplyEvent,previews.trigger-all-file-types,notification.plugin.api.enabled.com.atlassian.confluence.plugins.inlinecomments.events.InlineCommentCreateEvent,lucene.caching.filter,attachment.extracted.text.extractor,confluence.table.resizable,notification.batch,previews.sharing.pushstate,confluence-inline-comments-rich-editor,site-wide.synchrony.opt-in,file-annotations.likes,gatekeeper-ui-v2,v2.content.name.searcher,mobile.supported.version,pulp,pulp.disable,confluence-inline-comments,quick-reload-inline-comments-flags,confluence-inline-comments-dangling-comment">
+            <meta name="ajs-atl-token" content="e288ae89a415b947cac88171248dba8119be8dad">
+            <meta name="ajs-confluence-flavour" content="VANILLA">
+            <meta name="ajs-user-date-pattern" content="dd MMM yyyy">
+            <meta name="ajs-access-mode" content="READ_WRITE">
+            <meta name="ajs-render-mode" content="READ_WRITE">
+            <meta name="ajs-date.format" content="MMM dd, yyyy">
+    
+    <link rel="shortcut icon" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/favicon.ico">
+
+<link rel="search" type="application/opensearchdescription+xml" href="/wiki/opensearch/osd.action" title="Community Wiki"/>
+    
+                    
+            
+
+    <script>
+window.WRM=window.WRM||{};window.WRM._unparsedData=window.WRM._unparsedData||{};window.WRM._unparsedErrors=window.WRM._unparsedErrors||{};
+WRM._unparsedData["com.atlassian.plugins.atlassian-plugins-webresource-plugin:context-path.context-path"]="\u0022\u005C/wiki\u0022";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-feature-discovery-plugin:confluence-feature-discovery-plugin-resources.test-mode"]="false";
+WRM._unparsedData["com.atlassian.analytics.analytics-client:policy-update-init.policy-update-data-provider"]="false";
+WRM._unparsedData["com.atlassian.analytics.analytics-client:programmatic-analytics-init.programmatic-analytics-data-provider"]="false";
+WRM._unparsedData["com.atlassian.confluence.plugins.synchrony-interop:synchrony-status-banner-loader.synchrony-status"]="false";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-license-banner:confluence-license-banner-resources.license-details"]="{\u0022daysBeforeLicenseExpiry\u0022:0,\u0022daysBeforeMaintenanceExpiry\u0022:0,\u0022showLicenseExpiryBanner\u0022:false,\u0022showMaintenanceExpiryBanner\u0022:false,\u0022renewUrl\u0022:null,\u0022salesUrl\u0022:null}";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-search-ui-plugin:confluence-search-ui-plugin-resources.i18n-data"]="{\u0022search.ui.recent.link.text\u0022:\u0022View more recently visited\u0022,\u0022search.ui.filter.space.category.input.label\u0022:\u0022Find space categories...\u0022,\u0022search.ui.filter.clear.selected\u0022:\u0022Clear selected items\u0022,\u0022search.ui.search.results.empty\u0022:\u0022We couldn\u005Cu0027\u005Cu0027t find anything matching \u005C\u0022{0}\u005C\u0022.\u0022,\u0022search.ui.content.name.search.items.panel.load.all.top.items.button.text\u0022:\u0022Show more app results...\u0022,\u0022search.ui.filter.space.archive.label\u0022:\u0022Search archived spaces\u0022,\u0022search.ui.filter.label\u0022:\u0022filter\u0022,\u0022search.ui.filter.contributor.button.text\u0022:\u0022Contributor\u0022,\u0022search.ui.filter.date.all.text\u0022:\u0022Any time\u0022,\u0022search.ui.filter.space.current.label\u0022:\u0022CURRENT\u0022,\u0022search.ui.clear.input.button.text\u0022:\u0022Clear text\u0022,\u0022help.search.ui.link.title\u0022:\u0022Search tips\u0022,\u0022search.ui.search.results.clear.button\u0022:\u0022clear your filters.\u0022,\u0022search.ui.filter.date.hour.text\u0022:\u0022The past day\u0022,\u0022search.ui.filters.heading\u0022:\u0022Filter by\u0022,\u0022search.ui.filter.label.input.label\u0022:\u0022Find labels...\u0022,\u0022search.ui.filter.date.month.text\u0022:\u0022The past month\u0022,\u0022search.ui.recent.items.anonymous\u0022:\u0022Start exploring. Your search results will appear here.\u0022,\u0022search.ui.input.label\u0022:\u0022Search\u0022,\u0022search.ui.search.result\u0022:\u0022{0,choice,1#{0} search result|1\u005Cu003c{0} search results}\u0022,\u0022search.ui.infinite.scroll.button.text\u0022:\u0022More results\u0022,\u0022search.ui.filter.date.button.text\u0022:\u0022Date\u0022,\u0022search.ui.filter.date.week.text\u0022:\u0022The past week\u0022,\u0022search.ui.filter.label.button.text\u0022:\u0022Label\u0022,\u0022search.ui.input.alert\u0022:\u0022Hit enter to search\u0022,\u0022search.ui.filter.no.result.text\u0022:\u0022We can\u005Cu0027\u005Cu0027t find anything matching your search\u0022,\u0022search.ui.result.subtitle.calendar\u0022:\u0022Team calendar\u0022,\u0022search.ui.filter.date.heading\u0022:\u0022Last modified within\u0022,\u0022search.ui.result.subtitle.user\u0022:\u0022User profile\u0022,\u0022search.ui.filter.contributor.input.label\u0022:\u0022Find people...\u0022,\u0022search.ui.filter.content.type.button.text\u0022:\u0022Type\u0022,\u0022search.ui.filter.space.input.label\u0022:\u0022Find spaces...\u0022,\u0022search.ui.filter.date.year.text\u0022:\u0022The past year\u0022,\u0022search.ui.filter.space.button.text\u0022:\u0022Space\u0022,\u0022search.ui.advanced.search.link.text\u0022:\u0022Advanced search\u0022,\u0022search.ui.generic.error\u0022:\u0022Something went wrong. Refresh the page, or contact your admin if this keeps happening.\u0022,\u0022search.ui.recent.spaces\u0022:\u0022Recent Spaces\u0022,\u0022search.ui.search.results.clear.line2\u0022:\u0022Try a different search term or\u0022,\u0022search.ui.filter.space.category.button.text\u0022:\u0022Space category\u0022,\u0022search.ui.search.results.clear.line1\u0022:\u0022We couldn\u005Cu0027\u005Cu0027t find anything matching your search.\u0022,\u0022search.ui.content.name.search.items.panel.load.all.top.items.admin.button.text\u0022:\u0022Show more settings and app results...\u0022,\u0022search.ui.recent.pages\u0022:\u0022Recently visited\u0022,\u0022search.ui.search.result.anonymous\u0022:\u0022{0,choice,1#{0} search result|1\u005Cu003c{0} search results}. Have an account? {1}Log in{2} to expand your search.\u0022,\u0022search.ui.recent.items.empty\u0022:\u0022Start exploring. Pages and spaces you\u005Cu0027\u005Cu0027ve visited recently will appear here.\u0022,\u0022search.ui.result.subtitle.space\u0022:\u0022Space\u0022,\u0022search.ui.filter.space.init.heading\u0022:\u0022recent spaces\u0022}";
+if(window.WRM._dataArrived)window.WRM._dataArrived();</script>
+<link type="text/css" rel="stylesheet" href="/wiki/s/64ff51b4494ddb6bd56f0bfb38c6b9ff-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/f93a1c81170760ac4fb7da71531851a9/_/download/contextbatch/css/_super/batch.css" data-wrm-key="_super" data-wrm-batch-type="context" media="all">
+<link type="text/css" rel="stylesheet" href="/wiki/s/9cfe6a86c8aace4efbeb10b6197b9db8-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/77b47d3dd1530069bc51cf3bb414587a/_/download/contextbatch/css/atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super/batch.css?gatekeeper-ui-v2=true&amp;highlightactions=true&amp;hostenabled=true" data-wrm-key="atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super" data-wrm-batch-type="context" media="all">
+<link type="text/css" rel="stylesheet" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/styles/colors.css" media="all">
+<link type="text/css" rel="stylesheet" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/styles/custom.css" media="all">
+<script type="text/javascript" src="/wiki/s/d4c8a0219030d0420604e8b5bb5c236d-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/f93a1c81170760ac4fb7da71531851a9/_/download/contextbatch/js/_super/batch.js?locale=en-US" data-wrm-key="_super" data-wrm-batch-type="context" data-initially-rendered></script>
+<script type="text/javascript" src="/wiki/s/6e3ff1bc8c546b9f23f36ba9d36e0716-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/77b47d3dd1530069bc51cf3bb414587a/_/download/contextbatch/js/atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super/batch.js?gatekeeper-ui-v2=true&amp;highlightactions=true&amp;hostenabled=true&amp;locale=en-US" data-wrm-key="atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super" data-wrm-batch-type="context" data-initially-rendered></script>
+
+    
+
+        
+    
+
+        
+        <meta name="ajs-site-title" content="Community Wiki" />
+            
+    <!-- Hide page exports on UI for anonymous users, backend restriction implemented in plugin
+    https://github.wdf.sap.corp/confluence/plugin-restrict-anonymous-actions/wiki/Documentation -->
+<!-- EWU-518 Limit/Hide the Space List in the Dashboard for Guest users out of the box -->
+<script type="text/javascript">
+    AJS.toInit(function(){
+        if (AJS.params.remoteUser == ''){
+        /* Hide page exports on UI for anonymous users*/
+          AJS.$('#action-export-pdf-link').hide();
+          AJS.$('#action-export-word-link').hide();
+
+          /* EWU-518 */
+          AJS.$('#sidebar-spaces').hide();
+        }
+    });
+</script>
+
+<!--  WDS-148 Integrate Wiki with Adobe Launch. -->
+<script src="//assets.adobedtm.com/ccc66c06b30b/563843cfec4a/launch-d6d38849b49d.min.js" async></script>
+
+    
+                <link rel="canonical" href="https://wiki.scn.sap.com/wiki/display/ABAP/ABAP+Development">
+        <link rel="shortlink" href="https://wiki.scn.sap.com/wiki/x/rgY">
+    <meta name="wikilink" content="[ABAP:ABAP Development]">
+    <meta name="page-version" content="278">
+    <meta name="ajs-page-version" content="278">
+
+</head>
+
+    
+<body      id="com-atlassian-confluence" class="theme-default  aui-layout aui-theme-default">
+
+        
+            <div id='stp-licenseStatus-banner'></div>
+    <ul id="assistive-skip-links" class="assistive">
+    <li><a href="#title-heading">Skip to content</a></li>
+    <li><a href="#breadcrumbs">Skip to breadcrumbs</a></li>
+    <li><a href="#header-menu-bar">Skip to header menu</a></li>
+    <li><a href="#navigation">Skip to action menu</a></li>
+    <li><a href="#quick-search-query">Skip to quick search</a></li>
+</ul>
+<div id="page">
+<div id="full-height-container">
+    <div id="header-precursor">
+        <div class="cell">
+            <div style="background-color:#f6f6f6;">
+<center>
+<!-- Put your site header text here, make sure tags are symmetric -->
+</center>
+</div>
+                            </div>
+    </div>
+        
+
+
+
+
+
+<header id="header" role="banner">
+    <nav class="aui-header aui-dropdown2-trigger-group" role="navigation"><div class="aui-header-inner"><div class="aui-header-primary"><h1 id="logo" class="aui-header-logo aui-header-logo-custom"><a href="/wiki/"><img src="/wiki/download/attachments/389939204/atl.site.logo?version=1&amp;modificationDate=1574179418000&amp;api=v2" alt="Community Wiki" /><span class="aui-header-logo-text">Community Wiki</span></a></h1><ul class="aui-nav">
+                            <li>
+            
+        
+        
+<a  id="space-directory-link" href="/wiki/spacedirectory/view.action"  class=" aui-nav-imagelink"   title="Spaces">
+            <span>Spaces</span>
+    </a>
+        </li>
+                                <li class="aui-buttons">
+            </li>
+</ul>
+</div><div class="aui-header-secondary"><ul class="aui-nav">
+                        <li>
+        <div id="search-ui" class="aui-quicksearch dont-default-focus header-quicksearch"><input id="quick-search-query" aria-label="Search" placeholder="Search" type="text" /><div id="quick-search-alert" role="alert">Hit enter to search</div><aui-spinner size="small"></aui-spinner></div>
+    </li>
+        <li>
+            
+        <a id="help-menu-link" class="aui-nav-link aui-dropdown2-trigger aui-dropdown2-trigger-arrowless" href="#" aria-haspopup="true" aria-owns="help-menu-link-content" title="Help">
+        <span class="aui-icon aui-icon-small aui-iconfont-question-filled">Help</span>
+    </a>
+    <nav id="help-menu-link-content" class="aui-dropdown2 aui-style-default" aria-hidden="true">
+                    <div class="aui-dropdown2-section">
+                                <ul  id="help-menu-link-leading" class="aui-list-truncate section-leading first">
+                                            <li>
+        
+            
+<a  id="confluence-help-link" href="https://docs.atlassian.com/confluence/docs-74/" class="    "      title="Visit the Confluence documentation home"  target="_blank"
+>
+        Online Help
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="keyboard-shortcuts-link" href="/wiki" class="    "      title="View available keyboard shortcuts" >
+        Keyboard Shortcuts
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="feed-builder-link" href="/wiki/dashboard/configurerssfeed.action" class="    "      title="Create your custom RSS feed." >
+        Feed Builder
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="whats-new-menu-link" href="https://confluence.atlassian.com/display/DOC/Confluence+7.4+Release+Notes" class="    "      title="" >
+        What’s new
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="confluence-about-link" href="/wiki/aboutconfluencepage.action" class="    "      title="Get more information about Confluence" >
+        About Confluence
+</a>
+</li>
+                                    </ul>
+            </div>
+            </nav>
+    
+    </li>
+        <li>
+                
+    
+    </li>
+        <li>
+            
+    </li>
+        <li>
+                                            <li>
+        
+            
+<a  id="login-link" href="/wiki/login.action?os_destination=%2Fdisplay%2FABAP%2FABAP%2BDevelopment" class="   user-item login-link "      title="" >
+        Log in
+</a>
+</li>
+                        
+    </li>
+    </ul>
+</div></div><!-- .aui-header-inner--></nav><!-- .aui-header -->
+    <br class="clear">
+</header>
+    
+
+    
+    	<div class="ia-splitter">
+    		<div class="ia-splitter-left">
+    			<div class="ia-fixed-sidebar">
+                                            
+                            <div class="acs-side-bar ia-scrollable-section"><div class="acs-side-bar-space-info tipsy-enabled" data-configure-tooltip="Edit space details"><div class="avatar"><div class="space-logo" data-key="ABAP" data-name="ABAP Development" data-entity-type="confluence.space"><div class="avatar-img-container"><div class="avatar-img-wrapper"><a href="/wiki/display/ABAP/ABAP+Development" title="ABAP Development"><img class="avatar-img" src="/wiki/download/attachments/389939204/global.logo?version=8&amp;modificationDate=1574181442000&amp;api=v2" alt="ABAP Development"></a></div></div></div></div><div class="space-information-container"><div class="name"><a href="/wiki/display/ABAP/ABAP+Development" title="ABAP Development">ABAP Development</a></div><div class="flyout-handle icon aui-icon aui-icon-small aui-iconfont-edit"></div></div></div><div class="acs-side-bar-content"><div class="acs-nav-wrapper"><div class="acs-nav" data-has-create-permission="false" data-quick-links-state="hide" data-page-tree-state="hide" data-nav-type="pages"><div class="acs-nav-sections"><div class="main-links-section "><ul class="acs-nav-list"><li class="acs-nav-item wiki current-item" data-collector-key="spacebar-pages"><a class="acs-nav-item-link tipsy-enabled" href="/wiki/collector/pages.action?key=ABAP" data-collapsed-tooltip="Pages"><span class="icon"></span><span class="acs-nav-item-label">Pages</span></a></li></ul></div></div></div></div><div class="ia-secondary-container tipsy-enabled" data-tree-type="pages"></div></div><div class="hidden"><a href="/wiki/collector/pages.action?key=ABAP" id="space-pages-link"></a><script type="text/x-template" title="logo-config-content"><h2>Space Details</h2><div class="personal-space-logo-hint">Your profile picture is used as the logo for your personal space. <a href="/wiki/users/profile/editmyprofilepicture.action" target="_blank">Change your profile picture</a>.</div></script></div></div><div class="space-tools-section"><div id="space-tools-menu-additional-items" class="hidden"><div data-label="Browse pages" data-class="" data-href="/wiki/pages/reorderpages.action?key=ABAP">Browse pages</div></div><button id="space-tools-menu-trigger"  class=" aui-dropdown2-trigger aui-button aui-button-subtle tipsy-enabled aui-dropdown2-trigger-arrowless " aria-controls="space-tools-menu" aria-haspopup="true" role="button" data-aui-trigger><span class="aui-icon aui-icon-small aui-iconfont-configure">Configure</span><span class="aui-button-label">Space tools</span><span class="aui-icon "></span></button><div id="space-tools-menu" class="aui-dropdown2 aui-style-default space-tools-dropdown" role="menu" aria-hidden="true" data-aui-alignment="top left"><div role="application"></div></div><a class="expand-collapse-trigger aui-icon aui-icon-small aui-iconfont-chevron-double-right"></a></div>
+                    
+                        			</div>
+    		</div>
+        <!-- \#header -->
+
+            
+    
+        <div id="main" class=" aui-page-panel">
+                        <div id="main-header">
+                        
+    <div id="navigation" class="content-navigation view">
+                    <ul class="ajs-menu-bar">
+                                            
+        <li class="normal ajs-menu-item">
+        <a id="action-menu-link" class="action aui-dropdown2-trigger-arrowless aui-button aui-button-subtle ajs-menu-title aui-dropdown2-trigger" href="#" aria-haspopup="true" aria-label="More options" aria-owns="action-menu" data-container="#navigation">
+            <span>
+                                    <span class="aui-icon aui-icon-small aui-iconfont-more" aria-label="More options"></span>
+                                
+            </span>
+        </a>         <div id="action-menu" class="aui-dropdown2 aui-style-default" aria-hidden="true">
+                            <div class="aui-dropdown2-section">
+                    <ul  id="action-menu-primary"                         class="section-primary first">
+                                                    <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-attachments-link" href="/wiki/pages/viewpageattachments.action?pageId=1710" rel="nofollow" class="action-view-attachments"  accessKey="t"  title="View Attachments" >
+                        <span>
+                                A<u>t</u>tachments (131)
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-view-history-link" href="/wiki/pages/viewpreviousversions.action?pageId=1710" rel="nofollow" class="action-view-history"   title="" >
+                        <span>
+                                Page History
+            </span>        </a>
+    </li>
+                                        </ul>
+                </div>
+                            <div class="aui-dropdown2-section">
+                    <ul  id="action-menu-secondary"                         class="section-secondary">
+                                                    <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-page-info-link" href="/wiki/pages/viewinfo.action?pageId=1710" rel="nofollow" class="action-view-info"   title="" >
+                        <span>
+                                Page Information
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-resolved-comments" href="/wiki" rel="nofollow" class=""   title="" >
+                        <span>
+                                Resolved comments
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-in-hierarchy-link" href="/wiki/pages/reorderpages.action?key=ABAP&amp;openId=1710#selectedPageInHierarchy" rel="nofollow" class=""   title="" >
+                        <span>
+                                View in Hierarchy
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-view-source-link" href="/wiki/plugins/viewsource/viewpagesrc.action?pageId=1710" rel="nofollow" class="action-view-source popup-link"   title="" >
+                        <span>
+                                View Source
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-export-pdf-link" href="/wiki/spaces/flyingpdf/pdfpageexport.action?pageId=1710" rel="nofollow" class=""   title="" >
+                        <span>
+                                Export to PDF
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-export-word-link" href="/wiki/exportword?pageId=1710" rel="nofollow" class="action-export-word"   title="" >
+                        <span>
+                                Export to Word
+            </span>        </a>
+    </li>
+                                        </ul>
+                </div>
+                    </div>
+    </li>
+            </ul>
+    </div>
+
+            
+            <div id="title-heading" class="pagetitle with-breadcrumbs">
+                
+                                    <div id="breadcrumb-section">
+                        
+    
+    
+    <ol id="breadcrumbs">
+                                        
+                        
+        <li class="first" >
+                        
+                            <span class=""><a href="/wiki/collector/pages.action?key=ABAP">Dashboard</a></span>
+                                                                    </ol>
+
+
+                    </div>
+                
+                
+        <a href="#page-banner-end" class="assistive">Skip to end of banner</a>
+<div id="page-banner-start" class="assistive"></div>
+
+                    
+            <div id="page-metadata-banner"><ul class="banner"><li id="system-content-items" class="noprint"><a href="" title="Unrestricted" id="content-metadata-page-restrictions-hidden" class="hidden"></a><a href="/wiki/pages/viewpageattachments.action?pageId=1710&amp;metadataLink=true" title="131 attachments" id="content-metadata-attachments" class="aui-icon aui-icon-small aui-iconfont-attachment"></a></li><li class="page-metadata-item noprinthas-button"  id="content-metadata-jira-wrapper"><a href="" title="" id="content-metadata-jira" class="aui-button aui-button-subtle content-metadata-jira tipsy-disabled hidden"><span>Jira links</span></a></li></ul></div>
+            
+
+<a href="#page-banner-start" class="assistive">Go to start of banner</a>
+<div id="page-banner-end" class="assistive"></div>
+    
+
+                <h1 id="title-text" class="with-breadcrumbs">
+                                                <a href="/wiki/display/ABAP/ABAP+Development">ABAP Development</a>
+                                    </h1>
+            </div>
+        </div><!-- \#main-header -->
+        
+        
+
+        <div id="sidebar-container">
+                                                </div><!-- \#sidebar-container -->
+
+        
+    
+
+        
+
+
+
+
+            
+    
+
+                                
+    
+
+    
+    
+        
+    
+    
+                    
+    
+
+    
+
+    
+            
+        
+
+    
+    
+
+    
+            
+        
+
+
+
+    
+<div id="content" class="page view">
+    
+
+
+<div id="action-messages">
+                        </div>
+
+
+
+            <script type="text/x-template" title="searchResultsGrid">
+    <table class="aui">
+        <thead>
+            <tr class="header">
+                <th class="search-result-title">Page Title</th>
+                <th class="search-result-space">Space</th>
+                <th class="search-result-date">Updated</th>
+            </tr>
+        </thead>
+    </table>
+</script>
+<script type="text/x-template" title="searchResultsGridCount">
+    <p class="search-result-count">{0}</p>
+</script>
+<script type="text/x-template" title="searchResultsGridRow">
+    <tr class="search-result">
+        <td class="search-result-title"><a href="{1}" class="content-type-{2}"><span>{0}</span></a></td>
+        <td class="search-result-space"><a class="space" href="/wiki/display/{4}/" title="{3}">{3}</a></td>
+        <td class="search-result-date"><span class="date" title="{6}">{5}</span></td>
+    </tr>
+</script>
+        
+    
+            
+
+        
+                            
+    
+
+                    
+
+        
+        <a href="#page-metadata-end" class="assistive">Skip to end of metadata</a>
+<div id="page-metadata-start" class="assistive"></div>
+
+    <div class="page-metadata">
+        <ul>
+            <li class="page-metadata-modification-info">
+                
+        
+    
+        
+    
+        
+            
+            Created by <span class='author'>     <a href="    /wiki/display/~wm7mxes
+"
+                       class="url fn"
+                            >Craig Cmehil</a></span>, last modified by <span class='editor'>     <a href="    /wiki/display/~knc4047
+"
+                       class="url fn"
+                            >Tom Wan</a></span> on <a class='last-modified' title='Show changes' href='/wiki/pages/diffpagesbyversion.action?pageId=1710&amp;selectedPageVersions=277&amp;selectedPageVersions=278'>Jan 29, 2019</a>
+                </li>
+        </ul>
+    </div>
+
+
+<a href="#page-metadata-start" class="assistive">Go to start of metadata</a>
+<div id="page-metadata-end" class="assistive"></div>
+
+        
+                                            
+        <div id="main-content" class="wiki-content">
+                           
+        <div class="sectionColumnWrapper conf-macro output-block" data-hasbody="true" data-macro-name="section"><div class="sectionMacro"><p style="text-align: left;"><span class="status-macro aui-lozenge aui-lozenge-success conf-macro output-inline" data-hasbody="false" data-macro-name="status">ALL USERS ARE INVITED TO CREATE CONTENT!</span> <span style="color: rgb(0,0,0);">please follow the steps</span><em> </em><a href="https://wiki.scn.sap.com/wiki/pages/viewpage.action?pageId=475496678" rel="nofollow"><em>here </em></a></p><div class="sectionMacroRow"><div class="columnMacro conf-macro output-block" style="width:66%;min-width:66%;max-width:66%;" data-hasbody="true" data-macro-name="column"><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" width="450" src="/wiki/download/attachments/1710/ABAP%20Development.png?version=1&amp;modificationDate=1446673897000&amp;api=v2" data-image-src="/wiki/download/attachments/1710/ABAP%20Development.png?version=1&amp;modificationDate=1446673897000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="438174326" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="ABAP Development.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="1710" data-linked-resource-container-version="278" /></span></p><p>Welcome to the ABAP Development Wiki Space.</p><div class="confluence-information-macro confluence-information-macro-information conf-macro output-block" data-hasbody="true" data-macro-name="info"><span class="aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon"> </span><div class="confluence-information-macro-body"><p>Disclaimer: Content Accuracy is assured as much as possible. Discretion advised.</p></div></div></div></div></div></div><div class="sectionColumnWrapper conf-macro output-block" data-hasbody="true" data-macro-name="section"><div class="sectionMacro"><div class="sectionMacroRow"><div class="columnMacro conf-macro output-block" style="width:66%;min-width:66%;max-width:66%;" data-hasbody="true" data-macro-name="column"><div class="confluence-information-macro confluence-information-macro-information conf-macro output-block" data-hasbody="true" data-macro-name="info"><p class="title">New Support Channel: Ask an Expert Peer </p><span class="aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon"> </span><div class="confluence-information-macro-body"><h6 id="ABAPDevelopment-"><span style="color: rgb(0,0,0);"><br /></span></h6><h6 id="ABAPDevelopment-SAPSupporthasextendeditsservicesforyouandhaslaunchedthenewsupportchanneloptionAskanExpertPeerattheendofJanuary."><span style="color: rgb(0,0,0);">SAP Support has extended its services for you and has launched the new support channel option <span><a href="https://support.sap.com/en/my-support/incidents/ask-expert-peer.html" class="external-link" rel="nofollow">Ask an Expert Peer</a></span> at the end of January.</span></h6><h6 id="ABAPDevelopment-AskanExpertPeerisofferedinalimitedfeaturetrialforselectproductsandletsyoucollaborateonyourtechnical,product-relatedquestions–one-on-one,withaqualifiedandapprovedexpertoutsideofSAP.Thisway,youbenefitfromindustryinsights,alongwithanexperienc"><span style="color: rgb(0,0,0);">Ask an Expert Peer is offered in a limited feature trial for select products and lets you collaborate on your technical, product-related questions – one-on-one, with a qualified and approved expert <em>outside of SAP. </em>This way, you benefit from industry insights, along with an experienced perspective about your question. This channel is designed to deliver fast issue resolution for your basic inquiries and how-to questions </span></h6><h6 id="ABAPDevelopment-Fordetails,pleasecheckthisblog."><span style="color: rgb(0,0,0);"><span>For details, please check</span><a href="https://blogs.sap.com/2018/09/12/sap-support-expands-ask-an-expert-peer/" class="external-link" rel="nofollow"> this blog</a>.</span></h6><div><span style="color: rgb(0,0,0);"><br /></span></div></div></div></div><p> </p><p> </p><div class="columnMacro conf-macro output-block" style="width:33%;min-width:33%;max-width:33%;" data-hasbody="true" data-macro-name="column"><div class="panel conf-macro output-block" style="background-color: #FFFFFF;border-color: #F0AB00;border-style: solid;border-width: 1px;" data-hasbody="true" data-macro-name="panel"><div class="panelContent" style="background-color: #FFFFFF;">
+<p><strong><strong>Space Editor:</strong><span> </span><br /><span> </span><span style="color: rgb(240,171,0);"> <strong>|</strong> </span></strong> <span class="editor" style="color: rgb(112,112,112);"><a href="http://scn.sap.com/people/julia.song" class="external-link" rel="nofollow">Julia Song </a></span></p><p><strong>Moderators:</strong> <br /> <span style="color: rgb(240,171,0);"> <strong>|</strong> </span> <span class="editor" style="color: rgb(112,112,112);"><a class="external-link" style="text-decoration: none;" href="http://wiki.scn.sap.com/wiki/display/~ahnxs1c" rel="nofollow">Sebastian Arnold</a> <span style="color: rgb(240,171,0);"> </span><strong>| </strong></span><span style="color: rgb(112,112,112);"><span class="author" style="color: rgb(112,112,112);"><a class="external-link" href="http://wiki.scn.sap.com/wiki/display/~wm7mxes" rel="nofollow">Craig Cmehil</a> <span class="editor" style="color: rgb(112,112,112);"><strong>| </strong><a href="http://scn.sap.com/people/julia.song" class="external-link" rel="nofollow">Julia Song</a></span><span style="color: rgb(112,112,112);"><span class="author"><span class="editor" style="color: rgb(112,112,112);"><span style="color: rgb(240,171,0);"> </span><strong>| </strong></span><a href="http://scn.sap.com/people/tom.wan" class="external-link" rel="nofollow">Tom Wan</a></span></span></span></span></p><p><strong>SAP Community</strong> <strong>Topic Page:</strong></p><p><a href="https://www.sap.com/community/topic/abap.html" class="external-link" rel="nofollow">ABAP Development Community</a></p><p><strong>SAP Community</strong> <strong>Tags:</strong></p><p><a href="https://www.sap.com/community/tag.html?id=833755570260738661924709785639136" class="external-link" rel="nofollow">https://www.sap.com/community/tag.html?id=833755570260738661924709785639136</a></p>
+</div></div></div></div></div></div><div class="sectionColumnWrapper conf-macro output-block" data-hasbody="true" data-macro-name="section"><div class="sectionMacro"><div class="sectionMacroRow"><div class="columnMacro conf-macro output-block" style="width:66%;min-width:66%;max-width:66%;" data-hasbody="true" data-macro-name="column"><div class="panel conf-macro output-block" style="background-color: #FFFFFF;border-style: solid;border-width: 1px;" data-hasbody="true" data-macro-name="panel"><div class="panelHeader" style="border-bottom-width: 1px;border-bottom-style: solid;background-color: #F0AB00;"><b>ABAP Technology and Runtime Environment</b></div><div class="panelContent" style="background-color: #FFFFFF;">
+<p><a href="https://wiki.scn.sap.com/wiki/display/ABAP/ABAP+Technology+and+Runtime+Environment" rel="nofollow">ABAP Technology and Runtime Environment</a></p><p><span style="color: rgb(102,102,102);">Here you can find information about ABAP programming as well as various kinds of ABAP Technologies(ALV, Smartforms, Data Transfer, User Interfaces.eg).</span></p>
+</div></div><div class="panel conf-macro output-block" style="background-color: #FFFFFF;border-style: solid;border-width: 1px;" data-hasbody="true" data-macro-name="panel"><div class="panelHeader" style="border-bottom-width: 1px;border-bottom-style: solid;background-color: #F0AB00;"><b>ABAP Test and Analysis Tools</b></div><div class="panelContent" style="background-color: #FFFFFF;">
+<p><a href="http://wiki.scn.sap.com/wiki/display/ABAP/ABAP+Test+and+Analysis+Tools" class="external-link" rel="nofollow">ABAP Test and Analysis Tools</a></p><p>The rich set of integrated ABAP testing and analysis tools ensure functional and formal correctness of ABAP code, guarantee quality and robustness and offer best support for custom code migration to SAP S/4HANA:</p><p> </p><div class="table-wrap"><table class="wrapped confluenceTable" style="margin-left: 30.0px;"><colgroup><col /><col /></colgroup><tbody style="margin-left: 30.0px;"><tr style="margin-left: 30.0px;"><td style="margin-left: 30.0px;" colspan="1" class="confluenceTd"><ul><li><span>ABAP Code Analysis Tool </span></li></ul></td><td style="margin-left: 30.0px;" colspan="1" class="confluenceTd"><span>ATC/SCI/SLIN.eg</span></td></tr><tr style="margin-left: 30.0px;"><td style="margin-left: 30.0px;" class="confluenceTd"><ul><li><span>Performance Analysis Tool</span></li></ul></td><td style="margin-left: 30.0px;" class="confluenceTd"><span>ST12/ST05/SE30.eg</span></td></tr><tr style="margin-left: 30.0px;"><td style="margin-left: 30.0px;" class="confluenceTd"><ul><li><span>Memory Analysis Tool </span></li></ul></td><td style="margin-left: 30.0px;" class="confluenceTd"><span>Memory Inspector</span></td></tr><tr style="margin-left: 30.0px;"><td style="margin-left: 30.0px;" class="confluenceTd"><ul><li><span>Testing Tool </span></li></ul></td><td style="margin-left: 30.0px;" class="confluenceTd"><span>eCATT</span></td></tr></tbody></table></div>
+</div></div><div class="panel conf-macro output-block" style="background-color: #FFFFFF;border-style: solid;border-width: 1px;" data-hasbody="true" data-macro-name="panel"><div class="panelHeader" style="border-bottom-width: 1px;border-bottom-style: solid;background-color: #F0AB00;"><b>ABAP Connectivity Wiki</b></div><div class="panelContent" style="background-color: #FFFFFF;">
+<div class="sectionColumnWrapper conf-macro output-block"><div class="sectionMacro"><div class="sectionMacroRow"><div class="columnMacro conf-macro output-block"><p><a class="external-link" href="http://wiki.sdn.sap.com/wiki/display/ABAPConn/ABAP+Connectivity+Home" rel="nofollow">ABAP Connectivity Wiki</a></p><p>Here you can find any kind of topics related to ABAP Server communication. In particular, the ABAP Connectivity Wiki covers the areas of</p><div class="table-wrap"><table class="relative-table wrapped confluenceTable" style="width: 99.884%;"><colgroup><col style="width: 26.1395%;" /><col style="width: 32.2791%;" /><col style="width: 41.3953%;" /></colgroup><tbody><tr><td class="confluenceTd"><ul><li><span>ABAP Channels</span></li></ul></td><td class="confluenceTd"><ul><li><span>Internet Communication Framework (ICF)</span></li></ul></td><td rowspan="4" class="confluenceTd"><ul style="list-style-type: square;"><li><span>Connectors:</span></li></ul><p style="margin-left: 30.0px;">SAP Cloud Platform Cloud Connector<span><br /></span></p><p style="margin-left: 30.0px;"><span>SAP Java Connector (SAP JCo)</span><span><br /></span></p><p style="margin-left: 30.0px;"><span>SAP Java Resource Adapter (SAP JRA)</span><span><br /></span></p><p style="margin-left: 30.0px;"><span>(NetWeaver) RFC SDK</span><span><br /></span></p><p style="margin-left: 30.0px;"><span>SAP Business Connector (SAP BC)</span><span><br /></span></p><p style="margin-left: 30.0px;"><span>SAP .Net Connector (SAP NCo)</span><span><br /></span></p><p style="margin-left: 30.0px;"><span>SAP ABAP Connector (SAP ACo) </span></p></td></tr><tr><td class="confluenceTd"><ul><li><span>Remote Function Call (RFC)</span></li></ul></td><td class="confluenceTd"><ul><li><span>Internet Communication Manager (ICM)</span></li></ul></td></tr><tr><td class="confluenceTd"><ul><li><span>Web Services ABAP</span></li></ul></td><td class="confluenceTd"><ul><li><span>Unified Connectivity (UCON) </span></li></ul></td></tr><tr><td colspan="1" class="confluenceTd"><ul><li><span>OData</span></li></ul></td><td colspan="1" class="confluenceTd"><ul><li><span>REST Library </span></li></ul></td></tr></tbody></table></div><p><br />In other words: it is dedicated to all core technologies that connect an ABAP server to any other system (ABAP or non-ABAP) directly or over the internet.</p></div></div></div></div>
+</div></div><div class="panel conf-macro output-block" style="background-color: #FFFFFF;border-style: solid;border-width: 1px;" data-hasbody="true" data-macro-name="panel"><div class="panelHeader" style="border-bottom-width: 1px;border-bottom-style: solid;background-color: #F0AB00;"><b>SAP Cloud Platform ABAP Environment</b></div><div class="panelContent" style="background-color: #FFFFFF;">
+<p><a href="https://www.sap.com/community/topics/cloud-platform-abap-environment.html" class="external-link" rel="nofollow">SAP Cloud Platform ABAP Environment Community page.</a></p><p>SAP Cloud Platform ABAP Environment is SAP's Platform as a Service (PaaS) offering for ABAP development which enables developers to leverage their traditional on-premise ABAP know-how to develop and run ABAP applications in the SAP Cloud Platform, either as extension to SAP software or as standalone applications.</p>
+</div></div><div class="panel conf-macro output-block" style="background-color: #FFFFFF;border-style: solid;border-width: 1px;" data-hasbody="true" data-macro-name="panel"><div class="panelHeader" style="border-bottom-width: 1px;border-bottom-style: solid;background-color: #F0AB00;"><b>Related Resources</b></div><div class="panelContent" style="background-color: #FFFFFF;">
+<p><a href="https://www.sap.com/community/topics/abap.html" class="external-link" rel="nofollow">ABAP Development Community</a></p><p><a href="https://www.youtube.com/channel/UC5DgCoTxyLCuli33BQrLmrg" class="external-link" rel="nofollow">ABAP Channel on YouTube</a></p>
+</div></div></div><div class="columnMacro conf-macro output-block" style="width:33%;min-width:33%;max-width:33%;" data-hasbody="true" data-macro-name="column"><div class="panel conf-macro output-block" style="background-color: #FFFFE5;border-style: solid;border-width: 1px;" data-hasbody="true" data-macro-name="panel"><div class="panelHeader" style="border-bottom-width: 1px;border-bottom-style: solid;background-color: #008FD3;"><b>PS Social Media Channel</b></div><div class="panelContent" style="background-color: #FFFFE5;">
+<p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-thumbnail" width="20" src="/wiki/download/thumbnails/393838745/SCN-icon.png?version=1&amp;modificationDate=1413484271000&amp;api=v2" data-image-src="/wiki/download/attachments/393838745/SCN-icon.png?version=1&amp;modificationDate=1413484271000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="395444723" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="SCN-icon.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="393838745" data-linked-resource-container-version="46" /></span></span> <a class="external-link" href="http://scn.sap.com/community/it-management/alm/software-logistics/content?filterID=contentstatus%5Bpublished%5D~category%5Bsystem-upgrade-update%5D" rel="nofollow">SAP SCN Software</a><a class="external-link" href="http://scn.sap.com/community/it-management/alm/software-logistics" rel="nofollow"> Logistics Community</a></p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-thumbnail" width="20" src="/wiki/download/thumbnails/393838745/UIC.png?version=2&amp;modificationDate=1416442167000&amp;api=v2" data-image-src="/wiki/download/attachments/393838745/UIC.png?version=2&amp;modificationDate=1416442167000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="397312079" data-linked-resource-version="2" data-linked-resource-type="attachment" data-linked-resource-default-alias="UIC.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="393838745" data-linked-resource-container-version="46" /></span></span> <a class="external-link" href="https://support.sap.com/release-upgrade-maintenance/upgrade-info.html?source=email-g-upgrade-newsletter-20141016&amp;lf1=2381044928b801923771639c31421815" rel="nofollow">SAP Upgrade Information Center</a></p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-thumbnail" width="20" src="/wiki/download/thumbnails/393838745/twitter-icon.png?version=1&amp;modificationDate=1413483885000&amp;api=v2" data-image-src="/wiki/download/attachments/393838745/twitter-icon.png?version=1&amp;modificationDate=1413483885000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="395444720" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="twitter-icon.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="393838745" data-linked-resource-container-version="46" /></span></span> <a class="external-link" href="https://twitter.com/sapsupporthelp" rel="nofollow"><strong>SAP Product Support Twitter</strong><span style="color: rgb(197,90,17);"><span style="color: rgb(0,0,0);"> </span></span></a><span style="color: rgb(197,90,17);"><span style="color: rgb(0,0,0);"> </span></span></p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-thumbnail" width="20" src="/wiki/download/thumbnails/393838745/facebook-icon.png?version=1&amp;modificationDate=1413483866000&amp;api=v2" data-image-src="/wiki/download/attachments/393838745/facebook-icon.png?version=1&amp;modificationDate=1413483866000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="395444719" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="facebook-icon.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="393838745" data-linked-resource-container-version="46" /></span></span> <a class="external-link" href="https://www.facebook.com/SapProductSupport/timeline?ref=page_internal" rel="nofollow">SAP Product Support Facebook</a></p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-thumbnail" width="20" src="/wiki/download/thumbnails/393838745/LinkedIn_icon.png?version=1&amp;modificationDate=1432275677000&amp;api=v2" data-image-src="/wiki/download/attachments/393838745/LinkedIn_icon.png?version=1&amp;modificationDate=1432275677000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="419955415" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="LinkedIn_icon.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="393838745" data-linked-resource-container-version="46" /></span></span> <a class="external-link" href="https://www.linkedin.com/grp/home?gid=3913555" rel="nofollow">SAP Product Support LinkedIn</a></p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-thumbnail" width="23" src="/wiki/download/thumbnails/393838745/youtube-icon.png?version=1&amp;modificationDate=1413483981000&amp;api=v2" data-image-src="/wiki/download/attachments/393838745/youtube-icon.png?version=1&amp;modificationDate=1413483981000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="395444721" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="youtube-icon.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="393838745" data-linked-resource-container-version="46" /></span></span> <a class="external-link" href="http://www.youtube.com/user/SAPSupportInfo" rel="nofollow">SAP Support YouTube</a></p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-thumbnail" width="23" src="/wiki/download/thumbnails/393838745/Weibo-icon.png?version=1&amp;modificationDate=1413483996000&amp;api=v2" data-image-src="/wiki/download/attachments/393838745/Weibo-icon.png?version=1&amp;modificationDate=1413483996000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="395444722" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="Weibo-icon.png" data-base-url="https://wiki.scn.sap.com/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="393838745" data-linked-resource-container-version="46" /></span></span> <a class="external-link" href="http://weibo.com/scnchina" rel="nofollow">SAP Product Support Weibo</a></p>
+</div></div></div></div></div></div><p><br/><br/></p>
+
+                
+        
+    
+        </div>
+
+                        
+    
+
+
+
+<div id="labels-section" class="pageSection group">
+    <div class="labels-section-content content-column" entityid="1710" entitytype="page">
+	<div class="labels-content">
+		
+    <ul class="label-list label-list-right ">
+                    
+        <li class="aui-label " data-label-id="1142"><a class="aui-label-split-main" href="/wiki/label/ABAP/alv" rel="tag">alv</a></li><li class="aui-label " data-label-id="4766"><a class="aui-label-split-main" href="/wiki/label/ABAP/select" rel="tag">select</a></li><li class="aui-label " data-label-id="64"><a class="aui-label-split-main" href="/wiki/label/ABAP/performance" rel="tag">performance</a></li><li class="aui-label " data-label-id="2981"><a class="aui-label-split-main" href="/wiki/label/ABAP/exit" rel="tag">exit</a></li><li class="aui-label " data-label-id="88"><a class="aui-label-split-main" href="/wiki/label/ABAP/badi" rel="tag">badi</a></li><li class="aui-label " data-label-id="2574"><a class="aui-label-split-main" href="/wiki/label/ABAP/sapscript" rel="tag">sapscript</a></li><li class="aui-label " data-label-id="587"><a class="aui-label-split-main" href="/wiki/label/ABAP/screen" rel="tag">screen</a></li><li class="aui-label " data-label-id="668"><a class="aui-label-split-main" href="/wiki/label/ABAP/bapi" rel="tag">bapi</a></li><li class="aui-label " data-label-id="728"><a class="aui-label-split-main" href="/wiki/label/ABAP/report" rel="tag">report</a></li><li class="aui-label " data-label-id="103"><a class="aui-label-split-main" href="/wiki/label/ABAP/bsp" rel="tag">bsp</a></li><li class="aui-label " data-label-id="595"><a class="aui-label-split-main" href="/wiki/label/ABAP/spool" rel="tag">spool</a></li><li class="aui-label " data-label-id="845"><a class="aui-label-split-main" href="/wiki/label/ABAP/version" rel="tag">version</a></li><li class="aui-label " data-label-id="1664"><a class="aui-label-split-main" href="/wiki/label/ABAP/bdc" rel="tag">bdc</a></li><li class="aui-label " data-label-id="5207"><a class="aui-label-split-main" href="/wiki/label/ABAP/query" rel="tag">query</a></li><li class="aui-label " data-label-id="40"><a class="aui-label-split-main" href="/wiki/label/ABAP/abap" rel="tag">abap</a></li><li class="aui-label " data-label-id="770"><a class="aui-label-split-main" href="/wiki/label/ABAP/idoc" rel="tag">idoc</a></li><li class="aui-label " data-label-id="39682069"><a class="aui-label-split-main" href="/wiki/label/ABAP/grid" rel="tag">grid</a></li><li class="aui-label " data-label-id="2430"><a class="aui-label-split-main" href="/wiki/label/ABAP/smartform" rel="tag">smartform</a></li><li class="aui-label " data-label-id="33"><a class="aui-label-split-main" href="/wiki/label/ABAP/faq" rel="tag">faq</a></li><li class="aui-label " data-label-id="2661"><a class="aui-label-split-main" href="/wiki/label/ABAP/enhancement" rel="tag">enhancement</a></li><li class="aui-label " data-label-id="2553"><a class="aui-label-split-main" href="/wiki/label/ABAP/lsmw" rel="tag">lsmw</a></li><li class="aui-label " data-label-id="1239"><a class="aui-label-split-main" href="/wiki/label/ABAP/pdf" rel="tag">pdf</a></li><li class="aui-label " data-label-id="132808732"><a class="aui-label-split-main" href="/wiki/label/ABAP/topic-homepage" rel="tag">topic-homepage</a></li><li class="aui-label " data-label-id="458"><a class="aui-label-split-main" href="/wiki/label/ABAP/development" rel="tag">development</a></li><li class="aui-label " data-label-id="32571413"><a class="aui-label-split-main" href="/wiki/label/ABAP/mvc" rel="tag">mvc</a></li>
+            </ul>
+
+    </div>
+</div>
+</div>
+        
+		
+            
+
+
+
+
+            
+        
+
+
+
+
+
+
+
+
+                        
+    
+<div id="comments-section" class="pageSection group">
+                <div class="section-header">
+            <h2 id="comments-section-title" class="section-title">
+                                    36 Comments
+                            </h2>
+        </div>
+    
+    
+
+            <ol class="comment-threads top-level" id="page-comments">
+                    <li id="comment-thread-51858" class="comment-thread">
+        <div class="comment  " id="comment-51858">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: 107nv6xe7" title="107nv6xe7">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (107nv6xe7)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>can someone explain what this picture represents?</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=51858#comment-51858"
+                 id="comment-permalink-51858"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Oct 05, 2007 18:51" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=51858#comment-51858"
+                                    ><span>Oct 05, 2007</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-52787" class="comment-thread">
+        <div class="comment  " id="comment-52787">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: n8dtqv7" title="n8dtqv7">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (n8dtqv7)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>how to create an interactive report for scrap details of production planning and</p>
+
+<p>amount of time.wat is scrap details</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=52787#comment-52787"
+                 id="comment-permalink-52787"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Oct 17, 2007 13:15" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=52787#comment-52787"
+                                    ><span>Oct 17, 2007</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-52829" class="comment-thread">
+        <div class="comment  " id="comment-52829">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+            alt="User icon: Anonymous" title="Anonymous">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="anonymous-user">Anonymous</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>   Can anyone tell me that how to test macro(hr-abap) to check the output just like we are testing function module using se37?</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=52829#comment-52829"
+                 id="comment-permalink-52829"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Oct 18, 2007 06:21" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=52829#comment-52829"
+                                    ><span>Oct 18, 2007</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-56483" class="comment-thread">
+        <div class="comment  " id="comment-56483">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: f7agl2t" title="f7agl2t">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (f7agl2t)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>does anyone understand the image on this wiki space? It does not seem to make sense. Please explain and potentially move it were it belongs.<br/>
+M.</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=56483#comment-56483"
+                 id="comment-permalink-56483"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Nov 27, 2007 17:42" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=56483#comment-56483"
+                                    ><span>Nov 27, 2007</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-60251" class="comment-thread">
+        <div class="comment  " id="comment-60251">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: xox5dnv" title="xox5dnv">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <a href="    /wiki/display/~xox5dnv
+"
+                       class="url fn"
+                            >Beena  Praveen</a></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>How to change an ABAP program PBS enabled?</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=60251#comment-60251"
+                 id="comment-permalink-60251"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Dec 19, 2007 10:56" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=60251#comment-60251"
+                                    ><span>Dec 19, 2007</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-61465" class="comment-thread">
+        <div class="comment  " id="comment-61465">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: 98hf74ya" title="98hf74ya">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (98hf74ya)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>how does an abaper updates the data into the tables which he creates?</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=61465#comment-61465"
+                 id="comment-permalink-61465"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jan 02, 2008 18:07" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=61465#comment-61465"
+                                    ><span>Jan 02, 2008</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-62560" class="comment-thread">
+        <div class="comment  " id="comment-62560">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: inv8i23" title="inv8i23">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (inv8i23)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Can anyone please let me know how to install ABAP 4.6 on my own machine?</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=62560#comment-62560"
+                 id="comment-permalink-62560"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jan 13, 2008 04:05" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=62560#comment-62560"
+                                    ><span>Jan 13, 2008</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-73596938" class="comment-thread">
+        <div class="comment  " id="comment-73596938">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: pri2y4q" title="pri2y4q">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (pri2y4q)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p><strong>please sdn users help me.... i am staying at bangalore and i need a real time person who personally teaching abap general along with advanced topic like ale/idoc,bapi,badi etc......  here the institute are taking too much money and is of no use if you know such person or if you can find plz let me know  on my no 09379143453 or send me a mail at biswajitpradhan636@gmail.com</strong></p>
+
+<p><strong>thanks</strong></p>
+
+<p><strong>waiting for your reply  and hope to get a good teacher</strong></p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=73596938#comment-73596938"
+                 id="comment-permalink-73596938"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jan 19, 2009 11:19" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=73596938#comment-73596938"
+                                    ><span>Jan 19, 2009</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-129237308" class="comment-thread">
+        <div class="comment  " id="comment-129237308">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: ngeg74m" title="ngeg74m">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Former Member</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Why can I not add a wikii ,but I can add last year?</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=129237308#comment-129237308"
+                 id="comment-permalink-129237308"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jul 30, 2009 04:50" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=129237308#comment-129237308"
+                                    ><span>Jul 30, 2009</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-129335878" class="comment-thread">
+        <div class="comment  " id="comment-129335878">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+            alt="User icon: Anonymous" title="Anonymous">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <a href="    /wiki/display/~c0cbtrx
+"
+                       class="url fn"
+                            >Sandra Rossi</a></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>To Jack Wu : wiki became a semi-closed wiki since June 17th, see <a class="external-link" href="https://weblogs.sdn.sap.com/pub/wlg/14712" rel="nofollow">https://weblogs.sdn.sap.com/pub/wlg/14712</a></p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=129335878#comment-129335878"
+                 id="comment-permalink-129335878"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jul 30, 2009 10:09" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=129335878#comment-129335878"
+                                    ><span>Jul 30, 2009</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-187174970" class="comment-thread">
+        <div class="comment  " id="comment-187174970">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: 1010gtw35" title="1010gtw35">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (1010gtw35)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>what is sub type in workflow?</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=187174970#comment-187174970"
+                 id="comment-permalink-187174970"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="May 03, 2010 00:32" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=187174970#comment-187174970"
+                                    ><span>May 03, 2010</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-201066094" class="comment-thread">
+        <div class="comment  " id="comment-201066094">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: f2x7tzd" title="f2x7tzd">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (f2x7tzd)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>hi i want to write the certification exam for abap the exam code is C_TAW12_70 can any one send the material and faq links please thanks</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=201066094#comment-201066094"
+                 id="comment-permalink-201066094"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Sep 26, 2010 09:09" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=201066094#comment-201066094"
+                                    ><span>Sep 26, 2010</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-233736109" class="comment-thread">
+        <div class="comment  " id="comment-233736109">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: 101ejdv5m" title="101ejdv5m">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (101ejdv5m)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>can anyone tell me that is t possible to store multiple vales in single field in database table in abap???</p>
+
+<p>like column_name = qualification</p>
+
+<p>values                        B-Tech</p>
+
+<p>                                    12th</p>
+
+<p>                                    10th</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=233736109#comment-233736109"
+                 id="comment-permalink-233736109"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Apr 06, 2011 08:36" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=233736109#comment-233736109"
+                                    ><span>Apr 06, 2011</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-238060319" class="comment-thread">
+        <div class="comment  " id="comment-238060319">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: ake0y4m" title="ake0y4m">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (ake0y4m)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>can anyone know hoe to create alv using  blocked list ? </p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=238060319#comment-238060319"
+                 id="comment-permalink-238060319"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jun 10, 2011 04:28" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=238060319#comment-238060319"
+                                    ><span>Jun 10, 2011</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-249660098" class="comment-thread">
+        <div class="comment  " id="comment-249660098">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: pznlngr" title="pznlngr">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Former Member</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>how to provide coloumn wise heading in alv report?</p>
+
+<p>example like</p>
+
+<p> ebeln  3000008</p>
+
+<p> netpr   50000</p>
+
+<p> matnr  1000</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=249660098#comment-249660098"
+                 id="comment-permalink-249660098"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Aug 17, 2011 20:52" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=249660098#comment-249660098"
+                                    ><span>Aug 17, 2011</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-255527168" class="comment-thread">
+        <div class="comment  " id="comment-255527168">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: 100ceitnt" title="100ceitnt">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <a href="    /wiki/display/~100ceitnt
+"
+                       class="url fn"
+                            >Sreenivas Pachva</a></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p><strong>hi sap all</strong><br class="atl-forced-newline"/></p>
+
+<p>could you explain anyone what is sapruby ( i heard this one in SAP ByD) is it normal ruby language or sap introduced any new concepts in this one?  plzz help me out..<br class="atl-forced-newline"/> <br class="atl-forced-newline"/> <br class="atl-forced-newline"/></p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=255527168#comment-255527168"
+                 id="comment-permalink-255527168"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Oct 25, 2011 12:11" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=255527168#comment-255527168"
+                                    ><span>Oct 25, 2011</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-257556605" class="comment-thread">
+        <div class="comment  " id="comment-257556605">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: w5c5d4t" title="w5c5d4t">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <a href="    /wiki/display/~w5c5d4t
+"
+                       class="url fn"
+                            >Gregor Wolf</a></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Hello,</p>
+
+<p>you can find the Blue Ruby project at <a class="external-link" href="https://cw.sdn.sap.com/cw/groups/blue-ruby" rel="nofollow">https://cw.sdn.sap.com/cw/groups/blue-ruby</a>.</p>
+
+<p>Best regards<br/>
+Gregor</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=257556605#comment-257556605"
+                 id="comment-permalink-257556605"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Nov 01, 2011 10:25" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=257556605#comment-257556605"
+                                    ><span>Nov 01, 2011</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-257756761" class="comment-thread">
+        <div class="comment  " id="comment-257756761">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: krs56fv" title="krs56fv">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (krs56fv)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>earch engine optimization India is a highly developed industry, which is also due to the fact that India is also one of the leading countries in the world in terms of Information Technology. We are able to produce the highest quality SEO services in India, and we even go as far as designing and creating websites for our clients.</p>
+
+<p><a href="http://www.seoagency.org.uk/clients.html" class="external-link" rel="nofollow">SEO Agency</a></p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=257756761#comment-257756761"
+                 id="comment-permalink-257756761"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Nov 25, 2011 13:38" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=257756761#comment-257756761"
+                                    ><span>Nov 25, 2011</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-257757891" class="comment-thread">
+        <div class="comment  " id="comment-257757891">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: iwk3onv" title="iwk3onv">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (iwk3onv)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Hi,</p>
+
+<p>Can anyone tell me how to implement BAdis.</p>
+
+<p>Thanks &amp; Regards</p>
+
+<p><a class="confluence-userlink user-mention" data-username="iwk3onv" href="/wiki/display/~iwk3onv" data-linked-resource-id="257757888" data-linked-resource-version="1" data-linked-resource-type="userinfo" data-base-url="https://wiki.scn.sap.com/wiki">Unknown User (iwk3onv)</a></p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=257757891#comment-257757891"
+                 id="comment-permalink-257757891"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Dec 01, 2011 12:46" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=257757891#comment-257757891"
+                                    ><span>Dec 01, 2011</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-260047617" class="comment-thread">
+        <div class="comment  " id="comment-260047617">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: ueh6kxv" title="ueh6kxv">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (ueh6kxv)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>how to post a new question in forums</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=260047617#comment-260047617"
+                 id="comment-permalink-260047617"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Dec 09, 2011 07:01" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=260047617#comment-260047617"
+                                    ><span>Dec 09, 2011</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-263455577" class="comment-thread">
+        <div class="comment  " id="comment-263455577">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: nvqjp7x" title="nvqjp7x">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (nvqjp7x)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>hi,</p>
+
+<p>  i want to save data in ztableduring run-time....can anyone plz help m..</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=263455577#comment-263455577"
+                 id="comment-permalink-263455577"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jan 09, 2012 17:33" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=263455577#comment-263455577"
+                                    ><span>Jan 09, 2012</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-263292209" class="comment-thread">
+        <div class="comment  " id="comment-263292209">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: eh5gm47" title="eh5gm47">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <a href="    /wiki/display/~eh5gm47
+"
+                       class="url fn"
+                            >Syambabu Allu</a></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>it's very help full Blog</p>
+
+<p>Thank's</p>
+
+<p>Syam</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=263292209#comment-263292209"
+                 id="comment-permalink-263292209"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jan 11, 2012 07:58" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=263292209#comment-263292209"
+                                    ><span>Jan 11, 2012</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-263555087" class="comment-thread">
+        <div class="comment  " id="comment-263555087">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: jco70hx" title="jco70hx">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (jco70hx)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>data v_lines type i.</p>
+
+<p>describe table it_tab lines _lines.</p>
+
+
+<p>AT USER-COMMAND.</p>
+
+<p>IF SY-UCOMM 'DELETE'.</p>
+
+<p>d0 v_lines times.</p>
+
+<p>read line sy-index field value chk.</p>
+
+<p>if chk = 'X'.</p>
+
+<p>delete it_tab from wa_itab.</p>
+
+<p>clear wa_itab.</p>
+
+<p>endif.</p>
+
+<p>enddo.</p>
+
+<p>MY PROBLEM IS CHK = 'X'. NOT checking the condition.</p>
+
+<p>can any one help me please.</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=263555087#comment-263555087"
+                 id="comment-permalink-263555087"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jan 17, 2012 10:25" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=263555087#comment-263555087"
+                                    ><span>Jan 17, 2012</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-274793179" class="comment-thread">
+        <div class="comment  " id="comment-274793179">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: 995jqhyz" title="995jqhyz">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (995jqhyz)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>hi</p>
+
+<p>i hv used one of fm i.e  F4IF_INT_TABLE_VALUE_REQUEST, requirement is on selection screen thr r two fields s_matnr n s_werks when i enter any any value in s_matnr and moves to s_werks and press f4 it should show value help corresponding to value enter in s_matnr. but im nt getting dis. dis is code please help</p>
+
+<p>TYPES: BEGIN OF i_marc,</p>
+
+<p>  matnr TYPE marc-matnr,</p>
+
+<p>  werks TYPE marc-werks,</p>
+
+<p>  END OF i_marc.</p>
+
+<p>DATA: it_marc TYPE STANDARD TABLE OF i_marc INITIAL SIZE 0,</p>
+
+<p>      wa_marc TYPE i_marc.select-options s_matnr for mara-matnr.</p>
+
+<p>data :it_return type STANDARD TABLE OF DDSHRETVAL,</p>
+
+<p>      wa_return like line of it_return.</p>
+
+
+<p>parameters: s_werks type marc-werks.</p>
+
+<p>at selection-screen on value-request for s_werks.</p>
+
+<p>select matnr werks from marc into table it_marc where matnr in s_matnr.</p>
+
+<p>CALL FUNCTION 'F4IF_INT_TABLE_VALUE_REQUEST'</p>
+
+<p>  EXPORTING</p>
+
+<p>*   DDIC_STRUCTURE         = ' '</p>
+
+<p>    RETFIELD               = 'WERKS'</p>
+
+<p>*   PVALKEY                = ' '</p>
+
+<p>*   DYNPPROG               = ' '</p>
+
+<p>*   DYNPNR                 = ' '</p>
+
+<p>*   DYNPROFIELD            = ' '</p>
+
+<p>*   STEPL                  = 0</p>
+
+<p>*   WINDOW_TITLE           =</p>
+
+<p>*   VALUE                  = ' '</p>
+
+<p>   VALUE_ORG              = 'S'</p>
+
+<p>*   MULTIPLE_CHOICE        = ' '</p>
+
+<p>*   DISPLAY                = ' '</p>
+
+<p>*   CALLBACK_PROGRAM       = ' '</p>
+
+<p>*   CALLBACK_FORM          = ' '</p>
+
+<p>*   MARK_TAB               =</p>
+
+<p>* IMPORTING</p>
+
+<p>*   USER_RESET             =</p>
+
+<p>  TABLES</p>
+
+<p>    VALUE_TAB              = it_marc</p>
+
+<p>*   FIELD_TAB              =</p>
+
+<p>   RETURN_TAB             = it_return</p>
+
+<p>*   DYNPFLD_MAPPING        =</p>
+
+<p> EXCEPTIONS</p>
+
+<p>   PARAMETER_ERROR        = 1</p>
+
+<p>   NO_VALUES_FOUND        = 2</p>
+
+<p>   OTHERS                 = 3</p>
+
+<p>          .</p>
+
+
+
+<p>          .</p>
+
+
+
+<p> READ TABLE it_return into wa_return index 1.</p>
+
+<p>s_werks = wa_return-fieldval.</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=274793179#comment-274793179"
+                 id="comment-permalink-274793179"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Mar 18, 2012 21:19" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=274793179#comment-274793179"
+                                    ><span>Mar 18, 2012</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-274858988" class="comment-thread">
+        <div class="comment  " id="comment-274858988">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: onr6wcy" title="onr6wcy">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (onr6wcy)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Dear experts,<br class="atl-forced-newline"/></p>
+
+<p>           I have a query on background jobs in BDC session method, i.e. every day night jobs need to run in background, while I am checking next day all data is updated to data base, but my query is I have requirement like error records file should be at the front end.</p>
+
+<p>How can I achieve this please help me.<br class="atl-forced-newline"/></p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=274858988#comment-274858988"
+                 id="comment-permalink-274858988"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Mar 20, 2012 11:48" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=274858988#comment-274858988"
+                                    ><span>Mar 20, 2012</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-279807055" class="comment-thread">
+        <div class="comment  " id="comment-279807055">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: v2qnz3y" title="v2qnz3y">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Former Member</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Hi</p>
+
+<p>I want to develop a program which is start with user logon(for a specific user)</p>
+
+<p>then force user to enter some descriptions</p>
+
+<p>ı will update a dtable which contains user logon time logonoff time user name  and descriptions -with logon-</p>
+
+<p>many people may enter with same user but it has to work separately.</p>
+
+<p>Here is my questions have can ı describe user log off time and how can make program to start with user logon</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=279807055#comment-279807055"
+                 id="comment-permalink-279807055"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Apr 24, 2012 14:00" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=279807055#comment-279807055"
+                                    ><span>Apr 24, 2012</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-281282875" class="comment-thread">
+        <div class="comment  " id="comment-281282875">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: zuij5h2" title="zuij5h2">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (zuij5h2)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Hi,</p>
+
+<p> How to create monthly mass balance procedure in unidentified loss and %  of unidentified loss using alv list . pls let me share. </p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=281282875#comment-281282875"
+                 id="comment-permalink-281282875"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="May 21, 2012 08:51" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=281282875#comment-281282875"
+                                    ><span>May 21, 2012</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-284099341" class="comment-thread">
+        <div class="comment  " id="comment-284099341">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: aa8t2hc" title="aa8t2hc">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (aa8t2hc)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Hi ,</p>
+
+<p>i have two internal tables and two grid displays.</p>
+
+<p>in selection screen i have two requiremnets one is based on customer no and another is sales order.</p>
+
+<p>the requirement is if i select customer no then it has to disply customer no.</p>
+
+<p>if i select sales order then it has to display sales order</p>
+
+<p>i tried it but im getting the result customer no sales order but everytime displaying customer no first.</p>
+
+<p>plz help me</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=284099341#comment-284099341"
+                 id="comment-permalink-284099341"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jun 04, 2012 08:29" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=284099341#comment-284099341"
+                                    ><span>Jun 04, 2012</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-285179987" class="comment-thread">
+        <div class="comment  " id="comment-285179987">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: aa8t2hc" title="aa8t2hc">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (aa8t2hc)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Hi ,</p>
+
+<p>i have two internal tables and two grid displays.</p>
+
+<p>in selection screen i have two requiremnets one is based on customer no and another is sales order.</p>
+
+<p>the requirement is if i select customer no then it has to disply customer no.</p>
+
+<p>if i select sales order then it has to display sales order</p>
+
+<p>i tried it but im getting the result customer no sales order but everytime displaying customer no first.</p>
+
+<p>plz help me</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=285179987#comment-285179987"
+                 id="comment-permalink-285179987"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jun 04, 2012 08:29" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=285179987#comment-285179987"
+                                    ><span>Jun 04, 2012</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-293864701" class="comment-thread">
+        <div class="comment  " id="comment-293864701">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: 104ed090b" title="104ed090b">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (104ed090b)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Hi,</p>
+
+<p>I want to know the alternative for RFC Destination.</p>
+
+<p>How can i get the connectivity from an ABAP system to a Java system without using RFC Destination.</p>
+
+<p>Thanks for your help.<br class="atl-forced-newline"/></p>
+
+<p>Best Regards,</p>
+
+<p>Lata</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=293864701#comment-293864701"
+                 id="comment-permalink-293864701"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jul 19, 2012 08:40" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=293864701#comment-293864701"
+                                    ><span>Jul 19, 2012</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-293537045" class="comment-thread">
+        <div class="comment  " id="comment-293537045">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: 104ed090b" title="104ed090b">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Unknown User (104ed090b)</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Hi,</p>
+
+<p>I want to know the alternative for RFC Destination.</p>
+
+<p>How can i get the connectivity from an ABAP system to a Java system without using RFC Destination.</p>
+
+<p>Thanks for your help.<br class="atl-forced-newline"/></p>
+
+<p>Best Regards,</p>
+
+<p>Lata</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=293537045#comment-293537045"
+                 id="comment-permalink-293537045"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jul 19, 2012 08:40" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=293537045#comment-293537045"
+                                    ><span>Jul 19, 2012</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-293996102" class="comment-thread">
+        <div class="comment  " id="comment-293996102">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: w5c5d4t" title="w5c5d4t">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <a href="    /wiki/display/~w5c5d4t
+"
+                       class="url fn"
+                            >Gregor Wolf</a></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Dear Lata,</p>
+
+<p>please checkout the Page <a class="unresolved" href="#">ABAP Connectivity Home Old</a>. In Addition to WebServices you can have a look into <a href="http://scn.sap.com/community/netweaver-gateway" class="external-link" rel="nofollow">SAP NetWeaver Gateway</a>.</p>
+
+<p>Best regards<br/>
+Gregor</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=293996102#comment-293996102"
+                 id="comment-permalink-293996102"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Jul 19, 2012 09:02" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=293996102#comment-293996102"
+                                    ><span>Jul 19, 2012</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-333808109" class="comment-thread">
+        <div class="comment  " id="comment-333808109">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: 101jtg21v" title="101jtg21v">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <a href="    /wiki/display/~101jtg21v
+"
+                       class="url fn"
+                            >Devraj Bardhan</a></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Please add a section to include Non SAP Press books as well </p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=333808109#comment-333808109"
+                 id="comment-permalink-333808109"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="May 04, 2013 13:50" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=333808109#comment-333808109"
+                                    ><span>May 04, 2013</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-345539078" class="comment-thread">
+        <div class="comment  " id="comment-345539078">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: f6nnndg" title="f6nnndg">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <a href="    /wiki/display/~f6nnndg
+"
+                       class="url fn"
+                            >Jyothi Reddy</a></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Hi every one,</p>
+
+<p>I have some doubt regarding MD04 transaction.</p>
+
+<p>For this transaction i want modify standard screen(i.e making visible to a field i.e Stock in Transit*(mdez-tramg)*, i.e in the standard screen  that field already is there i.e in the table control .</p>
+
+<p>so how to make that field as visible, means any enhancement is there for MD04 Transaction for this requirement.</p>
+
+<p>PlZ help me.</p>
+
+<p>Regards,</p>
+
+<p>Jyothi</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=345539078#comment-345539078"
+                 id="comment-permalink-345539078"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Sep 02, 2013 07:25" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=345539078#comment-345539078"
+                                    ><span>Sep 02, 2013</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-345277268" class="comment-thread">
+        <div class="comment  " id="comment-345277268">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: 104bdxd6l" title="104bdxd6l">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <a href="    /wiki/display/~104bdxd6l
+"
+                       class="url fn"
+                            >Caroline Annabel</a></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Why can't I bookmark+ ABAP Development and Programming +page?</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=345277268#comment-345277268"
+                 id="comment-permalink-345277268"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Sep 04, 2013 12:21" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=345277268#comment-345277268"
+                                    ><span>Sep 04, 2013</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-449909376" class="comment-thread">
+        <div class="comment  " id="comment-449909376">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: eo0b58u" title="eo0b58u">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <a href="    /wiki/display/~eo0b58u
+"
+                       class="url fn"
+                            >Vishal Goenka</a></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>AUTHORITY-<span class="L1S52">CHECK</span> OBJECT <span class="L1S33">'M_EINK_FRG' not working....</span></p><p><span class="L1S33">Any suggestions ??</span></p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=449909376#comment-449909376"
+                 id="comment-permalink-449909376"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Oct 13, 2016 09:38" href="/wiki/display/ABAP/ABAP+Development?focusedCommentId=449909376#comment-449909376"
+                                    ><span>Oct 13, 2016</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+            </ol>
+
+
+</div>
+        
+
+
+                
+    
+            
+</div>
+
+    
+
+    
+
+
+
+
+    
+    
+
+    
+    
+    
+
+
+    
+<div id="space-tools-web-items" class="hidden">
+                <div data-label="Overview" data-href="/wiki/spaces/viewspacesummary.action?key=ABAP">Overview</div>
+            <div data-label="Content Tools" data-href="/wiki/pages/reorderpages.action?key=ABAP">Content Tools</div>
+    </div>
+        
+
+
+
+            </div><!-- \#main -->
+            
+    
+    
+        
+            
+            
+
+<div id="footer" role="contentinfo">
+    <section class="footer-body">
+
+                                                    
+        
+
+        <ul id="poweredby">
+            <li class="noprint">Powered by <a href="http://www.atlassian.com/software/confluence" class="hover-footer-link" rel="nofollow">Atlassian Confluence</a> <span id='footer-build-information'>7.4.13</span></li>
+            <li class="print-only">Printed by Atlassian Confluence 7.4.13</li>
+            <li class="noprint"><a href="https://support.atlassian.com/help/confluence" class="hover-footer-link" rel="nofollow">Report a bug</a></li>
+            <li class="noprint"><a href="https://www.atlassian.com/company" class="hover-footer-link" rel="nofollow">Atlassian News</a></li>
+        </ul>
+
+        
+
+        <div id="footer-logo"><a href="http://www.atlassian.com/" rel="nofollow">Atlassian</a></div>
+
+                    <div class="sap-footer" >
+	<ul id="sap-footer-links">
+        <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+        <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+        <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+        <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+        <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+    </ul>
+</div>
+        
+    </section>
+</div>
+
+    
+</div>
+
+</div><!-- \#full-height-container -->
+</div><!-- \#page -->
+
+    <span style="display:none;" id="confluence-server-performance">{"serverDuration": 834, "requestCorrelationId": "23070249a2778542"}</span>
+</body>
+</html>
+    

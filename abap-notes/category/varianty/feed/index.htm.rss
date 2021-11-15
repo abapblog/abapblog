@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Варианты | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/varianty/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sun, 12 Apr 2020 14:00:46 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>API для работы с вариантами</title>
+		<link>https://abap-blog.ru/abap-notes/api-dlya-raboty-s-variantami/</link>
+					<comments>https://abap-blog.ru/abap-notes/api-dlya-raboty-s-variantami/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 12 Apr 2020 13:42:09 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4069</guid>
+
+					<description><![CDATA[<p>RS_VARIANT_CONTENTS &#8212; чтение содержимого варианта, RS_CHANGE_CREATED_VARIANT &#8212; изменение варианта, RSAQ_DELETE_ONE_VARIANT &#8212; удаление варианта, RS_CREATE_VARIANT &#8212; создание варианта, RS_VARIANT_CATALOG &#8212; вызов диалога выбора варианта, RS_ISOLATE_1_SELSCREEN &#8212; выбор значений варианта с фильтром по экрану, RS_VARIANT_EXISTS &#8212; проверка существования варианта, RS_COPY_SELECTION_SETS &#8212; копирование вариантов из одного отчёта в другой, RS_VARIANT_INFO &#8212; получение информации о вариантах отчёта, RS_SUPPORT_SELECTIONS &#8212; [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/api-dlya-raboty-s-variantami/">API для работы с вариантами</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<ul>
+<li><strong>RS_VARIANT_CONTENTS</strong> &#8212; чтение содержимого варианта,</li>
+<li><strong>RS_CHANGE_CREATED_VARIANT</strong> &#8212; изменение варианта,</li>
+<li><strong>RSAQ_DELETE_ONE_VARIANT</strong> &#8212; удаление варианта,</li>
+<li><strong>RS_CREATE_VARIANT</strong> &#8212; создание варианта,</li>
+<li><strong>RS_VARIANT_CATALOG</strong> &#8212; вызов диалога выбора варианта,</li>
+<li><strong>RS_ISOLATE_1_SELSCREEN</strong> &#8212; выбор значений варианта с фильтром по экрану,</li>
+<li><strong>RS_VARIANT_EXISTS</strong> &#8212; проверка существования варианта,</li>
+<li><strong>RS_COPY_SELECTION_SETS</strong> &#8212; копирование вариантов из одного отчёта в другой,</li>
+<li><strong>RS_VARIANT_INFO</strong> &#8212; получение информации о вариантах отчёта,</li>
+<li><strong>RS_SUPPORT_SELECTIONS</strong> &#8212; загрузка варианта в текущем отчёте,</li>
+<li><strong>RS_VARIANT_LIST</strong> &#8212; запуск стандартного диалога ведения вариантов.</li>
+</ul>
+<p>Большинство ФМ-ов по работе с вариантам сосредоточены в группе функций <strong>SVAR</strong>.</p><p>The post <a href="https://abap-blog.ru/abap-notes/api-dlya-raboty-s-variantami/">API для работы с вариантами</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/api-dlya-raboty-s-variantami/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Вариант по умолчанию</title>
+		<link>https://abap-blog.ru/abap-notes/programmnyj-vybor-varianta/</link>
+					<comments>https://abap-blog.ru/abap-notes/programmnyj-vybor-varianta/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 12 Apr 2020 10:25:11 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4065</guid>
+
+					<description><![CDATA[<p>Вариант &#171;По умолчанию&#187; можно определить для отчёта следующим образом: [crayon-618a1e0446845634935062/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/programmnyj-vybor-varianta/">Вариант по умолчанию</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Вариант &#171;По умолчанию&#187; можно определить для отчёта следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS:
+  p_test.
+
+INITIALIZATION.
+  IF sy-slset IS INITIAL.
+    CALL FUNCTION 'RS_SUPPORT_SELECTIONS'
+      EXPORTING
+        report  = sy-cprog
+        variant = 'DEFAULT'
+      EXCEPTIONS
+        OTHERS  = 0.
+  ENDIF.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/programmnyj-vybor-varianta/">Вариант по умолчанию</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/programmnyj-vybor-varianta/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

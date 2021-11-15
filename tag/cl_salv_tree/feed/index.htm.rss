@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>cl_salv_tree | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_salv_tree/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:01:54 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Работа с SALV Tree</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-salv-tree/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-salv-tree/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 26 Apr 2012 15:49:22 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[cl_salv_tree]]></category>
+		<category><![CDATA[cl_salv_tree_settings]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=789</guid>
+
+					<description><![CDATA[<p>Для отображения иерархического дерева состоящего из любого числа уровней иерархии в SALV модели используется класс &#8212; cl_salv_tree. Строки в таком дереве называются узлами. Каждый узел, не важно, на каком он уровне, имеет одинаковую структуру со всеми остальными. Дерево, как и другие классы SALV модели, создается с помощью фабрично-статического метода factory(). При этом при его вызове [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-salv-tree/">Работа с SALV Tree</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Для отображения иерархического дерева состоящего из любого числа уровней иерархии в SALV модели используется класс &#8212; <strong>cl_salv_tree</strong>.</p>
+<p><strong><a href="http://abap-blog.ru/wp-content/uploads/2012/04/image03.png"><img loading="lazy" title="image03" src="http://abap-blog.ru/wp-content/uploads/2012/04/image03.png" alt="" width="748" height="272" /></a></strong></p>
+<p>Строки в таком дереве называются узлами. Каждый узел, не важно, на каком он уровне, имеет одинаковую структуру со всеми остальными.</p>
+<p>Дерево, как и другие классы SALV модели, создается с помощью фабрично-статического метода <strong>factory()</strong>. При этом при его вызове необходимо передавать не заполненную таблицу с данными, а пустую. Заполнение данных происходит на этапе определения узлов для созданного дерева. Объект дерева можно создать как в полно экранном режиме, так и в контейнере указав параметр r_container. Кроме того можно спрятать заголовок дерева – передав в параметр hide_header значение abap_true (X).</p>
+<p><span id="more-789"></span></p>
+<p>Пример создания дерева, без иерархии:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT
+
+FIELD-SYMBOLS:
+
+CLASS
+  PUBLIC SECTION.
+    CLASS-DATA:
+      go_alv_tree     TYPE REF TO cl_salv_tree,
+      gt_empty_tab    TYPE STANDARD TABLE OF spfli,
+      gt_full_tab     TYPE STANDARD TABLE OF spfli.
+    CLASS-METHODS:
+      create_tree,     " Создаем и настраиваем объект ALV
+      get_data,       " Получение данных из БД
+      create_nodes,   " Заполнение дерева данными (создание иерархии)
+      show_tree.      " Отображение (обновление) ALV дерева
+ENDCLASS.
+
+START-OF-SELECTION.
+  lcl_report=&gt;get_data( ).
+  lcl_report=&gt;create_tree( ).
+  lcl_report=&gt;create_nodes( ).
+  lcl_report=&gt;show_tree( ).
+
+CLASS lcl_report IMPLEMENTATION.
+  METHOD show_tree.
+    go_alv_tree-&gt;display( ).
+  ENDMETHOD.
+
+  METHOD create_nodes.
+    DATA:
+      lo_nodes  TYPE REF TO cl_salv_nodes,
+      lo_node   TYPE REF TO cl_salv_node.
+    " Получаем ссылку на экземпляр класса упрвления узлами дерева
+    lo_nodes = go_alv_tree-&gt;get_nodes( ).
+    SORT gt_full_tab BY carrid.
+    " Заполняем дерево
+    LOOP AT gt_full_tab ASSIGNING &lt;fs_line&gt;.
+      TRY.
+          lo_node = lo_nodes-&gt;add_node( related_node = ''
+                    relationship = cl_gui_column_tree=&gt;relat_first_child
+                                      ).
+          " Присвоение узлу данных
+          lo_node-&gt;set_data_row( &lt;fs_line&gt; ).
+        CATCH cx_salv_msg.
+      ENDTRY.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD get_data.
+    SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_full_tab.
+  ENDMETHOD.
+
+  METHOD create_tree.
+    TRY.
+        cl_salv_tree=&gt;factory(
+          IMPORTING
+            r_salv_tree = go_alv_tree
+          CHANGING
+            t_table     = gt_empty_tab ).
+      CATCH cx_salv_error.
+        MESSAGE 'Ошибка при создании объекта ALV' TYPE 'E'.
+    ENDTRY.
+  ENDMETHOD.
+
+ENDCLASS.</pre><p>Результат работы программы:</p>
+<p><strong><a href="http://abap-blog.ru/wp-content/uploads/2012/04/image00.png"><img loading="lazy" class="alignnone size-full wp-image-794" title="image00" src="http://abap-blog.ru/wp-content/uploads/2012/04/image00.png" alt="" width="691" height="157" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/image00.png 691w, https://abap-blog.ru/wp-content/uploads/2012/04/image00-300x68.png 300w" sizes="(max-width: 691px) 100vw, 691px" /></a></strong></p>
+<div dir="ltr"><strong>Создание иерархии</strong></div>
+<div dir="ltr">
+Чтобы создать иерархию, в момент заполнения дерева узлами необходимо определить дочерние и родительские узлы. Для того чтобы их определить необходимо разобраться с методом добавления узла &#8212; <strong>add_node</strong>. Метод имеет следующие параметры:</div>
+<div dir="ltr"></div>
+<div dir="ltr">
+<table>
+<tbody>
+<tr>
+<td><strong>Параметр</strong></td>
+<td><strong>Описание</strong></td>
+</tr>
+<tr>
+<td>related_node</td>
+<td>Ключ узла, к которому будем добавлять узел в качестве дочернего (или братского – к тому же родителю что и у него). Для получения узла в классе cl_salv_node существует метод key. Если значение пустое узел добавляется на самый верхний уровень.</td>
+</tr>
+<tr>
+<td>relationship</td>
+<td>Определяет местоположение, которое займет созданный узел, задается константами из класса cl_gui_column_tree:</p>
+<ul>
+<li>relat_first_child – узел добавляется первым дочерний</li>
+<li>relat_last_child – последним дочерним</li>
+<li>relat_first_sibling – узел добавляется как первый братский</li>
+<li>relat_last_sibling – узел добавляется как последний братский</li>
+<li>relat_next_sibling – узел добавляется как следующий братский</li>
+<li>relat_prev_sibling – узел добавляется как предыдущий братский</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>data_row</td>
+<td>Данные узла, с той же структурой что использовалась при создании в фабричном методе.</td>
+</tr>
+<tr>
+<td>collapsen_icon</td>
+<td>Иконка в свернутом состоянии</td>
+</tr>
+<tr>
+<td>expanded_icon</td>
+<td>Иконка в развернутом состоянии</td>
+</tr>
+<tr>
+<td>text</td>
+<td>Определяет текст, который вставляется в колонку иерархии для узла</td>
+</tr>
+<tr>
+<td>visible</td>
+<td>Видимость узла</td>
+</tr>
+<tr>
+<td>folder</td>
+<td>Если поставить в abap_true, узел будет иметь иконку в свернутом состоянии, в случае если нет дочерних элементов</td>
+</tr>
+<tr>
+<td>expander</td>
+<td>Определяет отображать ли флажок разворачивания (сворачивания) уровня иерархии для узла</td>
+</tr>
+<tr>
+<td>row_style</td>
+<td>Задает стиль (цвет) для узла. Виды стилей находятся в определении интерфейса IF_SALV_C_TREE_STYLE и могут принимать следующие значения:</p>
+<ul>
+<li>DEFAULT</li>
+<li>INHERITED</li>
+<li>INTENSIFIED</li>
+<li>INACTIVE</li>
+<li>INTENSIFIED_CRITICAL</li>
+<li>EMPHASIZED_NEGATIVE</li>
+<li>EMPHASIZED_POSITIVE</li>
+<li>EMPHASIZED</li>
+<li>EMPHASIZED_A</li>
+<li>EMPHASIZED_B</li>
+<li>EMPHASIZED_C</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div dir="ltr">Кроме того чтобы созданная иерархия отобразилась на экране необходимо настроить заголовок дерева. За настройку дерева отвечает класс <strong>cl_salv_tree_settings</strong>. Далее пример измененного метода, для создания иерархии:</div>
+<div dir="ltr"></div>
+<div dir="ltr">
+<pre class="urvanov-syntax-highlighter-plain-tag">METHOD create_nodes.
+    DATA:
+      lo_nodes  TYPE REF TO cl_salv_nodes,
+      lo_node   TYPE REF TO cl_salv_node,
+      lv_carrid_key TYPE lvc_nkey,
+      lv_expand_icon TYPE SALV_DE_TREE_IMAGE,
+      lv_collapse_icon TYPE SALV_DE_TREE_IMAGE,
+      lv_hier_icon    TYPE SALV_DE_TREE_IMAGE,
+      lo_settings TYPE REF TO cl_salv_tree_settings,
+      lv_carrid TYPE spfli-carrid.
+
+    lv_expand_icon = icon_expand.
+    lv_collapse_icon = icon_collapse.
+    lv_hier_icon = icon_tree.
+
+    lo_settings = go_alv_tree-&gt;get_tree_settings( ).
+    lo_settings-&gt;set_hierarchy_header( 'Иерархия' ).
+    lo_settings-&gt;set_hierarchy_size( 30 ).
+    lo_settings-&gt;set_hierarchy_icon( lv_hier_icon ).
+
+    " Получаем ссылку на экземпляр класса упрвления узлами дерева
+    lo_nodes = go_alv_tree-&gt;get_nodes( ).
+    SORT gt_full_tab BY carrid.
+    " Заполняем дерево
+    LOOP AT gt_full_tab ASSIGNING &lt;fs_line&gt;.
+      IF lv_carrid &lt;&gt; &lt;fs_line&gt;-carrid.
+        TRY.
+            lo_node = lo_nodes-&gt;add_node(
+                                  related_node   = ''
+                                  relationship   = cl_gui_column_tree=&gt;relat_last_child
+                                  data_row       = &lt;fs_line&gt;
+                                  collapsed_icon = lv_expand_icon
+                                  expanded_icon  = lv_collapse_icon
+                                  row_style      = IF_SALV_C_TREE_STYLE=&gt;emphasized_a
+                                  text           = 'Родительский узел' ).
+            lv_carrid_key = lo_node-&gt;get_key( ).
+          CATCH cx_salv_msg.
+        ENDTRY.
+      ELSE.
+        TRY.
+            lo_node = lo_nodes-&gt;add_node(
+                                  related_node   = lv_carrid_key
+                                  relationship   = cl_gui_column_tree=&gt;relat_last_child
+                                  data_row       = &lt;fs_line&gt;
+                                  collapsed_icon = lv_expand_icon
+                                  row_style      = IF_SALV_C_TREE_STYLE=&gt;emphasized_b
+                                  expanded_icon  = lv_collapse_icon
+                                  text           = 'Дочерний узел' ).
+          CATCH cx_salv_msg.
+        ENDTRY.
+      ENDIF.
+      lv_carrid = &lt;fs_line&gt;-carrid.
+    ENDLOOP.
+  ENDMETHOD.</pre><br />
+Результат работы программы:</p>
+</div>
+<p><strong><a href="http://abap-blog.ru/wp-content/uploads/2012/04/image01.png"><img loading="lazy" class="alignnone size-full wp-image-795" title="image01" src="http://abap-blog.ru/wp-content/uploads/2012/04/image01.png" alt="" width="685" height="210" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/image01.png 685w, https://abap-blog.ru/wp-content/uploads/2012/04/image01-300x91.png 300w" sizes="(max-width: 685px) 100vw, 685px" /></a></strong></p>
+<p><strong id="internal-source-marker_0.49962616129778326">Настройка функций</strong></p>
+<p>Как и в случае с <strong>cl_salv_table</strong>, для полноэкранного режима кнопки настраиваются через GUI статус, стандартный можно взять из программы &#8212; SALV_DEMO_TREE_SIMPLE. Если дерево отображается в контейнере, то через класс<strong> cl_salv_functions_tree</strong> .  Однако тут нет явного ограничения на использование GUI статуса в полноэкранном режиме, можно вместо него использовать вышеназванный класс, пример настройки кнопок:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD setup_functions.
+    go_alv_tree-&gt;set_screen_status(
+      pfstatus      =  'SALV_STANDARD'
+      REPORT        =  sy-repid " Скопировали к себе в программу статус
+      set_functions =  go_alv_tree-&gt;c_functions_all ).
+  ENDMETHOD.</pre><p>Или:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD setup_functions.
+    DATA: lo_functions TYPE REF TO cl_salv_functions_tree.
+
+    lo_functions = go_alv_tree-&gt;get_functions( ).
+    lo_functions-&gt;set_all( ).
+ENDMETHOD.</pre><p>Результат работы:</p>
+<p><strong><a href="http://abap-blog.ru/wp-content/uploads/2012/04/image02.png"><img loading="lazy" class="alignnone size-full wp-image-796" title="image02" src="http://abap-blog.ru/wp-content/uploads/2012/04/image02.png" alt="" width="663" height="96" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/image02.png 663w, https://abap-blog.ru/wp-content/uploads/2012/04/image02-300x43.png 300w" sizes="(max-width: 663px) 100vw, 663px" /></a></strong></p>
+<p><em>Если вдруг кнопка суммы не будет работать замените ее функцией &#8212; &amp;CALC_SUM.</em></p>
+<p><strong id="internal-source-marker_0.49962616129778326">Настройка колонок</strong></p>
+<p>Настройка колонок работает так же как и с<strong> cl_salv_table</strong>, за исключением того что для настройки колонок в дереве используются классы –<strong> cl_salv_columns_tree</strong> и <strong>cl_salv_column_tree</strong>. Пример настройки колонок – включение оптимизации:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD setup_columns.
+    DATA:
+      lo_columns TYPE REF TO cl_salv_columns_tree,
+      lo_column  TYPE REF TO cl_salv_column_tree.
+
+    lo_columns = go_alv_tree-&gt;get_columns( ).
+    lo_columns-&gt;set_optimize( abap_true ).
+  ENDMETHOD.</pre><p><strong id="internal-source-marker_0.49962616129778326">Обработка событий</strong></p>
+<p>За обработку событий дерева отвечает класс <strong>cl_salv_events_tree</strong>. Для дерева можно обработать следующие события:</p>
+<ul>
+<li> TOP_OF_PAGE – для обработки заголовка</li>
+<li> END_OF_PAGE – для обработки подвала</li>
+<li> BEFORE_SALV_FUNCTION – срабатывает до вызова стандартной функции</li>
+<li> AFTER_SALV_FUNCTION – обработка после вызова стандартной функции</li>
+<li> ADDED_FUNCTION – обработка своей функции</li>
+<li> LINK_CLICK – щелчок по активному элементу (кнопка, ссылка и т.п.)</li>
+<li> DOUBLE_CLICK – двойной щелчок</li>
+<li> KEYPRESS – нажатие клавиш</li>
+<li> CHECKBOX_CHANGE – изменение статуса галочки у записи</li>
+<li> EXPAND_EMPTY_FOLDER – при попытке развернуть пустую строку</li>
+</ul>
+<p>Пример обработки этих событий можно посмотреть в стандартной программе  &#8212; SALV_DEMO_TREE_EVENTS.</p>
+<p><strong id="internal-source-marker_0.49962616129778326"></strong><strong id="internal-source-marker_0.49962616129778326">Настройка ячеек узла</strong></p>
+<p><strong id="internal-source-marker_0.49962616129778326"></strong>Для настройки ячеек в узле используется класс <strong>cl_salv_item</strong>. С помощью него можно определить стиль ячейки, вид (кнопка, ссылка и т.п.), возможность редактирования, если тип – галочка (checkbox). Получить экземпляр класса для конкретной ячейки можно из узла, с помощью метода get_item( ‘ИмяЯчейки’). Ниже пример измененного метода настройки иерархии:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD create_nodes.
+    DATA:
+      lo_nodes  TYPE REF TO cl_salv_nodes,
+      lo_node   TYPE REF TO cl_salv_node,
+      lv_carrid_key TYPE lvc_nkey,
+      lv_expand_icon TYPE SALV_DE_TREE_IMAGE,
+      lv_collapse_icon TYPE SALV_DE_TREE_IMAGE,
+      lv_hier_icon    TYPE SALV_DE_TREE_IMAGE,
+      lo_item     TYPE REF TO cl_salv_item,
+      lo_settings TYPE REF TO cl_salv_tree_settings,
+      lv_carrid TYPE spfli-carrid.
+
+    lv_expand_icon = icon_expand.
+    lv_collapse_icon = icon_collapse.
+    lv_hier_icon = icon_tree.
+
+    lo_settings = go_alv_tree-&gt;get_tree_settings( ).
+    lo_settings-&gt;set_hierarchy_header( 'Иерархия' ).
+    lo_settings-&gt;set_hierarchy_size( 30 ).
+    lo_settings-&gt;set_hierarchy_icon( lv_hier_icon ).
+
+    " Получаем ссылку на экземпляр класса упрвления узлами дерева
+    lo_nodes = go_alv_tree-&gt;get_nodes( ).
+    SORT gt_full_tab BY carrid.
+    " Заполняем дерево
+    LOOP AT gt_full_tab ASSIGNING &lt;fs_line&gt;.
+      IF lv_carrid &lt;&gt; &lt;fs_line&gt;-carrid.
+        TRY.
+            lo_node = lo_nodes-&gt;add_node(
+                                  related_node   = ''
+                                  relationship   = cl_gui_column_tree=&gt;relat_last_child
+                                  data_row       = &lt;fs_line&gt;
+                                  collapsed_icon = lv_expand_icon
+                                  expanded_icon  = lv_collapse_icon
+                                  row_style      = IF_SALV_C_TREE_STYLE=&gt;emphasized_a
+                                  text           = 'Родительский узел' ).
+            lv_carrid_key = lo_node-&gt;get_key( ).
+            lo_item = lo_node-&gt;get_item( 'CARRID' ).
+            lo_item-&gt;set_type(  if_salv_c_item_type=&gt;button ).
+            lo_item = lo_node-&gt;get_item( 'CITYFROM' ).
+            lo_item-&gt;set_font( if_salv_c_item_font=&gt;fixed_size ).
+            lo_item-&gt;set_enabled( abap_false ).
+          CATCH cx_salv_msg.
+        ENDTRY.
+      ELSE.
+        TRY.
+            lo_node = lo_nodes-&gt;add_node(
+                                  related_node   = lv_carrid_key
+                                  relationship   = cl_gui_column_tree=&gt;relat_last_child
+                                  data_row       = &lt;fs_line&gt;
+                                  collapsed_icon = lv_expand_icon
+                                  row_style      = IF_SALV_C_TREE_STYLE=&gt;emphasized_negative
+                                  expanded_icon  = lv_collapse_icon
+                                  text           = 'Дочерний узел - Дочерний узел' ).
+            lo_item = lo_node-&gt;get_item( 'CARRID' ).
+            lo_item-&gt;set_type(  if_salv_c_item_type=&gt;checkbox ).
+            lo_item-&gt;set_editable( abap_true ).
+          CATCH cx_salv_msg.
+        ENDTRY.
+      ENDIF.
+      lv_carrid = &lt;fs_line&gt;-carrid.
+    ENDLOOP.
+  ENDMETHOD.                    "create_nodes</pre><p>Результат работы программы:</p>
+<p><strong><a href="http://abap-blog.ru/wp-content/uploads/2012/04/image03.png"><img loading="lazy" class="alignnone size-full wp-image-797" title="image03" src="http://abap-blog.ru/wp-content/uploads/2012/04/image03.png" alt="" width="748" height="272" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/image03.png 748w, https://abap-blog.ru/wp-content/uploads/2012/04/image03-300x109.png 300w" sizes="(max-width: 748px) 100vw, 748px" /></a></strong></p>
+<p>Напоследок исходный код программы целиком, c примером обработки событий и обхода дочерних узлов:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zsalv_tree_sample.
+
+FIELD-SYMBOLS: &lt;fs_line&gt; TYPE spfli.
+INCLUDE &lt;icon&gt;.
+
+CLASS lcl_report DEFINITION.
+  PUBLIC SECTION.
+    CLASS-DATA:
+      go_alv_tree     TYPE REF TO cl_salv_tree,
+      gt_empty_tab    TYPE STANDARD TABLE OF spfli,
+      gt_full_tab     TYPE STANDARD TABLE OF spfli.
+    CLASS-METHODS:
+      create_tree,    " Создаем и настраиваем объект ALV
+      get_data,       " Получение данных из БД
+      setup_functions," Настройка тулбара
+      create_nodes,   " Заполнение дерева данными (создание иерархии)
+      setup_columns,  " Настройка колонок
+      on_link_click FOR EVENT link_click OF cl_salv_events_tree IMPORTING NODE_KEY,
+      setup_events,
+      show_tree.      " Отображение (обновление) ALV дерева
+ENDCLASS.                    "lcl_report DEFINITION
+
+START-OF-SELECTION.
+  lcl_report=&gt;get_data( ).
+  lcl_report=&gt;create_tree( ).
+  lcl_report=&gt;create_nodes( ).
+  lcl_report=&gt;setup_functions( ).
+  lcl_report=&gt;setup_columns( ).
+  lcl_report=&gt;setup_events( ).
+  lcl_report=&gt;show_tree( ).
+
+CLASS lcl_report IMPLEMENTATION.
+  METHOD show_tree.
+    go_alv_tree-&gt;display( ).
+  ENDMETHOD.                    "show_tree
+
+  METHOD create_nodes.
+    DATA:
+      lo_nodes  TYPE REF TO cl_salv_nodes,
+      lo_node   TYPE REF TO cl_salv_node,
+      lv_carrid_key TYPE lvc_nkey,
+      lv_expand_icon TYPE SALV_DE_TREE_IMAGE,
+      lv_collapse_icon TYPE SALV_DE_TREE_IMAGE,
+      lv_hier_icon    TYPE SALV_DE_TREE_IMAGE,
+      lo_item     TYPE REF TO cl_salv_item,
+      lv_count TYPE I,
+      lo_settings TYPE REF TO cl_salv_tree_settings,
+      lv_carrid TYPE spfli-carrid.
+
+    lv_expand_icon = ICON_CLOSED_FOLDER.
+    lv_collapse_icon = ICON_OPEN_FOLDER.
+    lv_hier_icon = icon_tree.
+
+    lo_settings = go_alv_tree-&gt;get_tree_settings( ).
+    lo_settings-&gt;set_hierarchy_header( 'Иерархия' ).
+    lo_settings-&gt;set_hierarchy_size( 30 ).
+    lo_settings-&gt;set_hierarchy_icon( lv_hier_icon ).
+
+    " Получаем ссылку на экземпляр класса упрвления узлами дерева
+    lo_nodes = go_alv_tree-&gt;get_nodes( ).
+    SORT gt_full_tab BY carrid.
+    " Заполняем дерево
+    LOOP AT gt_full_tab ASSIGNING &lt;fs_line&gt;.
+      IF lv_carrid &lt;&gt; &lt;fs_line&gt;-carrid.
+        TRY.
+            lv_count = 0.
+            LOOP AT gt_full_tab TRANSPORTING NO FIELDS WHERE carrid = &lt;fs_line&gt;-carrid.
+              lv_count = lv_count + 1.
+            ENDLOOP.
+            IF lv_count &gt; 1.
+              lo_node = lo_nodes-&gt;add_node(
+                                    related_node   = ''
+                                    relationship   = cl_gui_column_tree=&gt;relat_last_child
+                                    data_row       = &lt;fs_line&gt;
+                                    collapsed_icon = lv_expand_icon
+                                    expanded_icon  = lv_collapse_icon
+                                    row_style      = IF_SALV_C_TREE_STYLE=&gt;emphasized_a
+                                    text           = 'Родительский узел' ).
+            ELSE.
+              lo_node = lo_nodes-&gt;add_node(
+                                    related_node   = ''
+                                    relationship   = cl_gui_column_tree=&gt;relat_last_child
+                                    data_row       = &lt;fs_line&gt;
+                                    collapsed_icon = lv_collapse_icon
+                                    row_style      = IF_SALV_C_TREE_STYLE=&gt;emphasized_a
+                                    text           = 'Родительский узел' ).
+            ENDIF.
+
+            lv_carrid_key = lo_node-&gt;get_key( ).
+            IF lv_count &gt; 1.
+              lo_item = lo_node-&gt;get_item( 'CARRID' ).
+              lo_item-&gt;set_type(  if_salv_c_item_type=&gt;button ).
+              lo_item-&gt;set_value( 'Все' ).
+            ENDIF.
+
+            lo_item = lo_node-&gt;get_item( 'CITYFROM' ).
+            lo_item-&gt;set_font( if_salv_c_item_font=&gt;fixed_size ).
+            lo_item-&gt;set_enabled( abap_false ).
+          CATCH cx_salv_msg.
+        ENDTRY.
+      ELSE.
+        TRY.
+            lo_node = lo_nodes-&gt;add_node(
+                                  related_node   = lv_carrid_key
+                                  relationship   = cl_gui_column_tree=&gt;relat_last_child
+                                  data_row       = &lt;fs_line&gt;
+                                  row_style      = IF_SALV_C_TREE_STYLE=&gt;emphasized_negative
+                                  text           = 'Дочерний узел - Дочерний узел' ).
+            lo_item = lo_node-&gt;get_item( 'CARRID' ).
+            lo_item-&gt;set_type(  if_salv_c_item_type=&gt;checkbox ).
+            lo_item-&gt;set_editable( abap_true ).
+          CATCH cx_salv_msg.
+        ENDTRY.
+      ENDIF.
+      lv_carrid = &lt;fs_line&gt;-carrid.
+    ENDLOOP.
+  ENDMETHOD.                    "create_nodes
+
+  METHOD get_data.
+    SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_full_tab.
+  ENDMETHOD.                    "get_data
+
+  METHOD create_tree.
+    TRY.
+        cl_salv_tree=&gt;factory(
+          IMPORTING
+            r_salv_tree = go_alv_tree
+          CHANGING
+            t_table     = gt_empty_tab ).
+      CATCH cx_salv_error.
+        MESSAGE 'Ошибка при создании объекта ALV' TYPE 'E'.
+    ENDTRY.
+  ENDMETHOD.                    "create_tree
+
+  METHOD setup_functions.
+    go_alv_tree-&gt;set_screen_status(
+      pfstatus      =  'SALV_STANDARD'
+      REPORT        =  sy-repid " Скопировали к себе в программу статус
+      set_functions =  go_alv_tree-&gt;c_functions_all ).
+  ENDMETHOD.
+
+  METHOD setup_columns.
+    DATA:
+      lo_columns TYPE REF TO cl_salv_columns_tree,
+      lo_column  TYPE REF TO cl_salv_column_tree.
+
+    TRY.
+      lo_columns = go_alv_tree-&gt;get_columns( ).
+      lo_columns-&gt;set_optimize( abap_true ).
+      lo_column ?= lo_columns-&gt;get_column( 'MANDT' ).
+      lo_column-&gt;set_technical( abap_true ).
+      lo_column ?= lo_columns-&gt;get_column( 'FLTYPE' ).
+      lo_column-&gt;set_technical( abap_true ).
+      lo_column ?= lo_columns-&gt;get_column( 'PERIOD' ).
+      lo_column-&gt;set_technical( abap_true ).
+    CATCH cx_salv_msg cx_salv_not_found.
+    ENDTRY.
+  ENDMETHOD.
+
+  METHOD on_link_click.
+    DATA: lo_nodes      TYPE REF TO cl_Salv_nodes,
+          lo_main_node  TYPE REF TO cl_salv_node,
+          lo_item       TYPE REF TO cl_salv_item,
+          lo_child_node TYPE REF TO cl_salv_node.
+
+    lo_nodes = go_alv_tree-&gt;get_nodes( ).
+
+    TRY.
+      lo_main_node  = lo_nodes-&gt;get_node( node_key ).
+      lo_child_node = lo_main_node-&gt;get_first_child( ).
+      WHILE lo_child_node IS BOUND.
+        lo_item = lo_child_node-&gt;get_item( 'CARRID' ).
+
+        IF lo_item-&gt;is_checked( ) = abap_true.
+          lo_item-&gt;set_checked( abap_false ).
+        ELSE.
+          lo_item-&gt;set_checked( abap_true ).
+        ENDIF.
+
+        lo_child_node = lo_child_node-&gt;get_next_sibling( ).
+      ENDWHILE.
+    CATCH cx_salv_msg.
+      EXIT.
+    ENDTRY.
+
+  ENDMETHOD.
+
+  METHOD setup_events.
+    DATA: lo_events TYPE REF TO cl_salv_events_tree.
+
+    lo_events = go_alv_tree-&gt;get_event( ).
+    SET HANDLER on_link_click FOR lo_events.
+  ENDMETHOD.
+
+ENDCLASS.                    "lcl_report IMPLEMENTATION</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-salv-tree/">Работа с SALV Tree</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-salv-tree/feed/</wfw:commentRss>
+			<slash:comments>13</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

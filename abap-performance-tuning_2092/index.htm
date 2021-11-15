@@ -1,0 +1,1177 @@
+
+<!DOCTYPE html>
+<html lang="en-us" class="no-js">
+    <head>
+        <title>ABAP Performance Tuning | E-Book
+    
+     - by
+    SAP PRESS</title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta name="created" content="14th Oct 2021 02:01">
+
+        
+
+        
+        <meta name="title" content="ABAP Performance Tuning | E-Book" />
+        <meta name="description" content="Maximize your SAP applications with this guide to ABAP performance tuning. Learn about analysis tools and technologies, source code analysis, and more. Be"/>
+
+        <meta property="og:type" content="product" />
+        <meta property="og:title" content="ABAP Performance Tuning" />
+        <meta property="og:description" content="Maximize your SAP applications with this guide to ABAP performance tuning. Learn about analysis tools and technologies, source code analysis, and more. Be" />
+        <meta property="og:image" content="https://s3-eu-west-1.amazonaws.com/cover2.galileo-press.de/print/9781592292899_800_2d.png" />
+        <meta property="og:site_name" content="SAP PRESS" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="product:brand" content="Rheinwerk Publishing, Inc." />
+        <meta property="product:retailer" content="258924584774" />
+        <meta property="product:category" content="Book" />
+        <meta property="product:isbn" content="978-1-59229-289-9" />
+        <meta property="product:price:amount" content="59.99" />
+        <meta property="product:price:currency" content="USD" />
+
+
+        <meta name="keywords" content="">
+
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="google-site-verification" content="yaHjrtg2odYYgOihSgCl6JUsn0xrPcypdnJQS8CAkyk" />
+
+        <meta name="google-site-verification" content="V3qzmbT57JdQzsA-LbFNSUEnJm3t9chqhSH7CjAypqk" />
+
+
+        
+
+<!-- BEGIN Bing Ads UET JavaScript tag -->
+<script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"5441636"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script><noscript><img src="//bat.bing.com/action/0?ti=5441636&Ver=2" height="0" width="0" style="display:none; visibility: hidden;" /></noscript>
+<!-- END Bing Ads UET JavaScript tag -->
+
+
+
+        
+            <link rel="shortcut icon" href="//static.sap-press.com/favicon.ico">
+            <link rel="apple-touch-icon-precomposed" href="//static.sap-press.com/favicon-152.png">
+        
+
+        <link rel="stylesheet" href="//static.sap-press.com/vendor/lightbox2/css/lightbox.css">
+        <link rel="stylesheet" type="text/css" href="//static.sap-press.com/css/default.css?v=4.8.3">
+
+        <script type="text/javascript">
+            var pageToLoad = 'catalogue/ProductDetailPage';
+        </script>
+        <script src="//static.sap-press.com/vendor/require.js" data-main="//static.sap-press.com/js/require.config.js?v=4.8.3"></script>
+        <script src="//static.sap-press.com/vendor/wgxpath.install.js"></script>
+        <script type="text/javascript">
+            'use strict';
+            if (!window.XPathResult) {
+                wgxpath.install(window);
+            }
+        </script>
+
+        
+        
+
+        
+    </head>
+
+    <body id="product-detail-body"
+          class="variant_choice_3"
+          data-list="Product detail">
+
+        
+
+        <div id="header-wrapper">
+            <div class="container flex">
+                
+                    <header>
+                        <div class="header-topbar">
+                            <div id="welcome"></div>
+                            
+                                <ul id="nav-account"><li><a id="account-link" href="/accounts/profile/summary/">Your account</a></li><li><a href="/help/">Help</a></li><li><a id="login-link" href="/accounts/login/?next=/abap-performance-tuning_2092/">Log in</a></li><li class="header-register-link"><a id="register-link" href="/accounts/register/">Register</a></li></ul>
+                            
+                        </div>
+                        <div class="header-main">
+                            
+                                <div id="branding">
+                                    <a href="/">
+                                        <img src="//static.sap-press.com/img/rheinwerk-sappress-logo-header.svg" title="Homepage"
+                                         alt="Rheinwerk Publishing and SAP PRESS – We publish books and e-books that educate the SAP community">
+                                    </a>
+                                </div>
+                            
+
+                            
+                                <input type="checkbox" id="toggle-search-visibility" hidden>
+                                <div id="search">
+                                    <form action="/search/">
+                                        <input type="search" name="q"><button type="submit"><svg xmlns="http://www.w3.org/2000/svg" class="icon-search" width="16" height="16" viewBox="0 0 24 24"><path d="M21.55,19.43l-5.79-5.8a7.5,7.5,0,1,0-2.13,2.13l5.8,5.79a1.47,1.47,0,0,0,1.06.44,1.45,1.45,0,0,0,1.06-.44A1.49,1.49,0,0,0,21.55,19.43ZM9.5,14A4.5,4.5,0,1,1,14,9.5,4.51,4.51,0,0,1,9.5,14Z"/></svg>
+</button>
+                                    </form>
+                                    <label class="search-close" for="toggle-search-visibility"><svg xmlns="http://www.w3.org/2000/svg" class="icon-close" width="24" height="24" viewBox="0 0 24 24"><path d="M15,12l5.79-5.79a1,1,0,0,0,0-1.42L19.21,3.21a1,1,0,0,0-1.42,0L12,9,6.21,3.21a1,1,0,0,0-1.42,0L3.21,4.79a1,1,0,0,0,0,1.42L9,12,3.21,17.79a1,1,0,0,0,0,1.42l1.58,1.58a1,1,0,0,0,1.42,0L12,15l5.79,5.79a1,1,0,0,0,1.42,0l1.58-1.58a1,1,0,0,0,0-1.42Z"/></svg>
+</label>
+                                </div>
+                            
+
+                            <div class="header-shop-features">
+                                <label class="search-open" for="toggle-search-visibility">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-search-header-mobile" width="30" height="30" viewBox="0 0 30 30"><path d="M26.5,24.38l-7.17-7.17a9,9,0,1,0-2.12,2.12c.6.6,5,5,7.11,7.16a1.54,1.54,0,0,0,2.18,0A1.49,1.49,0,0,0,26.5,24.38ZM12,18a6,6,0,1,1,6-6A6,6,0,0,1,12,18Z"/></svg>
+
+                                    <span class="icon-text">Search</span>
+                                </label>
+                                <a id="library" href="https://library.sap-press.com/library">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-library-header" width="30" height="30" viewBox="0 0 30 30"><rect x="9" y="8" width="2" height="12" rx="1"/><rect x="13" y="8" width="2" height="12" rx="1"/><rect x="18.09" y="7.79" width="2" height="12.36" rx="1" transform="translate(-4.03 8.97) rotate(-24)"/><path d="M23,3H7A2,2,0,0,0,5,5V25a2,2,0,0,0,2,2H23a2,2,0,0,0,2-2V5A2,2,0,0,0,23,3ZM6,21V5A1,1,0,0,1,7,4H23a1,1,0,0,1,1,1V21Z"/></svg>
+
+                                    <span class="icon-text">Library</span>
+                                </a>
+                                <a id="wishlist-header" href="/saved-for-later/">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-wishlist-header" width="30" height="30" viewBox="0 0 30 30"><path d="M19.38,17H10.63a.51.51,0,1,0,0,1h8.75a.51.51,0,1,0,0-1Z"/><path d="M19.38,21H10.63a.51.51,0,1,0,0,1h8.75a.51.51,0,1,0,0-1Z"/><path d="M19.38,13H10.63a.57.57,0,0,0-.63.5.57.57,0,0,0,.63.5h8.75a.51.51,0,1,0,0-1Z"/><path d="M6,6V24a3,3,0,0,0,3,3H21a3,3,0,0,0,3-3V11a2.65,2.65,0,0,0-.66-1.76L17.91,3.76A2.17,2.17,0,0,0,16.32,3H9A3,3,0,0,0,6,6ZM16,9.77A1.12,1.12,0,0,0,17.05,11H21a1,1,0,0,1,1,1V24a1,1,0,0,1-1,1H9a1,1,0,0,1-1-1V6A1,1,0,0,1,9,5h6a1,1,0,0,1,1,1Z"/></svg>
+
+                                    <span class="icon-text">Saved for Later</span>
+                                    <span class="notification-badge" style="display: none">
+                                        <span class="quantity"></span>
+                                    </span>
+                                </a>
+                                <a id="shopping-cart" href="/basket/">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-basket-header" width="30" height="30" viewBox="0 0 30 30"><path class="icon-basket-show-full" d="M11.89,7,14,4.57,15.92,7h2.56l-.63-.79,2.7-1,1,1.77h2.31l-2-3.5a1,1,0,0,0-1.21-.44L16.53,4.57,14.78,2.38A1,1,0,0,0,14,2a1,1,0,0,0-.78.35L9.26,7Z"/><path d="M22.85,16.53l4-8A1,1,0,0,0,26,7H9.19L8,2.75A1,1,0,0,0,7,2H3A1,1,0,0,0,3,4H6.23l5.25,18.25a1,1,0,0,0,1,.75H23a1,1,0,0,0,0-2H13.22l-1.15-4H22A1,1,0,0,0,22.85,16.53ZM11.49,15,9.77,9H24.2l-2.75,6Z"/><circle cx="13" cy="26" r="2"/><circle cx="22" cy="26" r="2"/></svg>
+
+                                    <span class="icon-text">Shopping Cart</span>
+                                    <span class="notification-badge" style="display: none">
+                                        <span class="quantity"></span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </header>
+                
+            </div>
+        </div>
+
+        <div id="nav-main-wrapper">
+            <div class="container flex">
+                
+                    <nav id="nav-main"><div class="nav-mobile-toggle">Menu</div><div class="nav-main-shop"><div class="nav-main-topic"><div class="nav-main-topic-toggle">Shop Books and E-Bites</div><ul><li><a title="Finance &amp; Controlling" href="/finance-controlling/">Finance & Controlling</a><ul><li><a title="SAP S/4HANA" href="/finance-controlling/sap-s4hana/">SAP S/4HANA</a></li><li><a title="Compliance" href="/finance-controlling/compliance/">Compliance</a></li><li><a title="Controlling" href="/finance-controlling/controlling/">Controlling</a></li><li><a title="Financial Accounting" href="/finance-controlling/financial-accounting/">Financial Accounting</a></li><li><a title="Financial Planning &amp; Analysis" href="/finance-controlling/financial-planning-analysis/">Financial Planning & Analysis</a></li><li><a title="Financial Supply Chain Management" href="/finance-controlling/financial-supply-chain-management/">Financial Supply Chain Management</a></li><li><a title="Reporting" href="/finance-controlling/reporting/">Reporting</a></li><li><a title="FICO E-Bites" href="/finance-controlling/fico-e-bites/">FICO E-Bites</a></li></ul></li><li><a title="Logistics" href="/logistics/">Logistics</a><ul><li><a title="SAP S/4HANA" href="/logistics/sap-s4hana/">SAP S/4HANA</a></li><li><a title="Materials Management" href="/logistics/materials-management/">Materials Management</a></li><li><a title="Procurement" href="/logistics/procurement/">Procurement</a></li><li><a title="Plant Maintenance" href="/logistics/plant-maintenance/">Plant Maintenance</a></li><li><a title="Project System &amp; PLM" href="/logistics/project-system-plm/">Project System & PLM</a></li><li><a title="Production Planning" href="/logistics/production-planning/">Production Planning & Manufacturing</a></li><li><a title="Transportation &amp; Warehouse Management" href="/logistics/transportation-warehouse-management/">Transportation & Warehouse Management</a></li><li><a title="Quality Management" href="/logistics/quality-management/">Quality Management</a></li><li><a title="Sales &amp; Distribution" href="/logistics/sales-distribution/">Sales & Distribution</a></li><li><a title="Supply Chain Management" href="/logistics/supply-chain-management/">Supply Chain Management</a></li><li><a title="Logistics E-Bites" href="/logistics/logistics-e-bites/">Logistics E-Bites</a></li></ul></li><li><a title="Programming" href="/programming/">Programming</a><ul><li><a title="ABAP Basics" href="/programming/abap-basics/">ABAP Basics</a></li><li><a title="Advanced ABAP" href="/programming/advanced-abap/">Advanced ABAP</a></li><li><a title="Cloud &amp; Mobile" href="/programming/cloud-mobile/">Cloud, Mobile & IOT</a></li><li><a title="HANA" href="/programming/hana/">HANA</a></li><li><a title="Integration" href="/programming/integration/">Integration</a></li><li><a title="User Interfaces" href="/programming/user-interfaces/">User Interfaces</a></li><li><a title="Programming E-Bites" href="/programming/programming-e-bites/">Programming E-Bites</a></li></ul></li><li><a title="Administration" href="/administration/">Administration</a><ul><li><a title="Application Server" href="/administration/application-server/">Application Server</a></li><li><a title="BW/BusinessObjects" href="/administration/bwbusinessobjects/">BW/BusinessObjects</a></li><li><a title="Enterprise Information Management" href="/administration/enterprise-information-management/">EIM</a></li><li><a title="Cloud &amp; Mobile" href="/administration/cloud-mobile/">Cloud & Mobile</a></li><li><a title="Database" href="/administration/database/">Database</a></li><li><a title="Integration" href="/administration/integration/">Integration</a></li><li><a title="Projects" href="/administration/projects/">Projects</a></li><li><a title="SAP Solution Manager" href="/administration/sap-solution-manager/">SAP Solution Manager</a></li><li><a title="Security and Identity Management" href="/administration/security-and-identity-management/">Security & Authorizations</a></li><li><a title="Administration E-Bites" href="/administration/administration-e-bites/">Administration E-Bites</a></li></ul></li><li><a title="Business Intelligence" href="/business-intelligence/">Business Intelligence</a><ul><li><a title="SAP BusinessObjects BI" href="/business-intelligence/sap-businessobjects-bi/">SAP BusinessObjects BI</a></li><li><a title="SAP BW" href="/business-intelligence/sap-bw/">SAP BW</a></li><li><a title="Intelligent Technologies" href="/business-intelligence/intelligent-technologies/">Intelligent Technologies</a></li><li><a title="Reporting" href="/business-intelligence/reporting/">Reporting & Analysis</a></li><li><a title="Administration" href="/business-intelligence/administration/">Administration</a></li><li><a title="BI &amp; BW E-Bites" href="/business-intelligence/bi-bw-e-bites/">BI & BW E-Bites</a></li></ul></li><li><a title="HANA" href="/hana/">HANA</a><ul><li><a title="Basics" href="/hana/basics/">Basics</a></li><li><a title="Development" href="/hana/development/">Development</a></li><li><a title="Implementation &amp; Administration" href="/hana/implementation-administration/">Implementation & Administration</a></li><li><a title="HANA E-Bites" href="/hana/hana-e-bites/">HANA E-Bites</a></li></ul></li><li><a title="Marketing &amp; Sales" href="/marketing-sales/">Marketing & Sales</a><ul><li><a title="SAP Customer Experience" href="/marketing-sales/sap-customer-experience/">SAP Customer Experience</a></li><li><a title="SAP Customer Relationship Management" href="/marketing-sales/sap-customer-relationship-management/">SAP Customer Relationship Management</a></li><li><a title="Sales &amp; Distribution" href="/marketing-sales/sales-distribution/">Sales & Distribution</a></li><li><a title="CRM &amp; Sales E-Bites" href="/marketing-sales/crm-sales-e-bites/">CRM & Sales E-Bites</a></li></ul></li><li><a title="Human Resources" href="/human-resources/">Human Resources</a><ul><li><a title="SuccessFactors" href="/human-resources/successfactors/">SuccessFactors</a></li><li><a title="SAP ERP HCM" href="/human-resources/sap-erp-hcm/">SAP ERP HCM</a></li><li><a title="Core HR" href="/human-resources/core-hr/">Core HR</a></li><li><a title="Talent Management" href="/human-resources/talent-management/">Talent Management</a></li><li><a title="HR E-Bites" href="/human-resources/hr-e-bites/">HR E-Bites</a></li></ul></li><li><a title="Introductions" href="/introductions/">Introductions</a><ul><li><a title="SAP for Beginners" href="/introductions/sap-for-beginners/">For Beginners</a></li><li><a title="SAP for IT Managers" href="/introductions/sap-for-it-managers/">For IT Managers</a></li><li><a title="On Emerging Topics" href="/introductions/on-emerging-topics/">On Emerging Topics</a></li></ul></li><li><a title="E-Bites" href="/e-bites/">E-Bites</a><ul><li><a title="Programming" href="/e-bites/programming/">Programming</a></li><li><a title="Admin &amp; EIM" href="/e-bites/admin-eim/">Administration</a></li><li><a title="BI &amp; BW" href="/e-bites/bi-bw/">Business Intelligence</a></li><li><a title="FICO &amp; BPC" href="/e-bites/fico-bpc/">Finance & Controlling</a></li><li><a title="Logistics" href="/e-bites/logistics/">Logistics</a></li><li><a title="HR" href="/e-bites/hr/">Human Resources</a></li><li><a title="CRM &amp; Sales" href="/e-bites/crm-sales/">Marketing & Sales</a></li><li><a title="HANA" href="/e-bites/hana/">HANA</a></li><li><a title="Chapters" href="/e-bites/chapters/">Books by Chapter</a></li></ul></li><li><a title="Certification Guides" href="/certification-guides/">Certification Guides</a><ul><li><a title="SAP Certification Study Guides" href="/certification-guides/sap-certification-study-guides/">SAP Certification Study Guides</a></li></ul></li></ul></div><a href="/subscriptions/">Shop Subscriptions</a></div><div class="nav-main-service"><a href="//blog.sap-press.com">Blog</a><a href="//learning.sap-press.com/">Learning Center</a><a href="/newsletter/subscribe/">Newsletters</a><a href="https://s3-eu-west-1.amazonaws.com/gxmedia.galileo-press.de/inc/tp/SAP-PRESS-Catalog-Shop.pdf">Catalog PDF</a></div><div class="nav-mobile-features"><a id="account-link-small-nav" class="account" href="/accounts/profile/summary/"><svg xmlns="http://www.w3.org/2000/svg" class="icon-user" width="24" height="24" viewBox="0 0 24 24"><path d="M14.6,14.24c-.12,0-.85-.39-.39-1.88h0C17.23,9.26,17.28,2,12,2S6.78,9.29,9.81,12.38c.47,1.3-.37,1.79-.54,1.86-2.73,1.12-5.61,2.7-5.27,5C4,21.48,8.17,22,12,22s8-.52,8-2.81C20.34,16.89,17.45,15.31,14.6,14.24Z"/></svg>
+ Your account
+                                </a><a class="help" href="/help/"><svg xmlns="http://www.w3.org/2000/svg" class="icon-info" width="24" height="24" viewBox="0 0 24 24"><circle cx="12.5" cy="4.5" r="2.5"/><path d="M15.74,21c-2.24,1.27-6.27,1.78-6.42-1.58,0-1.8,1.13-4.79,1.43-6.56.6-2.09-1.05-2.52-2.66-1.74L8.34,10c3.39-1.89,7.55-1.12,6.13,3.52-.39,2.15-3.3,8.39,1.53,6.36Z"/></svg>
+ Help
+                                </a></div></nav>
+                
+            </div>
+        </div>
+
+        <div class="container flex">
+            <div class="content">
+                
+                    <div class="content-main">
+                        
+
+    
+    <article id="product-detail-page" itemscope itemtype="http://schema.org/Book"
+         data-id="247"
+         data-title_id="2092"
+         data-title="ABAP Performance Tuning"
+         data-price="59.99"
+         data-variant="E-book"
+         data-category1="Programming/Advanced ABAP">
+
+        <div class="product-full-row color-bar" style="background-color: #A3110B;">
+            <span>Make your ABAP better!</span>
+        </div>
+
+        <section id="product-base">
+            <div id="product-cover" class="product-base-left-column">
+                <span class="cover_variant variant_choice_2 variant_choice_4">
+                    <a class="cover_link" data-lightbox="3d" href="https://s3-eu-west-1.amazonaws.com/cover2.galileo-press.de/print/9781592292899_800.png">
+                        
+
+<img src="https://s3-eu-west-1.amazonaws.com/cover2.galileo-press.de/print/9781592292899_267.png" class="cover-267" alt="Cover of ABAP Performance Tuning"
+     height="267" loading="lazy" itemprop="image" >
+                    </a>
+                </span>
+                <span class="cover_variant variant_choice_3 variant_choice_9">
+                    <a class="cover_link" data-lightbox="2d" href="https://s3-eu-west-1.amazonaws.com/cover2.galileo-press.de/print/9781592292899_800_2d.png">
+                        
+
+<img src="https://s3-eu-west-1.amazonaws.com/cover2.galileo-press.de/print/9781592292899_267_2d.png" class="cover-267" alt="Cover of ABAP Performance Tuning"
+     height="267" loading="lazy" itemprop="image" >
+                    </a>
+                </span>
+
+                <div id="product-small-previews">
+                    
+    
+
+<div class="pagepreviews_small" itemprop="associatedMedia" itemscope itemtype="http://schema.org/MediaObject">
+    <ul>
+        
+            <a target="_blank" href="https://s3-eu-west-1.amazonaws.com/gxmedia.galileo-press.de/leseproben/2092/sappress_abap_performance_tuning.pdf" itemprop="contentUrl">
+                <span><svg xmlns="http://www.w3.org/2000/svg" class="icon-book-sample" width="30" height="30" viewBox="0 0 24 24"><path d="M21.18,20.18l-3.05-3.05A4.44,4.44,0,0,0,19,14.5,4.5,4.5,0,1,0,14.5,19a4.55,4.55,0,0,0,2-.49l3.17,3.17a1.06,1.06,0,0,0,1.5-1.5ZM12,14.5A2.5,2.5,0,1,1,14.5,17,2.5,2.5,0,0,1,12,14.5Z"/><path d="M15.88,20a5.74,5.74,0,0,1-1.38.19A5.66,5.66,0,0,1,11,19H6.29A1,1,0,0,1,6,19a1.39,1.39,0,0,1-.9-1H10A5.67,5.67,0,0,1,14.5,8.81a4.19,4.19,0,0,1,.5,0V5a1,1,0,0,1,1,1V9a5.64,5.64,0,0,1,2,1V5a2,2,0,0,0-2-2H14.72A2,2,0,0,0,13,2H5A2,2,0,0,0,3,4V17a3.73,3.73,0,0,0,2,3.71A3.26,3.26,0,0,0,6.42,21H16a1.94,1.94,0,0,0,.73-.14Z"/></svg>
+Browse the Book</span>
+            </a>
+            <li>
+                
+                    <img class="preview preview_hardcopy" src="https://s3-eu-west-1.amazonaws.com/gxmedia.galileo-press.de/pagepreviews/2092/89/258_2-fold_2-grey.png" alt="Bildunterschrift zur Leseproben-Auswahl (optional)"/>
+                
+            </li>
+       
+            <a target="_blank" href="https://s3-eu-west-1.amazonaws.com/gxmedia.galileo-press.de/leseproben/2092/sappress_abap_performance_tuning.pdf" itemprop="contentUrl">
+                <span><svg xmlns="http://www.w3.org/2000/svg" class="icon-book-sample" width="30" height="30" viewBox="0 0 24 24"><path d="M21.18,20.18l-3.05-3.05A4.44,4.44,0,0,0,19,14.5,4.5,4.5,0,1,0,14.5,19a4.55,4.55,0,0,0,2-.49l3.17,3.17a1.06,1.06,0,0,0,1.5-1.5ZM12,14.5A2.5,2.5,0,1,1,14.5,17,2.5,2.5,0,0,1,12,14.5Z"/><path d="M15.88,20a5.74,5.74,0,0,1-1.38.19A5.66,5.66,0,0,1,11,19H6.29A1,1,0,0,1,6,19a1.39,1.39,0,0,1-.9-1H10A5.67,5.67,0,0,1,14.5,8.81a4.19,4.19,0,0,1,.5,0V5a1,1,0,0,1,1,1V9a5.64,5.64,0,0,1,2,1V5a2,2,0,0,0-2-2H14.72A2,2,0,0,0,13,2H5A2,2,0,0,0,3,4V17a3.73,3.73,0,0,0,2,3.71A3.26,3.26,0,0,0,6.42,21H16a1.94,1.94,0,0,0,.73-.14Z"/></svg>
+Browse the Book</span>
+            </a>
+            <li>
+                
+                    <img class="preview preview_hardcopy" src="https://s3-eu-west-1.amazonaws.com/gxmedia.galileo-press.de/pagepreviews/2092/89/264_2-fold_2-grey.png" alt="Bildunterschrift zur Leseproben-Auswahl (optional)"/>
+                
+            </li>
+       
+    </ul>
+</div>
+
+
+
+                </div>
+            </div>
+
+            <div class="product-base-right-column">
+                
+    <h1 class="product-full-row product-main-title" itemprop="name">
+        <span id="title">ABAP Performance Tuning</span>
+        <span id="subtitle"></span>
+    </h1>
+    <div class="product-full-row" id="authors">
+        written by
+        <span itemprop="author"><a href="/abap-performance-tuning_2092/author/">Hermann Gahm</a></span>
+    </div>
+    <div class="product-full-row">
+        <form>
+            
+                
+                
+
+<div class="variant-choice" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    <div class="variant-selector" itemprop="itemOffered" itemscope itemtype="http://schema.org/Book">
+        
+            <span class="radio">
+                <input type="radio"
+                       name="product_choice"
+                       id="product_choice_3"
+                       checked="checked"
+                       value="3"
+                       data-id="951"
+                       data-available="1"
+                       data-title_id="2092"
+                       data-title="ABAP Performance Tuning"
+                       data-price="59.99"
+                       data-variant="E-book"
+                       data-category1="Programming/Advanced ABAP"/>
+                <label for="product_choice_3" itemprop="bookFormat">E-book</label>
+            </span>
+        
+    </div>
+    <div id="variant-price" itemprop="price">
+        $59.99
+    </div>
+    <div id="variant-availability" itemprop="availability">
+        
+
+<p class="variant status available">
+    
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-available" width="12" height="12" viewBox="0 0 24 24"><path d="M21.52,3.46,19.73,2.19a1.07,1.07,0,0,0-1.51.3L9.43,15.93l-4-4.19a1.06,1.06,0,0,0-1.54,0L2.32,13.33a1.14,1.14,0,0,0,0,1.59l6.21,6.44A2.1,2.1,0,0,0,9.92,22a1.67,1.67,0,0,0,1.31-.8L21.81,5A1.14,1.14,0,0,0,21.52,3.46Z"/></svg>
+
+        Available
+        
+    
+</p>
+
+
+
+    </div>
+</div>
+
+            
+                
+                
+
+<div class="variant-choice" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    <div class="variant-selector" itemprop="itemOffered" itemscope itemtype="http://schema.org/Book">
+        
+            <span class="radio">
+                <input type="radio"
+                       name="product_choice"
+                       id="product_choice_2"
+                       
+                       value="2"
+                       data-id="700"
+                       data-available="0"
+                       data-title_id="2092"
+                       data-title="ABAP Performance Tuning"
+                       data-price="69.95"
+                       data-variant="Print edition"
+                       data-category1="Programming/Advanced ABAP"/>
+                <label for="product_choice_2" itemprop="bookFormat">Print edition</label>
+            </span>
+        
+    </div>
+    <div id="variant-price" itemprop="price">
+        $69.95
+    </div>
+    <div id="variant-availability" itemprop="availability">
+        
+
+<p class="variant status unavailable">
+    
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-unavailable" width="12" height="12" viewBox="0 0 24 24"><path d="M15,12l5.79-5.79a1,1,0,0,0,0-1.42L19.21,3.21a1,1,0,0,0-1.42,0L12,9,6.21,3.21a1,1,0,0,0-1.42,0L3.21,4.79a1,1,0,0,0,0,1.42L9,12,3.21,17.79a1,1,0,0,0,0,1.42l1.58,1.58a1,1,0,0,0,1.42,0L12,15l5.79,5.79a1,1,0,0,0,1.42,0l1.58-1.58a1,1,0,0,0,0-1.42Z"/></svg>
+
+        Unavailable
+        
+    
+</p>
+
+
+
+    </div>
+</div>
+
+            
+                
+                
+
+<div class="variant-choice" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    <div class="variant-selector" itemprop="itemOffered" itemscope itemtype="http://schema.org/Book">
+        
+            <span class="radio">
+                <input type="radio"
+                       name="product_choice"
+                       id="product_choice_4"
+                       
+                       value="4"
+                       data-id="952"
+                       data-available="0"
+                       data-title_id="2092"
+                       data-title="ABAP Performance Tuning"
+                       data-price="79.99"
+                       data-variant="Bundle"
+                       data-category1="Programming/Advanced ABAP"/>
+                <label for="product_choice_4" itemprop="bookFormat">Bundle</label>
+            </span>
+        
+    </div>
+    <div id="variant-price" itemprop="price">
+        $79.99
+    </div>
+    <div id="variant-availability" itemprop="availability">
+        
+
+<p class="variant status unavailable">
+    
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-unavailable" width="12" height="12" viewBox="0 0 24 24"><path d="M15,12l5.79-5.79a1,1,0,0,0,0-1.42L19.21,3.21a1,1,0,0,0-1.42,0L12,9,6.21,3.21a1,1,0,0,0-1.42,0L3.21,4.79a1,1,0,0,0,0,1.42L9,12,3.21,17.79a1,1,0,0,0,0,1.42l1.58,1.58a1,1,0,0,0,1.42,0L12,15l5.79,5.79a1,1,0,0,0,1.42,0l1.58-1.58a1,1,0,0,0,0-1.42Z"/></svg>
+
+        Unavailable
+        
+    
+</p>
+
+
+
+    </div>
+</div>
+
+            
+        </form>
+        <div id="product-add-to-basket-mobile">
+            
+
+<div class="color-bar" style="background-color: #A3110B;">
+    
+        <span class="variant variant_choice_2">Print edition</span>
+    
+        <span class="variant variant_choice_3">E-book</span>
+    
+        <span class="variant variant_choice_4">Bundle</span>
+    
+</div>
+<section class="product-full-row">
+    <div class="box add-to-basket-wrapper">
+        
+    
+        <div class="variant variant_choice_2">
+            <p class="variant price">
+                $69.95
+            </p>
+            
+
+<p class="variant status unavailable">
+    
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-unavailable" width="12" height="12" viewBox="0 0 24 24"><path d="M15,12l5.79-5.79a1,1,0,0,0,0-1.42L19.21,3.21a1,1,0,0,0-1.42,0L12,9,6.21,3.21a1,1,0,0,0-1.42,0L3.21,4.79a1,1,0,0,0,0,1.42L9,12,3.21,17.79a1,1,0,0,0,0,1.42l1.58,1.58a1,1,0,0,0,1.42,0L12,15l5.79,5.79a1,1,0,0,0,1.42,0l1.58-1.58a1,1,0,0,0,0-1.42Z"/></svg>
+
+        Unavailable
+        
+    
+</p>
+
+
+
+        </div>
+    
+        <div class="variant variant_choice_3">
+            <p class="variant price">
+                $59.99
+            </p>
+            
+
+<p class="variant status available">
+    
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-available" width="12" height="12" viewBox="0 0 24 24"><path d="M21.52,3.46,19.73,2.19a1.07,1.07,0,0,0-1.51.3L9.43,15.93l-4-4.19a1.06,1.06,0,0,0-1.54,0L2.32,13.33a1.14,1.14,0,0,0,0,1.59l6.21,6.44A2.1,2.1,0,0,0,9.92,22a1.67,1.67,0,0,0,1.31-.8L21.81,5A1.14,1.14,0,0,0,21.52,3.46Z"/></svg>
+
+        Available
+        
+    
+</p>
+
+
+
+        </div>
+    
+        <div class="variant variant_choice_4">
+            <p class="variant price">
+                $79.99
+            </p>
+            
+
+<p class="variant status unavailable">
+    
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-unavailable" width="12" height="12" viewBox="0 0 24 24"><path d="M15,12l5.79-5.79a1,1,0,0,0,0-1.42L19.21,3.21a1,1,0,0,0-1.42,0L12,9,6.21,3.21a1,1,0,0,0-1.42,0L3.21,4.79a1,1,0,0,0,0,1.42L9,12,3.21,17.79a1,1,0,0,0,0,1.42l1.58,1.58a1,1,0,0,0,1.42,0L12,15l5.79,5.79a1,1,0,0,0,1.42,0l1.58-1.58a1,1,0,0,0,0-1.42Z"/></svg>
+
+        Unavailable
+        
+    
+</p>
+
+
+
+        </div>
+    
+
+
+        
+        
+        <form id="add_to_basket_form" action="/basket/add/" method="post" class="form-stacked add-to-basket">
+            <input type='hidden' name='csrfmiddlewaretoken' value='911d71wYr3S1Y4XYFTppA63UsRDbg9y6' />
+            
+
+
+
+
+
+
+    
+
+
+    <input id="id_product_id" name="product_id" type="hidden" value="951" />
+
+
+
+    
+
+
+    <input id="id_quantity" name="quantity" type="hidden" value="1" />
+
+
+
+
+            <button type="submit" class="btn-add-to-basket" value="Add to Shopping Cart">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon-basket-add" width="30" height="30" viewBox="0 0 30 30"><path d="M20.21,6H18V3a1,1,0,0,0-2,0V6H13.79a.58.58,0,0,0-.41,1l3.22,3a.58.58,0,0,0,.81,0l3.21-3A.58.58,0,0,0,20.21,6Z"/><path d="M20.89,19.45l3-6A1,1,0,0,0,23,12H10.9L10,8.73A1,1,0,0,0,9,8H6a1,1,0,0,0,0,2H8.25L12,23.27A1,1,0,0,0,13,24h8a1,1,0,0,0,0-2H13.75l-.57-2H20A1,1,0,0,0,20.89,19.45ZM12.61,18l-1.14-4h9.91l-2,4Z"/><circle cx="13.5" cy="26.5" r="1.5"/><circle cx="20.5" cy="26.5" r="1.5"/></svg>
+
+                <span>Add to Shopping Cart</span>
+            </button>
+        </form>
+        <button class="btn-wishlist add-to-wishlist" title="Save for Later" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon-wishlist-add-button" width="24" height="24" viewBox="0 0 24 24"><g class="wishlist-add"><path d="M15.5,11h-7a.5.5,0,0,0,0,1h7a.5.5,0,0,0,0-1Z"/><path d="M15.5,14h-7a.5.5,0,0,0,0,1h7a.5.5,0,0,0,0-1Z"/><path d="M15.5,17h-7a.5.5,0,0,0,0,1h7a.5.5,0,0,0,0-1Z"/><path d="M19.41,7.41,14.59,2.59A2,2,0,0,0,13.17,2H7A3,3,0,0,0,4,5V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V8.83A2,2,0,0,0,19.41,7.41ZM18,19a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V5A1,1,0,0,1,7,4h5a1,1,0,0,1,1,1V8a1,1,0,0,0,1,1h3a1,1,0,0,1,1,1Z"/></g><g class="wishlist-check"><path d="M19.41,7.41,14.59,2.59A2,2,0,0,0,13.17,2H7A3,3,0,0,0,4,5V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V8.83A2,2,0,0,0,19.41,7.41Z"/><g class="wishlist-check-contrast"><path d="M15.81,11.58l-.72-.5a.42.42,0,0,0-.6.12L11,16.57,9.35,14.9a.41.41,0,0,0-.61,0l-.61.63a.47.47,0,0,0,0,.64l2.48,2.57a.82.82,0,0,0,.56.26.68.68,0,0,0,.52-.32l4.23-6.47A.46.46,0,0,0,15.81,11.58Z"/><path d="M13,8a1,1,0,0,0,1,1h4.09c1.91,0,.61-1.3.32-1.59L14.59,3.59C14.3,3.3,13,2,13,3.91Z"/></g></g></svg>
+
+            <span>Save for Later</span>
+        </button>
+    </div>
+</section>
+
+
+
+        </div>
+    </div>
+
+
+                <div id="product-bib-info" class="product-full-row">
+                    <meta itemprop="publisher" content="Rheinwerk Publishing, Inc." />
+                    
+    
+
+
+ <div class="bib_angaben">
+    
+        <span class="format_variant variant_choice_2">
+            <span itemprop="numberOfPages">348</span> pages,  <span itemprop="datePublished">2009</span>, Print edition hardcover<br/>ISBN <span itemprop="isbn">978-1-59229-289-9</span>
+        </span>
+    
+        <span class="format_variant variant_choice_3">
+            <span itemprop="numberOfPages">348</span> pages,  <span itemprop="datePublished">2009</span><br/>E-book formats: EPUB, MOBI, PDF, online<br/>ISBN <span itemprop="isbn">978-1-59229-555-5</span>
+        </span>
+    
+        <span class="format_variant variant_choice_4">
+            <span itemprop="numberOfPages">348</span> pages,  <span itemprop="datePublished">2009</span>, Print edition hardcover<br/>E-book formats: EPUB, MOBI, PDF, online<br/>ISBN <span itemprop="isbn">978-1-59229-556-2</span>
+        </span>
+    
+</div>
+
+
+                </div>
+            </div>
+        </section>
+
+        <section id="previously-purchased" class="product-full-row-padding">
+            <div class="previously-purchased"></div>
+        </section>
+
+        <section id="product-short-information">
+            <div id="product-short-text" itemprop="description">
+                
+    Is your ABAP as good as it can be? With this essential guide, find out how to make it so. You’ll learn about analysis tools and performance-relevant technologies, and discover how you can analyze existing source code and enhance your programming style. It's time to make sure that your ABAP programs are fully optimized.
+
+            </div>
+
+            <div id="product-usps">
+                
+    <ul class="usp">
+    
+    
+        <li style="color: #A3110B;"><div>Tools for performance analysis: Code Inspector, runtime analysis, performance trace, and more</div></li>
+    
+        <li style="color: #A3110B;"><div>Performance aspects in development: SQL queries, internal tables, buffer, data transfer</div></li>
+    
+        <li style="color: #A3110B;"><div>Application design: general performance and parallelization</div></li>
+    
+</ul>
+
+
+            </div>
+
+            <div id="product-keywords">
+                
+    
+
+
+            </div>
+
+            <div id="product-epub-reader">
+                
+    
+    
+
+            </div>
+
+            <div id="product-format-info" class="product-full-row-padding">
+                
+    
+        
+    <span class="tab">
+        <a rel="about-variant_2">About the Book</a>
+    </span>
+
+    <span class="tab active">
+        <a rel="about-variant_3">About the E-book</a>
+    </span>
+
+<span class="tab-contents product-full-row">
+    
+        <span id="about-variant_2" >
+            <span class="infobox_hard">348 pages, hardcover, 1 in. Foreword by Uwe Hommel. Reference book format 6.9 x 9 in. Printed black and white on 60# offset paper from sustainable sources. Casebound for durability. Reader-friendly serif font (Linotype Syntax 9.5 Pt.). One-column layout. </span>
+        </span>
+    
+        <span id="about-variant_3" class="active">
+            <span class="infobox_soft">E-book in black and white. PDF (15 MB), EPUB (22 MB), and MOBI file (35 MB) for download, DRM-free with personalized digital watermark. Copy &amp; paste, bookmarks, and print-out permitted. Table of contents, in-text references, and index fully linked. Including online book edition in dedicated reader application.</span>
+        </span>
+    
+</span>
+
+    
+
+            </div>
+        </section>
+
+        <section id="product-long-information" class="product-full-row-padding">
+            <div id="product-learning-points">
+                
+    
+        
+<div class="learning-points">
+    <h2>In this book, you'll learn about:</h2>
+    <ol>
+        
+            <li style="color: #A3110B;">
+                <h3>Analysis Tools</h3>
+                <p>Learn when and how to use analysis tools properly—including Code Inspector, performance trace, ABAP trace, and single records statistics.</p>
+            </li>
+        
+            <li style="color: #A3110B;">
+                <h3>Programming Technologies</h3>
+                <p>Get detailed information on parallel processing, internal tables, SQL data processing, and much more, and learn how these technologies affect performance.</p>
+            </li>
+        
+            <li style="color: #A3110B;">
+                <h3>Buffering</h3>
+                <p>Explore the different buffers that are available on the SAP NetWeaver Application Server ABAP, and learn the most important buffer options to avoid unnecessary database accesses.</p>
+            </li>
+        
+            <li style="color: #A3110B;">
+                <h3>Database Tuning</h3>
+                <p>Understand the database architecture and the technical background of database accesses, and master the tuning options for database accesses.</p>
+            </li>
+        
+    </ol>
+</div>
+
+
+    
+
+            </div>
+
+            <div id="product-highlights">
+                
+    
+        <div class="highlights">
+     
+    <h2>Highlights include:</h2>
+    <ul>
+        
+            <li style="color: #A3110B;">
+                <div>Code and Memory Inspector</div>
+            </li>
+        
+            <li style="color: #A3110B;">
+                <div>Debugger</div>
+            </li>
+        
+            <li style="color: #A3110B;">
+                <div>Performance, ABAP, E2E trace</div>
+            </li>
+        
+            <li style="color: #A3110B;">
+                <div>Single records statistics</div>
+            </li>
+        
+            <li style="color: #A3110B;">
+                <div>Parallel processing</div>
+            </li>
+        
+            <li style="color: #A3110B;">
+                <div>Data processing with SQL</div>
+            </li>
+        
+            <li style="color: #A3110B;">
+                <div>Access strategies</div>
+            </li>
+        
+            <li style="color: #A3110B;">
+                <div>Buffering</div>
+            </li>
+        
+            <li style="color: #A3110B;">
+                <div>Internal tables</div>
+            </li>
+        
+            <li style="color: #A3110B;">
+                <div>Table types</div>
+            </li>
+        
+            <li style="color: #A3110B;">
+                <div>RFC communication</div>
+            </li>
+        
+    </ul>
+</div>
+
+    
+
+
+                
+    
+        <div id="product-extract">
+            
+
+<div class="leseproben">
+    
+        <a class="probelink" href="https://s3-eu-west-1.amazonaws.com/gxmedia.galileo-press.de/leseproben/2092/sappress_abap_performance_tuning.pdf" target="_blank">
+            Reading Sample
+        </a>
+    
+</div>
+
+        </div>
+    
+
+
+                
+    
+        <div id="product-toc-teaser">
+            
+
+<div class="toc_teaser">
+    
+        <a id="toc-overlay" href="/abap-performance-tuning_2092/toc/247">
+            Table of Contents
+        </a>
+    
+</div>
+
+        </div>
+    
+
+            </div>
+
+            
+    
+        
+
+
+    <div class="pagepreviews" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+        <ul>
+            
+                <li>
+                    <a class="preview_hardcopy" data-lightbox="30-hardcopy" href="https://s3-eu-west-1.amazonaws.com/gxmedia.galileo-press.de/pagepreviews/2092/1600/30_2-fold_2-grey.png" itemprop="contentUrl">
+                        <img src="https://s3-eu-west-1.amazonaws.com/gxmedia.galileo-press.de/pagepreviews/2092/317/30_2-fold_2-grey.png" alt="Bildunterschrift (optional)" loading="lazy">
+                    </a>
+                </li>
+            
+                <li>
+                    <a class="preview_hardcopy" data-lightbox="150-hardcopy" href="https://s3-eu-west-1.amazonaws.com/gxmedia.galileo-press.de/pagepreviews/2092/1600/150_2-fold_2-grey.png" itemprop="contentUrl">
+                        <img src="https://s3-eu-west-1.amazonaws.com/gxmedia.galileo-press.de/pagepreviews/2092/317/150_2-fold_2-grey.png" alt="Bildunterschrift (optional)" loading="lazy">
+                    </a>
+                </li>
+            
+                <li>
+                    <a class="preview_hardcopy" data-lightbox="298-hardcopy" href="https://s3-eu-west-1.amazonaws.com/gxmedia.galileo-press.de/pagepreviews/2092/1600/298_2-fold_2-grey.png" itemprop="contentUrl">
+                        <img src="https://s3-eu-west-1.amazonaws.com/gxmedia.galileo-press.de/pagepreviews/2092/317/298_2-fold_2-grey.png" alt="Bildunterschrift (optional)" loading="lazy">
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+    
+
+        </section>
+
+        <section id="product-authorship-extract" class="product-full-row-padding">
+            
+    
+        
+
+<div class="authorship-content">
+    
+        
+            <div class="textwrap" style="color: #A3110B;">
+                &raquo;<span class="authorquote">The extensive experience of Hermann Gahm, the author and SAP support employee, in the analysis of ABAP programs for major SAP customers ensures that this book will considerably contribute to the success of your projects.</span>&laquo;
+            </div>
+        
+        
+            <div class="authorquote-source">
+                Uwe Hommel, Executive Vice President Active Global Support
+            </div>
+        
+    
+	
+	    <p><strong>Hermann Gahm</strong> is a principal consultant in the performance CoE of SAP Global IT Application Services. In this position, he is primarily responsible for performance analysis and optimization of the internal SAP ABAP systems powered by SAP HANA.</p>
+	
+	<a href="/abap-performance-tuning_2092/author/">more &gt;</a>
+</div>
+
+    
+
+        </section>
+
+        
+
+        <section id="product-supplements" class="product-full-row-padding">
+            
+    
+
+
+
+
+        </section>
+
+        <section id="product-recommendations">
+            
+    
+        
+        
+            <h2>You may also like:</h2>
+            <div class="productlisting">
+                <ul class="product-list grid">
+                
+                    <li class="product-box">
+                        
+
+<article class="product-box"
+         data-type="1"
+         data-releasedate="20151022"
+         data-status="1"
+         data-score="1724.51185309"
+         data-id="429"
+         data-title_id="3597"
+         data-title="Object-Oriented Programming with ABAP Objects"
+         data-price="59.99"
+         data-variant="E-book"
+         data-category1="Programming" data-category2="Programming/ABAP Basics"><div class="cover"><a href="/object-oriented-programming-with-abap-objects_3597/" title="More about the book Object-Oriented Programming with ABAP Objects"><img src="https://s3-eu-west-1.amazonaws.com/cover2.galileo-press.de/print/9781592299935_171_2d.jpg" class="cover-171" alt="Cover of Object-Oriented Programming with ABAP Objects"
+     height="171" loading="lazy" itemprop="image" ></a></div><!-- 3597 - 429 - 1 --><div class="product-details"><h3 class="product-title"><a title="More about the book Object-Oriented Programming with ABAP Objects" href="/object-oriented-programming-with-abap-objects_3597/">
+                Object-Oriented Programming with ABAP Objects
+                
+                <div class="subheading"></div></a></h3><p class="author">James Wood, Joseph Rupert</p><p class="bib-info">470 pages, hardcover
+            
+        </p><div class="abstract"><span class="text-19 text-30 text-40">There's more to ABAP than procedural programming. If you're ready to leap into the world of object-oriented programming (OOP) </span><span class="text-30 text-40">and ABAP Objects—or are already there and just need a refresher—then </span><span class="text-40">this is the book you've been looking for. Thanks to </span>
+            &hellip; <a title="More about the book Object-Oriented Programming with ABAP Objects" href="/object-oriented-programming-with-abap-objects_3597/">More about the book</a></div><p class="price">from  $59.99</p><p class="variant status available"><svg xmlns="http://www.w3.org/2000/svg" class="icon-available" width="12" height="12" viewBox="0 0 24 24"><path d="M21.52,3.46,19.73,2.19a1.07,1.07,0,0,0-1.51.3L9.43,15.93l-4-4.19a1.06,1.06,0,0,0-1.54,0L2.32,13.33a1.14,1.14,0,0,0,0,1.59l6.21,6.44A2.1,2.1,0,0,0,9.92,22a1.67,1.67,0,0,0,1.31-.8L21.81,5A1.14,1.14,0,0,0,21.52,3.46Z"/></svg>
+
+        Available
+        
+    
+</p><div class="variants"><span data-type="3">E-book</span> | <span data-type="2">Print edition</span> | <span data-type="4">Bundle</span></div></div></article>
+
+                    </li>
+                
+                    <li class="product-box">
+                        
+
+<article class="product-box"
+         data-type="1"
+         data-releasedate="20100528"
+         data-status="1"
+         data-score="843.711853088"
+         data-id="265"
+         data-title_id="2174"
+         data-title="ABAP Cookbook"
+         data-price="59.99"
+         data-variant="E-book"
+         data-category1="Programming/ABAP Basics" data-category2="Programming/Advanced ABAP"><div class="cover"><a href="/abap-cookbook_2174/" title="More about the book ABAP Cookbook"><img src="https://s3-eu-west-1.amazonaws.com/cover2.galileo-press.de/print/9781592293261_171_2d.jpg" class="cover-171" alt="Cover of ABAP Cookbook"
+     height="171" loading="lazy" itemprop="image" ></a></div><!-- 2174 - 265 - 1 --><div class="product-details"><h3 class="product-title"><a title="More about the book ABAP Cookbook" href="/abap-cookbook_2174/">
+                ABAP Cookbook
+                
+                    <span class="separator"> &ndash; </span><div class="subheading">Programming Recipes for Everyday Solutions</div></a></h3><p class="author">James Wood</p><p class="bib-info">548 pages, hardcover
+            
+        </p><div class="abstract"><span class="text-19 text-30 text-40">With this book, get answers to typical ABAP development problems or tasks: persistence programming, interface programming, security and tracing </span><span class="text-30 text-40">techniques, etc. The complexity of the "recipes" ranges from the simple </span><span class="text-40">starter plates to the complex main courses—and some sweet deserts, </span>
+            &hellip; <a title="More about the book ABAP Cookbook" href="/abap-cookbook_2174/">More about the book</a></div><p class="price">from  $59.99</p><p class="variant status available"><svg xmlns="http://www.w3.org/2000/svg" class="icon-available" width="12" height="12" viewBox="0 0 24 24"><path d="M21.52,3.46,19.73,2.19a1.07,1.07,0,0,0-1.51.3L9.43,15.93l-4-4.19a1.06,1.06,0,0,0-1.54,0L2.32,13.33a1.14,1.14,0,0,0,0,1.59l6.21,6.44A2.1,2.1,0,0,0,9.92,22a1.67,1.67,0,0,0,1.31-.8L21.81,5A1.14,1.14,0,0,0,21.52,3.46Z"/></svg>
+
+        Available
+        
+    
+</p><div class="variants"><span data-type="3">E-book</span> | <span data-type="2">Print edition</span> | <span data-type="4">Bundle</span></div></div></article>
+
+                    </li>
+                
+                    <li class="product-box">
+                        
+
+<article class="product-box"
+         data-type="1"
+         data-releasedate="20161027"
+         data-status="1"
+         data-score="1544.48981636"
+         data-id="2311"
+         data-title_id="4277"
+         data-title="Design Patterns in ABAP Objects"
+         data-price="69.99"
+         data-variant="E-book"
+         data-category1="Programming" data-category2="Programming/Advanced ABAP"><div class="cover"><a href="/design-patterns-in-abap-objects_4277/" title="More about the book Design Patterns in ABAP Objects"><img src="https://s3-eu-west-1.amazonaws.com/cover2.galileo-press.de/print/9781493214648_171_2d.jpg" class="cover-171" alt="Cover of Design Patterns in ABAP Objects"
+     height="171" loading="lazy" itemprop="image" ></a></div><!-- 4277 - 2311 - 1 --><div class="product-details"><h3 class="product-title"><a title="More about the book Design Patterns in ABAP Objects" href="/design-patterns-in-abap-objects_4277/">
+                Design Patterns in ABAP Objects
+                
+                <div class="subheading"></div></a></h3><p class="author">Kerem Koseoglu</p><p class="bib-info">387 pages, hardcover
+            
+        </p><div class="abstract"><span class="text-19 text-30 text-40">Use design patterns to step up your object-oriented ABAP game, starting with MVC! Want to create objects only when </span><span class="text-30 text-40">needed? Call objects only when required, minimizing runtime and memory costs? </span><span class="text-40">Reduce errors and effort by only coding an object once? </span>
+            &hellip; <a title="More about the book Design Patterns in ABAP Objects" href="/design-patterns-in-abap-objects_4277/">More about the book</a></div><p class="price">from  $69.99</p><p class="variant status available"><svg xmlns="http://www.w3.org/2000/svg" class="icon-available" width="12" height="12" viewBox="0 0 24 24"><path d="M21.52,3.46,19.73,2.19a1.07,1.07,0,0,0-1.51.3L9.43,15.93l-4-4.19a1.06,1.06,0,0,0-1.54,0L2.32,13.33a1.14,1.14,0,0,0,0,1.59l6.21,6.44A2.1,2.1,0,0,0,9.92,22a1.67,1.67,0,0,0,1.31-.8L21.81,5A1.14,1.14,0,0,0,21.52,3.46Z"/></svg>
+
+        Available
+        
+    
+</p><div class="variants"><span data-type="3">E-book</span> | <span data-type="2">Print edition</span> | <span data-type="4">Bundle</span></div></div></article>
+
+                    </li>
+                
+                </ul>
+            </div>
+        
+    
+
+        </section>
+
+    </article>
+
+    
+
+                    </div>
+                    <div class="content-sidebar">
+                        
+    <aside>
+        <div id="product-add-to-basket">
+            
+    
+
+<div class="color-bar" style="background-color: #A3110B;">
+    
+        <span class="variant variant_choice_2">Print edition</span>
+    
+        <span class="variant variant_choice_3">E-book</span>
+    
+        <span class="variant variant_choice_4">Bundle</span>
+    
+</div>
+<section class="product-full-row">
+    <div class="box add-to-basket-wrapper">
+        
+    
+        <div class="variant variant_choice_2">
+            <p class="variant price">
+                $69.95
+            </p>
+            
+
+<p class="variant status unavailable">
+    
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-unavailable" width="12" height="12" viewBox="0 0 24 24"><path d="M15,12l5.79-5.79a1,1,0,0,0,0-1.42L19.21,3.21a1,1,0,0,0-1.42,0L12,9,6.21,3.21a1,1,0,0,0-1.42,0L3.21,4.79a1,1,0,0,0,0,1.42L9,12,3.21,17.79a1,1,0,0,0,0,1.42l1.58,1.58a1,1,0,0,0,1.42,0L12,15l5.79,5.79a1,1,0,0,0,1.42,0l1.58-1.58a1,1,0,0,0,0-1.42Z"/></svg>
+
+        Unavailable
+        
+    
+</p>
+
+
+
+        </div>
+    
+        <div class="variant variant_choice_3">
+            <p class="variant price">
+                $59.99
+            </p>
+            
+
+<p class="variant status available">
+    
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-available" width="12" height="12" viewBox="0 0 24 24"><path d="M21.52,3.46,19.73,2.19a1.07,1.07,0,0,0-1.51.3L9.43,15.93l-4-4.19a1.06,1.06,0,0,0-1.54,0L2.32,13.33a1.14,1.14,0,0,0,0,1.59l6.21,6.44A2.1,2.1,0,0,0,9.92,22a1.67,1.67,0,0,0,1.31-.8L21.81,5A1.14,1.14,0,0,0,21.52,3.46Z"/></svg>
+
+        Available
+        
+    
+</p>
+
+
+
+        </div>
+    
+        <div class="variant variant_choice_4">
+            <p class="variant price">
+                $79.99
+            </p>
+            
+
+<p class="variant status unavailable">
+    
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-unavailable" width="12" height="12" viewBox="0 0 24 24"><path d="M15,12l5.79-5.79a1,1,0,0,0,0-1.42L19.21,3.21a1,1,0,0,0-1.42,0L12,9,6.21,3.21a1,1,0,0,0-1.42,0L3.21,4.79a1,1,0,0,0,0,1.42L9,12,3.21,17.79a1,1,0,0,0,0,1.42l1.58,1.58a1,1,0,0,0,1.42,0L12,15l5.79,5.79a1,1,0,0,0,1.42,0l1.58-1.58a1,1,0,0,0,0-1.42Z"/></svg>
+
+        Unavailable
+        
+    
+</p>
+
+
+
+        </div>
+    
+
+
+        
+        
+        <form id="add_to_basket_form" action="/basket/add/" method="post" class="form-stacked add-to-basket">
+            <input type='hidden' name='csrfmiddlewaretoken' value='911d71wYr3S1Y4XYFTppA63UsRDbg9y6' />
+            
+
+
+
+
+
+
+    
+
+
+    <input id="id_product_id" name="product_id" type="hidden" value="951" />
+
+
+
+    
+
+
+    <input id="id_quantity" name="quantity" type="hidden" value="1" />
+
+
+
+
+            <button type="submit" class="btn-add-to-basket" value="Add to Shopping Cart">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon-basket-add" width="30" height="30" viewBox="0 0 30 30"><path d="M20.21,6H18V3a1,1,0,0,0-2,0V6H13.79a.58.58,0,0,0-.41,1l3.22,3a.58.58,0,0,0,.81,0l3.21-3A.58.58,0,0,0,20.21,6Z"/><path d="M20.89,19.45l3-6A1,1,0,0,0,23,12H10.9L10,8.73A1,1,0,0,0,9,8H6a1,1,0,0,0,0,2H8.25L12,23.27A1,1,0,0,0,13,24h8a1,1,0,0,0,0-2H13.75l-.57-2H20A1,1,0,0,0,20.89,19.45ZM12.61,18l-1.14-4h9.91l-2,4Z"/><circle cx="13.5" cy="26.5" r="1.5"/><circle cx="20.5" cy="26.5" r="1.5"/></svg>
+
+                <span>Add to Shopping Cart</span>
+            </button>
+        </form>
+        <button class="btn-wishlist add-to-wishlist" title="Save for Later" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon-wishlist-add-button" width="24" height="24" viewBox="0 0 24 24"><g class="wishlist-add"><path d="M15.5,11h-7a.5.5,0,0,0,0,1h7a.5.5,0,0,0,0-1Z"/><path d="M15.5,14h-7a.5.5,0,0,0,0,1h7a.5.5,0,0,0,0-1Z"/><path d="M15.5,17h-7a.5.5,0,0,0,0,1h7a.5.5,0,0,0,0-1Z"/><path d="M19.41,7.41,14.59,2.59A2,2,0,0,0,13.17,2H7A3,3,0,0,0,4,5V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V8.83A2,2,0,0,0,19.41,7.41ZM18,19a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V5A1,1,0,0,1,7,4h5a1,1,0,0,1,1,1V8a1,1,0,0,0,1,1h3a1,1,0,0,1,1,1Z"/></g><g class="wishlist-check"><path d="M19.41,7.41,14.59,2.59A2,2,0,0,0,13.17,2H7A3,3,0,0,0,4,5V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V8.83A2,2,0,0,0,19.41,7.41Z"/><g class="wishlist-check-contrast"><path d="M15.81,11.58l-.72-.5a.42.42,0,0,0-.6.12L11,16.57,9.35,14.9a.41.41,0,0,0-.61,0l-.61.63a.47.47,0,0,0,0,.64l2.48,2.57a.82.82,0,0,0,.56.26.68.68,0,0,0,.52-.32l4.23-6.47A.46.46,0,0,0,15.81,11.58Z"/><path d="M13,8a1,1,0,0,0,1,1h4.09c1.91,0,.61-1.3.32-1.59L14.59,3.59C14.3,3.3,13,2,13,3.91Z"/></g></g></svg>
+
+            <span>Save for Later</span>
+        </button>
+    </div>
+</section>
+
+
+
+
+        </div>
+
+        
+    
+
+
+        <div class="box subscription">
+            
+
+<a href="/subscriptions/" title="Subscriptions"
+   class="subscription-box">
+    <div class="subscription-box-header">
+        <img src="//static.sap-press.com/img/sappress-logo.svg" alt="SAP PRESS">
+        <b>Subscription</b>
+    </div>
+    <div class="subscription-box-body">
+        <div class="subscription-box-content">
+            
+    <ul>
+        <li>
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" class="icon-check" width="30" height="30" viewBox="0 0 24 24"><path d="M21.52,3.46,19.73,2.19a1.07,1.07,0,0,0-1.51.3L9.43,15.93l-4-4.19a1.06,1.06,0,0,0-1.54,0L2.32,13.33a1.14,1.14,0,0,0,0,1.59l6.21,6.44A2.1,2.1,0,0,0,9.92,22a1.67,1.67,0,0,0,1.31-.8L21.81,5A1.14,1.14,0,0,0,21.52,3.46Z"/></svg>
+</div>
+            <div class="txt">
+                Access all SAP PRESS publications
+            </div>
+        </li>
+        <li>
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" class="icon-new" width="30" height="30" viewBox="0 0 24 24"><path d="M12,4a8,8,0,1,1-8,8,8,8,0,0,1,8-8m0-2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Z"/><path d="M12.81,9.82l.92-.3,1,2.08-.23-2.34.93-.3,1.19,2L16.3,8.69l.92-.3.57,4.12-1,.31-1.35-2.27.25,2.63-1,.31Z"/><path d="M9.69,10.84,12.3,10l.27.83-1.63.53.2.62,1.52-.49.25.79-1.51.5.25.76L13.33,13l.29.88L11,14.73Z"/><path d="M5.89,12.08l.91-.3,1.89,1.77L8,11.39l.92-.29L10.17,15l-.92.3L7.38,13.53l.69,2.14-.91.3Z"/></svg>
+</div>
+            <div class="txt">
+                Get new titles as soon as they publish
+            </div>
+        </li>
+        <li>
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" class="icon-ebook" width="30" height="30" viewBox="0 0 24 24"><path d="M17,2H7A3,3,0,0,0,4,5V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V5A3,3,0,0,0,17,2ZM13,21H11a1,1,0,0,1,0-2h2a1,1,0,0,1,0,2Zm5-3H6V5A1,1,0,0,1,7,4H17a1,1,0,0,1,1,1Z"/><rect x="8" y="7" width="8" height="1" rx="0.5"/><rect x="8" y="10" width="8" height="1" rx="0.5"/></svg>
+</div>
+            <div class="txt">
+                Download books to your mobile devices!
+            </div>
+        </li>
+    </ul>
+
+        </div>
+        <p class="call-to-action"><b>Subscribe now! ></b></p>
+    </div>
+</a>
+
+        </div>
+
+        
+            <div class="box banner">
+                <a href="/e-books/">
+                    <img src="//s3-eu-west-1.amazonaws.com/gxmedia.galileo-press.de/inc/sidebar-banner/ebook-banner.png" alt="SAP PRESS E-books" loading="lazy">
+                </a>
+            </div>
+        
+    </aside>
+
+                    </div>
+                
+            </div>
+        </div>
+
+        
+            <div class="container flex">
+                <footer>
+                    <div class="column">
+                        <div class="footer-heading">About Us</div>
+                        <ul>
+                            <li><a href="/the-publisher/">The Publisher</a></li>
+                            <li><a href="/the-team/">The Team</a></li>
+                            <li><a href="/legal-notes/">Legal Notes</a></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="footer-heading">Contact</div>
+                        <ul>
+                            <li><a href="//blog.sap-press.com">Blog</a></li>
+                            <li><a href="/newsletter/subscribe/">Newsletter</a></li>
+                            <li><a href="/become-an-author/">Become an Author</a></li>
+                            <li><a href="/press/">Press and Educators</a></li>
+                        </ul>
+                        <span class="social-media-icons">
+                            <a href="//www.facebook.com/sappress" title="Facebook" class="facebook">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-facebook" width="24" height="24" viewBox="0 0 24 24"><path d="M14,22V13h3l1-3H14V7.8c0-1,.52-1.8,2-1.8h2V3H14.66C11.94,3,10,4.57,10,7.46V10H7v3h3v9h3.76"/></svg>
+
+                            </a>
+                            <a href="//twitter.com/sappress" title="Twitter" class="twitter">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-twitter" width="24" height="24" viewBox="0 0 24 24"><path d="M21,6.66a7.44,7.44,0,0,1-2.12.55A3.54,3.54,0,0,0,20.5,5.26a7.72,7.72,0,0,1-2.34.86c-2.34-2.59-7.25-.27-6.3,3.22A10.66,10.66,0,0,1,4.25,5.65,3.48,3.48,0,0,0,5.4,10.37a3.78,3.78,0,0,1-1.68-.45,3.58,3.58,0,0,0,3,3.51A3.77,3.77,0,0,1,5,13.49,3.68,3.68,0,0,0,8.47,16,7.69,7.69,0,0,1,3,17.41c7,4.78,17.16-1.8,16.16-8.92A7.44,7.44,0,0,0,21,6.66"/></svg>
+
+                            </a>
+                            <a href="//linkedin.com/company/sap-press" title="LinkedIn" class="linkedin">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-linkedin" width="24" height="24" viewBox="0 0 24 24"><circle cx="5" cy="5" r="2"/><rect x="3" y="9" width="4" height="12"/><path d="M16.39,8.92A4.47,4.47,0,0,0,13,10V9H9V21h4V13.26c.23-.77.81-1.26,2.16-1.26,1.16,0,1.64.47,1.84,1.11V21h4V14C21,11,20.28,8.92,16.39,8.92Z"/></svg>
+
+                            </a>
+                            <a href="//www.instagram.com/sap_press" title="Instagram" class="instagram">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-instagram" width="24" height="24" viewBox="0 0 24 24"><path d="M16,19H8a3,3,0,0,1-3-3V8A3,3,0,0,1,8,5h8a3,3,0,0,1,3,3v8A3,3,0,0,1,16,19ZM3,8v8a5,5,0,0,0,5,5h8a5,5,0,0,0,5-5V8a5,5,0,0,0-5-5H8A5,5,0,0,0,3,8Z"/><path d="M12,9a3,3,0,1,1-3,3,3,3,0,0,1,3-3m0-1a4,4,0,1,0,4,4,4,4,0,0,0-4-4Z"/><circle cx="16" cy="8" r="1"/></svg>
+
+                            </a>
+                        </span>
+
+                    </div>
+                    <div class="column">
+                        <div class="footer-heading">Shopping with Us</div>
+                        <ul>
+                            <li><a href="/shopping/delivery/">Delivery/Shipping</a></li>
+                            <li><a href="/shopping/payment/">Payment</a></li>
+                            <li><a href="/shopping/returns/">Returns</a></li>
+                            <li><a href="/terms/">Terms and Privacy Policy</a></li>
+                            <li><a href="/help/">Help</a></li>
+                            <li><span class="show-consent-banner">Change Privacy Options</span></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="footer-heading">Customer Service</div>
+                        <p class="here-to-help">
+                            We're here to help!
+                            <br />Monday to Friday,
+                            <br class="br-desktop-only" />9am to 5pm EST
+                        </p>
+                        <p>+1.781.228.5070</p>
+                        <p><a href="mailto:info@rheinwerk-publishing.com">info@rheinwerk-publishing.com</a></p>
+                    </div>
+                </footer>
+            </div>
+        
+
+        
+        
+
+        
+
+        
+        <div class="overlay-center">
+            <div class="overlay" id="overlay">
+                <div id="overlay_content"></div>
+            </div>
+        </div>
+
+        
+        <div class="interstitial" id="interstitial">
+            <div id="interstitial_content">
+            </div>
+        </div>
+
+        
+        <!-- Version: N/A -->
+    </body>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>SMTR_KERNEL_CHECK_AUTHORITY | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/smtr_kernel_check_authority/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:00:20 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Обход проверок полномочий</title>
+		<link>https://abap-blog.ru/osnovy-abap/obxod-proverok-polnomochij/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/obxod-proverok-polnomochij/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 10 Apr 2012 14:24:41 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[SMTR_KERNEL_CHECK_AUTHORITY]]></category>
+		<category><![CDATA[проверка полномочий]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=701</guid>
+
+					<description><![CDATA[<p>Иногда возникают ситуации когда прав на запуск той или иной транзакции в системе нет, а права на отладку системы имеются, обойти ограничение на запуск, без изменения полномочий, можно следующим образом: Ставим точку в ФМ: SMTR_KERNEL_CHECK_AUTHORITY Нажимаем F7, чистим P_CANCEL_FLAG Другая часто встречающаяся ситуация: есть полномочия на запуск программ, но нет на запуск функций, идем в SE38 и запускаем [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/obxod-proverok-polnomochij/">Обход проверок полномочий</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Иногда возникают ситуации когда прав на запуск той или иной транзакции в системе нет, а права на отладку системы имеются, обойти ограничение на запуск, без изменения полномочий, можно следующим образом:</p>
+<ul>
+<li>Ставим точку в ФМ: <strong>SMTR_KERNEL_CHECK_AUTHORITY</strong></li>
+<li>Нажимаем F7, чистим <strong>P_CANCEL_FLAG</strong></li>
+</ul>
+<div><span style="line-height: 18px;">Другая часто встречающаяся ситуация: есть полномочия на запуск программ, но нет на запуск функций, идем в SE38 и запускаем &#8212; <strong>RSFUNCTIONBUILDER.</strong></span></div>
+<p>&nbsp;</p>
+<p>Если у вас нет полномочий на &#171;отладку системы&#187;, а есть простая отладка, и есть полномочия на SE37, заходим в ФМ &#8212; <strong>RS_TRANSACTION_TEST, </strong>ставим точку после проверки полномочий &#8212; ‘AUTH_CHECK_TCODE’ ID ‘TCODE’ FIELD objectname, меняем sy-subrc на 0 и вуаля <img src="https://s.w.org/images/core/emoji/13.1.0/72x72/1f609.png" alt="😉" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+<p>Еще более простой обход проверки полномочий, даже не имея прав на отладку вы можете запустить транзакцию используя ФМ: <strong>CC_CALL_TRANSACTION_NEW_TASK</strong>.</p>
+<p><strong>Обновлено: способ с запуском ФМ <strong>CC_CALL_TRANSACTION_NEW_TASK </strong>пофиксен нотой безопасности.</strong></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/obxod-proverok-polnomochij/">Обход проверок полномочий</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/obxod-proverok-polnomochij/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

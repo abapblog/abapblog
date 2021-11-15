@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>cl_salv_functional_settings | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_salv_functional_settings/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:56:56 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>SALV Table &#8212; Объединение полей в группы</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-obedinenie-polej-pri-nastrojke-formatov-v-gruppy/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-obedinenie-polej-pri-nastrojke-formatov-v-gruppy/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 13 Feb 2012 14:50:34 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[cl_salv_functional_settings]]></category>
+		<category><![CDATA[cl_salv_specific_groups]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=491</guid>
+
+					<description><![CDATA[<p>В случае когда в вашем ALV объекте сосредоточено большое количество полей, при определении форматов могут возникать трудности поиска необходимого поля. Чтобы облегчить данный поиск вы можете объединять поля в группы, выглядит это следующим образом: Для объединения полей в группы необходимо для начала их создать. Класс через который происходит создание этих групп называется  cl_salv_specific_groups. Получить ссылку [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-obedinenie-polej-pri-nastrojke-formatov-v-gruppy/">SALV Table — Объединение полей в группы</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>В случае когда в вашем ALV объекте сосредоточено большое количество полей, при определении форматов могут возникать трудности поиска необходимого поля. Чтобы облегчить данный поиск вы можете объединять поля в группы, выглядит это следующим образом:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/02/spec_groups.png"><img loading="lazy" class="alignnone size-full wp-image-492" title="spec_groups" src="http://abap-blog.ru/wp-content/uploads/2012/02/spec_groups.png" alt="" width="595" height="193" srcset="https://abap-blog.ru/wp-content/uploads/2012/02/spec_groups.png 595w, https://abap-blog.ru/wp-content/uploads/2012/02/spec_groups-300x97.png 300w" sizes="(max-width: 595px) 100vw, 595px" /></a></p>
+<p><span id="more-491"></span></p>
+<p>Для объединения полей в группы необходимо для начала их создать. Класс через который происходит создание этих групп называется  <strong>cl_salv_specific_groups. </strong>Получить ссылку на этот объект можно из класса  <strong>cl_salv_functional_settings,</strong> в свою очередь ссылку на него можно получить из главного объекта ALV. После создания полей, для всех полей группы необходимо задать ее идентификатор. Пример того как это делается:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZALV_SPECIFIC_GROUPS.
+
+DATA:
+      gt_data      TYPE spfli_tab,  " Таблица с данными
+      go_fun_set   TYPE REF TO cl_salv_functional_settings,
+      go_specg     TYPE REF TO cl_salv_specific_groups,
+      go_columns   TYPE REF TO cl_salv_columns_list,
+      go_column    TYPE REF TO cl_salv_column_list,
+      go_alv       TYPE REF TO cl_salv_table.
+
+START-OF-SELECTION.
+  SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_data.
+
+  " Фабричный метод возвращяет экзмепляр ALV объекта
+  TRY.
+      cl_salv_table=&gt;factory(
+         IMPORTING
+           r_salv_table = go_alv
+         CHANGING
+           t_table = gt_data ).
+    CATCH cx_salv_msg .
+      MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+  ENDTRY.
+  " Подключаем стандартные функции
+  go_alv-&gt;set_screen_status( EXPORTING
+                              REPORT = 'SAPLSALV_METADATA_STATUS'
+                              pfstatus = 'SALV_TABLE_STANDARD'
+                              set_functions = CL_SALV_MODEL_BASE=&gt;C_FUNCTIONS_ALL ).
+
+  go_fun_set = go_alv-&gt;get_functional_settings( ).
+  " Создаем группу полей.
+  go_specg = go_fun_set-&gt;get_specific_groups( ).
+  go_specg-&gt;add_specific_group( ID = '1' text = 'Данные отправления' ).
+
+  " Добавляем поля в группу
+  go_columns = go_alv-&gt;get_columns( ).
+  TRY.
+    go_column ?= go_columns-&gt;get_column( 'CITYFROM' ).
+    go_column-&gt;set_specific_group( '1' ).
+    go_column ?= go_columns-&gt;get_column( 'AIRPFROM' ).
+    go_column-&gt;set_specific_group( '1' ).
+  CATCH cx_salv_not_found.
+  ENDTRY.
+
+  " Отобразить ALV представление
+  go_alv-&gt;display( ).</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-obedinenie-polej-pri-nastrojke-formatov-v-gruppy/">SALV Table — Объединение полей в группы</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-obedinenie-polej-pri-nastrojke-formatov-v-gruppy/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,2040 @@
+﻿<!DOCTYPE html>
+<html lang="ru-RU" id="html">
+<head>
+		<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="profile" href="../xfn/11.html">
+	<link rel="pingback" href="https://abap-blog.ru/xmlrpc.php">
+	<title>ABAP Blog | Быстрые заметки</title>
+
+		<!-- All in One SEO 4.1.4.4 -->
+		<meta name="description" content="Быстрые заметки - это краткие заметки на тему разработки в SAP, распределённые по темам и не дотягивающие до полноценных статей, однако не менее полезные.">
+		<meta name="robots" content="max-image-preview:large">
+		<link rel="canonical" href="index.htm">
+		<script type="application/ld+json" class="aioseo-schema">
+			{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebSite","@id":"https:\/\/abap-blog.ru\/#website","url":"https:\/\/abap-blog.ru\/","name":"ABAP Blog","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445 \u043e\u0442 SAP","inLanguage":"ru-RU","publisher":{"@id":"https:\/\/abap-blog.ru\/#person"}},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/#person","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/abap-notes\/#personImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"BreadcrumbList","@id":"https:\/\/abap-blog.ru\/abap-notes\/#breadcrumblist","itemListElement":[{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/#listItem","position":1,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/","name":"\u0413\u043b\u0430\u0432\u043d\u0430\u044f","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 SAP \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445: ABAP, HANA, UI5, OData, Fiori.","url":"https:\/\/abap-blog.ru\/"},"nextItem":"https:\/\/abap-blog.ru\/abap-notes\/#listItem"},{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/abap-notes\/#listItem","position":2,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/abap-notes\/","name":"\u0411\u044b\u0441\u0442\u0440\u044b\u0435 \u0437\u0430\u043c\u0435\u0442\u043a\u0438","description":"\u0411\u044b\u0441\u0442\u0440\u044b\u0435 \u0437\u0430\u043c\u0435\u0442\u043a\u0438 - \u044d\u0442\u043e \u043a\u0440\u0430\u0442\u043a\u0438\u0435 \u0437\u0430\u043c\u0435\u0442\u043a\u0438 \u043d\u0430 \u0442\u0435\u043c\u0443 \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0438 \u0432 SAP, \u0440\u0430\u0441\u043f\u0440\u0435\u0434\u0435\u043b\u0451\u043d\u043d\u044b\u0435 \u043f\u043e \u0442\u0435\u043c\u0430\u043c \u0438 \u043d\u0435 \u0434\u043e\u0442\u044f\u0433\u0438\u0432\u0430\u044e\u0449\u0438\u0435 \u0434\u043e \u043f\u043e\u043b\u043d\u043e\u0446\u0435\u043d\u043d\u044b\u0445 \u0441\u0442\u0430\u0442\u0435\u0439, \u043e\u0434\u043d\u0430\u043a\u043e \u043d\u0435 \u043c\u0435\u043d\u0435\u0435 \u043f\u043e\u043b\u0435\u0437\u043d\u044b\u0435.","url":"https:\/\/abap-blog.ru\/abap-notes\/"},"previousItem":"https:\/\/abap-blog.ru\/#listItem"}]},{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/abap-notes\/#webpage","url":"https:\/\/abap-blog.ru\/abap-notes\/","name":"ABAP Blog | \u0411\u044b\u0441\u0442\u0440\u044b\u0435 \u0437\u0430\u043c\u0435\u0442\u043a\u0438","description":"\u0411\u044b\u0441\u0442\u0440\u044b\u0435 \u0437\u0430\u043c\u0435\u0442\u043a\u0438 - \u044d\u0442\u043e \u043a\u0440\u0430\u0442\u043a\u0438\u0435 \u0437\u0430\u043c\u0435\u0442\u043a\u0438 \u043d\u0430 \u0442\u0435\u043c\u0443 \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0438 \u0432 SAP, \u0440\u0430\u0441\u043f\u0440\u0435\u0434\u0435\u043b\u0451\u043d\u043d\u044b\u0435 \u043f\u043e \u0442\u0435\u043c\u0430\u043c \u0438 \u043d\u0435 \u0434\u043e\u0442\u044f\u0433\u0438\u0432\u0430\u044e\u0449\u0438\u0435 \u0434\u043e \u043f\u043e\u043b\u043d\u043e\u0446\u0435\u043d\u043d\u044b\u0445 \u0441\u0442\u0430\u0442\u0435\u0439, \u043e\u0434\u043d\u0430\u043a\u043e \u043d\u0435 \u043c\u0435\u043d\u0435\u0435 \u043f\u043e\u043b\u0435\u0437\u043d\u044b\u0435.","inLanguage":"ru-RU","isPartOf":{"@id":"https:\/\/abap-blog.ru\/#website"},"breadcrumb":{"@id":"https:\/\/abap-blog.ru\/abap-notes\/#breadcrumblist"},"datePublished":"2019-09-26T15:55:07+04:00","dateModified":"2020-09-27T15:49:10+04:00"}]}
+		</script>
+		<script type="text/javascript">
+			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+			ga('create', "UA-150412824-1", { 'cookieDomain': 'abap-blog.ru' } );
+			ga('require', 'outboundLinkTracker');
+			ga('send', 'pageview');
+		</script>
+		<script async="" src="../analytics.js"></script>
+		<script async="" src="../wp-content/plugins/all-in-one-seo-pack/app/Common/Assets/js/autotrack.js?ver=4.1.4.4"></script>
+		<!-- All in One SEO -->
+
+<link rel='dns-prefetch' href='../index-1.htm'>
+<link rel='dns-prefetch' href='//fonts.googleapis.com'>
+<link rel='dns-prefetch' href='../index-2.htm'>
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента" href="../feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев" href="../comments/feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев к &laquo;Быстрые заметки&raquo;" href="https://abap-blog.ru/abap-notes/feed/">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/abap-blog.ru\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8.1"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='urvanov_syntax_highlighter-css' href='../wp-content/plugins/urvanov-syntax-highlighter/css/min/urvanov_syntax_highlighter.min.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='wp-block-library-css' href='../wp-includes/css/dist/block-library/style.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='arve-main-css' href='../wp-content/plugins/advanced-responsive-video-embedder/build/main.css?ver=b809f4d4c33c91a5ae3a5099af09bdde' media='all'>
+<link rel='stylesheet' id='contact-form-7-css' href='../wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.5.1' media='all'>
+<link rel='stylesheet' id='bg-shce-genericons-css' href='../wp-content/plugins/show-hidecollapse-expand/assets/css/genericons/genericons.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='bg-show-hide-css' href='../wp-content/plugins/show-hidecollapse-expand/assets/css/bg-show-hide.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='dashicons-css' href='../wp-includes/css/dashicons.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='tooltip-css' href='../wp-content/plugins/wp-poll/assets/tool-tip.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-cb-css' href='../wp-content/plugins/wp-poll/assets/front/css/checkbox.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-css' href='../wp-content/plugins/wp-poll/assets/front/css/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='flat-fonts-css' href='../css.css?family=Lobster%7CRoboto:400,700%7CRoboto+Slab%7CRoboto%20Condensed' media='all'>
+<link rel='stylesheet' id='flat-theme-css' href='../wp-content/themes/flat/assets/css/flat.css?ver=1.7.11' media='all'>
+<link rel='stylesheet' id='flat-style-css' href='../wp-content/themes/flat/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='slb_core-css' href='../wp-content/plugins/simple-lightbox/client/css/app.css?ver=2.8.1' media='all'>
+<link rel='stylesheet' id='epkb-public-styles-css' href='../wp-content/plugins/echo-knowledge-base/css/public-styles.min.css?ver=7.7.0' media='all'>
+<link rel='stylesheet' id='decent-comments-widget-css' href='../wp-content/plugins/decent-comments/css/decent-comments-widget.css' media='all'>
+<script src='../wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script src='../wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' id='urvanov_syntax_highlighter_js-js-extra'>
+/* <![CDATA[ */
+var UrvanovSyntaxHighlighterSyntaxSettings = {"version":"2.8.22","is_admin":"0","ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","prefix":"urvanov-syntax-highlighter-","setting":"urvanov-syntax-highlighter-setting","selected":"urvanov-syntax-highlighter-setting-selected","changed":"urvanov-syntax-highlighter-setting-changed","special":"urvanov-syntax-highlighter-setting-special","orig_value":"data-orig-value","debug":""};
+var UrvanovSyntaxHighlighterSyntaxStrings = {"copy":"\u041d\u0430\u0436\u043c\u0438\u0442\u0435 %s \u0434\u043b\u044f \u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f, %s \u0434\u043b\u044f \u0432\u0441\u0442\u0430\u0432\u043a\u0438","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script src='../wp-content/plugins/urvanov-syntax-highlighter/js/min/urvanov_syntax_highlighter.min.js?ver=2.8.22' id='urvanov_syntax_highlighter_js-js'></script>
+<script src='../wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.7' id='regenerator-runtime-js'></script>
+<script src='../wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
+<script async="async" src='../wp-content/plugins/advanced-responsive-video-embedder/build/main.js?ver=b809f4d4c33c91a5ae3a5099af09bdde' id='arve-main-js'></script>
+<script src='../wp-content/plugins/wp-poll/assets/front/js/svgcheckbx.js?ver=5.8.1' id='wpp-front-cb-js'></script>
+<script type='text/javascript' id='wpp-front-js-extra'>
+/* <![CDATA[ */
+var wpp_object = {"ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","copyText":"Copied !","voteText":"Vote(s)","tempProDownload":"https:\/\/pluginbazar.com\/my-account\/downloads\/","tempProDownloadTxt":"Download Version 1.1.0"};
+/* ]]> */
+</script>
+<script src='../wp-content/plugins/wp-poll/assets/front/js/scripts.js?ver=5.8.1' id='wpp-front-js'></script>
+<script src='../wp-content/themes/flat/assets/js/flat.js?ver=1.7.11' id='flat-js-js'></script>
+<!--[if lt IE 9]>
+<script src='https://abap-blog.ru/wp-content/themes/flat/assets/js/html5shiv.min.js?ver=3.7.2' id='html5shiv-js'></script>
+<![endif]-->
+<script type='text/javascript' id='epkb-public-scripts-js-extra'>
+/* <![CDATA[ */
+var epkb_vars = {"msg_try_again":"\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043f\u043e\u0432\u0442\u043e\u0440\u0438\u0442\u0435 \u043f\u043e\u043f\u044b\u0442\u043a\u0443 \u043f\u043e\u0437\u0434\u043d\u0435\u0435.","error_occurred":"\u0412\u043e\u0437\u043d\u0438\u043a\u043b\u0430 \u043e\u0448\u0438\u0431\u043a\u0430 (16)","not_saved":"\u041e\u0448\u0438\u0431\u043a\u0430 - \u043a\u043e\u043d\u0444\u0438\u0433\u0443\u0440\u0430\u0446\u0438\u044f \u041d\u0415 \u0441\u043e\u0445\u0440\u0430\u043d\u0435\u043d\u0430 (6).","unknown_error":"Unknown error (17)","reload_try_again":"\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043f\u0435\u0440\u0435\u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u0435 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0443 \u0438 \u043f\u043e\u043f\u0440\u043e\u0431\u0443\u0439\u0442\u0435 \u0441\u043d\u043e\u0432\u0430.","save_config":"\u0421\u043e\u0445\u0440\u0430\u043d\u044f\u0435\u043c \u043a\u043e\u043d\u0444\u0438\u0433\u0443\u0440\u0430\u0446\u0438\u044e","input_required":"\u0412\u0432\u043e\u0434 \u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u0435\u043d","reduce_name_size":"\u0412\u043d\u0438\u043c\u0430\u043d\u0438\u0435: \u043f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u0443\u043c\u0435\u043d\u044c\u0448\u0438\u0442\u0435 \u0440\u0430\u0437\u043c\u0435\u0440 \u0432\u0430\u0448\u0435\u0433\u043e \u0438\u043c\u0435\u043d\u0438. \u0412\u043a\u043b\u0430\u0434\u043a\u0430 \u0431\u0443\u0434\u0435\u0442 \u043f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u0442\u043e\u043b\u044c\u043a\u043e \u043f\u0435\u0440\u0432\u044b\u0435 25 \u0441\u0438\u043c\u0432\u043e\u043b\u043e\u0432. ","load_template":"\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430 \u0448\u0430\u0431\u043b\u043e\u043d\u0430..."};
+/* ]]> */
+</script>
+<script src='../wp-content/plugins/echo-knowledge-base/js/public-scripts.min.js?ver=7.7.0' id='epkb-public-scripts-js'></script>
+<script src='../wp-content/plugins/echo-knowledge-base/js/lib/materialize.min.js?ver=7.7.0' id='epkb-materialize-js'></script>
+<link rel="https://api.w.org/" href="../wp-json/index.htm.json"><link rel="alternate" type="application/json" href="../wp-json/wp/v2/pages/3290.json"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="../xmlrpc.php.xml?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.8.1">
+<link rel='shortlink' href='index.htm?p=3290'>
+<link rel="alternate" type="application/json+oembed" href="../wp-json/oembed/1.0/embed-2.json?url=https%3A%2F%2Fabap-blog.ru%2Fabap-notes%2F">
+<link rel="alternate" type="text/xml+oembed" href="../wp-json/oembed/1.0/embed-2.xml?url=https%3A%2F%2Fabap-blog.ru%2Fabap-notes%2F&#038;format=xml">
+<style type="text/css" id="epkb-advanced-style">
+		/* KB Core 
+		-----------------------------------------------------------------------*/
+		#epkb-content-container .epkb-nav-tabs .active:after {
+			border-top-color: #ffffff!important
+		}
+		#epkb-content-container .epkb-nav-tabs .active {
+			background-color: #ffffff!important
+		}
+		#epkb-content-container .epkb-nav-tabs .active .epkb-category-level-1,
+		#epkb-content-container .epkb-nav-tabs .active p {
+			color: #686868!important
+		}
+		#epkb-content-container .epkb-nav-tabs .active:before {
+			border-top-color: #686868!important
+		}		
+	</style>
+<!-- WP Youtube Player 1.7 by unijimpe -->
+<style type="text/css">#page:before, .sidebar-offcanvas, #secondary { background-color: #272727; }@media (max-width: 1199px) { #page &gt; .container { background-color: #272727; } }body { background-size: initial; }</style><style type="text/css">#masthead .site-title {font-family:Lobster}body {font-family:Roboto }h1,h2,h3,h4,h5,h6 {font-family:Roboto Slab}#masthead .site-description, .hentry .entry-meta {font-family:Roboto Condensed}</style><style type="text/css" media="screen">body{position:relative}#dynamic-to-top{display:none;overflow:hidden;width:auto;z-index:90;position:fixed;bottom:20px;right:20px;top:auto;left:auto;font-family:sans-serif;font-size:1em;color:#fff;text-decoration:none;text-shadow:0 1px 0 #333;font-weight:bold;padding:17px 16px;border:2px solid #000;background:#4c5055;-webkit-background-origin:border;-moz-background-origin:border;-icab-background-origin:border;-khtml-background-origin:border;-o-background-origin:border;background-origin:border;-webkit-background-clip:padding-box;-moz-background-clip:padding-box;-icab-background-clip:padding-box;-khtml-background-clip:padding-box;-o-background-clip:padding-box;background-clip:padding-box;-webkit-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-ms-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-moz-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-o-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-khtml-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-icab-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-webkit-border-radius:30px;-moz-border-radius:30px;-icab-border-radius:30px;-khtml-border-radius:30px;border-radius:30px}#dynamic-to-top:hover{background:#4fd650;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 255, 255, 255, .2 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );cursor:pointer}#dynamic-to-top:active{background:#4c5055;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 0, 0, 0, .3 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) )}#dynamic-to-top,#dynamic-to-top:active,#dynamic-to-top:focus,#dynamic-to-top:hover{outline:none}#dynamic-to-top span{display:block;overflow:hidden;width:14px;height:12px;background:url( ../wp-content/plugins/dynamic-to-top/css/images/up.png )no-repeat center center}</style><style type="text/css" id="custom-background-css">
+body.custom-background { background-image: url("../wp-content/uploads/2014/10/escheresque_ste.png"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+		</head>
+
+<body class="page-template-default page page-id-3290 custom-background" itemscope="" itemtype="http://schema.org/WebPage">
+		<div id="page">
+	<div class="container">
+		<div class="row row-offcanvas row-offcanvas-left" style="background: #272727;">			
+			
+			<div id="secondary1" class="col-lg-t" style="background: #272727; display:none">
+								<header id="masthead1" class="site-headerex" role="banner">
+										<div class="hgroupex">
+						<h1 class="site-title display-title"><a href="../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+									</header>
+							</div>
+
+
+			<div id="secondary" class="col-lg-3" style="display:block">
+								<header id="masthead" class="site-header" role="banner">
+										<div class="hgroup">
+						<h1 class="site-title display-title"><a href="../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+					<button type="button" class="btn btn-link hidden-lg toggle-sidebar" data-toggle="offcanvas" aria-label="Sidebar"><i class="fa fa-gear"></i></button>
+					<button type="button" class="btn btn-link hidden-lg toggle-navigation" aria-label="Navigation Menu"><i class="fa fa-bars"></i></button>
+					<nav id="site-navigation" class="navigation main-navigation" role="navigation">
+						<ul id="menu-glavnoe-menyu" class="nav-menu"><li id="menu-item-2313" class="fa fa-home menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-2313"><a href="../index.htm">Главная</a>
+<ul class="sub-menu">
+	<li id="menu-item-2363" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2363"><a href="../category/osnovy-abap/index.htm">Основы ABAP</a>
+	<ul class="sub-menu">
+		<li id="menu-item-2906" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2906"><a href="../category/osnovy-abap/oop/index.htm">ABAP Objects</a></li>
+		<li id="menu-item-2370" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2370"><a href="../category/osnovy-abap/slovar/index.htm">ABAP Словарь</a></li>
+		<li id="menu-item-2367" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2367"><a href="../category/osnovy-abap/files/index.htm">Работа с файлами</a></li>
+		<li id="menu-item-2364" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2364"><a href="../category/osnovy-abap/sap-dynpro/index.htm">SAP Dynpro</a></li>
+		<li id="menu-item-6845" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6845"><a href="../category/osnovy-abap/vnutrennie-tablicy/index.htm">Внутренние таблицы</a></li>
+		<li id="menu-item-6849" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6849"><a href="../category/osnovy-abap/dinamicheskoe-programmirovanie/index.htm">Динамическое программирование</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2366" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2366"><a href="../category/database-work/index.htm">Работа с БД</a>
+	<ul class="sub-menu">
+		<li id="menu-item-7303" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7303"><a href="../category/hana/index.htm">HANA</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2368" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2368"><a href="../category/network/index.htm">Сетевые технологии</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6328" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6328"><a href="../category/network/ui5fiori/index.htm">UI5 &amp; Fiori</a></li>
+		<li id="menu-item-6327" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6327"><a href="../category/network/odata-network/index.htm">OData</a></li>
+		<li id="menu-item-2907" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2907"><a href="../category/network/web-dynpro/index.htm">Web Dynpro</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2369" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2369"><a href="../category/enhancements/index.htm">Расширения</a></li>
+	<li id="menu-item-6329" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6329"><a href="../category/abap-cloud/index.htm">ABAP Cloud</a></li>
+	<li id="menu-item-2365" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2365"><a href="../category/others/index.htm">Прочее</a></li>
+</ul>
+</li>
+<li id="menu-item-3536" class="fa fa-bell menu-item menu-item-type-post_type menu-item-object-page menu-item-3536"><a href="../abap-the-best-practice/index.htm">ABAP Best Practice</a></li>
+<li id="menu-item-3727" class="fa fa-child menu-item menu-item-type-post_type menu-item-object-page menu-item-3727"><a href="../vakansii/index.htm">Вакансии ABAP</a></li>
+<li id="menu-item-3885" class="fa fa-bookmark menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-3290 current_page_item menu-item-3885"><a href="index.htm" aria-current="page">Быстрые заметки</a></li>
+<li id="menu-item-2316" class="fa fa-info-circle menu-item menu-item-type-post_type menu-item-object-page menu-item-2316"><a href="../about/index.htm">Обо мне</a></li>
+</ul>					</nav>
+									</header>
+				
+				<div class="sidebar-offcanvas">
+<div id="main-sidebar" class="widget-area" role="complementary">
+											<aside id="search-2" class="widget widget_search">
+	<form method="get" id="searchform" action="https://abap-blog.ru/">
+		<label for="s" class="assistive-text">Поиск</label>
+		<input type="text" class="field" name="s" id="s" placeholder="Поиск">
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Поиск">
+	</form>
+					</aside>
+					<aside id="linkcat-2" class="widget widget_links">
+						<h3 class='widget-title'>Ссылки</h3>
+
+	<ul class='xoxo blogroll'>
+<li><a href="../topics/abap.html" target="_blank">ABAP Community</a></li>
+<li><a href="../wiki/display/ABAP/ABAP Development.html" title="Wiki по ABAP" target="_blank">ABAP Development Wiki</a></li>
+<li><a href="../doc/abapdocu_latest_index_htm/latest/en-US/index.htm" title="Последняя версия справки по ABAP" target="_blank">ABAP Help</a></li>
+<li><a href="../doc/abapdocu_cp_index_htm/CLOUD/en-US/index.htm" target="_blank">ABAP Help (Cloud)</a></li>
+<li><a href="../learning-journeys/overview.html?role=Developer" target="_blank">Developer Learning Journeys</a></li>
+<li><a href="../index-3.htm" target="_blank">Open Source Projects</a></li>
+<li><a href="../tutorial-navigator.html" target="_blank">SAP Tutorials</a></li>
+<li><a href="https://t.me/abapblog" target="_blank"><img src="../wp-content/uploads/2020/04/telegram-1.png" alt="Канал в Telegram"> Канал в Telegram</a></li>
+
+	</ul>
+					</aside>
+
+					<aside id="endo_wrc_widget-2" class="widget widget_endo_wrc_widget">
+						<h3 class='widget-title'>Цитаты</h3>
+<p>Ходить по воде и разрабатывать программы согласно ТЗ очень просто, если они заморожены.</p>
+<p><strong><a href="../pid/28/654.html">E. Berard</a></strong></p>
+					</aside>
+								<aside id="custom-post-type-recent-posts-3" class="widget widget_recent_entries">
+						<h3 class='widget-title'>Новое</h3>
+			<ul>
+													<li>
+										<a href="poluchenie-instancii-cl_gui_alv_grid-dlya-salv/index.htm">Получение инстанции cl_gui_alv_grid для SALV</a>
+											<span class="post-date">11.09.2021</span>
+														</li>
+													<li>
+										<a href="../abap-cloud/introduction-to-abap-in-the-cloud/index.htm">Introduction to ABAP in the Cloud</a>
+											<span class="post-date">18.08.2021</span>
+														</li>
+													<li>
+										<a href="getting-started-with-fpm-bopf-integration/index.htm">Getting Started with FPM BOPF Integration</a>
+											<span class="post-date">01.06.2021</span>
+														</li>
+													<li>
+										<a href="how-to-use-authority-checks-in-business-object-processing-framework/index.htm">30. How to Use Authority Checks in Business Object Processing Framework</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="bopf-extensibility/index.htm">29. BOPF Extensibility</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="bopf-enterprise-procurement-model-epm/index.htm">28. BOPF Enterprise Procurement Model (EPM)</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="bopf-integration/index.htm">27. BOPF Integration</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="bopf-business-configuration-objects/index.htm">26. BOPF Business Configuration Objects</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="bopf-performance/index.htm">25. BOPF Performance</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="bopf-supportability/index.htm">24. BOPF Supportability</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+							</ul>
+								</aside>
+					<aside id="decent_comments_widget-2" class="widget widget_decent_comments_widget">
+						<h3 class='widget-title'>Последние комментарии</h3>
+<div class="decent-comments"><ul><li><div class="comment"><span class="comment-author">Николай</span><span class="comment-date"> 27.10.2021 в 15:19</span><span class="comment-link"> на <a href="../osnovy-abap/internal-table-as-data-source-select/index.htm#comment-17857">Внутренние таблицы как источник в SQL запросах</a></span><span class="comment-excerpt">Спасибо за статью. Если нужно сделать агрегацию внутренней таблицы то агрегация через передачу во временную таблицу на БД тоже будет работать медленней чем через loop/collect? Например таблица 100к записей, которая становится 5к после агрегации. </span></div></li><li><div class="comment"><span class="comment-author">Аноним</span><span class="comment-date"> 14.10.2021 в 13:50</span><span class="comment-link"> на <a href="../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17856">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Так поведение Decorator не надо будет повторно описывать повторно в других Component. Но это возможно при изменении типа mo_component, например, на object. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 11.10.2021 в 06:50</span><span class="comment-link"> на <a href="../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17854">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет:) Возможно, я не так выразил мысль. Я имел ввиду, какая ценность от класса Decorator, если можно декорировать поведение от Component и от него же наследовать конкретные декораторы? (см. первую UML диаграмму) </span></div></li><li><div class="comment"><span class="comment-author">Astrafox</span><span class="comment-date"> 10.10.2021 в 12:39</span><span class="comment-link"> на <a href="../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17853">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет! Можно и так, однако конкретный компонент может иметь более широкий интерфейс, нежели тот, что нужен в декораторах. Тут скорее пример не совсем удачный, декорируемое поведение лучше вынести в отдельный интерфейс, реализуемый как компонентом, так и декораторами. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 04.10.2021 в 12:51</span><span class="comment-link"> на <a href="../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17850">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">А какую роль играет базовый класс декоратора lcl_decorator? Что мешает конкретные декораторы наследовать от компонента lcl_concrete_component? Клиентский код и логика выполнения не поменяется. </span></div></li></ul></div>					</aside>
+											</div>
+				</div>
+			</div>
+
+						<div id="primary" class="content-area col-lg-9" itemprop="mainContentOfPage" style="">
+				
+	<div class="eckb-kb-template" style="padding-top: 0px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; margin-top: 10px; margin-bottom: 10px; margin-left: 10px; margin-right: 10px;">	        <blockquote><p>Быстрые заметки &#8212; это краткие заметки на тему разработки в SAP, распределённые по темам и не дотягивающие до полноценных статей, однако не менее полезные.</p></blockquote>
+
+		<div id="epkb-main-page-container" class="epkb-css-full-reset epkb-basic-template eckb_mp_active_theme_flat">
+			<div class="epkb-full">  
+		<script>
+			var ajaxurl = 'https://abap-blog.ru/wp-admin/admin-ajax.php';
+		</script>   
+		<div class="epkb-doc-search-container eckb_search_on_main_page" style="background-color: #f1f1f1; padding-top: 50px; padding-right: 0px; padding-bottom: 50px; padding-left: 0px; margin-top: 0px; margin-bottom: 40px;">
+
+			<h2 class="epkb-doc-search-container__title" style="color: #686868; font-size:36px;;"> Поиск по заметкам</h2>
+			<form id="epkb_search_form" style="width: 80%;" class="epkb-search epkb-search-form-1" method="get" action="">
+
+				<div class="epkb-search-box">
+					<input type="text" style="border-width: 1px; border-color: #ffffff; background-color: #ffffff; background: #ffffff;" id="epkb_search_terms" aria-label="Найти заметку" name="epkb_search_terms" value="" placeholder="Найти заметку">
+					<input type="hidden" id="epkb_kb_id" value="1">
+					<div class="epkb-search-box_button-wrap">
+						<button type="submit" id="epkb-search-kb" style="background-color: #686868; background: #686868; border-width: 1px; border-color: #f1f1f1;">НАЙТИ </button>
+					</div>
+					<div class="loading-spinner"></div>
+				</div>
+				<div id="epkb_search_results"></div>
+
+			</form>
+
+		</div>  				<div id="epkb-content-container" style="background-color: #ffffff;">
+
+					<!--  Main Page Content -->
+					<div class="epkb-section-container">
+						
+
+		<div class="three-col eckb-categories-list" style="font-size:14px;;">   
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_1" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-coffee" data-kb-category-icon="epkbfa-coffee" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">ABAP Development Tools</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="nastrojka-backend-sistemy-dlya-eclipse/index.htm" class="epkb-mp-article" data-kb-article-id="4141">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Настройка backend-а для Eclipse и ADT</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_2" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-database" data-kb-category-icon="epkbfa-database" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">ABAP словарь</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="rabota-s-domenami/index.htm" class="epkb-mp-article" data-kb-article-id="3886">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Домены</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="elementy-dannyx/index.htm" class="epkb-mp-article" data-kb-article-id="3893">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Элементы данных</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+		<ul class="epkb-sub-category eckb-sub-category-ordering"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">Ракурсы ведения</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="generator-vedeniya-dlya-odnoj-zapisi/index.htm" class="epkb-mp-article" data-kb-article-id="7317">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Генератор ведения для одной записи</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="programmnyj-zapusk-rakursa-vedeniya/index.htm" class="epkb-mp-article" data-kb-article-id="3987">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Программный запуск ракурса ведения</span>
+			</span>
+		</a> 				</li> 
+		</ul> 		<ul class="epkb-sub-sub-category eckb-sub-sub-category-ordering" style="padding-left: 10px;"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h4 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">События</h4>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-3 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="event-01-before-saving-the-data-in-the-database/index.htm" class="epkb-mp-article" data-kb-article-id="7322">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Event 01: Before saving the data in the database</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-3 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="individual_authorization_checks/index.htm" class="epkb-mp-article" data-kb-article-id="7338">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Event 25: Individual authorization checks</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+		</ul> 				</li>  
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_3" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-table" data-kb-category-icon="epkbfa-table" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">ALV</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-sub-category eckb-sub-category-ordering"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">ALV Grid</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="alv-master-detail/index.htm" class="epkb-mp-article" data-kb-article-id="7078">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">ALV Master-Detail</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="alv-bez-ekrana/index.htm" class="epkb-mp-article" data-kb-article-id="4386">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">ALV без экрана</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="easy-reference-for-alv-grid-control/index.htm" class="epkb-mp-article" data-kb-article-id="4342">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Easy Reference for ALV Grid Control</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="dostup-k-privatnym-atributam-cl_gui_alv_grid/index.htm" class="epkb-mp-article" data-kb-article-id="6658">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Доступ к приватным атрибутам CL_GUI_ALV_GRID</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="kody-alv-funkcij/index.htm" class="epkb-mp-article" data-kb-article-id="4338">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Коды ALV функций</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="ochistka-bufera-alv/index.htm" class="epkb-mp-article" data-kb-article-id="4460">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Очистка буфера ALV</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="poluchenie-instancii-cl_gui_alv_grid-dlya-salv/index.htm" class="epkb-mp-article" data-kb-article-id="7888">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Получение инстанции cl_gui_alv_grid для SALV</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_4" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-archive" data-kb-category-icon="epkbfa-archive" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">BOPF</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-sub-category eckb-sub-category-ordering"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">BOPF Overview</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="7640/index.htm" class="epkb-mp-article" data-kb-article-id="7640">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">01. BOPF Introduction &amp; Architecture</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-transaction-service-manager/index.htm" class="epkb-mp-article" data-kb-article-id="7649">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">02. BOPF Transaction &amp; Service Manager</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-creating-bos-nodes-associations/index.htm" class="epkb-mp-article" data-kb-article-id="7653">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">03. BOPF Creating BOs, Nodes &amp; Associations</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="implementation-of-entities/index.htm" class="epkb-mp-article" data-kb-article-id="7657">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">04. Implementation of Entities</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-actions/index.htm" class="epkb-mp-article" data-kb-article-id="7659">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">05. BOPF Actions</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-determinations/index.htm" class="epkb-mp-article" data-kb-article-id="7665">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">06. BOPF Determinations</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-validations/index.htm" class="epkb-mp-article" data-kb-article-id="7669">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">07. BOPF Validations</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-queries/index.htm" class="epkb-mp-article" data-kb-article-id="7673">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">08. BOPF Queries</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-properties/index.htm" class="epkb-mp-article" data-kb-article-id="7677">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">09. BOPF Properties</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-special-associations/index.htm" class="epkb-mp-article" data-kb-article-id="7681">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">10. BOPF Special Associations</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-archiving/index.htm" class="epkb-mp-article" data-kb-article-id="7685">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">11. BOPF Archiving</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-change-documents/index.htm" class="epkb-mp-article" data-kb-article-id="7689">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">12. BOPF Change Documents</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-alternative-keys/index.htm" class="epkb-mp-article" data-kb-article-id="7693">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">13. BOPF Alternative Keys</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-node-categories/index.htm" class="epkb-mp-article" data-kb-article-id="7697">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">14. BOPF Node Categories</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="advanced-features/index.htm" class="epkb-mp-article" data-kb-article-id="7701">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">15. Advanced Features</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="status-action-management/index.htm" class="epkb-mp-article" data-kb-article-id="7705">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">16. Status &amp; Action Management</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-delegation-concept/index.htm" class="epkb-mp-article" data-kb-article-id="7709">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">17. BOPF Delegation Concept</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-inheritance-concept/index.htm" class="epkb-mp-article" data-kb-article-id="7713">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">18. BOPF Inheritance Concept</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-authorization-checks/index.htm" class="epkb-mp-article" data-kb-article-id="7717">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">19. BOPF Authorization Checks</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-test-framework/index.htm" class="epkb-mp-article" data-kb-article-id="7721">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">20. BOPF Test Framework</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="fpm-fbi-read-only-ovp/index.htm" class="epkb-mp-article" data-kb-article-id="7725">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">21. FPM / FBI – Read-only OVP</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="fbi-views/index.htm" class="epkb-mp-article" data-kb-article-id="7729">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">22. FBI Views</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="brf-rule-engine/index.htm" class="epkb-mp-article" data-kb-article-id="7733">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">23. BRF+ : Rule Engine</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-supportability/index.htm" class="epkb-mp-article" data-kb-article-id="7737">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">24. BOPF Supportability</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-performance/index.htm" class="epkb-mp-article" data-kb-article-id="7741">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">25. BOPF Performance</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-business-configuration-objects/index.htm" class="epkb-mp-article" data-kb-article-id="7745">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">26. BOPF Business Configuration Objects</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-integration/index.htm" class="epkb-mp-article" data-kb-article-id="7749">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">27. BOPF Integration</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-enterprise-procurement-model-epm/index.htm" class="epkb-mp-article" data-kb-article-id="7753">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">28. BOPF Enterprise Procurement Model (EPM)</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="bopf-extensibility/index.htm" class="epkb-mp-article" data-kb-article-id="7757">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">29. BOPF Extensibility</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="how-to-use-authority-checks-in-business-object-processing-framework/index.htm" class="epkb-mp-article" data-kb-article-id="7761">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">30. How to Use Authority Checks in Business Object Processing Framework</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="getting-started-with-fpm-bopf-integration/index.htm" class="epkb-mp-article" data-kb-article-id="7808">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Getting Started with FPM BOPF Integration</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_5" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-window-maximize" data-kb-category-icon="epkbfa-window-maximize" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Dynpro</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="dialog-prosmotra-xml-html-json/index.htm" class="epkb-mp-article" data-kb-article-id="4971">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Диалог просмотра XML, HTML, JSON</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="ispolzovanie-indikatora-progressa/index.htm" class="epkb-mp-article" data-kb-article-id="4955">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Использование индикатора прогресса</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+		<ul class="epkb-sub-category eckb-sub-category-ordering"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">GUI Controls</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="vertikalnyj-toolbar/index.htm" class="epkb-mp-article" data-kb-article-id="4394">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Вертикальный Toolbar</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="rabota-s-cl_column_tree_model/index.htm" class="epkb-mp-article" data-kb-article-id="5646">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Работа с CL_COLUMN_TREE_MODEL</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="rabota-s-cl_gui_calendar/index.htm" class="epkb-mp-article" data-kb-article-id="5659">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Работа с cl_gui_calendar</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="rabota-s-cl_list_tree_model/index.htm" class="epkb-mp-article" data-kb-article-id="5649">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Работа с CL_LIST_TREE_MODEL</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">Средства поиска</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="dialog-vedeniya-diapazonov/index.htm" class="epkb-mp-article" data-kb-article-id="5665">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Диалог ведения диапазонов</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="logika-opredeleniya-sp-k-ekrannym-polyam/index.htm" class="epkb-mp-article" data-kb-article-id="3960">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Логика определения СП к экранным полям</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="sp-dlya-vybora-mesyaca/index.htm" class="epkb-mp-article" data-kb-article-id="4051">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">СП для выбора месяца</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="f4-po-vnutrennej-tablice/index.htm" class="epkb-mp-article" data-kb-article-id="3900">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">СП для значений внутренней таблицы</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="sp-k-date-s-proizvodstvennym-kalendaryom/index.htm" class="epkb-mp-article" data-kb-article-id="4044">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">СП к дате с производственным календарём</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="sp-k-fajlu-na-servere-prilozhenij-predstavleniya/index.htm" class="epkb-mp-article" data-kb-article-id="4047">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">СП к файлу на сервере приложений/представления</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">Экран выбора</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="alv-na-ekrane-vybora/index.htm" class="epkb-mp-article" data-kb-article-id="4036">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">ALV на экране выбора</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="vybor-znachenij-iz-spiska/index.htm" class="epkb-mp-article" data-kb-article-id="5662">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Выбор значений из списка</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="vypadayushhij-spisok-na-ekrane-vybora/index.htm" class="epkb-mp-article" data-kb-article-id="4401">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Выпадающий список на экране выбора</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="generator-ekrana-vybora/index.htm" class="epkb-mp-article" data-kb-article-id="4030">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Генератор экрана выбора</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="dinamicheskoe-opredelenie-tekstov/index.htm" class="epkb-mp-article" data-kb-article-id="3902">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Динамическое определение текстов</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="zapretit-komandu-na-ekrane-vybora/index.htm" class="epkb-mp-article" data-kb-article-id="4028">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Запретить команду на экране выбора</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="ispolzovanie-gos-kontejnera/index.htm" class="epkb-mp-article" data-kb-article-id="4388">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Использование GOS контейнера</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="ne-soxranyat-znacheniya-pri-vozvrate/index.htm" class="epkb-mp-article" data-kb-article-id="4034">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Не сохранять значения при возврате</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="ogranichenie-parametrov-na-ekrane-vybora/index.htm" class="epkb-mp-article" data-kb-article-id="4074">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Ограничение SELECT-OPTIONS</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="polnoekrannyj-kontejner-na-ekrane-vybora/index.htm" class="epkb-mp-article" data-kb-article-id="5675">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Полноэкранный контейнер на экране выбора</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="ruchnoj-zapusk-sp/index.htm" class="epkb-mp-article" data-kb-article-id="4056">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Ручной запуск СП</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="poluchit-vse-znacheniya-s-ekrana-vybora/index.htm" class="epkb-mp-article" data-kb-article-id="4076">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Считать значения с экрана выбора</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_6" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-road" data-kb-category-icon="epkbfa-road" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">SAP Workflow</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="zapusk-sobytiya-s-peredachej-dannyx-v-kontejner/index.htm" class="epkb-mp-article" data-kb-article-id="4465">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Запуск события с передачей данных в контейнер</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="otladka-potokov-operacij/index.htm" class="epkb-mp-article" data-kb-article-id="4688">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Отладка потоков операций</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="statusy-v-wf/index.htm" class="epkb-mp-article" data-kb-article-id="5506">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Статусы в WF</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_7" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-hdd-o" data-kb-category-icon="epkbfa-hdd-o" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">SQL и работа с БД</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="db-hints-dlya-opensql/index.htm" class="epkb-mp-article" data-kb-article-id="4003">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">DB Hints для OpenSQL</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="nastrojka-for-all-entries/index.htm" class="epkb-mp-article" data-kb-article-id="3998">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Настройка FOR ALL ENTRIES</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="rekomendacii-dlya-custom-koda-pri-migraciyu-na-hana/index.htm" class="epkb-mp-article" data-kb-article-id="4001">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Рекомендации для Custom кода при миграции на HANA</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+		<ul class="epkb-sub-category eckb-sub-category-ordering"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">Core Data Services (CDS)</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="pervyj-i-poslednij-den-mesyaca-v-cds/index.htm" class="epkb-mp-article" data-kb-article-id="7616">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Первый и последний день месяца в CDS</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="tekushhaya-data-i-vremya-v-cds/index.htm" class="epkb-mp-article" data-kb-article-id="7310">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Текущая дата и время в CDS</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_8" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-spinner" data-kb-category-icon="epkbfa-spinner" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">UI5 &amp; Fiori</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="otkryt-fiori-prilozhenie-v-dynpro/index.htm" class="epkb-mp-article" data-kb-article-id="5657">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Открыть FIori приложение в Dynpro</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_9" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-desktop" data-kb-category-icon="epkbfa-desktop" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Web Dynpro</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-sub-category eckb-sub-category-ordering"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">FPM</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="how-to-create-enhance-and-adapt-floorplan-manager-applications/index.htm" class="epkb-mp-article" data-kb-article-id="6623">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">How to Create, Enhance and Adapt Floorplan Manager Applications</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_10" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-code" data-kb-category-icon="epkbfa-code" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Анализ кода</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="analiz-isxodnogo-koda/index.htm" class="epkb-mp-article" data-kb-article-id="5145">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Анализ исходного кода</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="gajd-po-sozdaniyu-novyx-proverok/index.htm" class="epkb-mp-article" data-kb-article-id="3943">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Гайд по созданию новых проверок в SCI / ATC</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_11" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-indent" data-kb-category-icon="epkbfa-indent" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Варианты</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="api-dlya-raboty-s-variantami/index.htm" class="epkb-mp-article" data-kb-article-id="4069">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">API для работы с вариантами</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="programmnyj-vybor-varianta/index.htm" class="epkb-mp-article" data-kb-article-id="4065">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Вариант по умолчанию</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_12" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-navicon" data-kb-category-icon="epkbfa-navicon" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Внутренние таблицы</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="value-i-parallelnye-kursory/index.htm" class="epkb-mp-article" data-kb-article-id="4086">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">VALUE и параллельные курсоры</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="modifikaciya-polya-vo-vsej-tablice-v-odnu-stroku/index.htm" class="epkb-mp-article" data-kb-article-id="5349">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Модификация значений внутренней таблицы в одну строку</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="sozdanie-tablicy-na-osnove-samoj-tablicy-cherez-value/index.htm" class="epkb-mp-article" data-kb-article-id="4019">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Создание таблицы через VALUE на основе самой таблицы</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_13" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-calendar" data-kb-category-icon="epkbfa-calendar" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Дата &amp; время</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="dobavit-ubavit-k-date-mesyac-god-ili-n-dnej/index.htm" class="epkb-mp-article" data-kb-article-id="4951">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Модификация даты: добавить (убавить) заданный промежуток времени</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="proverka-korrektnosti-daty/index.htm" class="epkb-mp-article" data-kb-article-id="3967">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Проверка корректности даты</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_14" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-edit" data-kb-category-icon="epkbfa-edit" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Интеграция с MS Office</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-sub-category eckb-sub-category-ordering"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">Excel</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="vygruzka-v-excel-cherez-cl_fdt_xl_spreadsheet/index.htm" class="epkb-mp-article" data-kb-article-id="5159">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Выгрузка в Excel через cl_fdt_xl_spreadsheet</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="zagruzka-iz-excel-cherez-cl_fdt_xl_spreadsheet/index.htm" class="epkb-mp-article" data-kb-article-id="5156">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Загрузка из Excel через cl_fdt_xl_spreadsheet</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_15" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-sign-language" data-kb-category-icon="epkbfa-sign-language" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Коммуникация</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="abap-i-json/index.htm" class="epkb-mp-article" data-kb-article-id="4383">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">ABAP и JSON</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="otpravka-pisem-v-badi-i-customer-exit-ax/index.htm" class="epkb-mp-article" data-kb-article-id="4151">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Отправка писем в BAdI и Customer-exit-ах</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+		<ul class="epkb-sub-category eckb-sub-category-ordering"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">ABAP Channels</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="iot/index.htm" class="epkb-mp-article" data-kb-article-id="5494">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">ABAP и поддержка IOT сценариев</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">ICM</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="poluchit-mime-tip-po-rasshireniyu/index.htm" class="epkb-mp-article" data-kb-article-id="5670">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Получить MIME тип по расширению</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">IDOCs</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="sap-idoc-overview/index.htm" class="epkb-mp-article" data-kb-article-id="5502">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">SAP IDoc Overview</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="poluchit-xml-predstavlenie-idoc-a/index.htm" class="epkb-mp-article" data-kb-article-id="5736">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Получить XML представление IDOC-a</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">OData</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="odata-service-development-options/index.htm" class="epkb-mp-article" data-kb-article-id="5508">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">OData service development options</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="odata-v4/index.htm" class="epkb-mp-article" data-kb-article-id="6717">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Odata V4</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="generaciya-odata-servisa-k-bw-zaprosam/index.htm" class="epkb-mp-article" data-kb-article-id="5526">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Генерация Odata-сервиса к BW запросам</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="instanciya-obrabotchika-servisa-if_http_server/index.htm" class="epkb-mp-article" data-kb-article-id="4463">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Инстанция обработчика сервиса if_http_server</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="ispolzovanie-batch-zaprosov/index.htm" class="epkb-mp-article" data-kb-article-id="5518">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Использование batch запросов</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">RFC</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="dostup-k-serveru-predstavleniya-v-fonovyx-processax/index.htm" class="epkb-mp-article" data-kb-article-id="4128">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Доступ к серверу представления в фоновых процессах</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="poluchit-ip-adres-po-zadannomu-rfc/index.htm" class="epkb-mp-article" data-kb-article-id="5681">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Получить IP адрес по заданному RFC</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="parallelnoe-vypolnenie-zadach-v-abap/index.htm" class="epkb-mp-article" data-kb-article-id="5711">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Распараллеливание вычислений в ABAP</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_16" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-gears" data-kb-category-icon="epkbfa-gears" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Настройки</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="xranilishhe-dannyx-personalizacii/index.htm" class="epkb-mp-article" data-kb-article-id="4180">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Хранилище данных персонализации</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_17" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa ep_font_icon_folder" data-kb-category-icon="ep_font_icon_folder" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Обработка файлов</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="zal11-prodvinutaya-versiya-al11/index.htm" class="epkb-mp-article" data-kb-article-id="4347">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">ZAL11 - продвинутая версия AL11</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="vybor-fajla-na-servere/index.htm" class="epkb-mp-article" data-kb-article-id="5738">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Выбор файла на сервере</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="proverit-nalichie-bom-v-utf-fajle/index.htm" class="epkb-mp-article" data-kb-article-id="5652">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Проверить наличие BOM в UTF файле</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="rekomendacii-po-rabote-s-fajlovym-interfejsom/index.htm" class="epkb-mp-article" data-kb-article-id="4005">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Рекомендации по работе с файловым интерфейсом</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+		<ul class="epkb-sub-category eckb-sub-category-ordering"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">Изображения</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="konvertaciya-i-modifikaciya-izobrazhenij/index.htm" class="epkb-mp-article" data-kb-article-id="5678">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Конвертация и модификация изображений</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_18" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-cubes" data-kb-category-icon="epkbfa-cubes" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">ООП</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="klassy-realizuyushhie-interfejs/index.htm" class="epkb-mp-article" data-kb-article-id="3909">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Классы реализующие интерфейс</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="poluchenie-informacii-o-strukture-klassa-interfejsa/index.htm" class="epkb-mp-article" data-kb-article-id="5654">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Получение информации о структуре класса/интерфейса</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="podklassy/index.htm" class="epkb-mp-article" data-kb-article-id="3911">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Получить список подклассов</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="refaktoring-videokurs/index.htm" class="epkb-mp-article" data-kb-article-id="4205">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Рефакторинг (видеокурс)</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="shablony-razrabotki-videokurs/index.htm" class="epkb-mp-article" data-kb-article-id="4200">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Шаблоны разработки (видеокурс)</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_19" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-bug" data-kb-category-icon="epkbfa-bug" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Отладка</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="beskonechnyj-cikl-dlya-otladki/index.htm" class="epkb-mp-article" data-kb-article-id="3905">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Бесконечный цикл для отладки</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="otladka-ot-imeni-drugogo-polzovatelya/index.htm" class="epkb-mp-article" data-kb-article-id="4458">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Отладка от имени другого пользователя</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="otladka-potokov-operacij/index-1.htm?seq_no=2" class="epkb-mp-article" data-kb-article-id="4688">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Отладка потоков операций</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="prosmotr-vsex-vneshnix-tochek-preryvaniya/index.htm" class="epkb-mp-article" data-kb-article-id="4690">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Просмотр внешних точек прерывания</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="prosmotr-soderzhimogo-sap-abap-memory/index.htm" class="epkb-mp-article" data-kb-article-id="6706">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Просмотр содержимого SAP Memory / ABAP Memory / SCREEN Table / Open Datasets</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="skript-dlya-poiska-rasshirenij/index.htm" class="epkb-mp-article" data-kb-article-id="4126">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Скрипт для поиска расширений</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="skript-dlya-propuska-proverki-polnomochij/index.htm" class="epkb-mp-article" data-kb-article-id="4122">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Скрипт для пропуска проверки полномочий</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_20" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-clipboard" data-kb-category-icon="epkbfa-clipboard" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Отчёты &amp; транзакции</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="zapusk-tranzakcii-v-novom-rezhime-v-drugoj-sisteme/index.htm" class="epkb-mp-article" data-kb-article-id="3950">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Запуск транзакции в новом режиме (в другой системе)</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="kody-funkcij-pri-paketnom-vvode/index.htm" class="epkb-mp-article" data-kb-article-id="4010">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Коды функций при пакетном вводе</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_21" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa ep_font_icon_screw_driver" data-kb-category-icon="ep_font_icon_screw_driver" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Расширения</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-sub-category eckb-sub-category-ordering"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">BDT</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="business-data-toolset-bdt-developers-manual/index.htm" class="epkb-mp-article" data-kb-article-id="5514">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Business Data Toolset (BDT) - Developer’s Manual</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">Switch Framework</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="prosmotr-obektov-iz-biznes-funkcii/index.htm" class="epkb-mp-article" data-kb-article-id="6687">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Просмотр объектов из бизнес-функции</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_22" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-unlock-alt" data-kb-category-icon="epkbfa-unlock-alt" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Роли и полномочия</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="generaciya-where-uslovij-otnositelno-polnomochij/index.htm" class="epkb-mp-article" data-kb-article-id="4404">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Генерация Where условий относительно полномочий</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_23" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-linode" data-kb-category-icon="epkbfa-linode" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Система</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="analiz-zavisimostej-v-abap-programme/index.htm" class="epkb-mp-article" data-kb-article-id="6690">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Анализ зависимостей в ABAP программе</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="generaciya-guid-ov/index.htm" class="epkb-mp-article" data-kb-article-id="4968">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Генерация UUID</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+		<ul class="epkb-sub-category eckb-sub-category-ordering"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">ABAP Сессии</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="zakryt-sessiyu-polzovatelya/index.htm" class="epkb-mp-article" data-kb-article-id="5733">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Закрыть сессию пользователя</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="poluchit-dannye-o-sessii-polzovatelya/index.htm" class="epkb-mp-article" data-kb-article-id="3955">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Получить данные о сессии пользователя</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="sbros-schyotchika-vremeni-vypolneniya/index.htm" class="epkb-mp-article" data-kb-article-id="3994">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Сброс счётчика времени выполнения</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">Локализация</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="pereklyuchenie-yazyka/index.htm" class="epkb-mp-article" data-kb-article-id="4194">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Переключение языка</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="poluchit-tekushhuyu-kodirovku/index.htm" class="epkb-mp-article" data-kb-article-id="5668">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Получить текущую кодировку</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">Учётные записи</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="otchyot-po-vxodam-v-sistemu-i-smene-parolej/index.htm" class="epkb-mp-article" data-kb-article-id="3983">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Отчёт по входам в систему и смене паролей</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="poluchit-parametry-polzovatelya/index.htm" class="epkb-mp-article" data-kb-article-id="5672">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Получить параметры пользователя</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="proverit-status-parolya-u-polzovatelya/index.htm" class="epkb-mp-article" data-kb-article-id="5741">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Проверить статус пароля у пользователя</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_24" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-quote-left" data-kb-category-icon="epkbfa-quote-left" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Строки</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="v-xstring-i-obratno/index.htm" class="epkb-mp-article" data-kb-article-id="3979">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">В xstring и обратно</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="prostoj-tekstovyj-redaktor/index.htm" class="epkb-mp-article" data-kb-article-id="3981">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Простой текстовый редактор</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_25" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-truck" data-kb-category-icon="epkbfa-truck" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Транспортная система</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="proverka-zaprosov/index.htm" class="epkb-mp-article" data-kb-article-id="3939">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Проверка запросов</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="sbros-statusa-v-zaprosax/index.htm" class="epkb-mp-article" data-kb-article-id="3933">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Сброс статуса в запросах/задачах</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+		<ul class="epkb-sub-category eckb-sub-category-ordering"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">Перенос объектов</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="perenos-tekstov-iz-so10/index.htm" class="epkb-mp-article" data-kb-article-id="6681">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Перенос текстов из SO10</span>
+			</span>
+		</a> 				</li> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="perenos-formatov-alv/index.htm" class="epkb-mp-article" data-kb-article-id="6684">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Перенос форматов ALV</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_26" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-calendar-check-o" data-kb-category-icon="epkbfa-calendar-check-o" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Фоновые задания</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="zapret-povtornogo-zapuska/index.htm" class="epkb-mp-article" data-kb-article-id="4345">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Запрет повторного запуска</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+				<!-- Section Container ( Category Box ) -->
+				<section id="epkb_cat_27" class="no_shadow epkb-top-category-box" style="border-radius: 4px; border-width: 1px; border-color: #f7f7f7; background-color: #fdfdfd; border-style: solid;">
+
+					<!-- Section Head -->
+					<div class="section-head section_divider" style="border-bottom-width: 1px; background-color: #f1f1f1; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-color: #cdcdcd; padding-top: 20px; padding-bottom: 20px; padding-left: 4px; padding-right: 4px;">
+
+						<!-- Category Name + Icon -->
+						<div class="epkb-category-level-1 epkb-category--top-cat-icon" style="color: #525252; text-align: center; justify-content: center;">
+
+							<!-- Icon Top / Left -->	                            									<span class="epkb-cat-icon epkbfa epkbfa-barcode" data-kb-category-icon="epkbfa-barcode" style="color: #53ccfb; font-size: 32px;"></span>									<h2 class="epkb-cat-name" style="color: #525252; font-size:21px;;">Формуляры</h2>							
+							<!-- Icon Right -->     
+						</div>
+
+						<!-- Category Description -->						
+					</div>
+
+					<!-- Section Body -->
+					<div class="epkb-section-body" style="border-bottom-width: 1px; padding-top: 4px; padding-bottom: 4px; padding-left: 20px; padding-right: 10px; font-size:14px;;">						
+		<ul class="epkb-main-category epkb-articles eckb-articles-ordering"> 				<li class="epkb-article-level-1 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="obedinit-neskolko-pdf-fajlov-v-odin/index.htm" class="epkb-mp-article" data-kb-article-id="5161">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Объединить несколько PDF файлов в один</span>
+			</span>
+		</a> 				</li> 
+		</ul> 
+		<ul class="epkb-sub-category eckb-sub-category-ordering"> 
+				<li style="padding-bottom: 8px; padding-top: 8px;">
+					<div class="epkb-category-level-2-3">
+						<span class="ep_font_icon_arrow_carrot_right epkb-category-level-2-3__cat-icon" style="color: #868686;"></span>
+						<h3 class="epkb-category-level-2-3__cat-name" tabindex="0" style="color: #868686;">Adobe Forms</h3>
+					</div>    
+		<ul class="epkb-articles eckb-articles-ordering" style="padding-left: 10px;"> 				<li class="epkb-article-level-2 " style="padding-bottom: 8px; padding-top: 8px;">   
+		<a href="analiz-oshibok-v-ads/index.htm" class="epkb-mp-article" data-kb-article-id="6695">
+			<span class="eckb-article-title article_underline_effect" style="color: #000000;">
+				<span class="eckb-article-title__icon ep_font_icon_document" style="color: #525252;"></span>
+				<span class="eckb-article-title__text">Анализ ошибок в ADS</span>
+			</span>
+		</a> 				</li> 
+		</ul> 				</li>  
+		</ul> 
+					</div><!-- Section Body End -->
+
+				</section><!-- Section End -->  
+			</div>       					</div>
+
+				</div>
+			</div>
+		</div>   
+<hr>
+<input type='hidden' bg_collapse_expand='618a04567f23c6057538210' value='618a04567f23c6057538210'><input type='hidden' id='bg-show-more-text-618a04567f23c6057538210' value='Добавить заметку'><input type='hidden' id='bg-show-less-text-618a04567f23c6057538210' value='Скрыть'><button id='bg-showmore-action-618a04567f23c6057538210' class='bg-showmore-plg-button bg-blue-button bg-arrow ' style=" color:white;">Добавить заметку</button><div id='bg-showmore-hidden-618a04567f23c6057538210'><div role="form" class="wpcf7" id="wpcf7-f3913-p3290-o1" lang="ru-RU" dir="ltr">
+<div class="screen-reader-response"><p role="status" aria-live="polite" aria-atomic="true"></p> <ul></ul></div>
+<form action="/abap-notes/#wpcf7-f3913-p3290-o1" method="post" class="wpcf7-form init" novalidate="novalidate" data-status="init">
+<div style="display: none;">
+<input type="hidden" name="_wpcf7" value="3913">
+<input type="hidden" name="_wpcf7_version" value="5.5.1">
+<input type="hidden" name="_wpcf7_locale" value="ru_RU">
+<input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f3913-p3290-o1">
+<input type="hidden" name="_wpcf7_container_post" value="3290">
+<input type="hidden" name="_wpcf7_posted_data_hash" value="">
+<input type="hidden" name="_wpcf7_recaptcha_response" value="">
+</div>
+<p><span class="wpcf7-form-control-wrap your-name"><input type="text" name="your-name" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true" aria-invalid="false" placeholder="Ваше имя"></span><br>
+<span class="wpcf7-form-control-wrap your-category"><input type="text" name="your-category" value="" size="40" class="wpcf7-form-control wpcf7-text" aria-invalid="false" placeholder="Категория"></span></p>
+<p><label> Текст заметки<br>
+    <span class="wpcf7-form-control-wrap your-message"><textarea name="your-message" cols="40" rows="10" class="wpcf7-form-control wpcf7-textarea" aria-invalid="false"></textarea></span> </label></p>
+<p><input type="submit" value="Отправить" class="wpcf7-form-control has-spinner wpcf7-submit"></p>
+<div class="wpcf7-response-output" aria-hidden="true"></div></form></div></div>
+
+	</div>   							</div>
+					</div>
+	</div>
+</div>
+<script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"api":{"root":"https:\/\/abap-blog.ru\/wp-json\/","namespace":"contact-form-7\/v1"}};
+/* ]]> */
+</script>
+<script src='../wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.5.1' id='contact-form-7-js'></script>
+<script src='../wp-includes/js/jquery/ui/effect.min.js?ver=1.12.1' id='jquery-effects-core-js'></script>
+<script src='../wp-includes/js/jquery/ui/effect-slide.min.js?ver=1.12.1' id='jquery-effects-slide-js'></script>
+<script src='../wp-includes/js/jquery/ui/effect-highlight.min.js?ver=1.12.1' id='jquery-effects-highlight-js'></script>
+<script src='../wp-includes/js/jquery/ui/effect-fold.min.js?ver=1.12.1' id='jquery-effects-fold-js'></script>
+<script src='../wp-includes/js/jquery/ui/effect-blind.min.js?ver=1.12.1' id='jquery-effects-blind-js'></script>
+<script type='text/javascript' id='bg-show-hide-script-js-extra'>
+/* <![CDATA[ */
+var BG_SHCE_USE_EFFECTS = ["0"];
+var BG_SHCE_TOGGLE_SPEED = ["400"];
+var BG_SHCE_TOGGLE_OPTIONS = ["none"];
+var BG_SHCE_TOGGLE_EFFECT = ["blind"];
+/* ]]> */
+</script>
+<script src='../wp-content/plugins/show-hidecollapse-expand/assets/js/bg-show-hide.js?ver=5.8.1' id='bg-show-hide-script-js'></script>
+<script src='../wp-includes/js/comment-reply.min.js?ver=5.8.1' id='comment-reply-js'></script>
+<script src='../wp-content/plugins/dynamic-to-top/js/libs/jquery.easing.js?ver=1.3' id='jquery-easing-js'></script>
+<script type='text/javascript' id='dynamic-to-top-js-extra'>
+/* <![CDATA[ */
+var mv_dynamic_to_top = {"text":"To Top","version":"0","min":"300","speed":"1100","easing":"easeInExpo","margin":"20"};
+/* ]]> */
+</script>
+<script src='../wp-content/plugins/dynamic-to-top/js/dynamic.to.top.min.js?ver=3.5' id='dynamic-to-top-js'></script>
+<script src='../recaptcha/api.js?render=6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC&#038;ver=3.0' id='google-recaptcha-js'></script>
+<script type='text/javascript' id='wpcf7-recaptcha-js-extra'>
+/* <![CDATA[ */
+var wpcf7_recaptcha = {"sitekey":"6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC","actions":{"homepage":"homepage","contactform":"contactform"}};
+/* ]]> */
+</script>
+<script src='../wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.5.1' id='wpcf7-recaptcha-js'></script>
+<script src='../wp-includes/js/wp-embed.min.js?ver=5.8.1' id='wp-embed-js'></script>
+<script type="text/javascript" id="slb_context">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB ) { {$.extend(SLB, {"context":["public","user_guest"]});} }})})(jQuery);}/* ]]> */</script>
+</body>
+</html>

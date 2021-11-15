@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>cl_gui_chart_engine | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_gui_chart_engine/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:02:11 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>SAP Chart Engine</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-chart-engine/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-chart-engine/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 21 May 2012 16:28:39 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[cl_gui_chart_engine]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=842</guid>
+
+					<description><![CDATA[<p>CE – это библиотека которая поможет вам создавать графики в SAP NW.  Использовать CE можно по двум сценариям: С помощью Internet Graphics Service используя класс cl_igs_chart_engine Как ActiveX GUI контрол в Windows клиенте SAP GUI через класс cl_gui_chart_engine. Рассмотрим второй сценарий.  Работа с контролом CE подобна тому, как мы работаем с ALV, сначала необходимо создать [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-chart-engine/">SAP Chart Engine</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><strong><a href="http://abap-blog.ru/wp-content/uploads/2012/05/image00.png"><img loading="lazy" class="alignnone size-full wp-image-843" title="image00" src="http://abap-blog.ru/wp-content/uploads/2012/05/image00.png" alt="" width="552" height="200" srcset="https://abap-blog.ru/wp-content/uploads/2012/05/image00.png 552w, https://abap-blog.ru/wp-content/uploads/2012/05/image00-300x108.png 300w" sizes="(max-width: 552px) 100vw, 552px" /></a></strong></p>
+<p>CE – это библиотека которая поможет вам создавать графики в SAP NW.  Использовать CE можно по двум сценариям:</p>
+<ul>
+<li>С помощью Internet Graphics Service используя класс cl_igs_chart_engine</li>
+<li>Как ActiveX GUI контрол в Windows клиенте SAP GUI через класс cl_gui_chart_engine.</li>
+</ul>
+<p>Рассмотрим второй сценарий.  Работа с контролом CE подобна тому, как мы работаем с ALV, сначала необходимо создать контейнер, затем создать объект, указав в конструкторе переменную контейнера.</p>
+<p><strong id="internal-source-marker_0.038244977593421936"><span id="more-842"></span><br />
+</strong>CE поддерживает большое количество разнообразных видов графиков, внешний вид настраивается либо через дизайнер CE, либо вручную. В обоих случаях генерируется XML документ, который необходимо передать в класс cl_gui_chart_engine. Создавая внешнее описание графика вручную необходимо знать спецификацию XML формата для построения графика, она не идет в комплекте вместе с дизайнером, есть только описание XML формата представления данных графика. Скачать данный набор можно <a title="Chart Designer" href="http://www.sdn.sap.com/irj/scn/downloads?rid=/library/uuid/e0a9ba90-0201-0010-d3a2-9cb376b5e181" target="_blank" rel="noopener">тут </a></p>
+<p>В следующем небольшом примере строится график, внешний вид которого настроен через дизайнер и хранится на сервере представления (построение шаблона в примере не рассматриваю, дизайнер довольно простой чтобы сгенерировать его самостоятельно), данные же берутся из таблицы и преобразуются в XML документ.</p>
+<p><strong><a href="http://abap-blog.ru/wp-content/uploads/2012/05/image01.png"><img loading="lazy" class="alignnone size-full wp-image-844" title="image01" src="http://abap-blog.ru/wp-content/uploads/2012/05/image01.png" alt="" width="1269" height="827" srcset="https://abap-blog.ru/wp-content/uploads/2012/05/image01.png 1269w, https://abap-blog.ru/wp-content/uploads/2012/05/image01-300x195.png 300w, https://abap-blog.ru/wp-content/uploads/2012/05/image01-1024x667.png 1024w" sizes="(max-width: 1269px) 100vw, 1269px" /></a></strong></p>
+<p>Код программы строящей график:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zalv_simple.
+
+PARAMETERS: p_dummy.
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Глобальные переменные &amp; структуры
+*&amp;---------------------------------------------------------------------*
+
+TYPES: BEGIN OF ty_result,
+        lifnr TYPE STRING, " Поставщик
+        matnr TYPE STRING, " Материал
+        menge TYPE I,      " Количество
+       END OF ty_result.
+
+DATA:
+     go_ce_engine TYPE REF TO cl_gui_chart_engine,
+     go_container TYPE REF TO cl_gui_docking_container,
+     gv_xstr      TYPE XSTRING,
+     gv_length    TYPE I,
+     gt_rawtab    TYPE w3mimetabtype,
+     gt_result    TYPE STANDARD TABLE OF ty_result.
+
+FIELD-SYMBOLS: &lt;fs_line&gt; TYPE spfli.
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Основная логика программы
+*&amp;---------------------------------------------------------------------*
+
+INITIALIZATION.
+  PERFORM get_data.
+
+  CHECK gt_result IS NOT INITIAL.
+
+  CREATE OBJECT go_container
+    EXPORTING
+      side   = cl_gui_docking_container=&gt;align_at_top
+      parent = cl_gui_container=&gt;screen0.
+
+  go_container-&gt;set_height( 999 ).
+
+  CREATE OBJECT go_ce_engine
+    EXPORTING
+      parent = go_container.
+
+  PERFORM load_data.
+  PERFORM load_customizing.
+
+  CALL METHOD go_ce_engine-&gt;render( ).
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Form load_customizing
+*&amp;---------------------------------------------------------------------*
+* Загружает внешнее описание графика
+*----------------------------------------------------------------------*
+FORM load_customizing.
+  cl_gui_frontend_services=&gt;gui_upload(
+    EXPORTING
+      filename                = 'D:\custom.xml' " Убедитесь что у вас есть настроенный шаблон для графика.
+      filetype                = 'BIN'
+    IMPORTING
+      filelength                  = gv_length
+    CHANGING
+      data_tab                = gt_rawtab
+    EXCEPTIONS
+      file_open_error         = 1
+      file_read_error         = 2
+      no_batch                = 3
+      gui_refuse_filetransfer = 4
+      invalid_type            = 5
+      no_authority            = 6
+      unknown_error           = 7
+      bad_data_format         = 8
+      header_not_allowed      = 9
+      separator_not_allowed   = 10
+      header_too_long         = 11
+      unknown_dp_error        = 12
+      access_denied           = 13
+      dp_out_of_memory        = 14
+      disk_full               = 15
+      dp_timeout              = 16
+      not_supported_by_gui    = 17
+      error_no_gui            = 18
+      OTHERS                  = 19
+  ).
+
+  go_ce_engine-&gt;set_customizing( xdata_table = gt_rawtab ).
+ENDFORM.                    "load_customizing
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Form get_data
+*&amp;---------------------------------------------------------------------*
+* Получение данных по закупаемым количествам у поставщиков.
+*----------------------------------------------------------------------*
+FORM get_data.
+  FIELD-SYMBOLS: &lt;fs_line&gt; TYPE ty_result.
+
+  DEFINE add_data.
+    APPEND INITIAL LINE TO gt_result ASSIGNING &lt;fs_line&gt;.
+    &lt;fs_line&gt;-lifnr = &amp;1.
+    &lt;fs_line&gt;-matnr = &amp;2.
+    &lt;fs_line&gt;-menge = &amp;3.
+  END-OF-DEFINITION.
+
+  add_data 'ООО Рога и Копыта' 'Елка' 10.
+  add_data 'ООО Рога и Копыта' 'Сосна' 20.
+  add_data 'ООО Рога и Копыта' 'Берёза' 30.
+  add_data 'ООО Рога и Копыта' 'Клён' 17.
+
+  add_data 'ООО ИНЛЕС' 'Елка' 15.
+  add_data 'ООО ИНЛЕС' 'Сосна' 25.
+  add_data 'ООО ИНЛЕС' 'Клён' 55.
+  add_data 'ООО ИНЛЕС' 'Берёза' 35.
+
+ENDFORM.                    "get_data
+
+*&amp;---------------------------------------------------------------------*
+*&amp; Form load_data
+*&amp;---------------------------------------------------------------------*
+* Загрузка данных в график.
+*----------------------------------------------------------------------*
+FORM load_data.
+  DATA:
+    lo_ixml               TYPE REF TO if_ixml,
+    lo_xml_doc            TYPE REF TO if_ixml_document,
+    lo_simplechartdata    TYPE REF TO if_ixml_element,
+    lo_categories         TYPE REF TO if_ixml_element,
+    lo_series             TYPE REF TO if_ixml_element,
+    lo_point              TYPE REF TO if_ixml_element,
+    lo_category           TYPE REF TO if_ixml_element,
+    lo_encoding           TYPE REF TO if_ixml_encoding,
+    lo_ixml_sf            TYPE REF TO if_ixml_stream_factory,
+    lo_ostream            TYPE REF TO if_ixml_ostream,
+    lv_xstring            TYPE XSTRING,
+    lo_value              TYPE REF TO if_ixml_element,
+    lt_materials          TYPE STANDARD TABLE OF ty_result,
+    lv_value              TYPE STRING.
+
+  FIELD-SYMBOLS: &lt;fs_line&gt; TYPE ty_result,
+                 &lt;fs_line_series&gt; TYPE ty_result.
+
+  lo_ixml = cl_ixml=&gt;create( ).
+  lo_xml_doc  = lo_ixml-&gt;create_document( ).
+  lo_ixml_sf = lo_ixml-&gt;create_stream_factory( ).
+
+  lo_encoding = lo_ixml-&gt;create_encoding( byte_order = if_ixml_encoding=&gt;co_little_endian character_set = 'utf-8' ).
+  lo_xml_doc-&gt;set_encoding( lo_encoding ).
+
+  lo_simplechartdata = lo_xml_doc-&gt;create_simple_element( NAME = 'ChartData' parent = lo_xml_doc ).
+  lo_categories = lo_xml_doc-&gt;create_simple_element( NAME = 'Categories' parent = lo_simplechartdata ).
+
+  LOOP AT gt_result ASSIGNING &lt;fs_line&gt;.
+    AT NEW lifnr.
+      lo_category = lo_xml_doc-&gt;create_simple_element( NAME = 'Category' parent = lo_categories ).
+      lo_category-&gt;if_ixml_node~set_value( &lt;fs_line&gt;-lifnr ).
+    ENDAT.
+  ENDLOOP.
+
+  SORT gt_result BY matnr.
+
+  LOOP AT gt_result ASSIGNING &lt;fs_line_series&gt;.
+    READ TABLE lt_materials WITH KEY matnr = &lt;fs_line_series&gt;-matnr TRANSPORTING NO FIELDS.
+    IF sy-subrc NE 0.
+      APPEND &lt;fs_line_series&gt; TO lt_materials.
+      lo_series = lo_xml_doc-&gt;create_simple_element( NAME = 'Series' parent = lo_simplechartdata ).
+      lo_series-&gt;set_attribute( NAME = 'label' VALUE = &lt;fs_line_series&gt;-matnr ).
+    ENDIF.
+    lo_point = lo_xml_doc-&gt;create_simple_element( NAME = 'Point' parent = lo_series ).
+    lo_value = lo_xml_doc-&gt;create_simple_element( NAME = 'Value' parent = lo_point ).
+    lv_value = &lt;fs_line_series&gt;-menge.
+    lo_value-&gt;if_ixml_node~set_value( lv_value ).
+    lo_value-&gt;set_attribute( NAME = 'type' VALUE = 'y' ).
+    lo_point-&gt;set_attribute( NAME = 'label' VALUE = lv_value ).
+  ENDLOOP.
+
+  lo_ostream = lo_ixml_sf-&gt;create_ostream_xstring( lv_xstring ).
+  lo_xml_doc-&gt;render( EXPORTING ostream = lo_ostream ).
+  go_ce_engine-&gt;set_data( xdata = lv_xstring ).
+
+ENDFORM.                    "load_data</pre><p>Для просмотра данных в XML в отладчике можно использовать просмотр переменной как XML в браузере:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/05/Безымянный.png"><img loading="lazy" class="alignnone size-full wp-image-848" title="Безымянный" src="http://abap-blog.ru/wp-content/uploads/2012/05/Безымянный.png" alt="" width="827" height="553" srcset="https://abap-blog.ru/wp-content/uploads/2012/05/Безымянный.png 827w, https://abap-blog.ru/wp-content/uploads/2012/05/Безымянный-300x200.png 300w" sizes="(max-width: 827px) 100vw, 827px" /></a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-chart-engine/">SAP Chart Engine</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-chart-engine/feed/</wfw:commentRss>
+			<slash:comments>4</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

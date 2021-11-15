@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>RFC | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/kommunikaciya/rfc/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Mon, 07 Dec 2020 20:19:01 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Распараллеливание вычислений в ABAP</title>
+		<link>https://abap-blog.ru/abap-notes/parallelnoe-vypolnenie-zadach-v-abap/</link>
+					<comments>https://abap-blog.ru/abap-notes/parallelnoe-vypolnenie-zadach-v-abap/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 27 Nov 2020 16:40:57 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5711</guid>
+
+					<description><![CDATA[<p>Распараллеливание вычислений в ABAP (не Cloud, в Cloud есть своё отдельное API) выполняется либо через aRFC (pRFC) модули, либо через фоновые задания. Подробное описание первого сценария можно почитать тут. Чтобы каждый раз не дублировать код с обработкой стандартных функций, можно воспользоваться простым фреймворком для распараллеливания. Демо программа (https://github.com/MikeSidorochkin/ABAP-Simple-Async-Framework/blob/main/zbc_async_demo.prog.abap): [crayon-618a1e2927c41691391383/] Для того чтобы распараллелить любую задачу [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/parallelnoe-vypolnenie-zadach-v-abap/">Распараллеливание вычислений в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Распараллеливание вычислений в ABAP (не Cloud, в Cloud есть своё отдельное API) выполняется либо через aRFC (pRFC) модули, либо через фоновые задания. Подробное описание первого сценария можно почитать <a href="https://sapland.ru/kb/articles/stats/uskorenie-programm-cherez-parallelinoe-programmirovanie.html">тут</a>. Чтобы каждый раз не дублировать код с обработкой стандартных функций, можно воспользоваться простым фреймворком для <a href="https://github.com/MikeSidorochkin/ABAP-Simple-Async-Framework">распараллеливания</a>.</p>
+<p>Демо программа (<a href="https://github.com/MikeSidorochkin/ABAP-Simple-Async-Framework/blob/main/zbc_async_demo.prog.abap">https://github.com/MikeSidorochkin/ABAP-Simple-Async-Framework/blob/main/zbc_async_demo.prog.abap</a>):</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  zbc_async_demo.
+
+CLASS lcl_task DEFINITION INHERITING FROM zcl_bc_async_task_base.
+  PROTECTED SECTION.
+    METHODS:
+      start REDEFINITION,
+      receive REDEFINITION.
+ENDCLASS.
+
+PARAMETERS:
+  p_s_grp TYPE rzlli_apcl DEFAULT 'parallel_generators' MATCHCODE OBJECT spta_server_group,
+  p_perc  TYPE i DEFAULT 75.
+
+SELECTION-SCREEN: SKIP.
+
+PARAMETERS:
+  p_calls TYPE i DEFAULT 20.
+
+CLASS lcl_task IMPLEMENTATION.
+  METHOD start.
+    CALL FUNCTION 'ZBC_PARALELL_TEST'
+      STARTING NEW TASK mv_task_name
+      DESTINATION IN GROUP mv_server_group
+      CALLING receive_internal ON END OF TASK
+      EXCEPTIONS
+        communication_failure = 1 MESSAGE ev_message
+        system_failure        = 2 MESSAGE ev_message
+        resource_failure      = 3
+        OTHERS                = 4.
+    ev_subrc = sy-subrc.
+  ENDMETHOD.
+
+  METHOD receive.
+    RECEIVE RESULTS FROM FUNCTION 'ZBC_PARALELL_TEST'.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA(go_timer) = cl_abap_runtime=&gt;create_hr_timer( ).
+  DATA(gv_start_time) = go_timer-&gt;get_runtime( ).
+
+  TRY.
+      DATA(go_controller) = NEW zcl_bc_async_controller( it_server_groups = VALUE #( ( CONV #( p_s_grp ) ) )
+                                                         iv_max_percent   = p_perc ).
+
+      DO p_calls TIMES.
+        go_controller-&gt;add_task( NEW lcl_task( io_controller = go_controller
+                                               iv_name       = |{ sy-index }| ) ).
+      ENDDO.
+
+      go_controller-&gt;start( ).
+    CATCH zcx_bc_async_base INTO DATA(go_exception).
+      WRITE go_exception-&gt;get_text( ).
+      STOP.
+  ENDTRY.
+
+  DATA(gt_tasks) = go_controller-&gt;get_tasks( ).
+
+  WRITE: / 'Processes started: ', p_calls.
+  ULINE.
+
+  LOOP AT gt_tasks ASSIGNING FIELD-SYMBOL(&lt;ls_task&gt;).
+    WRITE: / 'Task name: ',   &lt;ls_task&gt;-name(5) ,
+             'Start time: ',  |{ &lt;ls_task&gt;-start_time TIMESTAMP = ENVIRONMENT }|,
+             'End time: ' ,   |{ &lt;ls_task&gt;-end_time TIMESTAMP = ENVIRONMENT }|.
+  ENDLOOP.
+
+  ULINE.
+
+  DATA(gv_time) = VALUE t( ).
+  gv_time = ( go_timer-&gt;get_runtime( ) - gv_start_time ) / 1000000.
+
+  WRITE: /(50) 'Total time:', |{ gv_time TIME = USER }|.</pre><p><a href="https://abap-blog.ru/wp-content/uploads/2020/11/result.png"><img loading="lazy" class="alignnone size-full wp-image-5716" src="https://abap-blog.ru/wp-content/uploads/2020/11/result.png" alt="" width="522" height="465" srcset="https://abap-blog.ru/wp-content/uploads/2020/11/result.png 522w, https://abap-blog.ru/wp-content/uploads/2020/11/result-300x267.png 300w" sizes="(max-width: 522px) 100vw, 522px" /></a></p>
+<p>Для того чтобы распараллелить любую задачу необходимо создать RFC модуль в котором будет логика обработки некоторого блока данных, разделить массив обрабатываемых данных на пакеты/задачи и добавить их в контроллер.</p>
+<p>Распараллеливание лучше запускать с опцией относительно процентной нагрузки на группу серверов. Если все таки было задано число используемых процессов и оно больше свободных на момент запуска, контроллер будет ожидать доступности ресурсов по таймауту, количество попыток задаётся отдельно.</p>
+<p>Если не передавать процент и максимальное число процессов, программа автоматически выделит безопасное с точки зрения нагрузки на систему число ресурсов.</p><p>The post <a href="https://abap-blog.ru/abap-notes/parallelnoe-vypolnenie-zadach-v-abap/">Распараллеливание вычислений в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/parallelnoe-vypolnenie-zadach-v-abap/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Получить IP адрес по заданному RFC</title>
+		<link>https://abap-blog.ru/abap-notes/poluchit-ip-adres-po-zadannomu-rfc/</link>
+					<comments>https://abap-blog.ru/abap-notes/poluchit-ip-adres-po-zadannomu-rfc/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 17:07:17 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5681</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e292859a510525541/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-ip-adres-po-zadannomu-rfc/">Получить IP адрес по заданному RFC</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA(lv_ip) = CONV rfcdisplay-rfchost( '&lt;none&gt;' ).
+
+CALL FUNCTION 'RFC_HOST_TO_IP'
+  EXPORTING
+    rfchost                     = CONV rfcdisplay-rfchost( sy-host )
+  IMPORTING
+    rfcip                       = lv_ip
+  EXCEPTIONS
+    host_to_ip_conversion_error = 1
+    OTHERS                      = 2.
+
+IF sy-subrc = 0.
+  WRITE: / |Host: { sy-host } ({ lv_ip })|.
+ENDIF.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-ip-adres-po-zadannomu-rfc/">Получить IP адрес по заданному RFC</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/poluchit-ip-adres-po-zadannomu-rfc/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Доступ к серверу представления в фоновых процессах</title>
+		<link>https://abap-blog.ru/abap-notes/dostup-k-serveru-predstavleniya-v-fonovyx-processax/</link>
+					<comments>https://abap-blog.ru/abap-notes/dostup-k-serveru-predstavleniya-v-fonovyx-processax/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 16 Apr 2020 09:05:32 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4128</guid>
+
+					<description><![CDATA[]]></description>
+										<content:encoded><![CDATA[<style>
+                    </style>
+        	    <div id="h5vp618a1e2930cee" class="pdfp_wrapper">
+                        <div class="cta_wrapper">
+                	            <p><a href="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/RFCGUI.pdf&#038;download=true&#038;print=&#038;openfile=false"><button>View Fullscreen</button></a></p>
+            </div>
+            <div class="iframe_wrapper">
+                <iframe loading="lazy" width="100%" height="1122px" src="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/RFCGUI.pdf&#038;download=true&#038;print=&#038;openfile=false"></iframe>
+            </div>
+	    </div><p>The post <a href="https://abap-blog.ru/abap-notes/dostup-k-serveru-predstavleniya-v-fonovyx-processax/">Доступ к серверу представления в фоновых процессах</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/dostup-k-serveru-predstavleniya-v-fonovyx-processax/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

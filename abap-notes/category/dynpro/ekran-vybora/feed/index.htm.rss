@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Экран выбора | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/dynpro/ekran-vybora/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sun, 22 Nov 2020 16:53:32 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Полноэкранный контейнер на экране выбора</title>
+		<link>https://abap-blog.ru/abap-notes/polnoekrannyj-kontejner-na-ekrane-vybora/</link>
+					<comments>https://abap-blog.ru/abap-notes/polnoekrannyj-kontejner-na-ekrane-vybora/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 16:53:32 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5675</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dde7a666702239323/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/polnoekrannyj-kontejner-na-ekrane-vybora/">Полноэкранный контейнер на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: o_dock TYPE REF TO cl_gui_docking_container.
+DATA: o_salv_ida TYPE REF TO if_salv_gui_table_ida.
+
+PARAMETERS: p_name TYPE string.
+
+AT SELECTION-SCREEN OUTPUT.
+  IF NOT o_dock IS BOUND.
+    o_dock = NEW #( repid     = sy-repid
+                    dynnr     = sy-dynnr
+                    side      = cl_gui_docking_container=&gt;dock_at_bottom
+                    extension = cl_gui_docking_container=&gt;ws_maximizebox ).
+
+    o_salv_ida = cl_salv_gui_table_ida=&gt;create( iv_table_name    = 'T100'
+                                                io_gui_container = o_dock ).
+
+  ENDIF.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/polnoekrannyj-kontejner-na-ekrane-vybora/">Полноэкранный контейнер на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/polnoekrannyj-kontejner-na-ekrane-vybora/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Выбор значений из списка</title>
+		<link>https://abap-blog.ru/abap-notes/vybor-znachenij-iz-spiska/</link>
+					<comments>https://abap-blog.ru/abap-notes/vybor-znachenij-iz-spiska/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 14:11:47 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5662</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dde7ae7e215675642/] Результат:</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/vybor-znachenij-iz-spiska/">Выбор значений из списка</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">TYPES: BEGIN OF ty_sel_list,
+         l TYPE char100,
+       END OF ty_sel_list.
+ 
+TYPES: ty_it_sel_list TYPE STANDARD TABLE OF ty_sel_list WITH DEFAULT KEY.
+ 
+TYPES: ty_it_rsvbfidesc TYPE STANDARD TABLE OF rsvbfidesc WITH DEFAULT KEY.
+ 
+START-OF-SELECTION.
+ 
+  DATA(lv_ln) = 0.
+ 
+  DATA(it_sel_list) = VALUE ty_it_sel_list(
+                                            ( l = 'Feld 1' )
+                                            ( l = 'Feld 2' )
+                                            ( l = 'Feld 3' )
+                                            ( l = 'Feld 4' )
+                                            ( l = 'Feld 5' )
+                                          ).
+ 
+  DATA(it_rsvbfidesc) = VALUE ty_it_rsvbfidesc( ( fieldnum = 1 display = abap_true ) ).
+ 
+  CALL FUNCTION 'RS_VALUES_BOX'
+    EXPORTING
+      cursor_field         = 1
+      cursor_line          = 1
+      left_upper_col       = 10
+      left_upper_row       = 5
+      title                = 'Заголовок'
+    IMPORTING
+      linenumber           = lv_ln
+    TABLES
+      field_desc           = it_rsvbfidesc
+      value_tab            = it_sel_list
+    EXCEPTIONS
+      clear_contents       = 1
+      invalid_coordinates  = 2
+      invalid_field_number = 3
+      no_action            = 4
+      no_fields            = 5
+      no_markfield         = 6
+      process_user_action  = 7
+      value_tab_empty      = 8
+      value_tab_too_long   = 9
+      OTHERS               = 10.</pre><p>Результат:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/11/selectvalue.png"><img loading="lazy" class="alignnone size-full wp-image-5663" src="https://abap-blog.ru/wp-content/uploads/2020/11/selectvalue.png" alt="" width="756" height="289" srcset="https://abap-blog.ru/wp-content/uploads/2020/11/selectvalue.png 756w, https://abap-blog.ru/wp-content/uploads/2020/11/selectvalue-300x115.png 300w" sizes="(max-width: 756px) 100vw, 756px" /></a></p><p>The post <a href="https://abap-blog.ru/abap-notes/vybor-znachenij-iz-spiska/">Выбор значений из списка</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/vybor-znachenij-iz-spiska/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Выпадающий список на экране выбора</title>
+		<link>https://abap-blog.ru/abap-notes/vypadayushhij-spisok-na-ekrane-vybora/</link>
+					<comments>https://abap-blog.ru/abap-notes/vypadayushhij-spisok-na-ekrane-vybora/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 08 Jul 2020 18:18:43 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4401</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dde7b129508420153/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/vypadayushhij-spisok-na-ekrane-vybora/">Выпадающий список на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2020/07/listbox.png"><img loading="lazy" class="alignnone size-full wp-image-4402" src="https://abap-blog.ru/wp-content/uploads/2020/07/listbox.png" alt="" width="455" height="106" srcset="https://abap-blog.ru/wp-content/uploads/2020/07/listbox.png 455w, https://abap-blog.ru/wp-content/uploads/2020/07/listbox-300x70.png 300w" sizes="(max-width: 455px) 100vw, 455px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: it_cbval TYPE STANDARD TABLE OF vrm_value WITH DEFAULT KEY.
+
+PARAMETERS: p_l_lang TYPE char3 AS LISTBOX VISIBLE LENGTH 20 USER-COMMAND lb_cmd.
+
+INITIALIZATION.
+
+  it_cbval = VALUE #( ( key = 'A_1' text = 'Значение 1' )
+                      ( key = 'A_2' text = 'Значение 2' ) ).
+
+  CALL FUNCTION 'VRM_SET_VALUES'
+    EXPORTING
+      id              = 'P_L_LANG'
+      values          = it_cbval
+    EXCEPTIONS
+      id_illegal_name = 1
+      OTHERS          = 2.
+
+  IF sy-subrc = 0.
+    IF lines( it_cbval ) &gt; 0.
+      p_l_lang = 'A_1'.
+    ENDIF.
+  ENDIF.
+
+START-OF-SELECTION.
+  TRY.
+      DATA(s) = it_cbval[ key = p_l_lang ].
+
+      WRITE: / s-text.
+    CATCH cx_root.
+  ENDTRY.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/vypadayushhij-spisok-na-ekrane-vybora/">Выпадающий список на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/vypadayushhij-spisok-na-ekrane-vybora/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Использование GOS контейнера</title>
+		<link>https://abap-blog.ru/abap-notes/ispolzovanie-gos-kontejnera/</link>
+					<comments>https://abap-blog.ru/abap-notes/ispolzovanie-gos-kontejnera/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 08 Jul 2020 18:08:26 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4388</guid>
+
+					<description><![CDATA[<p>Создание toolbar-a на экране выбора: [crayon-618a1dde7b31d279979422/] Текстовый редактор в GOS контейнере: [crayon-618a1dde7b325705389037/] HTML браузер: [crayon-618a1dde7b328976644834/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/ispolzovanie-gos-kontejnera/">Использование GOS контейнера</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Создание toolbar-a на экране выбора:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/07/gos_toolbar.png"><img loading="lazy" class="alignnone size-full wp-image-4389" src="https://abap-blog.ru/wp-content/uploads/2020/07/gos_toolbar.png" alt="" width="227" height="81" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: o_cnt_gos TYPE REF TO cl_gui_gos_container.
+DATA: o_toolbar TYPE REF TO cl_gui_toolbar.
+
+CLASS lcl_events DEFINITION.
+  PUBLIC SECTION.
+
+    TYPES: ty_it_events TYPE STANDARD TABLE OF cntl_simple_event WITH DEFAULT KEY.
+
+    CLASS-METHODS:
+      on_function_selected FOR EVENT function_selected OF cl_gui_toolbar
+        IMPORTING
+            fcode.
+ENDCLASS.
+
+CLASS lcl_events IMPLEMENTATION.
+  METHOD on_function_selected.
+    MESSAGE fcode TYPE 'S'.
+  ENDMETHOD.
+ENDCLASS.
+
+PARAMETERS: p_chk1 AS CHECKBOX USER-COMMAND cmd1.
+
+INITIALIZATION.
+  o_cnt_gos = NEW #( width = 300 ).
+
+  o_toolbar = NEW #( parent       = o_cnt_gos
+                     display_mode = cl_gui_toolbar=&gt;m_mode_horizontal ).
+
+  o_toolbar-&gt;add_button( fcode     = 'BTN1'
+                         icon      = icon_open
+                         butn_type = cntb_btype_button ).
+
+  o_toolbar-&gt;add_button( fcode     = ''
+                         icon      = ''
+                         butn_type = cntb_btype_sep ).
+
+  o_toolbar-&gt;add_button( fcode     = 'BTN2'
+                         icon      = icon_system_save
+                         butn_type = cntb_btype_button ).
+
+  DATA(it_events) = VALUE lcl_events=&gt;ty_it_events( ( eventid    = cl_gui_toolbar=&gt;m_id_function_selected
+                                                      appl_event = abap_true ) ).
+
+  o_toolbar-&gt;set_registered_events( events = it_events ).
+
+  SET HANDLER lcl_events=&gt;on_function_selected FOR o_toolbar.
+
+AT SELECTION-SCREEN.
+  CASE sy-ucomm.
+    WHEN 'CMD1'.
+      o_cnt_gos-&gt;set_visible( COND abap_bool( WHEN p_chk1 = abap_true THEN abap_false ELSE abap_true ) ).
+  ENDCASE.
+
+START-OF-SELECTION.
+  WRITE: / p_chk1.</pre><p>Текстовый редактор в GOS контейнере:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/07/text_edit_gos.png"><img loading="lazy" class="alignnone size-full wp-image-4391" src="https://abap-blog.ru/wp-content/uploads/2020/07/text_edit_gos.png" alt="" width="494" height="84" srcset="https://abap-blog.ru/wp-content/uploads/2020/07/text_edit_gos.png 494w, https://abap-blog.ru/wp-content/uploads/2020/07/text_edit_gos-300x51.png 300w" sizes="(max-width: 494px) 100vw, 494px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: o_cnt_gos TYPE REF TO cl_gui_gos_container.
+DATA: o_edit TYPE REF TO cl_gui_textedit.
+
+PARAMETERS: p_test TYPE c.
+
+INITIALIZATION.
+  DATA(lv_x_metric) = cl_gui_cfw=&gt;compute_metric_from_dynp( metric = cl_gui_control=&gt;metric_pixel
+                                                            x_or_y = 'X'
+                                                            in = sy-scols ).
+
+  o_cnt_gos = NEW #( width = lv_x_metric ).
+
+  o_edit = NEW #( wordwrap_mode              = cl_gui_textedit=&gt;wordwrap_at_windowborder
+                  wordwrap_to_linebreak_mode = cl_gui_textedit=&gt;true
+                  parent                     = o_cnt_gos ).
+
+  o_edit-&gt;set_font_fixed( mode = cl_gui_textedit=&gt;true ).
+
+  o_edit-&gt;set_toolbar_mode( toolbar_mode = cl_gui_textedit=&gt;false ).
+  o_edit-&gt;set_statusbar_mode( statusbar_mode = cl_gui_textedit=&gt;false ).
+  o_edit-&gt;set_textstream( 'Testtext' ).
+
+START-OF-SELECTION.
+  IF o_edit IS BOUND.
+    DATA(lv_text) = ||.
+
+    o_edit-&gt;get_textstream( IMPORTING text = lv_text ).
+    cl_gui_cfw=&gt;flush( ).
+
+    WRITE: / lv_text.
+  ENDIF.</pre><p>HTML браузер:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2020/07/html_container.png"><img loading="lazy" class="alignnone size-full wp-image-4392" src="https://abap-blog.ru/wp-content/uploads/2020/07/html_container.png" alt="" width="531" height="86" srcset="https://abap-blog.ru/wp-content/uploads/2020/07/html_container.png 531w, https://abap-blog.ru/wp-content/uploads/2020/07/html_container-300x49.png 300w" sizes="(max-width: 531px) 100vw, 531px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: o_cnt_gos TYPE REF TO cl_gui_gos_container.
+DATA: o_html TYPE REF TO cl_gui_html_viewer.
+
+PARAMETERS: p_test TYPE c.
+
+INITIALIZATION.
+  DATA(lv_x_metric) = cl_gui_cfw=&gt;compute_metric_from_dynp( metric = cl_gui_control=&gt;metric_pixel
+                                                            x_or_y = 'X'
+                                                            in = sy-scols ).
+
+  o_cnt_gos = NEW #( width = lv_x_metric ).
+
+  o_html = NEW cl_gui_html_viewer( parent = o_cnt_gos ).
+
+  DATA(it_html) = VALUE w3_htmltab( ( '&lt;html&gt;&lt;head&gt;&lt;style&gt;body { margin: 0; background-color: #00BBCC; color: #001122; font: 18px "Courier" }&lt;/style&gt;&lt;/head&gt;' )
+                                    ( '&lt;body&gt;Test&lt;/body&gt;&lt;/html&gt;' ) ).
+  DATA: lv_url TYPE swk_url.
+
+  o_html-&gt;load_data( IMPORTING
+                      assigned_url = lv_url
+                    CHANGING
+                      data_table   = it_html ).
+
+  o_html-&gt;show_url( lv_url ).
+
+START-OF-SELECTION.
+  WRITE: / p_test.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/ispolzovanie-gos-kontejnera/">Использование GOS контейнера</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/ispolzovanie-gos-kontejnera/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Считать значения с экрана выбора</title>
+		<link>https://abap-blog.ru/abap-notes/poluchit-vse-znacheniya-s-ekrana-vybora/</link>
+					<comments>https://abap-blog.ru/abap-notes/poluchit-vse-znacheniya-s-ekrana-vybora/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 12 Apr 2020 14:41:38 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4076</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dde7b57c841748332/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-vse-znacheniya-s-ekrana-vybora/">Считать значения с экрана выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">TABLES:
+  sflight.
+
+SELECT-OPTIONS: so_carr FOR sflight-carrid.
+
+START-OF-SELECTION.
+  DATA:
+    lt_seltab TYPE STANDARD TABLE OF rsparams.
+
+  CALL FUNCTION 'RS_REFRESH_FROM_SELECTOPTIONS'
+    EXPORTING
+      curr_report     = sy-repid
+    TABLES
+      selection_table = lt_seltab
+    EXCEPTIONS
+      OTHERS          = 0.
+
+  cl_demo_output=&gt;display( lt_seltab ).</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-vse-znacheniya-s-ekrana-vybora/">Считать значения с экрана выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/poluchit-vse-znacheniya-s-ekrana-vybora/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Ограничение SELECT-OPTIONS</title>
+		<link>https://abap-blog.ru/abap-notes/ogranichenie-parametrov-na-ekrane-vybora/</link>
+					<comments>https://abap-blog.ru/abap-notes/ogranichenie-parametrov-na-ekrane-vybora/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 12 Apr 2020 14:32:58 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4074</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dde7b733159110711/] Либо воспользоваться обёрткой.</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/ogranichenie-parametrov-na-ekrane-vybora/">Ограничение SELECT-OPTIONS</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">TABLES:
+  sflight.
+
+SELECT-OPTIONS: so_carr FOR sflight-carrid.
+
+INITIALIZATION.
+  CALL FUNCTION 'SELECT_OPTIONS_RESTRICT'
+    EXPORTING
+      restriction = VALUE sscr_restrict( opt_list_tab = VALUE #( ( name = 'KEY1' options = VALUE #( eq = abap_true ) ) )
+                                         ass_tab      = VALUE #( ( name = 'SO_CARR' kind = 'S' sg_main = 'I' op_main = 'KEY1' ) ) )
+    EXCEPTIONS
+      OTHERS      = 0.</pre><p>Либо воспользоваться <a href="https://github.com/MikeSidorochkin/selectionscreencontroller">обёрткой</a>.</p><p>The post <a href="https://abap-blog.ru/abap-notes/ogranichenie-parametrov-na-ekrane-vybora/">Ограничение SELECT-OPTIONS</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/ogranichenie-parametrov-na-ekrane-vybora/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Ручной запуск СП</title>
+		<link>https://abap-blog.ru/abap-notes/ruchnoj-zapusk-sp/</link>
+					<comments>https://abap-blog.ru/abap-notes/ruchnoj-zapusk-sp/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 12 Apr 2020 09:04:28 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4056</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dde7b8dd444346415/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/ruchnoj-zapusk-sp/">Ручной запуск СП</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS:
+  p_carrid TYPE s_carrid.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_carrid.
+  DATA:
+    ls_shlp_descr TYPE shlp_descr,
+    lv_rc         LIKE sy-subrc,
+    lt_values     TYPE STANDARD TABLE OF ddshretval.
+
+  CALL FUNCTION 'F4IF_GET_SHLP_DESCR'
+    EXPORTING
+      shlpname = 'S_CARRIER_ID'
+      shlptype = 'SH'
+    IMPORTING
+      shlp     = ls_shlp_descr.
+
+  ls_shlp_descr-interface[ shlpfield = 'CARRID': ]-valfield = abap_true,
+                                                 ]-value    = 'AA'.
+
+  CALL FUNCTION 'F4IF_START_VALUE_REQUEST'
+    EXPORTING
+      shlp          = ls_shlp_descr
+      disponly      = abap_false
+      maxrecords    = 0
+      multisel      = space
+    IMPORTING
+      rc            = lv_rc
+    TABLES
+      return_values = lt_values.
+
+  p_carrid = VALUE #( lt_values[ fieldname = 'CARRID' ]-fieldval OPTIONAL ).</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/ruchnoj-zapusk-sp/">Ручной запуск СП</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/ruchnoj-zapusk-sp/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ALV на экране выбора</title>
+		<link>https://abap-blog.ru/abap-notes/alv-na-ekrane-vybora/</link>
+					<comments>https://abap-blog.ru/abap-notes/alv-na-ekrane-vybora/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 11 Apr 2020 15:09:56 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4036</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dde7ba90844336379/] Альтернативным вариантом может быть использование подэкранов.</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/alv-na-ekrane-vybora/">ALV на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2020/04/selscreen.png"><img loading="lazy" class="alignnone size-full wp-image-4039" src="https://abap-blog.ru/wp-content/uploads/2020/04/selscreen.png" alt="" width="1392" height="337" srcset="https://abap-blog.ru/wp-content/uploads/2020/04/selscreen.png 1392w, https://abap-blog.ru/wp-content/uploads/2020/04/selscreen-300x73.png 300w, https://abap-blog.ru/wp-content/uploads/2020/04/selscreen-1024x248.png 1024w, https://abap-blog.ru/wp-content/uploads/2020/04/selscreen-768x186.png 768w" sizes="(max-width: 1392px) 100vw, 1392px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">TABLES: sflight.
+
+CLASS lcl_report DEFINITION.
+  PUBLIC SECTION.
+    DATA: mt_data   TYPE STANDARD TABLE OF sflight,
+          r_carrid TYPE RANGE OF sflight-carrid.
+    METHODS:
+      get_data,
+      generate_output.
+ENDCLASS.
+
+DATA: lo_report TYPE REF TO lcl_report.
+
+SELECTION-SCREEN: BEGIN OF BLOCK blk1 WITH FRAME TITLE aaa.
+SELECT-OPTIONS: s_carrid FOR sflight-carrid.
+SELECTION-SCREEN: END   OF BLOCK blk1.
+
+INITIALIZATION.
+  aaa = 'Критерии выбора'.
+  CREATE OBJECT lo_report.
+  lo_report-&gt;generate_output( ).
+
+START-OF-SELECTION.
+  lo_report-&gt;r_carrid = s_carrid[].
+  lo_report-&gt;get_data( ).
+
+CLASS lcl_report IMPLEMENTATION.
+
+  METHOD get_data.
+    SELECT * FROM sflight INTO TABLE me-&gt;mt_data WHERE carrid IN s_carrid.
+    IF sy-dbcnt IS INITIAL.
+      MESSAGE s398(00) WITH 'По заданным критериям данных нет'.
+    ENDIF.
+
+    EXPORT data = me-&gt;mt_data TO MEMORY ID sy-cprog.
+  ENDMETHOD.
+
+  METHOD generate_output.
+    IMPORT data = me-&gt;mt_data FROM MEMORY ID sy-cprog.
+    FREE MEMORY ID sy-cprog.
+
+    CHECK me-&gt;mt_data IS NOT INITIAL.
+    DATA(lo_dock) = NEW cl_gui_docking_container( repid = sy-cprog
+                                                  dynnr = sy-dynnr
+                                                  ratio = 80
+                                                  side  = cl_gui_docking_container=&gt;dock_at_bottom
+                                                  name  = 'DOCK_CONT' ).
+    cl_salv_table=&gt;factory(
+      EXPORTING
+        list_display   = if_salv_c_bool_sap=&gt;false
+        r_container    = CAST #( lo_dock )
+        container_name = 'DOCK_CONT'
+      IMPORTING
+        r_salv_table   = DATA(lo_alv)
+      CHANGING
+        t_table        = me-&gt;mt_data ).
+
+    lo_alv-&gt;get_functions( )-&gt;set_all( abap_true ).
+    lo_alv-&gt;display( ).
+  ENDMETHOD.
+ENDCLASS.</pre><p>Альтернативным вариантом может быть использование <a href="https://abap-blog.ru/sap-dynpro/sozdanie-podekrana-na-ekrane-vybora/">подэкранов</a>.</p><p>The post <a href="https://abap-blog.ru/abap-notes/alv-na-ekrane-vybora/">ALV на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/alv-na-ekrane-vybora/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Не сохранять значения при возврате</title>
+		<link>https://abap-blog.ru/abap-notes/ne-soxranyat-znacheniya-pri-vozvrate/</link>
+					<comments>https://abap-blog.ru/abap-notes/ne-soxranyat-znacheniya-pri-vozvrate/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 11 Apr 2020 14:58:35 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4034</guid>
+
+					<description><![CDATA[<p>Когда пользователь возвращается на экран выбора, данные которые были уже введены ранее сохраняются, для того чтобы экран выбора не сохранял введенные значения можно воспользоваться следующим кодом: [crayon-618a1dde7bc57963569391/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/ne-soxranyat-znacheniya-pri-vozvrate/">Не сохранять значения при возврате</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Когда пользователь возвращается на экран выбора, данные которые были уже введены ранее сохраняются, для того чтобы экран выбора не сохранял введенные значения можно воспользоваться следующим кодом:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS:
+  p_dummy.
+
+START-OF-SELECTION.
+  ASSIGN ('(RSDBRUNT)MEMKEY-INT_MODE') TO FIELD-SYMBOL(&lt;lv_int_mode&gt;).
+  IF &lt;lv_int_mode&gt; IS ASSIGNED.
+    &lt;lv_int_mode&gt; = '01'.
+  ENDIF.
+
+  WRITE p_dummy.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/ne-soxranyat-znacheniya-pri-vozvrate/">Не сохранять значения при возврате</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/ne-soxranyat-znacheniya-pri-vozvrate/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Генератор экрана выбора</title>
+		<link>https://abap-blog.ru/abap-notes/generator-ekrana-vybora/</link>
+					<comments>https://abap-blog.ru/abap-notes/generator-ekrana-vybora/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 11 Apr 2020 14:44:38 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4030</guid>
+
+					<description><![CDATA[<p>[crayon-618a1dde7bdf8951640027/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/generator-ekrana-vybora/">Генератор экрана выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">TABLES: sflight.
+
+START-OF-SELECTION.
+  cl_ci_query_attributes=&gt;generic(
+    EXPORTING
+      p_name       = CONV #( sy-repid )
+      p_title      = 'Экран выбора'
+      p_attributes = VALUE #( ( ref = REF #( sflight-carrid ) kind = ' ' text = 'Airline code' obligatory = abap_true ) )
+      p_display    = abap_false ).</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/generator-ekrana-vybora/">Генератор экрана выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/generator-ekrana-vybora/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

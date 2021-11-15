@@ -1,0 +1,787 @@
+    
+<!DOCTYPE html>
+<html>
+<head>
+                            <title>Character encoding conversion - ABAP Development - Community Wiki</title>
+    
+        
+
+                        
+    
+                        
+    
+
+                
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE,chrome=IE7">
+<meta charset="UTF-8">
+<meta id="confluence-context-path" name="confluence-context-path" content="/wiki">
+<meta id="confluence-base-url" name="confluence-base-url" content="https://wiki.scn.sap.com/wiki">
+
+    <meta id="atlassian-token" name="atlassian-token" content="e288ae89a415b947cac88171248dba8119be8dad">
+
+
+<meta id="confluence-space-key" name="confluence-space-key" content="ABAP">
+<script type="text/javascript">
+        var contextPath = '/wiki';
+</script>
+
+    
+
+    <meta name="confluence-request-time" content="1636442889518">
+        
+    
+        
+            <style>.ia-fixed-sidebar, .ia-splitter-left {width: 285px;}.theme-default .ia-splitter #main {margin-left: 285px;}.ia-fixed-sidebar {visibility: hidden;}</style>
+            <meta name="ajs-use-keyboard-shortcuts" content="true">
+            <meta name="ajs-discovered-plugin-features" content="$discoveredList">
+            <meta name="ajs-keyboardshortcut-hash" content="c5ed35e18a787aee9028bc0e9f6ed5c7">
+            
+    
+    
+            <meta name="ajs-page-title" content="Character encoding conversion">
+            <meta name="ajs-latest-published-page-title" content="Character encoding conversion">
+            <meta name="ajs-space-name" content="ABAP Development">
+            <meta name="ajs-page-id" content="142344682">
+            <meta name="ajs-latest-page-id" content="142344682">
+            <meta name="ajs-content-type" content="page">
+            <meta name="ajs-parent-page-title" content="ABAP and Unicode home page">
+            <meta name="ajs-parent-page-id" content="142344356">
+            <meta name="ajs-space-key" content="ABAP">
+            <meta name="ajs-max-number-editors" content="12">
+            <meta name="ajs-macro-placeholder-timeout" content="5000">
+            <meta name="ajs-jira-metadata-count" content="-1">
+            <meta name="ajs-from-page-title" content="">
+            <meta name="ajs-can-remove-page" content="false">
+            <meta name="ajs-can-remove-page-hierarchy" content="false">
+            <meta name="ajs-browse-page-tree-mode" content="view">
+            <meta name="ajs-shared-drafts" content="true">
+            <meta name="ajs-context-path" content="/wiki">
+            <meta name="ajs-base-url" content="https://wiki.scn.sap.com/wiki">
+            <meta name="ajs-version-number" content="7.4.13">
+            <meta name="ajs-build-number" content="8402">
+            <meta name="ajs-remote-user" content="">
+            <meta name="ajs-remote-user-key" content="">
+            <meta name="ajs-remote-user-has-licensed-access" content="false">
+            <meta name="ajs-remote-user-has-browse-users-permission" content="false">
+            <meta name="ajs-current-user-fullname" content="">
+            <meta name="ajs-current-user-avatar-url" content="">
+            <meta name="ajs-current-user-avatar-uri-reference" content="/wiki/images/icons/profilepics/anonymous.svg">
+            <meta name="ajs-static-resource-url-prefix" content="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_">
+            <meta name="ajs-global-settings-attachment-max-size" content="5242880">
+            <meta name="ajs-global-settings-quick-search-enabled" content="true">
+            <meta name="ajs-user-locale" content="en_US">
+            <meta name="ajs-enabled-dark-features" content="site-wide.shared-drafts,site-wide.synchrony,clc.quick.create,confluence.view.edit.transition,cql.search.screen,confluence-inline-comments-resolved,http.session.registrar,frontend.editor.v4,nps.survey.inline.dialog,confluence.efi.onboarding.new.templates,frontend.editor.v4.compatibility,atlassian.cdn.static.assets,pdf-preview,previews.sharing,previews.versions,file-annotations,collaborative-audit-log,confluence.efi.onboarding.rich.space.content,previews.conversion-service,editor.ajax.save,graphql,read.only.mode,notification.plugin.api.enabled.com.atlassian.confluence.plugins.inlinecomments.events.InlineCommentReplyEvent,previews.trigger-all-file-types,notification.plugin.api.enabled.com.atlassian.confluence.plugins.inlinecomments.events.InlineCommentCreateEvent,lucene.caching.filter,attachment.extracted.text.extractor,confluence.table.resizable,notification.batch,previews.sharing.pushstate,confluence-inline-comments-rich-editor,site-wide.synchrony.opt-in,file-annotations.likes,gatekeeper-ui-v2,v2.content.name.searcher,mobile.supported.version,pulp,pulp.disable,confluence-inline-comments,quick-reload-inline-comments-flags,confluence-inline-comments-dangling-comment">
+            <meta name="ajs-atl-token" content="e288ae89a415b947cac88171248dba8119be8dad">
+            <meta name="ajs-confluence-flavour" content="VANILLA">
+            <meta name="ajs-user-date-pattern" content="dd MMM yyyy">
+            <meta name="ajs-access-mode" content="READ_WRITE">
+            <meta name="ajs-render-mode" content="READ_WRITE">
+            <meta name="ajs-date.format" content="MMM dd, yyyy">
+    
+    <link rel="shortcut icon" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/favicon.ico">
+
+<link rel="search" type="application/opensearchdescription+xml" href="/wiki/opensearch/osd.action" title="Community Wiki"/>
+    
+                    
+            
+
+    <script>
+window.WRM=window.WRM||{};window.WRM._unparsedData=window.WRM._unparsedData||{};window.WRM._unparsedErrors=window.WRM._unparsedErrors||{};
+WRM._unparsedData["com.atlassian.plugins.atlassian-plugins-webresource-plugin:context-path.context-path"]="\u0022\u005C/wiki\u0022";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-feature-discovery-plugin:confluence-feature-discovery-plugin-resources.test-mode"]="false";
+WRM._unparsedData["com.atlassian.analytics.analytics-client:policy-update-init.policy-update-data-provider"]="false";
+WRM._unparsedData["com.atlassian.analytics.analytics-client:programmatic-analytics-init.programmatic-analytics-data-provider"]="false";
+WRM._unparsedData["com.atlassian.confluence.plugins.synchrony-interop:synchrony-status-banner-loader.synchrony-status"]="false";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-license-banner:confluence-license-banner-resources.license-details"]="{\u0022daysBeforeLicenseExpiry\u0022:0,\u0022daysBeforeMaintenanceExpiry\u0022:0,\u0022showLicenseExpiryBanner\u0022:false,\u0022showMaintenanceExpiryBanner\u0022:false,\u0022renewUrl\u0022:null,\u0022salesUrl\u0022:null}";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-search-ui-plugin:confluence-search-ui-plugin-resources.i18n-data"]="{\u0022search.ui.recent.link.text\u0022:\u0022View more recently visited\u0022,\u0022search.ui.filter.space.category.input.label\u0022:\u0022Find space categories...\u0022,\u0022search.ui.filter.clear.selected\u0022:\u0022Clear selected items\u0022,\u0022search.ui.search.results.empty\u0022:\u0022We couldn\u005Cu0027\u005Cu0027t find anything matching \u005C\u0022{0}\u005C\u0022.\u0022,\u0022search.ui.content.name.search.items.panel.load.all.top.items.button.text\u0022:\u0022Show more app results...\u0022,\u0022search.ui.filter.space.archive.label\u0022:\u0022Search archived spaces\u0022,\u0022search.ui.filter.label\u0022:\u0022filter\u0022,\u0022search.ui.filter.contributor.button.text\u0022:\u0022Contributor\u0022,\u0022search.ui.filter.date.all.text\u0022:\u0022Any time\u0022,\u0022search.ui.filter.space.current.label\u0022:\u0022CURRENT\u0022,\u0022search.ui.clear.input.button.text\u0022:\u0022Clear text\u0022,\u0022help.search.ui.link.title\u0022:\u0022Search tips\u0022,\u0022search.ui.search.results.clear.button\u0022:\u0022clear your filters.\u0022,\u0022search.ui.filter.date.hour.text\u0022:\u0022The past day\u0022,\u0022search.ui.filters.heading\u0022:\u0022Filter by\u0022,\u0022search.ui.filter.label.input.label\u0022:\u0022Find labels...\u0022,\u0022search.ui.filter.date.month.text\u0022:\u0022The past month\u0022,\u0022search.ui.recent.items.anonymous\u0022:\u0022Start exploring. Your search results will appear here.\u0022,\u0022search.ui.input.label\u0022:\u0022Search\u0022,\u0022search.ui.search.result\u0022:\u0022{0,choice,1#{0} search result|1\u005Cu003c{0} search results}\u0022,\u0022search.ui.infinite.scroll.button.text\u0022:\u0022More results\u0022,\u0022search.ui.filter.date.button.text\u0022:\u0022Date\u0022,\u0022search.ui.filter.date.week.text\u0022:\u0022The past week\u0022,\u0022search.ui.filter.label.button.text\u0022:\u0022Label\u0022,\u0022search.ui.input.alert\u0022:\u0022Hit enter to search\u0022,\u0022search.ui.filter.no.result.text\u0022:\u0022We can\u005Cu0027\u005Cu0027t find anything matching your search\u0022,\u0022search.ui.result.subtitle.calendar\u0022:\u0022Team calendar\u0022,\u0022search.ui.filter.date.heading\u0022:\u0022Last modified within\u0022,\u0022search.ui.result.subtitle.user\u0022:\u0022User profile\u0022,\u0022search.ui.filter.contributor.input.label\u0022:\u0022Find people...\u0022,\u0022search.ui.filter.content.type.button.text\u0022:\u0022Type\u0022,\u0022search.ui.filter.space.input.label\u0022:\u0022Find spaces...\u0022,\u0022search.ui.filter.date.year.text\u0022:\u0022The past year\u0022,\u0022search.ui.filter.space.button.text\u0022:\u0022Space\u0022,\u0022search.ui.advanced.search.link.text\u0022:\u0022Advanced search\u0022,\u0022search.ui.generic.error\u0022:\u0022Something went wrong. Refresh the page, or contact your admin if this keeps happening.\u0022,\u0022search.ui.recent.spaces\u0022:\u0022Recent Spaces\u0022,\u0022search.ui.search.results.clear.line2\u0022:\u0022Try a different search term or\u0022,\u0022search.ui.filter.space.category.button.text\u0022:\u0022Space category\u0022,\u0022search.ui.search.results.clear.line1\u0022:\u0022We couldn\u005Cu0027\u005Cu0027t find anything matching your search.\u0022,\u0022search.ui.content.name.search.items.panel.load.all.top.items.admin.button.text\u0022:\u0022Show more settings and app results...\u0022,\u0022search.ui.recent.pages\u0022:\u0022Recently visited\u0022,\u0022search.ui.search.result.anonymous\u0022:\u0022{0,choice,1#{0} search result|1\u005Cu003c{0} search results}. Have an account? {1}Log in{2} to expand your search.\u0022,\u0022search.ui.recent.items.empty\u0022:\u0022Start exploring. Pages and spaces you\u005Cu0027\u005Cu0027ve visited recently will appear here.\u0022,\u0022search.ui.result.subtitle.space\u0022:\u0022Space\u0022,\u0022search.ui.filter.space.init.heading\u0022:\u0022recent spaces\u0022}";
+if(window.WRM._dataArrived)window.WRM._dataArrived();</script>
+<link type="text/css" rel="stylesheet" href="/wiki/s/64ff51b4494ddb6bd56f0bfb38c6b9ff-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/f93a1c81170760ac4fb7da71531851a9/_/download/contextbatch/css/_super/batch.css" data-wrm-key="_super" data-wrm-batch-type="context" media="all">
+<link type="text/css" rel="stylesheet" href="/wiki/s/9cfe6a86c8aace4efbeb10b6197b9db8-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/77b47d3dd1530069bc51cf3bb414587a/_/download/contextbatch/css/atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super/batch.css?gatekeeper-ui-v2=true&amp;highlightactions=true&amp;hostenabled=true" data-wrm-key="atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super" data-wrm-batch-type="context" media="all">
+<link type="text/css" rel="stylesheet" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/styles/colors.css" media="all">
+<link type="text/css" rel="stylesheet" href="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/39/_/styles/custom.css" media="all">
+<script type="text/javascript" src="/wiki/s/d4c8a0219030d0420604e8b5bb5c236d-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/f93a1c81170760ac4fb7da71531851a9/_/download/contextbatch/js/_super/batch.js?locale=en-US" data-wrm-key="_super" data-wrm-batch-type="context" data-initially-rendered></script>
+<script type="text/javascript" src="/wiki/s/6e3ff1bc8c546b9f23f36ba9d36e0716-CDN/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/77b47d3dd1530069bc51cf3bb414587a/_/download/contextbatch/js/atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super/batch.js?gatekeeper-ui-v2=true&amp;highlightactions=true&amp;hostenabled=true&amp;locale=en-US" data-wrm-key="atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super" data-wrm-batch-type="context" data-initially-rendered></script>
+
+    
+
+        
+    
+
+        
+        <meta name="ajs-site-title" content="Community Wiki" />
+            
+    <!-- Hide page exports on UI for anonymous users, backend restriction implemented in plugin
+    https://github.wdf.sap.corp/confluence/plugin-restrict-anonymous-actions/wiki/Documentation -->
+<!-- EWU-518 Limit/Hide the Space List in the Dashboard for Guest users out of the box -->
+<script type="text/javascript">
+    AJS.toInit(function(){
+        if (AJS.params.remoteUser == ''){
+        /* Hide page exports on UI for anonymous users*/
+          AJS.$('#action-export-pdf-link').hide();
+          AJS.$('#action-export-word-link').hide();
+
+          /* EWU-518 */
+          AJS.$('#sidebar-spaces').hide();
+        }
+    });
+</script>
+
+<!--  WDS-148 Integrate Wiki with Adobe Launch. -->
+<script src="//assets.adobedtm.com/ccc66c06b30b/563843cfec4a/launch-d6d38849b49d.min.js" async></script>
+
+    
+                <link rel="canonical" href="https://wiki.scn.sap.com/wiki/display/ABAP/Character+encoding+conversion">
+        <link rel="shortlink" href="https://wiki.scn.sap.com/wiki/x/6gF8C">
+    <meta name="wikilink" content="[ABAP:Character encoding conversion]">
+    <meta name="page-version" content="6">
+    <meta name="ajs-page-version" content="6">
+
+</head>
+
+    
+<body      id="com-atlassian-confluence" class="theme-default  aui-layout aui-theme-default">
+
+        
+            <div id='stp-licenseStatus-banner'></div>
+    <ul id="assistive-skip-links" class="assistive">
+    <li><a href="#title-heading">Skip to content</a></li>
+    <li><a href="#breadcrumbs">Skip to breadcrumbs</a></li>
+    <li><a href="#header-menu-bar">Skip to header menu</a></li>
+    <li><a href="#navigation">Skip to action menu</a></li>
+    <li><a href="#quick-search-query">Skip to quick search</a></li>
+</ul>
+<div id="page">
+<div id="full-height-container">
+    <div id="header-precursor">
+        <div class="cell">
+            <div style="background-color:#f6f6f6;">
+<center>
+<!-- Put your site header text here, make sure tags are symmetric -->
+</center>
+</div>
+                            </div>
+    </div>
+        
+
+
+
+
+
+<header id="header" role="banner">
+    <nav class="aui-header aui-dropdown2-trigger-group" role="navigation"><div class="aui-header-inner"><div class="aui-header-primary"><h1 id="logo" class="aui-header-logo aui-header-logo-custom"><a href="/wiki/"><img src="/wiki/download/attachments/389939204/atl.site.logo?version=1&amp;modificationDate=1574179418000&amp;api=v2" alt="Community Wiki" /><span class="aui-header-logo-text">Community Wiki</span></a></h1><ul class="aui-nav">
+                            <li>
+            
+        
+        
+<a  id="space-directory-link" href="/wiki/spacedirectory/view.action"  class=" aui-nav-imagelink"   title="Spaces">
+            <span>Spaces</span>
+    </a>
+        </li>
+                                <li class="aui-buttons">
+            </li>
+</ul>
+</div><div class="aui-header-secondary"><ul class="aui-nav">
+                        <li>
+        <div id="search-ui" class="aui-quicksearch dont-default-focus header-quicksearch"><input id="quick-search-query" aria-label="Search" placeholder="Search" type="text" /><div id="quick-search-alert" role="alert">Hit enter to search</div><aui-spinner size="small"></aui-spinner></div>
+    </li>
+        <li>
+            
+        <a id="help-menu-link" class="aui-nav-link aui-dropdown2-trigger aui-dropdown2-trigger-arrowless" href="#" aria-haspopup="true" aria-owns="help-menu-link-content" title="Help">
+        <span class="aui-icon aui-icon-small aui-iconfont-question-filled">Help</span>
+    </a>
+    <nav id="help-menu-link-content" class="aui-dropdown2 aui-style-default" aria-hidden="true">
+                    <div class="aui-dropdown2-section">
+                                <ul  id="help-menu-link-leading" class="aui-list-truncate section-leading first">
+                                            <li>
+        
+            
+<a  id="confluence-help-link" href="https://docs.atlassian.com/confluence/docs-74/" class="    "      title="Visit the Confluence documentation home"  target="_blank"
+>
+        Online Help
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="keyboard-shortcuts-link" href="/wiki" class="    "      title="View available keyboard shortcuts" >
+        Keyboard Shortcuts
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="feed-builder-link" href="/wiki/dashboard/configurerssfeed.action" class="    "      title="Create your custom RSS feed." >
+        Feed Builder
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="whats-new-menu-link" href="https://confluence.atlassian.com/display/DOC/Confluence+7.4+Release+Notes" class="    "      title="" >
+        What’s new
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="confluence-about-link" href="/wiki/aboutconfluencepage.action" class="    "      title="Get more information about Confluence" >
+        About Confluence
+</a>
+</li>
+                                    </ul>
+            </div>
+            </nav>
+    
+    </li>
+        <li>
+                
+    
+    </li>
+        <li>
+            
+    </li>
+        <li>
+                                            <li>
+        
+            
+<a  id="login-link" href="/wiki/login.action?os_destination=%2Fdisplay%2FABAP%2FCharacter%2Bencoding%2Bconversion%3Foriginal_fqdn%3Dwiki.sdn.sap.com" class="   user-item login-link "      title="" >
+        Log in
+</a>
+</li>
+                        
+    </li>
+    </ul>
+</div></div><!-- .aui-header-inner--></nav><!-- .aui-header -->
+    <br class="clear">
+</header>
+    
+
+    
+    	<div class="ia-splitter">
+    		<div class="ia-splitter-left">
+    			<div class="ia-fixed-sidebar">
+                                            
+                            <div class="acs-side-bar ia-scrollable-section"><div class="acs-side-bar-space-info tipsy-enabled" data-configure-tooltip="Edit space details"><div class="avatar"><div class="space-logo" data-key="ABAP" data-name="ABAP Development" data-entity-type="confluence.space"><div class="avatar-img-container"><div class="avatar-img-wrapper"><a href="/wiki/display/ABAP/ABAP+Development" title="ABAP Development"><img class="avatar-img" src="/wiki/download/attachments/389939204/global.logo?version=8&amp;modificationDate=1574181442000&amp;api=v2" alt="ABAP Development"></a></div></div></div></div><div class="space-information-container"><div class="name"><a href="/wiki/display/ABAP/ABAP+Development" title="ABAP Development">ABAP Development</a></div><div class="flyout-handle icon aui-icon aui-icon-small aui-iconfont-edit"></div></div></div><div class="acs-side-bar-content"><div class="acs-nav-wrapper"><div class="acs-nav" data-has-create-permission="false" data-quick-links-state="hide" data-page-tree-state="hide" data-nav-type="pages"><div class="acs-nav-sections"><div class="main-links-section "><ul class="acs-nav-list"><li class="acs-nav-item wiki current-item" data-collector-key="spacebar-pages"><a class="acs-nav-item-link tipsy-enabled" href="/wiki/collector/pages.action?key=ABAP" data-collapsed-tooltip="Pages"><span class="icon"></span><span class="acs-nav-item-label">Pages</span></a></li></ul></div></div></div></div><div class="ia-secondary-container tipsy-enabled" data-tree-type="pages"></div></div><div class="hidden"><a href="/wiki/collector/pages.action?key=ABAP" id="space-pages-link"></a><script type="text/x-template" title="logo-config-content"><h2>Space Details</h2><div class="personal-space-logo-hint">Your profile picture is used as the logo for your personal space. <a href="/wiki/users/profile/editmyprofilepicture.action" target="_blank">Change your profile picture</a>.</div></script></div></div><div class="space-tools-section"><div id="space-tools-menu-additional-items" class="hidden"><div data-label="Browse pages" data-class="" data-href="/wiki/pages/reorderpages.action?key=ABAP">Browse pages</div></div><button id="space-tools-menu-trigger"  class=" aui-dropdown2-trigger aui-button aui-button-subtle tipsy-enabled aui-dropdown2-trigger-arrowless " aria-controls="space-tools-menu" aria-haspopup="true" role="button" data-aui-trigger><span class="aui-icon aui-icon-small aui-iconfont-configure">Configure</span><span class="aui-button-label">Space tools</span><span class="aui-icon "></span></button><div id="space-tools-menu" class="aui-dropdown2 aui-style-default space-tools-dropdown" role="menu" aria-hidden="true" data-aui-alignment="top left"><div role="application"></div></div><a class="expand-collapse-trigger aui-icon aui-icon-small aui-iconfont-chevron-double-right"></a></div>
+                    
+                        			</div>
+    		</div>
+        <!-- \#header -->
+
+            
+    
+        <div id="main" class=" aui-page-panel">
+                        <div id="main-header">
+                        
+    <div id="navigation" class="content-navigation view">
+                    <ul class="ajs-menu-bar">
+                                            
+        <li class="normal ajs-menu-item">
+        <a id="action-menu-link" class="action aui-dropdown2-trigger-arrowless aui-button aui-button-subtle ajs-menu-title aui-dropdown2-trigger" href="#" aria-haspopup="true" aria-label="More options" aria-owns="action-menu" data-container="#navigation">
+            <span>
+                                    <span class="aui-icon aui-icon-small aui-iconfont-more" aria-label="More options"></span>
+                                
+            </span>
+        </a>         <div id="action-menu" class="aui-dropdown2 aui-style-default" aria-hidden="true">
+                            <div class="aui-dropdown2-section">
+                    <ul  id="action-menu-primary"                         class="section-primary first">
+                                                    <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-attachments-link" href="/wiki/pages/viewpageattachments.action?pageId=142344682" rel="nofollow" class="action-view-attachments"  accessKey="t"  title="View Attachments" >
+                        <span>
+                                A<u>t</u>tachments (0)
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-view-history-link" href="/wiki/pages/viewpreviousversions.action?pageId=142344682" rel="nofollow" class="action-view-history"   title="" >
+                        <span>
+                                Page History
+            </span>        </a>
+    </li>
+                                        </ul>
+                </div>
+                            <div class="aui-dropdown2-section">
+                    <ul  id="action-menu-secondary"                         class="section-secondary">
+                                                    <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-page-info-link" href="/wiki/pages/viewinfo.action?pageId=142344682" rel="nofollow" class="action-view-info"   title="" >
+                        <span>
+                                Page Information
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-resolved-comments" href="/wiki" rel="nofollow" class=""   title="" >
+                        <span>
+                                Resolved comments
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="view-in-hierarchy-link" href="/wiki/pages/reorderpages.action?key=ABAP&amp;openId=142344682#selectedPageInHierarchy" rel="nofollow" class=""   title="" >
+                        <span>
+                                View in Hierarchy
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-view-source-link" href="/wiki/plugins/viewsource/viewpagesrc.action?pageId=142344682" rel="nofollow" class="action-view-source popup-link"   title="" >
+                        <span>
+                                View Source
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-export-pdf-link" href="/wiki/spaces/flyingpdf/pdfpageexport.action?pageId=142344682" rel="nofollow" class=""   title="" >
+                        <span>
+                                Export to PDF
+            </span>        </a>
+    </li>
+                                                <li>
+
+    
+        
+    
+                                                        
+    
+    
+            <a  id="action-export-word-link" href="/wiki/exportword?pageId=142344682" rel="nofollow" class="action-export-word"   title="" >
+                        <span>
+                                Export to Word
+            </span>        </a>
+    </li>
+                                        </ul>
+                </div>
+                    </div>
+    </li>
+            </ul>
+    </div>
+
+            
+            <div id="title-heading" class="pagetitle with-breadcrumbs">
+                
+                                    <div id="breadcrumb-section">
+                        
+    
+    
+    <ol id="breadcrumbs">
+                                        
+                        
+        <li class="first" >
+                        
+                            <span class=""><a href="/wiki/collector/pages.action?key=ABAP">Dashboard</a></span>
+                                                                                    
+                        
+        <li>
+                        
+                            <span class=""><a href="/wiki/display/ABAP/ABAP+Foundation">ABAP Foundation</a></span>
+                                                                                    
+                        
+        <li>
+                        
+                            <span class=""><a href="/wiki/display/ABAP/ABAP+and+Unicode+home+page">ABAP and Unicode home page</a></span>
+                                                                    </ol>
+
+
+                    </div>
+                
+                
+        <a href="#page-banner-end" class="assistive">Skip to end of banner</a>
+<div id="page-banner-start" class="assistive"></div>
+
+                    
+            <div id="page-metadata-banner"><ul class="banner"><li id="system-content-items" class="noprint"><a href="" title="Unrestricted" id="content-metadata-page-restrictions-hidden" class="hidden"></a></li><li class="page-metadata-item noprinthas-button"  id="content-metadata-jira-wrapper"><a href="" title="" id="content-metadata-jira" class="aui-button aui-button-subtle content-metadata-jira tipsy-disabled hidden"><span>Jira links</span></a></li></ul></div>
+            
+
+<a href="#page-banner-start" class="assistive">Go to start of banner</a>
+<div id="page-banner-end" class="assistive"></div>
+    
+
+                <h1 id="title-text" class="with-breadcrumbs">
+                                                <a href="/wiki/display/ABAP/Character+encoding+conversion">Character encoding conversion</a>
+                                    </h1>
+            </div>
+        </div><!-- \#main-header -->
+        
+        
+
+        <div id="sidebar-container">
+                                                </div><!-- \#sidebar-container -->
+
+        
+    
+
+        
+
+
+
+
+            
+    
+
+                                
+    
+
+    
+    
+        
+    
+    
+                    
+    
+
+    
+
+    
+            
+        
+
+    
+    
+
+    
+            
+        
+
+
+
+    
+<div id="content" class="page view">
+    
+
+
+<div id="action-messages">
+                        </div>
+
+
+
+            <script type="text/x-template" title="searchResultsGrid">
+    <table class="aui">
+        <thead>
+            <tr class="header">
+                <th class="search-result-title">Page Title</th>
+                <th class="search-result-space">Space</th>
+                <th class="search-result-date">Updated</th>
+            </tr>
+        </thead>
+    </table>
+</script>
+<script type="text/x-template" title="searchResultsGridCount">
+    <p class="search-result-count">{0}</p>
+</script>
+<script type="text/x-template" title="searchResultsGridRow">
+    <tr class="search-result">
+        <td class="search-result-title"><a href="{1}" class="content-type-{2}"><span>{0}</span></a></td>
+        <td class="search-result-space"><a class="space" href="/wiki/display/{4}/" title="{3}">{3}</a></td>
+        <td class="search-result-date"><span class="date" title="{6}">{5}</span></td>
+    </tr>
+</script>
+        
+    
+            
+
+        
+                            
+    
+
+                    
+
+        
+        <a href="#page-metadata-end" class="assistive">Skip to end of metadata</a>
+<div id="page-metadata-start" class="assistive"></div>
+
+    <div class="page-metadata">
+        <ul>
+            <li class="page-metadata-modification-info">
+                
+        
+    
+        
+    
+        
+            
+            Created by <span class='author'>     <a href="    /wiki/display/~c0cbtrx
+"
+                       class="url fn"
+                            >Sandra Rossi</a></span>, last modified on <a class='last-modified' title='Show changes' href='/wiki/pages/diffpagesbyversion.action?pageId=142344682&amp;selectedPageVersions=5&amp;selectedPageVersions=6'>Jan 31, 2018</a>
+                </li>
+        </ul>
+    </div>
+
+
+<a href="#page-metadata-start" class="assistive">Go to start of metadata</a>
+<div id="page-metadata-end" class="assistive"></div>
+
+        
+                                            
+        <div id="main-content" class="wiki-content">
+                           
+        <p>SAP provides the CCC converter program to convert characters from an encoding to another one.</p><p><strong>Table of contents</strong></p><p><div class="toc-macro client-side-toc-macro  conf-macro output-block" data-headerelements="H1,H2,H3,H4,H5,H6,H7" data-hasbody="false" data-macro-name="toc"> </div></p><h1 id="Characterencodingconversion-Characterencoding(akacodepage)">Character encoding (aka code page)</h1><p><strong>Character encoding</strong> is a name (&quot;utf-8&quot;, &quot;iso-8859-1&quot;, etc.) and an equivalence table with a set of characters and octet values for each of these characters.</p><p><strong>Code page</strong> is the name that SAP uses instead of character encoding. Code pages have a 4-digit number instead of a character name.</p><h2 id="Characterencodingconversion-EquivalencesbetweenCharacterencodinginternationalnameandSAPcodepagenumber">Equivalences between Character encoding international name and SAP code page number</h2><p>Some SAP programs expect:</p><ul><li>either a 4 characters code: you then have to enter the SAP code page number<ul><li>You may find the SAP code page number from the international character encoding name by calling <a href="/wiki/display/ABAP/SCP_CODEPAGE_BY_EXTERNAL_NAME">SCP_CODEPAGE_BY_EXTERNAL_NAME</a> function module. Or you may look at TCP00A database table.</li></ul></li><li>or a 20 characters code: usually, you may either enter character encoding or SAP code page. Usually character encoding case is ignored.</li></ul><p>Examples of a few equivalences:</p><div class="table-wrap"><table class="wrapped confluenceTable"><colgroup><col/><col/></colgroup><tbody><tr><th class="confluenceTh"><p>SAP code page</p></th><th class="confluenceTh"><p>Character encoding international name</p></th></tr><tr><td class="confluenceTd"><p>124</p></td><td class="confluenceTd"><p>IBM EBCDIC 00697/00297</p></td></tr><tr><td class="confluenceTd"><p>1100</p></td><td class="confluenceTd"><p>iso-8859-1</p></td></tr><tr><td class="confluenceTd"><p>1105</p></td><td class="confluenceTd"><p>US-ASCII (7 bits)</p></td></tr><tr><td class="confluenceTd"><p>1160</p></td><td class="confluenceTd"><p>windows-1252</p></td></tr><tr><td class="confluenceTd"><p>4102</p></td><td class="confluenceTd"><p>utf-16be</p></td></tr><tr><td class="confluenceTd"><p>4103</p></td><td class="confluenceTd"><p>utf-16le</p></td></tr><tr><td class="confluenceTd"><p>4110</p></td><td class="confluenceTd"><p>utf-8</p></td></tr><tr><td class="confluenceTd"><p>8000</p></td><td class="confluenceTd"><p>Shift-JIS</p></td></tr><tr><td class="confluenceTd"><p>8300</p></td><td class="confluenceTd"><p>BIG5</p></td></tr></tbody></table></div><h1 id="Characterencodingconversion-UsualproblemswithCharacterencodingconversion">Usual problems with Character encoding conversion</h1><ul><li>Converting from one code page to another may be not possible for all characters of the source code page, because they do not exist in the target codepage.<ul><li>For example, converting from big5 (Chinese) to us-ascii makes no sense. If you think that it should be possible, then you probably didn't choose the right .</li><li>In that case, we have to provide a replacement character to the CCC converter</li></ul></li><li>Sequence of bytes is not recognized as a character in the source code page. It means that:<ul><li>either the sender program does not respect the code page (then ask the sender program to correct the error)</li><li>or you should choose another code page (sometimes, differences between code pages are very little)</li><li>or your program has erroneously shortened input bytes, last input byte(s) does mean nothing.</li><li>For example, the 2 only bytes D8 00 mean nothing in utf-16le: 2 following bytes are expected to be able to identify the character (here encoded on 4 bytes).</li></ul></li></ul><h1 id="Characterencodingconversion-HowtocalltheCCCconverter">How to call the CCC converter</h1><p>CCC converter is a kernel program which may be accessed by several programs:</p><ul><li><a href="https://help.sap.com/http.svc/rc/abapdocu_751_index_htm/7.51/en-US/index.htm?file=abencl_abap_codepage.htm" class="external-link" rel="nofollow">CL_ABAP_CODEPAGE</a> class, available since 7.02. The code page cannot be the SAP number, it must be either the &quot;<span style="color: rgb(51,51,51);text-decoration: none;">Character encoding international name</span>&quot;, or the name as used in java language.</li><li>CL_ABAP_CONV_* classes, since 6.10, where <a href="/wiki/display/ABAP/CL_ABAP_CONV_OBJ">CL_ABAP_CONV_OBJ</a> is the master class which gives full access to CCC converter. There are also these classes which call CCC converter with default values:<ul><li><a href="/wiki/display/ABAP/CL_ABAP_CONV_IN_CE">CL_ABAP_CONV_IN_CE</a>: converts bytes representing characters in a given codepage into a character or string variable</li><li><a class="unresolved" href="#">CL_ABAP_CONV_OUT_CE</a>: converts a character or string variable into bytes representing characters in a given codepage</li><li><a class="unresolved" href="#">CL_ABAP_CONV_X2X_CE</a>: converts bytes representing characters in a given codepage, into bytes representing characters in another given codepage</li></ul></li><li><a class="unresolved" href="#">SCP_TRANSLATE_CHARS</a> function module, works with all releases</li></ul><p>Note: CCC stands for Character set Conversion Cache, a memory area where SAP stores the code pages it needs for conversions.</p><h1 id="Characterencodingconversion-Links">Links</h1><ul><li><a href="https://www.sdn.sap.com/irj/scn/weblogs?blog=/pub/wlg/620" class="external-link" rel="nofollow">SDN blog - BSP - a Developer's Journal: Part VII - Dealing with multiple languages (English, German, Spanish, Thai, and Polish), by Thomas Jung</a></li><li><a href="/wiki/display/ABAP/What+is+Unicode">What is Unicode</a></li><li><a href="/wiki/display/ABAP/Unicode+Transformation+Format">Unicode Transformation Format</a></li><li>SAP library:<ul><li><a href="http://help.sap.com/saphelp_nw70/helpdata/EN/74/13453cc7f35d0ee10000000a11405a/frameset.htm" class="external-link" rel="nofollow">Internationalization</a></li><li><a href="http://help.sap.com/saphelp_nw70/helpdata/EN/62/3f2cb0b35311d5993800508b6b8b11/frameset.htm" class="external-link" rel="nofollow">Character codes</a>: short explanation of character encoding</li><li><a href="http://help.sap.com/saphelp_nw70/helpdata/EN/74/13453cc7f35d0ee10000000a11405a/frameset.htm" class="external-link" rel="nofollow">Data conversion</a>: short explanation of conversion possibilities in ABAP</li></ul></li></ul>
+
+                
+        
+    
+        </div>
+
+                        
+    
+
+
+
+<div id="labels-section" class="pageSection group">
+    <div class="labels-section-content content-column" entityid="142344682" entitytype="page">
+	<div class="labels-content">
+		
+    <ul class="label-list label-list-right ">
+            <li class="no-labels-message">
+            No labels
+        </li>
+            </ul>
+
+    </div>
+</div>
+</div>
+        
+		
+            
+
+
+
+
+            
+        
+
+
+
+
+
+
+
+
+                        
+    
+<div id="comments-section" class="pageSection group">
+                <div class="section-header">
+            <h2 id="comments-section-title" class="section-title">
+                                    3 Comments
+                            </h2>
+        </div>
+    
+    
+
+            <ol class="comment-threads top-level" id="page-comments">
+                    <li id="comment-thread-373064873" class="comment-thread">
+        <div class="comment  " id="comment-373064873">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: juxbp2u" title="juxbp2u">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <span class="unknown-user">Former Member</span></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p> </p><p>Very helpful! Thanks again Sandra!</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/Character+encoding+conversion?focusedCommentId=373064873#comment-373064873"
+                 id="comment-permalink-373064873"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Apr 16, 2014 16:16" href="/wiki/display/ABAP/Character+encoding+conversion?focusedCommentId=373064873#comment-373064873"
+                                    ><span>Apr 16, 2014</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-473957835" class="comment-thread">
+        <div class="comment  " id="comment-473957835">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: 9974qqqa" title="9974qqqa">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <a href="    /wiki/display/~9974qqqa
+"
+                       class="url fn"
+                            >Paolo Baruffaldi</a></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Extremely helpful!</p><p>Thanks Sandra Rossi</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/Character+encoding+conversion?focusedCommentId=473957835#comment-473957835"
+                 id="comment-permalink-473957835"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Aug 24, 2017 14:14" href="/wiki/display/ABAP/Character+encoding+conversion?focusedCommentId=473957835#comment-473957835"
+                                    ><span>Aug 24, 2017</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+                    <li id="comment-thread-523997734" class="comment-thread">
+        <div class="comment  " id="comment-523997734">
+        <p class="comment-user-logo">
+            <img class="userLogo logo anonymous" src="/wiki/s/ur37w0/8402/45c55aec607bd3c0b24eb377ecd790d998a06033/_/images/icons/profilepics/anonymous.svg"
+               alt="User icon: afnkfhy" title="afnkfhy">        </p>
+        <div class="comment-header">
+            <h4 class="author">    <a href="    /wiki/display/~afnkfhy
+"
+                       class="url fn"
+                            >Marco SILVA</a></h4>
+        </div>
+        <div class="comment-body">
+            <div class="comment-content wiki-content">
+                <p>Hi Sandra,</p><p>Thank you for this blog!</p><p>I'm trying to create a file in encoding &quot;ISO-8859-15&quot;, which should work for example for € (EUR) character, but at the end I get a file in &quot;Windows-1252&quot; encoding and displaying wrong those special characters...</p><p>Any clue about what can be wrong?</p><p>Best regards,<br/>Marco Silva</p>
+            </div>
+            <div class="comment-actions">
+                                                <ul class="comment-actions-secondary">
+                                                              <li class="first comment-permalink"><a title="Permanent link to this comment" href="/wiki/display/ABAP/Character+encoding+conversion?focusedCommentId=523997734#comment-523997734"
+                 id="comment-permalink-523997734"                     ><span>Permalink</span></a></li>
+            </ul>
+                                    <ul class="comment-actions-primary">
+                                                              <li class="first comment-date"><a title="Aug 09, 2019 16:20" href="/wiki/display/ABAP/Character+encoding+conversion?focusedCommentId=523997734#comment-523997734"
+                                    ><span>Aug 09, 2019</span></a></li>
+            </ul>
+                </div>
+        </div>
+    </div>
+
+    
+    </li>
+            </ol>
+
+
+</div>
+        
+
+
+                
+    
+            
+</div>
+
+    
+
+    
+
+
+
+
+    
+    
+
+    
+    
+    
+
+
+    
+<div id="space-tools-web-items" class="hidden">
+                <div data-label="Overview" data-href="/wiki/spaces/viewspacesummary.action?key=ABAP">Overview</div>
+            <div data-label="Content Tools" data-href="/wiki/pages/reorderpages.action?key=ABAP">Content Tools</div>
+    </div>
+        
+
+
+
+            </div><!-- \#main -->
+            
+    
+    
+        
+            
+            
+
+<div id="footer" role="contentinfo">
+    <section class="footer-body">
+
+                                                    
+        
+
+        <ul id="poweredby">
+            <li class="noprint">Powered by <a href="http://www.atlassian.com/software/confluence" class="hover-footer-link" rel="nofollow">Atlassian Confluence</a> <span id='footer-build-information'>7.4.13</span></li>
+            <li class="print-only">Printed by Atlassian Confluence 7.4.13</li>
+            <li class="noprint"><a href="https://support.atlassian.com/help/confluence" class="hover-footer-link" rel="nofollow">Report a bug</a></li>
+            <li class="noprint"><a href="https://www.atlassian.com/company" class="hover-footer-link" rel="nofollow">Atlassian News</a></li>
+        </ul>
+
+        
+
+        <div id="footer-logo"><a href="http://www.atlassian.com/" rel="nofollow">Atlassian</a></div>
+
+                    <div class="sap-footer" >
+	<ul id="sap-footer-links">
+        <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+        <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+        <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+        <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+        <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+    </ul>
+</div>
+        
+    </section>
+</div>
+
+    
+</div>
+
+</div><!-- \#full-height-container -->
+</div><!-- \#page -->
+
+    <span style="display:none;" id="confluence-server-performance">{"serverDuration": 113, "requestCorrelationId": "8722331000e94eb0"}</span>
+</body>
+</html>
+    

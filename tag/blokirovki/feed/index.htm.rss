@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>enqueue dequeue | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/blokirovki/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:51:04 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Заблокировать запуск программы</title>
+		<link>https://abap-blog.ru/others/run-block/</link>
+					<comments>https://abap-blog.ru/others/run-block/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 03 Jan 2012 13:33:30 +0000</pubDate>
+				<category><![CDATA[Прочее]]></category>
+		<category><![CDATA[enqueue dequeue]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=57</guid>
+
+					<description><![CDATA[<p>Бывают случаи когда необходимо заблокировать программу на выполнение, чтобы пользователи не могли одновременно с ней работать, один из самых простых способов сделать это воспользоваться системой блокировок, а конкретно функцией ENQUEUE_ESINDX. &#8230; [crayon-618a1eaf95017377805512/]</p>
+<p>The post <a href="https://abap-blog.ru/others/run-block/">Заблокировать запуск программы</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Бывают случаи когда необходимо заблокировать программу на выполнение, чтобы пользователи не могли одновременно с ней работать, один из самых простых способов сделать это воспользоваться системой блокировок, а конкретно функцией <strong>ENQUEUE_ESINDX.</strong></p>
+<p><span id="more-57"></span></p>
+<p>&#8230;</p><pre class="urvanov-syntax-highlighter-plain-tag">START-OF-SELECTION.
+  DATA: repid TYPE INDX_SRTFD.
+  repid = sy-repid.
+  CALL FUNCTION 'ENQUEUE_ESINDX'
+    EXPORTING
+      relid = 'ZZ'
+      srtfd = repid
+      srtf2 = 0.
+
+  WAIT UP TO 10 SECONDS.
+  WRITE 'Программа запущена'.</pre><p></p><p>The post <a href="https://abap-blog.ru/others/run-block/">Заблокировать запуск программы</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/others/run-block/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

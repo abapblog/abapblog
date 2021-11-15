@@ -1,0 +1,494 @@
+﻿<!DOCTYPE html>
+<html lang="ru-RU" id="html">
+<head>
+		<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="profile" href="../../xfn/11.html">
+	<link rel="pingback" href="https://abap-blog.ru/xmlrpc.php">
+	<title>ABAP Blog | Абстрактный класс или интерфейс, что и когда использовать</title>
+
+		<!-- All in One SEO 4.1.4.4 -->
+		<meta name="description" content="Рекомендации по выбору между использованием абстрактного класса и интерфейсами.">
+		<meta name="robots" content="max-image-preview:large">
+		<meta name="keywords" content="основы abap">
+		<link rel="canonical" href="index.htm">
+		<script type="application/ld+json" class="aioseo-schema">
+			{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebSite","@id":"https:\/\/abap-blog.ru\/#website","url":"https:\/\/abap-blog.ru\/","name":"ABAP Blog","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445 \u043e\u0442 SAP","inLanguage":"ru-RU","publisher":{"@id":"https:\/\/abap-blog.ru\/#person"}},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/#person","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/#personImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"BreadcrumbList","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/#breadcrumblist","itemListElement":[{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/#listItem","position":1,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/","name":"\u0413\u043b\u0430\u0432\u043d\u0430\u044f","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 SAP \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445: ABAP, HANA, UI5, OData, Fiori.","url":"https:\/\/abap-blog.ru\/"},"nextItem":"https:\/\/abap-blog.ru\/osnovy-abap\/#listItem"},{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/#listItem","position":2,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/","name":"\u041e\u0441\u043d\u043e\u0432\u044b ABAP","description":"\u0420\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0446\u0438\u0438 \u043f\u043e \u0432\u044b\u0431\u043e\u0440\u0443 \u043c\u0435\u0436\u0434\u0443 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435\u043c \u0430\u0431\u0441\u0442\u0440\u0430\u043a\u0442\u043d\u043e\u0433\u043e \u043a\u043b\u0430\u0441\u0441\u0430 \u0438 \u0438\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u0430\u043c\u0438.","url":"https:\/\/abap-blog.ru\/osnovy-abap\/"},"nextItem":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/#listItem","previousItem":"https:\/\/abap-blog.ru\/#listItem"},{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/#listItem","position":3,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/","name":"\u0410\u0431\u0441\u0442\u0440\u0430\u043a\u0442\u043d\u044b\u0439 \u043a\u043b\u0430\u0441\u0441 \u0438\u043b\u0438 \u0438\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441, \u0447\u0442\u043e \u0438 \u043a\u043e\u0433\u0434\u0430 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u044c","description":"\u0420\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0446\u0438\u0438 \u043f\u043e \u0432\u044b\u0431\u043e\u0440\u0443 \u043c\u0435\u0436\u0434\u0443 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435\u043c \u0430\u0431\u0441\u0442\u0440\u0430\u043a\u0442\u043d\u043e\u0433\u043e \u043a\u043b\u0430\u0441\u0441\u0430 \u0438 \u0438\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u0430\u043c\u0438.","url":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/"},"previousItem":"https:\/\/abap-blog.ru\/osnovy-abap\/#listItem"}]},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/author\/admin\/#author","url":"https:\/\/abap-blog.ru\/author\/admin\/","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/#authorImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/#webpage","url":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/","name":"ABAP Blog | \u0410\u0431\u0441\u0442\u0440\u0430\u043a\u0442\u043d\u044b\u0439 \u043a\u043b\u0430\u0441\u0441 \u0438\u043b\u0438 \u0438\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441, \u0447\u0442\u043e \u0438 \u043a\u043e\u0433\u0434\u0430 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u044c","description":"\u0420\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0446\u0438\u0438 \u043f\u043e \u0432\u044b\u0431\u043e\u0440\u0443 \u043c\u0435\u0436\u0434\u0443 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435\u043c \u0430\u0431\u0441\u0442\u0440\u0430\u043a\u0442\u043d\u043e\u0433\u043e \u043a\u043b\u0430\u0441\u0441\u0430 \u0438 \u0438\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u0430\u043c\u0438.","inLanguage":"ru-RU","isPartOf":{"@id":"https:\/\/abap-blog.ru\/#website"},"breadcrumb":{"@id":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/#breadcrumblist"},"author":"https:\/\/abap-blog.ru\/author\/admin\/#author","creator":"https:\/\/abap-blog.ru\/author\/admin\/#author","datePublished":"2012-01-08T05:02:41+04:00","dateModified":"2021-03-02T05:52:12+04:00"},{"@type":"Article","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/#article","name":"ABAP Blog | \u0410\u0431\u0441\u0442\u0440\u0430\u043a\u0442\u043d\u044b\u0439 \u043a\u043b\u0430\u0441\u0441 \u0438\u043b\u0438 \u0438\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441, \u0447\u0442\u043e \u0438 \u043a\u043e\u0433\u0434\u0430 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u044c","description":"\u0420\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0446\u0438\u0438 \u043f\u043e \u0432\u044b\u0431\u043e\u0440\u0443 \u043c\u0435\u0436\u0434\u0443 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435\u043c \u0430\u0431\u0441\u0442\u0440\u0430\u043a\u0442\u043d\u043e\u0433\u043e \u043a\u043b\u0430\u0441\u0441\u0430 \u0438 \u0438\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u0430\u043c\u0438.","inLanguage":"ru-RU","headline":"\u0410\u0431\u0441\u0442\u0440\u0430\u043a\u0442\u043d\u044b\u0439 \u043a\u043b\u0430\u0441\u0441 \u0438\u043b\u0438 \u0438\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441, \u0447\u0442\u043e \u0438 \u043a\u043e\u0433\u0434\u0430 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u044c","author":{"@id":"https:\/\/abap-blog.ru\/author\/admin\/#author"},"publisher":{"@id":"https:\/\/abap-blog.ru\/#person"},"datePublished":"2012-01-08T05:02:41+04:00","dateModified":"2021-03-02T05:52:12+04:00","commentCount":5,"articleSection":"\u041e\u0441\u043d\u043e\u0432\u044b ABAP","mainEntityOfPage":{"@id":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/#webpage"},"isPartOf":{"@id":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/#webpage"},"image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/osnovy-abap\/abstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat\/#articleImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}}]}
+		</script>
+		<script type="text/javascript">
+			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+			ga('create', "UA-150412824-1", { 'cookieDomain': 'abap-blog.ru' } );
+			ga('require', 'outboundLinkTracker');
+			ga('send', 'pageview');
+		</script>
+		<script async="" src="../../analytics.js"></script>
+		<script async="" src="../../wp-content/plugins/all-in-one-seo-pack/app/Common/Assets/js/autotrack.js?ver=4.1.4.4"></script>
+		<!-- All in One SEO -->
+
+<link rel='dns-prefetch' href='../../index-1.htm'>
+<link rel='dns-prefetch' href='//fonts.googleapis.com'>
+<link rel='dns-prefetch' href='../../index-2.htm'>
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента" href="../../feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев" href="../../comments/feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев к &laquo;Абстрактный класс или интерфейс, что и когда использовать&raquo;" href="feed/index.htm.rss">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/abap-blog.ru\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8.1"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='urvanov_syntax_highlighter-css' href='../../wp-content/plugins/urvanov-syntax-highlighter/css/min/urvanov_syntax_highlighter.min.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='crayon-theme-abapblog-css' href='../../wp-content/uploads/urvanov-syntax-highlighter/themes/abapblog/abapblog.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='crayon-font-monospace-css' href='../../wp-content/plugins/urvanov-syntax-highlighter/fonts/monospace.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='wp-block-library-css' href='../../wp-includes/css/dist/block-library/style.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='arve-main-css' href='../../wp-content/plugins/advanced-responsive-video-embedder/build/main.css?ver=b809f4d4c33c91a5ae3a5099af09bdde' media='all'>
+<link rel='stylesheet' id='contact-form-7-css' href='../../wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.5.1' media='all'>
+<link rel='stylesheet' id='bg-shce-genericons-css' href='../../wp-content/plugins/show-hidecollapse-expand/assets/css/genericons/genericons.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='bg-show-hide-css' href='../../wp-content/plugins/show-hidecollapse-expand/assets/css/bg-show-hide.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='dashicons-css' href='../../wp-includes/css/dashicons.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='tooltip-css' href='../../wp-content/plugins/wp-poll/assets/tool-tip.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-cb-css' href='../../wp-content/plugins/wp-poll/assets/front/css/checkbox.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-css' href='../../wp-content/plugins/wp-poll/assets/front/css/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='flat-fonts-css' href='../../css.css?family=Lobster%7CRoboto:400,700%7CRoboto+Slab%7CRoboto%20Condensed' media='all'>
+<link rel='stylesheet' id='flat-theme-css' href='../../wp-content/themes/flat/assets/css/flat.css?ver=1.7.11' media='all'>
+<link rel='stylesheet' id='flat-style-css' href='../../wp-content/themes/flat/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='slb_core-css' href='../../wp-content/plugins/simple-lightbox/client/css/app.css?ver=2.8.1' media='all'>
+<link rel='stylesheet' id='decent-comments-widget-css' href='../../wp-content/plugins/decent-comments/css/decent-comments-widget.css' media='all'>
+<script src='../../wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script src='../../wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' id='urvanov_syntax_highlighter_js-js-extra'>
+/* <![CDATA[ */
+var UrvanovSyntaxHighlighterSyntaxSettings = {"version":"2.8.22","is_admin":"0","ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","prefix":"urvanov-syntax-highlighter-","setting":"urvanov-syntax-highlighter-setting","selected":"urvanov-syntax-highlighter-setting-selected","changed":"urvanov-syntax-highlighter-setting-changed","special":"urvanov-syntax-highlighter-setting-special","orig_value":"data-orig-value","debug":""};
+var UrvanovSyntaxHighlighterSyntaxStrings = {"copy":"\u041d\u0430\u0436\u043c\u0438\u0442\u0435 %s \u0434\u043b\u044f \u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f, %s \u0434\u043b\u044f \u0432\u0441\u0442\u0430\u0432\u043a\u0438","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/urvanov-syntax-highlighter/js/min/urvanov_syntax_highlighter.min.js?ver=2.8.22' id='urvanov_syntax_highlighter_js-js'></script>
+<script src='../../wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.7' id='regenerator-runtime-js'></script>
+<script src='../../wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
+<script async="async" src='../../wp-content/plugins/advanced-responsive-video-embedder/build/main.js?ver=b809f4d4c33c91a5ae3a5099af09bdde' id='arve-main-js'></script>
+<script src='../../wp-content/plugins/wp-poll/assets/front/js/svgcheckbx.js?ver=5.8.1' id='wpp-front-cb-js'></script>
+<script type='text/javascript' id='wpp-front-js-extra'>
+/* <![CDATA[ */
+var wpp_object = {"ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","copyText":"Copied !","voteText":"Vote(s)","tempProDownload":"https:\/\/pluginbazar.com\/my-account\/downloads\/","tempProDownloadTxt":"Download Version 1.1.0"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/wp-poll/assets/front/js/scripts.js?ver=5.8.1' id='wpp-front-js'></script>
+<script src='../../wp-content/themes/flat/assets/js/flat.js?ver=1.7.11' id='flat-js-js'></script>
+<!--[if lt IE 9]>
+<script src='https://abap-blog.ru/wp-content/themes/flat/assets/js/html5shiv.min.js?ver=3.7.2' id='html5shiv-js'></script>
+<![endif]-->
+<link rel="https://api.w.org/" href="../../wp-json/index.htm.json"><link rel="alternate" type="application/json" href="../../wp-json/wp/v2/posts/148.json"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="../../xmlrpc.php.xml?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../../wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.8.1">
+<link rel='shortlink' href='index.htm?p=148'>
+<link rel="alternate" type="application/json+oembed" href="../../wp-json/oembed/1.0/embed-366.json?url=https%3A%2F%2Fabap-blog.ru%2Fosnovy-abap%2Fabstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat%2F">
+<link rel="alternate" type="text/xml+oembed" href="../../wp-json/oembed/1.0/embed-366.xml?url=https%3A%2F%2Fabap-blog.ru%2Fosnovy-abap%2Fabstraktnyj-klass-ili-interfejs-chto-i-kogda-ispolzovat%2F&#038;format=xml">
+
+<!-- WP Youtube Player 1.7 by unijimpe -->
+<style type="text/css">#page:before, .sidebar-offcanvas, #secondary { background-color: #272727; }@media (max-width: 1199px) { #page &gt; .container { background-color: #272727; } }body { background-size: initial; }</style><style type="text/css">#masthead .site-title {font-family:Lobster}body {font-family:Roboto }h1,h2,h3,h4,h5,h6 {font-family:Roboto Slab}#masthead .site-description, .hentry .entry-meta {font-family:Roboto Condensed}</style><style type="text/css" media="screen">body{position:relative}#dynamic-to-top{display:none;overflow:hidden;width:auto;z-index:90;position:fixed;bottom:20px;right:20px;top:auto;left:auto;font-family:sans-serif;font-size:1em;color:#fff;text-decoration:none;text-shadow:0 1px 0 #333;font-weight:bold;padding:17px 16px;border:2px solid #000;background:#4c5055;-webkit-background-origin:border;-moz-background-origin:border;-icab-background-origin:border;-khtml-background-origin:border;-o-background-origin:border;background-origin:border;-webkit-background-clip:padding-box;-moz-background-clip:padding-box;-icab-background-clip:padding-box;-khtml-background-clip:padding-box;-o-background-clip:padding-box;background-clip:padding-box;-webkit-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-ms-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-moz-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-o-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-khtml-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-icab-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-webkit-border-radius:30px;-moz-border-radius:30px;-icab-border-radius:30px;-khtml-border-radius:30px;border-radius:30px}#dynamic-to-top:hover{background:#4fd650;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 255, 255, 255, .2 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );cursor:pointer}#dynamic-to-top:active{background:#4c5055;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 0, 0, 0, .3 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) )}#dynamic-to-top,#dynamic-to-top:active,#dynamic-to-top:focus,#dynamic-to-top:hover{outline:none}#dynamic-to-top span{display:block;overflow:hidden;width:14px;height:12px;background:url( ../../wp-content/plugins/dynamic-to-top/css/images/up.png )no-repeat center center}</style><style type="text/css" id="custom-background-css">
+body.custom-background { background-image: url("../../wp-content/uploads/2014/10/escheresque_ste.png"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+		</head>
+
+<body class="post-template-default single single-post postid-148 single-format-standard custom-background" itemscope="" itemtype="http://schema.org/WebPage">
+		<div id="page">
+	<div class="container">
+		<div class="row row-offcanvas row-offcanvas-left" style="background: #272727;">			
+			
+			<div id="secondary1" class="col-lg-t" style="background: #272727; display:none">
+								<header id="masthead1" class="site-headerex" role="banner">
+										<div class="hgroupex">
+						<h1 class="site-title display-title"><a href="../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+									</header>
+							</div>
+
+
+			<div id="secondary" class="col-lg-3" style="display:block">
+								<header id="masthead" class="site-header" role="banner">
+										<div class="hgroup">
+						<h1 class="site-title display-title"><a href="../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+					<button type="button" class="btn btn-link hidden-lg toggle-sidebar" data-toggle="offcanvas" aria-label="Sidebar"><i class="fa fa-gear"></i></button>
+					<button type="button" class="btn btn-link hidden-lg toggle-navigation" aria-label="Navigation Menu"><i class="fa fa-bars"></i></button>
+					<nav id="site-navigation" class="navigation main-navigation" role="navigation">
+						<ul id="menu-glavnoe-menyu" class="nav-menu"><li id="menu-item-2313" class="fa fa-home menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-2313"><a href="../../index.htm">Главная</a>
+<ul class="sub-menu">
+	<li id="menu-item-2363" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children menu-item-2363"><a href="../../category/osnovy-abap/index.htm">Основы ABAP</a>
+	<ul class="sub-menu">
+		<li id="menu-item-2906" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2906"><a href="../../category/osnovy-abap/oop/index.htm">ABAP Objects</a></li>
+		<li id="menu-item-2370" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2370"><a href="../../category/osnovy-abap/slovar/index.htm">ABAP Словарь</a></li>
+		<li id="menu-item-2367" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2367"><a href="../../category/osnovy-abap/files/index.htm">Работа с файлами</a></li>
+		<li id="menu-item-2364" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2364"><a href="../../category/osnovy-abap/sap-dynpro/index.htm">SAP Dynpro</a></li>
+		<li id="menu-item-6845" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6845"><a href="../../category/osnovy-abap/vnutrennie-tablicy/index.htm">Внутренние таблицы</a></li>
+		<li id="menu-item-6849" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6849"><a href="../../category/osnovy-abap/dinamicheskoe-programmirovanie/index.htm">Динамическое программирование</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2366" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2366"><a href="../../category/database-work/index.htm">Работа с БД</a>
+	<ul class="sub-menu">
+		<li id="menu-item-7303" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7303"><a href="../../category/hana/index.htm">HANA</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2368" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2368"><a href="../../category/network/index.htm">Сетевые технологии</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6328" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6328"><a href="../../category/network/ui5fiori/index.htm">UI5 &amp; Fiori</a></li>
+		<li id="menu-item-6327" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6327"><a href="../../category/network/odata-network/index.htm">OData</a></li>
+		<li id="menu-item-2907" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2907"><a href="../../category/network/web-dynpro/index.htm">Web Dynpro</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2369" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2369"><a href="../../category/enhancements/index.htm">Расширения</a></li>
+	<li id="menu-item-6329" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6329"><a href="../../category/abap-cloud/index.htm">ABAP Cloud</a></li>
+	<li id="menu-item-2365" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2365"><a href="../../category/others/index.htm">Прочее</a></li>
+</ul>
+</li>
+<li id="menu-item-3536" class="fa fa-bell menu-item menu-item-type-post_type menu-item-object-page menu-item-3536"><a href="../../abap-the-best-practice/index.htm">ABAP Best Practice</a></li>
+<li id="menu-item-3727" class="fa fa-child menu-item menu-item-type-post_type menu-item-object-page menu-item-3727"><a href="../../vakansii/index.htm">Вакансии ABAP</a></li>
+<li id="menu-item-3885" class="fa fa-bookmark menu-item menu-item-type-post_type menu-item-object-page menu-item-3885"><a href="../../abap-notes/index.htm">Быстрые заметки</a></li>
+<li id="menu-item-2316" class="fa fa-info-circle menu-item menu-item-type-post_type menu-item-object-page menu-item-2316"><a href="../../about/index.htm">Обо мне</a></li>
+</ul>					</nav>
+									</header>
+				
+				<div class="sidebar-offcanvas">
+<div id="main-sidebar" class="widget-area" role="complementary">
+											<aside id="search-2" class="widget widget_search">
+	<form method="get" id="searchform" action="https://abap-blog.ru/">
+		<label for="s" class="assistive-text">Поиск</label>
+		<input type="text" class="field" name="s" id="s" placeholder="Поиск">
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Поиск">
+	</form>
+					</aside>
+					<aside id="linkcat-2" class="widget widget_links">
+						<h3 class='widget-title'>Ссылки</h3>
+
+	<ul class='xoxo blogroll'>
+<li><a href="../../topics/abap.html" target="_blank">ABAP Community</a></li>
+<li><a href="../../wiki/display/ABAP/ABAP Development.html" title="Wiki по ABAP" target="_blank">ABAP Development Wiki</a></li>
+<li><a href="../../doc/abapdocu_latest_index_htm/latest/en-US/index.htm" title="Последняя версия справки по ABAP" target="_blank">ABAP Help</a></li>
+<li><a href="../../doc/abapdocu_cp_index_htm/CLOUD/en-US/index.htm" target="_blank">ABAP Help (Cloud)</a></li>
+<li><a href="../../learning-journeys/overview.html?role=Developer" target="_blank">Developer Learning Journeys</a></li>
+<li><a href="../../index-3.htm" target="_blank">Open Source Projects</a></li>
+<li><a href="../../tutorial-navigator.html" target="_blank">SAP Tutorials</a></li>
+<li><a href="https://t.me/abapblog" target="_blank"><img src="../../wp-content/uploads/2020/04/telegram-1.png" alt="Канал в Telegram"> Канал в Telegram</a></li>
+
+	</ul>
+					</aside>
+
+					<aside id="endo_wrc_widget-2" class="widget widget_endo_wrc_widget">
+						<h3 class='widget-title'>Цитаты</h3>
+<p>Самое важное правило объектно-ориентированного программирования на C++ таково: открытое наследование означает «является». Запомните это.</p>
+<p><strong>Скотт Мейерс</strong></p>
+					</aside>
+								<aside id="custom-post-type-recent-posts-3" class="widget widget_recent_entries">
+						<h3 class='widget-title'>Новое</h3>
+			<ul>
+													<li>
+										<a href="../../abap-notes/poluchenie-instancii-cl_gui_alv_grid-dlya-salv/index.htm">Получение инстанции cl_gui_alv_grid для SALV</a>
+											<span class="post-date">11.09.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-cloud/introduction-to-abap-in-the-cloud/index.htm">Introduction to ABAP in the Cloud</a>
+											<span class="post-date">18.08.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/getting-started-with-fpm-bopf-integration/index.htm">Getting Started with FPM BOPF Integration</a>
+											<span class="post-date">01.06.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/how-to-use-authority-checks-in-business-object-processing-framework/index.htm">30. How to Use Authority Checks in Business Object Processing Framework</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-extensibility/index.htm">29. BOPF Extensibility</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-enterprise-procurement-model-epm/index.htm">28. BOPF Enterprise Procurement Model (EPM)</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-integration/index.htm">27. BOPF Integration</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-business-configuration-objects/index.htm">26. BOPF Business Configuration Objects</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-performance/index.htm">25. BOPF Performance</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-supportability/index.htm">24. BOPF Supportability</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+							</ul>
+								</aside>
+					<aside id="decent_comments_widget-2" class="widget widget_decent_comments_widget">
+						<h3 class='widget-title'>Последние комментарии</h3>
+<div class="decent-comments"><ul><li><div class="comment"><span class="comment-author">Николай</span><span class="comment-date"> 27.10.2021 в 15:19</span><span class="comment-link"> на <a href="../internal-table-as-data-source-select/index.htm#comment-17857">Внутренние таблицы как источник в SQL запросах</a></span><span class="comment-excerpt">Спасибо за статью. Если нужно сделать агрегацию внутренней таблицы то агрегация через передачу во временную таблицу на БД тоже будет работать медленней чем через loop/collect? Например таблица 100к записей, которая становится 5к после агрегации. </span></div></li><li><div class="comment"><span class="comment-author">Аноним</span><span class="comment-date"> 14.10.2021 в 13:50</span><span class="comment-link"> на <a href="../oop/dekorator-decorator-wrapper/index.htm#comment-17856">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Так поведение Decorator не надо будет повторно описывать повторно в других Component. Но это возможно при изменении типа mo_component, например, на object. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 11.10.2021 в 06:50</span><span class="comment-link"> на <a href="../oop/dekorator-decorator-wrapper/index.htm#comment-17854">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет:) Возможно, я не так выразил мысль. Я имел ввиду, какая ценность от класса Decorator, если можно декорировать поведение от Component и от него же наследовать конкретные декораторы? (см. первую UML диаграмму) </span></div></li><li><div class="comment"><span class="comment-author">Astrafox</span><span class="comment-date"> 10.10.2021 в 12:39</span><span class="comment-link"> на <a href="../oop/dekorator-decorator-wrapper/index.htm#comment-17853">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет! Можно и так, однако конкретный компонент может иметь более широкий интерфейс, нежели тот, что нужен в декораторах. Тут скорее пример не совсем удачный, декорируемое поведение лучше вынести в отдельный интерфейс, реализуемый как компонентом, так и декораторами. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 04.10.2021 в 12:51</span><span class="comment-link"> на <a href="../oop/dekorator-decorator-wrapper/index.htm#comment-17850">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">А какую роль играет базовый класс декоратора lcl_decorator? Что мешает конкретные декораторы наследовать от компонента lcl_concrete_component? Клиентский код и логика выполнения не поменяется. </span></div></li></ul></div>					</aside>
+											</div>
+				</div>
+			</div>
+
+						<div id="primary" class="content-area col-lg-9" itemprop="mainContentOfPage" style="">
+							<div id="content" class="site-content" role="main" itemscope="" itemtype="http://schema.org/Article">
+			<article id="post-148" class="post-148 post type-post status-publish format-standard hentry category-osnovy-abap">
+	<header class="entry-header">
+		<h1 class="entry-title" itemprop="name">Абстрактный класс или интерфейс, что и когда использовать</h1>
+							<div class="entry-meta"><span class="entry-date"><a href="index.htm" rel="bookmark"><time class="entry-date published" datetime="2012-01-08T09:02:41+04:00" itemprop="datepublished">08.01.2012</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="index.htm#comments" itemprop="discussionUrl">5 комментариев</a></span></div>
+			</header>
+		
+	
+	<div class="entry-content" itemprop="articleBody">
+				<p>Абстрактные классы как и интерфейсы используются для одних целей. Как их применять при разработке в ABAP познакомимся в этой статье.</p>
+<p><span id="more-148"></span></p>
+<p><strong>Что такое абстрактный класс?</strong></p>
+<p>Абстрактный класс это специальный вид класса который не может иметь инстанций. Мы можем лишь создать инстанции дочернего от него класса, если он так же не является абстрактным. Абстрактный класс должен содержать по крайней мере один абстрактный метод. Абстрактные методы имеют только объявление, они не должны иметь реализацию. Кроме того мы можем создать переменные типа абстрактного класса и присвоить им инстанцию дочернего класса во время выполнения.  Пример простого абстрактного класса:</p><!-- Urvanov Syntax Highlighter v2.8.22 -->
+
+		<div id="urvanov-syntax-highlighter-618a1e9f02dbf618405215" class="urvanov-syntax-highlighter-syntax crayon-theme-abapblog urvanov-syntax-highlighter-font-monospace urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-bottom: 12px; clear: none; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="urvanov-syntax-highlighter-plain-wrap"></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a1e9f02dbf618405215-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a1e9f02dbf618405215-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a1e9f02dbf618405215-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a1e9f02dbf618405215-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a1e9f02dbf618405215-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a1e9f02dbf618405215-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a1e9f02dbf618405215-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a1e9f02dbf618405215-8">8</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a1e9f02dbf618405215-9">9</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a1e9f02dbf618405215-10">10</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a1e9f02dbf618405215-11">11</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a1e9f02dbf618405215-12">12</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a1e9f02dbf618405215-1"><span class="crayon-st">CLASS</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>base<span class="crayon-sy">_</span>functions<span class="crayon-h"> </span><span class="crayon-st">DEFINITION</span><span class="crayon-h"> </span><span class="crayon-st">ABSTRACT</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a1e9f02dbf618405215-2"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-m">PUBLIC SECTION</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a1e9f02dbf618405215-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">METHODS</span><span class="crayon-o">:</span><span class="crayon-h"> </span>set<span class="crayon-sy">_</span>my<span class="crayon-sy">_</span>name<span class="crayon-h"> </span><span class="crayon-st">ABSTRACT</span><span class="crayon-h"> </span><span class="crayon-st">IMPORTING</span><span class="crayon-h"> </span>iv<span class="crayon-sy">_</span>text<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">STRING</span><span class="crayon-h"> </span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a1e9f02dbf618405215-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">METHODS</span><span class="crayon-o">:</span><span class="crayon-h"> </span>write<span class="crayon-sy">_</span>name<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a1e9f02dbf618405215-5"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-m">PRIVATE SECTION</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a1e9f02dbf618405215-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">DATA</span><span class="crayon-o">:</span><span class="crayon-h"> </span>my<span class="crayon-sy">_</span>name<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">STRING</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a1e9f02dbf618405215-7"><span class="crayon-st">ENDCLASS</span><span class="crayon-o">.</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">"zcl_base_functions DEFINITION</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a1e9f02dbf618405215-8"><span class="crayon-c">*</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a1e9f02dbf618405215-9"><span class="crayon-st">CLASS</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>base<span class="crayon-sy">_</span>functions<span class="crayon-h"> </span><span class="crayon-st">IMPLEMENTATION</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a1e9f02dbf618405215-10"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">METHOD</span><span class="crayon-h"> </span>write<span class="crayon-sy">_</span>name<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a1e9f02dbf618405215-11"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">ENDMETHOD</span><span class="crayon-o">.</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">"write_name</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a1e9f02dbf618405215-12"><span class="crayon-st">ENDCLASS</span><span class="crayon-o">.</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">"zcl_base_functions IMPLEMENTATION</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0022 seconds] -->
+<p><strong>Что такое интерфейс?</strong></p>
+<p>Во-первых интерфейс это не класс. Это сущность не имеющая реализации. Интерфейс может содержать только объявление методов и компонентов. Компоненты интерфейса всегда находятся в общедоступном разделе (public). Чтобы изменить их видимость в дальнейшем мы можем создать класс  на основе интерфейса. Пример простого интерфейса и класса его реализующего:</p><!-- Urvanov Syntax Highlighter v2.8.22 -->
+
+		<div id="urvanov-syntax-highlighter-618a1e9f02dcc047619299" class="urvanov-syntax-highlighter-syntax crayon-theme-abapblog urvanov-syntax-highlighter-font-monospace urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-bottom: 12px; clear: none; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="urvanov-syntax-highlighter-plain-wrap"></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a1e9f02dcc047619299-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a1e9f02dcc047619299-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a1e9f02dcc047619299-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a1e9f02dcc047619299-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a1e9f02dcc047619299-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a1e9f02dcc047619299-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a1e9f02dcc047619299-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a1e9f02dcc047619299-8">8</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a1e9f02dcc047619299-9">9</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a1e9f02dcc047619299-1"><span class="crayon-st">INTERFACE</span><span class="crayon-h"> </span>zif<span class="crayon-sy">_</span>order<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a1e9f02dcc047619299-2"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">METHODS</span><span class="crayon-o">:</span><span class="crayon-h"> </span>set<span class="crayon-sy">_</span>order<span class="crayon-sy">_</span>data<span class="crayon-h"> </span><span class="crayon-st">IMPORTING</span><span class="crayon-h"> </span>iv<span class="crayon-sy">_</span>order<span class="crayon-sy">_</span>Data<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">STRING</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a1e9f02dcc047619299-3"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">METHODS</span><span class="crayon-o">:</span><span class="crayon-h"> </span>create<span class="crayon-sy">_</span>order<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a1e9f02dcc047619299-4"><span class="crayon-st">ENDINTERFACE</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a1e9f02dcc047619299-5"><span class="crayon-c">*</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a1e9f02dcc047619299-6"><span class="crayon-st">CLASS</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>sales<span class="crayon-sy">_</span>order<span class="crayon-h"> </span><span class="crayon-st">DEFINITION</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a1e9f02dcc047619299-7"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-m">PUBLIC SECTION</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a1e9f02dcc047619299-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">INTERFACES</span><span class="crayon-o">:</span><span class="crayon-h"> </span>zif<span class="crayon-sy">_</span>order<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a1e9f02dcc047619299-9"><span class="crayon-st">ENDCLASS</span><span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0008 seconds] -->
+<p>Основные отличия абстрактных классов от интерфейсов:</p>
+<ul>
+<li><strong>Множественное наследование. </strong>Мы можем использовать множественное наследование с помощью интерфейсов. ABAP не позволяет создавать класс на основе более чем одного супер класса, под супер классом имеется в виду абстрактный класс.</li>
+<li><strong>Функциональные возможности. </strong>Если мы добавим в интерфейс новый метод, все классы реализующие данный интерфейс так же должны определить этот метод, в противном случае возникнет ошибка. Для абстрактных классов если мы добавим новый не абстрактный метод, не будет необходимости его определения в наследуемых от него классах.</li>
+<li><strong>Поведение. </strong>Мы можем заранее задать определение для не абстрактных методов в абстрактном классе. Интерфейс такого не позволяет.</li>
+<li><strong>Видимость. </strong>Все компоненты интерфейса по умолчанию находятся в общедоступном разделе (public). В абстрактном классе мы можем сами задавать область видимости компонентов.</li>
+</ul>
+<p>На основе данных особенностей можно определить следующие рекомендации:</p>
+<ul>
+<li>В случае если необходимо использовать множественное наследование, надо использовать интерфейсы.</li>
+<li>В случае когда вы хотите создать заранее определенное поведение для сущности необходимо рассмотреть возможность использования абстрактного класса с не абстрактными методами. Это предаст определенную гибкость при создании наследуемого класса, т.к. некоторое го поведение уже будет определено.</li>
+<li>Если вы хотите обеспечить общую реализацию функциональности для всех наследующих компонентов используйте абстрактный класс. Абстрактные классы позволяют частично реализовать свой класс, интерфейсы нет.</li>
+<li>Интерфейсы должны использоваться для широкого круга объектов. Абстрактные классы должны быть использованы для наследуемых классов тесно связанных друг с другом.</li>
+<li>Интерфейсы должны использоваться как определения небольших функциональностей, объединяясь вместе которые задают поведение конкретному бизнес объекту.</li>
+</ul>
+<p><a title="Оригинал статьи" href="http://help-abap.zevolving.com/2012/01/abstract-class-vs-interface/" target="_blank" rel="noopener">Оригинал статьи.</a></p>
+							</div>
+		</article>
+	
+	<nav class="navigation post-navigation" role="navigation" aria-label="Записи">
+		<h2 class="screen-reader-text">Навигация по записям</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="../sap-dynpro/izmenit-gui-status-na-ekrane-vybora/index.htm" rel="prev"><span class="meta-nav" aria-hidden="true">Назад</span> <span class="screen-reader-text">Предыдущая запись:</span> <span class="post-title">Изменить GUI-статус на экране выбора</span></a></div><div class="nav-next"><a href="../peregruzka-metodov/index.htm" rel="next"><span class="meta-nav" aria-hidden="true">Далее</span> <span class="screen-reader-text">Следующая запись:</span> <span class="post-title">Перегрузка методов</span></a></div></div>
+	</nav>
+
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			<span itemprop="interactionCount">5</span> комментариев		</h2>
+
+		<ol class="comment-list">
+					<li id="comment-8" class="comment even thread-even depth-1">
+			<article id="div-comment-8" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/a488f1ad81d7a9a7f74ab761da93b2b8.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/a488f1ad81d7a9a7f74ab761da93b2b8-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn"><a href='http://net' rel='external nofollow ugc' class='url'>abaper</a></b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-8"><time datetime="2012-02-03T21:38:20+04:00">03.02.2012 в 21:38</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>интерфейс &#8212; определяет что должен уметь делать класс.<br>
+Абстрактный класс &#8212; задаёт группу классов. И почему их всё время сравнивают это принципиально разные сущности.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-1.htm?replytocom=8#respond' data-commentid="8" data-postid="148" data-belowelement="div-comment-8" data-respondelement="respond" data-replyto="Комментарий к записи abaper" aria-label='Комментарий к записи abaper'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-10" class="comment odd alt thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-10" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/b8f33dae08b3d4b4cd1a51f68a54418e.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/b8f33dae08b3d4b4cd1a51f68a54418e-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">mcloving</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-10"><time datetime="2012-02-05T15:00:32+04:00">05.02.2012 в 15:00</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>это из-за того, что в таком ужасном, но растпространённом языке, как C++ интерфейсов нет, и их возможности реализуются костылями с множественным наследованием от абстрактных класов.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-2.htm?replytocom=10#respond' data-commentid="10" data-postid="148" data-belowelement="div-comment-10" data-respondelement="respond" data-replyto="Комментарий к записи mcloving" aria-label='Комментарий к записи mcloving'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-1287" class="comment even depth-2">
+			<article id="div-comment-1287" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/e5182bb3254c8d6d84e02efd17f8e79c.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/e5182bb3254c8d6d84e02efd17f8e79c-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Alex_M_</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-1287"><time datetime="2012-10-22T23:03:54+04:00">22.10.2012 в 23:03</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Формально &#8212; интерфейс частный случай абстрактного класса (как вы уже заметили, в C++ есть множественное наследование от классов). Что именно вы считаете костылями? 🙂<br>
+Я сам давно абапер, но до сих пор считаю С++ более продуманным и элегантным языком, чем abap. Хотя в abap&#8217;е тоже есть свои прелести (RTTC, динамические Assign&#8217;ы и др.), которых нет в С++.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-3.htm?replytocom=1287#respond' data-commentid="1287" data-postid="148" data-belowelement="div-comment-1287" data-respondelement="respond" data-replyto="Комментарий к записи Alex_M_" aria-label='Комментарий к записи Alex_M_'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-17773" class="comment odd alt thread-even depth-1 parent">
+			<article id="div-comment-17773" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/f164e184ae85563b28de0a196338c271.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/f164e184ae85563b28de0a196338c271-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Alberd</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17773"><time datetime="2017-11-21T12:52:00+04:00">21.11.2017 в 12:52</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>&#171;т.к. некоторое го поведение&#187; &#8212; подразумевалось слово &#171;готовое&#187;? 🙂</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-4.htm?replytocom=17773#respond' data-commentid="17773" data-postid="148" data-belowelement="div-comment-17773" data-respondelement="respond" data-replyto="Комментарий к записи Alberd" aria-label='Комментарий к записи Alberd'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-17774" class="comment even depth-2">
+			<article id="div-comment-17774" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/47a1eb6e85596e832b844631b7c9dd09.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/47a1eb6e85596e832b844631b7c9dd09-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn"><a href='../../index.htm' rel='external nofollow ugc' class='url'>Сидорочкин Михаил</a></b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17774"><time datetime="2017-11-21T16:59:00+04:00">21.11.2017 в 16:59</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Подразумевалось его 😉</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-5.htm?replytocom=17774#respond' data-commentid="17774" data-postid="148" data-belowelement="div-comment-17774" data-respondelement="respond" data-replyto="Комментарий к записи Сидорочкин Михаил" aria-label='Комментарий к записи Сидорочкин Михаил'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		</ol>
+
+		
+		
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Добавить комментарий для <a href="#comment-8">abaper</a> <small><a rel="nofollow" id="cancel-comment-reply-link" href="index.htm#respond">Отменить ответ</a></small></h3><form action="https://abap-blog.ru/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate=""><p class="comment-notes"><span id="email-notes">Ваш адрес email не будет опубликован.</span></p><p class="comment-form-comment"><label for="comment">Комментарий</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Имя</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
+<div class="anr_captcha_field"><div id="anr_captcha_field_1" class="anr_captcha_field_div"></div></div><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Отправить комментарий"> <input type='hidden' name='comment_post_ID' value='148' id='comment_post_ID'>
+<input type='hidden' name='comment_parent' id='comment_parent' value='8'>
+</p></form>	</div><!-- #respond -->
+	
+	
+</div>
+
+			</div>
+							</div>
+					</div>
+	</div>
+</div>
+<script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"api":{"root":"https:\/\/abap-blog.ru\/wp-json\/","namespace":"contact-form-7\/v1"}};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.5.1' id='contact-form-7-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect.min.js?ver=1.12.1' id='jquery-effects-core-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-slide.min.js?ver=1.12.1' id='jquery-effects-slide-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-highlight.min.js?ver=1.12.1' id='jquery-effects-highlight-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-fold.min.js?ver=1.12.1' id='jquery-effects-fold-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-blind.min.js?ver=1.12.1' id='jquery-effects-blind-js'></script>
+<script src='../../wp-content/plugins/show-hidecollapse-expand/assets/js/bg-show-hide.js?ver=5.8.1' id='bg-show-hide-script-js'></script>
+<script src='../../wp-includes/js/comment-reply.min.js?ver=5.8.1' id='comment-reply-js'></script>
+<script src='../../wp-content/plugins/dynamic-to-top/js/libs/jquery.easing.js?ver=1.3' id='jquery-easing-js'></script>
+<script type='text/javascript' id='dynamic-to-top-js-extra'>
+/* <![CDATA[ */
+var mv_dynamic_to_top = {"text":"To Top","version":"0","min":"300","speed":"1100","easing":"easeInExpo","margin":"20"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/dynamic-to-top/js/dynamic.to.top.min.js?ver=3.5' id='dynamic-to-top-js'></script>
+<script src='../../recaptcha/api.js?render=6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC&#038;ver=3.0' id='google-recaptcha-js'></script>
+<script type='text/javascript' id='wpcf7-recaptcha-js-extra'>
+/* <![CDATA[ */
+var wpcf7_recaptcha = {"sitekey":"6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC","actions":{"homepage":"homepage","contactform":"contactform"}};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.5.1' id='wpcf7-recaptcha-js'></script>
+<script src='../../wp-includes/js/wp-embed.min.js?ver=5.8.1' id='wp-embed-js'></script>
+<script type="text/javascript" id="slb_context">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB ) { {$.extend(SLB, {"context":["public","user_guest"]});} }})})(jQuery);}/* ]]> */</script>
+			<script type="text/javascript">
+				var anr_onloadCallback = function() {
+					for ( var i = 0; i < document.forms.length; i++ ) {
+						var form = document.forms[i];
+						var captcha_div = form.querySelector( '.anr_captcha_field_div' );
+
+						if ( null === captcha_div )
+							continue;
+						captcha_div.innerHTML = '';
+						( function( form ) {
+							var anr_captcha = grecaptcha.render( captcha_div,{
+								'sitekey' : '6LfmhbAaAAAAABBrfPpMngzFHB6qZ4ATxXd3rvOR',
+								'size'  : 'normal',
+								'theme' : 'light'
+							});
+							if ( typeof jQuery !== 'undefined' ) {
+								jQuery( document.body ).on( 'checkout_error', function(){
+									grecaptcha.reset(anr_captcha);
+								});
+							}
+							if ( typeof wpcf7 !== 'undefined' ) {
+								document.addEventListener( 'wpcf7submit', function() {
+									grecaptcha.reset(anr_captcha);
+								}, false );
+							}
+						})(form);
+					}
+				};
+			</script>
+						<script src="../../recaptcha/api-1.js?onload=anr_onloadCallback&#038;render=explicit" async="" defer="">
+			</script>
+			</body>
+</html>

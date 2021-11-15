@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>CL_GOS_SERVICE | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_gos_service/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:55:21 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Generic Object Services (Часть 1 &#8212; Введение)</title>
+		<link>https://abap-blog.ru/enhancements/generic-object-services-chast-1/</link>
+					<comments>https://abap-blog.ru/enhancements/generic-object-services-chast-1/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 27 Jan 2012 04:40:57 +0000</pubDate>
+				<category><![CDATA[Расширения]]></category>
+		<category><![CDATA[CL_GOS_SERVICE]]></category>
+		<category><![CDATA[Generic Object Services]]></category>
+		<category><![CDATA[GOS]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=359</guid>
+
+					<description><![CDATA[<p>GOS – технология предоставляющая функции к разным приложениям SAP. Эти функции всегда относятся к объекту приложения, например: показывают связанные с ним файлы, запускают Workflow, добавляют заметки пользователя к объекту, отправляют его по почте. Под объектом понимается бизнес объект: материал, сбытовой заказ, закупочный заказ и т.п. (посмотреть можно в SWO1) Внешне это выглядит как кнопка на [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/enhancements/generic-object-services-chast-1/">Generic Object Services (Часть 1 — Введение)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>GOS – технология предоставляющая функции к разным приложениям SAP. Эти функции всегда относятся к объекту приложения, например: показывают связанные с ним файлы, запускают Workflow, добавляют заметки пользователя к объекту, отправляют его по почте.</p>
+<p><span id="more-359"></span></p>
+<p>Под объектом понимается бизнес объект: материал, сбытовой заказ, закупочный заказ и т.п. (посмотреть можно в SWO1) Внешне это выглядит как кнопка на панели инструментов с заголовком программы:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_1.png"><img loading="lazy" class="alignnone size-full wp-image-360" title="gos1_1" src="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_1.png" alt="" width="255" height="92" /></a></p>
+<p>Возможности GOS:</p>
+<ul>
+<li>Ввод личных и общих заметок к объекту</li>
+<li>Создание вложений к объекту (картинки, документы и т.п.)</li>
+<li>Создание связей между объектами (Например: к объекту закупочного заказа можно прикрепить все материальные документы, заявки).</li>
+<li>Показывает все Workflows, в которых используется объект, позволяет вести архивирование и запуск.</li>
+<li>Возможность отправки объекта во вложении в письме из одной SAP системы в другую</li>
+<li>Подписываться на объект, для уведомления обо всех изменениях, вносимых в него</li>
+<li>Добавлять в список фаворитов, для быстрого доступа к объекту (Система –&gt; Мои объекты).</li>
+</ul>
+<h2>Администрирование GOS</h2>
+<p>Необходимые роли для администрирования GOS: SAP_BC_SRV_GBT, SAP_BC_BMT_WFM_ADMIN and SAP_BC_SRV_ARL_ADMIN. Авторизация для работы с GOS зависит от авторизации со связанным бизнес объектом.  Если у пользователя нет полномочий на изменение бизнес объекта, те действия GOS, которые вносят какие либо изменения, так же не будут ему доступны.</p>
+<p>Все пользователи имеют доступ к общим вложениям и заметкам, но доступ на изменение заметки или вложения имеет пользователь, который их создал.  Только пользователь, который создал личную заметку, имеет возможность ее просматривать или изменять. Для ввода бизнес документов, штрих кодов должен быть настроен <a href="http://help.sap.com/saphelp_nw70/helpdata/EN/5e/566039b85f9443e10000000a114084/frameset.htm" target="_parent" rel="noopener noreferrer">ArchiveLink</a> (транзакции OAC1-5).</p>
+<p>Отправка бизнес объекта как вложения использует функциональность Business Workplace, для его настройки обратитесь к справке <a href="http://help.sap.com/saphelp_nw70/helpdata/EN/6c/69c302418d11d1896e0000e8322d00/frameset.htm" target="_parent" rel="noopener noreferrer">Administration of Send, Folder and Office Functions</a>.</p>
+<p>Отправка внешних писем использует SAPConnect, его администрирование рассматривается тут <a href="http://help.sap.com/saphelp_nw70/helpdata/EN/2b/d925bf4b8a11d1894c0000e8323c4f/frameset.htm" target="_parent" rel="noopener noreferrer">SAPconnect (BC-SRV-COM)</a>.</p>
+<p>Администрирование Workflow рассматривается тут <a href="http://help.sap.com/saphelp_nw70/helpdata/EN/b9/2a651eb04411d2b46f006094b9ea0d/frameset.htm" target="_parent" rel="noopener noreferrer">Workflow System Administration</a>.</p>
+<h3>Настройка подписки на изменения объектов</h3>
+<p>По умолчанию пользователь может подписываться на события или изменения объектов, но вы так же можете добавить и свои дополнительные события.</p>
+<p>Процедура настройки:</p>
+<ol start="1">
+<li>Перейдите в ведение ракурса таблицы SM30 – SGOSSUB</li>
+<li>Создайте новую запись и укажите:</li>
+</ol>
+<ul>
+<li>Тип объекта (BUS2012 – заказ на поставку, просмотреть можно в тр. SWO1)</li>
+<li>Событие, на которое будем подписываться (CHANGED – изменение заказа)</li>
+<li>Индикатор подписки, если она активна, ставим галочку</li>
+<li>Функциональный модуль для дополнительной проверки</li>
+<li>Заголовок письма (Объект &amp;OBJKEY&amp; был изменен &#8212; &amp;SY-DATUM&amp;, тип объекта – &amp;OBJTYP&amp;, атрибут &amp;ATTRIBUTE&amp;)</li>
+<li>Содержимое письма, в качестве стандартного содержимого используется текст SGBT_DEF_SUB.</li>
+<li>Нажмите сохранить.</li>
+</ul>
+<div><span style="line-height: 18px;"><a href="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_7.png"><img loading="lazy" class="alignnone size-full wp-image-366" title="gos1_7" src="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_7.png" alt="" width="599" height="335" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/gos1_7.png 599w, https://abap-blog.ru/wp-content/uploads/2012/01/gos1_7-300x167.png 300w" sizes="(max-width: 599px) 100vw, 599px" /></a></span></div>
+<p>После чего можно настроить уведомление на изменение бизнес объекта (заказа на закупку). Нажав на кнопку GOS -&gt; Мои объекты -&gt; Абонировать/сторнировать объект.</p>
+<h3>Добавление своего пункта меню в панель GOS</h3>
+<p>Перед добавлением своего пункта меню в GOS панель необходимо создать глобальный класс реализующий обработку события выбора данного пункта меню. Класс должен быть унаследован от CL_GOS_SERVICE. В качестве примера я создам пункт меню, при нажатии на который показывается пользователь, создавший закупочный заказ.</p>
+<ul>
+<li>Создадим наследуемый от CL_GOS_SERVICE глобальный класс ZCL_PO_USER_CHANGE. (тр. SE24).</li>
+<li>Логика обработки нажатия на наш элемент в GOS панели обрабатывается в методе EXECUTE. Необходимо переопределить метод, внести туда наш код.</li>
+</ul>
+<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: ERNAM TYPE EKKO-ERNAM.
+
+SELECT SINGLE ERNAM INTO (ernam) FROM EKKO WHERE EBELN EQ GS_LPORB-INSTID.
+IF sy-subrc EQ 0.
+  MESSAGE ernam TYPE 'I'.
+ENDIF.</pre><p></p>
+<ul>
+<li>Переопределить метод  CHECK_STATUS, для активации сервиса только для объекта BUS2012</li>
+</ul>
+<p></p><pre class="urvanov-syntax-highlighter-plain-tag">IF gs_lporb-typeid EQ 'BUS2012'.
+    ep_status = mp_status_active.
+  ELSE.
+    ep_status = mp_status_invisible.
+  ENDIF.</pre><p></p>
+<ul>
+<li>Для добавления к списку сервисов необходимо внести его через ведение в SM30 таблица SGOSATTR.</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_2.png"><img loading="lazy" class="alignnone size-full wp-image-361" title="gos1_2" src="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_2.png" alt="" width="593" height="410" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/gos1_2.png 593w, https://abap-blog.ru/wp-content/uploads/2012/01/gos1_2-300x207.png 300w" sizes="(max-width: 593px) 100vw, 593px" /></a></p>
+<ul>
+<li>После создания записи необходимо добавить ссылку на наш сервис в крайнем в очереди сервисе, в моем случае это справка к GOS (Можно вставить и по середине, для этого придется изменить 2 записи):</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_3.png"><img loading="lazy" class="alignnone size-full wp-image-362" title="gos1_3" src="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_3.png" alt="" width="592" height="414" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/gos1_3.png 592w, https://abap-blog.ru/wp-content/uploads/2012/01/gos1_3-300x209.png 300w" sizes="(max-width: 592px) 100vw, 592px" /></a></p>
+<p>Если этого не сделать сервис будет не активным. Флаг Управление означает, что при выполнении сервиса будет создан контейнер (параметр IO_CONTAINER в методе EXECUTE).</p>
+<p>В конечном итоге для GOS панели объекта BUS2012 (Закупочный заказ, тр. ME23n) мы создали пункт меню который дает нам информацию о пользователе, создавшем заказ.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_4.png"><img loading="lazy" class="alignnone size-full wp-image-363" title="gos1_4" src="http://abap-blog.ru/wp-content/uploads/2012/01/gos1_4.png" alt="" width="437" height="193" srcset="https://abap-blog.ru/wp-content/uploads/2012/01/gos1_4.png 437w, https://abap-blog.ru/wp-content/uploads/2012/01/gos1_4-300x132.png 300w" sizes="(max-width: 437px) 100vw, 437px" /></a></p><p>The post <a href="https://abap-blog.ru/enhancements/generic-object-services-chast-1/">Generic Object Services (Часть 1 — Введение)</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/enhancements/generic-object-services-chast-1/feed/</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

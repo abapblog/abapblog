@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Расширение экранов | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/rasshirenie-ekranov/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:01:00 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>ОЗМ &#8212; добавление экранов в транзакции MM01,MM02,MM03</title>
+		<link>https://abap-blog.ru/enhancements/ozm-dobavlenie-ekranov-v-tranzakcii-mm01mm02mm03/</link>
+					<comments>https://abap-blog.ru/enhancements/ozm-dobavlenie-ekranov-v-tranzakcii-mm01mm02mm03/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 20 Apr 2012 08:09:42 +0000</pubDate>
+				<category><![CDATA[Расширения]]></category>
+		<category><![CDATA[MM01]]></category>
+		<category><![CDATA[MM02]]></category>
+		<category><![CDATA[MM03]]></category>
+		<category><![CDATA[Расширение экранов]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=751</guid>
+
+					<description><![CDATA[<p>В данной статье будет показано каким образом через настройку системы можно расширить стандартные экраны ведения ОЗМ для транзакций MM01,MM02,MM03. Каких-либо BADI или Screen-exit&#8217;ов для расширения этих экранов не существует, но есть последовательность операций в SPRO благодаря которой мы можем их расширить. Далее  будет продемонстрировано как добавить дополнительный подэкран в в дополнительных данных MM01-MM03. 1. Перейдите [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/enhancements/ozm-dobavlenie-ekranov-v-tranzakcii-mm01mm02mm03/">ОЗМ — добавление экранов в транзакции MM01,MM02,MM03</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>В данной статье будет показано каким образом через настройку системы можно расширить стандартные экраны ведения ОЗМ для транзакций MM01,MM02,MM03.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM00.png"><img loading="lazy" class="alignnone size-full wp-image-771" title="OZM00" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM00.png" alt="" width="634" height="164" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM00.png 634w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM00-300x77.png 300w" sizes="(max-width: 634px) 100vw, 634px" /></a></p>
+<p><span id="more-751"></span></p>
+<p>Каких-либо BADI или Screen-exit&#8217;ов для расширения этих экранов не существует, но есть последовательность операций в <strong>SPRO</strong> благодаря которой мы можем их расширить.</p>
+<p>Далее  будет продемонстрировано как добавить дополнительный подэкран в в дополнительных данных MM01-MM03.</p>
+<p>1. Перейдите по следующему пути: SPRO -&gt; Общая логистика -&gt; Основные записи материалов -&gt; Конфигурация основных записей материалов -&gt; Создание программы для подэкранов пользователей.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM1.png"><img loading="lazy" class="alignnone size-full wp-image-752" title="OZM1" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM1.png" alt="" width="752" height="669" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM1.png 752w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM1-300x266.png 300w" sizes="(max-width: 752px) 100vw, 752px" /></a></p>
+<p>Далее система попросит указать Имя группы функций, которая будет отвечать за обработку подэкранов.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM21.png"><img loading="lazy" class="alignnone size-full wp-image-769" title="OZM2" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM21.png" alt="" width="455" height="179" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM21.png 455w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM21-300x118.png 300w" sizes="(max-width: 455px) 100vw, 455px" /></a></p>
+<p>2. Теперь необходимо определить структуру для последовательности экранов: SPRO -&gt; Общая логистика -&gt; Основные записи материалов -&gt; Конфигурация основных записей материалов -&gt; Определение структуры экранов данных по последовательностям экранов.</p>
+<p>Скопируйте последовательность &#8217;21&#8217; (правой кнопкой &#8212; скопировать как) и назовите ее например &#8216;ZZ&#8217;.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM3.png"><img loading="lazy" class="alignnone size-full wp-image-754" title="OZM3" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM3.png" alt="" width="787" height="505" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM3.png 787w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM3-300x192.png 300w" sizes="(max-width: 787px) 100vw, 787px" /></a></p>
+<p>Теперь выберите данную ZZ последовательность и перейдите на <strong>экраны данных</strong></p>
+<p>Создайте свою запись со следующим содержимым:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM4.png"><img loading="lazy" class="alignnone size-full wp-image-755" title="OZM4" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM4.png" alt="" width="1004" height="495" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM4.png 1004w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM4-300x147.png 300w" sizes="(max-width: 1004px) 100vw, 1004px" /></a></p>
+<p>Где тип экрана определяет каким он будет &#8212; основным (1) или дополнительным (2). Номер экрана подэкранов берем из любой записи доп.данных. Статус ведения определяет какие подразделения отвечают за эти данные, укажем все. Тип заголовка укажем такой же как у любой записи из доп. данных. Другое наименование экрана &#8212; тот текст который будет на закладке подэкрана.</p>
+<p>Далее переходим на подэкраны. И указываем в качестве первого &#8212; 1001 &#8212; экран содержащий номер ОЗМ и его описание. Для второй записи указываем программу группы функций созданную на первом шаге и номер экрана &#8212; 0001 (элементы на экране и логику обработки можно добавить позже).</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM51.png"><img loading="lazy" class="alignnone size-full wp-image-757" title="OZM5" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM51.png" alt="" width="669" height="459" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM51.png 669w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM51-300x205.png 300w" sizes="(max-width: 669px) 100vw, 669px" /></a></p>
+<p>3. Далее необходимо присвоить дополнительные экраны: SPRO -&gt; Общая логистика -&gt; Основные записи материалов -&gt; Конфигурация основных записей материалов -&gt; Присвоение дополнительных экранов. Выбирайте ZZ последовательность, теперь необходимо добавить наш экран к доп. экранам, для этого щелкнуть по кнопке, как показано ниже:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM6.png"><img loading="lazy" class="alignnone size-full wp-image-758" title="OZM6" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM6.png" alt="" width="632" height="525" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM6.png 632w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM6-300x249.png 300w" sizes="(max-width: 632px) 100vw, 632px" /></a></p>
+<p>4. Следующим шагом будет &#171;Ведение последовательностей основных и дополнительных экранов&#187;. Данный шаг не обязателен, вы можете указать на нем в какой последовательности будут выводится экраны.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM7.png"><img loading="lazy" class="alignnone size-full wp-image-759" title="OZM7" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM7.png" alt="" width="604" height="610" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM7.png 604w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM7-150x150.png 150w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM7-297x300.png 297w" sizes="(max-width: 604px) 100vw, 604px" /></a></p>
+<p>5. Следующим шагом мы заменим стандартную последовательность экранов &#8217;21&#8217; на нашу &#8216;ZZ&#8217;: SPRO -&gt; Общая логистика -&gt; Основные записи материалов -&gt; Конфигурация основных записей материалов -&gt; Присвоение последоват. экранов пользователям/ВидамМтр/транзакциям/отраслям.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM8.png"><img loading="lazy" class="alignnone size-full wp-image-760" title="OZM8" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM8.png" alt="" width="800" height="557" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM8.png 800w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM8-300x208.png 300w" sizes="(max-width: 800px) 100vw, 800px" /></a></p>
+<p>Таким образом мы получили следующее:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/OZM93.png"><img loading="lazy" class="alignnone size-full wp-image-764" title="OZM9" src="http://abap-blog.ru/wp-content/uploads/2012/04/OZM93.png" alt="" width="642" height="309" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/OZM93.png 642w, https://abap-blog.ru/wp-content/uploads/2012/04/OZM93-300x144.png 300w" sizes="(max-width: 642px) 100vw, 642px" /></a></p>
+<p>Где иконка с надписью это содержимое 0001 экрана в созданной группе функций.</p>
+<p>Оригинал статьи <a href="http://scn.sap.com/community/abap/blog/2012/04/20/configuring-customized-material-master--adding-sub-screens-in-mm01-mm02-mm03" target="_blank" rel="noopener">тут</a>.</p><p>The post <a href="https://abap-blog.ru/enhancements/ozm-dobavlenie-ekranov-v-tranzakcii-mm01mm02mm03/">ОЗМ — добавление экранов в транзакции MM01,MM02,MM03</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/enhancements/ozm-dobavlenie-ekranov-v-tranzakcii-mm01mm02mm03/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

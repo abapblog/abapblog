@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>selection screen | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/tag/selection-screen/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sun, 12 Apr 2020 20:26:31 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>ALV на экране выбора</title>
+		<link>https://abap-blog.ru/abap-notes/alv-na-ekrane-vybora/</link>
+					<comments>https://abap-blog.ru/abap-notes/alv-na-ekrane-vybora/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 11 Apr 2020 15:09:56 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4036</guid>
+
+					<description><![CDATA[<p>[crayon-618a1de573818526428083/] Альтернативным вариантом может быть использование подэкранов.</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/alv-na-ekrane-vybora/">ALV на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://abap-blog.ru/wp-content/uploads/2020/04/selscreen.png"><img loading="lazy" class="alignnone size-full wp-image-4039" src="https://abap-blog.ru/wp-content/uploads/2020/04/selscreen.png" alt="" width="1392" height="337" srcset="https://abap-blog.ru/wp-content/uploads/2020/04/selscreen.png 1392w, https://abap-blog.ru/wp-content/uploads/2020/04/selscreen-300x73.png 300w, https://abap-blog.ru/wp-content/uploads/2020/04/selscreen-1024x248.png 1024w, https://abap-blog.ru/wp-content/uploads/2020/04/selscreen-768x186.png 768w" sizes="(max-width: 1392px) 100vw, 1392px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">TABLES: sflight.
+
+CLASS lcl_report DEFINITION.
+  PUBLIC SECTION.
+    DATA: mt_data   TYPE STANDARD TABLE OF sflight,
+          r_carrid TYPE RANGE OF sflight-carrid.
+    METHODS:
+      get_data,
+      generate_output.
+ENDCLASS.
+
+DATA: lo_report TYPE REF TO lcl_report.
+
+SELECTION-SCREEN: BEGIN OF BLOCK blk1 WITH FRAME TITLE aaa.
+SELECT-OPTIONS: s_carrid FOR sflight-carrid.
+SELECTION-SCREEN: END   OF BLOCK blk1.
+
+INITIALIZATION.
+  aaa = 'Критерии выбора'.
+  CREATE OBJECT lo_report.
+  lo_report-&gt;generate_output( ).
+
+START-OF-SELECTION.
+  lo_report-&gt;r_carrid = s_carrid[].
+  lo_report-&gt;get_data( ).
+
+CLASS lcl_report IMPLEMENTATION.
+
+  METHOD get_data.
+    SELECT * FROM sflight INTO TABLE me-&gt;mt_data WHERE carrid IN s_carrid.
+    IF sy-dbcnt IS INITIAL.
+      MESSAGE s398(00) WITH 'По заданным критериям данных нет'.
+    ENDIF.
+
+    EXPORT data = me-&gt;mt_data TO MEMORY ID sy-cprog.
+  ENDMETHOD.
+
+  METHOD generate_output.
+    IMPORT data = me-&gt;mt_data FROM MEMORY ID sy-cprog.
+    FREE MEMORY ID sy-cprog.
+
+    CHECK me-&gt;mt_data IS NOT INITIAL.
+    DATA(lo_dock) = NEW cl_gui_docking_container( repid = sy-cprog
+                                                  dynnr = sy-dynnr
+                                                  ratio = 80
+                                                  side  = cl_gui_docking_container=&gt;dock_at_bottom
+                                                  name  = 'DOCK_CONT' ).
+    cl_salv_table=&gt;factory(
+      EXPORTING
+        list_display   = if_salv_c_bool_sap=&gt;false
+        r_container    = CAST #( lo_dock )
+        container_name = 'DOCK_CONT'
+      IMPORTING
+        r_salv_table   = DATA(lo_alv)
+      CHANGING
+        t_table        = me-&gt;mt_data ).
+
+    lo_alv-&gt;get_functions( )-&gt;set_all( abap_true ).
+    lo_alv-&gt;display( ).
+  ENDMETHOD.
+ENDCLASS.</pre><p>Альтернативным вариантом может быть использование <a href="https://abap-blog.ru/sap-dynpro/sozdanie-podekrana-na-ekrane-vybora/">подэкранов</a>.</p><p>The post <a href="https://abap-blog.ru/abap-notes/alv-na-ekrane-vybora/">ALV на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/alv-na-ekrane-vybora/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Не сохранять значения при возврате</title>
+		<link>https://abap-blog.ru/abap-notes/ne-soxranyat-znacheniya-pri-vozvrate/</link>
+					<comments>https://abap-blog.ru/abap-notes/ne-soxranyat-znacheniya-pri-vozvrate/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 11 Apr 2020 14:58:35 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4034</guid>
+
+					<description><![CDATA[<p>Когда пользователь возвращается на экран выбора, данные которые были уже введены ранее сохраняются, для того чтобы экран выбора не сохранял введенные значения можно воспользоваться следующим кодом: [crayon-618a1de573fe2081589689/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/ne-soxranyat-znacheniya-pri-vozvrate/">Не сохранять значения при возврате</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Когда пользователь возвращается на экран выбора, данные которые были уже введены ранее сохраняются, для того чтобы экран выбора не сохранял введенные значения можно воспользоваться следующим кодом:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS:
+  p_dummy.
+
+START-OF-SELECTION.
+  ASSIGN ('(RSDBRUNT)MEMKEY-INT_MODE') TO FIELD-SYMBOL(&lt;lv_int_mode&gt;).
+  IF &lt;lv_int_mode&gt; IS ASSIGNED.
+    &lt;lv_int_mode&gt; = '01'.
+  ENDIF.
+
+  WRITE p_dummy.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/ne-soxranyat-znacheniya-pri-vozvrate/">Не сохранять значения при возврате</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/ne-soxranyat-znacheniya-pri-vozvrate/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Генератор экрана выбора</title>
+		<link>https://abap-blog.ru/abap-notes/generator-ekrana-vybora/</link>
+					<comments>https://abap-blog.ru/abap-notes/generator-ekrana-vybora/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 11 Apr 2020 14:44:38 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4030</guid>
+
+					<description><![CDATA[<p>[crayon-618a1de57416f427578804/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/generator-ekrana-vybora/">Генератор экрана выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">TABLES: sflight.
+
+START-OF-SELECTION.
+  cl_ci_query_attributes=&gt;generic(
+    EXPORTING
+      p_name       = CONV #( sy-repid )
+      p_title      = 'Экран выбора'
+      p_attributes = VALUE #( ( ref = REF #( sflight-carrid ) kind = ' ' text = 'Airline code' obligatory = abap_true ) )
+      p_display    = abap_false ).</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/generator-ekrana-vybora/">Генератор экрана выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/generator-ekrana-vybora/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

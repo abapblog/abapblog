@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Web Dynpro | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/category/network/web-dynpro/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:12:44 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Адаптация WDP приложений</title>
+		<link>https://abap-blog.ru/network/web-dynpro/adaptaciya-wdp-prilozhenij/</link>
+					<comments>https://abap-blog.ru/network/web-dynpro/adaptaciya-wdp-prilozhenij/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 06 Oct 2015 08:20:24 +0000</pubDate>
+				<category><![CDATA[Web Dynpro]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2619</guid>
+
+					<description><![CDATA[<p>Следующим курсом в рамках программы «Вечерний ABAP» для меня стал курс об основах Web Dynpro – NET310. Курс рассматривает базовые понятия WDP, такие как типы контроллеров, окна, ракурсы, базовые элементы UI, приложения и взаимодействия между всеми этими объектами. Одной из самых любопытных для меня тем была возможность изменения существующих WDP приложений. Когда заходит речь об [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/network/web-dynpro/adaptaciya-wdp-prilozhenij/">Адаптация WDP приложений</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Следующим курсом в рамках программы «Вечерний ABAP» для меня стал курс об основах Web Dynpro – <strong>NET310</strong>. Курс рассматривает базовые понятия WDP, такие как типы контроллеров, окна, ракурсы, базовые элементы UI, приложения и взаимодействия между всеми этими объектами. Одной из самых любопытных для меня тем была возможность изменения существующих WDP приложений.</p>
+<p>Когда заходит речь об изменении WDP приложений, можно рассматривать эти изменения с разных точек зрения:</p>
+<ul>
+<li>с одной стороны нам может понадобиться изменить какую-либо WDP сущность или создать новую (расширить контекст, изменить ABAP код и т.п., добавить UI элемент в ракурс, создать ракурс);</li>
+<li>с другой стороны мы можем захотеть скрыть ненужные поля в рамках ракурса, прописать значения для конфигурационного контроллера, изменить прочие UI свойства, т.е. все те изменения, которые не затрагивают непосредственно изменение каких-либо базовых WDP сущностей.</li>
+</ul>
+<p>В первом случае речь будет идти о расширении приложения (с помощью Enhancement Framework), во втором случае об адаптации. Далее в статье рассматриваются возможности адаптации WDP приложений. Более подробно о расширениях вы можете узнать из курса NET310 и официальной документации. Статья подразумевает, что читатель знает основы WDP.</p>
+<p><span id="more-2619"></span></p>
+<p>Адаптация WDP приложений может подразделяться на три подуровня, за каждый из которых может отвечать отдельный специалист:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_1.jpg"><img loading="lazy" class="alignnone size-full wp-image-2620" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_1.jpg" alt="pict_1" width="814" height="420" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_1.jpg 814w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_1-300x155.jpg 300w" sizes="(max-width: 814px) 100vw, 814px" /></a></p>
+<p>Каждый следующий уровень может влиять на адаптацию, выполненную на предыдущем. Каждый предыдущий уровень может ограничивать возможности адаптации на последующих уровнях.</p>
+<p>Рассмотрим уровни более подробно:</p>
+<ul>
+<li><strong>Уровень конфигурации</strong>. На уровне конфигурации программисты, которые разрабатывают приложение WDP, создают наборы настроек (конфигурации) для компонентов (конфигурация компонента) и приложений (конфигурация приложения). Созданные конфигурации являются объектами репозитария, они, как правило, лежат в одном пакете с приложением и переносятся с помощью транспортной системы. Конфигурации, как и приложения не зависят от манданта.</li>
+<li><strong>Уровень кастомизации</strong>. На данном уровне администраторы могут адаптировать UI элементы конкретного приложения во время его выполнения. Кастомизация для приложения всегда одна в рамках клиента (манданта) и текущей конфигурации, при этом эти настройки так же можно перенести через транспортную систему, пример объектов из такого запроса:<a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_2.jpg"><img loading="lazy" class="size-full wp-image-2621 aligncenter" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_2.jpg" alt="pict_2" width="304" height="139" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_2.jpg 304w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_2-300x137.jpg 300w" sizes="(max-width: 304px) 100vw, 304px" /></a></li>
+<li><strong>Уровень персонализации</strong>. На данном этапе пользователь WDP приложения может поменять некоторые настройки UI элементов под себя, при этом настройки сохраняются только для конкретного пользователя.</li>
+</ul>
+<h2>Подготовка</h2>
+<p>&nbsp;</p>
+<p>В качестве примера рассмотрим простейшее приложение WDP, которое содержит внутри себя один ракурс с текстовым полем и кнопкой. В контексте контроллера компонента объявим следующий узел:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_3.png"><img loading="lazy" class="alignnone size-full wp-image-2622" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_3.png" alt="pict_3" width="467" height="193" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_3.png 467w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_3-300x124.png 300w" sizes="(max-width: 467px) 100vw, 467px" /></a></p>
+<p>Где атрибуты TEXT_ONE и TEXT_TWO имеют тип STRING.</p>
+<p>Создадим контроллер конфигурации для нашего компонента:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_4.png"><img loading="lazy" class="alignnone size-full wp-image-2623" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_4.png" alt="pict_4" width="605" height="133" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_4.png 605w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_4-300x66.png 300w" sizes="(max-width: 605px) 100vw, 605px" /></a></p>
+<p>Пометим его как <strong>конфигурационный контроллер</strong>:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_5.png"><img loading="lazy" class="alignnone size-full wp-image-2624" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_5.png" alt="pict_5" width="436" height="199" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_5.png 436w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_5-300x137.png 300w" sizes="(max-width: 436px) 100vw, 436px" /></a></p>
+<p>Конфигурационный контроллер необходим для того чтобы иметь возможность настраивать его контекст из конфигурации компонента для последующей передачи значений из его контекста в контекст контроллера компонента.</p>
+<p>Для передачи в контроллер компонента данных из конфигурационного контроллера необходимо добавить его в качестве используемых контроллеров:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_6.png"><img loading="lazy" class="alignnone size-full wp-image-2625" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_6.png" alt="pict_6" width="678" height="254" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_6.png 678w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_6-300x112.png 300w" sizes="(max-width: 678px) 100vw, 678px" /></a></p>
+<p>Далее скопируем в контекст конфигурационного контроллера созданный узел TEXTS из контекста контроллера компонента, для этого можно воспользоваться мастером:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_7.png"><img loading="lazy" class="alignnone size-full wp-image-2626" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_7.png" alt="pict_7" width="526" height="181" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_7.png 526w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_7-300x103.png 300w" sizes="(max-width: 526px) 100vw, 526px" /></a></p>
+<p>На последующем экране необходимо выбрать контроллер компонента и узел TEXTS, таким образом, мы получим копию узла в нашем конфигурационном контроллере.</p>
+<p>После создания узла контекста привяжем его к узлу контроллера компонента, делается это в контексте контроллера компонента:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_8.png"><img loading="lazy" class="alignnone size-full wp-image-2627" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_8.png" alt="pict_8" width="769" height="201" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_8.png 769w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_8-300x78.png 300w" sizes="(max-width: 769px) 100vw, 769px" /></a></p>
+<p>Следует отметить, что конфигурационный контроллер в рамках компонента может быть только один.</p>
+<p>После создания конф. контроллера, привяжем узел TEXTS из контроллера компонента к контексту ракурса и привяжем свойство TEXT из UI элемента Caption к атрибуту TEXT_ONE:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_9.png"><img loading="lazy" class="alignnone size-full wp-image-2628" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_9.png" alt="pict_9" width="908" height="361" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_9.png 908w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_9-300x119.png 300w" sizes="(max-width: 908px) 100vw, 908px" /></a></p>
+<p>На текущем этапе у нас будет выводиться следующий экран:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_10.png"><img loading="lazy" class="alignnone size-full wp-image-2629" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_10.png" alt="pict_10" width="139" height="53" /></a></p>
+<p>Далее проходя по всем уровням адаптации, будем изменять значения текста и свойства UI элементов.</p>
+<h2>Уровень конфигурации</h2>
+<p>&nbsp;</p>
+<p>На данном этапе адаптации, основными объектами с которыми мы будем работать будут:</p>
+<ul>
+<li>Конфигурация компонента</li>
+<li>Конфигурация приложения</li>
+<li>Конфигурационный контроллер</li>
+</ul>
+<p>Конфигурация компонента необходима для хранения значений для конфигурационного контроллера и адаптации внешнего вида у ракурсов компонента.</p>
+<p>Чтобы создать конфигурацию компонента, можно использовать контекстное меню в SE80:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_11.png"><img loading="lazy" class="alignnone size-full wp-image-2630" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_11.png" alt="pict_11" width="401" height="211" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_11.png 401w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_11-300x158.png 300w" sizes="(max-width: 401px) 100vw, 401px" /></a></p>
+<p>После чего автоматически стартует WDP приложение &#8212; CONFIGURE_COMPONENT.</p>
+<p>Приложение довольно простое, в нем необходимо задать имя конфигурации и нажать на кнопку создать:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_12.png"><img loading="lazy" class="alignnone size-full wp-image-2631" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_12.png" alt="pict_12" width="763" height="149" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_12.png 763w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_12-300x59.png 300w" sizes="(max-width: 763px) 100vw, 763px" /></a></p>
+<p>Далее следует указать пакет, в котором она будет сохранена, а так же транспорт через который будет осуществлен перенос (в моем случае это локальный пакет, запрос на транспорт не потребуется):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_13.png"><img loading="lazy" class="alignnone size-full wp-image-2632" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_13.png" alt="pict_13" width="631" height="216" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_13.png 631w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_13-300x103.png 300w" sizes="(max-width: 631px) 100vw, 631px" /></a></p>
+<p>В зависимости от версии системы следующий экран может выглядеть по-разному.  В моей версии системы (7.31) появляется экран с тремя вкладками: attributes, component-defined, web Dynpro built-in. В более старых версиях вкладки назывались: properties, explicit configuration, implicit configuration.</p>
+<p>На закладке Component-Defined можно задать значения для контекста конфигурационного контроллера:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_14.png"><img loading="lazy" class="alignnone size-full wp-image-2633" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_14.png" alt="pict_14" width="805" height="242" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_14.png 805w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_14-300x90.png 300w" sizes="(max-width: 805px) 100vw, 805px" /></a></p>
+<p>Запустив наше приложение с такой конфигурацией, мы бы уже увидели измененный экран:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_15.png"><img loading="lazy" class="alignnone size-full wp-image-2634" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_15.png" alt="pict_15" width="235" height="85" /></a></p>
+<p>Однако для того чтобы запустить приложение с конфигурацией компонента, необходимо создать конфигурацию приложения, об этом будет рассказано чуть позже.</p>
+<p>Галочка Final (Окон.) обозначает то, что на последующих уровнях настройки контекст не должен изменяться. Предположим у нас в приложении есть дополнительная инициализация после того как значения из контекста конфигурационного контроллера будут перенесены в контекст контроллера компонента. Для этого мы можем в событии инициализации контроллера компонента (WDDOINIT) добавить следующий код:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA lo_nd_texts TYPE REF TO if_wd_context_node.
+  DATA lo_el_texts TYPE REF TO if_wd_context_element.
+  DATA ls_texts TYPE wd_this-&gt;element_texts.
+
+  lo_nd_texts = wd_context-&gt;get_child_node( name = wd_this-&gt;wdctx_texts ).
+  lo_el_texts = lo_nd_texts-&gt;get_element( ).
+
+  TRY.
+
+      lo_el_texts-&gt;set_attribute(
+        name =  `TEXT_ONE`
+        value = `Значение по умолчанию 1` ).
+
+    CATCH cx_wd_context.
+  ENDTRY.
+
+  TRY.
+      lo_el_texts-&gt;set_attribute(
+        name =  `TEXT_TWO`
+        value = `Значение по умолчанию 2` ).
+    CATCH cx_wd_context.
+  ENDTRY.</pre><p>В случае установки галочки <strong>«</strong><strong>final»</strong> в конфигурации напротив какого-либо атрибута, код по его изменению будет приводить к особой ситуации CX_WD_CONTEXT.</p>
+<p>На вкладке Web Dynpro Built-In находятся настройки к привязке к UI элементам (в дереве отражены все ракурсы компонента), например таким образом можно изменить текст еще раз:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_16.png"><img loading="lazy" class="alignnone size-full wp-image-2635" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_16.png" alt="pict_16" width="800" height="345" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_16.png 800w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_16-300x129.png 300w" sizes="(max-width: 800px) 100vw, 800px" /></a></p>
+<p>В результате получим:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_17.png"><img loading="lazy" class="alignnone size-full wp-image-2637" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_17.png" alt="pict_17" width="213" height="73" /></a></p>
+<p>Вместо непосредственно текста можно прописать ссылку из OTR репозитария.</p>
+<p>Галочка Final по аналогии с такой же на закладе Component-Defined обозначает, что на последующих уровнях адаптации, это значение не должно меняться.</p>
+<p>С помощью кнопки «Reset» можно сбросить измененное значение на начальное.</p>
+<p>Для компонента можно создать неограниченное количество конфигураций.</p>
+<p>Создав конфигурацию компонента её нужно каким-то образом запустить. Для этого, создается конфигурация приложения, опять воспользуемся контекстным меню (с узла WDP приложения) из SE80:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_18.png"><img loading="lazy" class="alignnone size-full wp-image-2638" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_18.png" alt="pict_18" width="445" height="131" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_18.png 445w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_18-300x88.png 300w" sizes="(max-width: 445px) 100vw, 445px" /></a></p>
+<p>Создадим новую конфигурацию приложения:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_19.png"><img loading="lazy" class="alignnone size-full wp-image-2639" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_19.png" alt="pict_19" width="768" height="149" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_19.png 768w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_19-300x58.png 300w" sizes="(max-width: 768px) 100vw, 768px" /></a></p>
+<p>Укажем пакет и описание:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_20.png"><img loading="lazy" class="alignnone size-full wp-image-2640" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_20.png" alt="pict_20" width="629" height="215" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_20.png 629w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_20-300x103.png 300w" sizes="(max-width: 629px) 100vw, 629px" /></a></p>
+<p>В зависимости от версии системы следующий экран может отличаться.</p>
+<p>На вкладке structure укажем, с какой конфигурацией компонента будет запускаться наша конфигурация приложения:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_21.png"><img loading="lazy" class="alignnone size-full wp-image-2641" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_21.png" alt="pict_21" width="1205" height="181" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_21.png 1205w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_21-300x45.png 300w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_21-1024x154.png 1024w" sizes="(max-width: 1205px) 100vw, 1205px" /></a></p>
+<p>Кроме присваивания конфигурации компонента, в конфигурации приложения можно так же настроить параметры приложения – те самые, что настраиваются на закладке Parameters, когда вы редактируете WDP приложение в SE80:<a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_22.png"><img loading="lazy" class="alignnone size-full wp-image-2642" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_22.png" alt="pict_22" width="781" height="154" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_22.png 781w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_22-300x59.png 300w" sizes="(max-width: 781px) 100vw, 781px" /></a></p>
+<p>Делается это на вкладке Application Parameters:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_23.png"><img loading="lazy" class="alignnone size-full wp-image-2643" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_23.png" alt="pict_23" width="644" height="223" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_23.png 644w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_23-300x104.png 300w" sizes="(max-width: 644px) 100vw, 644px" /></a></p>
+<p>В параметрах так же можно задать пользовательские параметры, определенные в Startup Inbound Plug.</p>
+<p>С помощью кнопки «Test» можно запустить приложение с обрабатываемой конфигурацией.</p>
+<p>Вообще сам запуск WDP приложения с конфигурацией может быть осуществлен либо динамически, либо статически. При динамическом запуске в URL к приложению необходимо добавить указание на имя конфигурации, в нашем  случае: <strong>sap-wd-configId</strong>=ZAPP_CONFIG. При статическом запуске ID конфигурации указывается в параметрах приложения:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_24.png"><img loading="lazy" class="alignnone size-full wp-image-2644" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_24.png" alt="pict_24" width="753" height="150" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_24.png 753w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_24-300x60.png 300w" sizes="(max-width: 753px) 100vw, 753px" /></a></p>
+<p>После чего запуск приложения всегда будет осуществляться с указанной конфигурацией приложения. Для приложения WDP можно создать сколько угодно конфигураций приложения.</p>
+<h2>Уровень кастомизации</h2>
+<p>&nbsp;</p>
+<p>На уровне кастомизации, администраторы могут адаптировать UI элементы WDP приложения для текущей конфигурации компонента в рамках клиента. Если приложение запущено без конфигурации, адаптация происходит непосредственно для него. Для каждой конфигурации компонента может быть выполнена и сохранена только одна настройка кастомизации.</p>
+<p>Настройки кастомизации сохраняются в специальных настроечных таблицах, после чего их можно переносить через транспортную систему.  Пример содержимого запроса:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_25.png"><img loading="lazy" class="alignnone size-full wp-image-2647" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_25.png" alt="pict_25" width="495" height="338" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_25.png 495w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_25-300x205.png 300w" sizes="(max-width: 495px) 100vw, 495px" /></a></p>
+<p>В данном случае была произведена кастомизация приложения без конфигурации и приложения с конфигурацией ZCOMP_CONFIG.</p>
+<p>Для того чтобы начать производить кастомизацию, необходимо добавить к URL следующий параметр: <strong>SAP-</strong><strong>CONFIG-</strong><strong>MODE</strong>=X. В результате чего, в контекстном меню появится следующий пункт:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_26.png"><img loading="lazy" class="alignnone size-full wp-image-2646" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_26.png" alt="pict_26" width="355" height="102" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_26.png 355w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_26-300x86.png 300w" sizes="(max-width: 355px) 100vw, 355px" /></a></p>
+<p>Нажав на пункт меню, откроется окно изменений кастомизации:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_27.png"><img loading="lazy" class="alignnone size-full wp-image-2645" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_27.png" alt="pict_27" width="1005" height="398" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_27.png 1005w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_27-300x119.png 300w" sizes="(max-width: 1005px) 100vw, 1005px" /></a></p>
+<p>Диалог аналогичен рассматриваемому ранее диалогу на закладке Web Dynpro Built-In в конфигурации компонента.  Напомню, если в конфигурации компонента выставлена галочка «Final», изменить значение в кастомизации не получится:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_28.png"><img loading="lazy" class="alignnone size-full wp-image-2648" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_28.png" alt="pict_28" width="933" height="399" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_28.png 933w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_28-300x128.png 300w" sizes="(max-width: 933px) 100vw, 933px" /></a></p>
+<p>Галочка Final (или окон.) в данном же диалоге означает, что на уровне персонализации пользователь не сможет переопределить свойство UI элемента.</p>
+<h2>Уровень персонализации</h2>
+<p>&nbsp;</p>
+<p>На этапе персонализации пользователь может изменить те настройки пользовательского интерфейса, которые ему не запретили изменять на предыдущих уровнях адаптации (флаг Окон. Final). Данный шаг является самым ограниченным в плане адаптации, т.к. далеко не все может быть изменено пользователем (В основном пользователь может скрывать не нужные ему элементы, менять позиции столбцов в таблицах и т.п.). Персонализация может быть запрещена путем настройки параметра приложения:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_29.png"><img loading="lazy" class="alignnone size-full wp-image-2649" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_29.png" alt="pict_29" width="498" height="134" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_29.png 498w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_29-300x81.png 300w" sizes="(max-width: 498px) 100vw, 498px" /></a></p>
+<p>В связи с тем, что настройки персонализации не отображаются в транзакции SE80, может возникнуть проблема с их поиском и определением. К счастью для нас существует специальное WDP приложение, где мы можем посмотреть их, а так же все конфигурации к компоненту WD_ANALYZE_CONFIG_USER:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_30.png"><img loading="lazy" class="alignnone size-full wp-image-2650" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_30.png" alt="pict_30" width="732" height="254" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_30.png 732w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_30-300x104.png 300w" sizes="(max-width: 732px) 100vw, 732px" /></a></p>
+<p>При просмотре персонализации мы можем понять, какие свойства UI элементов были изменены:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_31.png"><img loading="lazy" class="alignnone size-full wp-image-2652" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_31.png" alt="pict_31" width="962" height="495" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_31.png 962w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_31-300x154.png 300w" sizes="(max-width: 962px) 100vw, 962px" /></a></p>
+<h2>Уровень глобальных настроек</h2>
+<p>&nbsp;</p>
+<p>Кроме перечисленных уровней адаптации, администраторы могут так же задавать глобальные параметры для WDP приложений в рамках текущего манданта. Делается это путём запуска приложения WD_GLOBAL_SETTING:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/10/pict_32.png"><img loading="lazy" class="alignnone size-full wp-image-2653" src="http://abap-blog.ru/wp-content/uploads/2015/10/pict_32.png" alt="pict_32" width="831" height="289" srcset="https://abap-blog.ru/wp-content/uploads/2015/10/pict_32.png 831w, https://abap-blog.ru/wp-content/uploads/2015/10/pict_32-300x104.png 300w" sizes="(max-width: 831px) 100vw, 831px" /></a></p><p>The post <a href="https://abap-blog.ru/network/web-dynpro/adaptaciya-wdp-prilozhenij/">Адаптация WDP приложений</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/network/web-dynpro/adaptaciya-wdp-prilozhenij/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

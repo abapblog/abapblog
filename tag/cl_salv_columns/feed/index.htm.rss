@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>CL_SALV_COLUMNS | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_salv_columns/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:56:49 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>SALV Table &#8212; Настройка колонок</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-kolonok/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-kolonok/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 12 Feb 2012 14:56:24 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[CL_SALV_COLUMN]]></category>
+		<category><![CDATA[CL_SALV_COLUMNS]]></category>
+		<category><![CDATA[exception]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=472</guid>
+
+					<description><![CDATA[<p>Для настройки колонок в ALV первым делом необходимо получить ссылку на объект класса: CL_SALV_COLUMNS. Данный класс отвечает за общие для всех колонок настройки, такие как: оптимизация ширины, порядок колонок. Получить ссылку на объект можно методом get_columns главного объекта ALV. Для изменения индивидуальных колонок необходимо получить ссылку на объект требуемой колонки. Для этого воспользоваться методом get_column( &#8216;ИмяКолонки&#8217; [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-kolonok/">SALV Table — Настройка колонок</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Для настройки колонок в ALV первым делом необходимо получить ссылку на объект класса: <strong>CL_SALV_COLUMNS</strong>. Данный класс отвечает за общие для всех колонок настройки, такие как: оптимизация ширины, порядок колонок. Получить ссылку на объект можно методом get_columns главного объекта ALV. Для изменения индивидуальных колонок необходимо получить ссылку на объект требуемой колонки. Для этого воспользоваться методом <strong>get_column</strong>( &#8216;ИмяКолонки&#8217; ) из объекта отвечающего за все колонки, полученного ранее.</p>
+<p><span id="more-472"></span></p>
+<p>В случае если удалось найти колонку с указанным именем, метод возвращает объект класса <strong>CL_SALV_COLUMN</strong>, отвечающий за индивидуальные параметры указанной колонки. Обратите внимание что метод get_column в случае не верно указанного имени колонки порождает исключение <strong>cx_salv_not_found,</strong> которое необходимо обработать.</p>
+<p>Пример настройки колонок:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZALV_COLUMNS.
+
+DATA:
+      gt_data      TYPE spfli_tab,  " Таблица с данными
+      go_columns   TYPE REF TO cl_salv_columns,
+      go_column    TYPE REF TO cl_salv_column,
+      go_alv       TYPE REF TO cl_salv_table.
+
+START-OF-SELECTION.
+  SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_data.
+  " Фабричный метод возвращяет экзмепляр ALV объекта
+  TRY.
+      cl_salv_table=&gt;factory(
+         IMPORTING
+           r_salv_table = go_alv
+         CHANGING
+           t_table = gt_data ).
+    CATCH cx_salv_msg .
+      MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+  ENDTRY.
+  go_alv-&gt;set_screen_status( EXPORTING
+                              REPORT = 'SAPLSALV_METADATA_STATUS'
+                              pfstatus = 'SALV_TABLE_STANDARD'
+                              set_functions = CL_SALV_MODEL_BASE=&gt;C_FUNCTIONS_ALL ).
+  " Получаем ссылку на объект настройки колонок
+  go_columns = go_alv-&gt;get_columns( ).
+  " Включаем оптимизацию колонок
+  go_columns-&gt;set_optimize( abap_true ).
+  " Получаем ссылку на объект настройки колонки отвечающей за город отправления
+  TRY.
+    go_column = go_columns-&gt;get_column( 'CITYFROM' ).
+    " настраиваем текст
+    go_column-&gt;set_long_text( 'Long long text' ).
+    go_column-&gt;set_medium_text( 'Medium text' ).
+    go_column-&gt;set_short_text( 'Short' ).
+  CATCH cx_salv_not_found.
+  ENDTRY.
+  " Отобразить ALV представление
+  go_alv-&gt;display( ).</pre><p>Результат работы программы:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/02/column_settings.png"><img loading="lazy" class="alignnone size-full wp-image-473" title="column_settings" src="http://abap-blog.ru/wp-content/uploads/2012/02/column_settings.png" alt="" width="334" height="41" srcset="https://abap-blog.ru/wp-content/uploads/2012/02/column_settings.png 334w, https://abap-blog.ru/wp-content/uploads/2012/02/column_settings-300x36.png 300w" sizes="(max-width: 334px) 100vw, 334px" /></a></p>
+<p>Колонки могут иметь разные типы: ссылки, кнопки, символы, иконки. Стандартная программа для демонстрации возможностей колонок: <strong>SALV_DEMO_TABLE_COLUMNS. </strong>Классы cl_salv_columns и cl_salv_columns являются общими для всех типов ALV объектов. Для настройки индивидуальных особенностей таблиц можно использовать классы:  cl_salv_columns_table и cl_salv_column_table соответственно. Все эти классы описаны в пакете <strong>SALV_METADATA.</strong></p>
+<p>Пример использования Exception поля в SALV Table:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZALV_EXCEPTION_COLUMN.
+
+TYPES BEGIN OF ty_spfli.
+        TYPES exception TYPE char1.
+        INCLUDE TYPE spfli.
+TYPES END OF ty_spfli.
+
+DATA:
+      gt_data      TYPE STANDARD TABLE OF ty_spfli,  " Таблица с данными
+      go_columns   TYPE REF TO cl_salv_columns_table,
+      go_alv       TYPE REF TO cl_salv_table.
+
+FIELD-SYMBOLS: &lt;fs&gt; LIKE LINE OF gt_data.
+
+START-OF-SELECTION.
+  SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_data.
+  " Фабричный метод возвращяет экзмепляр ALV объекта
+  TRY.
+      cl_salv_table=&gt;factory(
+         IMPORTING
+           r_salv_table = go_alv
+         CHANGING
+           t_table = gt_data ).
+    CATCH cx_salv_msg .
+      MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+  ENDTRY.
+
+  LOOP AT gt_data ASSIGNING &lt;fs&gt;.
+    IF &lt;fs&gt;-CARRID = '003'.
+      &lt;fs&gt;-exception = '1'.  "red
+    ELSEIF &lt;fs&gt;-CARRID = '002'.
+      &lt;fs&gt;-exception = '2'.  "yellow
+    ELSE.
+      &lt;fs&gt;-exception = '3'.  "green
+    ENDIF.
+  ENDLOOP.
+  " Подключаем стандартные функции
+  go_alv-&gt;set_screen_status( EXPORTING
+                              REPORT = 'SAPLSALV_METADATA_STATUS'
+                              pfstatus = 'SALV_TABLE_STANDARD'
+                              set_functions = CL_SALV_MODEL_BASE=&gt;C_FUNCTIONS_ALL ).
+  " Получаем ссылку на объект настройки колонок
+  go_columns = go_alv-&gt;get_columns( ).
+  " Указываем на поле которое будет счетчиком
+  go_columns-&gt;set_exception_column( 'EXCEPTION' ).
+  " Отобразить ALV представление
+  go_alv-&gt;display( ).</pre><p><a href="http://abap-blog.ru/wp-content/uploads/2012/02/exception_column.png"><img loading="lazy" class="alignnone size-full wp-image-487" title="exception_column" src="http://abap-blog.ru/wp-content/uploads/2012/02/exception_column.png" alt="" width="871" height="423" srcset="https://abap-blog.ru/wp-content/uploads/2012/02/exception_column.png 871w, https://abap-blog.ru/wp-content/uploads/2012/02/exception_column-300x145.png 300w" sizes="(max-width: 871px) 100vw, 871px" /></a></p>
+<p>Определение типа для конкретной ячейки:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZALV_CELL_TYPE_COLUMN.
+
+TYPES BEGIN OF ty_spfli.
+        TYPES t_cell_type TYPE SALV_T_INT4_COLUMN.
+        INCLUDE TYPE spfli.
+TYPES END OF ty_spfli.
+
+DATA:
+      gt_data      TYPE STANDARD TABLE OF ty_spfli,  " Таблица с данными
+      go_columns   TYPE REF TO cl_salv_columns_table,
+      gs_type      TYPE SALV_S_INT4_COLUMN,
+      go_alv       TYPE REF TO cl_salv_table.
+
+FIELD-SYMBOLS: &lt;fs&gt; LIKE LINE OF gt_data.
+
+START-OF-SELECTION.
+  SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_data.
+  " Фабричный метод возвращяет экзмепляр ALV объекта
+  TRY.
+      cl_salv_table=&gt;factory(
+         IMPORTING
+           r_salv_table = go_alv
+         CHANGING
+           t_table = gt_data ).
+    CATCH cx_salv_msg .
+      MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+  ENDTRY.
+
+  LOOP AT gt_data ASSIGNING &lt;fs&gt;.
+    gs_type-COLUMNNAME = 'CITYFROM'.
+    IF &lt;fs&gt;-CARRID = '003'.
+      gs_type-VALUE = IF_SALV_C_CELL_TYPE=&gt;CHECKBOX.
+    ELSEIF &lt;fs&gt;-CARRID = '002'.
+      gs_type-VALUE = IF_SALV_C_CELL_TYPE=&gt;HOTSPOT.
+    ELSE.
+      gs_type-VALUE = IF_SALV_C_CELL_TYPE=&gt;BUTTON.
+    ENDIF.
+    APPEND gs_type TO &lt;fs&gt;-t_cell_type.
+  ENDLOOP.
+  " Подключаем стандартные функции
+  go_alv-&gt;set_screen_status( EXPORTING
+                              REPORT = 'SAPLSALV_METADATA_STATUS'
+                              pfstatus = 'SALV_TABLE_STANDARD'
+                              set_functions = CL_SALV_MODEL_BASE=&gt;C_FUNCTIONS_ALL ).
+  " Получаем ссылку на объект настройки колонок
+  go_columns = go_alv-&gt;get_columns( ).
+  " Указываем на поле которое будет счетчиком
+  go_columns-&gt;set_cell_type_column( 'T_CELL_TYPE' ).
+  " Отобразить ALV представление
+  go_alv-&gt;display( ).</pre><p><a href="http://abap-blog.ru/wp-content/uploads/2012/02/columns_types.png"><img loading="lazy" class="alignnone size-full wp-image-485" title="columns_types" src="http://abap-blog.ru/wp-content/uploads/2012/02/columns_types.png" alt="" width="830" height="423" srcset="https://abap-blog.ru/wp-content/uploads/2012/02/columns_types.png 830w, https://abap-blog.ru/wp-content/uploads/2012/02/columns_types-300x152.png 300w" sizes="(max-width: 830px) 100vw, 830px" /></a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-kolonok/">SALV Table — Настройка колонок</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-kolonok/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>CL_ABAP_CONV_X2X_CE | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_abap_conv_x2x_ce/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:55:09 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Работа с кодировками</title>
+		<link>https://abap-blog.ru/osnovy-abap/rabota-s-kodirovkami/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/rabota-s-kodirovkami/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 24 Jan 2012 04:43:59 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[CL_ABAP_CONV_IN_CE]]></category>
+		<category><![CDATA[CL_ABAP_CONV_OBJ]]></category>
+		<category><![CDATA[CL_ABAP_CONV_OUT_CE]]></category>
+		<category><![CDATA[CL_ABAP_CONV_UC_NUMBER]]></category>
+		<category><![CDATA[CL_ABAP_CONV_X2X_CE]]></category>
+		<category><![CDATA[Кодировки]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=316</guid>
+
+					<description><![CDATA[<p>SAP предоставляет разработчикам возможность преобразовывать наборы символов из одной кодовой страницы в другую, из внутреннего представления SAP системы в необходимую кодировку. Кодовая страница представлена четырехзначным номером.  Для того чтобы получить описание по номеру кодовой страницы можно воспользоваться ФМ: SCP_CODEPAGE_BY_EXTERNAL_NAME или посмотреть содержимое таблицы TCP00A.  Для того чтобы получить кодовую страницу используемую на сервере приложений в [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/rabota-s-kodirovkami/">Работа с кодировками</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>SAP предоставляет разработчикам возможность преобразовывать наборы символов из одной кодовой <a href="http://abap-blog.ru/wp-content/uploads/2012/01/800px-ASCII_Code_Chart.svg_.png"><img loading="lazy" class="alignright size-thumbnail wp-image-373" title="800px-ASCII_Code_Chart.svg" src="http://abap-blog.ru/wp-content/uploads/2012/01/800px-ASCII_Code_Chart.svg_-150x150.png" alt="" width="150" height="150" /></a>страницы в другую, из внутреннего представления SAP системы в необходимую кодировку. Кодовая страница представлена четырехзначным номером.  Для того чтобы получить описание по номеру кодовой страницы можно воспользоваться ФМ: <strong>SCP_CODEPAGE_BY_EXTERNAL_NAME</strong> или посмотреть содержимое таблицы <strong>TCP</strong><strong>00</strong><strong>A</strong>.  Для того чтобы получить кодовую страницу используемую на сервере приложений в настоящий момент, можно воспользоваться статическим методом <strong>GET_APPSERVER_CODEPAGE</strong> из класса <strong>CL_ABAP_CONV_UC_NUMBER</strong>.<span id="more-316"></span></p>
+<p>Примеры кодовых страниц:</p>
+<table border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top"><strong>Кодовая страница</strong></td>
+<td valign="top"><strong>Текстовое описание</strong></td>
+</tr>
+<tr>
+<td valign="top">124</td>
+<td valign="top">IBM EBCDIC 00697/00297</td>
+</tr>
+<tr>
+<td valign="top">1100</td>
+<td valign="top">iso-8859-1</td>
+</tr>
+<tr>
+<td valign="top">1105</td>
+<td valign="top">US-ASCII (7 bits)</td>
+</tr>
+<tr>
+<td valign="top">1160</td>
+<td valign="top">windows-1252</td>
+</tr>
+<tr>
+<td valign="top">4102</td>
+<td valign="top">utf-16be</td>
+</tr>
+<tr>
+<td valign="top">4103</td>
+<td valign="top">utf-16le</td>
+</tr>
+<tr>
+<td valign="top">4110</td>
+<td valign="top">utf-8</td>
+</tr>
+<tr>
+<td valign="top">8000</td>
+<td valign="top">Shift-JIS</td>
+</tr>
+<tr>
+<td valign="top">8300</td>
+<td valign="top">BIG5</td>
+</tr>
+</tbody>
+</table>
+<p>Проблемы, связанные с перекодированием:</p>
+<ul>
+<li>Конвертация не всегда возможна, т.к. символы из исходной кодировки могут не существовать в той, в которую преобразуем.</li>
+<li>Последовательность байтов в исходной кодировке не опознана. Проблема может быть связана с некорректным определением номера исходной кодировки.</li>
+</ul>
+<p>Для преобразования в ABAP создан набор классов CL_ABAP_CONV* :</p>
+<ul>
+<li><strong>CL_</strong><strong>ABAP_</strong><strong>CONV_</strong><strong>OBJ</strong> – универсальный класс для перекодирования</li>
+<li><strong>CL_</strong><strong>ABAP_</strong><strong>CONV_</strong><strong>IN_</strong><strong>CE</strong> – преобразование набора символов во внутреннее представление системы</li>
+<li><strong>CL_</strong><strong>ABAP_</strong><strong>CONV_</strong><strong>OUT_</strong><strong>CE</strong> – преобразование из внутреннего представления системы в указанную кодировку</li>
+<li><strong>CL_</strong><strong>ABAP_</strong><strong>CONV_</strong><strong>X2</strong><strong>X_</strong><strong>CE</strong> – преобразование набора символов из одной кодировки в другую</li>
+<li><strong>CL_ABAP_CONV_UC_NUMBER</strong> – преобразование набора символов в формат UNICODE в байтовом представлении.</li>
+</ul>
+<p></p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zccc_api.
+
+DATA: go_conv_in  TYPE REF TO cl_abap_conv_in_ce,
+      go_conv_out TYPE REF TO cl_abap_conv_out_ce,
+      go_conv_obj TYPE REF TO cl_abap_conv_obj,
+      gv_buffer(4) TYPE X,
+      gv_text(100) TYPE C.
+
+gv_buffer = '41424332'. " Набор байтов в UTF-8 означает ABC2
+
+go_conv_in = cl_abap_conv_in_ce=&gt;create(
+  ENCODING    = 'UTF-8'               " Кодировка из которой будем преобразовывать
+).
+go_conv_in-&gt;convert( EXPORTING INPUT = gv_buffer IMPORTING DATA = gv_text ).
+
+WRITE: / gv_text. CLEAR gv_buffer.
+
+go_conv_out = cl_abap_conv_out_ce=&gt;create(
+  ENCODING    = 'UTF-8'               " Кодировка в которую будем преобразовывать
+).
+
+go_conv_out-&gt;convert( EXPORTING DATA = gv_text IMPORTING buffer = gv_buffer ).
+
+WRITE: / gv_buffer. CLEAR gv_text.
+
+CREATE OBJECT go_conv_obj
+ EXPORTING
+  incode = 4110 " UTF-8
+  outcode = 1500. " System
+
+CHECK go_conv_out IS BOUND.
+
+go_conv_obj-&gt;convert(
+  EXPORTING
+    inbuff = gv_buffer outbufflg = 0
+  IMPORTING outbuff = gv_text ).
+
+WRITE: / gv_text.</pre><p>Ссылка на SAP <a href="http://wiki.sdn.sap.com/wiki/display/ABAP/Character+encoding+conversion">Wiki</a> по теме.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/rabota-s-kodirovkami/">Работа с кодировками</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/rabota-s-kodirovkami/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

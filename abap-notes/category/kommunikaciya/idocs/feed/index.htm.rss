@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>IDOCs | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/kommunikaciya/idocs/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sat, 28 Nov 2020 12:10:46 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Получить XML представление IDOC-a</title>
+		<link>https://abap-blog.ru/abap-notes/poluchit-xml-predstavlenie-idoc-a/</link>
+					<comments>https://abap-blog.ru/abap-notes/poluchit-xml-predstavlenie-idoc-a/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 28 Nov 2020 12:10:46 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5736</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e2367e13495606352/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-xml-predstavlenie-idoc-a/">Получить XML представление IDOC-a</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS: p_idoc TYPE edi_docnum.
+ 
+START-OF-SELECTION.
+ 
+  TRY.
+      DATA(o_idoc_xml) = NEW cl_idoc_xml1( docnum = p_idoc ).
+       DATA: lv_xml TYPE string.
+ 
+      o_idoc_xml-&gt;get_xmldata_as_string( IMPORTING data_string = lv_xml ).
+      DATA(it_xml) = VALUE stringtab( ( |{ lv_xml }| ) ).
+ 
+      DATA: lv_temp_dir TYPE string.
+      cl_gui_frontend_services=&gt;get_desktop_directory( CHANGING desktop_directory = lv_temp_dir ).
+      
+      cl_gui_cfw=&gt;flush( ).
+
+      DATA(lv_filename) = |{ lv_temp_dir }\\my_xml.xml|.
+ 
+      cl_gui_frontend_services=&gt;gui_download( EXPORTING
+                                                filename = lv_filename
+                                                filetype = 'ASC'
+                                              CHANGING
+                                                data_tab = it_xml ).
+ 
+      WRITE: / lv_filename.
+    CATCH cx_root INTO DATA(e_txt).
+      WRITE: / e_txt-&gt;get_text( ).
+  ENDTRY.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-xml-predstavlenie-idoc-a/">Получить XML представление IDOC-a</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/poluchit-xml-predstavlenie-idoc-a/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>SAP IDoc Overview</title>
+		<link>https://abap-blog.ru/abap-notes/sap-idoc-overview/</link>
+					<comments>https://abap-blog.ru/abap-notes/sap-idoc-overview/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 10 Nov 2020 05:47:03 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5502</guid>
+
+					<description><![CDATA[]]></description>
+										<content:encoded><![CDATA[<style>
+                    </style>
+        	    <div id="h5vp618a1e236e7ee" class="pdfp_wrapper">
+                        <div class="cta_wrapper">
+                	            <p><a href="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/SAP-IDoc-Overview.pdf&#038;download=true&#038;print=&#038;openfile=false"><button>View Fullscreen</button></a></p>
+            </div>
+            <div class="iframe_wrapper">
+                <iframe loading="lazy" width="100%" height="1122px" src="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/SAP-IDoc-Overview.pdf&#038;download=true&#038;print=&#038;openfile=false"></iframe>
+            </div>
+	    </div><p>The post <a href="https://abap-blog.ru/abap-notes/sap-idoc-overview/">SAP IDoc Overview</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/sap-idoc-overview/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

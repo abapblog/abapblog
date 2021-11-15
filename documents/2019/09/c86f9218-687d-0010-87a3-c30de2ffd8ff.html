@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en" class="content-en_us en_us   touchPageRenderingFix" data-language="en_us" data-page-path="/content/sapdx/countries/en_us/asset/pdf" data-site-code="usa" data-request-path="/content/sapdx/countries/en_us/documents/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.html" data-page-model-path="/asset/pdf.model.json?pagePath=/content/sapdx/countries/en_us/documents/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.html" data-is-publish xmlns="http://www.w3.org/1999/xhtml" prefix="og: http://ogp.me/ns# fb: http://www.facebook.com/2008/fbml" data-contact-module-model-path="/bin/sapdxc/cache/contactModule/content/sapdx/countries/en_us/_jcr_content/parContactModule/contactModule.model.json" data-header-model-path="/bin/sapdxc/cache/header/content/sapdx/countries/en_us/_jcr_content/parHeader/headerstandard.model.json">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>Installing AS ABAP 7.52 dev edition on VMWare and Linux</title>
+<meta name="description" content="If you are new to Linux, this step-by-step guide talks you through installing: A virtual machine (VMWare Player); a Linux operating system (openSUSE Leap 15.0); and the AS ABAP 7.52 SP01 developer edition on ASE 16.0 datatbase."/>
+<meta name="created_timestamp" content="2019-08-24 00:00:00"/>
+<meta name="updated_timestamp" content="2021-08-24 00:00:00"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.sap.com/documents/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.html"/>
+<meta property="og:title" content="Installing AS ABAP 7.52 dev edition on VMWare and Linux"/>
+<meta property="og:description" content="If you are new to Linux, this step-by-step guide talks you through installing: A virtual machine (VMWare Player); a Linux operating system (openSUSE Leap 15.0); and the AS ABAP 7.52 SP01 developer edition on ASE 16.0 datatbase."/>
+<meta property="og:site_name" content="SAP"/>
+<meta property="og:image" content="http://www.sap.com/dam/site/sapcom/docs/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.pdf/_jcr_content/renditions/cq5dam.thumbnail.319.319.png"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:url" content="https://www.sap.com/documents/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.html"/>
+<meta name="twitter:title" content="Installing AS ABAP 7.52 dev edition on VMWare and Linux"/>
+<meta name="twitter:description" content="If you are new to Linux, this step-by-step guide talks you through installing: A virtual machine (VMWare Player); a Linux operating system (openSUSE Leap 15.0); and the AS ABAP 7.52 SP01 developer edition on ASE 16.0 datatbase."/>
+<meta name="twitter:site" content="@SAP"/>
+<meta name="twitter:image" content="http://www.sap.com/dam/site/sapcom/docs/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.pdf/_jcr_content/renditions/cq5dam.thumbnail.319.319.png"/>
+<link rel="apple-touch-icon" sizes="60x60" href="/etc.clientlibs/sapdx/clientlibs/clientlib-generic-legacy/resources/images/apple-touch-icons/touch-icon-60x60.png"/>
+<link rel="apple-touch-icon" sizes="120x120" href="/etc.clientlibs/sapdx/clientlibs/clientlib-generic-legacy/resources/images/apple-touch-icons/touch-icon-120x120.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/etc.clientlibs/sapdx/clientlibs/clientlib-generic-legacy/resources/images/apple-touch-icons/touch-icon-180x180.png"/>
+<!--*/ Used for metadata customization of inherited pages */-->
+<meta name="sm_tech_ids" content="a4348185-5d93-4315-bd56-7aa117f0f674,en-US,01200314690800000134,01200314690800000234,348099819432015884290175913233275,150162736570365605599991,833755570260738661924709785639136"/>
+<meta name="type" content="Document"/>
+<meta name="programming_tool" content="ABAP Development"/>
+<meta name="web_site_identifier" content="Global / USA"/>
+<meta name="software_product_technology_platform" content="SAP NetWeaver"/>
+<meta name="software_product_technology_platform_sap_netweaver" content="SAP NetWeaver"/>
+<meta name="content_format" content="Brochures/PDFs"/>
+<meta name="software_product_technology_platform_sap_netweaver" content="SAP NetWeaver Application Server for ABAP"/>
+<meta name="asset_type" content="Technical Article"/>
+<meta name="language" content="English"/>
+<meta name="software_product" content="Technology Platform"/>
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="dns-prefetch" href="https://epsilon.6sense.com"/><link rel="preconnect" href="https://epsilon.6sense.com"/>
+<link rel="dns-prefetch" href="https://assets.adobedtm.com"/><link rel="preconnect" href="https://assets.adobedtm.com"/>
+<link rel="dns-prefetch" href="https://sapglobalmarketingin.tt.omtrdc.net"/><link rel="preconnect" href="https://sapglobalmarketingin.tt.omtrdc.net"/>
+<link rel="dns-prefetch" href="https://consent.trustarc.com"/><link rel="preconnect" href="https://consent.trustarc.com"/>
+<link rel="dns-prefetch" href="https://content.cdn.sap.com"/><link rel="preconnect" href="https://content.cdn.sap.com"/>
+<link rel="canonical" href="https://www.sap.com/documents/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.html"/>
+<link rel="stylesheet" href="/etc.clientlibs/sapdx/clientlibs/clientlib-extended-grid.min.6f0b6de61cb8e45a6f9d845d2fdccfa4.css" type="text/css">
+<script src="/etc.clientlibs/clientlibs/granite/jquery.min.f65891607efbe75b84a8031849cec6c7.js"></script>
+<script src="/etc.clientlibs/clientlibs/granite/utils.min.fd64744866d6499535dd464d6da82678.js"></script>
+<script src="/etc.clientlibs/clientlibs/granite/jquery/granite.min.da45f476f6c3ee364516239ac10cd5f1.js"></script>
+<script src="/etc.clientlibs/foundation/clientlibs/jquery.min.dd9b395c741ce2784096e26619e14910.js"></script>
+<script src="/etc.clientlibs/foundation/clientlibs/shared.min.6cd003256d877aa91c7c5632fd28d19d.js"></script>
+<script src="/etc.clientlibs/sapdx/clientlibs/clientlib-assets-detail/critical.min.5f99b0f3dafd2f441acf9026b1d5633b.js"></script>
+<script src="/etc.clientlibs/cq/personalization/clientlib/underscore.min.d99f57901735a3fa5a31df6fe7d54ac5.js"></script>
+<script src="/etc.clientlibs/sapdx/clientlibs/analytics/clientlib-analytics.min.a82024ce8f88e290815610e94c29eb14.js"></script>
+<script src="/etc.clientlibs/sapdx/clientlibs/analytics/clientlib-onload-analytics.min.4ea1ba459fbe5fa0f3ac4f7a9c81d21a.js"></script>
+<script src="/etc.clientlibs/sapdx/clientlibs/analytics/clientlib-init-analytics.min.abf4c34200daa13fb61f39139197b055.js"></script>
+<script src="/etc.clientlibs/sapdx/components/modular/truste/truste/clientlib.min.aab6126f614c41d395dbde507a42ab4f.js"></script>
+<script src="/etc.clientlibs/sapdx/clientlibs/clientlib-assets-detail/head.min.b19fe8745f72d390586beec0fbf33824.js"></script>
+<link rel="stylesheet" href="/etc.clientlibs/sapdx/components/modular/pdfAssetDetail/clientlib.min.408e6701f396e318758deeaa133fe6fd.css" type="text/css">
+<script src="/etc.clientlibs/sapdx/components/modular/pdfAssetDetail/clientlib.min.caa5542db18bb58a9d3b49372de87242.js"></script>
+<link rel="stylesheet" href="/etc.clientlibs/sapdx/clientlibs/clientlib-assets-detail/codebase.min.b2ac22ad7ca6f10d52cb2aafd86799d9.css" type="text/css">
+<script type="text/javascript">
+        (function(){
+            window.SAP = window.SAP || {};
+            SAP.DTM = SAP.DTM || {};
+            SAP.DTM.pageComponents = ["sapdx/components/modular/pdfAssetDetail","sapdx/components/modular/breadcrumb","sapdx/components/modular/nav/headerStandard","nt:unstructured","sapdx/components/page/contentpages/stopMarker","sapdx/components/modular/nav/footer","sapdx/components/page/contentpages/pdfAssetDetailPage","foundation/components/parsys","sapdx/components/modular/countrySelector","cq:LiveCopy","foundation/components/iparsys","cq:BlueprintSyncConfig","sapdx/components/page/contentpages/homePageStandard"];
+            SAP.DTM.runMode = "prod";
+        })();
+    </script>
+<script type="text/javascript">
+        window.SAP = window.SAP || {};
+        SAP.DTM = SAP.DTM || {};
+        SAP.DTM.LivePerson = SAP.DTM.LivePerson || {};
+        var url = window.location.href;
+        SAP.DTM.LivePerson.lpButtonId = "lpChatButtonDiv1";
+        SAP.DTM.LivePerson.countryWithDefault = "us";
+        SAP.DTM.LivePerson.languageWithDefault = "en";
+        SAP.DTM.LivePerson.arrLPvars = [
+            { scope:'page', name:'Unit', value: "sales" },
+            { scope:'page', name:'Section', value: "home" },
+            { scope:'page', name:'Site', value:"sap" },
+            { scope:'page', name:'Collection', value:"general" },
+            { scope:'page', name:'Country', value:"us" },
+            { scope:'page', name:'Language', value:"en" },
+            { scope:'page', name:'WBSCode', value:"CRM-XH16-INB-CHAT" },
+            { scope:'page', name:'Url', value: url },
+            { scope:'session', name:'lpReferrer', value: url },
+            { scope:'page', name:'VideoIsPlaying', value: "false" }
+        ];
+    </script>
+<script src="//assets.adobedtm.com/ccc66c06b30b/6e9b68185489/launch-83335cf2ecda.min.js"></script>
+<link rel="stylesheet" href="/etc.clientlibs/sapdx/components/modular/formLogin/clientlib.min.2f5b9527d2c57fb0125df95d90b9eb3e.css" type="text/css">
+<script defer type="text/javascript" src="/etc.clientlibs/sapdx/clientlibs/clientlib-gating-hybris-data.min.94ab269bcfb8df2e1eb3bf13e2023581.js"></script>
+<script defer type="text/javascript" src="/etc.clientlibs/sapdx/components/modular/formLogin/clientlib.min.91d5342dcbd31f21454f81ee7d20d2c6.js"></script>
+<link rel="stylesheet" href="/etc/sapdx/binary/clientlib-pdfjs.min.deaedf5c4ec5c18f90c77f3f782fc1fa.css" type="text/css">
+<link rel="stylesheet" href="/etc/sapdx/binary/clientlib-viewerjs.min.8d7d80f4c80035d58a45001bbdc2b4cb.css" type="text/css">
+<style>#teconsent{display:none!important}#consent_blackbar{bottom:-15px;position:fixed;z-index:1000000;width:100%}#header{height:64px;background-color:#000}#header.tier2{background-color:#f4f4f4}.sectionUI2020{min-height:400px}.standardGrid3.is-lightbox .sectionUI2020{min-height:200px}.universalLayoutUI2020.horizontal{min-height:300px}.universalLayoutUI2020.horizontal.one-box{min-height:100px}.universalLayoutUI2020.horizontal.two-boxes,.universalLayoutUI2020.vertical{min-height:200px}.standardGrid3.is-lightbox .universalLayoutUI2020{min-height:50px}.heroUniversalUI2020.preview-large,.heroUniversalUI2020.preview-medium{min-height:238px}.heroUniversalUI2020.preview-small{height:135px}@media only screen and (min-width:980px){.heroUniversalUI2020.preview-small{height:146px}}html:not(.aem-AuthorLayer-Preview) #header.cq-Editable-dom{height:280px;background-color:#fff}#footer.footer-standard{background-color:#222}#footer.footer-standard.tier2{background-color:#f4f4f4}.storyContainer{background:#222;color:#fff;padding-top:5.25rem}.customer-reference-standard .carousel-holder .carousel-mask .carousel-slider{display:flex}.customer-reference-standard .carousel-holder .carousel-mask .carousel-slider .max-divider{min-width:3.25rem}.customer-reference-standard .item-content .navbar-item-icon-link:after{display:none}.customer-reference-standard .item-content .navbar-item-icon-link .navbar-item-icon{width:140px;height:86px}.customer-reference-standard .item-content .navbar-item-icon-link .navbar-item-icon .svg-image{max-width:140px;max-height:90%;filter:grayscale(100%)}.customer-reference-standard .arrows{display:none}@media only screen and (max-width:767px){.navigation-icon-bar-standard{min-height:180px}}.footer-standard{padding:40px 0;color:#999}.footer-standard .service-item-image{margin:0 15px 0 0;width:32px;height:32px}.footer-standard .social-networks__icon{max-width:16px;max-height:16px;display:block}.footer-standard .social-networks__link{width:26px;height:26px;display:flex}.footer-standard .social-networks__list{margin:0;padding:0 0 0 8px;list-style:none outside}.footer-standard .social-networks__item{float:left}.footer-standard .footer-column__icon{display:none}.footer-standard .footer-list{list-style:none outside;margin:0;padding:0}.footer-standard .footer-list__item{padding:0 0 20px}.footer-standard .footer-list__item .footer-list__link{color:#999}@media only screen and (min-width:768px){.footer-standard .footer-column__checkbox{display:none}}.hidden-chat-button{display:none}.event-includer-visible{min-height:75px}@media only screen and (max-width:767px){.event-includer-visible{min-height:100px}}.developerShortcuts{height:70px}.tutorial-header .title{margin-bottom:20px}@media only screen and (max-width:1023px){.tutorial-header .steps-wrapper_scroll{margin-bottom:30px}}.tutorialSummary .info img{width:45px;height:45px}.tutorialSummary .icon-key:before{min-width:20px;min-height:22px}.flexible-columns .flexible-columns__left-column{margin-left:10px}.flexible-columns .flexible-columns__right-column{margin-right:10px}@media only screen and (max-width:1023px){.flexible-columns .flexible-columns__left-column{margin-left:0}.flexible-columns .flexible-columns__right-column{margin-right:0}}@media only screen and (max-width:1023px){.tutorialSummary .body{min-height:215px}.tutorialSummary .title{min-height:72px}.tutorialBody .done-button{min-height:77px}.tutorialDescription{padding:40px 20px 20px}.tutorialDescription .copied-content{min-height:361px}.tutorialDescription .textAndIcon{min-height:69px}.tutorialDescription .tutorial-miniNavigator{margin-bottom:0}.tutorialDescription .tutorial-contents{min-height:256px}}</style><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/runtime.320febb1e5cbf53cc69a.js"></script><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/critical.80c28e563f46ad120f40.js"></script><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/84.c4d1b45737afa3182c02.js"></script><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/3352.fc3c90d57b379338e2a9.js"></script><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/2168.95899c7d6b85a08f282a.js"></script><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/925.aba5e937e40d7c3bd9e1.js"></script><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/2065.8d770d59e2dca189ed92.js"></script><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/654.abbd98c3bb0079569fb1.js"></script><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/2251.aefb8e9b965bb27dda20.js"></script><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/4492.704d3782fc8c12698025.js"></script><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/sapcom-43dd7041.e3df8e263691497df9f8.js"></script><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/sapcom-31743c5a.43be4e641319a59be677.js"></script><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/sapcom-96d4916e.bc598abcb6f879a6f322.js"></script><script defer="defer" src="/etc.clientlibs/sapdx/ui/react/resources/sapcom/static-fonts.aaf81a4e470e958e85a2.js"></script><link href="/etc.clientlibs/sapdx/ui/react/resources/sapcom/sapcom-43dd7041.81c097a7653548b61d5f.css" rel="stylesheet"/><link href="/etc.clientlibs/sapdx/ui/react/resources/sapcom/sapcom-31743c5a.66d4c495657e16d06500.css" rel="stylesheet"/><link href="/etc.clientlibs/sapdx/ui/react/resources/sapcom/static-fonts.9dd7062245ffbc730db0.css" rel="stylesheet"/>
+
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="G3JB4-MG6V2-K5QTM-ZUA37-AURLV",function(){function e(){if(!r){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,o.appendChild(e),r=!0}}function t(e){r=!0;var n,t,a,i,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(o,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",i=(a.frameElement||a).style,i.width=0,i.height=0,i.border=0,i.display="none",o.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void 0;",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=14,window.BOOMR.url=n+"G3JB4-MG6V2-K5QTM-ZUA37-AURLV";var i=document.currentScript||document.getElementsByTagName("script")[0],o=i.parentNode,r=!1,d=document.createElement("link");if(d.relList&&"function"==typeof d.relList.supports&&d.relList.supports("preload")&&"as"in d)window.BOOMR.snippetMethod="p",d.href=window.BOOMR.url,d.rel="preload",d.as="script",d.addEventListener("load",e),d.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!r)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),o.appendChild(d);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="f37bkpaxbx3wuymkczxa-f-1939195d7-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"32","ak.cp":"197059","ak.ai":parseInt("168275",10),"ak.ol":"0","ak.cr":20,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"91126ec","ak.r":28076,"ak.a2":n,"ak.m":"x","ak.n":"essl","ak.bpcip":"46.254.21.0","ak.cport":51502,"ak.gh":"104.84.152.14","ak.quicv":"","ak.tlsv":"tls1.2","ak.0rtt":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1636439662","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==ElscOEEk5njPXlt5eInolJ++ys4L4+O4XXmAEDPco2f8TZT/ItykMT0RAkQ5n5ioYRxYNx5Jp+K6eQ9XFjGMLCPheF13/mNoDg1+b5YOMk0am9+fYP5R+WMSaWbA3lffDsVpP+88cO5XEg4jVVitadYzpfT/5p5IxLJ+WRZu1pEVuxGYNwLpEdiBDIfCFktAR4uhBbqg4j2V1K4SeATv6f5KP4Fu/YqIIk47ofVcNiJB9z7IgZKAyI3pKgA5sJ5jmGA7mY/xGFhQYQ4FkSDZVQ8c63SBgt70slnafHdwc3y7Ts7WIi1iJgPLuk5oH6+BCkmzlnHINL85ghqhTv9h6lzzNABXBXIDQzymeAQmrjDukyol7UM0i7nmxn/tJvLFfsgnWs+AY0L7TPBfjJlTpRRyc7lfVmuXhaKTACDwChA=","ak.pv":"58","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+<body class="is-publish-true pdfAssetDetail " data-is-pdf-lightbox-enabled="false" data-is-video-lightbox-enabled="false" data-dynamic-components="sapdx/components/modular/finders/finderContainerStandard,sapdx/components/modular/finderContainer" data-is-pdf-rating-allowed="true" data-is-video-rating-allowed="true" data-qualtrics-survey-language="EN" data-enable-qualtrics-service-layer="true" data-banner-enabled="true" data-banner-expdate="2021-05-07" data-banner-key="Header.NotificationBanner.PrivacyUpdate.Text">
+<div class="notificationBannerWrapper" style="display: none" data-component="NotificationBanner"></div>
+<noscript>
+<div class="nojs">Javascript must be enabled for the correct page display</div>
+</noscript>
+<div id="page">
+<div id="idsConfig" class="hidden" data-ids-cookie-name="ONEDX_IDS_PROD" data-ids-sp-name="sapdx" data-ids-cookie-loggedout-value="xxxxxx"></div>
+<div class="pageAnalytics-block hidden">
+<div class="pageAnalytics" data-every-page-analytics-page-name="sap:/documents/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.html" data-country-code="glo" data-page-section="documents" data-ids-hostname="https://accounts.sap.com">
+</div>
+<div class="assetAnalytics" data-sap-global-domains="[concur.com, fieldglass.com, gigya.com, successfactors.eu, sapanalytics.cloud, sapandasug.com, jam4.sapjam.com, saps4hanahub.com, sap.wegone.com, sapsupport.info, sapforum.it, sapappsdevelopmentpartnercenter.com, aribalive.com, concur.cn, concur.co.jp, concur.co.uk, concur.com.sg, sapsf.eu, mailsap.com, sapbydesign.com, yaas.io, sapsf.com, sapdigital.com, sapbusinessobjects.cloud, workconnect.io, digital.sap.com, sap.io, sap.to, growthmattersnetwork.com, saplumira.com, sapappcenter.com, digitalistmag.com, hybris.com, the-future-of-commerce.com, sapmobileconsumertrends.com, sapeducationsolutions.com, sapns2.com, sapvirtualevents.com, streamwork.com, sapstreamwork.com, aboutsapcampbell.com, analytics-usa.com, estara.com, bestsapchina.com, businessobjects.com, businessobjects.com.pl, business-objects.com.pl, businessobjects.pl, business-objects.pl, careersatsap.com, cfolder.de, cfolders.com, cfolders.de, cfolders.net, crystalreports.com, digitalriver.com, edusap.at, fazi.at, fazi.com, fazi.de, futurefactoryinitiative.com, futurefactoryinitiative.org, fuzzy.at, fuzzy.ch, fuzzy-informatik.com, fuzzy-informatik.de, fuzzy-online.com, fuzzy-online.de, infommersion.com, ondemand.com, sap.at, sap.bg, sap.biz, sap.ca, sap.ch, sap.cl, sap.cn, sap.co.at, sap.co.il, sap.co.jp, sap.co.kr, sap.co.nz, sap.co.th, sap.co.uk, sap.co.za, sap.com, sap.com.au, sap.com.cn, sap.com.pl, sap.com.sg, sap.com.tr, sap.com.tw, sap.cz, sap.de, sap.ee, sap.fi, sap.hk, sap.hr, sap.hu, sap.ie, sap.in, sap.info, sap.kz, sap.lu, sap.nl, sap.pl, sap.pt, sap.ro, sap.ru, sap.si, sap.sk, sap.tw, sap.ua, sap.us, sapag.de, sap-ag.de, sapamerica.com, sap-answer.com, sap-austria.com, sap-best-fit-adviser.com, sapbusinessbydesign.cn, sapbusinessbydesign.co.uk, sapbusinessbydesign.com, sapbusinessbydesign.de, sapbusinessbydesign.us, sapbusinessobjects.com.pl, sap-business-objects.com.pl, sapbusinessobjects.pl, sap-business-objects.pl, sapbusinessobjectsresponses.com, sapbusinessone.pl, sap-campbell.com, sapcampbell.net, sapcampbell.org, sapchina.com, sapclear.com, sapconfigurator.com, sapdesignguild.org, sap-event.jp, sapevents.com, sap-forum.de, sap-insights.com, sapkhimetrics.com, saplabs.bg, saplabs.co.in, saplabs.fr, saplabs.in, sapnetweaver.com, sapphirenow.com, sap-retail.de, sapsapphire.com, sapsem.com, sap-spectrum.com, sapstreamwork.com, sapteched.com, sapthai.com, sapturkiye.com.tr, sap-tv.com, sapventures.com, sapworldtour.com, sapworldtour2010.com, steeb.de, sap.corp, saplabs.com, sybase.com, sappartneredge.eu, sapbusinessinthemoment.com, sapbusinessoptimizer.com, sapcampaigns.com, sapcfo.com, sapcpg.com, sapcrystalconfigurator.com, SAPEnterpriseMobility.mobi, sapevent.ch, sapfinancialservices.com, sapforumbimadrid2011.com, sap-im-dialog.com, sap-innovationnow.com, sap-it-leadership.com, sappartnermobileapps.com, sap-readytoboost.com, sapretailtoday.com, saprunprouder.com, sapsponsorships.com, sapstrategichr.com, sapsurvey.com, sapsustainabilitytoday.com, saputilitiestoday.com, sap-webseminare.de, iqformarketers.com, sybase.be, sybase.ca, sybase.ch, sybase.co.kr, sybase.co.uk, sybase.com, sybase.com.ar, sybase.com.au, sybase.com.br, sybase.com.cn, sybase.com.hk, sybase.com.mx, sybase.com.tw, sybase.de, sybase.dk, sybase.es, sybase.fr, sybase.hu, sybase.in, sybase.it, sybase.jp, sybase.nl, sybase.no, sybase.se, sybase365.com, sappartneredge.com, ariba.com, saphana.com, saphanacouncil.com, saphanapartnerrace.com, successfactors.co.kr, successfactors.com, successfactors.com.br, successfactors.com.cn, successfactors.de, successfactors.es, successfactors.jp, successfactors.nl, successfactors.se, sybase.asia, sybase.at, SYBASE.BIZ, sybase.co.at, sybase.co.hu, sybase.co.it, sybase.co.jp, sybase.co.ma, sybase.co.nz, sybase.co.za, sybase.com.ec, sybase.com.es, sybase.com.gr, sybase.com.my, sybase.com.pe, sybase.com.pk, sybase.com.pl, sybase.com.ro, sybase.com.sg, sybase.com.ve, sybase.cz, sybase.ec, sybase.ee, sybase.eu, sybase.hk, sybase.ie, sybase.info, sybase.li, sybase.lu, sybase.mobi, SYBASE.ORG, sybase.ph, sybase.pl, sybase.tw, sybase.us, sybasesolutions.net, syclo.co.uk, syclo.com, syclo.com.br, syclo.de, syclo.es, syclo.it, syclo.mobi, gainthevisibleadvantage.com, getconnected-sap.co.uk, myrunwayapp.com, sapafaria.com, saparpfasttrack.com, sapbusinessonnesolutions.com, sapcloudappspartnercenter.com, sapcustomerexerience.com, sapcycle4youth.com, sapdashboardgallery.com, sapdatacentertour.com, sapdatachallenge.com, sap-milestones.com, sap-milestones.de, sapmobileappspartnercenter.com, sapmobileappspartnercenter.com, sapmobileservices.com, sapmobiletransformation.com, sap-sybase-ase.com, sap-sybase-iq.com, stepaheadwithsap.com, thinkbiggrowfast.net, sapbusinessobjectsbi.com, sapbigdata.com, cloud.sap]" data-sap-account-domains="[accounts.sap.com, accounts400.sap.com]">
+</div>
+</div>
+<strong class="accessibility"><a href="#main" tabindex="0" accesskey="S">Skip to Content</a></strong>
+<header id="header">
+<div class="section"><div class="new"></div>
+</div><div class="iparys_inherited"><div class="parHeader iparsys parsys"><div class="headerStandard genericComponent parbase section"><div data-component="HeaderStandard" data-model="/bin/sapdxc/cache/header/content/sapdx/countries/en_us/_jcr_content/parHeader/headerstandard.model.json" data-show-in-navigation data-country-selector-path="/bin/sapdxc/cache/header/content/sapdx/countries/en_us/asset/pdf/_jcr_content/parHeader/headerstandard.model.countryselector.json?pagePath=/content/sapdx/countries/en_us/documents/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.html" data-language-selector-path="/bin/sapdxc/cache/header/content/sapdx/countries/en_us/asset/pdf/_jcr_content/parHeader/headerstandard.model.languageselector.json?pagePath=/content/sapdx/countries/en_us/documents/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.html" data-header.logOn.label="Log On" data-header.logOut="Logout" data-header.search.label="Search" data-Header.MegaMenu.MobileView.Spotlights.Label="Spotlights" data-Header.MegaMenu.MobileView.Overview.Label="Overview" data-Header.TryAndBuy.Label="Try &amp; Buy" data-CountrySelector.ChooseRegionCountry.Text="Choose your region" data-footer.countyselector.selectCountry="Select country" data-CountrySelector.AllRegions.Label="All regions" data-Header.Search.AutoSuggest.ViewAllResults.Label="View all results" data-Generic.BurgerMenuIcon.Label="Menu">
+</div></div>
+</div>
+</div>
+<div class="currentpage-context hidden">
+<a class="contact-module-meta" alt="Contact Us" title="Contact Us" target="_self" href="//www.sap.com/registration/contact.html?pageTitle=PDF&countryOfOrigin=en_us&refererPagePath=https%3A%2F%2Fwww.sap.com%2Fasset%2Fpdf.html&refererContentPath=%2Fcontent%2Fsapdx%2Fcountries%2Fen_us%2Fasset%2Fpdf&navTitle=Contact+Form">Contact Us</a>
+<a class="blueLink  contact-us-raq-lightbox contact-us-link" target="_self" href="//www.sap.com/registration/contact.html?navTitle=Contact+Form">Contact Us</a>
+<div class="footer-current-context-page-data" data-mailto-share-link="https://www.sap.com/documents/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.html"></div>
+</div>
+<div class="hidden-chat-button">
+<div id="lpChatButtonDiv1"></div>
+<button id="lpMobileChatButtonDiv1">Chat now</button>
+</div>
+</header>
+<div id="consent_blackbar"></div>
+<div id="main">
+<div class="container">
+<div>
+<div data-component="ContactUs" data-model="/bin/sapdxc/cache/contactModule/content/sapdx/countries/en_us/_jcr_content/parContactModule/contactModule.model.json" data-design="Contact Module"></div>
+</div>
+<div></div>
+<div><div class="section"><div class="new"></div>
+</div><div class="iparys_inherited"><div class="parBreadCrumb iparsys parsys"></div>
+</div>
+</div>
+<div><div class="breadcrumb-section dx-row1 dx-f669c1c16d11b3686952c65036e3f1bf7a0075ff section">
+<link rel="stylesheet" href="/etc.clientlibs/sapdx/components/modular/breadcrumb/clientlib.min.f4cbaf2bcac46f1da652173caf696849.css" type="text/css">
+<script defer type="text/javascript" src="/etc.clientlibs/sapdx/components/modular/breadcrumb/clientlib.min.b96036617d185773a8f71adf13decce9.js"></script>
+<div class="breadcrumb section">
+<script id="breadcrumb-template" type="text/x-handlebars-template">
+    <div class="breadcrumb base-font02 {{#unless pages}}empty{{/unless}} level{{pageLevel}}">
+        <ul>
+            {{#if pages}}
+            {{#each pages}}
+            {{#unless hideInNav}}
+            <li>
+                {{#if path}}
+                <a title="go to {{title}}" href="{{path}}.html">
+                    {{#if navigationTitle}}
+                    <span>{{navigationTitle}}</span>
+                    {{else}}
+                    <span>{{title}}</span>
+                    {{/if}}
+                </a>
+                {{else}}
+                <span>{{navigationTitle}}</span>
+                {{/if}}
+            </li>
+            {{/unless}}
+            {{/each}}
+            {{/if}}
+        </ul>
+    </div>
+</script>
+</div></div>
+<div class="pdfAssetDetailComponent dx-147c5868b7b008accec6cd4b18a7d5fe9b82259b dx-row2 section">
+<div data-delayed-load-analytics class="pdf-panel" data-analyticsAssetId="c86f9218-687d-0010-87a3-c30de2ffd8ff|pdf|Installing AS ABAP 7.52 dev edition on VMWare and Linux" data-sap-digital-id="No Digital Library ID" data-public-asset-url="//www.sap.com/docs/download/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.pdf" data-akamai-asset-url="https://assets.cdn.sap.com/sapcom/docs/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.pdf" data-dgl-asset="false">
+<div class="pdf-panel-player">
+<!--
+Copyright 2012 Mozilla Foundation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Adobe CMap resources are covered by their own copyright but the same license:
+
+    Copyright 1990-2015 Adobe Systems Incorporated.
+
+See https://github.com/adobe-type-tools/cmap-resources
+-->
+<div class="html pdf-js aem-viewer" dir="ltr">
+<div tabindex="1" class="body loadingInProgress">
+<div id="outerContainer">
+<link rel="resource" type="application/l10n" href="/etc/sapdx/binary/clientlib-viewerjs/locale/locale.properties"/>
+<div id="sidebarContainer">
+<div id="toolbarSidebar">
+<div class="splitToolbarButton toggled">
+<button id="viewThumbnail" class="toolbarButton toggled" title="Show Thumbnails" tabindex="2" data-l10n-id="thumbs">
+<span data-l10n-id="thumbs_label">Thumbnails</span>
+</button>
+<button id="viewOutline" class="toolbarButton" title="Show Document Outline (double-click to expand/collapse all items)" tabindex="3" data-l10n-id="document_outline">
+<span data-l10n-id="document_outline_label">Document Outline</span>
+</button>
+<button id="viewAttachments" class="toolbarButton" title="Show Attachments" tabindex="4" data-l10n-id="attachments">
+<span data-l10n-id="attachments_label">Attachments</span>
+</button>
+</div>
+</div>
+<div id="sidebarContent">
+<div id="thumbnailView">
+</div>
+<div id="outlineView" class="hidden">
+</div>
+<div id="attachmentsView" class="hidden">
+</div>
+</div>
+</div>
+<!-- sidebarContainer -->
+<div id="mainContainer">
+<div class="findbar hidden doorHanger" id="findbar">
+<div id="findbarInputContainer">
+<input id="findInput" class="toolbarField" title="Find" placeholder="Find in document…" tabindex="91" data-l10n-id="find_input"/>
+<div class="splitToolbarButton">
+<button id="findPrevious" class="toolbarButton findPrevious" title="Find the previous occurrence of the phrase" tabindex="92" data-l10n-id="find_previous">
+<span data-l10n-id="find_previous_label">Previous</span>
+</button>
+<div class="splitToolbarButtonSeparator"></div>
+<button id="findNext" class="toolbarButton findNext" title="Find the next occurrence of the phrase" tabindex="93" data-l10n-id="find_next">
+<span data-l10n-id="find_next_label">Next</span>
+</button>
+</div>
+</div>
+<div id="findbarOptionsContainer">
+<input type="checkbox" id="findHighlightAll" class="toolbarField" tabindex="94"/>
+<label for="findHighlightAll" class="toolbarLabel" data-l10n-id="find_highlight">Highlight
+                            all</label>
+<input type="checkbox" id="findMatchCase" class="toolbarField" tabindex="95"/>
+<label for="findMatchCase" class="toolbarLabel" data-l10n-id="find_match_case_label">Match
+                            case</label>
+<span id="findResultsCount" class="toolbarLabel hidden"></span>
+</div>
+<div id="findbarMessageContainer">
+<span id="findMsg" class="toolbarLabel"></span>
+</div>
+</div>
+<!-- findbar -->
+<div id="secondaryToolbar" class="secondaryToolbar hidden doorHangerRight">
+<div id="secondaryToolbarButtonContainer">
+<button id="secondaryPresentationMode" class="secondaryToolbarButton presentationMode visibleLargeView" title="Switch to Presentation Mode" tabindex="51" data-l10n-id="presentation_mode">
+<span data-l10n-id="presentation_mode_label">Presentation Mode</span>
+</button>
+<button id="secondaryPrint" class="secondaryToolbarButton print visibleMediumView" title="Print" tabindex="53" data-l10n-id="print">
+<span data-l10n-id="print_label">Print</span>
+</button>
+<a href="#" id="secondaryViewBookmark" class="secondaryToolbarButton bookmark visibleSmallView" title="Current view (copy or open in new window)" tabindex="55" data-l10n-id="bookmark">
+<span data-l10n-id="bookmark_label">Current View</span>
+</a>
+<div class="horizontalToolbarSeparator visibleLargeView"></div>
+<button id="firstPage" class="secondaryToolbarButton firstPage" title="Go to First Page" tabindex="56" data-l10n-id="first_page">
+<span data-l10n-id="first_page_label">Go to First Page</span>
+</button>
+<button id="lastPage" class="secondaryToolbarButton lastPage" title="Go to Last Page" tabindex="57" data-l10n-id="last_page">
+<span data-l10n-id="last_page_label">Go to Last Page</span>
+</button>
+<div class="horizontalToolbarSeparator"></div>
+<button id="pageRotateCw" class="secondaryToolbarButton rotateCw" title="Rotate Clockwise" tabindex="58" data-l10n-id="page_rotate_cw">
+<span data-l10n-id="page_rotate_cw_label">Rotate Clockwise</span>
+</button>
+<button id="pageRotateCcw" class="secondaryToolbarButton rotateCcw" title="Rotate Counterclockwise" tabindex="59" data-l10n-id="page_rotate_ccw">
+<span data-l10n-id="page_rotate_ccw_label">Rotate Counterclockwise</span>
+</button>
+<div class="horizontalToolbarSeparator"></div>
+<button id="toggleHandTool" class="secondaryToolbarButton handTool" title="Enable hand tool" tabindex="60" data-l10n-id="hand_tool_enable">
+<span data-l10n-id="hand_tool_enable_label">Enable hand tool</span>
+</button>
+<div class="horizontalToolbarSeparator"></div>
+<button id="documentProperties" class="secondaryToolbarButton documentProperties" title="Document Properties…" tabindex="61" data-l10n-id="document_properties">
+<span data-l10n-id="document_properties_label">Document Properties…</span>
+</button>
+</div>
+</div>
+<!-- secondaryToolbar -->
+<div class="toolbar">
+<div id="toolbarContainer">
+<div id="toolbarViewer">
+<div id="toolbarViewerLeft">
+<button id="sidebarToggle" class="toolbarButton" title="Toggle Sidebar" tabindex="11" data-l10n-id="toggle_sidebar">
+<span data-l10n-id="toggle_sidebar_label">Toggle Sidebar</span>
+</button>
+<div class="toolbarButtonSpacer"></div>
+<button id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar">
+<span data-l10n-id="findbar_label">Find</span>
+</button>
+<div class="splitToolbarButton hiddenSmallView">
+<button class="toolbarButton pageUp" title="Previous Page" id="previous" tabindex="13" data-l10n-id="previous">
+<span data-l10n-id="previous_label">Previous</span>
+</button>
+<div class="splitToolbarButtonSeparator"></div>
+<button class="toolbarButton pageDown" title="Next Page" id="next" tabindex="14" data-l10n-id="next">
+<span data-l10n-id="next_label">Next</span>
+</button>
+</div>
+<input type="number" id="pageNumber" class="toolbarField pageNumber" title="Page" value="1" size="4" min="1" tabindex="15" data-l10n-id="page"/>
+<span id="numPages" class="toolbarLabel"></span>
+</div>
+<div id="toolbarViewerRight">
+<button id="presentationMode" class="toolbarButton presentationMode hiddenLargeView" title="Switch to Presentation Mode" tabindex="31" data-l10n-id="presentation_mode">
+<span data-l10n-id="presentation_mode_label">Presentation Mode</span>
+</button>
+<button id="print" class="toolbarButton print hiddenMediumView" title="Print" tabindex="33" data-l10n-id="print">
+<span data-l10n-id="print_label">Print</span>
+</button>
+<a href="#" id="viewBookmark" class="toolbarButton bookmark hiddenSmallView" title="Current view (copy or open in new window)" tabindex="35" data-l10n-id="bookmark">
+<span data-l10n-id="bookmark_label">Current View</span>
+</a>
+<div class="verticalToolbarSeparator hiddenSmallView"></div>
+<button id="secondaryToolbarToggle" class="toolbarButton" title="Tools" tabindex="36" data-l10n-id="tools">
+<span data-l10n-id="tools_label">Tools</span>
+</button>
+</div>
+<div id="toolbarViewerMiddle">
+<div class="splitToolbarButton">
+<button id="zoomOut" class="toolbarButton zoomOut" title="Zoom Out" tabindex="21" data-l10n-id="zoom_out">
+<span data-l10n-id="zoom_out_label">Zoom Out</span>
+</button>
+<div class="splitToolbarButtonSeparator"></div>
+<button id="zoomIn" class="toolbarButton zoomIn" title="Zoom In" tabindex="22" data-l10n-id="zoom_in">
+<span data-l10n-id="zoom_in_label">Zoom In</span>
+</button>
+</div>
+<span id="scaleSelectContainer" class="dropdownToolbarButton">
+<select id="scaleSelect" class="disable-jcf-select" title="Zoom" tabindex="23" data-l10n-id="zoom">
+<option id="pageAutoOption" title="" value="auto" selected="selected" data-l10n-id="page_scale_auto">Automatic Zoom</option>
+<option id="pageActualOption" title="" value="page-actual" data-l10n-id="page_scale_actual">Actual Size</option>
+<option id="pageFitOption" title="" value="page-fit" data-l10n-id="page_scale_fit">Fit Page</option>
+<option id="pageWidthOption" title="" value="page-width" data-l10n-id="page_scale_width">Full Width</option>
+<option id="customScaleOption" title="" value="custom" disabled="disabled" hidden="true"></option>
+<option title="" value="0.5" data-l10n-id="page_scale_percent" data-l10n-args='{ &quot;scale&quot;: 50 }'>50%</option>
+<option title="" value="0.75" data-l10n-id="page_scale_percent" data-l10n-args='{ &quot;scale&quot;: 75 }'>75%</option>
+<option title="" value="1" data-l10n-id="page_scale_percent" data-l10n-args='{ &quot;scale&quot;: 100 }'>100%</option>
+<option title="" value="1.25" data-l10n-id="page_scale_percent" data-l10n-args='{ &quot;scale&quot;: 125 }'>125%</option>
+<option title="" value="1.5" data-l10n-id="page_scale_percent" data-l10n-args='{ &quot;scale&quot;: 150 }'>150%</option>
+<option title="" value="2" data-l10n-id="page_scale_percent" data-l10n-args='{ &quot;scale&quot;: 200 }'>200%</option>
+<option title="" value="3" data-l10n-id="page_scale_percent" data-l10n-args='{ &quot;scale&quot;: 300 }'>300%</option>
+<option title="" value="4" data-l10n-id="page_scale_percent" data-l10n-args='{ &quot;scale&quot;: 400 }'>400%</option>
+</select>
+</span>
+</div>
+</div>
+<div id="loadingBar">
+<div class="progress">
+<div class="glimmer">
+</div>
+</div>
+</div>
+</div>
+</div>
+<menu type="context" id="viewerContextMenu">
+<menuitem id="contextFirstPage" label="First Page" data-l10n-id="first_page"></menuitem>
+<menuitem id="contextLastPage" label="Last Page" data-l10n-id="last_page"></menuitem>
+<menuitem id="contextPageRotateCw" label="Rotate Clockwise" data-l10n-id="page_rotate_cw"></menuitem>
+<menuitem id="contextPageRotateCcw" label="Rotate Counter-Clockwise" data-l10n-id="page_rotate_ccw"></menuitem>
+</menu>
+<div id="viewerContainer" tabindex="0">
+<div id="viewer" class="pdfViewer"></div>
+</div>
+<div id="errorWrapper" hidden='true'>
+<div id="errorMessageLeft">
+<span id="errorMessage"></span>
+<button id="errorShowMore" data-l10n-id="error_more_info">
+                            More Information
+</button>
+<button id="errorShowLess" data-l10n-id="error_less_info" hidden='true'>
+                            Less Information
+</button>
+</div>
+<div id="errorMessageRight">
+<button id="errorClose" data-l10n-id="error_close">
+                            Close
+</button>
+</div>
+<div class="clearBoth"></div>
+<textarea id="errorMoreInfo" hidden='true' readonly="readonly"></textarea>
+</div>
+</div> <!-- mainContainer -->
+<div id="overlayContainer" class="hidden">
+<div id="passwordOverlay" class="container hidden">
+<div class="dialog">
+<div class="row">
+<p id="passwordText" data-l10n-id="password_label">Enter the password to open this PDF
+                                file:</p>
+</div>
+<div class="row">
+<input id="password" class="toolbarField"/>
+</div>
+<div class="buttonRow">
+<button id="passwordCancel" class="overlayButton"><span data-l10n-id="password_cancel">Cancel</span>
+</button>
+<button id="passwordSubmit" class="overlayButton"><span data-l10n-id="password_ok">OK</span>
+</button>
+</div>
+</div>
+</div>
+<div id="documentPropertiesOverlay" class="container hidden">
+<div class="dialog">
+<div class="row">
+<span data-l10n-id="document_properties_file_name">File name:</span>
+<p id="fileNameField">-</p>
+</div>
+<div class="row">
+<span data-l10n-id="document_properties_file_size">File size:</span>
+<p id="fileSizeField">-</p>
+</div>
+<div class="separator"></div>
+<div class="row">
+<span data-l10n-id="document_properties_title">Title:</span>
+<p id="titleField">-</p>
+</div>
+<div class="row">
+<span data-l10n-id="document_properties_author">Author:</span>
+<p id="authorField">-</p>
+</div>
+<div class="row">
+<span data-l10n-id="document_properties_subject">Subject:</span>
+<p id="subjectField">-</p>
+</div>
+<div class="row">
+<span data-l10n-id="document_properties_keywords">Keywords:</span>
+<p id="keywordsField">-</p>
+</div>
+<div class="row">
+<span data-l10n-id="document_properties_creation_date">Creation Date:</span>
+<p id="creationDateField">-</p>
+</div>
+<div class="row">
+<span data-l10n-id="document_properties_modification_date">Modification Date:</span>
+<p id="modificationDateField">-</p>
+</div>
+<div class="row">
+<span data-l10n-id="document_properties_creator">Creator:</span>
+<p id="creatorField">-</p>
+</div>
+<div class="separator"></div>
+<div class="row">
+<span data-l10n-id="document_properties_producer">PDF Producer:</span>
+<p id="producerField">-</p>
+</div>
+<div class="row">
+<span data-l10n-id="document_properties_version">PDF Version:</span>
+<p id="versionField">-</p>
+</div>
+<div class="row">
+<span data-l10n-id="document_properties_page_count">Page Count:</span>
+<p id="pageCountField">-</p>
+</div>
+<div class="buttonRow">
+<button id="documentPropertiesClose" class="overlayButton"><span data-l10n-id="document_properties_close">Close</span></button>
+</div>
+</div>
+</div>
+<div id="printServiceOverlay" class="container hidden">
+<div class="dialog">
+<div class="row">
+<span data-l10n-id="print_progress_message">Preparing document for printing…</span>
+</div>
+<div class="row">
+<progress value="0" max="100"></progress>
+<span data-l10n-id="print_progress_percent" data-l10n-args='{ &quot;progress&quot;: 0 }' class="relative-progress">0%</span>
+</div>
+<div class="buttonRow">
+<button id="printCancel" class="overlayButton"><span data-l10n-id="print_progress_close">Cancel</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- overlayContainer -->
+</div> <!-- outerContainer -->
+</div>
+</div>
+</div>
+<div class="asset-panel-description pdf-panel-description">
+<h1>Installing AS ABAP 7.52 dev edition on VMWare and Linux</h1>
+<p>If you are new to Linux, this step-by-step guide talks you through installing: A virtual machine (VMWare Player); a Linux operating system (openSUSE Leap 15.0); and the AS ABAP 7.52 SP01 developer edition on ASE 16.0 datatbase.
+                &nbsp;<a id="download-link" class="exclude-ligthbox-handler" data-analytics-assetid="c86f9218-687d-0010-87a3-c30de2ffd8ff|pdf|Installing AS ABAP 7.52 dev edition on VMWare and Linux" data-sap-digital-id="No Digital Library ID" href="//www.sap.com/docs/download/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.pdf" download>Download the Document</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="teconsent" data-eu-countries="no,de,be,fi,pt,bg,dk,lt,lu,hr,lv,fr,hu,se,si,sk,gb,ie,ee,mt,is,it,gr,es,at,cy,cz,pl,li,ro,nl" data-disabled-countries="ru" data-domain-name="sap.com" data-page-path="/content/sapdx/countries/en_us/asset/pdf" data-requested-page-path="/content/sapdx/countries/en_us/asset/pdf" data-is-treat-non-eu-countries-as-disabled="false"></div>
+<div class="container-extended footnote-wrapper">
+<div class="row">
+<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xlg-1"></div>
+<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xlg-10">
+</div>
+<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xlg-1"></div>
+</div>
+</div>
+<div data-component="PageRating" data-pagerating.submit.label="Send Feedback" data-pagerating.close.label="No additional feedback">
+</div>
+<footer id="footer" data-activity-map-region="Footer" class="footer-standard ">
+<div class="container-extended">
+<div class="section"><div class="new"></div>
+</div><div class="iparys_inherited"><div class="parFooter iparsys parsys"><div class="footer genericComponent parbase section"><!-- SDI include (path: /content/sapdx/countries/en_us/_jcr_content/parFooter/footer.2019-09.c86f9218-687d-0010-87a3-c30de2ffd8ff.cache.html, resourceType: sapdx/components/modular/nav/footer) -->
+
+<span class='lazy-loader-wrapper' data-loader='lazyScriptCssLoader' data-resource-type="sapdx/components/modular/nav/footer">
+<span class='lazy-css' data-src="/etc.clientlibs/sapdx/components/modular/nav/footer/clientlib.min.18daxb2.1.0.2016.css"></span><span class='lazy-script' data-src="/etc.clientlibs/sapdx/components/modular/nav/footer/clientlib.min.18daxb2.1.0.2016.js"></span>
+</span>
+<div class="footer-standard__holder footer-skin-tier1">
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 col-xlg-3">
+<div class="footer-column">
+<fieldset arial-label="Quick Links">
+<input id="footer-column0" class="disable-jcf-select footer-column__checkbox" type="checkbox" name="footer-accordion"/>
+<label for="footer-column0" class="footer-column__heading">
+<legend>Quick Links</legend>
+<span class="footer-column__icon icon-arrowdown"></span>
+<span class="footer-column__icon icon-arrowup"></span>
+</label>
+<div class="footer-column__slide">
+<ul class="footer-list">
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/why-sap.html" target="_self" data-engagement-tracking-analytics="footer:Why SAP" data-content-page-path="/content/sapdx/countries/en_us/why-sap.html">Why SAP</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/products/intelligent-enterprise.html" target="_self" data-engagement-tracking-analytics="footer:Intelligent Enterprise" data-content-page-path="/content/sapdx/countries/en_us/products/intelligent-enterprise.html">Intelligent Enterprise</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/products/sme-business-software.html" target="_self" data-engagement-tracking-analytics="footer:Small and Midsize Enterprises" data-content-page-path="/content/sapdx/countries/en_us/products/sme-business-software.html">Small and Midsize Enterprises</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/about/trust-center.html" target="_self" data-engagement-tracking-analytics="footer:SAP Trust Center" data-content-page-path="/content/sapdx/countries/en_us/about/trust-center.html">SAP Trust Center</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://insights.sap.com" target="_blank" data-engagement-tracking-analytics="footer:SAP Insights" data-content-page-path="https://insights.sap.com">SAP Insights</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://community.sap.com/" target="_blank" data-engagement-tracking-analytics="footer:SAP Community" data-content-page-path="https://community.sap.com/">SAP Community</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://developers.sap.com/" target="_blank" data-engagement-tracking-analytics="footer:Developer" data-content-page-path="https://developers.sap.com/">Developer</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://support.sap.com/en/index.html" target="_blank" data-engagement-tracking-analytics="footer:Support Portal" data-content-page-path="https://support.sap.com/en/index.html">Support Portal</a>
+</li>
+</ul>
+</div>
+</fieldset>
+</div>
+</div>
+<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 col-xlg-3">
+<div class="footer-column">
+<fieldset arial-label="About SAP">
+<input id="footer-column1" class="disable-jcf-select footer-column__checkbox" type="checkbox" name="footer-accordion"/>
+<label for="footer-column1" class="footer-column__heading">
+<legend>About SAP</legend>
+<span class="footer-column__icon icon-arrowdown"></span>
+<span class="footer-column__icon icon-arrowup"></span>
+</label>
+<div class="footer-column__slide">
+<ul class="footer-list">
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/about/company.html" target="_self" data-engagement-tracking-analytics="footer:Company Information" data-content-page-path="/content/sapdx/countries/en_us/about/company.html">Company Information</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/about/company/office-locations.html" target="_self" data-engagement-tracking-analytics="footer:Worldwide Directory" data-content-page-path="/content/sapdx/countries/en_us/about/company/office-locations.html">Worldwide Directory</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/investors/en.html" target="_blank" data-engagement-tracking-analytics="footer:Investor Relations" data-content-page-path="/content/investors/sap-se/en.html">Investor Relations</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/about/careers.html" target="_self" data-engagement-tracking-analytics="footer:Careers" data-content-page-path="/content/sapdx/countries/en_us/about/careers.html">Careers</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://news.sap.com/" target="_blank" data-engagement-tracking-analytics="footer:News and Press" data-content-page-path="https://news.sap.com/">News and Press</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/about/events.html" target="_self" data-engagement-tracking-analytics="footer:Events" data-content-page-path="/content/sapdx/countries/en_us/about/events.html">Events</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/about/customer-stories.html" target="_self" data-engagement-tracking-analytics="footer:Customer Stories" data-content-page-path="/content/sapdx/countries/en_us/about/customer-stories.html">Customer Stories</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/cmp/nl/sap-newsletter/index.html" target="_blank" data-engagement-tracking-analytics="footer:Newsletter" data-content-page-path="/content/sapdx/countries/en_us/cmp/nl/sap-newsletter/index.html">Newsletter</a>
+</li>
+</ul>
+</div>
+</fieldset>
+</div>
+</div>
+<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 col-xlg-3">
+<div class="footer-column">
+<fieldset arial-label="Site Information">
+<input id="footer-column2" class="disable-jcf-select footer-column__checkbox" type="checkbox" name="footer-accordion"/>
+<label for="footer-column2" class="footer-column__heading">
+<legend>Site Information</legend>
+<span class="footer-column__icon icon-arrowdown"></span>
+<span class="footer-column__icon icon-arrowup"></span>
+</label>
+<div class="footer-column__slide">
+<ul class="footer-list">
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/about/legal/privacy.html" target="_self" data-engagement-tracking-analytics="footer:Privacy" data-content-page-path="/content/sapdx/countries/en_us/about/legal/privacy.html">Privacy</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/corporate/en/legal/terms-of-use.html" target="_self" data-engagement-tracking-analytics="footer:Terms of Use" data-content-page-path="/content/corporate/sap-se/en/legal/terms-of-use.html">Terms of Use</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/about/legal/impressum.html" target="_self" data-engagement-tracking-analytics="footer:Legal Disclosure" data-content-page-path="/content/sapdx/countries/en_us/about/legal/impressum.html">Legal Disclosure</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/about/legal/copyright.html" target="_self" data-engagement-tracking-analytics="footer:Copyright" data-content-page-path="/content/sapdx/countries/en_us/about/legal/copyright.html">Copyright</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/about/legal/trademark.html" target="_self" data-engagement-tracking-analytics="footer:Trademark" data-content-page-path="/content/sapdx/countries/en_us/about/legal/trademark.html">Trademark</a>
+</li>
+<li class="footer-list__item">
+<a class="standard footer-list__link" href="https://www.sap.com/site-map.html" target="_self" title="Sitemap" data-engagement-tracking-analytics="footer:Sitemap" data-content-page-path="/content/sapdx/countries/en_us/site-map.html">Sitemap</a>
+</li>
+<li class="footer-list__item">
+<a class="textView footer-list__link" href="#" target="_self" title="Text View" data-engagement-tracking-analytics="footer:Text View" data-content-page-path="#">Text View</a>
+</li>
+<li class="footer-list__item">
+<a class="cookiePreference footer-list__link" href="#" target="_self" data-engagement-tracking-analytics="footer:Cookie Preferences" data-content-page-path="#">Cookie Preferences</a>
+</li>
+</ul>
+</div>
+</fieldset>
+</div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xlg-3">
+<div data-component="ContactUs" data-model="/bin/sapdxc/cache/contactModule/content/sapdx/countries/en_us/_jcr_content/parContactModule/contactModule.model.json" data-design="In Footer"></div>
+</div>
+</div>
+<div class="footer-standard__wrap">
+<div class="row">
+<div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 col-xlg-6 footer-standard__frame pull-right">
+<div class="social-networks">
+<div class="social-networks__headline">Find us on</div>
+<ul class="social-networks__list followShareWrap">
+<li class="share social-networks__item" data-count="1">
+<a href="https://www.facebook.com/SAP" data-share-channel="facebook" data-share-tracking-analytics="FOLLOW" data-share-link-flag="share" title="Facebook" data-title="Facebook" target="_blank" data-share-url="?source=social-atw-facebook" class="share_button_facebook social-networks__link" rel="noopener noreferrer">
+<img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" class="social-networks__icon lazy" data-src="https://www.sap.com/dam/application/shared/images/social-icons/icon-2018-facebook.svg" alt=""/>
+</a>
+</li>
+<li class="share social-networks__item" data-count="2">
+<a href="https://twitter.com/sap" data-share-channel="twitter" data-share-tracking-analytics="FOLLOW" data-share-link-flag="share" title="Twitter" data-title="Twitter" target="_blank" data-share-url="?source=social-atw-twitter" class="share_button_twitter social-networks__link" rel="noopener noreferrer">
+<img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" class="social-networks__icon lazy" data-src="https://www.sap.com/dam/application/shared/images/social-icons/icon-2018-twitter.svg" alt=""/>
+</a>
+</li>
+<li class="share social-networks__item" data-count="3">
+<a href="https://www.youtube.com/user/SAP" data-share-channel="youtube" data-share-tracking-analytics="FOLLOW" title="YouTube" data-title="YouTube" target="_blank" data-share-url="?source=social-atw-youtube" class="share_button_youtube social-networks__link" rel="noopener noreferrer">
+<img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" class="social-networks__icon lazy" data-src="https://www.sap.com/dam/application/shared/images/social-icons/icon-2018-youtube.svg" alt=""/>
+</a>
+</li>
+<li class="share social-networks__item" data-count="4">
+<a href="https://www.linkedin.com/company/sap" data-share-channel="linkedin" data-share-tracking-analytics="FOLLOW" data-share-link-flag="share" title="LinkedIn" data-title="LinkedIn" target="_blank" data-share-url="?source=social-atw-linkedin" class="share_button_linkedin social-networks__link" rel="noopener noreferrer">
+<img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" class="social-networks__icon lazy" data-src="https://www.sap.com/dam/application/shared/images/social-icons/icon-2018-linked-in.svg" alt=""/>
+</a>
+</li>
+<li class="share social-networks__item" data-count="5">
+<a href="https://www.instagram.com/sap/" data-share-channel="instagram" data-share-tracking-analytics="FOLLOW" title="Instagram" data-title="Instagram" target="_blank" data-share-url="?source=social-atw-instagram" class="share_button_instagram social-networks__link" rel="noopener noreferrer">
+<img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" class="social-networks__icon lazy" data-src="https://www.sap.com/dam/application/shared/images/social-icons/icon-2018-instagram.svg" alt=""/>
+</a>
+</li>
+<li class="share social-networks__item" data-count="6">
+<a class="social-networks__link" title="Email share" target="_self" data-share-tracking-analytics="SHARE" data-share-channel="mailto">
+<img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" class="social-networks__icon lazy" data-src="https://www.sap.com/dam/application/shared/images/social-icons/icon-2018-envelope.svg" alt=""/>
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="col-xs-12 col-sm-4 col-md-4 col-lg-6 col-xlg-6">
+<a class="footer-standard__logo" title="SAP" href="//www.sap.com/index.html">
+<img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg" class="image lazy" alt="SAP"/>
+</a>
+</div>
+</div>
+</div>
+<a href="#" class="fullBrowserView" title="Return to Full Browser View" target="_self"><span class='sreen-reader-only'>Return to Full Browser View</span></a>
+</div></div>
+</div>
+</div>
+</div>
+</footer>
+<div id="bPopup-container">
+<span class="b-close"></span>
+<div class="bPopup-content"></div>
+</div>
+<strong class="accessibility"><a href="#page">Back to top</a></strong>
+</div>
+<div class="i18nContainer hidden">
+<div class="trialsKeys" data-forms.registration.gatedassets-trials.headline.title="Thank you for your interest in SAP" data-fd_Submit="Submit" data-forms.trial.scenario.eula.headline.text="End user license agreement" data-forms.trial.scenario.technicalerror.headline.title="Get your free trial" data-forms.trial.scenario.technicalerror.headline.text="Sorry" data-forms.trial.scenario.technicalerror.message="Unfortunately, a technical error occurred when processing your request. Please try again." data-form.registration.confirmationscreen.link.text="Close this window and go back to SAP.com" data-forms.trial.scenario.confirmation.headline.text="Welcome to your free trial" data-forms.trial.scenario.confirmation.button.label="Click here to start your trial!" data-forms.trial.scenario.technicalerror.nonexistingtrial.message="Our apologies, but the requested trial does not exist." data-forms.trial.scenario.technicalerror.secondaryevaluation.message="Our apologies, but this solution cannot currently be provided. We will e-mail you as soon as this problem has been solved." data-forms.trial.scenario.eula.validation.text="Please acknowledge that you have read the end user license agreement." data-forms.generic.scenario.gtscheckfailed.message="Your request for information is being reviewed. Once approved, you’ll receive an e-mail with additional instructions." data-forms.generic.scenario.gtsdatamismatched.message="Some of your information doesn’t match what we have in your profile. Please log out of SAP.com, log in with the correct account, and resubmit the form with the original information provided." data-forms.registration.statusbar.register.label="Register" data-forms.registration.statusbar.verifyemail.label="Verify your e-mail" data-forms.registration.statusbar.eula.label="Accept license agreement" data-forms.registration.statusbar.viewContent.label="Access your content" data-forms.registration.statusbar.accessresources.label="Access all resources">
+</div>
+</div>
+<div class="hidden lightboxI18nContainer" data-forms.lightbox.documentnotfound.maintitle.text="Message" data-forms.lightbox.documentnotfound.headline.text="Document can’t be found" data-forms.lightbox.documentnotfound.paragraph.text="Our apologies! The document you are looking for may have been removed or is temporarily unavailable." data-forms.lightbox.documentnotfound.submit.button.label="Ok" data-forms.lightbox.videonotfound.maintitle.text="Message" data-forms.lightbox.videonotfound.headline.text="Video can’t be found" data-forms.lightbox.videonotfound.paragraph.text="Our apologies! The video you are looking for may have been removed or is temporarily unavailable." data-forms.lightbox.videonotfound.submit.button.label="Ok" data-lightbox.search.nomatches.text="Phrase not found" data-lightbox.search.totalmatches.template="{0} entries found" data-lightbox.search.currentmatch.template="{0} of {1}" data-2017.form.browsercompatibility.maintitle.text="Notification" data-2017.form.browsercompatibility.headline.text="Dear visitor of the SAP Integrated Report," data-2017.form.browsercompatibility.paragraph.text="We would like to inform you that during our quality assurance testing Microsoft Internet Explorer showed some performance issues when loading PDFs. If you experience any inconvenient delays, we recommend switching to a different browser.Thank you for your understanding." data-2017.form.browsercompatibility.button.confirm.label="Ok">
+</div>
+<script class="markupLigtbox" type="text/x-handlebars-template">
+    <div class="lightboxPopup" id="openPopup">
+        <section>
+            <div class="loadingBar">
+                <div class="bar bar-first"></div>
+                <div class="bar bar-second"></div>
+                <div class="bar bar-third"></div>
+            </div>
+        </section>
+        <div class="lightboxContainer">
+            <div class="popupHeader container-extended">
+                <div class="header-container grid-container">
+                    <div class="row">
+                        <div class="col-xs-11 col-sm-10 col-md-10 col-lg-10">
+                            <div class="sectionTitle he">{{assetTitle}}</div>
+                            <div class="descriptionText text">{{assetDescription}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="toolbar-container {{#if pageRating}}{{pageRating}} col-xlg-12 col-lg-12 col-md-12 col-xs-12 col{{/if}}">
+                    <nav class="toolbar">
+                        <ul class="toolbar-list">
+                            <li><a id="download-link" class="toolbtn download icon-download exclude-ligthbox-handler"></a></li>
+                            <li><a target="_top" class="toolbtn mail icon-email exclude-ligthbox-handler" data-share-tracking-analytics="SHARE" data-share-channel="mailto"></a></li>
+                            <li class="share-wrap"><a class="toolbtn share icon-share"></a>
+                                <ul class="share-dropdown">
+                                    {{#each socialItems}}
+                                    <li>
+                                        <a class="{{shareClass}}" title="{{title}}" data-share-channel="{{share-channel}}" data-share-tracking-analytics="SHARE" target="_blank"
+                                           data-share-url="{{resourceLink}}"><span class="{{class}}"></span>{{title}}</a>
+                                    </li>
+                                    {{/each }}
+                                </ul>
+                            </li>
+                            <li class="rating-message initial hidden">
+                                <div class="thanksLikeBlock ds-body ds-body--l"></div>
+                                <div class="thanksDisliking"></div>
+                                <div class="question firstQuestion initial">
+                                    <div class="question-headline ds-body"></div>
+                                    <div class="question-buttons">
+                                        <div class="button-block">
+                                            <a class="like-button ds-button ds-button--secondary ds-button--secondary--white ds-m-r-m ds-m-l-l"></a>
+                                            <a class="dislike-button dislike-icon ds-button ds-button--secondary ds-button--secondary--white"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="toolbtn exit icon-close mfp-close"></div>
+                </div>
+                <div class="question-container">
+                    <div class="rating-wrapper-lightbox">
+                        <div class="question secondQuestion col-xlg-10 col-lg-10 col-sm-10 col-md-10 col">
+                            <div class="blockReasons">
+                                <div class="question-wrapper">
+                                    <div class="questionText"></div>
+                                    <ul class="radio-rating ds-m-t-m"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="close-feedback icon-close"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="popupContent">
+                {{{popupContent}}}
+            </div>
+            <div class="popupFooter">
+                {{#if isFooterConfigured}}
+                <div class="footer-container grid-container">
+                    <div class="row">
+                        <div class="col-xs-7 col-sm-12 col-md-12 col-lg-12">
+                            <div class="info-container">
+                                <div class="he footer-headine">{{assetFooterTitle}}</div>
+                                <div class="text footer-paragraph">{{assetFooterDescription}}</div>
+                            </div>
+                        </div>
+                        <div class="btn-wrapper col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                            {{#if assetFooterLinkName}}
+                                <a href="{{assetFooterLinkPath}}" target="{{assetFooterLinkTarget}}"
+                                   title="{{assetFooterLinkTooltip}}" class="button2017 version1 lightbox-footer-link">
+                                    <span class="buttonText">{{assetFooterLinkName}}</span>
+                                    <span class="hoverboxes"><span class="hoverbox"></span><span
+                                            class="hoverbox"></span><span class="hoverbox"></span></span>
+                                </a>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</script>
+<script class="feedbackLightbox" type="text/x-handlebars-template">
+    <div class="lightboxPopup lightboxFeedback" id="openPopup">
+        <div class="wrapper">
+            <div class="header">
+                <div class="title he">{{assetTitle}}</div>
+                <div class="toolbtn exit icon-close mfp-close"></div>
+            </div>
+            <div class="popupContent">
+                {{{popupContent}}}
+            </div>
+        </div>
+    </div>
+</script>
+<script class="compatibilityLightbox" type="text/x-handlebars-template">
+    <div class="lightboxPopup lightboxCompatibility" id="openPopup">
+        <div class="wrapper">
+            <div class="header">
+                <div class="title he">{{compatibilityTitle}}</div>
+                <div class="toolbtn exit icon-close mfp-close"></div>
+            </div>
+            <div class="popupContent">
+                <div class="compatibility-wrapper">
+                    <div class="compatibility-content">
+                        <div class="compatibility-headline">
+                            {{compatibilityHeadline}}
+                        </div>
+                        <div class="compatibility-body">
+                            {{compatibilityContent}}
+                        </div>
+                        <div class="compatibility-button-wrapper">
+                            <a class="compatibility-button button2017 version1">
+                                <span class="buttonText">{{compatibilityConfirmButton}}</span>
+                                <span class="hoverboxes">
+                                    <span class="hoverbox"></span>
+                                    <span class="hoverbox"></span>
+                                    <span class="hoverbox"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script class="messageLightbox" type="text/x-handlebars-template">
+    <div class="popup-header">
+        <p class="title">{{headerMessage}}</p>
+        <button class="close-button" type="button">×</button>
+    </div>
+    <div class="popup-container">
+        {{> content}}
+        <div class="loading-bar-overlay">
+            <div class="loadingBar">
+                <div class="bar bar-first"></div>
+                <div class="bar bar-second"></div>
+                <div class="bar bar-third"></div>
+            </div>
+        </div>
+    </div>
+</script>
+<script class="errorMessageContent" type="text/x-handlebars-template">
+    <div class="content-container content-partial content-fail-partial container-extended">
+        <div class="row">
+            <div class="col-xlg-offset-1 col-xlg-10 col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12">
+                <div class="standardText">
+                    <h1 class="header-title hd">{{failTitle}}</h1>
+                    <div class="content-block">
+                        <div class="body-text text">
+                            <p>{{errorMessage}}</p>
+                        </div>
+                        <div class="links-list">
+                            <ul class="links list-unstyled">
+                                <li class="type-link">
+                                    <a class="button2017 version1 error-close-button" type="button" href="#">
+                                        <span class="buttonText">{{buttonTitle}}</span>
+                                        <span class="hoverboxes">
+                                            <span class="hoverbox"></span>
+                                            <span class="hoverbox"></span>
+                                            <span class="hoverbox"></span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script class="html-content-lightbox" type="text/x-handlebars-template">
+    <div class="popupHeader">
+        {{#if isHeaderConfigured}}
+        <div class="header-container grid-container">
+            <div class="row">
+                <div class="col-xs-11 col-sm-10 col-md-10 col-lg-10">
+                    <div class="sectionTitle he">{{assetTitle}}</div>
+                    <div class="descriptionText text">{{assetDescription}}</div>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+        <div class="toolbar-container">
+            {{#if isHeaderConfigured}}
+            {{#if isEnabledShareLink}}
+            <nav class="toolbar">
+                <ul class="toolbar-list">
+                    <li><a class="toolbtn mail icon-email exclude-ligthbox-handler" data-share-tracking-analytics="SHARE" data-share-channel="mailto"></a></li>
+                    <li class="share-wrap"><a class="toolbtn share icon-share"></a>
+                        <ul class="share-dropdown">
+                            {{#each socialItems}}
+                            <li>
+                                <a class="{{shareClass}}" title="{{title}}" data-share-channel="{{share-channel}}" data-share-tracking-analytics="SHARE" target="_blank"
+                                   data-share-url="{{resourceLink}}"><span class="{{class}}"></span>{{title}}</a>
+                            </li>
+                            {{/each }}
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            {{/if}}
+            {{/if}}
+            <div class="toolbtn exit icon-close mfp-close"></div>
+        </div>
+    </div>
+    <div class="popup-container">
+        <iframe 
+            class="html-content-lightbox-frame"
+            src={{src}}
+            width='1100px' height='700px'>
+        </iframe>
+    </div>
+    <div class="popupFooter">
+        {{#if isFooterConfigured}}
+        <div class="footer-container grid-container">
+            <div class="row">
+                <div class="col-xs-7 col-sm-12 col-md-12 col-lg-12">
+                    <div class="info-container">
+                        <div class="he footer-headine">{{assetFooterTitle}}</div>
+                        <div class="text footer-paragraph">{{assetFooterDescription}}</div>
+                    </div>
+                </div>
+                <div class="btn-wrapper col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                    <a href="{{assetFooterLinkPath}}" target="{{assetFooterLinkTarget}}"
+                       title="{{assetFooterLinkTooltip}}" class="button2017 version1 lightbox-footer-link">
+                        <span class="buttonText">{{assetFooterLinkName}}</span>
+                        <span class="hoverboxes"><span class="hoverbox"></span><span
+                                class="hoverbox"></span><span class="hoverbox"></span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</script>
+<script>
+    try{
+        if (!!window._satellite) {
+            _satellite.pageBottom();
+        }
+    } catch(e) {
+        console.error("Error while calling _satellite.pageBottom(), Error thrown : " +  e);
+    }
+</script>
+<script src="/etc.clientlibs/sapdx/clientlibs/clientlib-lightbox-util.min.c714dc8b79a2ba76265f03f4d1b3ea02.js"></script>
+<script src="/etc.clientlibs/sapdx/clientlibs/clientlib-lightbox-lazy-init.min.33890ef0435c27911e80c20ca73d268b.js"></script>
+<span class='lazy-loader-event-wrapper' data-categories='apps.sapdx.lightbox'>
+<span class='lazy-css' data-src="/etc.clientlibs/sapdx/clientlibs/clientlib-lightbox.min.18daxb2.1.0.2016.css"></span><span class='lazy-script' data-src="/etc.clientlibs/sapdx/clientlibs/clientlib-lightbox.min.18daxb2.1.0.2016.js"></span>
+</span>
+<span class='lazy-loader-event-wrapper' data-categories='apps.assets.detail.mfp.lazy'>
+<span class='lazy-css' data-src="/etc.clientlibs/sapdx/clientlibs/clientlib-assets-detail/mfp-lazy.min.18daxb2.1.0.2016.css"></span>
+</span>
+<script defer type="text/javascript" src="/etc.clientlibs/sapdx/clientlibs/clientlib-ip-detection.min.925a92f8be4a5664c213186fab88093d.js"></script>
+<script src="/etc.clientlibs/sapdx/clientlibs/clientlib-handlebars.min.8b33830677f1fe3d2b3cbc36bcfff0fb.js"></script>
+<script src="/etc.clientlibs/sapdx/clientlibs/clientlib-assets-detail/codebase.min.442b087c40eae69ef7165343b2e44be4.js"></script>
+<link rel="stylesheet" href="/etc/sapdx/binary/clientlibs-pdfjs-extensions.min.d0e64aa04183419090cf093099dc05e4.css" type="text/css">
+<script defer type="text/javascript" src="/etc/sapdx/binary/clientlib-pdfjs.min.d69d3bd08f52a79589ec4cc3d5a77d03.js"></script>
+<script defer type="text/javascript" src="/etc/sapdx/binary/clientlibs-pdfjs-extensions.min.fa1d62136788aab499ab01df12199ccd.js"></script>
+<script defer type="text/javascript" src="/etc/sapdx/binary/clientlib-viewerjs.min.6808a569f2c9199946699dfdaace7423.js"></script>
+<div class="call-popup" style="display:none">
+<div class="musthead">
+<h3 class="hd callme-title">Call me now</h3>
+<span class="popup-close ignore-draggable-intouch" role="button" title="Close"></span>
+<span class="popup-minimize ignore-draggable-intouch" role="button" title="Minimize"></span>
+<span class="popup-maximize ignore-draggable-intouch" role="button" title="Maximize"></span>
+</div>
+</div>
+</body>
+</html>

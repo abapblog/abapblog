@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Внутренние таблицы | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/vnutrennie-tablicy/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Wed, 28 Oct 2020 20:02:35 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Модификация значений внутренней таблицы в одну строку</title>
+		<link>https://abap-blog.ru/abap-notes/modifikaciya-polya-vo-vsej-tablice-v-odnu-stroku/</link>
+					<comments>https://abap-blog.ru/abap-notes/modifikaciya-polya-vo-vsej-tablice-v-odnu-stroku/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 28 Oct 2020 19:53:14 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5349</guid>
+
+					<description><![CDATA[<p>С удивлением обнаружил, что не все знают о такой конструкции, которая позволяет поменять значения определённых полей в таблице в одну строку, да еще и с условиями: [crayon-618a1e0c02425720940533/] Справка по теме.</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/modifikaciya-polya-vo-vsej-tablice-v-odnu-stroku/">Модификация значений внутренней таблицы в одну строку</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>С удивлением обнаружил, что не все знают о такой конструкции, которая позволяет поменять значения определённых полей в таблице в одну строку, да еще и с условиями:</p><pre class="urvanov-syntax-highlighter-plain-tag">MODIFY lt_table FROM VALUE #( some_field = 'NEW value' ) TRANSPORTING some_field WHERE some_field CP '*'.</pre><p><a href="https://help.sap.com/doc/abapdocu_752_index_htm/7.52/en-US/abapmodify_itab_multiple.htm">Справка по теме.</a></p><p>The post <a href="https://abap-blog.ru/abap-notes/modifikaciya-polya-vo-vsej-tablice-v-odnu-stroku/">Модификация значений внутренней таблицы в одну строку</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/modifikaciya-polya-vo-vsej-tablice-v-odnu-stroku/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>VALUE и параллельные курсоры</title>
+		<link>https://abap-blog.ru/abap-notes/value-i-parallelnye-kursory/</link>
+					<comments>https://abap-blog.ru/abap-notes/value-i-parallelnye-kursory/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 13 Apr 2020 06:28:23 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4086</guid>
+
+					<description><![CDATA[<p>Техника параллельных курсоров (индексов) при обработке вложенных таблиц позволяет существенно увеличить производительность при обходе внутренних таблиц, в простейшем виде это выглядит следующим образом: [crayon-618a1e0c02f89430415364/] Используя оператор VALUE мы так же можем прибегать к этой технике: [crayon-618a1e0c02f92514585621/] &#160; &#160; &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/value-i-parallelnye-kursory/">VALUE и параллельные курсоры</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Техника параллельных курсоров (индексов) при обработке вложенных таблиц позволяет существенно увеличить производительность при обходе внутренних таблиц, в простейшем виде это выглядит следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">SORT: it_vbak BY vbeln,
+      it_vbap BY vbeln.
+
+LOOP AT it_vbak ASSIGNING &lt;ls_vbak&gt;.
+  READ TABLE it_vbap TRANSPORTING NO FIELDS
+       WITH KEY vbeln = &lt;ls_vbak&gt;-vbeln
+       BINARY SEARCH.
+  lv_tabix = sy-tabix.
+  LOOP AT it_vbap FROM lv_tabix ASSIGNING &lt;ls_vbap&gt; .
+    IF &lt;ls_vbap&gt;-vbeln &lt;&gt; &lt;ls_vbak&gt;-vbeln.
+      EXIT.
+    ENDIF.
+  ENDLOOP.
+ENDLOOP.
+
+" Или без READ
+
+SORT: it_vbak BY vbeln,
+      it_vbap BY vbeln.
+lv_tabix = 1.   
+LOOP AT it_vbak ASSIGNING &lt;ls_vbak&gt;.
+  LOOP AT it_vbap FROM lv_tabix
+                  ASSIGNING &lt;ls_vbap&gt;.
+    IF &lt;ls_vbak&gt;-vbeln &lt;&gt; &lt;ls_vbap&gt;-vbeln.
+      lv_tabix = sy-tabix.
+      EXIT.
+    ENDIF.
+  ENDLOOP.
+ENDLOOP.</pre><p>Используя оператор VALUE мы так же можем прибегать к этой технике:</p><pre class="urvanov-syntax-highlighter-plain-tag">" Через Until
+
+     DATA(lt_table) = VALUE ty_t_data(
+            FOR &lt;ls_vbak&gt; IN lt_vbak
+            FOR i = line_index( lt_vbap[ vbeln = &lt;ls_vbak&gt;-vbeln ] )
+                UNTIL i = 0 
+                   OR i &gt; lines( lt_vbap )
+                   OR lt_vbap[ i ]-vbeln &lt;&gt; &lt;ls_vbak&gt;-vbeln
+            ( vbeln   = &lt;ls_vbak&gt;-vbeln
+              posnr   = VALUE #( lt_vbap[ i ]-posnr OPTIONAL ) ) ).
+
+" Или через While
+
+      DATA(lt_table) = VALUE ty_t_data(
+            FOR &lt;ls_vbak&gt; IN lt_vbak
+            FOR i = line_index( lt_vbap[ vbeln = &lt;ls_vbak&gt;-vbeln ] )
+                WHILE i &lt;&gt; 0
+                  AND i &lt;= lines( lt_vbap )
+                  AND lt_vbap[ i ]-vbeln = &lt;ls_vbak&gt;-vbeln
+            ( vbeln   = &lt;ls_vbak&gt;-vbeln
+              posnr   = VALUE #( lt_vbap[ i ]-posnr OPTIONAL ) ) ).</pre><p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/value-i-parallelnye-kursory/">VALUE и параллельные курсоры</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/value-i-parallelnye-kursory/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Создание таблицы через VALUE на основе самой таблицы</title>
+		<link>https://abap-blog.ru/abap-notes/sozdanie-tablicy-na-osnove-samoj-tablicy-cherez-value/</link>
+					<comments>https://abap-blog.ru/abap-notes/sozdanie-tablicy-na-osnove-samoj-tablicy-cherez-value/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 09 Apr 2020 10:32:38 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4019</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e0c03191871362527/] При использовании оператора VALUE следует быть внимательным в случае если мы формируем таблицу на основе её же данных: If the VALUE operator is used as the source of an assignment to an internal table, this table is first initialized after the evaluation of the LET expression (if available) or is assigned the content of itab.</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/sozdanie-tablicy-na-osnove-samoj-tablicy-cherez-value/">Создание таблицы через VALUE на основе самой таблицы</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  lt_comp TYPE string_table.
+
+lt_comp = VALUE #( ( `123` ) ).
+lt_comp = VALUE #( FOR &lt;ls&gt; IN lt_comp ( |{ &lt;ls&gt; }-123| ) ).
+cl_demo_output=&gt;write( name = 'Присвоение с ошибкой' data = lt_comp ).
+
+lt_comp = VALUE #( ( `123` ) ).
+lt_comp = VALUE #( LET lt_tab = lt_comp IN FOR &lt;ls&gt; IN lt_tab ( |{ &lt;ls&gt; }-123| ) ).
+cl_demo_output=&gt;display( name = 'Присвоение без ошибки' data = lt_comp ).</pre><p>При использовании оператора VALUE следует быть внимательным в случае если мы формируем таблицу на основе её же данных:</p>
+<blockquote><p><span style="font-family: Arial,sans-serif;"><span lang="en-US">If the VALUE operator is used as the source of an assignment to an internal table, this table is first initialized after the evaluation of the </span></span><span style="font-family: Arial,sans-serif;"><span lang="en-US">LET</span></span><span style="font-family: Arial,sans-serif;"><span lang="en-US"> expression (if available) or is assigned the content of itab.</span></span></p></blockquote><p>The post <a href="https://abap-blog.ru/abap-notes/sozdanie-tablicy-na-osnove-samoj-tablicy-cherez-value/">Создание таблицы через VALUE на основе самой таблицы</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/sozdanie-tablicy-na-osnove-samoj-tablicy-cherez-value/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

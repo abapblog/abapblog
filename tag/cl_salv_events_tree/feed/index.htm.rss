@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>CL_SALV_EVENTS_TREE | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_salv_events_tree/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:59:30 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Обработка событий в SALV модели</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/obrabotka-sobytij-v-salv-obektax/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/obrabotka-sobytij-v-salv-obektax/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 02 Apr 2012 15:23:09 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[CL_SALV_EVENTS]]></category>
+		<category><![CDATA[CL_SALV_EVENTS_HIERSEQ]]></category>
+		<category><![CDATA[CL_SALV_EVENTS_LIST]]></category>
+		<category><![CDATA[CL_SALV_EVENTS_TABLE]]></category>
+		<category><![CDATA[CL_SALV_EVENTS_TREE]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=660</guid>
+
+					<description><![CDATA[<p>Объектная модель SALV не позволяет редактировать данные (нормальным способом), однако Вы можете обрабатывать множество других событий: нажатие на кнопки, hotspot элементы, ссылки, checkbox&#8217;ы, добавлять свои собственные функции, обрабатывать щелчки (двойные щелчки), нажатие специальных клавиш (F1,F2). Обработка событий полностью основана на событийной модели ABAP Objects. В первую очередь необходимо получить ссылку на класс вызывающий событие (с [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/obrabotka-sobytij-v-salv-obektax/">Обработка событий в SALV модели</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Объектная модель SALV не позволяет редактировать данные (нормальным способом), однако Вы можете обрабатывать множество других событий: нажатие на кнопки, hotspot элементы, ссылки, checkbox&#8217;ы, добавлять свои собственные функции, обрабатывать щелчки (двойные щелчки), нажатие специальных клавиш (F1,F2).</p>
+<p><span id="more-660"></span></p>
+<p>Обработка событий полностью основана на событийной модели ABAP Objects. В первую очередь необходимо получить ссылку на класс вызывающий событие (с помощью метода get_events &#8212; sALV объекта), затем зарегистрировать обработчик. Классы вызывающие события:</p>
+<ul>
+<li>CL_SALV_EVENTS &#8212; общие события для всех sALV объектов</li>
+<li>CL_SALV_EVENTS_HIERSEQ &#8212; для иерархического списка</li>
+<li>CL_SALV_EVENTS_LIST &#8212; для ALV в виде списка</li>
+<li>CL_SALV_EVENTS_TABLE &#8212; для ALV таблицы</li>
+<li>CL_SALV_EVENTS_TREE &#8212; для древовидного ALV</li>
+</ul>
+<div><span style="line-height: 18px;"> </span></div>
+<div>В качестве примера рассмотрим обработку стандартных для всех sALV объектов событий:</div>
+<div></div>
+<div>
+<pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZALV_EVENTS NO STANDARD PAGE HEADING.
+
+CLASS lcl_report DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      get_data, " Получение данных
+      show_alv, " Показать ALV
+      " Обработчик вызывается до нажатия стандартных функций
+      on_before_salv_function FOR EVENT BEFORE_SALV_FUNCTION OF cl_salv_events IMPORTING E_SALV_FUNCTION,
+      " Обработчик вызывается после нажатия стандартных функций
+      on_after_salv_function  FOR EVENT AFTER_SALV_FUNCTION  OF cl_salv_events IMPORTING E_SALV_FUNCTION,
+      " Обработчик своих функций
+      on_added_salv_function  FOR EVENT ADDED_FUNCTION       OF cl_salv_events IMPORTING E_SALV_FUNCTION.
+  PRIVATE SECTION.
+  DATA:
+    gt_data      TYPE spfli_tab,  " Таблица с данными
+    go_alv       TYPE REF TO cl_salv_table,
+    go_functions TYPE REF TO cl_salv_functions,
+    gv_string    TYPE STRING,
+    go_events    TYPE REF TO cl_salv_events.
+ENDCLASS.
+
+CLASS lcl_report IMPLEMENTATION.
+
+  METHOD get_data.
+    SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_data.
+  ENDMETHOD.
+
+  METHOD show_alv.
+    CHECK go_alv IS NOT BOUND.
+
+    TRY.
+        cl_salv_table=&gt;factory(
+           IMPORTING
+             r_salv_table = go_alv
+           CHANGING
+             t_table = gt_data ).
+      CATCH cx_salv_msg .
+        MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+    ENDTRY.
+
+    " Вешаем обработку событий для объекта go_events:
+    go_events = go_alv-&gt;get_event( ).
+    SET HANDLER on_before_salv_function FOR go_events.
+    SET HANDLER on_added_salv_function FOR go_events.
+    SET HANDLER on_after_salv_function FOR go_events.
+
+    " Настройка функций
+    go_functions = go_alv-&gt;get_functions( ).
+    go_functions-&gt;set_all( abap_true ).
+
+    go_alv-&gt;display( ).
+  ENDMETHOD.
+
+  METHOD on_before_salv_function.
+    CONCATENATE 'BEFORE ALV FUNCTION:' E_SALV_FUNCTION INTO gv_string.
+    MESSAGE gv_string TYPE 'I'.
+  ENDMETHOD.
+
+  METHOD on_after_salv_function.
+    CONCATENATE 'AFTER ALV FUNCTION:' E_SALV_FUNCTION INTO gv_string.
+    MESSAGE gv_string TYPE 'I'.
+  ENDMETHOD.
+
+  METHOD on_added_salv_function.
+    CONCATENATE 'CUSTOM ALV FUNCTION:' E_SALV_FUNCTION INTO gv_string.
+    MESSAGE gv_string TYPE 'I'.
+  ENDMETHOD.
+
+ENDCLASS.
+
+DATA:
+  lo_report TYPE REF TO lcl_report.
+
+START-OF-SELECTION.
+   CREATE OBJECT lo_report.
+   lo_report-&gt;get_data( ).
+   lo_report-&gt;show_alv( ).</pre><br />
+Таким же образом, Вы можете назначить свои обработчики для событий sALV объектов. Описание основных событий:</p>
+</div>
+<ul>
+<li><strong>TOP_OF_PAGE</strong> &#8212; позволяет создать свой заголовок для sALV объекьа</li>
+<li><strong>END_OF_PAGE</strong> &#8212; позволяет создать подвал</li>
+<li><strong>BEFORE_SALV_FUNCTION</strong> &#8212; вызывает обработчик до непосредственно обработки стандартной функции</li>
+<li><strong>AFTER_SALV_FUNCTION</strong> &#8212; вызывается после обработки стандартной функции</li>
+<li><strong>ADDED_FUNCTION</strong> &#8212; обработка собственных функций</li>
+<li><strong>DOUBLE_CLICK</strong> &#8212; двойной щелчок по sALV объекту</li>
+<li><strong>LINK_CLICK</strong> &#8212; щелчок по hotspot элементы (кнопке, ссылке, checkbox&#8217;у, hotspot ячейке)</li>
+<li><strong>KEYPRESS</strong> (для дерева) &#8212; обработка специальных клавиш (F1,F2)</li>
+<li><strong>CHECKBOX_CHANGE</strong> (для дерева) &#8212; обработка изменения состояния checkbox элемента</li>
+</ul><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/obrabotka-sobytij-v-salv-obektax/">Обработка событий в SALV модели</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/obrabotka-sobytij-v-salv-obektax/feed/</wfw:commentRss>
+			<slash:comments>7</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

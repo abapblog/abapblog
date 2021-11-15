@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>sci | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/sci/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:10:28 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Автоматическая проверка присвоения имен для переменных</title>
+		<link>https://abap-blog.ru/osnovy-abap/avtomaticheskaya-proverka-prisvoeniya-imen-dlya-peremennyx/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/avtomaticheskaya-proverka-prisvoeniya-imen-dlya-peremennyx/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 05 Apr 2014 06:59:08 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[sci]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1889</guid>
+
+					<description><![CDATA[<p>Как правило, в ABAP используется венгерская нотация для обозначения переменных. В разных источниках правила по обозначению переменных могут отличаться, даже внутри кода SAP нет единого подхода. Есть некоторые рекомендации по обозначению, но они так же не являются полными. С помощью анализатора кода тр. SCI можно унифицировать правила и проверять их соблюдение.  Ниже, с помощью этой [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/avtomaticheskaya-proverka-prisvoeniya-imen-dlya-peremennyx/">Автоматическая проверка присвоения имен для переменных</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Как правило, в ABAP используется <a href="http://ru.wikipedia.org/wiki/%D0%92%D0%B5%D0%BD%D0%B3%D0%B5%D1%80%D1%81%D0%BA%D0%B0%D1%8F_%D0%BD%D0%BE%D1%82%D0%B0%D1%86%D0%B8%D1%8F">венгерская</a> нотация для обозначения переменных.</p>
+<p>В разных источниках правила по обозначению переменных могут отличаться, даже внутри кода SAP нет единого подхода. Есть некоторые <a href="http://help.sap.com/abapdocu_740/en/abennaming_guidl.htm">рекомендации</a> по обозначению, но они так же не являются полными.</p>
+<p>С помощью анализатора кода тр. <b>SCI</b> можно унифицировать правила и проверять их соблюдение.  Ниже, с помощью этой транзакции, будет рассмотрена проверка тестовой программы на соглашения об именах.</p>
+<p><span id="more-1889"></span></p>
+<ul>
+<li>Определение варианта проверки. Назовем его VI_PROG:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/vi.png"><img loading="lazy" class="alignnone size-full wp-image-1890" src="http://abap-blog.ru/wp-content/uploads/2014/04/vi.png" alt="vi" width="382" height="100" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/vi.png 382w, https://abap-blog.ru/wp-content/uploads/2014/04/vi-300x78.png 300w" sizes="(max-width: 382px) 100vw, 382px" /></a></p>
+<ul>
+<li>Так как другие проверки нас сейчас не интересуют, выбираем только проверку «Расшир. соглаш. по присвоен. имен для прог.» и нажимаем на кнопку настройки <a href="http://abap-blog.ru/wp-content/uploads/2014/04/btn.png"><img loading="lazy" class="alignnone size-full wp-image-1891" src="http://abap-blog.ru/wp-content/uploads/2014/04/btn.png" alt="btn" width="21" height="15" /></a></li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/vi_conf.png"><img loading="lazy" class="alignnone size-full wp-image-1892" src="http://abap-blog.ru/wp-content/uploads/2014/04/vi_conf.png" alt="vi_conf" width="463" height="423" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/vi_conf.png 463w, https://abap-blog.ru/wp-content/uploads/2014/04/vi_conf-300x274.png 300w" sizes="(max-width: 463px) 100vw, 463px" /></a></p>
+<ul>
+<li> На следующем шаге определяются правила проверки, в моем случае меня устроил стандартный вариант, за исключением проверки именования классов, пришлось добавить ZCL_* и ZCX_. Настраиваем соглашения под свои нужды и сохраняем вариант проверки.</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/vi_options.png"><img loading="lazy" class="alignnone size-full wp-image-1893" src="http://abap-blog.ru/wp-content/uploads/2014/04/vi_options.png" alt="vi_options" width="685" height="566" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/vi_options.png 685w, https://abap-blog.ru/wp-content/uploads/2014/04/vi_options-300x247.png 300w" sizes="(max-width: 685px) 100vw, 685px" /></a></p>
+<ul>
+<li> Далее определяется набор объектов, который необходимо проверить, в нашем случае это тестовая программа ZTEST01 со следующим содержимым:</li>
+</ul>
+<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_test TYPE REF TO if_aa_event_out,
+  gr_test TYPE REF TO cl_salv_adapter,
+  ls_test TYPE STANDARD TABLE OF mara,
+  lt_test TYPE mara.</pre><p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/so.png"><img loading="lazy" class="alignnone size-full wp-image-1894" src="http://abap-blog.ru/wp-content/uploads/2014/04/so.png" alt="so" width="376" height="94" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/so.png 376w, https://abap-blog.ru/wp-content/uploads/2014/04/so-300x75.png 300w" sizes="(max-width: 376px) 100vw, 376px" /></a></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/so_conf.png"><img loading="lazy" class="alignnone size-full wp-image-1895" src="http://abap-blog.ru/wp-content/uploads/2014/04/so_conf.png" alt="so_conf" width="622" height="239" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/so_conf.png 622w, https://abap-blog.ru/wp-content/uploads/2014/04/so_conf-300x115.png 300w" sizes="(max-width: 622px) 100vw, 622px" /></a></p>
+<ul>
+<li>Создаем инспекцию:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/ci.png"><img loading="lazy" class="alignnone size-full wp-image-1896" src="http://abap-blog.ru/wp-content/uploads/2014/04/ci.png" alt="ci" width="385" height="86" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/ci.png 385w, https://abap-blog.ru/wp-content/uploads/2014/04/ci-300x67.png 300w" sizes="(max-width: 385px) 100vw, 385px" /></a></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/ci_conf.png"><img loading="lazy" class="alignnone size-full wp-image-1897" src="http://abap-blog.ru/wp-content/uploads/2014/04/ci_conf.png" alt="ci_conf" width="419" height="328" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/ci_conf.png 419w, https://abap-blog.ru/wp-content/uploads/2014/04/ci_conf-300x234.png 300w" sizes="(max-width: 419px) 100vw, 419px" /></a></p>
+<ul>
+<li>Результат проверки:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/result.png"><img loading="lazy" class="alignnone size-full wp-image-1898" src="http://abap-blog.ru/wp-content/uploads/2014/04/result.png" alt="result" width="1000" height="205" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/result.png 1000w, https://abap-blog.ru/wp-content/uploads/2014/04/result-300x61.png 300w" sizes="(max-width: 1000px) 100vw, 1000px" /></a></p>
+<ul>
+<li>Согласно стандартному соглашению, программа должна выглядеть следующим образом:</li>
+</ul>
+<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  gi_test TYPE REF TO if_aa_event_out,
+  go_test TYPE REF TO cl_salv_adapter,
+  gt_test TYPE STANDARD TABLE OF mara,
+  gs_test TYPE mara.</pre><p></p>
+<ul>
+<li>Проверим заново:</li>
+</ul>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/04/result_new.png"><img loading="lazy" class="alignnone size-full wp-image-1899" src="http://abap-blog.ru/wp-content/uploads/2014/04/result_new.png" alt="result_new" width="1010" height="85" srcset="https://abap-blog.ru/wp-content/uploads/2014/04/result_new.png 1010w, https://abap-blog.ru/wp-content/uploads/2014/04/result_new-300x25.png 300w" sizes="(max-width: 1010px) 100vw, 1010px" /></a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/avtomaticheskaya-proverka-prisvoeniya-imen-dlya-peremennyx/">Автоматическая проверка присвоения имен для переменных</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/avtomaticheskaya-proverka-prisvoeniya-imen-dlya-peremennyx/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

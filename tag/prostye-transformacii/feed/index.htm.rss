@@ -1,0 +1,1461 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Простые трансформации | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/prostye-transformacii/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:04:52 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Простые трансформации</title>
+		<link>https://abap-blog.ru/osnovy-abap/prostye-transformacii/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/prostye-transformacii/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 07 Apr 2013 06:59:20 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[Simple transformation]]></category>
+		<category><![CDATA[ST]]></category>
+		<category><![CDATA[Простые трансформации]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1464</guid>
+
+					<description><![CDATA[<p>Простые трансформации – язык программирования компании SAP позволяющий преобразовывать данные из ABAP в XML (Сериализация) и из XML в ABAP (Десериализация). Простые трансформации представляют из себя специальный вид программ, которые при желании можно отлаживать как обычные ABAP программы. &#160; &#160; Запустить подобную программу можно с помощью ABAP оператора CALL TRANSFORMATION. Основные характеристики ST программ, в [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/prostye-transformacii/">Простые трансформации</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2013/04/XML1.gif"><img loading="lazy" class=" wp-image-1474 alignleft" src="http://abap-blog.ru/wp-content/uploads/2013/04/XML1.gif" alt="XML[1]" width="317" height="196" /></a>Простые трансформации – язык программирования компании SAP позволяющий преобразовывать данные из ABAP в XML (Сериализация) и из XML в ABAP (Десериализация). Простые трансформации представляют из себя специальный вид программ, которые при желании можно отлаживать как обычные ABAP программы.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Запустить подобную программу можно с помощью ABAP оператора CALL TRANSFORMATION. Основные характеристики ST программ, в сравнении с XSLT:</p>
+<p><span id="more-1464"></span></p>
+<ul>
+<li>Простота для понимания, за счёт декларативного описания.</li>
+<li>Повышенная производительность, за счёт последовательного доступа к XML элементам.</li>
+<li>Благодаря специальному синтаксису, используемому в данных программах, одна программа может быть использована как для сериализации, так и для десериализации.</li>
+<li>Трансформация из одного набора данных ABAP в другой набор ABAP данных или из одного XML документа в другой не поддерживается, но возможна через два вызова трансформации.</li>
+<li>Преобразование ссылочных переменных и объектов в настоящее время не поддерживается. Так же не поддерживается трансформация структур и таблиц, компонентами которых являются ссылочные переменные. Несмотря на это, допускается работа со ссылочными переменными (например, для вызова метода класса).</li>
+</ul>
+<p>ST программы создаются либо через SE80, либо через транзакцию STRANS. ST программа должна представлять собой XML документ, со следующей структурой:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;?sap.transform simple?&gt;
+&lt;tt:transform [template="tmpl"]
+              xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+    [&lt;tt:type name="..." [...]&gt;
+     ...
+    &lt;/tt:type&gt;
+     ...]
+    [&lt;tt:root name="root1" [...] /&gt;
+     &lt;tt:root name="root2" [...] /&gt;
+   ...]
+  [&lt;tt:parameter name="para1" [...] /&gt;
+   &lt;tt:parameter name="para2" [...] /&gt;
+   ...]
+  [&lt;tt:variable name="vari1" [...] /&gt;
+   &lt;tt:variable name="vari2" [...] /&gt;
+   ...]
+  &lt;tt:template [name=="tmpl"]&gt;
+    ...
+  &lt;/tt:template&gt;
+  [&lt;tt:template [name=="..."]&gt;
+     ...
+   &lt;/tt:template&gt;
+   ...]
+&lt;/tt:transform&gt;</pre><p>Первая строка &lt;? &#8230; ?&gt; используется для идентификации типа программы. Нет необходимости вводить её вручную, т.к. при проверке синтаксиса она будет введена автоматически.</p>
+<p>Главный элемент ST программы tt:transform, в котором описаны пространства имен и главный шаблон. Элементы пространства имен «http://www.sap.com/transformation-templates» являются командами ST программы. Префикс пространства имен tt: используется для отображения команд из этого пространства. ST команды могут выступать в роли узлов XML документа или атрибутов в тестовых XML элементах (например при определении значения для текстового XML элемента).</p>
+<p>В ST программах допускается использование обыкновенного текста, который при сериализации подставляется в созданный XML документ, данный текст обычно представляет набор тегов XML.</p>
+<p>При десериализации происходит следующее: XML документ представляет собой входной поток, из которого по очереди выбираются элементы и в случае их совпадения с элементами в ST программе, их значения подставляются в соответствующие, привязанные к ним значения в ST программе (ABAP переменные). В зависимости от логики, заложенной в ST программе, элементы могут пропускаться или объединяться.</p>
+<p>Кроме того можно вставлять комментарии, т.к. ST программа это XML документ, комментарии определяются теми же правилами которые действуют для XML документа:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;!-- Comment Text --&gt;</pre><p>Имена в текстовых элементах зависят от регистра, т.о. &lt;ELEMENT&gt; и &lt;element&gt; два разных элемента.</p>
+<p>Основная логика преобразования лежит внутри так называемых шаблонов, которые включают в себя набор ST команд. Когда вы определяете главный элемент <b>tt:</b><b>transform</b> вы можете указать главный шаблон через атрибут <b>template</b>. Это первый шаблон, который выполнит ST программа при своем запуске. Если главный шаблон явно не определен, в ST программе должен присутствовать шаблон без имени, который будет запущен в роли главного. Шаблоны определяются командой tt:template.</p>
+<p>Кроме определения главного шаблона и главного элемента, ST программы еще могут содержать следующие элементы:</p>
+<ul>
+<li>Корневые узлы данных (Data Roots) определяющие связь между ABAP данными и ST программой (определяются командой tt:root);</li>
+<li>Параметры, которые могут быть переданы через оператор CALL TRANSFORMATION (определяются командой tt:parameter);</li>
+<li>Переменные (определяются командой tt:variable);</li>
+<li>Типы данных, используемые в трансформации (определяются через оператор tt:type), заданные таким образом типы, можно использовать как в узлах данных, так и в параметрах и переменных;</li>
+<li>Вложенные шаблоны, используемые в качестве разбиения логики ST программы на части.</li>
+</ul>
+<h2><a name="_Toc352851892"></a>Определение корневых узлов параметров и переменных</h2>
+<h3><a name="_Toc352851893"></a>Определение корневых узлов</h3>
+<p>Для доступа к данным из ABAP программы, ST программа должна иметь хотя бы одно определение корневого узла. Корневые узлы представляют собой интерфейс по обмену данными из ST в ABAP программу и обратно, переменные из ABAP программы подставляются в параметрах source (сериализация) и result (десериализация) оператора CALL TRANSFORMATION.</p>
+<p>Корневые узлы могут быть объявлены на уровне всей ST программы (tt:transformation) и на уровне вложенных шаблонов. Во вложенных шаблонах они не связаны с ABAP данными и используются для связи с корневыми узлами на верхнем уровне ST программы, при передаче через команду tt:with-root и объявляются в элементе tt:context (см. объявление вложенных шаблонов).</p>
+<p>Синтаксис при объявлении корневых узлов следующий:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:root name="..." [[line-]type="..."[length="..."][decimals="..."]][...] /&gt;</pre><p>В качестве атрибута name указывается ABAP переменная, с которой необходимо связать узел, имя узла должно быть уникальным как среди других корневых узлов, так и среди объявленных в трансформации переменных (tt:variable) и параметров (tt:parameter). Имя не чувствительно к регистру.</p>
+<p>Тип данных указывается через атрибут line-type или type. Line-type используется в случае указания на внутреннюю таблицу.  Если явно не указать тип данных, проверки сработают только во время выполнения трансформации, что в случае неверных данных может приводить к ошибкам:</p>
+<ul>
+<li>К доступу несуществующего элемента структуры</li>
+<li>Циклу не по табличной переменной</li>
+<li>Обработки структуры как обычной переменной</li>
+</ul>
+<p>В качестве типа могут быть указаны как элементарные ABAP типы, так и типы из словаря, и типы, объявленные через команду tt:type. При сериализации значения корневых узлов не могут быть изменены (например, через tt:assign) и доступны только для чтения, при десериализации только для записи (например, через tt:value).</p>
+<p>Length – указывает на длину узла, Decimals на количество знаков после запятой, эти параметры указываются в случае необходимости для соответствующих им типов данных.</p>
+<p>В приведенном ниже примере узел R1 объявлен с элементарным типом D, R2 – как таблица, состоящая из элементарного типа I, R3 &#8212; как структура, из ABAP словаря, R4 – Структура из пула типов, R5 – внутренняя таблица из структуры в классе cl_abc, R6 – структура с типом из трансформации. Обратите внимание на использование пространств имен.</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"
+              xmlns:ddic="http://www.sap.com/abapxml/types/dictionary"
+              xmlns:tp="http://www.sap.com/abapxml/types/type-pool/ABCD"
+              xmlns:cl="http://www.sap.com/abapxml/types/class-pool/CL_ABC"
+              xmlns:def="http://www.sap.com/abapxml/types/defined" &gt;
+  &lt;tt:type name="STRUCT"&gt;
+    &lt;tt:node name="C1" type="I"/&gt;
+    &lt;tt:node name="C2" type="I"/&gt;
+  &lt;/tt:type&gt;
+  &lt;tt:root name="R1" type="D"/&gt;
+  &lt;tt:root name="R2" line-type="I"/&gt;
+  &lt;tt:root name="R3" type="ddic:DSTRUCT"/&gt;
+  &lt;tt:root name="R4" type="tp:ABCDSTRUCT"/&gt;
+  &lt;tt:root name="R5" line-type="cl:ABCSTRUCT"/&gt;
+  &lt;tt:root name="R6" type="def:STRUCT"/&gt;</pre><p>Доступ к компонентам узла осуществляется через «.». Ниже приведен небольшой пример (в приведенных ниже примерах проверка исключений во время трансформаций опущена специально, в продуктивных системах подобного стоит избегать, используя оператор TRY..Catch):</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  gt_test_struct TYPE addr,
+  lv_xml         TYPE string.
+
+gt_test_struct-name1 = 'Mike'.
+gt_test_struct-line1 = 'Leningradkaya St'.
+
+CALL TRANSFORMATION ztest_st
+      SOURCE struct = gt_test_struct
+      RESULT XML lv_xml.
+
+WRITE lv_xml.
+
+SKIP. CLEAR gt_test_struct.
+
+CALL TRANSFORMATION ztest_st
+     SOURCE XML lv_xml
+     RESULT struct = gt_test_struct.
+
+WRITE: / gt_test_struct-name1,
+         gt_test_struct-line1.</pre><p>Трансформация:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;?sap.transform simple?&gt;
+&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="struct"/&gt;
+  &lt;tt:template&gt;
+    &lt;lines&gt;
+      &lt;name&gt;
+        &lt;tt:value ref="struct.name1"/&gt;
+      &lt;/name&gt;
+      &lt;line&gt;
+        &lt;tt:value ref="struct.line1"/&gt;
+      &lt;/line&gt;
+    &lt;/lines&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Создать трансформацию можно нажав правой кнопкой на пакете разработки, выбрав соответствующий пункт меню:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/04/st_1.png"><img loading="lazy" class="alignnone size-full wp-image-1465" src="http://abap-blog.ru/wp-content/uploads/2013/04/st_1.png" alt="st_1" width="713" height="575" /></a></p>
+<p>&nbsp;</p>
+<p>В появившемся диалоге выбрать тип трансформации (S – простая трансформация):</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/04/st_2.png"><img loading="lazy" class="alignnone size-full wp-image-1468" src="http://abap-blog.ru/wp-content/uploads/2013/04/st_2.png" alt="st_2" width="686" height="142" /></a></p>
+<p>Результат работы программы:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2013/04/st_3.png"><img loading="lazy" class="alignnone size-full wp-image-1470" src="http://abap-blog.ru/wp-content/uploads/2013/04/st_3.png" alt="st_3" width="766" height="131" /></a></p>
+<h3>Определение параметров</h3>
+<p>ST программы могут содержать параметры которые передаются в оператор CALL TRANSFORMATION и могут использоваться для определения логики поведения. Синтаксис их определения следующий:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:parameter name="..." [ref-type="..."]
+                         [kind="..."] 
+                         [[s-val="..."][d-val="..."]]|[val="..."] /&gt;</pre><p>Через атрибут name определяется имя параметра, которое не должно превышать 30 символов и должно быть уникально среди имен в корневых узлах, параметрах, переменных. Имя не чувствительно к регистру. Параметры определяются как на уровне главного шаблона, так и остальных используемых шаблонов, при этом параметры, определенные в одном шаблоне не могут быть доступны в другом.</p>
+<p>Параметры могут быть использованы для вызова вложенных шаблонов (tt:apply) или других ST программ (tt:call), при указании атрибута with-parameter.</p>
+<p>Атрибут kind определяет направление параметра, может принимать значения «in» &#8212; входящий, «out» &#8212; исходящий, «in/out» &#8212; входящий и исходящий. Если явно не задать направление, по умолчанию такой параметр будет входящим «in».</p>
+<p>Параметры s-val, d-val, val – присваивают значение для параметра по умолчанию, могут быть выполнены следующие присвоения (приставки s- и d- тут и в других атрибутах указывают на процесс сериализации и десериализации):</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top"><b>Тип данных</b></td>
+<td valign="top"><b>Представление</b></td>
+</tr>
+<tr>
+<td valign="top">Floating point numbers (ABAP type f)</td>
+<td valign="top">F(&#8216;value&#8217;)</td>
+</tr>
+<tr>
+<td valign="top">Byte strings (ABAP types x and xstring)</td>
+<td valign="top">X(&#8216;value&#8217;)</td>
+</tr>
+<tr>
+<td valign="top">Date fields (ABAP type d)</td>
+<td valign="top">D(&#8216;value&#8217;)</td>
+</tr>
+<tr>
+<td valign="top">Decimal floating point numbers (ABAP types decfloat16, decfloat34)</td>
+<td valign="top">DECFLOAT16(&#8216;value&#8217;)<span style="font-size: 11px; line-height: 19px;">DECFLOAT34(&#8216;value&#8217;)</span></td>
+</tr>
+<tr>
+<td valign="top">Packed numbers (ABAP type p)</td>
+<td valign="top">P(value)</td>
+</tr>
+<tr>
+<td valign="top">Integers (ABAP type i)</td>
+<td valign="top">I(value) | value</td>
+</tr>
+<tr>
+<td valign="top">Numeric text fields (ABAP type n)</td>
+<td valign="top">N(&#8216;value&#8217;)</td>
+</tr>
+<tr>
+<td valign="top">Character strings (ABAP types c and string)</td>
+<td valign="top">C(&#8216;value&#8217;) | &#8216;value&#8217;</td>
+</tr>
+<tr>
+<td valign="top">Time fields (ABAP type t)</td>
+<td valign="top">T(&#8216;value&#8217;)</td>
+</tr>
+<tr>
+<td valign="top">Initial value (all ABAP types)</td>
+<td valign="top">initial</td>
+</tr>
+</tbody>
+</table>
+<p>С помощью атрибута ref-type определяется атрибут, имеющий ссылочный тип, т.е. ссылка на глобальный ABAP класс или интерфейс, а так же на ссылочную переменную (REF TO DATA). При этом имена классов и интерфейсов указываются напрямую без указания пространства имен, а ссылочная переменная должна быть заранее определена через тип данных в команде tt:type, где нужно указать пространство имен. Параметры классов (интерфейсов) используются обычно для создания объектов или вызова методов, а ссылочные переменные как атрибуты в передаваемые методы. Получить значение параметра, можно используя команду tt:assign.</p>
+<p>Примеры объявления параметров:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:parameter kind="in" name="PARA1" val="4"/&gt;
+  &lt;tt:parameter kind="out" name="PARA2"/&gt;
+  &lt;tt:parameter kind="in/out" name="PARA3"/&gt;
+  &lt;tt:template&gt;
+    &lt;tt:assign to-var="PARA2" var="PARA3"/&gt;
+    &lt;tt:assign to-var="PARA3" var="PARA1"/&gt;
+    &lt;tt:assign to-var="PARA1" val="555"/&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Как параметры при вызове других трансформаций:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:variable name="VARI1" val="1"/&gt;
+  &lt;tt:variable name="VARI2" val="2"/&gt;
+  &lt;tt:variable name="VARI3" val="3"/&gt;
+  &lt;tt:template&gt;
+    &lt;tt:call transformation="..."&gt;
+      &lt;tt:with-parameter name="PARA1" var="VARI1"/&gt;
+      &lt;tt:with-parameter name="PARA2" var="VARI2"/&gt;
+      &lt;tt:with-parameter name="PARA3" var="VARI3"/&gt;
+    &lt;/tt:call&gt;
+    &lt;X1&gt;
+      &lt;tt:write var="VARI1"/&gt;
+    &lt;/X1&gt;
+    &lt;X2&gt;
+      &lt;tt:write var="VARI2"/&gt;
+    &lt;/X2&gt;
+    &lt;X3&gt;
+      &lt;tt:write var="VARI3"/&gt;
+    &lt;/X3&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p></p>
+<h3>Определение переменных</h3>
+<p>Переменные в ST программах объявляются командой tt:variable, которая имеет следующий синтаксис:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:variable name="..." [ref-type="..."]
+                        [[s-val="..."][d-val="..."]]|[val="..."] /&gt;</pre><p>Атрибуты аналогичны описанным выше атрибутам для параметров. К переменным можно получать прямой доступ в шаблонах, но переменные, объявленные в одном шаблоне, не могут быть получены в другом. В случае необходимости их значения могут быть переданы при вызове шаблона.  В отличие от корневых узлов, переменные не связаны с ABAP данными. Для получения значения переменных используется команда tt:assign.</p>
+<h3>Определение типов</h3>
+<p>Корневые узлы, используемые в ST программах, могут, но не обязаны иметь присвоение типа. Обычно для этого используются типы из словаря или глобальных классов. Кроме того ST программы позволяют определять свои собственные типы данных, для этого служит команда: tt:type. Объявление типа происходит вне шаблонов ST программы. Команда tt:type имеет следующий синтаксис:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:type name="..." [[line-]type="..." [length="..."] [decimals="..."]]
+  [extensible=extensible_flag]&gt;
+  [&lt;tt:front&gt;
+     &lt;tt:node name="..." [[line-]type="..." [...]]
+       [extensible=extensible_flag]&gt;
+       [...] 
+     &lt;/tt:node&gt;
+     ...
+   &lt;/tt:front&gt;]
+  [&lt;tt:node name="..." [[line-]type="..." [...]]
+     [extensible=extensible_flag]&gt;
+     [...] 
+   &lt;/tt:node&gt;
+  ...]
+&lt;/tt:type&gt;</pre><p>Атрибут name определяет имя типа. Вы можете определять как элементарные, структурные, так и табличные типы данных, которые могут быть частично или полностью родовыми. Кроме того возможна ссылка на ранее определенный локально в ST программе или глобальный тип данных через атрибут type.</p>
+<p>При определении ссылки через атрибут [line-]type можно использовать следующие пространства имен:</p>
+<ul>
+<li>http://www.sap.com/abapxml/types/dictionary если ссылаетесь на словарь.</li>
+<li>http://www.sap.com/abapxml/types/type-pool/<i>name</i> если ссылаетесь на пул типов.</li>
+<li>http://www.sap.com/abapxml/types/class-pool/<i>class</i> если ссылаетесь на глобальный атрибут класса.</li>
+<li>http://www.sap.com/abapxml/types/defined/<i>name</i> если ссылаетесь на ранее определенный в текущей ST программе тип tt:type.</li>
+</ul>
+<p>Имя типа необходимо указывать <b>в верхнем регистре</b>. Пример p:NAME, где p – определенное заранее, пространство имен.</p>
+<p><b>Определение элементарных типов</b></p>
+<p>При определении элементарного типа данных, атрибуту type должно быть присвоено одно из следующих значений: C, D, F, I, N, P, STRING, T, X или, XSTRING (в верхнем регистре).</p>
+<p>Для типов C, N, P, X может быть указан атрибут length определяющий длину, а для типа P атрибут decimals указывающий на кол-во знаков после запятой. Если атрибут decimals указан без длинны, то он игнорируется. Если оба атрибута пропущены, их значения берутся как значения по умолчанию для родового типа.</p>
+<p>Если для типа C не указать длину, это означает, что тип может иметь любую длину, как для string или csequence. Тоже самое справедливо и для типа X.</p>
+<h3>Определение структурных типов</h3>
+<p>Для определения структурных типов используется команда tt:node. Вложенная команда tt:node определяет элемент структуры с именем определенным в атрибуте name и типом type. Команда tt:node вложенная в другую команду tt:node определяет подструктуру. Элемент tt:type или tt:node,  который имеет вложенный элемент tt:node не должен иметь ссылку на тип в атрибуте type, вместо этого должно стоять значение «?». Порядок, в котором компоненты расположены в структуре, не имеет значения при связывании с ABAP структурой, кроме того некоторые поля могут отсутствовать в указании типа (см. атрибут extensible). Для определения порядка, в котором будут расположены компоненты структуры можно воспользоваться элементом tt:front, данный элемент может быть задан только в единственном числе для элементов tt:node и tt:type.</p>
+<p>Для определения ограничений на тип структуры используется атрибут extensible. Может иметь следующие значения:</p>
+<ul>
+<li>«on» &#8212; указывает на то, что текущий элемент может иметь вложенные элементы, явно не определенные в типе.</li>
+<li>«deep» &#8212; указывает на то, что как текущий, так и его дочерние элементы могут иметь вложенные элементы, явно не определенные. Данное значение установлено по умолчанию.</li>
+<li>«off» &#8212; текущий элемент не должен иметь других элементов, явно не описанных в типе.</li>
+<li>«deep-off» &#8212; как текущий, так и его дочерние элементы не должны иметь элементы, явно не описанные в типе.</li>
+</ul>
+<h3>Определение табличных типов</h3>
+<p>Если для элемента tt:node или tt:type задан атрибут line-type, значит, данный элемент представляет собой внутреннюю таблицу с типом указанным в line-type. Если вы хотите объявить внутреннюю таблицу с указанным через команду tt:node структурным типом, для элемента верхнего уровня в качестве типа необходимо указать «?»:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:node line-type=”?”&gt;
+  &lt;tt:node type=”C”/&gt;
+&lt;/tt:node&gt;</pre><p>Примеры объявления типов:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"
+ xmlns:ddic="http://www.sap.com/abapxml/types/dictionary"
+ xmlns:def="http://www.sap.com/abapxml/types/defined" &gt;
+  &lt;tt:type name="T1"&gt;
+    &lt;tt:node name="C" line-type="?"&gt;
+      &lt;tt:node name="C1" type="ddic:DDT1"/&gt;
+      &lt;tt:node name="C2" line-type="def:T2"/&gt;
+    &lt;/tt:node&gt;
+  &lt;/tt:type&gt;
+  &lt;tt:type name="T2"&gt;
+    &lt;tt:node name="D"&gt;
+      &lt;tt:node name="D1" line-type="?"/&gt;
+    &lt;/tt:node&gt;
+  &lt;/tt:type&gt;</pre><p></p>
+<h3>Определение ссылочных типов</h3>
+<p>Напрямую нельзя задать тип ссылки, но можно задать ссылку на ссылочную переменную из словаря. Например, на какой-нибудь класс, затем при объявлении параметров (переменных) указать на созданный тип со ссылкой на класс, после чего можно будет создать его и вызывать методы (см. ниже)</p>
+<h2><a name="_Toc352851900"></a>Адресация ABAP данных в ST программах</h2>
+<p>В ST программах все объекты данных представляют собой древовидную структуру.  Доступ к элементам (если они есть) в узлах осуществляется через точку. Каждый корневой узел данных (tt:root) имеет свою древовидную структуру. К данным можно обращаться либо указывая имя узла в ссылке, либо через текущий узел. Текущим узлом можно установить любой корневой узел, но текущим, в один момент времени, может быть только один узел.</p>
+<p>Рассмотрим пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">TYPES:
+  BEGIN OF ty_root_one,
+    X TYPE i,
+  END OF ty_root_one,
+  BEGIN OF ty_root_two,
+    Y TYPE i,
+  END OF ty_root_two.
+
+DATA:
+  ls_one TYPE ty_root_one,
+  ls_two TYPE ty_root_two,
+  lv_xml TYPE string.
+
+ls_one-x = 1.
+ls_two-y = 2.
+
+CALL TRANSFORMATION ZTEST_ST
+  SOURCE root1 = ls_one
+         root2 = ls_two
+  RESULT XML lv_xml.
+
+WRITE lv_xml.</pre><p>Трансформация:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;?sap.transform simple?&gt;
+&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT1"/&gt;
+  &lt;tt:root name="ROOT2"/&gt;
+  &lt;tt:template&gt;
+    &lt;roots&gt;
+      &lt;root1&gt;
+        &lt;x&gt;&lt;tt:value ref="ROOT1.X"/&gt;&lt;/x&gt;
+      &lt;/root1&gt;
+      &lt;root2&gt;
+        &lt;x&gt;&lt;tt:value ref="ROOT2.Y"/&gt;&lt;/x&gt;
+      &lt;/root2&gt;
+    &lt;/roots&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Для того чтобы не указывать имя узла каждый раз, мы можем определить текущий узел. Для установки текущего узла можно воспользоваться командой tt:ref:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:ref name="node"&gt;..&lt;/ref&gt;</pre><p>где name – имя узла. Приведенная выше трансформация может быть преобразована в следующий вид:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;?sap.transform simple?&gt;
+&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT1"/&gt;
+  &lt;tt:root name="ROOT2"/&gt;
+  &lt;tt:template&gt;
+    &lt;roots&gt;
+      &lt;root1&gt;
+        &lt;tt:ref name="ROOT1"&gt;
+          &lt;x&gt;&lt;tt:value ref="X"/&gt;&lt;/x&gt;
+        &lt;/tt:ref&gt;
+      &lt;/root1&gt;
+      &lt;root2&gt;
+        &lt;tt:ref name="ROOT2"&gt;
+          &lt;x&gt;&lt;tt:value ref="Y"/&gt;&lt;/x&gt;
+        &lt;/tt:ref&gt;
+      &lt;/root2&gt;
+    &lt;/roots&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Для многих ST команд текущий узел может быть задан через атрибут ref. Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:instruction ref="node"&gt;
+...
+&lt;/tt:instruction&gt;</pre><p>Где instruction – имя ST команды. Кроме того текущий узел можно установить в ST атрибуте для текстового XML элемента, тогда наша трансформация будет иметь следующий вид:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;?sap.transform simple?&gt;
+&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT1"/&gt;
+  &lt;tt:root name="ROOT2"/&gt;
+  &lt;tt:template&gt;
+    &lt;roots&gt;
+      &lt;root1 tt:ref="ROOT1"&gt;
+        &lt;x&gt;&lt;tt:value ref="X"/&gt;&lt;/x&gt;
+      &lt;/root1&gt;
+      &lt;root2 tt:ref="ROOT2"&gt;
+        &lt;x&gt;&lt;tt:value ref="Y"/&gt;&lt;/x&gt;
+      &lt;/root2&gt;
+    &lt;/roots&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Для текстовых элементов допускается указание значения через атрибут tt:value-ref, тогда трансформация примет следующий вид:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;?sap.transform simple?&gt;
+&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT1"/&gt;
+  &lt;tt:root name="ROOT2"/&gt;
+  &lt;tt:template&gt;
+    &lt;roots&gt;
+      &lt;root1&gt;
+        &lt;x tt:value-ref="ROOT1.X"/&gt;
+      &lt;/root1&gt;
+      &lt;root2&gt;
+        &lt;x tt:value-ref="ROOT2.Y"/&gt;
+      &lt;/root2&gt;
+    &lt;/roots&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Если определен текущий узел, и доступ получаете через указание имени корневого элемента, необходимо указывать точку:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;root2 tt:ref="ROOT2"&gt;
+ &lt;x&gt;&lt;tt:value ref=".ROOT2.Y"/&gt;&lt;/x&gt;
+&lt;/root2&gt;</pre><p>Кроме того во всех ST командах, которые позволяют явно задать текущий узел, к заданному узлу можно обратиться через константу $ref, при этом если текущий узел не задан, обращаться через $ref нельзя:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;root2 tt:ref="ROOT2"&gt;
+ &lt;x&gt;&lt;tt:value ref="$ref.Y"/&gt;&lt;/x&gt;
+&lt;/root2&gt;</pre><p><b>Существует следующее ограничение</b>: если первый символ узла не является буквой или подчеркиванием или в имени встречаются символы кроме букв, чисел, дефисов и подчеркиваний, доступ к такому узлу необходимо получать с помощью оператора ref(‘ИмяУзла’).</p>
+<h2>Контроль выполнения сериализации и десериализации</h2>
+<p>Как было сказано выше, выполнение ST программы начинается с обработки главного шаблона программы. Внутри данного шаблона простой текст обрабатывается вместе с ST командами, после чего происходит либо сериализация, либо десериализация.</p>
+<p>В процессе сериализации, текст введенный в ST программу переносится в создающийся XML документ без каких-либо изменений, выполняются ST команды, встречающиеся в этом тексте.</p>
+<p>В процессе десериализации исходный XML документ рассматривается как входящий поток и сравнивается элемент за элементом с введенным шаблоном в ST программе. Если имена элементов (атрибутов) совпадают и располагаются в том же месте ST программы, они обрабатываются. Существует возможность пропуска сравнения определенных элементов и другие операции, которые позволяют  повлиять на логику десериализации.</p>
+<h3>Определение текстового шаблона</h3>
+<p>В качестве текста шаблона могут быть представлены либо XML элементы с атрибутами, либо просто текст.</p>
+<p>XML элементы и атрибуты определяются по обычным правилам построения XML документа, но не должны лежать в пространстве имен ST команд (без префикса tt:).  Используется следующий синтаксис:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;element [attr] [tt:ref=″node″&gt;]
+                [tt:lax=lax_flag]
+                [tt:extensible=extensible_flag]&gt;
+  ...
+&lt;/element&gt;</pre><p>Имя XML элемента может быть любым в рамках правил XML. Тут же могут быть статически прописаны атрибуты и их значения [attr].</p>
+<p>Атрибут tt:ref устанавливает ссылку на текущий узел (см. выше).</p>
+<p>Атрибут tt:lax определяет правило, по которому реагирует интерпретатор на несоответствие XML документа при десериализации относительно имён XML элементов и наличия атрибутов. Принимает следующие значения (по умолчанию deep-off):</p>
+<ul>
+<li>«off» &#8212; XML атрибут во входящем потоке должен быть с тем же именем и наличием тех же атрибутов с такими же значениями что в программе.</li>
+<li>«on» &#8212; XML элемент во входящем потоке может иметь любое имя, но при этом атрибуты и их содержимое должно совпадать.</li>
+<li>«deep-on», «deep-off» &#8212; устанавливают те же правила, включая вложенные элементы.</li>
+</ul>
+<p>Для всех вложенных элементов, значение атрибута может быть перезаписано.</p>
+<p>Атрибут tt:extensible определяет правило, по которому реагирует интерпретатор на несоответствие вложенности и наличия других XML элементов, не описанных статически в ST программе. Может принимать следующие значения (По умолчанию «on»):</p>
+<ul>
+<li>«on» &#8212; элемент XML может иметь вложенные элементы, явно не определенные в ST программе.</li>
+<li>«deep-static» и «deep-dynamic» &#8212; текущий элемент и его вложенные элементы могут  иметь неопределенные вложенные элементы во входящем XML потоке.</li>
+<li>«off» &#8212; запрещает расширение для текущего элемента, но не для его вложенных элементов.</li>
+<li>«deep-off» &#8212; запрещает расширение для текущего элемента и его вложенных элементов.</li>
+</ul>
+<p>Для всех вложенных элементов, значение атрибута может быть перезаписано. Разница между deep-static и deep-dynamic в том, что они имеют разные области действия. Deep-static используется только в текущем шаблоне, deep-dynamic выполняется для всех шаблонов и вызываемых ST программ.</p>
+<p>Если необходимо задать атрибут для XML элемента динамически, делается это с помощью команды tt:attribute:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:attribute name=″attr″ [ref=″node″]&gt;
+  ...
+&lt;/tt:attribute&gt;</pre><p>Где name – имя атрибута, ref – ссылка на текущий узел.  Значение передается командой tt:value, но можно так же использовать и короткую форму используя ST атрибут value-ref:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;root2&gt;
+ &lt;tt:attribute name="attribute" value-ref="ROOT2.Y" /&gt;
+&lt;/root2&gt;</pre><p></p>
+<h3>Вставка текста</h3>
+<p>Текстом называется часть шаблона, которая не является элементом XML документа. Текст в шаблон может быть вставлен двумя способами, либо просто как текст:</p>
+<p>&#8230;&gt;<i>text</i>&lt;&#8230;</p>
+<p>Либо через ST команду:</p>
+<p>&#8230;&gt;&lt;<em>tt:text</em>&gt;<i>text</i>&lt;/<em>tt:text</em>&gt;&lt;&#8230;</p>
+<p>В первом случае текст будет вставлен в документ XML, но проигнорирован в случае наличия в нем только пробелов. Во втором случае такой текст не игнорируется.</p>
+<p><b>Сериализация:</b> если текст не проигнорирован, все символы текста вставляются в создающийся XML документ, включая пробелы. Если текст был проигнорирован, ничего не попадает в XML.</p>
+<p><b>Десериализация: </b>Текст из XML потока посимвольно сравнивается с текстом из шаблона (включая пробелы и разрывы строк), если сравнение будет неудачным, система вызовет исключение CX_ST_MATCH_ELEMENT<b>. </b>Тексты могут быть пропущены командой tt:skip.<b><br clear="all" /></b><b></b></p>
+<h3>Трансформация ABAP данных</h3>
+<p>Для обработки ABAP данных служат следующие команды:</p>
+<ul>
+<li>tt:value – для элементарных типов данных и компонентов структур.</li>
+<li>tt:loop – для внутренних таблиц.</li>
+<li>tt:copy – для работы с объектами данных целиком вместе с компонентами.</li>
+</ul>
+<h4>Обработка элементарных типов и компонентов структур</h4>
+<p>Для сериализации и десериализации элементарных типов данных используется команда tt:value:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:value [ref="node"] [map="mapping_list"] 
+                       [length|minLength|maxLength="length"]
+                        [validation] /&gt;</pre><p>Атрибут ref – определяет текущий узел. Узел должен быть элементарного типа, внутренние таблицы и структуры обрабатываются через команду tt:copy.   Элементарные типы отображаются в XML и обратно согласно заранее определенному asXML формату. Формат определяет соответствие элементарных типов ABAP и типов данных языка описания XML (<a href="http://www.w3.org/TR/xmlschema-2/#built-in-datatypes">XML schema</a>). Следующая таблица показывает пример соответствия для этих преобразований (остальное можно найти в документации по asXML):</p>
+<table border="1" width="640" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top"><b>ABAP тип</b></td>
+<td valign="top"><b>ABAP представление</b></td>
+<td valign="top"><b>XML Scheme тип</b></td>
+<td valign="top" width="201"><b>XML представление</b></td>
+</tr>
+<tr>
+<td valign="top">b</td>
+<td valign="top">123</td>
+<td valign="top">xsd:unsignedByte</td>
+<td valign="top" width="201">123</td>
+</tr>
+<tr>
+<td valign="top">s</td>
+<td valign="top">-123</td>
+<td valign="top">xsd:short</td>
+<td valign="top" width="201">-123</td>
+</tr>
+<tr>
+<td valign="top">i</td>
+<td valign="top">-123</td>
+<td valign="top">xsd:int</td>
+<td valign="top" width="201">-123</td>
+</tr>
+<tr>
+<td valign="top">p</td>
+<td valign="top">-1.23</td>
+<td valign="top">xsd:decimal</td>
+<td valign="top" width="201">-1.23</td>
+</tr>
+<tr>
+<td valign="top">decfloat16</td>
+<td valign="top">123E+1</td>
+<td valign="top">precisionDecimal, totalDigits = 16</td>
+<td valign="top" width="201">1.23E+3</td>
+</tr>
+<tr>
+<td valign="top">decfloat34</td>
+<td valign="top">-3.140&#8230;0E+02</td>
+<td valign="top">precisionDecimal, totalDigits = 34</td>
+<td valign="top" width="201">-314.0&#8230;0</td>
+</tr>
+<tr>
+<td valign="top">f</td>
+<td valign="top">-3.140&#8230;0E+02</td>
+<td valign="top">xsd:double</td>
+<td valign="top" width="201">-3.14E2</td>
+</tr>
+</tbody>
+</table>
+<p>Кроме того для отдельных доменов из ABAP словаря существуют свои правила преобразования:</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="184"><b>Домент</b></td>
+<td valign="top" width="145"><b>ABAP представление</b></td>
+<td valign="top" width="123"><b>XML Schema тип</b></td>
+<td valign="top" width="187"><b>XML представление</b></td>
+</tr>
+<tr>
+<td valign="top" width="184">XSDBOOLEAN</td>
+<td valign="top" width="145">&#171;X&#187;, &#187; &#171;</td>
+<td valign="top" width="123">boolean</td>
+<td valign="top" width="187">&#171;true&#187;, &#171;false&#187;</td>
+</tr>
+<tr>
+<td valign="top" width="184">XSDDATE_D</td>
+<td valign="top" width="145">&#171;20071001&#187;</td>
+<td valign="top" width="123">date</td>
+<td valign="top" width="187">&#171;2007-10-01&#187;</td>
+</tr>
+<tr>
+<td valign="top" width="184">XSDDATETIME_Z, XSDDATETIME_LONG_Z, XSDDATETIME_OFFSET, XSDDATETIME_LOCAL</td>
+<td valign="top" width="145">&#171;20060727170334&#187;</td>
+<td valign="top" width="123">dateTime</td>
+<td valign="top" width="187">&#171;2006-07-27T17:03:34Z&#187;</td>
+</tr>
+<tr>
+<td valign="top" width="184">XSDLANGUAGE</td>
+<td valign="top" width="145">&#171;E&#187;, &#171;D&#187;</td>
+<td valign="top" width="123">language</td>
+<td valign="top" width="187">&#171;EN&#187;, &#171;DE&#187;</td>
+</tr>
+<tr>
+<td valign="top" width="184">XSDQNAME</td>
+<td valign="top" width="145">&#171;{URI}name&#187;</td>
+<td valign="top" width="123">QName</td>
+<td valign="top" width="187">prefix:name</td>
+</tr>
+<tr>
+<td valign="top" width="184">XSDTIME_T</td>
+<td valign="top" width="145">&#171;115500&#187;</td>
+<td valign="top" width="123">time</td>
+<td valign="top" width="187">&#171;11:55:00&#187;</td>
+</tr>
+<tr>
+<td valign="top" width="184">XSDUUID_RAW, XSDUUID_CHAR</td>
+<td valign="top" width="145">&#171;123456781234ABCDEF12123456789012&#187;</td>
+<td valign="top" width="123">UUID</td>
+<td valign="top" width="187">&#171;12345678-1234-abcd-ef12-123456789012</td>
+</tr>
+</tbody>
+</table>
+<p>С помощью атрибута map можно задать правила для замены одного или нескольких значений другими. Правила задаются через запятую и с соблюдением следующего синтаксиса:</p>
+<ul>
+<li>val(a1…an) &gt; xml(x) – срабатывает при сериализации, указывает на то, что значения a1..an необходимо преобразовать в X.</li>
+<li>xml(x1…xn) &gt; val(a) – срабатывает при десериализации и указывает на то, что значения x1..xn необходимо преобразовать в A.</li>
+<li>xml(x) = val(a) или val(a) = xml(x) – срабатывает как при сериализации так и при десериализации.</li>
+</ul>
+<p>Пример, программа при сериализации заменяет все значения Woman и Man на Person:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT1"/&gt;
+  &lt;tt:template&gt;
+      &lt;X1&gt;
+        &lt;tt:value  ref="ROOT1"
+                   map="val(C('Woman'), C('Man')) &gt; xml('Person')" /&gt;
+      &lt;/X1&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>С помощью атрибутов length, minLength, maxLength задается ограничение на длину значения при сериализации и десериализации.</p>
+<p>В блоке validation для команд tt:value, tt:read и tt:write устанавливаются ограничения связанные с XML Schema типами и их сериализацией и десериализацией.</p>
+<p>Указываются следующие атрибуты:</p>
+<p>&#8230; xsd-type=&#187;type&#187;<br />
+[xsd-maxInclusive=&#187;max&#187;]<br />
+[xsd-maxExclusive =&#187;max&#187;]<br />
+[xsd-minInclusive=&#187;min&#187;]<br />
+[xsd-minExclusive =&#187;min&#187;]<br />
+[xsd-totalDigits=&#187;dgts&#187;]<br />
+[xsd-fractionDigits=&#187;dgts&#187;] &#8230;</p>
+<p>Атрибут xsd-type указывает на тип данных XML Schema. Значение для сериализации и десериализации должно входить в диапазон указанного типа, в противном случае система вызовет исключение CX_ST_SERIALIZATION_ERROR при сериализации и CX_ST_DESERIALIZATION_ERROR при десериализации.</p>
+<p>Кроме указания типа задаются следующие атрибуты:</p>
+<ul>
+<li>xsd-maxInclusive – максимально допустимое значение, включая указанное, xsd-maxExclusive – максимально допустимое число не включая указанное.</li>
+<li>xsd-minInclusive – минимально допустимое число, включая указанное, xsd-minExclusive – минимально допустимое число не включая указанное.</li>
+<li>xsd-totalDigits, fractionDigits – максимальное кол-во число цифр до и после запятой.</li>
+</ul>
+<p>Пример трансформации:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform 
+  xmlns:tt="http://www.sap.com/transformation-templates"&gt; 
+  &lt;tt:root name="NUM"/&gt; 
+  &lt;tt:template&gt; 
+    &lt;Number&gt; 
+      &lt;tt:value ref="NUM" 
+          xsd-type="short" xsd-minInclusive="30000"/&gt; 
+    &lt;/Number&gt; 
+  &lt;/tt:template&gt; 
+&lt;/tt:transform&gt;</pre><p>Программа вызова:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS int TYPE i. 
+
+DATA xml_string TYPE string. 
+
+TRY. 
+    CALL TRANSFORMATION ... 
+         SOURCE num = int 
+         RESULT XML xml_string. 
+    WRITE / 'OK'. 
+  CATCH cx_st_error. 
+    WRITE / 'Not OK'. 
+ENDTRY.</pre><p>В данном примере допустимо только преобразования чисел в диапазоне от 30000 до 32767 (предел типа Short).</p>
+<h4>Ограничение на длину значений</h4>
+<p>Вы можете использовать атрибуты minLength, maxLength и length для определения длинны в таких командах как: tt:value, tt:read, tt:write. Параметры определяют ограничения на значения, передаваемые при сериализации и десериализации.</p>
+<p>В качестве значения может быть передано положительное целое число. Данные атрибуты можно задать для узлов данных или переменных с типами: с, x, string и xstring. Для всех остальных типов данные ограничения игнорируются.</p>
+<p><b>Сериализация</b>: атрибуты length или minLength определяют количество символов или байт (x), которые будут переданы в итоговый XML документ. Если будет передано значение с меньшей реальной длинной, недостающие до length символы будут заполнены справа либо пробелами, либо нулевым байтом (в зависимости от типа). Атрибуты length или maxLength определяют максимально возможное число символов или байт, которые могут быть переданы в XML документ. Если будет передано больше символов, возникнет исключение CX_SY_CONVERSION_DATA_LOSS (если только оставшиеся символы не состоят из пробелов или нулевых байтов).</p>
+<p><b>Десериализация</b>: атрибут minLength игнорируется, атрибуты length и maxLength задают максимальное число символов или байтов, которое ожидается для получения из XML документа. Если оно содержит большее количество символов и эти символы не являются пробелами и  нулевыми байтами, система вызовет исключение CX_ST_CONSTRAINT_ERROR. Причем данное исключение не может быть обработано при вызове CALL TRANSFORMATION.</p>
+<h4>Обработка таблиц</h4>
+<p>Сериализация и десериализация внутренних таблиц  происходит в цикле, где на каждой итерации текущим узлом задается строка таблицы. Для обработки таблиц служит команда tt:loop:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:loop [ref=“node“] [name=“alias“]&gt;
+  ...
+&lt;/tt:loop&gt;</pre><p>Атрибут ref – как и в других командах, указывает на узел данных, который содержит внутреннюю таблицу, name – задает псевдоним для доступа к текущей строке внутренней таблицы.</p>
+<p>Пример трансформации с обработкой внутренней таблицы:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT"/&gt;
+  &lt;tt:template&gt;
+    &lt;tab1&gt;
+      &lt;tt:loop ref=".ROOT" name="line"&gt;
+        &lt;key&gt;
+          &lt;tt:value ref="$line.key" /&gt;
+        &lt;/key&gt;
+        &lt;tab2&gt;
+          &lt;tt:loop ref="$line.values"&gt;
+            &lt;value&gt;
+              &lt;tt:value /&gt;
+            &lt;/value&gt;
+          &lt;/tt:loop&gt;
+        &lt;/tab2&gt;
+      &lt;/tt:loop&gt;
+    &lt;/tab1&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Программа:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA xml_string TYPE string.
+DATA: BEGIN OF line,
+        key TYPE i,
+        values TYPE TABLE OF i,
+      END OF line.
+DATA num TYPE i.
+DATA itab LIKE TABLE OF line.
+DATA result LIKE itab.
+DO 3 TIMES.
+  CLEAR line.
+  line-key = sy-index + 1.
+  num = line-key ** 2.
+  APPEND num TO line-values.
+  num = line-key ** 3.
+  APPEND num TO line-values.
+  num = line-key ** 4.
+  APPEND num TO line-values.
+  APPEND line TO itab.
+ENDDO.
+
+CALL TRANSFORMATION ...
+  SOURCE root = itab
+  RESULT XML xml_string.
+
+cl_abap_browser=&gt;show_xml( EXPORTING xml_string = xml_string ).
+
+CALL TRANSFORMATION ...
+  SOURCE XML xml_string
+  RESULT root = result.</pre><p>Возвращаемый XML:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tab1&gt;
+  &lt;key&gt;2&lt;/key&gt;
+  &lt;tab2&gt;
+    &lt;value&gt;4&lt;/value&gt;
+    &lt;value&gt;8&lt;/value&gt;
+    &lt;value&gt;16&lt;/value&gt;
+  &lt;/tab2&gt;
+  &lt;key&gt;3&lt;/key&gt;
+  &lt;tab2&gt;
+    &lt;value&gt;9&lt;/value&gt;
+    &lt;value&gt;27&lt;/value&gt;
+    &lt;value&gt;81&lt;/value&gt;
+  &lt;/tab2&gt;
+  &lt;key&gt;4&lt;/key&gt;
+  &lt;tab2&gt;
+    &lt;value&gt;16&lt;/value&gt;
+    &lt;value&gt;64&lt;/value&gt;
+    &lt;value&gt;256&lt;/value&gt;
+  &lt;/tab2&gt;
+&lt;/tab1&gt;</pre><p></p>
+<h4>Комплексная обработка ABAP данных</h4>
+<p>С помощью команды tt:copy можно провести сериализацию и десериализацию для всех типов данных, кроме ссылочных переменных. Данная команда запускает XSL трансформацию и преобразует данные в формат asXML (аналогично стандартной трансформации ID). Так, например, мы можем вывести целиком всю структуру без указания всех её компонентов, либо внутреннюю таблицу, если нам не нужно дополнительной обработки этих компонентов. Пример трансформации к предыдущей программе:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT"/&gt;
+  &lt;tt:template&gt;
+    &lt;node&gt;
+      &lt;tt:copy  ref="ROOT" /&gt;
+    &lt;/node&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Результатом обработки будет следующий XML:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;node&gt;
+  &lt;item&gt;
+    &lt;KEY&gt;2&lt;/KEY&gt;
+    &lt;VALUES&gt;
+      &lt;item&gt;4&lt;/item&gt;
+      &lt;item&gt;8&lt;/item&gt;
+      &lt;item&gt;16&lt;/item&gt;
+    &lt;/VALUES&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;KEY&gt;3&lt;/KEY&gt;
+    &lt;VALUES&gt;
+      &lt;item&gt;9&lt;/item&gt;
+      &lt;item&gt;27&lt;/item&gt;
+      &lt;item&gt;81&lt;/item&gt;
+    &lt;/VALUES&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;KEY&gt;4&lt;/KEY&gt;
+    &lt;VALUES&gt;
+      &lt;item&gt;16&lt;/item&gt;
+      &lt;item&gt;64&lt;/item&gt;
+      &lt;item&gt;256&lt;/item&gt;
+    &lt;/VALUES&gt;
+  &lt;/item&gt;
+&lt;/node&gt;</pre><p></p>
+<h3>Присвоение значений</h3>
+<p>Вы можете использовать команду tt:assign для присвоения значений узлам данных, параметрам и переменным. Команда имеет следующий синтаксис:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:assign [to-ref="node"|to-var="variable"] 
+           [ref="node"|val="value"|var="variable"] /&gt;</pre><p>Атрибуты to-ref и to-var указывают куда передать значение, ref, val и var – какое значение передавать. В качестве полей источников и полей назначения могут выступать:</p>
+<ul>
+<li>Узлы данных (ref), следует помнить, что их содержимое не может быть изменено при сериализации и считано во время десериализации. Нельзя записать из одного узла в другой.</li>
+<li>Переменные и параметры (var).</li>
+<li>Так же можно передавать значения напрямую (константы) через атрибут val.</li>
+</ul>
+<p>В случае необходимости можно использовать команду по преобразованию типов tt:cast. Для работы с внутренними таблицами можно использовать следующий синтаксис:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:assign [to-ref="itab"]&gt;
+  &lt;tt:assign [to-ref="comp"] 
+             [val="value"|var="variable"] /&gt;
+  ...
+&lt;/tt:assign&gt;</pre><p>В данном случае в таблицу itab добавляется новая строка и компоненту comp присваивается значение.</p>
+<p>Для очистки значений переменных, узлов данных и параметров служит команда tt:clear:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:clear [ref="node"|var="variable"] /&gt;</pre><p>Где можно указать либо имя узла через атрибут ref, либо переменную или параметр через атрибут var.</p>
+<p><b>Сериализация</b>: во время сериализации установка значений может быть выполнена только для параметров и переменных, если в качестве назначения указан узел данных или неявно текущий узел, данное присвоение игнорируется.</p>
+<p><b>Десериализация</b>: во время десериализации в качестве источника данных могут выступать только переменные (параметры) и значения, если указать в качестве источника ссылку на узел данных, данное присвоение будет проигнорировано.</p>
+<h3>Вывод значений переменных (параметров)</h3>
+<p>Во время сериализации можно вывести значения переменных и параметров в XML документ, делается это с помощью команды tt:write:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:write var="variable" [map="mapping_list"] 
+                         [length|minLength=″length″]
+                         [validation] /&gt;</pre><p>Где var – имя переменной или параметра, map – список с правилами замены (см. выше), Length, minLength – ограничения вывода по длине.</p>
+<p>Пример использования команды:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:variable name="VARI" val="333" /&gt;
+  &lt;tt:template&gt;
+    &lt;X&gt;
+      &lt;tt:write var="VARI"/&gt;
+    &lt;/X&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Результат: <tt>&lt;</tt><tt>X</tt><tt>&gt;333&lt;/</tt><tt>X</tt><tt>&gt;. </tt>При десериализации данная команда игнорируется.</p>
+<h3>Чтение значений XML элементов</h3>
+<p>Во время выполнения десериализации с помощью команды tt:read можно получить значение XML атрибута, синтаксис команды следующий:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:read var="variable" type="type"
+                         [length="len"]
+                         [decimals="dec"]
+                         [map="mapping list"]
+                         [maxLength="length"]
+        [validation] /&gt;</pre><p>Атрибут variable – указывает на имя переменной или параметра, куда необходимо записать считанное значение. Length, maxLength – ограничение по длине, в данном случае обозначают одно и тоже. Decimals – кол-во знаков после запятой, map – список правил присвоения. Type – тип данных. Команда поддерживает считывание только родовых типов.</p>
+<p>Пример использования команды:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT"/&gt;
+  &lt;tt:variable name="VARI"/&gt;
+  &lt;tt:template&gt;
+    &lt;X&gt;
+      &lt;tt:read type="I" var="VARI"/&gt;
+    &lt;/X&gt;
+    &lt;tt:assign to-ref="ROOT" var="VARI"/&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Если входной XML будет таким: &lt;X&gt;333&lt;/X&gt;, узлу ROOT будет назначено значение 333. Данная команда игнорируется при сериализации.</p>
+<h2>Управление ходом выполнения</h2>
+<h3>Определение направления</h3>
+<p>С помощью команд &lt;tt:serialize&gt; и &lt;tt:deserialize&gt; можно определить, какие команды будут выполнены при сериализации, а какие при десериализации. Синтаксис следующий:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:serialize&gt;
+  ...
+&lt;/tt:serialize&gt;
+&lt;tt:deserialize&gt;
+  ...
+&lt;/tt:deserialize&gt;</pre><p>Пример трансформации:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT1"/&gt;
+  &lt;tt:root name="ROOT2"/&gt;
+  &lt;tt:template&gt;
+    &lt;X&gt;
+      &lt;tt:serialize&gt;
+        &lt;Y&gt;
+          &lt;tt:value ref=".ROOT1.COL1" /&gt;
+        &lt;/Y&gt;
+        &lt;Y&gt;
+          &lt;tt:value ref=".ROOT1.COL2" /&gt;
+        &lt;/Y&gt;
+        &lt;Y&gt;
+          &lt;tt:value ref=".ROOT1.COL3" /&gt;
+        &lt;/Y&gt;
+      &lt;/tt:serialize&gt;
+      &lt;tt:deserialize&gt;
+        &lt;tt:loop ref=".ROOT2"&gt;
+          &lt;Y&gt;
+            &lt;tt:value /&gt;
+          &lt;/Y&gt;
+        &lt;/tt:loop&gt;
+      &lt;/tt:deserialize&gt;
+    &lt;/X&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p></p>
+<h4>Пропуск элементов при десериализации</h4>
+<p>В том случае, когда необходимо пропустить тот или иной элемент XML документа можно воспользоваться командой tt:skip:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:skip [name="name"] [count="cnt"]/&gt;</pre><p>При десериализации данная команда имеет следующий эффект:</p>
+<ul>
+<li>Если не заданы атрибуты, пропускается текущий элемент в XML потоке.</li>
+<li>Если атрибуты установлены, пропускается элемент с именем name, пропуск будет cnt раз, при этом, если значение будет равным «*», элемент будет полностью проигнорирован при десериализации.</li>
+<li>Если имя не установлено, будет пропущено cnt следующих элементов.</li>
+</ul>
+<p>Пример трансформации:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;?sap.transform simple?&gt;
+&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT1"/&gt;
+  &lt;tt:template&gt;
+    &lt;roots&gt;
+      &lt;root1&gt;
+        &lt;x tt:value-ref="ROOT1.X" /&gt;
+        &lt;tt:skip name="Y" count="*"/&gt;
+        &lt;z tt:value-ref="ROOT1.Z" /&gt;
+      &lt;/root1&gt;
+    &lt;/roots&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Программа:</p><pre class="urvanov-syntax-highlighter-plain-tag">TYPES:
+  BEGIN OF ty_root_one,
+    x TYPE i,
+    y TYPE i,
+    z TYPE i,
+  END OF ty_root_one.
+
+DATA:
+  ls_one TYPE ty_root_one,
+  lv_xml TYPE string.
+
+ls_one-x = 1.
+ls_one-y = 2.
+ls_one-z = 3.
+
+CALL TRANSFORMATION ZTEST_ST
+  SOURCE root1 = ls_one
+  RESULT XML lv_xml.
+
+WRITE lv_xml.
+
+CALL TRANSFORMATION ZTEST_ST
+   SOURCE XML lv_xml
+   RESULT root1 = ls_one.</pre><p></p>
+<h4>Условные трансформации</h4>
+<p>Позволяют отделить набор ST команд и выполнить их только при определенных условиях. Используются как отдельно, так и внутри таких команд как tt:switch и tt:group. Синтаксис выглядит следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:[s-|d-]cond[-var] [using="precond"] [data="assertion"] [[s-|d-]check="cond"]&gt;
+  ...
+&lt;/tt:[s-|d-]cond&gt;</pre><p>Префикс s- и d- используются тогда, когда условия должны обрабатываться только для сериализации или только для десериализации. Префикс –var используется если условная трансформация применяется относительно переменных или параметров.</p>
+<p><b>Определение предусловий</b></p>
+<p>Атрибут using определяет <b>предусловия</b>, могут быть следующими:</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top"><b>Предусловие</b></td>
+<td valign="top"><b>Обозначение</b></td>
+</tr>
+<tr>
+<td valign="top"><tt>exist(</tt><em>)</em></td>
+<td valign="top">Срабатывает когда указанный узел существует</td>
+</tr>
+<tr>
+<td valign="top"><tt>type-C(</tt><em>)</em></td>
+<td valign="top">Срабатывает если узел типа C</td>
+</tr>
+<tr>
+<td valign="top"><tt>type-D(</tt><em>)</em></td>
+<td valign="top">Срабатывает если узел типа D</td>
+</tr>
+<tr>
+<td valign="top"><tt>type-F(</tt><em>)</em></td>
+<td valign="top">Срабатывает если узел типа F</td>
+</tr>
+<tr>
+<td valign="top"><tt>type-I(</tt><em>)</em></td>
+<td valign="top">Срабатывает если узел типа I</td>
+</tr>
+<tr>
+<td valign="top"><tt>type-N(</tt><em>)</em></td>
+<td valign="top">Срабатывает если узел типа N</td>
+</tr>
+<tr>
+<td valign="top"><tt>type-P(</tt><em>)</em></td>
+<td valign="top">Срабатывает если узел типа P</td>
+</tr>
+<tr>
+<td valign="top"><tt>type-T(</tt><em>)</em></td>
+<td valign="top">Срабатывает если узел типа T</td>
+</tr>
+<tr>
+<td valign="top"><tt>type-X(</tt><em>)</em></td>
+<td valign="top">Срабатывает если узел типа X</td>
+</tr>
+</tbody>
+</table>
+<p>Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT"/&gt;
+  &lt;tt:template&gt;
+    &lt;tt:s-cond using="type-C(ref('ROOT'))"&gt;
+      &lt;X&gt;
+        ...
+      &lt;/X&gt;
+    &lt;/tt:s-cond&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Указанное условие можно записать следующим образом: &#171;type-C(ROOT)&#187;.  Через запятую можно указывать несколько условий:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT1"/&gt;
+  &lt;tt:root name="ROOT2"/&gt;
+  &lt;tt:template&gt;
+    &lt;tt:s-cond using="type-I(ROOT1), type-F(ROOT2)"&gt;
+      &lt;X&gt;
+        ...
+      &lt;/X&gt;
+    &lt;/tt:s-cond&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p><b>Определение утверждений</b></p>
+<p>Оператор data определяет утверждения, если утверждение истинно выполняется блок ST команд. В противном случае вызывается исключение CX_ST_COND_CHECK_FAIL. В утверждениях могут быть использованы как узлы данных, так и переменные и просто значения:</p>
+<ul>
+<li>Узлы данных, как и во всех других условиях, записываются в форме ref(‘ИмяУзла’), либо просто ИмяУзла.</li>
+<li>Переменные и параметры var(ИмяПеременной)</li>
+</ul>
+<p>Утверждения бывают двух видов:</p>
+<ul>
+<li>Сравнение со значением по умолчанию &#8212; initial(..)</li>
+<li>Сравнение со значением: ref(‘ИмяУзла’) = 22</li>
+</ul>
+<p>В следующем примере, если значение ROOT1 не будет равно ABC, система вызовет исключение:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:template&gt;
+    &lt;ROOTS&gt;
+      &lt;ROOT&gt;
+        &lt;tt:cond data="ROOT1='ABC'"&gt;
+          &lt;tt:value ref="ROOT1"/&gt;
+        &lt;/tt:cond&gt;
+      &lt;/ROOT&gt;
+    &lt;/ROOTS&gt;
+  &lt;/tt:template&gt;</pre><p><b>Определение проверок</b></p>
+<p>Атрибут <b>check</b> позволяет задавать условия относительно значений переменных, параметров и узлов данных. Приставка –var (var-check) в данном атрибуте используется для условий относительно переменных и параметров.</p>
+<p>Через условия можно определить состояние значений в переменных, параметрах, узлах:</p>
+<ul>
+<li>exist(‘ИмяУзла’) – выполняется, если указанный узел существует.</li>
+<li>Initial(ref(‘ИмяУзла’) или ИмяПеременной) – выполняется если узел или переменная (параметр) имеют пустое значение</li>
+<li>Not-initial(..) – противоположность initial.</li>
+</ul>
+<p>Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT"/&gt;
+  &lt;tt:template&gt;
+    &lt;tt:s-cond check="not-initial(ROOT)"&gt;
+      &lt;X&gt;
+        &lt;tt:value ref="ROOT" /&gt;
+      &lt;/X&gt;
+    &lt;/tt:s-cond&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>В атрибуте check так же можно задавать условия сравнения синтаксис следующий:</p>
+<p>Ref(‘ИмяУзла’)|var(ИмяПеременной)|Значение <b>Оператор </b>Ref(‘ИмяУзла’)|var(ИмяПеременной)|Значение</p>
+<p>Существуют следующие операторы:</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top">Оператор</td>
+<td valign="top">Значение</td>
+</tr>
+<tr>
+<td valign="top">=</td>
+<td valign="top">Условие выполняется, если оба операнда равны</td>
+</tr>
+<tr>
+<td valign="top">!=</td>
+<td valign="top">Условие выполняется, если значения операндов не равны</td>
+</tr>
+<tr>
+<td valign="top">&gt;, &amp;gt;</td>
+<td valign="top">Значение выполняется если значение левого операнда больше правого</td>
+</tr>
+<tr>
+<td valign="top">&gt;=, &amp;gt;=</td>
+<td valign="top">Значение выполняется если значение левого операнда больше или равно правого</td>
+</tr>
+<tr>
+<td valign="top">&amp;lt;</td>
+<td valign="top">Значение выполняется если правый операнд больше</td>
+</tr>
+<tr>
+<td valign="top">&amp;lt;=</td>
+<td valign="top">Значение выполняется если правый операнд меньше или равен левому</td>
+</tr>
+</tbody>
+</table>
+<p>Как видно из таблицы, оператор &lt; в XML всегда должен быть заменен &amp;lt; Оператор &gt; может быть заменен на &amp;gt; но можно и не менять.</p>
+<p>Пример использования:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:cond check="ref('ROOT1.X') &gt;= 10"&gt;
+  &lt;X tt:value-ref="ROOT1.X"/&gt;
+&lt;/tt:cond&gt;
+&lt;tt:cond check="ref('ROOT1.X') &amp;lt;= 10"&gt;
+  &lt;Y tt:value-ref="ROOT1.X"/&gt;
+&lt;/tt:cond&gt;</pre><p>Условия в атрибуте check можно объединять через оператор and или or, так же доступны скобки и отрицание, через оператор not. Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT1"/&gt;
+  &lt;tt:root name="ROOT2"/&gt;
+  &lt;tt:root name="ROOT3"/&gt;
+  &lt;tt:template&gt;
+    &lt;tt:ref name="ROOT1"&gt;
+      &lt;tt:s-cond check="($ref &gt; ref('.ROOT2')) and ($ref &lt; ref('.ROOT3'))"&gt;
+        &lt;X&gt;
+          &lt;tt:value/&gt;
+        &lt;/X&gt;
+      &lt;/tt:s-cond&gt;
+    &lt;/tt:ref&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Если содержимое tt:[s-|d-]cond не является шаблоном, должен быть указан хотя бы один атрибут: check, data, using.</p>
+<p><b>Определение шаблона</b></p>
+<p>Когда условная трансформация десериализуется, содержимое шаблона, находящееся между &lt;tt:cond&gt; .. &lt;/tt:cond&gt; используется как критерий присвоения.  Шаблон содержит одну или несколько конструкций используемых как маркеры. Наиболее распространенная форма маркера – текстовый XML элемент, если содержимое шаблона состоит из одного XML элемента, с тем же именем что и обрабатываемый элемент из XML потока, то условие считается положительным и XML элемент обрабатывается. Если в шаблоне несколько маркеров, то условие обрабатывается, если все маркеры были обработаны.</p>
+<p>Допустим, имеем следующий XML документ:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;roots&gt;
+  &lt;root1&gt;
+    &lt;Z&gt;3&lt;/Z&gt;
+    &lt;X&gt;8&lt;/X&gt;
+    &lt;Y&gt;2&lt;/Y&gt;
+  &lt;/root1&gt;
+&lt;/roots&gt;</pre><p>Трансформация, использующаяся при десериализации:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;?sap.transform simple?&gt;
+&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT1"/&gt;
+  &lt;tt:template&gt;
+    &lt;roots&gt;
+      &lt;root1&gt;
+        &lt;tt:cond&gt;
+          &lt;Z tt:value-ref="ROOT1.Z"/&gt;
+          &lt;X tt:value-ref="ROOT1.X"/&gt;
+        &lt;/tt:cond&gt;
+        &lt;tt:skip count="2"/&gt;
+        &lt;Y tt:value-ref="ROOT1.Y"/&gt;
+      &lt;/root1&gt;
+    &lt;/roots&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Шаблон обработается успешно, если во входящем потоке будут последовательно найдены элемент Z и элемент X, если их порядок в шаблоне будет другим, шаблон не выполнится, и будут пропущены эти два элемента, обработается только Y.</p>
+<p>В следующей трансформации порядок элементов будет не важен, т.к. есть два шаблона и один из них будет выполнен:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;?sap.transform simple?&gt;
+&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT1"/&gt;
+  &lt;tt:template&gt;
+    &lt;roots&gt;
+      &lt;root1&gt;
+        &lt;tt:cond&gt;
+          &lt;X tt:value-ref="ROOT1.X"/&gt;
+          &lt;Z tt:value-ref="ROOT1.Z"/&gt;
+        &lt;/tt:cond&gt;
+        &lt;tt:cond&gt;
+          &lt;Z tt:value-ref="ROOT1.Z"/&gt;
+          &lt;X tt:value-ref="ROOT1.X"/&gt;
+        &lt;/tt:cond&gt;
+        &lt;Y tt:value-ref="ROOT1.Y"/&gt;
+      &lt;/root1&gt;
+    &lt;/roots&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Шаблоном можно назвать условия, содержимое которых содержит:</p>
+<ul>
+<li>Обычный текст в виде XML элементов и статических атрибутов</li>
+<li>Динамические атрибуты, объявленные в команде tt:attribute</li>
+<li>Текст, если он не пустой</li>
+<li>Явно определенный пустой шаблон, через команду tt:empty, может быть использован, если не известно есть ли внутри узла компоненты.</li>
+</ul>
+<p>Если в предыдущую программу передать следующий XML:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;roots&gt;
+  &lt;root1&gt;
+  &lt;/root1&gt;
+&lt;/roots&gt;</pre><p>Её обработка вызовет ошибку, но если добавить в неё пустой шаблон, ошибки не произойдет:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:cond&gt;
+ &lt;tt:empty/&gt;
+&lt;/tt:cond&gt;</pre><p><b>Порядок обработки условных трансформаций при сериализации</b>:</p>
+<ul>
+<li>Предварительные условия</li>
+<li>Утверждения</li>
+<li>Условия сравнения</li>
+</ul>
+<p>Блок условий обрабатывается, когда все три проверки возвращают истинное значение.</p>
+<p><b>Порядок обработки условных трансформаций при десериализации:</b></p>
+<p><b></b>1. Является ли содержимое условной трансформации шаблоном</p>
+<p>1.1. Если содержимое является шаблоном, сравниваются последовательно элементы в XML потоке. Если шаблон не выполняется, условная трансформация пропускается, при этом элементы из XML потока не пропускается из обработки. Если шаблон корректен, переходим к шагу 2.</p>
+<p>1.2. Если не шаблон переходим к шагу 2.</p>
+<p>2. Проверка предусловий</p>
+<p>2.1. Если содержимое является шаблоном и предусловие не выполняется, команда tt:cond пропускается, при этом элементы во входящем XML потоке пропускаются (не десериализуются). Если предусловие выполняется, переходим к шагу 3.</p>
+<p>2.2. Если содержимое не является шаблоном и предусловие не выполняется, при десериализации срабатывает исключение CX_ST_REF_ACCESS. Если предусловие выполняется, переходим к шагу 3.</p>
+<p>3. Выполнение инструкций внутри условной трансформации. На данном этапе происходит десериализация узлов данных, их существование можно было проверить на шаге 2. Результат десериализации можно будет проверить на шаге 5.</p>
+<p>4. Установка утверждений. Если в момент десериализации значение в утверждении не совпадет со значением в XML потоке, система вызовет исключение CX_ST_COND_CHECK_FAIL.</p>
+<p>5. Проверка условий. Если условия не выполняются, десериализация будет прервана с исключением CX_ST_COND_CHECK_FAIL.</p>
+<h4>Использование команды выбора</h4>
+<p>Аналогично оператору CASE в ABAP, в ST программах может использоваться команда выбора, позволяющая от определенных условий выполнять те или иные ST команды или обработать шаблон, синтаксис данной команды:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:switch[-var]&gt; 
+   &lt;tt:[s-|d-]cond ..&gt;
+   &lt;/tt:[s-|d-]cond ..&gt;
+…
+ 	 &lt;tt:[s-|d-]cond ..&gt;
+   &lt;/tt:[s-|d-]cond ..&gt;
+ &lt;/tt:switch&gt;</pre><p>Префикс var применяется, когда команда выбора применяется относительно переменной или параметра.</p>
+<p>В отличие от условных трансформаций, используемых вне оператора tt:case, tt:group, нет необходимости в объявлении хотя-бы одного из атрибутов using,check,data, если содержимое условных трансформаций не шаблон.</p>
+<p>При использовании команд выбора необходимо помнить следующее:</p>
+<ul>
+<li>Вы можете определить только одно условие стандартное для сериализации (s-), т.е. то где не заполнены атрибуты check,using, data.</li>
+<li>Вы можете определить только одно стандартное условие десериализации (d-), т.е. то, что не содержит шаблон.</li>
+</ul>
+<p>Шаги, выполняемые при сериализации:</p>
+<ol>
+<li>Первое релевантное для сериализации условие выбора tt:[s-]cond, выбранное относительно условий в using, data, check обрабатывается, далее происходит выход из команды tt:switch.</li>
+<li>Если подобного условия не было найдено, обрабатывается условие выбора без атрибутов с проверками (без data, check, using – стандартное условие сериализации, если такое условие выбора есть), далее выход из команды tt:switch.</li>
+<li>Если ни одно из условий не было обработано система вызовет исключение CX_ST_SWITCH_NO_CASE.</li>
+</ol>
+<p>Шаги, выполняемые при десериализации:</p>
+<ol>
+<li>Сначала ищется первое подходящее условие выбора tt:[d-]cond с подходящим шаблоном и условиями, заданными через атрибуты. Если найдено подходящее, произойдет выход из команды tt:switch.</li>
+<li>Если система не нашла подходящего условия выбора, обрабатывается стандартное условие для десериализации, если такое существует. Если при этом условия определенные через атрибуты для стандартного условия выбора не выполняются, система выдает исключение CX_ST_REF_ACCESS.</li>
+<li>Если система не смогла найти подходящего условия выбора, она выдаст исключение  CX_ST_SWITCH_NO_CASE.</li>
+</ol>
+<p>Следующий пример демонстрирует работу с командой switch, при сериализации числовые значения заменяются на текстовые, при десериализации текстовые заменяются числовыми:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="SIZE"/&gt;
+  &lt;tt:template&gt;
+    &lt;Paragraph&gt;
+      &lt;tt:attribute name="size"&gt;
+        &lt;tt:switch&gt;
+          &lt;tt:s-cond check="SIZE&lt;10"&gt;
+            &lt;tt:text&gt;Small&lt;/tt:text&gt;
+          &lt;/tt:s-cond&gt;
+          &lt;tt:s-cond check="SIZE&gt;20"&gt;
+            &lt;tt:text&gt;Big&lt;/tt:text&gt;
+          &lt;/tt:s-cond&gt;
+          &lt;tt:s-cond&gt;
+            &lt;tt:text&gt;Medium&lt;/tt:text&gt;
+          &lt;/tt:s-cond&gt;
+          &lt;tt:d-cond using="exist(SIZE)" data="SIZE=8"&gt;
+            &lt;tt:text&gt;Small&lt;/tt:text&gt;
+          &lt;/tt:d-cond&gt;
+          &lt;tt:d-cond using="exist(SIZE)" data="SIZE=16"&gt;
+            &lt;tt:text&gt;Medium&lt;/tt:text&gt;
+          &lt;/tt:d-cond&gt;
+          &lt;tt:d-cond using="exist(SIZE)" data="SIZE=28"&gt;
+            &lt;tt:text&gt;Big&lt;/tt:text&gt;
+          &lt;/tt:d-cond&gt;
+          &lt;tt:d-cond using="exist(SIZE)" data="SIZE=12"&gt;
+            &lt;tt:skip/&gt;
+          &lt;/tt:d-cond&gt;
+        &lt;/tt:switch&gt;
+      &lt;/tt:attribute&gt;
+      &lt;tt:text&gt;Text&lt;/tt:text&gt;
+    &lt;/Paragraph&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Тот же пример без использования префиксов, но с указанием направления для команды выбора:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="SIZE"/&gt;
+  &lt;tt:template&gt;
+    &lt;Paragraph&gt;
+      &lt;tt:attribute name="size"&gt;
+        &lt;tt:serialize&gt;
+          &lt;tt:switch&gt;
+            &lt;tt:cond check="SIZE&lt;10"&gt;
+              &lt;tt:text&gt;Small&lt;/tt:text&gt;
+            &lt;/tt:cond&gt;
+            &lt;tt:cond check="SIZE&gt;20"&gt;
+              &lt;tt:text&gt;Big&lt;/tt:text&gt;
+            &lt;/tt:cond&gt;
+            &lt;tt:cond&gt;
+              &lt;tt:text&gt;Medium&lt;/tt:text&gt;
+            &lt;/tt:cond&gt;
+          &lt;/tt:switch&gt;
+        &lt;/tt:serialize&gt;
+        &lt;tt:deserialize&gt;
+          &lt;tt:cond using="exist(SIZE)"&gt;
+            &lt;tt:switch&gt;
+              &lt;tt:cond data="SIZE=8"&gt;
+                &lt;tt:text&gt;Small&lt;/tt:text&gt;
+              &lt;/tt:cond&gt;
+              &lt;tt:cond data="SIZE=16"&gt;
+                &lt;tt:text&gt;Medium&lt;/tt:text&gt;
+              &lt;/tt:cond&gt;
+              &lt;tt:cond data="SIZE=28"&gt;
+                &lt;tt:text&gt;Big&lt;/tt:text&gt;
+              &lt;/tt:cond&gt;
+              &lt;tt:cond data="SIZE=12"&gt;
+                &lt;tt:skip/&gt;
+              &lt;/tt:cond&gt;
+            &lt;/tt:switch&gt;
+          &lt;/tt:cond&gt;
+        &lt;/tt:deserialize&gt;
+      &lt;/tt:attribute&gt;
+      &lt;tt:text&gt;Blahblah&lt;/tt:text&gt;
+    &lt;/Paragraph&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p></p>
+<h4>Использование группировок</h4>
+<p>В том случае, когда не известно сколько раз, тот или иной элемент в XML документе будет повторяться и в какой последовательности, можно воспользоваться группировками.</p>
+<p>Следующий пример демонстрирует такой случай:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  lv_xml TYPE string,
+  x1     TYPE i,
+  x2     TYPE i,
+  x3     TYPE i.
+
+lv_xml = '&lt;roots&gt;' &amp;&amp;
+         '  &lt;X1&gt;1&lt;/X1&gt;' &amp;&amp;
+         '  &lt;X2&gt;2&lt;/X2&gt;' &amp;&amp;
+         '  &lt;X1&gt;3&lt;/X1&gt;' &amp;&amp;
+         '  &lt;X3&gt;1&lt;/X3&gt;' &amp;&amp;
+         '  &lt;X2&gt;1&lt;/X2&gt;' &amp;&amp;
+         '&lt;/roots&gt;'.
+
+CALL TRANSFORMATION ZTEST_ST2
+  SOURCE XML lv_xml
+  RESULT x1 = x1
+         x2 = x2
+         x3 = x3.
+
+WRITE: / 'X1=', X1, 'X2=', X2, 'X3=', X3.</pre><p>Для удобства обработки такой последовательности, используются группировки:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;?sap.transform simple?&gt;
+&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="X1"/&gt;
+  &lt;tt:root name="X2"/&gt;
+  &lt;tt:root name="X3"/&gt;
+  &lt;tt:template&gt;
+    &lt;roots&gt;
+      &lt;tt:group&gt;
+        &lt;tt:cond frq="*"&gt;
+          &lt;X1 tt:value-ref="X1"/&gt;
+        &lt;/tt:cond&gt;
+        &lt;tt:cond frq="*"&gt;
+          &lt;X2 tt:value-ref="X2"/&gt;
+        &lt;/tt:cond&gt;
+        &lt;tt:cond frq="*"&gt;
+          &lt;X3 tt:value-ref="X3"/&gt;
+        &lt;/tt:cond&gt;
+      &lt;/tt:group&gt;
+    &lt;/roots&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Как и для команды tt:switch условные трансформации можно создавать для конкретного направления ([s-|d-]cond). Но нельзя внутри них использовать вложенные условные трансформации с другим типом направления.</p>
+<p>В отличие от условных трансформаций, используемых вне оператора tt:case, tt:group, нет необходимости в объявлении хотя-бы одного из атрибутов using,check,data, если содержимое условных трансформаций не шаблон.</p>
+<p>Для контроля того, как часто относительно десериализации условная трансформация может быть выполнена, заполняется параметр frq (frequency- частота):</p>
+<ul>
+<li>1 – должна быть обработана 1 раз.</li>
+<li>? – может быть обработана, а может и нет.</li>
+<li>* &#8212; может быть обработана ноль и более раз.</li>
+</ul>
+<p><b>Сериализация</b>: во время сериализации элемент tt:group выполняется один раз: все зависимые относительно сериализации условные трансформации с предустановленными условиями или без них выполняются в указанном порядке.</p>
+<p><b>Десериализация</b>: при десериализации элемент tt:group инициирует цикл. Система пытается обработать все условные трансформации с обязательным присутствием элемента (частота -1). Как только это происходит, цикл завершается. Пока не обработаны все обязательные условные трансформации, могут быть так же обработаны опциональные (? – встречается хотя бы раз) и множественные условные трансформации (*). На каждой итерации цикла, одна из подходящих для сериализации условных трансформаций, чья частота не достигла указанного максимума, может быть выбрана следующим образом:</p>
+<ol>
+<li>Выбирается первая условная трансформация с подходящим шаблоном</li>
+<li>Если такая не обнаружена, система пытается выполнить стандартную для десериализации условную трансформацию, не содержащую шаблона. Если для неё не будут выполнены ограничения: using, check, data система выдаст исключение CX_ST_REF_ACCESS.</li>
+<li>Если система не может выполнить обязательных условных трансформаций, вызывается исключение CX_ST_GROUP_MISSING_CASE.</li>
+</ol>
+<p>Рассмотрим приме, имеется следующая трансформация:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform 
+  xmlns:tt="http://www.sap.com/transformation-templates"&gt; 
+  &lt;tt:root name="ROOT1"/&gt; 
+  &lt;tt:root name="ROOT2"/&gt; 
+  &lt;tt:root name="ROOT3"/&gt; 
+  &lt;tt:root name="ROOT4"/&gt; 
+  &lt;tt:template&gt; 
+    &lt;X0&gt; 
+      &lt;tt:group&gt; 
+        &lt;tt:cond&gt; 
+          &lt;X3&gt; 
+            &lt;tt:value ref="ROOT3"/&gt; 
+          &lt;/X3&gt; 
+        &lt;/tt:cond&gt; 
+        &lt;tt:cond frq="?"&gt; 
+          &lt;X2&gt; 
+            &lt;tt:value ref="ROOT2"/&gt; 
+          &lt;/X2&gt; 
+        &lt;/tt:cond&gt; 
+        &lt;tt:cond frq="*"&gt; 
+          &lt;X1&gt; 
+            &lt;tt:value ref="ROOT1"/&gt; 
+          &lt;/X1&gt; 
+        &lt;/tt:cond&gt; 
+        &lt;tt:cond&gt; 
+          &lt;tt:skip count="1"/&gt; 
+        &lt;/tt:cond&gt; 
+      &lt;/tt:group&gt; 
+      &lt;X4&gt; 
+        &lt;tt:value ref="ROOT4"/&gt; 
+      &lt;/X4&gt; 
+    &lt;/X0&gt; 
+  &lt;/tt:template&gt; 
+&lt;/tt:transform&gt;</pre><p>Допустим, XML будет следующим:</p>
+<p>Тогда система выполнит следующие действия:</p>
+<ol>
+<li>В первой итерации цикла система пытается десериализовать элемент X1, узлу ROOT присваивается значение 1.</li>
+<li>Во второй итерации система обрабатывает второй элемент X1, т.к. для данной условной трансформации указана частота 0 и более, узлу ROOT будет назначено новое значение 2.</li>
+<li>Далее система десериализует элемент X2, для условной трансформации с подходящим шаблоном этого элемента, частота установлена хотя бы 1 раз, что значит, что она будет выполнена на этой итерации и узлу  ROOT2 будет передано значение 4.</li>
+<li>На четвертой итерации система вновь обрабатывает элемент X2, но т.к. условная трансформация для него уже была выбрана ранее, система запускает стандартную для десериализации условную трансформацию, в которой вызывается команда для пропуска элемента tt:skip.</li>
+<li>На пятой итерации система обрабатывает условную трансформацию с элементом X3, т.к. частота для неё не задана, по умолчанию равна 1 и она является последней обязательной условной трансформацией, цикл на этом завершается.</li>
+<li>Шестой элемент из XML потока обрабатывается уже вне конструкции группировки tt:group</li>
+</ol>
+<h2>Модульное построение ST программ</h2>
+<p>В ST программах возможно разбиение логики на отдельные части, путем определения и вызова вложенных шаблонов. Все шаблоны в ST программе, за исключением главного являются вложенными.</p>
+<h3>Определение вложенных шаблонов</h3>
+<p>Вложенные шаблоны определяются следующим способом:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:template name=“tmpl“&gt;
+  [&lt;tt:context&gt;
+    [&lt;tt:root name="root1" [[line-]type=...] /&gt;
+     &lt;tt:root name="root2" [[line-]type=...] /&gt;
+     ...]
+    [&lt;tt:parameter name="para1" [[s-|d-]val="def1"] [kind="knd1"] /&gt;
+     &lt;tt:parameter name="para2" [[s-|d-]val="def2"] [kind="knd2"] /&gt;
+     ...]
+    [&lt;tt:variable name="vari1" [[s-|d-]val="val1"] /&gt;
+     &lt;tt:variable name="vari2" [[s-|d-]val="val2"] /&gt;
+     ...]
+   &lt;/tt:context&gt;]
+  ...
+&lt;/tt:template&gt;</pre><p>Атрибут name определяет уникальное имя для вложенного шаблона, имя не должно быть пустым и не должно совпадать с главным шаблоном или другими вложенными шаблонами.</p>
+<p>Во вложенных шаблонах через команду tt:context можно объявлять свои узлы данных, параметры и переменные. Узлы данных во вложенных шаблонах не имеют прямой связи с ABAP данными, они используются (как и параметры) в роли интерфейса между шаблонами, т.е. мы можем, запуская вложенный шаблон, передать в значения его узлов данные из узлов запускающего шаблона через команду tt:with-root.  В значения параметров так же передаются значения из вызывающих шаблонов. Переменные (tt:variable) используются для внутренних целей шаблона и не изменяются через вызывающий шаблон, доступ к ним может иметь только шаблон, внутри которого они определены.</p>
+<h3>Вызов вложенных шаблонов</h3>
+<p>Для вызова вложенных шаблонов используется команда tt:apply:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:apply name="tmpl" [ref="node"]&gt;
+  [&lt;tt:with-root name="root1" [ref="node1"] /&gt;
+   &lt;tt:with-root name="root2" [ref="node2"] /&gt;
+   ...]
+  [&lt;tt:with-parameter name="para1" [ref="node1"|val="val1"|var="var1"] /&gt;
+   &lt;tt:with-parameter name="para2" [ref="node2"|val="val2"|var="var2"] /&gt;
+   ...]
+&lt;/tt:apply&gt;</pre><p>Атрибут name задает имя вложенного шаблона, ref- текущий узел, для передачи данных во внутренние узлы данных используется команда tt:with-root, для передачи в параметры команда tt:with-parameter.</p>
+<p>Пример трансформации с использованием вложенного шаблона:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:transform template="TEMP_MAIN"
+    xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:root name="ROOT"/&gt;
+  &lt;tt:template name="TEMP_MAIN"&gt;
+    &lt;week&gt;
+      &lt;day1 tt:ref="ROOT.DAY1"&gt;
+        &lt;tt:apply name="TEMP_SUB" /&gt;
+      &lt;/day1&gt;
+      &lt;day2 tt:ref="ROOT.DAY2"&gt;
+        &lt;tt:apply name="TEMP_SUB" /&gt;
+      &lt;/day2&gt;
+      &lt;day3 tt:ref="ROOT.DAY3"&gt;
+        &lt;tt:apply name="TEMP_SUB" /&gt;
+      &lt;/day3&gt;
+      &lt;day4 tt:ref="ROOT.DAY4"&gt;
+        &lt;tt:apply name="TEMP_SUB" /&gt;
+      &lt;/day4&gt;
+      &lt;day5 tt:ref="ROOT.DAY5"&gt;
+        &lt;tt:apply name="TEMP_SUB" /&gt;
+      &lt;/day5&gt;
+      &lt;day6 tt:ref="ROOT.DAY6"&gt;
+        &lt;tt:apply name="TEMP_SUB" /&gt;
+      &lt;/day6&gt;
+      &lt;day7 tt:ref="ROOT.DAY7"&gt;
+        &lt;tt:apply name="TEMP_SUB" /&gt;
+      &lt;/day7&gt;
+    &lt;/week&gt;
+  &lt;/tt:template&gt;
+  &lt;tt:template name="TEMP_SUB"&gt;
+    &lt;name&gt;
+      &lt;tt:value ref="$ref.name" /&gt;
+    &lt;/name&gt;
+    &lt;work&gt;
+      &lt;tt:value ref="$ref.work" /&gt;
+    &lt;/work&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Программа для её вызова:</p><pre class="urvanov-syntax-highlighter-plain-tag">TYPES: BEGIN OF day,
+         name TYPE string,
+         work(1) TYPE c,
+       END OF day.
+DATA: BEGIN OF week,
+        day1 TYPE day,
+        day2 TYPE day,
+        day3 TYPE day,
+        day4 TYPE day,
+        day5 TYPE day,
+        day6 TYPE day,
+        day7 TYPE day,
+      END OF week.
+DATA xml_string TYPE string.
+DATA result LIKE week.
+week-day1-name = 'Monday'.    week-day1-work = 'X'.
+week-day2-name = 'Tuesday'.   week-day2-work = 'X'.
+week-day3-name = 'Wednesday'. week-day3-work = 'X'.
+week-day4-name = 'Thursday'.  week-day4-work = 'X'.
+week-day5-name = 'Friday'.    week-day5-work = 'X'.
+week-day6-name = 'Saturday'.  week-day6-work = ' '.
+week-day7-name = 'Sunday'.    week-day7-work = ' '.
+CALL TRANSFORMATION ...
+  SOURCE root = week
+  RESULT XML xml_string.
+CALL TRANSFORMATION ...
+  SOURCE XML xml_string
+  RESULT root = result.</pre><p>Результат:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;week&gt;
+  &lt;day1&gt;
+    &lt;name&gt;Monday&lt;/name&gt;
+    &lt;work&gt;X&lt;/work&gt;
+  &lt;/day1&gt;
+  &lt;day2&gt;
+    &lt;name&gt;Tuesday&lt;/name&gt;
+    &lt;work&gt;X&lt;/work&gt;
+  &lt;/day2&gt;
+  &lt;day3&gt;
+    &lt;name&gt;Wednesday&lt;/name&gt;
+    &lt;work&gt;X&lt;/work&gt;
+  &lt;/day3&gt;
+  &lt;day4&gt;
+    &lt;name&gt;Thursday&lt;/name&gt;
+    &lt;work&gt;X&lt;/work&gt;
+  &lt;/day4&gt;
+  &lt;day5&gt;
+    &lt;name&gt;Friday&lt;/name&gt;
+    &lt;work&gt;X&lt;/work&gt;
+  &lt;/day5&gt;
+  &lt;day6&gt;
+    &lt;name&gt;Saturday&lt;/name&gt;
+    &lt;work/&gt;
+  &lt;/day6&gt;
+  &lt;day7&gt;
+    &lt;name&gt;Sunday&lt;/name&gt;
+    &lt;work/&gt;
+  &lt;/day7&gt;
+&lt;/week&gt;</pre><p></p>
+<h2>Использование других ST программ</h2>
+<p>В ST программах есть возможность вызова других ST программ и включение содержимого одной ST программы в другую.</p>
+<h3>Вызов ST программ</h3>
+<p>Для вызова программ необходимо воспользоваться командой tt:call:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:call transformation=“trafo“&gt;
+  [&lt;tt:with-root name="root1" [ref=”node1”] / &gt;
+   &lt;tt:with-root name=" root2" [ref=”node2”] / &gt;
+   ...]
+  [&lt;tt:with-parameter name="para1" [ref=”node1”|val=”val1”|var=”var1”] /&gt;
+   &lt;tt:with-parameter name="para2" [ref=”node2”|val=”val2”|var=”var2”] /&gt;
+   ...]
+&lt;/tt:call&gt;</pre><p>Атрибут transformation задает имя ST программы, как и при вызове вложенных шаблонов ST программу можно вызвать, передав в неё узлы данных и параметры (описание см. выше).</p>
+<h3>Включение содержимого программ</h3>
+<p>Для включения содержимого одной программы в другую необходимо воспользоваться командой tt:include, со следующим синтаксисом:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:include name=" trafo " [templates=""tmpl1 tmpl2 ...] /&gt;</pre><p>Данная команда не может быть вызвана внутри шаблона, по умолчанию она копирует все именованные вложенные шаблоны (пропуская шаблоны без имени). Необходимо убедиться в том, что не будет дублирования имен шаблонов. Через атрибут templates можно напрямую задать, какие вложенные шаблоны необходимо скопировать.</p>
+<h2>Доступ к ABAP объектам из ST программ</h2>
+<p>В ST программах можно использовать объекты и классы из ABAP’а следующим образом:</p>
+<ul>
+<li>Вызывать статические методы объекта</li>
+<li>Вызывать методы инстанции объекта</li>
+<li>Создавать объекты</li>
+<li>В методах так же можно получать доступ к XML потоку</li>
+</ul>
+<h3>Вызов методов</h3>
+<p>Для вызова метода необходимо воспользоваться командой tt:call-method:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:call-method [var=”oref”] [class="class"] [s-|d-]name="meth" 
+                              [writer = "writer_para"] 
+                              [reader = "reader_para"] 
+  [&lt;tt:with-parameter [s-|d-]name="para1" 
+                      [ref="node1"|val="val1"|var="var1"] /&gt; 
+   &lt;tt:with-parameter [s-|d-]name="para2" 
+                      [ref="node2"|val="val2"|var="var2"] /&gt; 
+   ...] 
+&lt;/tt:call-method&gt;</pre><p>Если вызывается статический метод, в атрибуте class указывается имя класса, в котором этот метод находится, если метод инстанции, то в атрибут var передается имя переменной или параметра, ссылочного типа, которая указывает на объект, атрибут ref-type переменной или параметра должен быть явно указан. Атрибут name указывает на имя метода, а префиксы в случае необходимости можно использовать для разграничения направления трансформации.</p>
+<p>С помощью элементов tt:with-paramteter задаются параметры, передающиеся в метод класса. Атрибут name указывает на имя параметра, префиксы s- и d- указывают на направление трансформации. В качестве значения может быть передана ссылка на узел данных (ref), параметр или переменная (var) или значение (val).</p>
+<p>Не стоит забывать, что при сериализации узлы будут доступны только для чтения, а при десериализации только для записи.</p>
+<p>Тип передаваемого в метод параметра должен совпадать с типом в интерфейсе метода. Типом узла данных, в котором явно не указана ссылка на тип, будет тип ABAP переменной связанной с этим узлом. Параметры и переменные, не имеющие явного указания на тип через атрибут ref-type, определяются как ссылочные переменные.</p>
+<p>Когда выполняется ABAP метод, управление из ST обработчика переходит к ABAP обработчику. Нет никаких ограничений на конструкции, используемые в методе, если выполняются операторы ENDMETHOD и RETURN управление возвращается назад к ST обработчику, однако возврат может быть не осуществлен если:</p>
+<ul>
+<li>Если будут запущены операторы LEAVE PROGRAM, SUBMIT без дополнений AND RETURN, LEAVE TO TRANSACTION.</li>
+<li>Метод вызвал исключение объектное исключение, тогда ST программа вызовет свое исключение CX_ST_CALL_METHOD_ERROR, в котором в качестве атрибута EXCEPTION_NAME будет передано имя оригинального класса исключения.</li>
+<li>Если будет вызвано не объектное исключение, ST обработчик вызовет не отлавливаемое исключение.</li>
+</ul>
+<p>Если к узлам данных привязаны данные, которые изменяются вызовом метода, эти изменения немедленно отображаются на узлах данных. Но существуют следующие ограничения: в ST команде tt:loop нельзя изменить данные таблицы, которые обрабатываются в цикле.</p>
+<p>В атрибуты reader и writer передается имя атрибута, в вызываемом методе, который является ссылочным типом, со ссылкой на интерфейс IF_SXML_WRITER или IF_SXML_READER. В момент вызова метода, в него передается ссылочная переменная на объект, реализующий данный интерфейс, через который можно получить доступ к XML потоку. Объект создается каждый раз при вызове метода. В зависимости от объявления имени метода и его направления можно указать только writer, если метод запущен для сериализации и только reader, если метод запущен для десериализации. Если метод запускается для обоих направлений, можно указать как reader, так и writer.</p>
+<p>Пример вызова статического метода в сериализации:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;?sap.transform simple?&gt;
+&lt;tt:transform xmlns:tt="http://www.sap.com/transformation-templates"&gt;
+  &lt;tt:parameter name="STR"/&gt;
+  &lt;tt:root name="X1"/&gt;
+  &lt;tt:template&gt;
+    &lt;tt:call-method class="CL_ABAP_DEMO_SERVICES" name="IS_PRODUCTION_SYSTEM"&gt;
+      &lt;tt:with-parameter name="FLAG" var="STR"/&gt;
+    &lt;/tt:call-method&gt;
+    &lt;X tt:value-ref="X1"&gt;&lt;/X&gt;
+  &lt;/tt:template&gt;
+&lt;/tt:transform&gt;</pre><p>Программа, вызывающая трансформацию:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  lv_xml    TYPE string,
+  lv_is_production TYPE abap_bool,
+  lv_x  TYPE i.
+
+lv_xml = '&lt;X&gt;1&lt;/X&gt;'.
+
+CALL TRANSFORMATION ZTEST_ST2
+  SOURCE XML lv_xml
+  PARAMETERS str = lv_is_production
+  RESULT x1 = lv_x.
+
+WRITE: / lv_is_production, lv_x.</pre><p><strong>Создание объектов</strong></p>
+<p>При вызове методов инстанции ABAP объектов, необходимо чтобы эти объекты существовали. Если в качестве ссылочной переменной, при вызове метода, указана ST переменная, необходимо чтобы объект был создан (Параметр с объектом может быть создан вне ST программы). Для создания объектов необходимо воспользоваться командой tt:create-object:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;tt:create-object var="oref" [class="class"]&gt; 
+  [&lt;tt:with-parameter name="para1" 
+                      [ref="node1"|val="val1"|var="var1"] /&gt; 
+   &lt;tt:with-parameter name="para2" 
+                      [ref="node2"|val="val2"|var="var2"] /&gt; 
+   ...] 
+&lt;/tt:call-method&gt;</pre><p>Атрибут var – содержит имя переменной или параметра со ссылочной переменной, указывающей на ABAP класс или интерфейс. Атрибут class определяет имя создаваемого класса:</p>
+<ul>
+<li>Если var – переменная со ссылкой на класс, атрибут class должен содержать имя этого класса или имя класса его наследника.</li>
+<li>Если var – переменная со ссылкой на интерфейс, атрибут class должен содержать имя класса, его реализующего.</li>
+</ul>
+<p>Через элементы tt:with-parameter передаются параметры в конструктор класса. Исключения, создаваемые внутри класса и правила передачи параметров те же, что и для вызова методов.</p>
+<p>Ссылки по теме: <a href="http://help.sap.com/saphelp_nw73ehp1/helpdata/en/4a/0c248079281b40e10000000a42189c/frameset.htm" target="_blank" rel="noopener">справка от SAP</a>.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/prostye-transformacii/">Простые трансформации</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/prostye-transformacii/feed/</wfw:commentRss>
+			<slash:comments>9</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

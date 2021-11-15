@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>ADBC | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/adbc/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:04:57 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>ADBC &#8212; ABAP Database Connectivity</title>
+		<link>https://abap-blog.ru/database-work/adbc-abap-database-connectivity/</link>
+					<comments>https://abap-blog.ru/database-work/adbc-abap-database-connectivity/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 08 Apr 2013 14:40:10 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<category><![CDATA[ADBC]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1483</guid>
+
+					<description><![CDATA[<p>ADBC – объектно-ориентированное API, для взаимодействия с интерфейсом нативного SQL в ABAP. Может быть использован в том случае, когда необходим динамический доступ к нативному SQL, т.к. вызов через команды EXEC SQL не подразумевает динамической обработки. Классы, представляющие ADBC начинаются с CL_SQL_* и CX_SQL_* (пакет SDB_ADBC). Основные из них: CL_SQL_STATEMENT – для выполнения SQL команд CL_SQL_PREPARED_STATEMENT [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/adbc-abap-database-connectivity/">ADBC — ABAP Database Connectivity</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>ADBC – объектно-ориентированное API, для взаимодействия с интерфейсом нативного SQL в ABAP. Может быть использован в том случае, когда необходим динамический доступ к нативному SQL, т.к. вызов через команды EXEC SQL не подразумевает динамической обработки.</p>
+<p>Классы, представляющие ADBC начинаются с CL_SQL_* и CX_SQL_* (пакет SDB_ADBC). Основные из них:</p>
+<p><span id="more-1483"></span></p>
+<ul>
+<li>CL_SQL_STATEMENT – для выполнения SQL команд</li>
+<li>CL_SQL_PREPARED_STATEMENT – для выполнения заранее созданных SQL команд, с возможностью подстановки параметров</li>
+<li>CL_SQL_CONNECTION  &#8212; для управления подключениями к БД</li>
+<li>CX_SQL_EXCEPTION – базовый класс исключений</li>
+</ul>
+<p>ADBC не поддерживает обработки автоматическое заполнение мандантов на основе текущей сессии, поле мандант должно быть явно указано (sy-mandt).  Вы должны позаботиться о том, чтобы приложение не использовало данные из других мандантов.</p>
+<h3>Выполнение SQL команд через CL_SQL_STATEMENT</h3>
+<p>Класс CL_SQL_STATEMENT содержит методы уровня инстанции для выполнения и получения данных из динамически созданных SQL выражений.</p>
+<p>Инстанцию класса можно получить, используя оператор CREATE OBJECT, при необходимости передав ссылку на объект класса CL_SQL_CONNECTION, в котором содержится информация о подключении к БД. Если не передать ссылку, используется стандартное подключение к БД (см. тр. DBACOCKPIT).</p>
+<p><b>DDL и </b><b>DML выражения</b></p>
+<p>Класс содержит следующие методы для выполнения DDL (язык определения данных) и DML (язык манипуляции данными) инструкций:</p>
+<ul>
+<li>EXECUTE_DDL – для таких команд как: CREATE, DROP или ALTER.</li>
+<li>EXECUTE_UPDATE – для таких команд как: INSERT, UPDATE или DELETE.</li>
+</ul>
+<p>Оба метода содержат обязательный для заполнения параметр – STATEMENT типа string. Данный параметр должен содержать синтаксически корректное SQL выражение. Метод EXECUTE_UPDATE так же имеет возвращаемый параметр ROWS_PROCESSED, в котором заполняется количество строк таблицы, обработанных выражением.</p>
+<p>В DML выражениях значения, передаваемые в базу данных, могут быть параметризированы, для того чтобы указать параметры необходимо воспользоваться символом «?». До выполнения SQL выражения, необходимо чтобы все параметры были заполнены, заполнение параметров осуществляется через метод SET_PARAM, с указанием ссылки на переменную. При этом по умолчанию, заполнение параметров происходит поочередно, слева направо в SQL выражении. После выполнения SQL выражения, все присвоения параметров теряются.</p>
+<p>Следует знать, что использование DDL для создания таблиц (вместо SE11) крайне не рекомендуется, т.к. кроме созданных таблиц в БД, SAP создает записи в таблицах с метаданными (DD02L, DD03L и др.), из-за чего доступ к созданным таким способом таблицам будет ограничен. Для создания таблиц лучше использовать ФМ: DD_CREATE_TABLE.</p>
+<p><b>Запросы</b></p>
+<p>С помощью метода EXECUTE_QUERY можно выполнить запрос к БД. Так же как и предыдущие методы, он содержит обязательный параметр STATEMENT, который должен быть заполнен синтаксически верным SELECT выражением. Можно, как и для вышеописанных методов, задавать параметры, используя метод SET_PARAM.</p>
+<p>В качестве результата, метод возвращает параметр RESULT_SET, который является ссылкой на класс CL_SQL_RESULT_SET. Методы данного класса позволяют получить доступ к результатам SQL запроса.</p>
+<p>Для получения результата запроса служат следующие методы класса CL_SQL_RESULT_SET:</p>
+<ul>
+<li>SET_PARAM, NEXT, и CLOSE. Данные методы обеспечивают доступ к индивидуальным строкам и колонкам данных из результата.  По умолчанию, доступ осуществляется слева на право. Метод NEXT переводит к следующей строке набора данных, если возвращает 1 – следующая строка считана, 0 – следующая строка не считана (достигнут конец набора данных). Чтение должно заканчиваться вызовом метода CLOSE.</li>
+<li>SET_PARAM_STRUCT, NEXT, и CLOSE. Доступ аналогичен вышеуказанному способу, но вместо доступа к индивидуальным столбцам, получаем целиком структуру строки.</li>
+<li>SET_PARAM_TABLE, NEXT_PACKAGE, и CLOSE. Метод NEXT_PACKAGE считывает указанное в параметре UPTO значение строк таблицы. Если параметр не задан, считываются все строки. При каждом новом вызове этого метода, в указанную таблицу добавляются новые записи, старые не удаляются.</li>
+</ul>
+<p><b>Хранимые процедуры</b></p>
+<p>Для запуска хранимых процедур используется метод EXECUTE_PROCEDURE. Метод содержит обязательный параметр PROC_NAME типа string, в который передается имя хранимой процедуры. Как и для вышеуказанных методов, можно задавать параметры, которые будут переданы в процедуру. Параметры, передаваемые в ХП, могут иметь разные типы направления, задается через необязательный параметр метода SET_PARAM – INOUT. Значения данного атрибута заполняются константами из класса CL_SQL_STATEMENT: C_PARAM_IN (по умолчанию), C_PARAM_OUT, и C_PARAM_INOUT.</p>
+<p>Примеры работы с данным классом:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT demo_adbc_ddl_dml_binding.
+
+PARAMETERS  p_name TYPE c LENGTH 10 DEFAULT 'mytab'.
+SELECTION-SCREEN SKIP.
+PARAMETERS: p_create RADIOBUTTON GROUP grp,
+            p_insert RADIOBUTTON GROUP grp,
+            p_select RADIOBUTTON GROUP grp,
+            p_drop   RADIOBUTTON GROUP grp.
+SELECTION-SCREEN SKIP.
+PARAMETERS  p_key TYPE i DEFAULT 1.
+
+CLASS adbc DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS main.
+  PRIVATE SECTION.
+    CLASS-DATA: dbname TYPE string,
+                sql TYPE REF TO cl_sql_statement,
+                wa1 TYPE c LENGTH 10,
+                wa2 TYPE c LENGTH 10,
+                err TYPE REF TO cx_sql_exception .
+    CLASS-METHODS: create RAISING cx_sql_exception,
+                   insert RAISING cx_sql_exception,
+                   select RAISING cx_sql_exception,
+                   drop   RAISING cx_sql_exception.
+ENDCLASS.
+
+CLASS adbc IMPLEMENTATION.
+  METHOD main.
+    dbname = 'ABAP_DOCU_DEMO_' &amp;&amp; p_name.
+    TRY.
+        CREATE OBJECT sql.
+        IF p_create = 'X'.
+          create( ).
+          MESSAGE 'Create was successful' TYPE 'S'.
+        ELSEIF p_insert = 'X'.
+          insert( ).
+          MESSAGE 'Insert was successful' TYPE 'S'.
+        ELSEIF p_select = 'X'.
+          select( ).
+          MESSAGE 'Select was successful' TYPE 'S'.
+        ELSEIF p_drop   = 'X'.
+          drop( ).
+          MESSAGE 'Drop was successful' TYPE 'S'.
+        ENDIF.
+      CATCH cx_sql_exception INTO err.
+        MESSAGE err TYPE 'I' DISPLAY LIKE 'E'.
+    ENDTRY.
+  ENDMETHOD.
+  METHOD create.
+    sql-&gt;execute_ddl(
+      `CREATE TABLE ` &amp;&amp; dbname   &amp;&amp;
+      `( val1 char(10) NOT NULL,` &amp;&amp;
+      `  val2 char(10) NOT NULL,` &amp;&amp;
+      `  PRIMARY KEY (val1) )` ).
+  ENDMETHOD.
+  METHOD insert.
+    DATA dref TYPE REF TO data.
+    DO 100 TIMES.
+      GET REFERENCE OF wa1 INTO dref.
+      sql-&gt;set_param( dref ).
+      GET REFERENCE OF wa2 INTO dref.
+      sql-&gt;set_param( dref ).
+      wa1 = sy-index.
+      wa2 = sy-index ** 2.
+      sql-&gt;execute_update(
+       `INSERT INTO ` &amp;&amp; dbname &amp;&amp; ` VALUES (?,?)` ).
+    ENDDO.
+  ENDMETHOD.
+  METHOD select.
+    DATA: result TYPE REF TO cl_sql_result_set,
+          msg    TYPE c LENGTH 30,
+          key    TYPE c LENGTH 10,
+          dref   TYPE REF TO data,
+          rc     TYPE i.
+    key = p_key.
+    GET REFERENCE OF key INTO dref.
+    sql-&gt;set_param( dref ).
+    result = sql-&gt;execute_query(
+      `SELECT val1, val2 ` &amp;&amp;
+      `FROM ` &amp;&amp; dbname &amp;&amp; ` ` &amp;&amp;
+      `WHERE val1 = ?` ).
+    GET REFERENCE OF wa1 INTO dref.
+    result-&gt;set_param( dref ).
+    GET REFERENCE OF wa2 INTO dref.
+    result-&gt;set_param( dref ).
+    rc = result-&gt;next( ).
+    IF rc &gt; 0.
+      WRITE: 'Result:' TO msg,
+             wa1 TO msg+10,
+             wa2 TO msg+20.
+    ELSE.
+      msg = 'No entry found'.
+    ENDIF.
+    result-&gt;close( ).
+    MESSAGE msg TYPE 'I'.
+  ENDMETHOD.
+  METHOD drop.
+    sql-&gt;execute_ddl(
+     `DROP TABLE ` &amp;&amp; dbname ).
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  adbc=&gt;main( ).</pre><p>Программа, выполняющая запрос и считывающая результат в таблицу:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT demo_adbc_query.
+
+PARAMETERS p_carrid TYPE sflight-carrid.
+
+CLASS demo DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS main.
+  PRIVATE SECTION.
+    CLASS-DATA: BEGIN OF result_line,
+                  carrid TYPE sflight-carrid,
+                  connid TYPE sflight-connid,
+                  fldate TYPE sflight-fldate,
+                END OF result_line,
+                result_tab LIKE TABLE OF result_line.
+    CLASS-METHODS display.
+ENDCLASS.
+
+CLASS demo IMPLEMENTATION.
+  METHOD main.
+    DATA:  sql     TYPE REF TO cl_sql_statement,
+           result  TYPE REF TO cl_sql_result_set,
+           err     TYPE REF TO cx_sql_exception,
+           cols    TYPE adbc_column_tab,
+           dref    TYPE REF TO data.
+    APPEND 'CARRID' TO cols.
+    APPEND 'CONNID' TO cols.
+    APPEND 'FLDATE' TO cols.
+    CREATE OBJECT sql.
+    GET REFERENCE OF result_tab INTO dref.
+    TRY.
+        result = sql-&gt;execute_query(
+         `SELECT carrid, connid, fldate ` &amp;&amp;
+         `FROM sflight ` &amp;&amp;
+         `WHERE mandt  = ` &amp;&amp; `'` &amp;&amp; sy-mandt &amp;&amp; `' AND` &amp;&amp;
+         `      carrid = ` &amp;&amp; `'` &amp;&amp; p_carrid &amp;&amp; `'` ).
+        result-&gt;set_param_table( itab_ref = dref
+                                 corresponding_fields = cols ).
+        IF result-&gt;next_package( ) &gt; 0.
+          SORT result_tab BY carrid connid fldate.
+          display( ).
+        ENDIF.
+      CATCH cx_sql_exception INTO err.
+        MESSAGE err TYPE 'I' DISPLAY LIKE 'E'.
+    ENDTRY.
+  ENDMETHOD.
+  METHOD display.
+    DATA alv TYPE REF TO cl_salv_table.
+    DATA err TYPE REF TO cx_salv_msg.
+    TRY.
+        cl_salv_table=&gt;factory(
+          IMPORTING r_salv_table = alv
+          CHANGING  t_table      = result_tab ).
+        alv-&gt;display( ).
+      CATCH cx_salv_msg INTO err.
+        MESSAGE err TYPE 'I' DISPLAY LIKE 'E'.
+    ENDTRY.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  demo=&gt;main( ).</pre><p>Создание и выполнение хранимой процедуры:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT demo_adbc_stored_procedure.
+
+SELECTION-SCREEN BEGIN OF SCREEN 100.
+PARAMETERS incprice TYPE sflight-price.
+SELECTION-SCREEN END OF SCREEN 100.
+
+CLASS demo DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS main.
+  PRIVATE SECTION.
+    CLASS-METHODS call_screen.
+ENDCLASS.
+
+CLASS demo IMPLEMENTATION.
+  METHOD main.
+    DATA:  sql     TYPE REF TO cl_sql_statement,
+           err     TYPE REF TO cx_sql_exception,
+           dref    TYPE REF TO data.
+    call_screen( ).
+    CREATE OBJECT sql.
+    TRY.
+        sql-&gt;execute_ddl(
+          `CREATE OR REPLACE PROCEDURE increase_price (x IN NUMBER) IS `
+           &amp;&amp; `BEGIN `
+           &amp;&amp; `UPDATE sflight SET price = price + x`
+           &amp;&amp; `               WHERE mandt = '` &amp;&amp; sy-mandt &amp;&amp; `'; `
+           &amp;&amp; `END;` ).
+        GET REFERENCE OF incprice INTO dref.
+        sql-&gt;set_param( data_ref = dref
+                        inout    = cl_sql_statement=&gt;c_param_in ).
+        sql-&gt;execute_procedure( proc_name = 'increase_price' ).
+      CATCH cx_sql_exception INTO err.
+        MESSAGE err TYPE 'I' DISPLAY LIKE 'E'.
+    ENDTRY.
+  ENDMETHOD.
+  METHOD call_screen.
+    IF sy-dbsys &lt;&gt; 'ORACLE'.
+      MESSAGE 'Example is only for Oracle SQL'
+              TYPE 'I' DISPLAY LIKE 'E'.
+      LEAVE PROGRAM.
+    ENDIF.
+    CALL SELECTION-SCREEN 100.
+    IF sy-subrc &lt;&gt; 0.
+      LEAVE PROGRAM.
+    ENDIF.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  demo=&gt;main( ).</pre><p></p>
+<h3>Выполнение заранее определенных SQL команд</h3>
+<p>Класс CL_SQL_PREPARED_STATEMENT позволяет выполнять заранее определенные SQL выражения, при этом меняя их параметры при необходимости. Данный класс является наследником от CL_SQL_STATEMENT.</p>
+<p>SQL выражение передается в конструктор класса, через обязательный параметр STATEMENT. Как и для методов класса CL_SQL_STATEMENT доступны методы для определения параметров SQL выражения.</p>
+<p>После выполнения ЛЕР БД, объект данного класса не может быть вновь использован. Если данный объект более не нужен, необходимо выполнить метод close, который освободит занятые ресурсы.</p>
+<p>Пример программы использующей данный класс:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT demo_adbc_prepared_statement.
+
+CLASS demo DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS main.
+  PRIVATE SECTION.
+    CLASS-DATA: BEGIN OF result_line,
+                  carrid TYPE sflight-carrid,
+                  connid TYPE sflight-connid,
+                END OF result_line,
+                result_tab LIKE TABLE OF result_line.
+    CLASS-METHODS display.
+ENDCLASS.
+
+CLASS demo IMPLEMENTATION.
+  METHOD main.
+    DATA:  sql        TYPE REF TO cl_sql_prepared_statement,
+           result     TYPE REF TO cl_sql_result_set,
+           err        TYPE REF TO cx_sql_exception,
+           cols       TYPE adbc_column_tab,
+           carrid     TYPE sflight-carrid,
+           carrid_tab TYPE TABLE OF sflight-carrid,
+           dref1      TYPE REF TO data,
+           dref2      TYPE REF TO data.
+    APPEND 'CARRID' TO cols.
+    APPEND 'CONNID' TO cols.
+    APPEND 'AA' TO carrid_tab.
+    APPEND 'LH' TO carrid_tab.
+    APPEND 'UA' TO carrid_tab.
+    TRY.
+        CREATE OBJECT sql
+          EXPORTING
+            statement = `SELECT carrid, connid `      &amp;&amp;
+                        `FROM spfli `                 &amp;&amp;
+                        `WHERE mandt = '` &amp;&amp; sy-mandt &amp;&amp;
+                        `' AND carrid = ?`.
+        GET REFERENCE OF carrid       INTO dref1.
+        GET REFERENCE OF result_line INTO dref2.
+        sql-&gt;set_param( dref1 ).
+        LOOP AT carrid_tab INTO carrid.
+          result = sql-&gt;execute_query( ).
+          result-&gt;set_param_struct( struct_ref = dref2
+                                    corresponding_fields = cols ).
+          WHILE result-&gt;next( ) &gt; 0.
+            APPEND result_line TO result_tab.
+          ENDWHILE.
+        ENDLOOP.
+        sql-&gt;close( ).
+        display( ).
+      CATCH cx_sql_exception INTO err.
+        MESSAGE err TYPE 'I' DISPLAY LIKE 'E'.
+    ENDTRY.
+  ENDMETHOD.
+  METHOD display.
+    DATA alv TYPE REF TO cl_salv_table.
+    DATA err TYPE REF TO cx_salv_msg.
+    TRY.
+        cl_salv_table=&gt;factory(
+          IMPORTING r_salv_table = alv
+          CHANGING  t_table      = result_tab ).
+        alv-&gt;display( ).
+      CATCH cx_salv_msg INTO err.
+        MESSAGE err TYPE 'I' DISPLAY LIKE 'E'.
+    ENDTRY.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  demo=&gt;main( ).</pre><p></p>
+<h3>Обработка подключений</h3>
+<p>SQL выражения представленные классами CL_SQL_STATEMENT  и CL_SQL_PREPARED_STATEMENT по умолчанию используют соединение для главной базы данных сервера приложений. При необходимости можно указать и другое подключение, если оно настроено (тр. DBACOCKPIT).</p>
+<p>Статический метод GET_CONNECTION при удачном соединении с альтернативной БД, возвращает экземпляр класса CL_SQL_CONNECTION, который в дальнейшем может быть использован при создании объектов  CL_SQL_STATEMENT  и CL_SQL_PREPARED_STATEMENT через параметр конструктора &#8212; CON_REF. Если подключение необходимо контролировать для БД по умолчанию, объект может быть создан через оператор CREATE OBJECT.</p>
+<p>Для закрытия подключения необходимо использовать метод CLOSE. При этом объекты, созданные с этим подключением, не могут быть далее использованы, если только подключение не осуществлялось к главной БД (БД по умолчанию).</p>
+<p>Для обработки ЛЕР БД в данном классе присутствуют следующие методы: COMMIT – для подтверждения, ROLLBACK – для отмены. При создании экземпляра данного класса ЛЕР БД открывается неявно.</p>
+<h3>Обработка исключений</h3>
+<p>Для обработки исключений в ADBC используется класс CX_SQL_EXCEPTION. Кроме текста исключения, в данном классе присутствуют следующие атрибуты:</p>
+<table border="1" cellpadding="0">
+<tbody>
+<tr>
+<td><b>Атрибут</b></td>
+<td><b>Значение</b></td>
+</tr>
+<tr>
+<td>DB_ERROR</td>
+<td>&#171;X&#187;, Если SQL выражение не выполнено СУБД. SQL_CODE и SQL_MESSAGE содержат подробную информацию.</td>
+</tr>
+<tr>
+<td>DBOBJECT_EXISTS</td>
+<td>&#171;X&#187;, Если вы пытаетесь создать объект, который уже существует. DB_ERROR так же содержит &#171;X&#187;.</td>
+</tr>
+<tr>
+<td>DBOBJECT_NOT_EXISTS</td>
+<td>&#171;X&#187;, Если вы пытаетесь получить доступ к объекту, которого не существует. DB_ERROR так де содержит &#171;X&#187;.</td>
+</tr>
+<tr>
+<td>DUPLICATE_KEY</td>
+<td>&#171;X&#187;, Если DML выражение нарушает уникальность ключа. DB_ERROR так де содержит &#171;X&#187;.</td>
+</tr>
+<tr>
+<td>INTERNAL_ERROR</td>
+<td>Внутренняя ошибка СУБД, для подробных данных смотрите журналы СУБД.</td>
+</tr>
+<tr>
+<td>INVALID_CURSOR</td>
+<td>&#171;X&#187;, если вы используете не активный курсор БД.</td>
+</tr>
+<tr>
+<td>SQL_CODE</td>
+<td>Код ошибки в SQL выражении, Если DB_ERROR &#8212; &#171;X&#187;.</td>
+</tr>
+<tr>
+<td>SQL_MESSAGE</td>
+<td>Расшифровка кода ошибки в SQL выражении, если DB_ERROR &#8212; &#171;X&#187;.</td>
+</tr>
+</tbody>
+</table>
+<p>SAP <a href="http://help.sap.com/abapdocu_731/en/abenadbc.htm">справка</a> на тему ADBC.</p><p>The post <a href="https://abap-blog.ru/database-work/adbc-abap-database-connectivity/">ADBC — ABAP Database Connectivity</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/adbc-abap-database-connectivity/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

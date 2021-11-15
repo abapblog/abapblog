@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	
+	>
+<channel>
+	<title>
+	Комментарии: Заместитель (Proxy)	</title>
+	<atom:link href="https://abap-blog.ru/osnovy-abap/oop/zamestitel-proxy/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru/osnovy-abap/oop/zamestitel-proxy/</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:13:08 +0000</lastBuildDate>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>
+		Автор: Svirinstel		</title>
+		<link>https://abap-blog.ru/osnovy-abap/oop/zamestitel-proxy/#comment-17735</link>
+
+		<dc:creator><![CDATA[Svirinstel]]></dc:creator>
+		<pubDate>Thu, 13 Oct 2016 20:02:00 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2889#comment-17735</guid>
+
+					<description><![CDATA[Кстати, я бы в качестве примера все же сделал lcl_subject интерфейсом, а прокси и реальный объект - его реализацией. Смысла в абстрактном классе нет.
+К тому же, часто приходится именно навешивать прокси, когда уже есть готовый реальный объект, но к нему нужно что-то еще, какой-то доп.функционал.
+Я бы все же для примера взял задачу, когда над вызовом каждого метода реального объекта необходимо добавить запись этого действия в лог. В таком случае это будет реальный пример из жизни, максимально описывающий смысл прокси.
+Вот в этом видео у Немчинского тема прокси отлично раскрыта: https://youtu.be/gCLePmhzy9o?list=PLmqFxxywkatStbd9hdzVOS1hZa9dc56k4]]></description>
+			<content:encoded><![CDATA[<p>Кстати, я бы в качестве примера все же сделал lcl_subject интерфейсом, а прокси и реальный объект &#8212; его реализацией. Смысла в абстрактном классе нет.<br />
+К тому же, часто приходится именно навешивать прокси, когда уже есть готовый реальный объект, но к нему нужно что-то еще, какой-то доп.функционал.<br />
+Я бы все же для примера взял задачу, когда над вызовом каждого метода реального объекта необходимо добавить запись этого действия в лог. В таком случае это будет реальный пример из жизни, максимально описывающий смысл прокси.<br />
+Вот в этом видео у Немчинского тема прокси отлично раскрыта: <a href="https://youtu.be/gCLePmhzy9o?list=PLmqFxxywkatStbd9hdzVOS1hZa9dc56k4" rel="nofollow ugc">https://youtu.be/gCLePmhzy9o?list=PLmqFxxywkatStbd9hdzVOS1hZa9dc56k4</a></p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: svirinstel		</title>
+		<link>https://abap-blog.ru/osnovy-abap/oop/zamestitel-proxy/#comment-17734</link>
+
+		<dc:creator><![CDATA[svirinstel]]></dc:creator>
+		<pubDate>Thu, 13 Oct 2016 19:54:00 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2889#comment-17734</guid>
+
+					<description><![CDATA[В ответ на &lt;a href=&quot;https://abap-blog.ru/osnovy-abap/oop/zamestitel-proxy/#comment-17716&quot;&gt;Astrafox&lt;/a&gt;.
+
+Если абстрагироваться от прокси, то, мое личное мнение, инициализация данных в конструкторе вполне нормальная ситуация, если эти данные необходимы для полноты объекта.
+Пример: класс, описывающий какой-либо документ, который отвечает лишь за получение и обработку данных по нему. Смысл существования такого объекта с ключевыми полями в качестве атрибута, но без основных данных из БД, равен нулю. И в любом случае после создания такого объекта нам придется вызывать его инициализацию...
+Отложенная инициализация имеет место быть, но опять же для ряда случаев. Например, тот же класс (описанный выше) получает доп. функционал в виде удаления записи из БД. В таком случае необязательно получать данные из БД по ключам, однако необходимо в конструкторе выполнить проверку, что такая запись вообще существует. В случае отсутствия - кинуть исключение прямо из конструктора.]]></description>
+			<content:encoded><![CDATA[<p>Если абстрагироваться от прокси, то, мое личное мнение, инициализация данных в конструкторе вполне нормальная ситуация, если эти данные необходимы для полноты объекта.<br />
+Пример: класс, описывающий какой-либо документ, который отвечает лишь за получение и обработку данных по нему. Смысл существования такого объекта с ключевыми полями в качестве атрибута, но без основных данных из БД, равен нулю. И в любом случае после создания такого объекта нам придется вызывать его инициализацию&#8230;<br />
+Отложенная инициализация имеет место быть, но опять же для ряда случаев. Например, тот же класс (описанный выше) получает доп. функционал в виде удаления записи из БД. В таком случае необязательно получать данные из БД по ключам, однако необходимо в конструкторе выполнить проверку, что такая запись вообще существует. В случае отсутствия &#8212; кинуть исключение прямо из конструктора.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Astrafox		</title>
+		<link>https://abap-blog.ru/osnovy-abap/oop/zamestitel-proxy/#comment-17716</link>
+
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 30 Jun 2016 20:40:00 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2889#comment-17716</guid>
+
+					<description><![CDATA[В ответ на &lt;a href=&quot;https://abap-blog.ru/osnovy-abap/oop/zamestitel-proxy/#comment-17715&quot;&gt;Developer&lt;/a&gt;.
+
+Именно этим и занимается прокси в примере, решает проблему перенося запрос данных на более поздний срок. Ну а при проектировании своих объектов отложенная инициализация является неплохим подходом. https://ru.m.wikipedia.org/wiki/Отложенная_инициализация]]></description>
+			<content:encoded><![CDATA[<p>Именно этим и занимается прокси в примере, решает проблему перенося запрос данных на более поздний срок. Ну а при проектировании своих объектов отложенная инициализация является неплохим подходом. <a href="https://ru.m.wikipedia.org/wiki/Отложенная_инициализация" rel="nofollow ugc">https://ru.m.wikipedia.org/wiki/Отложенная_инициализация</a></p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Developer		</title>
+		<link>https://abap-blog.ru/osnovy-abap/oop/zamestitel-proxy/#comment-17715</link>
+
+		<dc:creator><![CDATA[Developer]]></dc:creator>
+		<pubDate>Tue, 28 Jun 2016 15:10:00 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2889#comment-17715</guid>
+
+					<description><![CDATA[Указано, что 
+&quot;  чтение данных в конструкторе, не самое лучшее решение..
+    SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE mt_data.&quot;
+К примеру, необходимо выбрать номер рейса, дату из таблицы и присвоить их переменным класса в конструкторе.
+Не подскажите тогда, как можно заменить данное не самое лучшее решение?]]></description>
+			<content:encoded><![CDATA[<p>Указано, что<br />
+&#187;  чтение данных в конструкторе, не самое лучшее решение..<br />
+    SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE mt_data.&#187;<br />
+К примеру, необходимо выбрать номер рейса, дату из таблицы и присвоить их переменным класса в конструкторе.<br />
+Не подскажите тогда, как можно заменить данное не самое лучшее решение?</p>
+]]></content:encoded>
+		
+			</item>
+	</channel>
+</rss>

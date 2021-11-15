@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Query Service | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/query-service/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:10:53 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>ABAP Object Services &#8212; Query Service</title>
+		<link>https://abap-blog.ru/database-work/abap-object-services-query-service/</link>
+					<comments>https://abap-blog.ru/database-work/abap-object-services-query-service/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Tue, 03 Jun 2014 08:37:58 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<category><![CDATA[Object Services]]></category>
+		<category><![CDATA[Query Service]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2074</guid>
+
+					<description><![CDATA[<p>Ранее было показано, каким образом можно загрузить хранимый объект из БД относительно ключевых полей и даже как массово их инициализировать (метод GET_PERSISTENT_BY_KEY_TAB). Альтернативой подобному методу служит &#8212; Query Service. QS &#8212; Инструмент позволяющий Вам делать поиск и загрузку хранимых объектов, относительно логических выражений (условий). Кроме фильтров относительно условий, QS позволяет задать параметры сортировки. Используя QS, вам [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-query-service/">ABAP Object Services — Query Service</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/1401801143_0331.png"><img loading="lazy" class="alignleft wp-image-2076 " src="http://abap-blog.ru/wp-content/uploads/2014/06/1401801143_0331.png" alt="1401801143_033" width="165" height="165" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/1401801143_0331.png 256w, https://abap-blog.ru/wp-content/uploads/2014/06/1401801143_0331-150x150.png 150w" sizes="(max-width: 165px) 100vw, 165px" /></a></p>
+<p>Ранее было показано, каким образом можно загрузить хранимый объект из БД относительно ключевых полей и даже как массово их инициализировать (метод GET_PERSISTENT_BY_KEY_TAB). Альтернативой подобному методу служит &#8212; Query Service. QS &#8212; Инструмент позволяющий Вам делать поиск и загрузку хранимых объектов, относительно логических выражений (условий). Кроме фильтров относительно условий, QS позволяет задать параметры сортировки. Используя QS, вам не надо будет выбирать отдельные ключевые поля, т.о. для массовой инициализации группы объектов, система выполнит только один SQL запрос.</p>
+<p><span id="more-2074"></span></p>
+<p>Пример использования QS с фильтром по дате полёта:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  gv_filter         TYPE string,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+gv_filter = 'FLDATE &lt;= ''' &amp;&amp; '20130306'''.
+
+go_query = go_query_manager-&gt;create_query(
+    i_filter     = gv_filter
+).
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+  RECEIVING
+    result          = gt_result
+).</pre><p>Для того чтобы иметь возможность получить объекты по запросу, необходимо сначала этот запрос создать. За создание запроса отвечает менеджер запросов, получить ссылку на который, можно через класс <strong>CL_</strong><strong>OS_</strong><strong>SYSTEM</strong>. Далее, используя метод CREATE_QUERY, создается экземпляр класса запроса (реализующего интерфейс &#8212; IF_OS_QUERY). В данный метод передан параметр, формирующий динамическое условие относительно даты полёта. Результатом запроса будет внутренняя таблица (gt_result), заполненная ссылочными переменными на хранимые объекты.</p>
+<p>&nbsp;</p>
+<h2>Компоненты Query Service</h2>
+<p>&nbsp;</p>
+<p>QS включает в себя следующие компоненты:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/gs_components.gif"><img loading="lazy" class="alignnone size-full wp-image-2077" src="http://abap-blog.ru/wp-content/uploads/2014/06/gs_components.gif" alt="gs_components" width="571" height="627" /></a></p>
+<p>&nbsp;</p>
+<h3>Методы менеджера запросов (IF_OS_QUERY_MANAGER)</h3>
+<p><strong>CREATE_</strong><strong>QUERY</strong>. Создание экземпляра класса запроса, на вход получает следующие параметры: I_FILTER,I_ORDERING,I_PARAMETERS. Условие фильтрации основано на динамическом вызове WHERE, с поддержкой некоторых условий относительно ссылочных переменных. Как и в условии WHERE, поддерживаются логические операторы AND, OR, NOT, а так же объединение условий через круглые скобки. При вызове запроса через агент класса, фильтрация привязана к атрибутам хранимого класса для этого агента, атрибуты должны быть публичными (public) хранимыми атрибутами, иначе произойдет исключение. Таким образом, созданный объект запроса может использоваться разными агентами, но с соблюдением условий наличия атрибутов.</p>
+<p>Условие фильтрации, как и его параметры обрабатываются каждый раз, когда выполняется запрос, для того чтобы не делать разбор выражения каждый раз, можно использовать методы интерфейса IF_OS_QUERY_EXPR_FACTORY чтобы сформировать условия фильтрации сразу во внутреннем представлении (пример ниже).</p>
+<p>Условия фильтрации поддерживают следующие операторы:</p>
+<ul>
+<li>=, &lt;&gt;, &lt;, &lt;=, &gt;, &gt;=</li>
+<li>attr [NOT] LIKE { pattern } [ESCAPE escape]</li>
+<li>attr IS [NOT] NULL</li>
+<li>attr EQUALSREF par – Сравнение двух ссылочных переменных. Когда выполняется запрос, параметр parдолжен быть привязан к ссылочной переменной хранимого класса.</li>
+<li>NOT expr</li>
+<li>expr AND expr</li>
+<li>expr OR expr</li>
+</ul>
+<p>Примеры фильтров:</p>
+<ul>
+<li>price &lt; &#8216;100&#8217; AND currency = &#8216;EUR&#8217;</li>
+<li>name LIKE PAR1 AND age &gt; &#8217;45&#8217; AND age &lt; &#8217;65&#8217;</li>
+<li>( department EQUALSREF DEP1 OR department EQUALSREF DEP2 ) AND NOT ( salary &gt; &#8216;50000&#8217; AND currency = &#8216;EUR&#8217; ) )</li>
+</ul>
+<p>I_FILTER позволяет использовать внутри себя параметры, заполнить которые можно в запросе агента:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  gv_filter         TYPE string,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+gv_filter = 'FLDATE &lt;= PAR1'.
+
+go_query = go_query_manager-&gt;create_query(
+    i_filter     = gv_filter
+).
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+    i_par1          = '20130406'
+  RECEIVING
+    result          = gt_result
+).</pre><p>Если параметров будет больше чем 3, необходимо использовать таблицу параметров (нельзя одновременно использовать i_par1-3 и таблицу параметров).  Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  gr_paramval       TYPE REF TO DATA,
+  gv_paramval       TYPE sy-datum VALUE '20130206',
+  gv_filter         TYPE string,
+  gt_parameters     TYPE osdreftab,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+gv_filter = 'FLDATE &lt;= CustomParameter'.
+
+go_query = go_query_manager-&gt;create_query(
+    i_filter     = gv_filter
+    i_parameters = 'CustomParameter'
+).
+
+GET REFERENCE OF gv_paramval INTO gr_paramval.
+APPEND gr_paramval TO gt_parameters.
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+    i_parameter_tab = gt_parameters
+  RECEIVING
+    result          = gt_result
+).</pre><p>I_PARAMETERS &#8212; определяет имена используемых в запросе параметров, имена должны быть разделены пробелом. В условии сортировки I_ORDERING может быть прописано два вида условия: сортировка по возрастанию и сортировка по убыванию, пример:</p>
+<p>price ASCENDING date DESCENDING</p>
+<p>&nbsp;</p>
+<h3>Методы интерфейса IF_OS_QUERY</h3>
+<p><strong>IF_OS_QUERY~GET_EXPR_FACTORY.</strong>Получает ссылку на фабрику условий, класс реализующий интерфейс IF_OS_QUERY_EXPR_FACTORY. С помощью фабрики условий можно формировать условия во внутреннем представлении QS.</p>
+<p><strong>IF_OS_QUERY~SET_FILTER_EXPR. </strong>Установка условия фильтрации, на вход принимает класс реализующий интерфейс <strong>IF_OS_QUERY_FILTER_EXPR</strong>. Ссылку на данный класс можно получить через фабрику условий:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_expr_factory   TYPE REF TO if_os_query_expr_factory,
+  go_filter_expr    TYPE REF TO if_os_query_filter_expr,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+
+go_query = go_query_manager-&gt;create_query( ).
+go_expr_factory = go_query-&gt;get_expr_factory( ).
+go_filter_expr = go_expr_factory-&gt;create_operator_expr(
+    i_attr1        = 'FLDATE'
+    i_operator     = '&lt;='
+    i_val          = '20130206'
+).
+
+go_query-&gt;set_filter_expr( go_filter_expr ).
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+  RECEIVING
+    result          = gt_result
+).</pre><p>В условии выражения с операторами можно указать индекс в таблице с параметрами:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_expr_factory   TYPE REF TO if_os_query_expr_factory,
+  go_filter_expr    TYPE REF TO if_os_query_filter_expr,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  go_sflight_agent TYPE REF TO zca_sflight,
+  gr_paramval       TYPE REF TO data,
+  gv_paramval       TYPE sflight-fldate VALUE '20130206',
+  gt_parameters     TYPE osdreftab.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+
+go_query = go_query_manager-&gt;create_query( ).
+go_expr_factory = go_query-&gt;get_expr_factory( ).
+go_filter_expr = go_expr_factory-&gt;create_operator_expr(
+    i_attr1        = 'FLDATE'
+    i_operator     = '&lt;='
+    i_idx          = 1
+).
+
+go_query-&gt;set_filter_expr( go_filter_expr ).
+
+GET REFERENCE OF gv_paramval INTO gr_paramval.
+APPEND gr_paramval TO gt_parameters.
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+    i_parameter_tab = gt_parameters
+  RECEIVING
+    result          = gt_result
+).</pre><p><strong>IF_OS_QUERY~SET_PARAMETERS_EXPR. </strong>Устанавливает список параметров для условия фильтрации:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_expr_factory   TYPE REF TO if_os_query_expr_factory,
+  go_params_expr    TYPE REF TO if_os_query_parameters_expr,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  go_sflight_agent TYPE REF TO zca_sflight,
+  gr_paramval       TYPE REF TO data,
+  gv_paramval       TYPE sflight-fldate VALUE '20130206',
+  gt_parameters     TYPE osdreftab.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+
+go_query = go_query_manager-&gt;create_query( i_filter = 'FLDATE &lt;= PARAM' ).
+go_expr_factory = go_query-&gt;get_expr_factory( ).
+
+go_params_expr = go_expr_factory-&gt;create_parameters_expr( ).
+go_params_expr-&gt;append('PARAM').
+go_query-&gt;set_parameters_expr( go_params_expr ).
+
+GET REFERENCE OF gv_paramval INTO gr_paramval.
+APPEND gr_paramval TO gt_parameters.
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+    i_parameter_tab = gt_parameters
+  RECEIVING
+    result          = gt_result
+).</pre><p><strong>IF_OS_QUERY~SET_ORDERING_EXPR</strong>. Устанавливает условия сортировки:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_expr_factory   TYPE REF TO if_os_query_expr_factory,
+  go_order_expr     TYPE REF TO if_os_query_ordering_expr,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+
+go_query = go_query_manager-&gt;create_query( i_filter = 'FLDATE &lt;= ''' &amp;&amp; '20130206'''  ).
+go_expr_factory = go_query-&gt;get_expr_factory( ).
+go_order_expr = go_expr_factory-&gt;create_ordering_expr( ).
+
+go_order_expr-&gt;append_ascending( 'FLDATE' ).
+go_query-&gt;set_ordering_expr( go_order_expr ).
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+  RECEIVING
+    result          = gt_result
+).</pre><p>Условия фильтрации, показанные ранее, включали в себя всего одно условие, QS позволяет создавать комплексные условия (OR,AND,NOT), пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_expr_factory   TYPE REF TO if_os_query_expr_factory,
+  go_filter_fldate  TYPE REF TO if_os_query_filter_expr,
+  go_filter_price   TYPE REF TO if_os_query_filter_expr,
+  go_filter_date_and_price TYPE REF TO if_os_query_filter_expr,
+  go_query          TYPE REF TO if_os_query,
+  gt_result         TYPE osreftab,
+  go_sflight_agent TYPE REF TO zca_sflight.
+
+go_sflight_agent = zca_sflight=&gt;agent.
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+
+go_query = go_query_manager-&gt;create_query( ).
+go_expr_factory = go_query-&gt;get_expr_factory( ).
+
+go_filter_fldate = go_expr_factory-&gt;create_operator_expr(
+    i_attr1        = 'FLDATE'
+    i_operator     = '&lt;='
+    i_val          = '20130206'
+).
+
+go_filter_price = go_expr_factory-&gt;create_operator_expr(
+    i_attr1        = 'PRICE'
+    i_operator     = '&gt;'
+    i_val          = '1000'
+).
+
+go_filter_date_and_price = go_expr_factory-&gt;create_and_expr(
+    i_expr1 = go_filter_fldate
+    i_expr2 = go_filter_price
+).
+
+go_query-&gt;set_filter_expr( go_filter_date_and_price ).
+
+go_sflight_agent-&gt;if_os_ca_persistency~get_persistent_by_query(
+  EXPORTING
+    i_query         = go_query
+  RECEIVING
+    result          = gt_result
+).</pre><p>Инициировать объекты через QS можно как с помощью агента класса, так и с помощью менеджера постоянства, указав имя класса:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_query_manager  TYPE REF TO if_os_query_manager,
+  go_query          TYPE REF TO if_os_query,
+  go_pers_manager   TYPE REF TO if_os_persistency_manager,
+  gs_cls_name       TYPE seoclskey,
+  gt_result         TYPE osreftab.
+
+go_query_manager = cl_os_system=&gt;get_query_manager( ).
+go_query = go_query_manager-&gt;create_query(
+    i_filter     = 'FLDATE &lt;= ''20130206'''
+).
+
+gs_cls_name-clsname = 'ZCL_SFLGIHT'.
+
+go_pers_manager = cl_os_system=&gt;get_persistency_manager( ).
+
+gt_result = go_pers_manager-&gt;get_persistent_by_query(
+    i_class_name    = gs_cls_name
+    i_query         = go_query
+).</pre><p></p><p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-query-service/">ABAP Object Services — Query Service</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/abap-object-services-query-service/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

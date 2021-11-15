@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Ракурсы ведения | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/abap-dictionary/rakursy-vedeniya/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sun, 02 May 2021 07:52:42 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Event 25: Individual authorization checks</title>
+		<link>https://abap-blog.ru/abap-notes/individual_authorization_checks/</link>
+					<comments>https://abap-blog.ru/abap-notes/individual_authorization_checks/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 30 Apr 2021 15:49:29 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=7338</guid>
+
+					<description><![CDATA[<p>Событие используется для как правило для оценки возможности редактирования в генераторе относительно полномочий. Пример кодировки: [crayon-618a1dc91d0f7968729211/] Метод is_auth_checked возвращает abap_false, если проверка на полномочия не пройдена. Метод is_need_to_view_data тут исключительно для демонстрации двух опций обработки отсутствия полномочий. Мы можем либо отобразить сообщение об отсутствии полномочий на редактирование (если пользователь заходит в редактирование) и показать данные [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/individual_authorization_checks/">Event 25: Individual authorization checks</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Событие используется для как правило для оценки возможности редактирования в генераторе относительно полномочий. Пример кодировки:</p><pre class="urvanov-syntax-highlighter-plain-tag">FORM check_auth.
+  CHECK zcl_auth_checker=&gt;is_auth_checked( ) = abap_false.
+
+  IF zcl_auth_checker=&gt;is_need_to_view_data( ) = abap_true.
+    " Отобразить информацию о недостаточных полномочиях, но открыть на просмотр
+    CHECK sy-ucomm EQ 'UPD' OR sy-ucomm EQ 'AEND'. " Режим изменения
+    vim_auth_msgid = '/SDF/WS_MON'.
+    vim_auth_msgno = '001'.
+  ELSE.
+    " Не показывать данные ракурса для просмотра
+    MESSAGE ID '/SDF/WS_MON' TYPE 'E' NUMBER '001'
+          WITH sy-msgv1 sy-msgv2 sy-msgv3  sy-msgv4.
+  ENDIF.
+
+  vim_auth_rc = 4.
+ENDFORM.</pre><p>Метод is_auth_checked возвращает abap_false, если проверка на полномочия не пройдена.</p>
+<p>Метод is_need_to_view_data тут исключительно для демонстрации двух опций обработки отсутствия полномочий.</p>
+<p>Мы можем либо отобразить сообщение об отсутствии полномочий на редактирование (если пользователь заходит в редактирование) и показать данные в режиме просмотра, либо выдать сообщение и не показывать данные вовсе.</p><p>The post <a href="https://abap-blog.ru/abap-notes/individual_authorization_checks/">Event 25: Individual authorization checks</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/individual_authorization_checks/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Event 01: Before saving the data in the database</title>
+		<link>https://abap-blog.ru/abap-notes/event-01-before-saving-the-data-in-the-database/</link>
+					<comments>https://abap-blog.ru/abap-notes/event-01-before-saving-the-data-in-the-database/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 30 Apr 2021 14:37:49 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=7322</guid>
+
+					<description><![CDATA[<p>Данное событие можно использовать для: самостоятельного заполнения скрытых или недоступных для пользователя полей, контроль введённых значений перед сохранением, логирования, доп. проверки полномочий и т.п. Предположим у нас есть таблица следующего вида: Создадим на её базе ракурс ведения: Поля CHUSER и CHDATE у нас отмечены как R &#8212; доступные только для чтения. Их заполнение будет автоматически [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/event-01-before-saving-the-data-in-the-database/">Event 01: Before saving the data in the database</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Данное событие можно использовать для:</p>
+<ul>
+<li>самостоятельного заполнения скрытых или недоступных для пользователя полей,</li>
+<li>контроль введённых значений перед сохранением,</li>
+<li>логирования,</li>
+<li>доп. проверки полномочий и т.п.</li>
+</ul>
+<p>Предположим у нас есть таблица следующего вида:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/table-1.png"><img loading="lazy" class="alignnone size-full wp-image-7323" src="https://abap-blog.ru/wp-content/uploads/2021/04/table-1.png" alt="" width="857" height="244" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/table-1.png 857w, https://abap-blog.ru/wp-content/uploads/2021/04/table-1-300x85.png 300w, https://abap-blog.ru/wp-content/uploads/2021/04/table-1-768x219.png 768w" sizes="(max-width: 857px) 100vw, 857px" /></a></p>
+<p>Создадим на её базе ракурс ведения:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/maint_view.png"><img loading="lazy" class="alignnone size-full wp-image-7324" src="https://abap-blog.ru/wp-content/uploads/2021/04/maint_view.png" alt="" width="881" height="247" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/maint_view.png 881w, https://abap-blog.ru/wp-content/uploads/2021/04/maint_view-300x84.png 300w, https://abap-blog.ru/wp-content/uploads/2021/04/maint_view-768x215.png 768w" sizes="(max-width: 881px) 100vw, 881px" /></a></p>
+<p>Поля CHUSER и CHDATE у нас отмечены как R &#8212; доступные только для чтения.</p>
+<p>Их заполнение будет автоматически выполняться при сохранении в БД.</p>
+<p>Создадим для ракурса генератор ведения:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/create_gen.png"><img loading="lazy" class="alignnone size-full wp-image-7327" src="https://abap-blog.ru/wp-content/uploads/2021/04/create_gen.png" alt="" width="612" height="325" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/create_gen.png 612w, https://abap-blog.ru/wp-content/uploads/2021/04/create_gen-300x159.png 300w" sizes="(max-width: 612px) 100vw, 612px" /></a></p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/maint_view_gen.png"><img loading="lazy" class="alignnone size-full wp-image-7330" src="https://abap-blog.ru/wp-content/uploads/2021/04/maint_view_gen.png" alt="" width="588" height="502" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/maint_view_gen.png 588w, https://abap-blog.ru/wp-content/uploads/2021/04/maint_view_gen-300x256.png 300w" sizes="(max-width: 588px) 100vw, 588px" /></a></p>
+<p>После чего создадим событие 01:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/events.png"><img loading="lazy" class="alignnone size-full wp-image-7326" src="https://abap-blog.ru/wp-content/uploads/2021/04/events.png" alt="" width="766" height="186" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/events.png 766w, https://abap-blog.ru/wp-content/uploads/2021/04/events-300x73.png 300w" sizes="(max-width: 766px) 100vw, 766px" /></a></p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/create_event.png"><img loading="lazy" class="alignnone size-full wp-image-7328" src="https://abap-blog.ru/wp-content/uploads/2021/04/create_event.png" alt="" width="330" height="150" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/create_event.png 330w, https://abap-blog.ru/wp-content/uploads/2021/04/create_event-300x136.png 300w" sizes="(max-width: 330px) 100vw, 330px" /></a></p>
+<p>Перейдём к кодировке:</p><pre class="urvanov-syntax-highlighter-plain-tag">FORM fill_read_only_fields .
+  DATA: lv_index LIKE sy-tabix.
+  FIELD-SYMBOLS &lt;lv_component&gt; TYPE any.
+
+  LOOP AT total. " Таблица со всеми данными в ракурсе
+    IF &lt;action&gt; = aendern OR      "Запись изменена
+       &lt;action&gt; = neuer_eintrag.  "Новая запись
+
+      READ TABLE extract WITH KEY &lt;vim_xtotal_key&gt;. " Таблица с отображающимися
+                                                    " на экране в момент вызова события записями
+      IF sy-subrc = 0.
+        lv_index = sy-tabix.
+      ELSE.
+        CLEAR lv_index.
+      ENDIF.
+
+      ASSIGN  COMPONENT 'CHUSER' OF STRUCTURE &lt;vim_total_struc&gt; TO &lt;lv_component&gt;.
+      &lt;lv_component&gt; = sy-uname.
+
+      ASSIGN  COMPONENT 'CHDATE' OF STRUCTURE &lt;vim_total_struc&gt; TO &lt;lv_component&gt;.
+      &lt;lv_component&gt; = sy-datum.
+
+      MODIFY total.
+      CHECK lv_index &gt; 0.
+
+      extract = total.
+      MODIFY extract INDEX lv_index.
+    ENDIF.
+  ENDLOOP.
+ENDFORM.</pre><p>В результате сохранения поля будут заполняться нужными нам данными:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/filled_fields.png"><img loading="lazy" class="alignnone size-full wp-image-7329" src="https://abap-blog.ru/wp-content/uploads/2021/04/filled_fields.png" alt="" width="468" height="96" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/filled_fields.png 468w, https://abap-blog.ru/wp-content/uploads/2021/04/filled_fields-300x62.png 300w" sizes="(max-width: 468px) 100vw, 468px" /></a></p>
+<h4>Контроль введённых значений перед сохранением</h4>
+<p>Сразу приведу кодировку:</p><pre class="urvanov-syntax-highlighter-plain-tag">FORM check_before_save.
+  LOOP AT zsm_test_view_extract TRANSPORTING NO FIELDS
+                                WHERE url IS INITIAL AND
+                                      action &lt;&gt; leer. "Не пустая строка
+    MESSAGE 'Необходимо ввести URL' TYPE 'S' DISPLAY LIKE 'E'.
+    vim_abort_saving = abap_true.
+  ENDLOOP.
+ENDFORM.</pre><p>Где ИмяView_extract как и ИмяView_total &#8212; генерируются для каждого ракурса.</p>
+<p>P.S. Реализацию этого и прочих событий в других ракурсах всегда можно подсмотреть в таблице <strong>TVIMF</strong></p><p>The post <a href="https://abap-blog.ru/abap-notes/event-01-before-saving-the-data-in-the-database/">Event 01: Before saving the data in the database</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/event-01-before-saving-the-data-in-the-database/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Генератор ведения для одной записи</title>
+		<link>https://abap-blog.ru/abap-notes/generator-vedeniya-dlya-odnoj-zapisi/</link>
+					<comments>https://abap-blog.ru/abap-notes/generator-vedeniya-dlya-odnoj-zapisi/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 30 Apr 2021 14:04:53 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=7317</guid>
+
+					<description><![CDATA[<p>Если в таблице к которой мы создаём генератор ведения не будет ключевых полей (кроме манданта), например: То при генерации ракурса ведения к ней с двумя уровнями: У нас будет возможность редактирования этой самой единственной записи зависимой от текущего манданта в SM30: &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/generator-vedeniya-dlya-odnoj-zapisi/">Генератор ведения для одной записи</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Если в таблице к которой мы создаём генератор ведения не будет ключевых полей (кроме манданта), например:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/table.png"><img loading="lazy" class="alignnone size-full wp-image-7318" src="https://abap-blog.ru/wp-content/uploads/2021/04/table.png" alt="" width="850" height="225" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/table.png 850w, https://abap-blog.ru/wp-content/uploads/2021/04/table-300x79.png 300w, https://abap-blog.ru/wp-content/uploads/2021/04/table-768x203.png 768w" sizes="(max-width: 850px) 100vw, 850px" /></a></p>
+<p>То при генерации ракурса ведения к ней с двумя уровнями:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/table_generator.png"><img loading="lazy" class="alignnone size-full wp-image-7319" src="https://abap-blog.ru/wp-content/uploads/2021/04/table_generator.png" alt="" width="528" height="259" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/table_generator.png 528w, https://abap-blog.ru/wp-content/uploads/2021/04/table_generator-300x147.png 300w" sizes="(max-width: 528px) 100vw, 528px" /></a></p>
+<p>У нас будет возможность редактирования этой самой единственной записи зависимой от текущего манданта в SM30:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/sm30.png"><img loading="lazy" class="alignnone size-full wp-image-7320" src="https://abap-blog.ru/wp-content/uploads/2021/04/sm30.png" alt="" width="532" height="125" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/sm30.png 532w, https://abap-blog.ru/wp-content/uploads/2021/04/sm30-300x70.png 300w" sizes="(max-width: 532px) 100vw, 532px" /></a></p>
+<p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/generator-vedeniya-dlya-odnoj-zapisi/">Генератор ведения для одной записи</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/generator-vedeniya-dlya-odnoj-zapisi/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Программный запуск ракурса ведения</title>
+		<link>https://abap-blog.ru/abap-notes/programmnyj-zapusk-rakursa-vedeniya/</link>
+					<comments>https://abap-blog.ru/abap-notes/programmnyj-zapusk-rakursa-vedeniya/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 05 Apr 2020 18:45:26 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=3987</guid>
+
+					<description><![CDATA[<p>Ракурс ведения в простейшем виде можно открыть с помощью ФМ-а: VIEW_MAINTENANCE_CALL [crayon-618a1dc91f3e4102059524/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/programmnyj-zapusk-rakursa-vedeniya/">Программный запуск ракурса ведения</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Ракурс ведения в простейшем виде можно открыть с помощью ФМ-а: <strong>VIEW_MAINTENANCE_CALL</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">START-OF-SELECTION.
+  DATA(lt_exclude) = VALUE /osp/tt_func( ( function = 'NEWL' ) ). " Без кнопки новые записи
+
+  " Ограничим типом документа
+  DATA(lt_filters) = VALUE c2s_vimsellist_ttype( ( viewfield = 'DOC_TYPE' operator = 'EQ' value = 'DOC' ) ).
+
+  CALL FUNCTION 'VIEW_MAINTENANCE_CALL'
+    EXPORTING
+      action                       = 'U'          " Открыть в режиме изменения
+      view_name                    = 'V_TOADD'
+      no_warning_for_clientindep   = abap_true    " Скрыть предупреждение о независимости от манданта
+      show_selection_popup         = abap_true    " Показать критерии выбора
+    TABLES
+      excl_cua_funct               = lt_exclude
+      dba_sellist                  = lt_filters
+    EXCEPTIONS
+      OTHERS                       = 0.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/programmnyj-zapusk-rakursa-vedeniya/">Программный запуск ракурса ведения</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/programmnyj-zapusk-rakursa-vedeniya/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

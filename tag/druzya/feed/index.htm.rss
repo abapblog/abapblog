@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Друзья | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/druzya/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:52:58 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>ABAP Objects &#8212; концепт друзей</title>
+		<link>https://abap-blog.ru/osnovy-abap/abap-objects-koncept-druzej/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/abap-objects-koncept-druzej/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 09 Jan 2012 08:28:01 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[ALV]]></category>
+		<category><![CDATA[Друзья]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=174</guid>
+
+					<description><![CDATA[<p>В объектно-ориентированных языках доступ к приватным или защищенным методам или атрибутам должен быть запрещен. Если кто либо попытается к ним обратиться то компилятор выдаст ошибку. Однако иногда нам необходимо получить к ним доступ, в ABAP это возможно с помощью использования концепции &#171;друзей&#187;. Использование данной концепции возможно с помощью ключевого слова FRIENDS в атрибуте класса. В [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/abap-objects-koncept-druzej/">ABAP Objects — концепт друзей</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>В объектно-ориентированных языках доступ к приватным или защищенным методам или атрибутам должен быть запрещен. Если кто либо попытается к ним обратиться то компилятор выдаст ошибку. Однако иногда нам необходимо получить к ним доступ, в ABAP это возможно с помощью использования концепции &#171;друзей&#187;.</p>
+<p><span id="more-174"></span></p>
+<p>Использование данной концепции возможно с помощью ключевого слова FRIENDS в атрибуте класса. В следующем примере показан класс <strong>lcl_me</strong> который определяет в качестве друга класс <strong>lcl_friend</strong>. У класса <strong>lcl_friend</strong> создан метод <strong>access_a1_of_class1</strong> который выводит переменную из области видимости PRIVATE класса <strong>lcl_me</strong>.</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_me DEFINITION FRIENDS lcl_friend.
+  PRIVATE SECTION.
+    DATA: a1 TYPE STRING VALUE 'I am A1 of LCL_ME'.
+ENDCLASS.                    "lcl_me DEFINITIONREPORT zdemo_simple_friend.
+*
+CLASS lcl_friend DEFINITION.
+  PUBLIC SECTION.
+    METHODS: access_a1_of_class1.
+ENDCLASS.                    "lcl_friend DEFINITION
+*
+CLASS lcl_me DEFINITION FRIENDS lcl_friend.
+  PRIVATE SECTION.
+    DATA: a1 TYPE STRING VALUE 'I am A1 of LCL_ME'.
+ENDCLASS.                    "lcl_me DEFINITION
+*
+CLASS lcl_friend IMPLEMENTATION.
+  METHOD access_a1_of_class1.
+    DATA: lo_class1 TYPE REF TO lcl_me.
+    CREATE OBJECT lo_class1.
+    WRITE: / lo_class1-&gt;a1.
+  ENDMETHOD.                    "access_a1_of_class1
+ENDCLASS.                    "lcl_friend IMPLEMENTATION
+*
+START-OF-SELECTION.
+  DATA: lo_friend TYPE REF TO lcl_friend.
+  CREATE OBJECT lo_friend.
+  lo_friend-&gt;access_a1_of_class1( ).</pre><p>Таким образом класс <strong>lcl_friend</strong> получает неограниченный доступ к <strong>lcl_me</strong>. Все классы наследуемые от <strong>lcl_friend</strong> будут так же иметь доступ ко все приватным атрибутам <strong>lcl_me:</strong></p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT znp_demo_friend_kids.
+*
+CLASS lcl_friend DEFINITION.
+  PUBLIC SECTION.
+    METHODS: access_a1_of_class1.
+ENDCLASS.                    "lcl_friend DEFINITION
+*
+CLASS lcl_friend_kids DEFINITION INHERITING FROM lcl_friend.
+  PUBLIC SECTION.
+    METHODS: my_access_a1.
+ENDCLASS.                    "lcl_friend_kids DEFINITION
+*
+CLASS lcl_me DEFINITION FRIENDS lcl_friend.
+  PRIVATE SECTION.
+    DATA: a1 TYPE STRING VALUE 'I am A1 of LCL_ME'.
+ENDCLASS.                    "lcl_me DEFINITION
+*
+CLASS lcl_friend IMPLEMENTATION.
+  METHOD access_a1_of_class1.
+    DATA: lo_class1 TYPE REF TO lcl_me.
+    CREATE OBJECT lo_class1.
+    WRITE: / lo_class1-&gt;a1.
+  ENDMETHOD.                    "access_a1_of_class1
+ENDCLASS.                    "lcl_friend IMPLEMENTATION
+*
+CLASS lcl_friend_kids IMPLEMENTATION.
+  METHOD my_access_a1.
+    DATA: lo_class1 TYPE REF TO lcl_me.
+    CREATE OBJECT lo_class1.
+    WRITE: / 'Accessing A1 from LCL_FRIEND_KIDS'.
+    WRITE: / lo_class1-&gt;a1.
+  ENDMETHOD.                    "my_access_a1
+ENDCLASS.                    "lcl_friend_kids IMPLEMENTATION
+*
+START-OF-SELECTION.
+  " Friend kid
+  DATA: lo_friend_kids TYPE REF TO lcl_friend_kids.
+  CREATE OBJECT lo_friend_kids.
+  lo_friend_kids-&gt;my_access_a1( ).</pre><p>Кроме того в качестве &#171;друга&#187; мы можем обозначить интерфейс. Все классы которые реализуют данный интерфейс будут иметь такой же доступ если бы они сами были &#171;друзьями&#187;.</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT znp_demo_friend_intf.
+*
+INTERFACE lif_friend.
+  METHODS: access_a1_of_class1.
+ENDINTERFACE.                    "lif_friend
+*
+CLASS lcl_friend DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_friend.
+ENDCLASS.                    "lcl_friend DEFINITION
+*
+CLASS lcl_friend_2 DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES: lif_friend.
+ENDCLASS.                    "lcl_friend_2 DEFINITION
+*
+CLASS lcl_me DEFINITION FRIENDS lif_friend.
+  PRIVATE SECTION.
+    DATA: a1 TYPE STRING VALUE 'I am A1 of LCL_ME'.
+ENDCLASS.                    "lcl_me DEFINITION
+*
+CLASS lcl_friend IMPLEMENTATION.
+  METHOD lif_friend~access_a1_of_class1.
+    DATA: lo_class1 TYPE REF TO lcl_me.
+    CREATE OBJECT lo_class1.
+    WRITE: / 'Accessing A1 from LCL_FRIEND via LIF_FRIEND'.
+    WRITE: / lo_class1-&gt;a1.
+  ENDMETHOD.                    "access_a1_of_class1
+ENDCLASS.                    "lcl_friend IMPLEMENTATION
+*
+CLASS lcl_friend_2 IMPLEMENTATION.
+  METHOD lif_friend~access_a1_of_class1.
+    DATA: lo_class1 TYPE REF TO lcl_me.
+    CREATE OBJECT lo_class1.
+    WRITE: / 'Accessing A1 from LCL_FRIEND_2 via LIF_FRIEND'.
+    WRITE: / lo_class1-&gt;a1.
+  ENDMETHOD.                    "my_access_a1
+ENDCLASS.                    "lcl_friend_2 IMPLEMENTATION
+*
+START-OF-SELECTION.
+  " Friend Access via Interface
+  DATA: lo_friend TYPE REF TO lif_friend.
+  CREATE OBJECT lo_friend TYPE lcl_friend.
+  lo_friend-&gt;access_a1_of_class1( ).
+  " another friend
+  CREATE OBJECT lo_friend TYPE lcl_friend_2.
+  lo_friend-&gt;access_a1_of_class1( ).</pre><p>Однако наследуемые классы от <strong>lcl_me </strong>не будут являться друзьями класса <strong>lcl_friend</strong>. Другими словами дружба не наследуется напрямую, она создается в определении класса.</p>
+<p><strong>Доступ к приватным данным CL_GUI_ALV_GRID</strong></p>
+<p>Благодаря тому что интерфейс IF_ALV_RM_GRID_FRIEND в CL_GUI_ALV_GRID объявлен как интерфейс друга, любой Ваш класс реализующий данный интерфейс получит доступ к приватным данным объектов этого класса.</p>
+<p>Доступ к приватным данным можно так же получить передав их по <a href="http://abap-blog.ru/osnovy-abap/dostup-k-privatnomu-atributu-klassa/">ссылке</a>.</p>
+<p><a title="Оригинал статьи" href="http://help-abap.zevolving.com/2011/12/abap-objects-concepts-friends/" target="_blank" rel="noopener">Оригинал статьи</a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/abap-objects-koncept-druzej/">ABAP Objects — концепт друзей</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/abap-objects-koncept-druzej/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

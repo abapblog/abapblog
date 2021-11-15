@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	
+	>
+<channel>
+	<title>
+	Комментарии: Немного о рефакторинге	</title>
+	<atom:link href="https://abap-blog.ru/osnovy-abap/refactoring/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru/osnovy-abap/refactoring/</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:03:38 +0000</lastBuildDate>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>
+		Автор: Astrafox		</title>
+		<link>https://abap-blog.ru/osnovy-abap/refactoring/#comment-1321</link>
+
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 09 Nov 2012 18:19:55 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1107#comment-1321</guid>
+
+					<description><![CDATA[В ответ на &lt;a href=&quot;https://abap-blog.ru/osnovy-abap/refactoring/#comment-1319&quot;&gt;Александр&lt;/a&gt;.
+
+Ну константы редко меняются исходя из названия. Чаще хранятся в пулах типов, либо как атрибуты интерфейсов если об ООП речь.]]></description>
+			<content:encoded><![CDATA[<p>Ну константы редко меняются исходя из названия. Чаще хранятся в пулах типов, либо как атрибуты интерфейсов если об ООП речь.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Александр		</title>
+		<link>https://abap-blog.ru/osnovy-abap/refactoring/#comment-1319</link>
+
+		<dc:creator><![CDATA[Александр]]></dc:creator>
+		<pubDate>Fri, 09 Nov 2012 07:19:07 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1107#comment-1319</guid>
+
+					<description><![CDATA[Ну почему же странный? У каждого действия есть свои причины, возможно тут:
+- проще чистить переменные. (CLEAR: lc_OrderType.)
+- интереснее хранить все константы в группе, что бы не искать потом по коду объявленные переменные
+- при включенной подстановке в редакторе, автоматом выходят все вариант
+- что то другое..
+Ну а для использования IN, можно например так попробовать:
+
+DATA: lv_x TYPE lfart VALUE &#039;ZDR&#039;,
+      lc_ordertype TYPE RANGE OF likp-lfart.
+
+lc_ordertype = &#039;IEQ&#039;.
+lc_ordertype-low = &#039;ZDR&#039;. &quot;Прямые продажи
+APPEND lc_ordertype.
+
+lc_ordertype = &#039;IEQ&#039;.
+lc_ordertype-low = &#039;ZIDR&#039;. &quot;Простые непрямые продажи
+APPEND lc_ordertype.
+
+IF lv_x IN lc_ordertype.
+  WRITE &#039;Ok&#039;.
+ENDIF.
+
+Облегчает хранение переменных + использование в условиях и запросах, только ненадо забывать что пустой range это все значения.]]></description>
+			<content:encoded><![CDATA[<p>Ну почему же странный? У каждого действия есть свои причины, возможно тут:<br />
+&#8212; проще чистить переменные. (CLEAR: lc_OrderType.)<br />
+&#8212; интереснее хранить все константы в группе, что бы не искать потом по коду объявленные переменные<br />
+&#8212; при включенной подстановке в редакторе, автоматом выходят все вариант<br />
+&#8212; что то другое..<br />
+Ну а для использования IN, можно например так попробовать:</p>
+<p>DATA: lv_x TYPE lfart VALUE &#8216;ZDR&#8217;,<br />
+      lc_ordertype TYPE RANGE OF likp-lfart.</p>
+<p>lc_ordertype = &#8216;IEQ&#8217;.<br />
+lc_ordertype-low = &#8216;ZDR&#8217;. &#171;Прямые продажи<br />
+APPEND lc_ordertype.</p>
+<p>lc_ordertype = &#8216;IEQ&#8217;.<br />
+lc_ordertype-low = &#8216;ZIDR&#8217;. &#171;Простые непрямые продажи<br />
+APPEND lc_ordertype.</p>
+<p>IF lv_x IN lc_ordertype.<br />
+  WRITE &#8216;Ok&#8217;.<br />
+ENDIF.</p>
+<p>Облегчает хранение переменных + использование в условиях и запросах, только ненадо забывать что пустой range это все значения.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Astrafox		</title>
+		<link>https://abap-blog.ru/osnovy-abap/refactoring/#comment-1317</link>
+
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 08 Nov 2012 15:41:46 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1107#comment-1317</guid>
+
+					<description><![CDATA[В ответ на &lt;a href=&quot;https://abap-blog.ru/osnovy-abap/refactoring/#comment-1316&quot;&gt;Анатолий&lt;/a&gt;.
+
+Весьма странный способ)]]></description>
+			<content:encoded><![CDATA[<p>Весьма странный способ)</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Анатолий		</title>
+		<link>https://abap-blog.ru/osnovy-abap/refactoring/#comment-1316</link>
+
+		<dc:creator><![CDATA[Анатолий]]></dc:creator>
+		<pubDate>Thu, 08 Nov 2012 04:15:01 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1107#comment-1316</guid>
+
+					<description><![CDATA[В ответ на &lt;a href=&quot;https://abap-blog.ru/osnovy-abap/refactoring/#comment-1315&quot;&gt;Astrafox&lt;/a&gt;.
+
+Именно... ну как пример, есть несколько типов заказов которые надо обработать в программе.
+
+CONSTANTS: BEGIN OF lc_OrderType,
+           DirectSalse TYPE RSORDERTYPE VALUE &#039;ZDR&#039;,    &quot;Прямые продажи
+           InDirectSales TYPE RSORDERTYPE VALUE &#039;ZIDR&#039;  &quot;Простые непрямые продажи
+           ShemeA TYPE RSORDERTYPE VALUE &#039;ZSHA&#039;,        &quot; бла бла бла
+           ...
+           ShemeZ TYPE RSORDERTYPE VALUE &#039;ZSHZ&#039;,
+           END OF lc_OrderType.
+
+В коде соответственно
+
+IF -type = lc_OrderType-InDirectSales.]]></description>
+			<content:encoded><![CDATA[<p>Именно&#8230; ну как пример, есть несколько типов заказов которые надо обработать в программе.</p>
+<p>CONSTANTS: BEGIN OF lc_OrderType,<br />
+           DirectSalse TYPE RSORDERTYPE VALUE &#8216;ZDR&#8217;,    &#171;Прямые продажи<br />
+           InDirectSales TYPE RSORDERTYPE VALUE &#8216;ZIDR&#8217;  &#171;Простые непрямые продажи<br />
+           ShemeA TYPE RSORDERTYPE VALUE &#8216;ZSHA&#8217;,        &#187; бла бла бла<br />
+           &#8230;<br />
+           ShemeZ TYPE RSORDERTYPE VALUE &#8216;ZSHZ&#8217;,<br />
+           END OF lc_OrderType.</p>
+<p>В коде соответственно</p>
+<p>IF -type = lc_OrderType-InDirectSales.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Astrafox		</title>
+		<link>https://abap-blog.ru/osnovy-abap/refactoring/#comment-1315</link>
+
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 07 Nov 2012 18:09:57 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1107#comment-1315</guid>
+
+					<description><![CDATA[В ответ на &lt;a href=&quot;https://abap-blog.ru/osnovy-abap/refactoring/#comment-1311&quot;&gt;Анатолий&lt;/a&gt;.
+
+Константы в виде структур?]]></description>
+			<content:encoded><![CDATA[<p>Константы в виде структур?</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Анатолий		</title>
+		<link>https://abap-blog.ru/osnovy-abap/refactoring/#comment-1311</link>
+
+		<dc:creator><![CDATA[Анатолий]]></dc:creator>
+		<pubDate>Wed, 07 Nov 2012 10:16:10 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1107#comment-1311</guid>
+
+					<description><![CDATA[Интересно.
+
+На заметку... Видел что SAP иногда объявляет группы констант, через операторы begin of/end of. Правда жалко не хватает иногда групповых операций, типа IN.]]></description>
+			<content:encoded><![CDATA[<p>Интересно.</p>
+<p>На заметку&#8230; Видел что SAP иногда объявляет группы констант, через операторы begin of/end of. Правда жалко не хватает иногда групповых операций, типа IN.</p>
+]]></content:encoded>
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,1130 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>SAP Dynpro | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/category/osnovy-abap/sap-dynpro/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Thu, 22 Apr 2021 15:36:43 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Запуск транзакций из сообщений</title>
+		<link>https://abap-blog.ru/osnovy-abap/call_transaction_se91_documentation/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/call_transaction_se91_documentation/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 22 Apr 2021 09:17:05 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[Основы ABAP]]></category>
+		<guid isPermaLink="false">https://abap-blog.ru/?p=7192</guid>
+
+					<description><![CDATA[<p>В подробных текстах сообщений (тр. SE91) или в документации (тр. SO10) мы кроме непосредственно описания можем так же вставлять ссылки на транзакции или отчёты для их запуска, что позволяет упростить жизнь пользователям. Однако у стандартной реализации данного механизма есть ряд ограничений: Длинна ссылки ограничена, из-за чего передать все необходимые параметры для запуска транзакции может не [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/call_transaction_se91_documentation/">Запуск транзакций из сообщений</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>В подробных текстах сообщений (тр. <strong>SE91</strong>) или в документации (тр. <strong>SO10</strong>) мы кроме непосредственно описания можем так же вставлять ссылки на транзакции или отчёты для их запуска, что позволяет упростить жизнь пользователям.</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/run_report.png"><img loading="lazy" class="alignnone size-full wp-image-7224" src="https://abap-blog.ru/wp-content/uploads/2021/04/run_report.png" alt="" width="424" height="179" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/run_report.png 424w, https://abap-blog.ru/wp-content/uploads/2021/04/run_report-300x127.png 300w" sizes="(max-width: 424px) 100vw, 424px" /></a></p>
+<p>Однако у стандартной реализации данного механизма есть ряд ограничений:</p>
+<ul>
+<li>Длинна ссылки ограничена, из-за чего передать все необходимые параметры для запуска транзакции может не получиться.</li>
+<li>Нет возможности вставки интернет-ссылок более 70 символов (ограничение стандарта).</li>
+<li>Нет возможности запуска отчёта с параметрами (только запуск с вариантом).</li>
+</ul>
+<p>В статье рассмотрим каким образом можно расширить стандартные возможности чтобы избежать вышеуказанных ограничений.</p>
+<p><span id="more-7192"></span></p>
+<p>Для того чтобы вставить ссылку в подробном тексте сообщения, необходимо перейти в меню:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/insert_link.png"><img loading="lazy" class="alignnone size-full wp-image-7215" src="https://abap-blog.ru/wp-content/uploads/2021/04/insert_link.png" alt="" width="604" height="287" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/insert_link.png 604w, https://abap-blog.ru/wp-content/uploads/2021/04/insert_link-300x143.png 300w" sizes="(max-width: 604px) 100vw, 604px" /></a></p>
+<p>При активации может возникнуть сообщение об ошибке, следует нажать кнопку игнорировать.</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/ignore_activation.png"><img loading="lazy" class="alignnone size-full wp-image-7216" src="https://abap-blog.ru/wp-content/uploads/2021/04/ignore_activation.png" alt="" width="475" height="147" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/ignore_activation.png 475w, https://abap-blog.ru/wp-content/uploads/2021/04/ignore_activation-300x93.png 300w" sizes="(max-width: 475px) 100vw, 475px" /></a></p>
+<p>Для корректного отображения вставляемых ссылок следует отключить графический редактор:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/disable_graphical_editor.png"><img loading="lazy" class="alignnone size-full wp-image-7217" src="https://abap-blog.ru/wp-content/uploads/2021/04/disable_graphical_editor.png" alt="" width="611" height="349" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/disable_graphical_editor.png 611w, https://abap-blog.ru/wp-content/uploads/2021/04/disable_graphical_editor-300x171.png 300w" sizes="(max-width: 611px) 100vw, 611px" /></a></p>
+<p>Существует несколько стандартных возможности по вставке ссылок на транзакции/отчёты, разберём на примере запуска транзакции просмотра журнала (тр. <strong>SLG1</strong>) и отчёта автоматического поиска нот (тр. <strong>ANST</strong>):</p>
+<ul>
+<li><strong>Запуск транзакции без пропуска экрана (связь с транзакцией&#8230;)</strong>: &lt;DS:TRAN.SLG1(BALOBJ.&amp;V1&amp;)(BALSUBOBJ.&amp;V2&amp;)&gt;Open SLG1&lt;/&gt;</li>
+<li><strong>Запуск транзакции с пропуском экрана</strong>: &lt;DS:TRAS.SLG1(BALOBJ.&amp;V1&amp;)&gt;Run SLG1&lt;/&gt;</li>
+<li><strong>Запуск отчёта (диалоговое выполнение отчёта&#8230;)</strong>: &lt;DS:REPO.ANST_SEARCH_TOOL.&amp;V3&amp;&gt;Open ANST Report&lt;/&gt;</li>
+<li>Есть и другие варианты, например &#8212; немедленное планирование отчёта в фоне, но логика обработки там аналогичная.</li>
+</ul>
+<p>BALOBJ и BALSUBOBJ это ID параметров, которые можно передавать через память при запуске транзакции (SET MEMORY ID&#8230;):</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/memory_id.png"><img loading="lazy" class="alignnone size-full wp-image-7219" src="https://abap-blog.ru/wp-content/uploads/2021/04/memory_id.png" alt="" width="705" height="426" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/memory_id.png 705w, https://abap-blog.ru/wp-content/uploads/2021/04/memory_id-300x181.png 300w" sizes="(max-width: 705px) 100vw, 705px" /></a></p>
+<p>При запуске диалогового выполнения отчёта мы указываем имя варианта. Во всех случаях для большей гибкости параметры передаются из программы через параметры к сообщению (хотя можно задавать и статически).</p>
+<p>Пример вызова сообщения:</p><pre class="urvanov-syntax-highlighter-plain-tag">START-OF-SELECTION.   
+  MESSAGE i000(zsm_mess) WITH 'ANST_TESTING' 'ANST_TESTING_AT_REC' 'VAR'.</pre><p>Стандартная реализация обработки таких ссылок лежит в классе <strong>CL_EPSS_SAPEVENT</strong>, а вызов его происходит по настройке в ракурсе <strong>EPSSA2</strong>. Чтобы создать свой обработчик для своих типов ссылок, следует создать наследуемый от вышеуказанного класс и добавить запись в ракурс через тр. <strong>SM30</strong>:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/04/new_epssa2.png"><img loading="lazy" class="alignnone size-full wp-image-7220" src="https://abap-blog.ru/wp-content/uploads/2021/04/new_epssa2.png" alt="" width="588" height="259" srcset="https://abap-blog.ru/wp-content/uploads/2021/04/new_epssa2.png 588w, https://abap-blog.ru/wp-content/uploads/2021/04/new_epssa2-300x132.png 300w" sizes="(max-width: 588px) 100vw, 588px" /></a></p>
+<p>При этом стандартную запись следует удалить, чтобы обеспечить корректность порядка вызовов (если этого не сделать, придётся вносить типы ссылок в настройку TDCLD). В наследуемом классе мы переопределим для Custom типов ссылок поведения обработчика &#8212; метод RESOLVE_LINK, для всех прочих типов ссылок будет отрабатывать стандартная логика.</p>
+<p>Полный код нового класса:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS zcl_epss_sapevent DEFINITION
+  PUBLIC
+  INHERITING FROM cl_epss_sapevent
+  FINAL
+  CREATE PUBLIC.
+  PUBLIC SECTION.
+
+    TYPES:
+      tt_report_parameters TYPE STANDARD TABLE OF rsparamsl_255 .
+
+    CLASS-METHODS set_report_parameters
+      IMPORTING
+        !it_parameters TYPE tt_report_parameters .
+
+    METHODS resolve_link
+        REDEFINITION .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+
+    CONSTANTS:
+      BEGIN OF gc_link_types,
+        zrep TYPE string VALUE 'ZREP',
+        zurl TYPE string VALUE 'ZURL',
+      END OF gc_link_types .
+    DATA mv_doc_link TYPE string.
+    CLASS-DATA gt_report_parameters TYPE tt_report_parameters .
+
+    METHODS process_report .
+    METHODS process_url .
+ENDCLASS.
+
+CLASS zcl_epss_sapevent IMPLEMENTATION.
+
+  METHOD process_report.
+    " Пример: &lt;DS:ZREP.ANST_SEARCH_TOOL&gt;Open ANST&lt;/&gt;
+
+    SPLIT mv_doc_link+8 AT '.' INTO TABLE DATA(lt_parts).
+    DATA(lv_prog) = VALUE sy-cprog( lt_parts[ 1 ] OPTIONAL ).
+
+    IF lv_prog IS INITIAL.
+      CLEAR: gt_report_parameters.
+      RETURN.
+    ENDIF.
+
+    SUBMIT (lv_prog)
+      VIA SELECTION-SCREEN
+      AND RETURN
+      WITH SELECTION-TABLE gt_report_parameters.
+
+    CLEAR: gt_report_parameters.
+  ENDMETHOD.
+
+  METHOD process_url.
+    " Пример: &lt;DS:ZURL.http://abap-blog.ru&gt;Open ABAP Blog&lt;/&gt;
+    DATA:
+      lv_url TYPE bxmnodes-url.
+
+    lv_url = mv_doc_link+8.
+
+    CALL FUNCTION 'CALL_BROWSER'
+      EXPORTING
+        url    = lv_url
+      EXCEPTIONS
+        OTHERS = 0.
+  ENDMETHOD.
+
+  METHOD resolve_link.
+    mv_doc_link = doc_link.
+
+    CASE mv_doc_link+3(4).
+      WHEN gc_link_types-zrep.
+        process_report( ).
+      WHEN gc_link_types-zurl.
+        process_url( ).
+      WHEN OTHERS.
+        super-&gt;resolve_link(
+          EXPORTING
+            doc_link         = doc_link
+            epss_html_viewer = epss_html_viewer
+            help_info        = help_info ).
+    ENDCASE.
+  ENDMETHOD.
+
+  METHOD set_report_parameters.
+    gt_report_parameters = it_parameters.
+  ENDMETHOD.
+ENDCLASS.</pre><p>Новые типы ссылок:</p>
+<ul>
+<li><strong>Запуск URL</strong>: &lt;DS:ZURL.http://abap-blog.ru&gt;Open ABAP Blog&lt;/&gt;</li>
+<li><strong>Запуск отчёта с заданными параметрами экрана</strong>: &lt;DS:ZREP.ANST_SEARCH_TOOL&gt;Open ANST&lt;/&gt;</li>
+</ul>
+<p>Для запуска отчёта мы предварительно заполняем параметры отчёта:</p><pre class="urvanov-syntax-highlighter-plain-tag">START-OF-SELECTION.
+  zcl_epss_sapevent=&gt;set_report_parameters(
+    it_parameters = VALUE #( ( selname = 'P_TRANS' kind = 'P' option = 'EQ' low = 'SE24' ) ) ).
+
+  MESSAGE i000(zsm_mess) WITH 'ANST_TESTING' 'ANST_TESTING_AT_REC' 'VAR'.</pre><p>Подводя итог можно сказать что таким образом мы можем реализовать как собственные типы ссылок, так и расширять функционал стандартных.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/call_transaction_se91_documentation/">Запуск транзакций из сообщений</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/call_transaction_se91_documentation/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Просмотр каталога полей любого ALV</title>
+		<link>https://abap-blog.ru/osnovy-abap/prosmotr-kataloga-polej-lyubogo-alv/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/prosmotr-kataloga-polej-lyubogo-alv/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 28 Mar 2021 06:00:48 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[Основы ABAP]]></category>
+		<guid isPermaLink="false">https://abap-blog.ru/?p=6902</guid>
+
+					<description><![CDATA[<p>Иногда бывает полезно посмотреть каталог ALV без погружения в код или в отладку. Cделать это можно для любого ALV зажав Shift и щёлкнув два раза правой кнопкой мыши на не занятом данными месте, пример: Откроется сервисный инструмент (alv consistency check), где среди прочего есть каталог полей: В полноэкранных ALV можно просто набрать команду &#38;SOS.</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/prosmotr-kataloga-polej-lyubogo-alv/">Просмотр каталога полей любого ALV</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Иногда бывает полезно посмотреть каталог ALV без погружения в код или в отладку. Cделать это можно для любого ALV зажав Shift и щёлкнув два раза правой кнопкой мыши на не занятом данными месте, пример:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/alv_settings.png"><img loading="lazy" class="alignnone size-full wp-image-6903" src="https://abap-blog.ru/wp-content/uploads/2021/03/alv_settings.png" alt="" width="983" height="184" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/alv_settings.png 983w, https://abap-blog.ru/wp-content/uploads/2021/03/alv_settings-300x56.png 300w, https://abap-blog.ru/wp-content/uploads/2021/03/alv_settings-768x144.png 768w" sizes="(max-width: 983px) 100vw, 983px" /></a></p>
+<p>Откроется сервисный инструмент (alv consistency check), где среди прочего есть каталог полей:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/consistency_check_alv.png"><img loading="lazy" class="alignnone size-full wp-image-6904" src="https://abap-blog.ru/wp-content/uploads/2021/03/consistency_check_alv.png" alt="" width="1083" height="350" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/consistency_check_alv.png 1083w, https://abap-blog.ru/wp-content/uploads/2021/03/consistency_check_alv-300x97.png 300w, https://abap-blog.ru/wp-content/uploads/2021/03/consistency_check_alv-1024x331.png 1024w, https://abap-blog.ru/wp-content/uploads/2021/03/consistency_check_alv-768x248.png 768w" sizes="(max-width: 1083px) 100vw, 1083px" /></a></p>
+<p>В полноэкранных ALV можно просто набрать команду <strong>&amp;SOS.</strong></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/prosmotr-kataloga-polej-lyubogo-alv/">Просмотр каталога полей любого ALV</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/prosmotr-kataloga-polej-lyubogo-alv/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Принудительный Display Like</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/prinuditelnyj-display-like/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/prinuditelnyj-display-like/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 22 Mar 2021 07:42:25 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<guid isPermaLink="false">https://abap-blog.ru/?p=6828</guid>
+
+					<description><![CDATA[<p>Обнаружил для себя забавную особенность при работе с сообщениями. Есть код: [crayon-618a050aa77ba216700976/] Логично предположить что сообщение будет вида &#8216;S&#8217; (Status), однако есть возможность внутри самого сообщения указать принудительно DISPLAY LIKE, переопределив тем самым отображаемый вид сообщения: Более того, можно подставить &#38; вместо типа сообщения и передавать его как параметр 🙂</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/prinuditelnyj-display-like/">Принудительный Display Like</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Обнаружил для себя забавную особенность при работе с сообщениями.</p>
+<p>Есть код:</p><pre class="urvanov-syntax-highlighter-plain-tag">START-OF-SELECTION.
+  MESSAGE s000(ztest).</pre><p>Логично предположить что сообщение будет вида &#8216;S&#8217; (Status), однако есть возможность внутри самого сообщения указать принудительно DISPLAY LIKE, переопределив тем самым отображаемый вид сообщения:</p>
+<p><a href="https://abap-blog.ru/wp-content/uploads/2021/03/display_like.png"><img loading="lazy" class="alignnone size-full wp-image-6829" src="https://abap-blog.ru/wp-content/uploads/2021/03/display_like.png" alt="" width="392" height="178" srcset="https://abap-blog.ru/wp-content/uploads/2021/03/display_like.png 392w, https://abap-blog.ru/wp-content/uploads/2021/03/display_like-300x136.png 300w" sizes="(max-width: 392px) 100vw, 392px" /></a></p>
+<p>Более того, можно подставить &amp; вместо типа сообщения и передавать его как параметр <img src="https://s.w.org/images/core/emoji/13.1.0/72x72/1f642.png" alt="🙂" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/prinuditelnyj-display-like/">Принудительный Display Like</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/prinuditelnyj-display-like/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Value Check для связанных параметров</title>
+		<link>https://abap-blog.ru/osnovy-abap/value-check-dlya-svyazannyx-parametrov/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/value-check-dlya-svyazannyx-parametrov/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 05 Sep 2015 08:12:17 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[Основы ABAP]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2584</guid>
+
+					<description><![CDATA[<p>VALUE CHECK дополнение используется когда необходимо удостоверится в том что значения введенные пользователем для параметра есть либо фиксированных значениях домена, либо если указываем на внешний ключ, они присутствуют в таблице. Однако, когда речь заходит о нескольких параметрах, есть некоторая особенность, которая и будет рассмотрена далее. Рассмотрим пример: [crayon-618a050aa79cf811151967/] В результате появляется возможность выбора значений: А [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/value-check-dlya-svyazannyx-parametrov/">Value Check для связанных параметров</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>VALUE CHECK дополнение используется когда необходимо удостоверится в том что значения введенные пользователем для параметра есть либо фиксированных значениях домена, либо если указываем на внешний ключ, они присутствуют в таблице. Однако, когда речь заходит о нескольких параметрах, есть некоторая особенность, которая и будет рассмотрена далее.<span id="more-2584"></span></p>
+<p>Рассмотрим пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">PROGRAM zvalue_check_test.
+
+PARAMETERS:
+  p_carr TYPE sbook-carrid VALUE CHECK.
+
+START-OF-SELECTION.
+  WRITE 'Checked'.</pre><p>В результате появляется возможность выбора значений:<a href="http://abap-blog.ru/wp-content/uploads/2015/09/1.png"><img loading="lazy" class="alignnone size-full wp-image-2585" src="http://abap-blog.ru/wp-content/uploads/2015/09/1.png" alt="1" width="566" height="206" srcset="https://abap-blog.ru/wp-content/uploads/2015/09/1.png 566w, https://abap-blog.ru/wp-content/uploads/2015/09/1-300x109.png 300w" sizes="(max-width: 566px) 100vw, 566px" /></a></p>
+<p>А при попытке указать не верное значение, система выдаст ошибку:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/09/2.png"><img loading="lazy" class="alignnone size-full wp-image-2586" src="http://abap-blog.ru/wp-content/uploads/2015/09/2.png" alt="2" width="418" height="150" srcset="https://abap-blog.ru/wp-content/uploads/2015/09/2.png 418w, https://abap-blog.ru/wp-content/uploads/2015/09/2-300x108.png 300w" sizes="(max-width: 418px) 100vw, 418px" /></a></p>
+<p>Предположим мы захотели указать кроме авиакомпании еще и номер авиасообщения и переделали код следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">PROGRAM zvalue_check_test.
+
+PARAMETERS:
+  p_carr TYPE sbook-carrid VALUE CHECK,
+  p_conn TYPE sbook-connid VALUE CHECK.
+
+START-OF-SELECTION.
+  WRITE 'Checked'.</pre><p>Как и ранее выбор работает замечательно, указываем номер авиасообщения, на экран автоматически выводится код авиакомпании:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/09/3.png"><img loading="lazy" class="alignnone size-full wp-image-2587" src="http://abap-blog.ru/wp-content/uploads/2015/09/3.png" alt="3" width="645" height="146" srcset="https://abap-blog.ru/wp-content/uploads/2015/09/3.png 645w, https://abap-blog.ru/wp-content/uploads/2015/09/3-300x68.png 300w" sizes="(max-width: 645px) 100vw, 645px" /></a></p>
+<p>Однако при проверке указанных значений, несмотря на то что они есть в базе данных, система выдаст ошибку:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/09/4.png"><img loading="lazy" class="alignnone size-full wp-image-2588" src="http://abap-blog.ru/wp-content/uploads/2015/09/4.png" alt="4" width="446" height="153" srcset="https://abap-blog.ru/wp-content/uploads/2015/09/4.png 446w, https://abap-blog.ru/wp-content/uploads/2015/09/4-300x103.png 300w" sizes="(max-width: 446px) 100vw, 446px" /></a></p>
+<p>Почему так происходит можно посмотреть в коде 1000 экрана который генерируется автоматически:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/09/5.png"><img loading="lazy" class="alignnone size-full wp-image-2589" src="http://abap-blog.ru/wp-content/uploads/2015/09/5.png" alt="5" width="457" height="307" srcset="https://abap-blog.ru/wp-content/uploads/2015/09/5.png 457w, https://abap-blog.ru/wp-content/uploads/2015/09/5-300x202.png 300w" sizes="(max-width: 457px) 100vw, 457px" /></a></p>
+<p>Как можно убедится, для поля с номером авиасообщения, значение авиакомпании система пытается получить из структуры SBOOK, которой нет в нашей программе, исправим наш код:</p><pre class="urvanov-syntax-highlighter-plain-tag">PROGRAM zvalue_check_test.
+
+TABLES: sbook.
+
+PARAMETERS:
+  p_carr TYPE sbook-carrid VALUE CHECK,
+  p_conn TYPE sbook-connid VALUE CHECK.
+
+AT SELECTION-SCREEN ON p_carr.
+  sbook-carrid = p_carr.
+
+START-OF-SELECTION.
+  WRITE 'Checked'.</pre><p>В результате получим работоспособную проверку по обоим полям.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/value-check-dlya-svyazannyx-parametrov/">Value Check для связанных параметров</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/value-check-dlya-svyazannyx-parametrov/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Работа с GOS контейнером</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-gos-kontejnerom/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-gos-kontejnerom/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 10 Jul 2015 06:30:03 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2570</guid>
+
+					<description><![CDATA[<p>Многие из Вас видели в стандартных транзакциях кнопки расположенные в заголовке экрана: Для того чтобы иметь возможность располагать GUI элементы в заголовке есть специальный контейнер называется он cl_gui_gos_container. Пример работы с ним далее. [crayon-618a050aa8025659546162/] Результат:</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-gos-kontejnerom/">Работа с GOS контейнером</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Многие из Вас видели в стандартных транзакциях кнопки расположенные в заголовке экрана:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/07/11.png"><img loading="lazy" class="alignnone size-full wp-image-2571" src="http://abap-blog.ru/wp-content/uploads/2015/07/11.png" alt="1" width="459" height="194" srcset="https://abap-blog.ru/wp-content/uploads/2015/07/11.png 459w, https://abap-blog.ru/wp-content/uploads/2015/07/11-300x127.png 300w" sizes="(max-width: 459px) 100vw, 459px" /></a></p>
+<p>Для того чтобы иметь возможность располагать GUI элементы в заголовке есть специальный контейнер называется он cl_gui_gos_container. Пример работы с ним далее.</p>
+<p><span id="more-2570"></span></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_toolbar   TYPE REF TO cl_gui_toolbar,
+  go_container TYPE REF TO cl_gui_gos_container,
+  gv_icon      TYPE iconname,
+  gv_quick     TYPE iconquick,
+  gt_event     TYPE cntl_simple_events,
+  gs_event     TYPE cntl_simple_event.
+
+CLASS lcl_handle_event DEFINITION DEFERRED.
+
+DATA tool_event TYPE REF TO lcl_handle_event.
+*
+CLASS lcl_handle_event DEFINITION.
+  PUBLIC SECTION.
+    METHODS: on_dropdown_clicked FOR EVENT dropdown_clicked
+               OF cl_gui_toolbar
+                 IMPORTING fcode posx posy.
+    METHODS: on_function_selected FOR EVENT function_selected
+               OF cl_gui_toolbar
+                 IMPORTING fcode.
+ENDCLASS.                    "lcl_handle_event DEFINITION
+*
+CLASS lcl_handle_event IMPLEMENTATION.
+  METHOD on_dropdown_clicked.
+    DATA: my_menu  TYPE REF TO cl_ctmenu,
+          sub_menu TYPE REF TO cl_ctmenu.
+
+    CREATE OBJECT my_menu.
+
+    CASE fcode.
+      WHEN 'MY_MENU'.
+
+        my_menu-&gt;add_function( fcode = 'OPTION1'
+                               text  = 'Do something...1' ).
+        my_menu-&gt;add_function( fcode = 'OPTION2'
+                               text  = 'Do something...2' ).
+        my_menu-&gt;add_function( fcode = 'OPTION3'
+                               text  = 'Do something...3' ).
+
+        my_menu-&gt;add_separator( ).
+*   Create sub menu
+        CREATE OBJECT sub_menu.
+
+        sub_menu-&gt;add_function( fcode = 'SUB1'
+                                text  = 'Do something...1' ).
+        sub_menu-&gt;add_function( fcode = 'SUB2'
+                                text  = 'Do something...2' ).
+
+
+*-- Add sub menu to the context menu
+        my_menu-&gt;add_submenu( menu = sub_menu
+                              text = 'Do something else.....' ).
+      WHEN 'MY_MENU2'.
+        my_menu-&gt;add_function( fcode = 'OPTION21'
+                               text  = 'Do something crazy' ).
+        my_menu-&gt;add_function( fcode = 'OPTION22'
+                               text  = 'Do something funny' ).
+    ENDCASE.
+
+    CALL METHOD go_toolbar-&gt;track_context_menu
+      EXPORTING
+        context_menu = my_menu
+        posx         = posx
+        posy         = posy.
+
+
+  ENDMETHOD.                    "ON_DROPDOWN_CLICKED
+
+  METHOD on_function_selected.
+    CASE fcode.
+      WHEN 'MY_MENU'.  MESSAGE i208(00) WITH 'Press on Icon Plane'.
+      WHEN 'MY_MENU2'. MESSAGE i208(00) WITH 'Press on Icon Truck'.
+      WHEN 'OPTION1'.  MESSAGE i208(00) WITH 'Option 1'.
+      WHEN 'OPTION2'.  MESSAGE i208(00) WITH 'Option 2'.
+      WHEN 'OPTION3'.  MESSAGE i208(00) WITH 'Option 3'.
+      WHEN 'SUB1'.     MESSAGE i208(00) WITH 'Sub Option 1'.
+      WHEN 'SUB2'.     MESSAGE i208(00) WITH 'Sub Option 2'.
+      WHEN 'OPTION21'. MESSAGE i208(00) WITH 'Option 2/1'.
+      WHEN 'OPTION22'. MESSAGE i208(00) WITH 'Option 2/2'.
+    ENDCASE.
+  ENDMETHOD.                    "ON_FUNCTION_SELECTED
+ENDCLASS.                    "lcl_handle_event IMPLEMENTATION
+
+
+START-OF-SELECTION.
+
+  CREATE OBJECT go_container
+    EXPORTING
+      width                   = 160
+      no_autodef_progid_dynnr = 'X'
+    EXCEPTIONS
+      OTHERS                  = 5.
+
+  CHECK sy-subrc = 0.
+  CREATE OBJECT go_toolbar
+    EXPORTING
+      parent = go_container.
+
+  CALL FUNCTION 'ICON_CREATE'
+    EXPORTING
+      name       = 'ICON_WS_PLANE'
+      add_stdinf = space
+    IMPORTING
+      RESULT     = gv_icon
+    EXCEPTIONS
+      OTHERS     = 0.
+
+  gv_quick = 'New Menu'.
+
+  CALL METHOD go_toolbar-&gt;add_button
+    EXPORTING
+      fcode     = 'MY_MENU'
+      icon      = gv_icon
+      butn_type = 1
+      quickinfo = gv_quick.
+
+  CLEAR gv_icon.
+  gv_quick = 'New Menu 2'.
+
+  CALL FUNCTION 'ICON_CREATE'
+    EXPORTING
+      name       = 'ICON_TRANSPORT'
+      add_stdinf = space
+    IMPORTING
+      RESULT     = gv_icon
+    EXCEPTIONS
+      OTHERS     = 0.
+
+  CALL METHOD go_toolbar-&gt;add_button
+    EXPORTING
+      fcode     = 'MY_MENU2'
+      icon      = gv_icon
+      butn_type = 1
+      text      = 'Go on!'
+      quickinfo = gv_quick.
+
+  CLEAR gt_event.
+  gs_event-eventid = cl_gui_toolbar=&gt;m_id_function_selected.
+  gs_event-appl_event = space.
+  APPEND gs_event TO gt_event.
+  gs_event-eventid = cl_gui_toolbar=&gt;m_id_dropdown_clicked.
+  gs_event-appl_event = space.
+  APPEND gs_event TO gt_event.
+  CALL METHOD go_toolbar-&gt;set_registered_events
+    EXPORTING
+      events = gt_event.
+
+  CREATE OBJECT tool_event.
+
+  SET HANDLER tool_event-&gt;on_dropdown_clicked FOR go_toolbar.
+  SET HANDLER tool_event-&gt;on_function_selected FOR go_toolbar.
+
+  WRITE 'Hello'.</pre><p>Результат:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/07/21.png"><img loading="lazy" class="alignnone size-full wp-image-2572" src="http://abap-blog.ru/wp-content/uploads/2015/07/21.png" alt="2" width="227" height="96" /></a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-gos-kontejnerom/">Работа с GOS контейнером</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-gos-kontejnerom/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Создание подэкрана на экране выбора</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/sozdanie-podekrana-na-ekrane-vybora/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/sozdanie-podekrana-na-ekrane-vybora/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 03 Jul 2015 06:48:52 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2553</guid>
+
+					<description><![CDATA[<p>Обычно подэкраны вставляются на экране выбора через создание вкладок по следующему принципу: [crayon-618a050aa8260426508369/] Но что делать, если нам нужен только один подэкран и без рамки табуляции? Для этого можно воспользоваться следующим «хаком»: Создаем экран с типом подэкрна. Рисуем его содержимое, а далее в программе пишем такой код: [crayon-618a050aa8267763267558/] Пример подэкрана:</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/sozdanie-podekrana-na-ekrane-vybora/">Создание подэкрана на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Обычно подэкраны вставляются на экране выбора через создание вкладок по следующему принципу:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECTION-SCREEN BEGIN OF SCREEN 100 AS SUBSCREEN.
+PARAMETERS: p1 TYPE c LENGTH 10,
+            p2 TYPE c LENGTH 10,
+            p3 TYPE c LENGTH 10.
+SELECTION-SCREEN END OF SCREEN 100.
+
+SELECTION-SCREEN BEGIN OF SCREEN 200 AS SUBSCREEN.
+PARAMETERS: q1 TYPE c LENGTH 10,
+            q2 TYPE c LENGTH 10,
+            q3 TYPE c LENGTH 10.
+SELECTION-SCREEN END OF SCREEN 200.
+
+SELECTION-SCREEN: BEGIN OF TABBED BLOCK mytab FOR 10 LINES,
+                  TAB (20) button1 USER-COMMAND push1
+                                   DEFAULT SCREEN 100,
+                  TAB (20) button2 USER-COMMAND push2
+                                   DEFAULT SCREEN 200,
+                  END OF BLOCK mytab.
+
+INITIALIZATION.
+  button1 = 'Selection Screen 1'.
+  button2 = 'Selection Screen 2'.</pre><p><a href="http://abap-blog.ru/wp-content/uploads/2015/07/selection_tabs.png"><img loading="lazy" class="alignnone size-full wp-image-2554" src="http://abap-blog.ru/wp-content/uploads/2015/07/selection_tabs.png" alt="selection_tabs" width="496" height="136" srcset="https://abap-blog.ru/wp-content/uploads/2015/07/selection_tabs.png 496w, https://abap-blog.ru/wp-content/uploads/2015/07/selection_tabs-300x82.png 300w" sizes="(max-width: 496px) 100vw, 496px" /></a></p>
+<p>Но что делать, если нам нужен только один подэкран и без рамки табуляции? Для этого можно воспользоваться следующим «хаком»:</p>
+<p><span id="more-2553"></span></p>
+<p>Создаем экран с типом подэкрна.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/07/subscreen.png"><img loading="lazy" class="alignnone size-full wp-image-2555" src="http://abap-blog.ru/wp-content/uploads/2015/07/subscreen.png" alt="subscreen" width="590" height="256" srcset="https://abap-blog.ru/wp-content/uploads/2015/07/subscreen.png 590w, https://abap-blog.ru/wp-content/uploads/2015/07/subscreen-300x130.png 300w" sizes="(max-width: 590px) 100vw, 590px" /></a></p>
+<p>Рисуем его содержимое, а далее в программе пишем такой код:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECTION-SCREEN: BEGIN OF TABBED BLOCK mytab FOR 20 LINES,
+END OF BLOCK mytab.
+
+INITIALIZATION.
+  mytab-prog = sy-cprog.
+  mytab-dynnr = 9001.</pre><p>Пример подэкрана:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2015/07/subscreen_on_selection_screen.png"><img loading="lazy" class="alignnone size-full wp-image-2556" src="http://abap-blog.ru/wp-content/uploads/2015/07/subscreen_on_selection_screen.png" alt="subscreen_on_selection_screen" width="432" height="143" srcset="https://abap-blog.ru/wp-content/uploads/2015/07/subscreen_on_selection_screen.png 432w, https://abap-blog.ru/wp-content/uploads/2015/07/subscreen_on_selection_screen-300x99.png 300w" sizes="(max-width: 432px) 100vw, 432px" /></a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/sozdanie-podekrana-na-ekrane-vybora/">Создание подэкрана на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/sozdanie-podekrana-na-ekrane-vybora/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>SAP Product Road Map SAP User Interface</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/sap-product-road-map-sap-user-interface/</link>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 20 May 2013 16:23:01 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1543</guid>
+
+					<description><![CDATA[<p>Стратегия развития UI технологий SAP.</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/sap-product-road-map-sap-user-interface/">SAP Product Road Map SAP User Interface</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://www.sdn.sap.com/irj/scn/go/portal/prtroot/docs/library/uuid/c0e5d250-3e9a-3010-97a0-a0c7f48b5bd8?QuickLink=index&amp;overridelayout=true&amp;58385785485042" target="_blank" rel="noopener">Стратегия</a> развития UI технологий SAP.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/sap-product-road-map-sap-user-interface/">SAP Product Road Map SAP User Interface</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Сокрытие полей ввода на селекционном экране</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/abaphr-ru-sokrytie-polej-vvoda-na-selekcionnom-ekrane/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/abaphr-ru-sokrytie-polej-vvoda-na-selekcionnom-ekrane/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 27 Oct 2012 16:06:04 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[HR]]></category>
+		<category><![CDATA[SM30]]></category>
+		<category><![CDATA[инфо-тип]]></category>
+		<category><![CDATA[поля ввода]]></category>
+		<category><![CDATA[экран выбора]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1157</guid>
+
+					<description><![CDATA[<p>Иногда возникает необходимость скрыть одно или несколько полей (или любой другой элемент) на экране в зависимости от некоторых условий. Существует несколько способов это сделать, как простых и незамысловатых, так и достаточно сложных, но дающих максимальную гибкость настройки экрана. Пойдем от простого к сложному. NO-DISPLAY для элементов экрана Для таких элементов экрана, как PARAMETERS и SELECT-OPTIONS есть дополнение [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/abaphr-ru-sokrytie-polej-vvoda-na-selekcionnom-ekrane/">Сокрытие полей ввода на селекционном экране</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Иногда возникает необходимость скрыть одно или несколько полей (или любой другой элемент) на экране в зависимости от некоторых условий. Существует несколько способов это сделать, как простых и незамысловатых, так и достаточно сложных, но дающих максимальную гибкость настройки экрана. Пойдем от простого к сложному.</p>
+<p><span id="more-1157"></span><br />
+<strong>NO-</strong><strong>DISPLAY для элементов экрана</strong></p>
+<p>Для таких элементов экрана, как <strong>PARAMETERS</strong> и <strong>SELECT-OPTIONS</strong> есть дополнение <strong>NO-DISPLAY</strong>, позволяющее скрыть поля на экране. Поле с таким дополнением будет скрыто, но к нему можно будет обратиться, например, при вызове программы с таким полем из другой программы с передачей SET-параметров. Выглядит это так:</p>
+<p>&nbsp;</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS p_par TYPE CHAR10 NO-DISPLAY.
+
+SELECT-OPTIONS so_sopt FOR gv_somevar NO-DISPLAY.</pre><p>&nbsp;</p>
+<p><strong>Сокрытие полей экранов инфо-типов </strong><strong>HR</strong></p>
+<p>Настройка полей инфо-типа производится в таблице <strong>T588</strong><strong>M</strong>, открыть которую можно из транзакции <strong>SM30</strong>.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/10/t588M.png"><img loading="lazy" class="size-full wp-image-1158 alignnone" title="t588M" src="http://abap-blog.ru/wp-content/uploads/2012/10/t588M.png" alt="" width="591" height="257" srcset="https://abap-blog.ru/wp-content/uploads/2012/10/t588M.png 591w, https://abap-blog.ru/wp-content/uploads/2012/10/t588M-300x130.png 300w" sizes="(max-width: 591px) 100vw, 591px" /></a></p>
+<p>Здесь первоначальным экраном служит экран, для которого поле «Переменный ключ» не заполнено. По двойному щелчку можно открыть детальный просмотр:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/10/t588M_2.png"><img loading="lazy" class="size-full wp-image-1159 alignnone" title="t588M_2" src="http://abap-blog.ru/wp-content/uploads/2012/10/t588M_2.png" alt="" width="569" height="456" srcset="https://abap-blog.ru/wp-content/uploads/2012/10/t588M_2.png 569w, https://abap-blog.ru/wp-content/uploads/2012/10/t588M_2-300x240.png 300w" sizes="(max-width: 569px) 100vw, 569px" /></a></p>
+<p>Как видно из рисунка, для полей экрана можно задать не только невидимость (столбцы выделены красной рамкой), но и сделать поле обязательным (<strong>Обяз</strong>), необязательным (<strong>Необ</strong>) или закрытым для редактирования (<strong>Вывд</strong>). Поле <strong>Скрт </strong>делает поле невидимым, а поле <strong>Иниц</strong> вдобавок к невидимости очищает его содержимое.</p>
+<p><strong>Сокрытие полей в </strong><strong>ABAP</strong></p>
+<p>Скрыть поля экрана можно при помощи реализации цикла с использованием специальной структуры <strong>SCREEN </strong>(её можно найти в словаре данных SE11). Как правило, цикл по структуре включается либо в событие AT SELECTION-SCREEN OUTPUT (для селекционного экрана) либо в PBO-модуль (для селекционного и обычного экранов). Цикл по экрану выглядит как обычный цикл:</p><pre class="urvanov-syntax-highlighter-plain-tag">LOOP AT SCREEN.
+
+...
+
+ENDLOOP.</pre><p>Есть одно различие: в данном цикле нельзя использовать дополнительный параметр WHERE, т.к. SCREEN в данном случае выступает в качестве рабочей области, а таблицей является сам экран. Получить доступ по ключу или по номеру строки таблицы к строкам экрана нельзя.</p>
+<p>Для того, чтобы скрыть элемент экрана, нужно отредактировать два поля структуры SCREEN:</p><pre class="urvanov-syntax-highlighter-plain-tag">SCREEN-INVISIBLE ='1'.
+
+SCREEN-ACTIVE = '0'.</pre><p>После этого нужно обязательно сделать <strong>MODIFY SCREEN</strong>.</p>
+<p>Существует несколько способов определения, какой именно объект нужно скрыть на экране.</p>
+<p><strong>1 способ – по имени поля</strong></p>
+<p>Часто используется для модификации селекционного экрана, из-за простоты обращения. Например, у нас есть параметр на селекционном экране:</p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS p_par1(10).</pre><p>Все элементы экрана, такие как, например, сгенерированная подпись, в своём имени будут содержать имя параметра P_PAR1. Соответственно, в цикле по экрану мы можем сделать проверку на присутствие названия параметра в имени элемента:</p><pre class="urvanov-syntax-highlighter-plain-tag">IF SCREEN-NAME CS ‘P_PAR1’.
+
+   SCREEN-INVISIBLE = '1'.
+
+   SCREEN-ACTIVE = '0'.
+
+   MODIFY SCREEN.
+
+ENDIF.</pre><p><strong>2 способ – по группе полей</strong></p>
+<p>В редакторе экрана для интересующих нас полей можно задать группы:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/10/field_group.png"><img loading="lazy" class="alignnone size-full wp-image-1166" title="field_group" src="http://abap-blog.ru/wp-content/uploads/2012/10/field_group.png" alt="" width="243" height="389" srcset="https://abap-blog.ru/wp-content/uploads/2012/10/field_group.png 243w, https://abap-blog.ru/wp-content/uploads/2012/10/field_group-187x300.png 187w" sizes="(max-width: 243px) 100vw, 243px" /></a></p>
+<p>Этим группам в структуре SCREEN соответствуют поля <strong>GROUP1…</strong><strong>GROUP4</strong>. Проверка групп будет выглядеть следующим образом:</p><pre class="urvanov-syntax-highlighter-plain-tag">IF SCREEN-GROUP1 = ‘GR1’.
+
+   SCREEN-INVISIBLE = '1'.
+
+   SCREEN-ACTIVE = '0'.
+
+   MODIFY SCREEN.
+
+ENDIF.</pre><p>Данный способ больше подходит для обычного экрана, т.к. если мы внесём свои группы в поля селекционного экрана, то, если в будущем произойдёт перегенерация экрана, все группы затрутся.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/abaphr-ru-sokrytie-polej-vvoda-na-selekcionnom-ekrane/">Сокрытие полей ввода на селекционном экране</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/abaphr-ru-sokrytie-polej-vvoda-na-selekcionnom-ekrane/feed/</wfw:commentRss>
+			<slash:comments>5</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Выгрузить данные из ALV в XML с произвольной структурой</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/vygruzit-dannye-iz-alv-v-xml-s-proizvolnoj-strukturoj/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/vygruzit-dannye-iz-alv-v-xml-s-proizvolnoj-strukturoj/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 05 Jul 2012 04:33:45 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[Работа с файлами]]></category>
+		<category><![CDATA[abap upload]]></category>
+		<category><![CDATA[ALV]]></category>
+		<category><![CDATA[XML]]></category>
+		<category><![CDATA[Преобразование]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=869</guid>
+
+					<description><![CDATA[<p>Задача: результат работы стандартного отчёта необходимо выгрузить в XML файл, с применением определенных правил построения XML (заданной схемой). &#160; В качестве решения будут использованы шаблоны для ракурса Microsoft Excel в ALV. Инструкцию о том как их использовать вы можете найти на сайте sapland.ru Excel будет выступать в качестве конвертора. Выгрузив файл через стандартный шаблон в [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/vygruzit-dannye-iz-alv-v-xml-s-proizvolnoj-strukturoj/">Выгрузить данные из ALV в XML с произвольной структурой</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Задача: результат работы стандартного отчёта необходимо выгрузить в XML файл, с применением определенных правил построения XML (заданной схемой).</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/07/Безымянный.png"><img loading="lazy" class="alignleft size-full wp-image-870" title="Безымянный" src="http://abap-blog.ru/wp-content/uploads/2012/07/Безымянный.png" alt="" width="786" height="70" srcset="https://abap-blog.ru/wp-content/uploads/2012/07/Безымянный.png 786w, https://abap-blog.ru/wp-content/uploads/2012/07/Безымянный-300x26.png 300w" sizes="(max-width: 786px) 100vw, 786px" /></a></p>
+<p>&nbsp;</p>
+<p>В качестве решения будут использованы шаблоны для ракурса Microsoft Excel в ALV. Инструкцию о том как их использовать вы можете найти на сайте <a title="SapLand.ru" href="http://sapland.ru" target="_blank" rel="noopener">sapland.ru</a> Excel будет выступать в качестве конвертора.</p>
+<p><span id="more-869"></span>Выгрузив файл через стандартный шаблон в Excel, мы получим лишь электронную таблицу без возможности выгрузки в нужном нам XML формате.</p>
+<p>Для того чтобы иметь возможность сохранить в нужном формате, необходимо использовать возможности Excel по выгрузке XML, а именно XML карты. В excel карты выглядят примерно следующим образом:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/07/schm.png"><img loading="lazy" class="size-full wp-image-871 alignnone" title="schm" src="http://abap-blog.ru/wp-content/uploads/2012/07/schm.png" alt="" width="251" height="245" /></a></p>
+<p>Открыть этот инструмент можно через панель – разработчик. Карта представляет собой структуру XML файла, элементы карты можно присваивать полям Excel документа. Предположим, что нам необходимо на выходе получать следующий формат:</p><pre class="urvanov-syntax-highlighter-plain-tag">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;tenderposition_import&gt;
+         &lt;tenderpositions&gt;
+          &lt;tenderposition&gt;
+             &lt;amount&gt;10.00&lt;/amount&gt;
+             &lt;maxprice&gt;1200&lt;/maxprice&gt;
+             &lt;gost&gt;ГОСТ 22123456&lt;/gost&gt;
+             &lt;units&gt;пачки.&lt;/units&gt;
+             &lt;comment&gt;Комментарий2&lt;/comment&gt;
+             &lt;title&gt;Вытяжка Krona Elis 60022 (тестовый товар)&lt;/title&gt;
+             &lt;description&gt;&lt;/description&gt;
+           &lt;/tenderposition&gt;
+         &lt;/tenderpositions&gt;
+&lt;/tenderposition_import&gt;</pre><p>Для данного XML файла нам необходимо составить соответствующую карту (см. рисунок наверху). Карта может быть составлена на основе XML документа или XSD схемы. Нас интересует второй вариант. Т.к. схему нам хранить не нужно, создавать мы ее будем динамически. Присваивать элементы полям Excel так же динамически.</p>
+<p>Один из вариантов создания XSD схемы:</p><pre class="urvanov-syntax-highlighter-plain-tag">Sub BuildXSD()
+   Dim StrMyXml As String, MyMap As XmlMap
+   Dim StrMySchema As String
+   Dim slideName As String
+   Dim currentMap As XmlMap
+   Dim processComments As Boolean
+
+   For Each currentMap In ActiveWorkbook.XmlMaps
+       ActiveWorkbook.XmlMaps(currentMap.Name).Delete
+   Next
+
+  StrMyXml = "&lt;?xml version=""1.0"" encoding=""UTF-8"" standalone=""no"" ?&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:schema xmlns:xsd=""http://www.w3.org/2001/XMLSchema""&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:element name=""tenderposition_import""&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:complexType&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:sequence&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:element name=""tenderpositions""&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:complexType&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:sequence&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:element minOccurs=""0"" maxOccurs=""unbounded"" name=""tenderposition""&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:complexType&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:sequence&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:element name=""amount"" type=""xsd:string""/&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:element name=""maxprice"" type=""xsd:string""/&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:element name=""gost"" type=""xsd:string""/&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:element name=""units"" type=""xsd:string""/&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:element name=""comment"" type=""xsd:string""/&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:element name=""title"" type=""xsd:string""/&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;xsd:element name=""description"" type=""xsd:string""/&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;/xsd:sequence&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;/xsd:complexType&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;/xsd:element&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;/xsd:sequence&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;/xsd:complexType&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;/xsd:element&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;/xsd:sequence&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;/xsd:complexType&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;/xsd:element&gt;"
+  StrMyXml = StrMyXml &amp; "&lt;/xsd:schema&gt;"
+
+  Set MyMap = ThisWorkbook.XmlMaps.Add(StrMyXml)
+  MyMap.ShowImportExportValidationErrors = True
+  MyMap.PreserveColumnFilter = True
+  MyMap.PreserveNumberFormatting = True
+  MyMap.AdjustColumnWidth = True
+  MyMap.Name = "mymap"
+
+  StrMySchema = ThisWorkbook.XmlMaps(1).Schemas(1).XML
+End Sub</pre><p>Как видно из кода мы заранее подготовленную схему XSD загружаем в Excel. Далее необходимо привязать слолбцы к нужным XML полям:</p><pre class="urvanov-syntax-highlighter-plain-tag">Sub CreateList()
+   Dim lstContacts As ListObject
+   Set mapContact = ActiveWorkbook.XmlMaps(1)
+
+   For Each lstContacts In ActiveSheet.ListObjects
+       lstContacts.Unlist
+   Next
+
+   Set lstContacts = ActiveSheet.ListObjects.Add(Destination:=ThisWorkbook.ActiveSheet.Range("A:G"))
+   lstContacts.ShowTableStyleColumnStripes = True
+
+   strXPath = "/tenderposition_import/tenderpositions/tenderposition/amount"
+   lstContacts.ListColumns(1).XPath.SetValue mapContact, strXPath
+
+   strXPath = "/tenderposition_import/tenderpositions/tenderposition/maxprice"
+   lstContacts.ListColumns(2).XPath.SetValue mapContact, strXPath
+
+   strXPath = "/tenderposition_import/tenderpositions/tenderposition/gost"
+   lstContacts.ListColumns(3).XPath.SetValue mapContact, strXPath
+
+   strXPath = "/tenderposition_import/tenderpositions/tenderposition/units"
+   lstContacts.ListColumns(4).XPath.SetValue mapContact, strXPath
+
+   strXPath = "/tenderposition_import/tenderpositions/tenderposition/comment"
+   lstContacts.ListColumns(5).XPath.SetValue mapContact, strXPath
+
+   strXPath = "/tenderposition_import/tenderpositions/tenderposition/title"
+   lstContacts.ListColumns(6).XPath.SetValue mapContact, strXPath
+
+   strXPath = "/tenderposition_import/tenderpositions/tenderposition/description"
+   lstContacts.ListColumns(7).XPath.SetValue mapContact, strXPath
+End Sub</pre><p>Описывать работу с внутренними объектами VBA не стану, все можно найти по F1. Теперь необходимо вызвать данные процедуры во время открытия листа (например – Format). После чего данные на листе будут связаны с картой, их можно будет сохранить в нужном xml формате. Обратите внимание на код связывания, там жестко прописаны номера столбцов с данными. В результате связывания должно получится что-то вроде этого:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/07/done.png"><img loading="lazy" class="alignleft size-full wp-image-872" title="done" src="http://abap-blog.ru/wp-content/uploads/2012/07/done.png" alt="" width="794" height="634" srcset="https://abap-blog.ru/wp-content/uploads/2012/07/done.png 794w, https://abap-blog.ru/wp-content/uploads/2012/07/done-300x239.png 300w" sizes="(max-width: 794px) 100vw, 794px" /></a></p>
+<p>&nbsp;</p>
+<p>Сохранив в виде XML получим необходимую нам структуру. Таким образом, используя Excel в качестве конвертора, можно выгружать данные из ALV в XML с любой структурой.</p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/vygruzit-dannye-iz-alv-v-xml-s-proizvolnoj-strukturoj/">Выгрузить данные из ALV в XML с произвольной структурой</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/vygruzit-dannye-iz-alv-v-xml-s-proizvolnoj-strukturoj/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Ненормальное программирование</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/nenormalnoe-programmirovanie/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/nenormalnoe-programmirovanie/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 21 Jun 2012 03:51:18 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=862</guid>
+
+					<description><![CDATA[<p>Периодически встречаются программы использующие ALV таблицу в виде иерархии, к примеру ME59N. Ниже будет пример того как сделать нечто подобное. Для работы программы необходим GUI статус с тремя кнопками (см код.). Код не самый оптимальный, исключительно ради примера: [crayon-618a050aa91e6623986736/]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/nenormalnoe-programmirovanie/">Ненормальное программирование</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Периодически встречаются программы использующие ALV таблицу в виде иерархии, к примеру ME59N. Ниже будет пример того как сделать нечто подобное.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/06/alvTree.png"><img loading="lazy" class="size-full wp-image-863 alignnone" title="alvTree" src="http://abap-blog.ru/wp-content/uploads/2012/06/alvTree.png" alt="" width="1006" height="258" srcset="https://abap-blog.ru/wp-content/uploads/2012/06/alvTree.png 1006w, https://abap-blog.ru/wp-content/uploads/2012/06/alvTree-300x76.png 300w" sizes="(max-width: 1006px) 100vw, 1006px" /></a></p>
+<p><span id="more-862"></span>Для работы программы необходим GUI статус с тремя кнопками (см код.). Код не самый оптимальный, исключительно ради примера:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zalv_pl.
+
+TYPE-POOLS: &lt;icon&gt;.
+
+TYPES: BEGIN OF ty_spfli_ex,
+        icon_field  TYPE icon_d,
+        t_cell_type TYPE SALV_T_INT4_COLUMN,
+        t_color     TYPE lvc_t_scol.
+        INCLUDE STRUCTURE spfli.
+TYPES: END OF ty_spfli_ex.
+
+CLASS lcl_report DEFINITION.
+  PUBLIC SECTION.
+    CLASS-DATA:
+      gt_all_data TYPE STANDARD TABLE OF ty_spfli_ex,  " Все выбранные данные
+      gt_alv_data TYPE STANDARD TABLE OF ty_spfli_ex,  " Данные которые отображены в ALV c учётом свернутых
+      go_alv      TYPE REF TO cl_salv_table,
+      gv_field    TYPE STRING,
+      gv_icon_field TYPE LVC_FNAME,
+      gv_first_field TYPE STRING.
+    CLASS-METHODS:
+      on_added_function FOR EVENT added_function OF cl_salv_events_table IMPORTING e_salv_function,
+      on_link_click FOR EVENT link_click OF cl_salv_events_table IMPORTING row,
+      get_data, " Получение данных
+      show_alv, " Настройка и отображение ALV таблицы
+      hide_all, " Свернуть все
+      show_all, " Развернуть все
+      FORWARD,  " Вперед
+      set_key   " Устанавливает ключевое поле по которому будем определять дубликаты
+        IMPORTING
+          i_field  TYPE CSEQUENCE,
+      set_column_key_color
+        IMPORTING
+          i_column TYPE CSEQUENCE
+          i_clear  TYPE abap_bool OPTIONAL,
+      set_icon
+        IMPORTING
+          i_icon   TYPE CSEQUENCE,
+      show_by   " развернуть указанную строку
+        IMPORTING
+          i_field  TYPE ANY
+          i_row    TYPE I,
+      hide_by   " Свернуть строку
+        IMPORTING
+          i_field  TYPE ANY
+          i_row    TYPE I.
+ENDCLASS.
+
+" Реализация обработчика события для двойного щелчка
+CLASS lcl_report IMPLEMENTATION.
+  METHOD get_data.
+    CLEAR gt_all_data.
+    SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_all_data.
+  ENDMETHOD.
+
+  METHOD set_column_key_color.
+    DATA: lo_columns TYPE REF TO cl_salv_columns_table,
+          lv_color   TYPE LVC_S_COLO,
+          lo_column  TYPE REF TO cl_salv_column_table.
+
+    lo_columns = go_alv-&gt;get_columns( ).
+    TRY.
+      lo_column ?= lo_columns-&gt;get_column( i_column ).
+    CATCH CX_SALV_NOT_FOUND.
+      EXIT.
+    ENDTRY.
+
+    IF i_clear IS INITIAL.
+      lv_color-col = 4.
+      lv_color-int = 1.
+    ENDIF.
+    lo_column-&gt;set_color( lv_color ).
+  ENDMETHOD.
+
+  METHOD show_alv.
+    DATA:
+      lo_columns  TYPE REF TO cl_salv_columns_table,
+      lo_column   TYPE REF TO cl_salv_column_table,
+      lo_events   TYPE REF TO cl_salv_events_table,
+      lv_fname    TYPE LVC_FNAME.
+
+    IF go_alv IS NOT BOUND.
+      TRY.
+          cl_salv_table=&gt;factory(
+             IMPORTING
+               r_salv_table = go_alv
+             CHANGING
+               t_table = gt_alv_data ).
+        CATCH cx_salv_msg .
+          MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+      ENDTRY.
+
+      go_alv-&gt;set_screen_status( EXPORTING
+                                 REPORT   = 'ZTMP1'
+                                 pfstatus = 'SALV_TABLE_STANDARD'
+                                 set_functions = cl_salv_model_base=&gt;c_functions_none ).
+
+      " Настройка событий
+      TRY.
+        lo_events = go_alv-&gt;get_event( ).
+        SET HANDLER on_added_function FOR lo_events.
+        SET HANDLER on_link_click FOR lo_events.
+      CATCH CX_SALV_NOT_FOUND.
+        EXIT.
+      ENDTRY.
+
+      " Настройка колонок
+      TRY.
+        lo_columns = go_alv-&gt;get_columns( ).
+        lo_columns-&gt;set_optimize( abap_true ).
+        lo_columns-&gt;set_cell_type_column( 'T_CELL_TYPE' ).
+
+        lo_column ?= lo_columns-&gt;get_column( 'MANDT' ).
+        lo_column-&gt;set_technical( abap_true ).
+
+        lo_column ?= lo_columns-&gt;get_column( 'CARRID' ).
+        lo_column-&gt;set_key( abap_false ).
+
+        lo_column ?= lo_columns-&gt;get_column( 'CONNID' ).
+        lo_column-&gt;set_key( abap_false ).
+
+        lo_column ?= lo_columns-&gt;get_column( gv_icon_field ).
+        set_column_key_color( gv_icon_field ).
+
+        lo_columns-&gt;set_color_column( 'T_COLOR' ).
+
+        lv_fname = gv_field.
+        lo_columns-&gt;set_column_position( EXPORTING columnname = lv_fname POSITION = 2 ).
+        set_column_key_color( lv_fname ).
+      CATCH CX_SALV_NOT_FOUND CX_SALV_DATA_ERROR.
+        EXIT.
+      ENDTRY.
+
+      " Свернем все строки
+      hide_all( ).
+      go_alv-&gt;display( ).
+    ELSE. " ALV создан - обновляем
+      lv_fname = gv_field.
+      lo_columns = go_alv-&gt;get_columns( ).
+      lo_columns-&gt;set_column_position(
+        EXPORTING
+          columnname = lv_fname
+          POSITION   = 2
+      ).
+
+      set_column_key_color( lv_fname ).
+
+      lo_columns-&gt;set_column_position(
+        EXPORTING
+          columnname = gv_icon_field
+          POSITION   = 1
+      ).
+
+      hide_all( ).
+      go_alv-&gt;refresh( ).
+    ENDIF.
+  ENDMETHOD.
+
+  METHOD hide_all.
+    DATA: lv_index TYPE I,
+          lv_cond  TYPE STRING.
+
+    FIELD-SYMBOLS: &lt;fs_line&gt; TYPE ty_spfli_ex,
+                   &lt;fs_field&gt; TYPE ANY,
+                   &lt;fs_key&gt;   TYPE ANY,
+                   &lt;fs_new_line&gt; TYPE ty_spfli_ex.
+
+    DATA: ls_type  TYPE SALV_S_INT4_COLUMN.
+
+    ls_type-columnname = gv_icon_field.
+    ls_type-VALUE = IF_SALV_C_CELL_TYPE=&gt;HOTSPOT.
+
+    SORT gt_all_data BY (gv_field).
+    CLEAR: gt_alv_data.
+    LOOP AT gt_all_data ASSIGNING &lt;fs_line&gt;.
+      UNASSIGN &lt;fs_field&gt;.
+      ASSIGN COMPONENT gv_field OF STRUCTURE &lt;fs_line&gt; TO &lt;fs_field&gt;.
+      CHECK &lt;fs_field&gt; IS ASSIGNED.
+      IF ( &lt;fs_key&gt; IS NOT ASSIGNED ) OR ( &lt;fs_key&gt; &lt;&gt; &lt;fs_field&gt; ).
+        ASSIGN &lt;fs_field&gt; TO &lt;fs_key&gt;.
+        APPEND INITIAL LINE TO gt_alv_data ASSIGNING &lt;fs_new_line&gt;.
+        MOVE-CORRESPONDING &lt;fs_line&gt; TO &lt;fs_new_line&gt;.
+        lv_index = 0.
+        lv_cond = &lt;fs_field&gt;.
+        CONCATENATE gv_field ' = `' lv_cond '`' INTO lv_cond.
+        LOOP AT gt_all_data TRANSPORTING NO FIELDS WHERE (lv_cond).
+          lv_index = lv_index + 1.
+          IF lv_index &gt; 1.
+            &lt;fs_new_line&gt;-icon_field = icon_positive.
+            APPEND ls_type TO &lt;fs_new_line&gt;-t_cell_type.
+            EXIT.
+          ENDIF.
+        ENDLOOP.
+      ENDIF.
+    ENDLOOP.
+
+    go_alv-&gt;refresh( ).
+  ENDMETHOD.
+
+  METHOD show_by.
+    DATA:
+      lv_index TYPE I,
+      s_scol   TYPE lvc_s_scol,
+      lv_cond  TYPE STRING,
+      ls_line  TYPE ty_spfli_ex.
+
+    FIELD-SYMBOLS &lt;fs_line&gt; TYPE ty_spfli_ex.
+
+    DATA: ls_type  TYPE SALV_S_INT4_COLUMN.
+
+    ls_type-columnname = gv_icon_field.
+    ls_type-VALUE = IF_SALV_C_CELL_TYPE=&gt;HOTSPOT.
+
+    SORT gt_all_data BY (gv_field).
+    lv_cond = i_field.
+    CONCATENATE gv_field ` = '` lv_cond `'` INTO lv_cond.
+
+    lv_index = 0.
+    LOOP AT gt_all_data INTO ls_line WHERE (lv_cond).
+      lv_index = lv_index + 1.
+      IF lv_index &gt; 1.
+        CLEAR s_scol.
+        s_scol-color-col = 4.
+        APPEND s_scol TO ls_line-t_color.
+        s_scol-color-col = 4.
+        s_scol-color-int = 1.
+        s_scol-fname = gv_icon_field.
+        APPEND s_scol TO ls_line-t_color.
+        s_scol-color-col = 4.
+        s_scol-color-int = 1.
+        s_scol-fname = gv_field.
+        APPEND s_scol TO ls_line-t_color.
+        INSERT ls_line INTO gt_alv_data INDEX i_row + lv_index - 1.
+       ENDIF.
+    ENDLOOP.
+
+    READ TABLE gt_alv_data INDEX i_row ASSIGNING &lt;fs_line&gt;.
+    IF &lt;fs_line&gt; IS ASSIGNED.
+      &lt;fs_line&gt;-icon_field = icon_negative.
+      APPEND ls_type TO &lt;fs_line&gt;-t_cell_type.
+    ENDIF.
+
+    go_alv-&gt;refresh( ).
+  ENDMETHOD.
+
+  METHOD hide_by.
+    DATA: lv_cond TYPE STRING.
+    FIELD-SYMBOLS &lt;fs_line&gt; TYPE ty_spfli_ex.
+
+    DATA: ls_type  TYPE SALV_S_INT4_COLUMN.
+
+    ls_type-columnname = gv_icon_field.
+    ls_type-VALUE = IF_SALV_C_CELL_TYPE=&gt;HOTSPOT.
+
+    lv_cond = i_field.
+    CONCATENATE '`' lv_cond '`' INTO lv_cond.
+    CONCATENATE gv_field '=' lv_cond 'AND' gv_icon_field 'IS INITIAL' INTO lv_cond SEPARATED BY SPACE.
+    DELETE gt_alv_data WHERE (lv_cond).
+
+    READ TABLE gt_alv_data INDEX i_row ASSIGNING &lt;fs_line&gt;.
+    IF &lt;fs_line&gt; IS ASSIGNED.
+      &lt;fs_line&gt;-icon_field = icon_positive.
+      APPEND ls_type TO &lt;fs_line&gt;-t_cell_type.
+    ENDIF.
+
+    go_alv-&gt;refresh( ).
+  ENDMETHOD.
+
+  METHOD set_key.
+    gv_field = i_field.
+    IF gv_first_field IS INITIAL.
+      gv_first_field = i_field.
+    ENDIF.
+  ENDMETHOD.
+
+  METHOD set_icon.
+    gv_icon_field = i_icon.
+  ENDMETHOD.
+
+  METHOD on_link_click.
+    FIELD-SYMBOLS: &lt;fs_line&gt; TYPE ty_spfli_ex,
+                   &lt;fs_field&gt; TYPE ANY.
+    READ TABLE gt_alv_data INDEX row ASSIGNING &lt;fs_line&gt;.
+    IF &lt;fs_line&gt; IS ASSIGNED.
+      ASSIGN COMPONENT gv_field OF STRUCTURE &lt;fs_line&gt; TO &lt;fs_field&gt;.
+      CHECK &lt;fs_field&gt; IS ASSIGNED.
+      IF &lt;fs_line&gt;-icon_field = icon_negative.
+        hide_by( EXPORTING i_field = &lt;fs_field&gt; i_row = row ).
+      ELSEIF &lt;fs_line&gt;-icon_field = icon_positive.
+        show_by( EXPORTING i_field = &lt;fs_field&gt; i_row = row ).
+      ENDIF.
+    ENDIF.
+  ENDMETHOD.
+
+  METHOD on_added_function.
+    CASE e_salv_function.
+      WHEN 'FORW'.
+        FORWARD( ).
+      WHEN 'HIALL'.
+        hide_all( ).
+        show_alv( ).
+      WHEN 'SHALL'.
+        show_all( ).
+    ENDCASE.
+  ENDMETHOD.
+
+  METHOD FORWARD.
+    DATA:
+      lo_descr TYPE REF TO cl_abap_structdescr,
+      lv_flag  TYPE abap_bool,
+      lv_lines TYPE I,
+      lv_fname TYPE LVC_FNAME,
+      lv_prev  TYPE STRING,
+      ls_descr TYPE abap_compdescr.
+
+    lv_fname = gv_field.
+    set_column_key_color( i_column = lv_fname i_clear = abap_true ).
+
+    lo_descr ?= cl_abap_structdescr=&gt;describe_by_name( 'ty_spfli_ex' ).
+    lv_lines = LINES( lo_descr-&gt;components ).
+    LOOP AT lo_descr-&gt;components INTO ls_descr.
+      IF ( ls_descr-NAME = gv_field ) AND ( sy-tabix &lt;&gt; lv_lines ).
+        lv_flag = abap_true.
+        CONTINUE.
+      ELSEIF ( sy-tabix = lv_lines ) AND ( ls_descr-NAME = gv_field ).
+        set_key( gv_first_field ).
+        lv_fname = gv_first_field.
+        set_column_key_color( i_column = lv_fname ).
+        show_alv( ).
+        EXIT.
+      ENDIF.
+      IF lv_flag = abap_true.
+        set_key( ls_descr-NAME ).
+        lv_fname = ls_descr-NAME.
+        set_column_key_color( i_column = lv_fname ).
+        show_alv( ).
+        EXIT.
+      ENDIF.
+      lv_prev = ls_descr-NAME.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD show_all.
+    DATA: lv_index TYPE I,
+          s_scol   TYPE lvc_s_scol,
+          lv_cond  TYPE STRING.
+
+    FIELD-SYMBOLS: &lt;fs_line&gt; TYPE ty_spfli_ex,
+                   &lt;fs_field&gt; TYPE ANY,
+                   &lt;fs_key&gt;   TYPE ANY,
+                   &lt;fs_new_line&gt; TYPE ty_spfli_ex.
+
+    DATA: ls_type  TYPE SALV_S_INT4_COLUMN.
+
+    ls_type-columnname = gv_icon_field.
+    ls_type-VALUE = IF_SALV_C_CELL_TYPE=&gt;HOTSPOT.
+
+    SORT gt_all_data BY (gv_field).
+    CLEAR: gt_alv_data.
+    LOOP AT gt_all_data ASSIGNING &lt;fs_line&gt;.
+      UNASSIGN &lt;fs_field&gt;.
+      ASSIGN COMPONENT gv_field OF STRUCTURE &lt;fs_line&gt; TO &lt;fs_field&gt;.
+      CHECK &lt;fs_field&gt; IS ASSIGNED.
+
+      APPEND INITIAL LINE TO gt_alv_data ASSIGNING &lt;fs_new_line&gt;.
+      MOVE-CORRESPONDING &lt;fs_line&gt; TO &lt;fs_new_line&gt;.
+      IF ( &lt;fs_key&gt; IS NOT ASSIGNED ) OR ( &lt;fs_key&gt; &lt;&gt; &lt;fs_field&gt; ).
+        ASSIGN &lt;fs_field&gt; TO &lt;fs_key&gt;.
+        lv_index = 0.
+        lv_cond = &lt;fs_field&gt;.
+        CONCATENATE gv_field ' = `' lv_cond '`' INTO lv_cond.
+        LOOP AT gt_all_data TRANSPORTING NO FIELDS WHERE (lv_cond).
+          lv_index = lv_index + 1.
+          IF lv_index &gt; 1.
+            &lt;fs_new_line&gt;-icon_field = icon_negative.
+            APPEND ls_type TO &lt;fs_new_line&gt;-t_cell_type.
+            EXIT.
+          ENDIF.
+        ENDLOOP.
+      ELSEIF ( &lt;fs_key&gt; IS ASSIGNED ) AND ( &lt;fs_key&gt; = &lt;fs_field&gt; ).
+        CLEAR s_scol.
+        s_scol-color-col = 4.
+        APPEND s_scol TO &lt;fs_new_line&gt;-t_color.
+        s_scol-color-col = 4.
+        s_scol-color-int = 1.
+        s_scol-fname = gv_icon_field.
+        APPEND s_scol TO &lt;fs_new_line&gt;-t_color.
+        s_scol-color-col = 4.
+        s_scol-color-int = 1.
+        s_scol-fname = gv_field.
+        APPEND s_scol TO &lt;fs_new_line&gt;-t_color.
+      ENDIF.
+    ENDLOOP.
+
+    go_alv-&gt;refresh( ).
+  ENDMETHOD.
+
+ENDCLASS.
+
+START-OF-SELECTION.
+  lcl_report=&gt;get_data( ).
+  lcl_report=&gt;set_key( 'CARRID' ).
+  lcl_report=&gt;set_icon( 'ICON_FIELD' ).
+  lcl_report=&gt;show_alv( ).</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/nenormalnoe-programmirovanie/">Ненормальное программирование</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/nenormalnoe-programmirovanie/feed/</wfw:commentRss>
+			<slash:comments>3</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

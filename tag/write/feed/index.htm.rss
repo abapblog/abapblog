@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>write | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/write/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:55:36 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Вывод Enjoy элементов во write отчётах</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/vyvod-enjoy-elementov-vo-write-otchyote/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/vyvod-enjoy-elementov-vo-write-otchyote/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 01 Feb 2012 15:29:10 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[cl_gui_custom_container]]></category>
+		<category><![CDATA[write]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=388</guid>
+
+					<description><![CDATA[<p>[crayon-618a1f459ffbf310341698/]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/vyvod-enjoy-elementov-vo-write-otchyote/">Вывод Enjoy элементов во write отчётах</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zwrite_container NO STANDARD PAGE HEADING.
+
+DATA:
+      go_container TYPE REF TO cl_gui_custom_container,
+      gt_data      TYPE spfli_tab,
+      go_alv       TYPE REF TO cl_salv_table.
+
+LOAD-OF-PROGRAM.
+
+START-OF-SELECTION.
+  SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_data.
+
+  WRITE: / 'Тест вывода в GUI контейнер во WRITE отчёте'. SKIP 20.
+  CREATE OBJECT go_container
+    EXPORTING
+      container_name = ''
+      repid          = 'SAPMSSY0'
+      dynnr          = '0120'.
+
+  go_container-&gt;set_top( 10 ).
+  go_container-&gt;set_left( 10 ).
+  go_container-&gt;set_width( 980 ).
+  go_container-&gt;set_height( 120 ).
+
+  TRY.
+      cl_salv_table=&gt;factory(
+         EXPORTING
+           r_container = go_container
+         IMPORTING
+           r_salv_table = go_alv
+         CHANGING
+           t_table = gt_data ).
+    CATCH cx_salv_msg .
+      MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+  ENDTRY.
+
+  go_alv-&gt;display( ).
+
+  WRITE 'Вывод после ALV'.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/vyvod-enjoy-elementov-vo-write-otchyote/">Вывод Enjoy элементов во write отчётах</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/vyvod-enjoy-elementov-vo-write-otchyote/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

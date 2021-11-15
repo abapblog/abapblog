@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+<html
+	ng-app="cp"
+
+	ng-controller="headerCtrl"
+	ng-class="
+		viewerOn.value ? {
+			'darkcode': darkCode.value,
+			'toc-hidden': tocHidden.value,
+			'rw-shown': rwShown.value
+		} : 'toc-hidden'"
+
+	lang="{{ getTwoDigitPrefLang() }}"
+	dir="{{ getDirection() }}"
+>
+    <head>
+    	<base href="/viewer/" />
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="_build_2.3.0.20211105/images/favicon.ico">
+
+		<title>SAP Help Portal</title>
+
+		<script src="_build_2.3.0.20211105/bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="_build_2.3.0.20211105/js/adobe_tracking.js"></script>
+
+		<script id="source-files">
+		//This script contains paths to all JavaScript and CSS files
+		//New paths can be added to this, and paths can be removed or modified
+		//Please do not add additional code to this inline script, there should only be two variables: javaScriptFilePaths and cssFilePaths
+			var jsFilePaths = [
+				"bower_components/jquery/dist/jquery.min.js",
+				"bower_components/bootstrap/dist/js/bootstrap.min.js", //Bootstrap 3.1.1: used for the responsive design, mobile layout
+				"bower_components/angular/angular.min.js", //Core AngularJS 1.4.8
+				"bower_components/angular-route/angular-route.min.js",
+				"bower_components/angular-resource/angular-resource.min.js",
+				"bower_components/angular-sanitize/angular-sanitize.min.js",
+				"bower_components/angular-translate/angular-translate.min.js",
+				"bower_components/angular-translate-loader-url/angular-translate-loader-url.min.js",
+				"bower_components/infinite-scrolling/ng-infinite-scroll.min.js", //infinite scrolling
+				"bower_components/angular-cookies/angular-cookies.min.js", //used to access cookies through Angular
+				"bower_components/angular-elastic/angular-elastic.min.js", //auto expanding text box
+				"bower_components/angular-animate/angular-animate.min.js", //used (nonessentially) by the progress bar, also may be used in the future for other animations
+				"bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js", //provides certain angular directives for bootstrap elements, faster and more stable
+				"bower_components/angular-ui-notifications/angular-ui-notification.min.js", //displays notifications
+				"bower_components/angular-loading-bar/loading-bar.min.js", //displays loading bar during http requests
+				"bower_components/progressbar.js/dist/progressbar.js", //Dynamic PDF loading animation
+				"bower_components/angular-tree-control/angular-tree-control.min.js", //angular treeview: displays TOC
+				"bower_components/ng-text-truncate/ng-text-truncate.min.js", //angular truncate text: for comments
+				"bower_components/uuid/angular-uuid-service.min.js", //manual upload loio generation
+				"bower_components/angular-scroll/angular-scroll.min.js", //scrollSpy
+				"bower_components/annotate/annotator-full.js", //annotateJS anchored comments: provides anchored comments
+				"bower_components/jstz/jstz-1.0.4.min.js", //Timezone determination - jstz
+				"bower_components/lightbox/js/lightbox.min.js", //lightbox plugin
+				"bower_components/prettify/prettify.min.js", //prettify.js plugin
+				"bower_components/imagemapster/jquery.imagemapster.js", //Interactive imagemaps
+				"bower_components/collapsify/sap.collapsify.js", //SAP Collapsify
+				"bower_components/datatables/js/jquery.dataTables.min.js", //Data Tables CSS & Script
+				"bower_components/datatables/js/dataTables.colReorder.min.js", //col reorder
+				"bower_components/datatables/js/dataTables.buttons.min.js", //button
+				"bower_components/datatables/js/buttons.colVis.min.js",
+				"bower_components/datatables/js/buttons.html5.min.js",
+				"bower_components/datatables/js/dataTables.select.min.js", //select
+				"bower_components/datatables/js/dataTables.scroller.min.js", //scroller
+				"bower_components/datatables/js/jquery.dataTables.columnFilter.min.js", //column filter
+				"bower_components/datatables/js/jquery.doubleScroll.min.js", //double scrollbar
+				"bower_components/datatables/plugin/colvis/colvis.min.js", //colVis: show/hide columns (SAP legacy)
+				"bower_components/datatables/js/jquery.highlight.min.js",
+				"bower_components/datatables/js/dataTables.searchHighlight.min.js",
+				"bower_components/angular-ui-router/angular-ui-router.js",
+				"bower_components/ng-sortable/dist/ng-sortable.min.js",
+				"js/cp.js",
+				"js/routing.js",
+				"js/translations.js",
+				"js/controllers/cp-controllers.js",
+				"js/controllers/cp-homepagecontroller.js",
+				"js/services/cp-services.js",
+				"js/services/cp-dashboardssharedservice.js",
+				"js/services/cp-loginservice.js",
+				"js/directives/cp-directives.js",
+				"js/directives/cp-pdfgenerationdirectives.js",
+				"js/directives/cp-ljIntegration.js",
+				"js/directives/cp-usermgmtdirectives.js",
+				"js/directives/cp-comment-text.js",
+				"js/directives/pdf_batch_downloader/cp-pdf-batch-downloader.js",
+				"js/filters/filters.js",
+				"js/services/cp-searchservice.js",
+				"js/controllers/cp-searchcontroller.js",
+				"js/controllers/cp-searchapi.js",
+				"js/controllers/cp-resultscontroller.js",
+				"js/services/cp-advancedSearchService.js",
+				"js/services/cp-parametersService.js",
+				"js/services/cp-filtersService.js",
+				"js/services/cp-resultsService.js",
+				"js/controllers/cp-search-hp-controller.js",
+				"js/services/cp-contentapiservice.js",
+				"js/services/cp-whatsnewservice.js",
+				"js/controllers/cp-whatsnewcontroller.js",
+				"js/controllers/cp-productpagecontroller.js",
+				"js/controllers/cp-newproductpagecontroller.js",
+				"js/services/cp-productpageservice.js",
+				"js/controllers/cp-usermgmtcontrollers.js",
+				"js/services/cp-usermgmtservices.js",
+				"js/controllers/cp-headerctrl.js",
+				"js/controllers/cp-pagecontentctrl.js",
+				"js/controllers/cp-rwctrl.js",
+				"js/controllers/cp-pagecommentctrl.js",
+				"js/controllers/cp-dynamicpdfctrl.js",
+				"js/services/cp-dynamicpdfservice.js",
+				"js/controllers/cp-dashboardctrl.js",
+				"js/controllers/cp-publicationctrl.js",
+				"js/controllers/cp-uploadstatusjobsctrl.js",
+				"js/controllers/cp-manualuploadctrl.js",
+				"js/controllers/cp-manualeditctrl.js",
+				"js/services/cp-manualoperationsservice.js",
+				"js/controllers/cp-addeditversionctrl.js",
+				"js/controllers/cp-addeditproductctrl.js",
+				"js/controllers/cp-editprojectctrl.js",
+				"js/controllers/cp-deleteprojectdependencyctrl.js",
+				"js/controllers/cp-addprojectdependencyctrl.js",
+				"js/controllers/cp-sapwebanalyticsctrl.js",
+				"js/services/cp-sapwebanalyticsservice.js",
+				"js/services/cp-swaconsentmanagementservice.js",
+				"js/controllers/cp-searchoptionsctrl.js",
+				"js/services/cp-searchoptionsservice.js",
+				"js/controllers/cp-urlmappingsctrl.js",
+				"js/services/cp-urlmappingsservice.js",
+				"js/controllers/cp-movetoslavectrl.js",
+				"js/services/cp-movetoslaveservice.js",
+				"js/services/cp-languageservice.js",
+				"js/controllers/cp-aliasesctrl.js",
+				"js/controllers/cp-editaliasctrl.js",
+				"js/services/cp-aliasservice.js",
+				"js/controllers/cp-commentsctrl.js",
+				"js/services/cp-commentservice.js",
+				"js/controllers/cp-feedbackctrl.js",
+				"js/services/cp-feedbackservice.js",
+				"js/services/cp-jobservice.js",
+				"js/services/cp-sharedservice.js",
+				"js/services/cp-projectservice.js",
+				"js/services/cp-versionservice.js",
+				"js/services/cp-productservice.js",
+				"js/services/cp-projectservice.js",
+				"js/services/cp-disclaimerpageservice.js",
+				"js/controllers/cp-privacypagecontroller.js",
+				"js/controllers/cp-disclaimerpagecontroller.js",
+				"js/controllers/kp-feedbackmodalctrl.js",
+				"js/controllers/cp-optincontroller.js",
+				"js/controllers/cp-contactuscontroller.js",
+				"js/controllers/cp-getsupportcontroller.js",
+				"js/controllers/cp-getsupport2controller.js",
+				"js/controllers/cp-errorcontroller.js",
+				"js/controllers/cp-nowhitelistcontroller.js",
+				"js/controllers/cp-disclaimerfooterpage.js",
+				"js/controllers/cp-copyrightpage.js",
+				"js/controllers/cp-productfindercontroller.js",
+				"js/services/cp-videoPlayerService.js",
+				//"js/directives/cp-searchablevideocaption.js",
+				"js/api/filterlanguage_api.js",
+				"js/api/filterproduct_api.js",
+				"js/api/filterstates_api.js",
+				"js/api/filterversion_api.js",
+				"js/api/hierarchy_api.js",
+				"js/api/hierarchy_loader.js",
+				//"js/api/kp_product_widget_loader.js", //For KP Prototype
+				//"js/api/kp_s4hana_loader.js", //For KP Prototype
+				//"js/api/kp_s4hana_wnv.js", //For KP Prototype
+				//"js/api/kp_s4hana_lj.js", //For KP Prototype
+				"js/api/productfinder_api.js",
+				"js/api/search_api.js",
+				"js/api/suggestion_api.js",
+				"js/machine_translation.js",
+				"js/controllers/cp-dynamicfilteringctrl.js",
+				"js/services/cp-dynamicfilteringservice.js",
+				"js/services/cp-selectednodeservice.js",
+				"js/controllers/cp-favoritectrl.js",
+				"js/controllers/cp-profilectrl.js"
+			];
+
+			var cssFilePaths = [
+				"bower_components/bootstrap/dist/css/bootstrap.min.css", //Bootstrap 3.1.1: used for the responsive design, mobile layout
+				"bower_components/angular-ui-notifications/angular-ui-notification.min.css", //displays notifications
+				"bower_components/angular-loading-bar/loading-bar.min.css", //displays loading bar during http requests
+				"bower_components/angular-tree-control/css/tree-control.min.css", //angular treeview: displays TOC
+				"bower_components/annotate/annotator.css", //provides anchored comments
+				"bower_components/lightbox/css/lightbox.min.css", //lightbox plugin
+				//"bower_components/prettify/prettify.min.css", //prettify.js plugin
+				"css/prettify.css",
+				"bower_components/collapsify/sap.collapsify.min.css", //SAP Collapsify
+				"css/fonts.css",
+				"css/general.css",
+				"css/menus.css",
+				"css/cp-header.css",
+				"css/cp-footer.css",
+				"css/toc.css",
+				"css/rw.css",
+				"css/pdftoc.css",
+				"css/modals.css",
+				"css/cp.css",
+				"css/rtl.css",
+				"css/topic.css",
+				"css/hero.css",
+				//"css/page.css",
+				"css/dita.css",
+				//"css/datatables.css",
+				//"css/table.css",
+				//"css/treecontrol.css",
+				"css/toc-hidden.css",
+				"css/wide-monitors.css",
+				"css/narrow-monitors.css",
+				"css/tablet.css",
+				"css/phone.css",
+				"css/whatsnew.css",
+				"css/kp.css", //Added for the KP Prototype
+				"css/kp-product.css",
+				"css/wnframe.css", //Added for the KP Prototype
+				"bower_components/datatables/css/jquery.dataTables.min.css", //Data Tables CSS & Script
+				//"css/datatable.css",
+				"bower_components/datatables/css/colReorder.dataTables.min.css", //col reorder
+				"bower_components/datatables/css/buttons.dataTables.min.css", //buttons
+				"bower_components/datatables/css/select.dataTables.min.css", //select
+				"bower_components/datatables/css/scroller.dataTables.min.css", //scroller
+				"bower_components/datatables/plugin/colvis/colvis.min.css", //colVis: show/hide columns (SAP legacy)
+				"css/dt.css",
+				"css/profilepage.css",
+				"bower_components/ng-sortable/dist/ng-sortable.min.css"
+			]
+		</script>
+
+        <script>
+            if(window.location.search.indexOf("debug=true") > -1 || document.cookie.indexOf("debugMode=true") > -1) {
+                document.cookie = "debugMode=true";
+
+				for(var i=0; i<jsFilePaths.length; i++) {
+					document.write('<script src="_build_2.3.0.20211105/' + jsFilePaths[i] + '" type="text/javascript"><\/script>');
+				}
+
+				for(var i=0; i<cssFilePaths.length; i++) {
+					document.write('<link rel="stylesheet" type="text/css" href="_build_2.3.0.20211105/' + cssFilePaths[i] +'">');
+				}
+
+            } else {
+              	//Please do not remove this line
+    			var app_version = "_build_2.3.0.20211105/";
+
+                var script = document.createElement("script");
+                script.setAttribute("src", app_version + "js/js.min.js");
+				document.head.appendChild(script);
+
+    			var link  = document.createElement('link');
+    			link.rel  = 'stylesheet';
+    			link.type = 'text/css';
+				link.href = app_version + 'css/css.min.css';
+				document.head.appendChild(link);
+
+				(function () {
+					/*This function checks that the minified files exist
+					and reload in debug mode if they do not exist*/
+					var minifiedFiles = [
+						"js/js.min.js",
+						"css/css.min.css"
+					];
+
+					for(var i=0; i<minifiedFiles.length; i++) {
+
+						var http = new XMLHttpRequest();
+						var url = app_version + minifiedFiles[i];
+
+						http.open('HEAD', url);
+						http.onreadystatechange = function() {
+							if (this.readyState == this.DONE && this.status != 200) {
+								document.cookie = "debugMode=true";
+								location.reload();
+							}
+						};
+
+						http.send();
+					}
+				})();
+            }
+        </script>
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script>
+        		var swaOptInStatus = false;
+
+				var swa = {
+					pubToken :  '718b3282-5ed7-4564-84ea-c32f7a91e7f7-uacp2',
+					baseUrl : 'https://webanalytics.cfapps.eu10.hana.ondemand.com/tracker/',
+					visitorCookieTimeout : 63113852,
+					dntLevel : 1,
+					bannerEnabled : false
+				};
+
+				var swaInfo = {};
+
+				function logLoioValue() {
+					return swaInfo.loio;
+				}
+				function logVersionValue() {
+					return swaInfo.version;
+				}
+				function logLanguageValue() {
+					return swaInfo.language;
+				}
+				function logTopicLoioValue() {
+					return swaInfo.topicLoio;
+				}
+				function logStandardPath () {
+					return swaInfo.filePath;
+				}
+				function logHostName () {
+					return window.location.host;
+				}
+				function logProductId () {
+					return swaInfo.productId;
+                }
+                function logDeliverableName () {
+					return swaInfo.name;
+				}
+
+				swa.custom1={ref:'logLoioValue'};
+				swa.custom2={ref:'logVersionValue'};
+				swa.custom3={ref:'logLanguageValue'};
+				swa.custom4={ref:'logTopicLoioValue'};
+				swa.custom5={ref:'logStandardPath'};
+				swa.custom6={ref:'logHostName'};
+                swa.custom7={ref:'logProductId'};
+                swa.custom8={ref:'logDeliverableName'};
+
+				var swaInit = false;
+
+				var gdprPrefs = document.cookie.replace(/(?:(?:^|.*;\s*)notice_gdpr_prefs\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
+				function runSwa() {
+					if (gdprPrefs == '0,1:') {
+						if(!swaInit) {
+							var d = document, g = d
+							.createElement('script'), s = d
+							.getElementsByTagName('script')[0];
+							g.type = 'text/javascript';
+							g.defer = true;
+							g.async = true;
+							g.src = swa.baseUrl + 'js/privacy.js';
+							s.parentNode.insertBefore(g, s);
+
+							swaInit = true;
+						} else {
+							try {
+								swa.trackLoad();
+							} catch (e) {
+								console.log(e);
+							}
+						}
+					}
+				};
+
+				var sap_s; //set up a variable to handle function calls if adobe is not enabled
+	  </script>
+	  
+	  
+	  <script>
+		// DPS-9554
+	    window.addEventListener('load', function(event){
+			  var noticeBehavior = document.cookie.replace(/(?:(?:^|.*;\s*)notice_behavior\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+			  if(noticeBehavior == 'implied,eu' && gdprPrefs != "0,1:"){
+						var consentBtn =  document.getElementById('truste-consent-button');
+						if(consentBtn){
+							consentBtn.addEventListener('click', function(){
+								setTimeout(function(){
+								   window.location.reload();
+								}, 500);
+							});
+						}
+				}
+		  });
+	  </script>
+
+	  <!-- DTM Header Tag -->
+	  <script src="//assets.adobedtm.com/ccc66c06b30b/32c05409e1fd/launch-8b3c5ca29b9e.min.js"></script>
+	  <script src="https://cdn.schemaapp.com/javascript/highlight.js"></script>
+      <script src="https://cdn.schemaapp.com/javascript/schemaFunctions.min.js"></script>
+      <script>schemaLoad("Acronym/Helpsap", "325UM-NQRHZ-P7T97-M5SY8");</script>
+
+    </head>
+    <body ng-style="bodyStyle()">
+        <cp-header></cp-header>
+	        <div class="view-container" ng-class="{dark: dark, dashboard: dashboardOn.value}">
+	            <div ui-view class="view-frame">
+	            </div>
+	        </div>
+        <cp-footer></cp-footer>
+
+        <!-- DTM Footer Tag -->
+        <script> try{_satellite.pageBottom();}catch(e){console.log(e);} </script>
+    </body>
+</html>

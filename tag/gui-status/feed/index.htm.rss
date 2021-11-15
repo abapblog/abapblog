@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>gui-status | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/gui-status/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:52:01 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Изменить GUI-статус на экране выбора</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/izmenit-gui-status-na-ekrane-vybora/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/izmenit-gui-status-na-ekrane-vybora/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 07 Jan 2012 10:39:17 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[gui-status]]></category>
+		<category><![CDATA[экран выбора]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=142</guid>
+
+					<description><![CDATA[<p>[crayon-618a2208849bb872062790/]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/izmenit-gui-status-na-ekrane-vybora/">Изменить GUI-статус на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  gt_exclude TYPE TABLE OF rsexfcode,
+  gs_exclude TYPE          rsexfcode.
+
+PARAMETERS:
+  pa_test TYPE C.
+
+INITIALIZATION.
+  gs_exclude-fcode  = 'ONLI'.
+  APPEND gs_exclude TO gt_exclude.
+
+AT SELECTION-SCREEN OUTPUT.
+  CALL FUNCTION 'RS_SET_SELSCREEN_STATUS'
+    EXPORTING
+      p_status  = '%_00'
+      p_program = 'RSSYSTDB'
+    TABLES
+      p_exclude = gt_exclude.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/izmenit-gui-status-na-ekrane-vybora/">Изменить GUI-статус на экране выбора</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/izmenit-gui-status-na-ekrane-vybora/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

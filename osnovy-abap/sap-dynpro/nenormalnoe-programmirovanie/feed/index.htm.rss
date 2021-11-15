@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	
+	>
+<channel>
+	<title>
+	Комментарии: Ненормальное программирование	</title>
+	<atom:link href="https://abap-blog.ru/osnovy-abap/sap-dynpro/nenormalnoe-programmirovanie/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/nenormalnoe-programmirovanie/</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:02:22 +0000</lastBuildDate>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>
+		Автор: Мария		</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/nenormalnoe-programmirovanie/#comment-17644</link>
+
+		<dc:creator><![CDATA[Мария]]></dc:creator>
+		<pubDate>Tue, 26 May 2015 08:15:00 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=862#comment-17644</guid>
+
+					<description><![CDATA[аналогичная ошибка с lv_cond. Как бы ее побороть, подскажите, плиз...]]></description>
+			<content:encoded><![CDATA[<p>аналогичная ошибка с lv_cond. Как бы ее побороть, подскажите, плиз&#8230;</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: Astrafox		</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/nenormalnoe-programmirovanie/#comment-1939</link>
+
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 24 Apr 2013 18:43:25 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=862#comment-1939</guid>
+
+					<description><![CDATA[Написано в 7.0 версии, с какой версии появились динамические условия в циклах увы не помню, могу рекомендовать посмотреть тут: help.sap.com/abapdocu_731/en/abennews.htm или в курсе по изменениям в ABAP.]]></description>
+			<content:encoded><![CDATA[<p>Написано в 7.0 версии, с какой версии появились динамические условия в циклах увы не помню, могу рекомендовать посмотреть тут: help.sap.com/abapdocu_731/en/abennews.htm или в курсе по изменениям в ABAP.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Автор: KOstyan		</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/nenormalnoe-programmirovanie/#comment-1933</link>
+
+		<dc:creator><![CDATA[KOstyan]]></dc:creator>
+		<pubDate>Wed, 24 Apr 2013 15:01:24 +0000</pubDate>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=862#comment-1933</guid>
+
+					<description><![CDATA[Я прошу прощения, но в какой версии это сделано? Потому как на вот такую сентенцию 
+    LOOP AT gt_all_data INTO ls_line WHERE (lv_cond).
+      lv_index = lv_index + 1.
+      IF lv_index &#062; 1.
+        CLEAR s_scol.
+        s_scol-color-col = 4.
+        APPEND s_scol TO ls_line-t_color.
+        s_scol-color-col = 4.
+        s_scol-color-int = 1.
+        s_scol-fname = gv_icon_field.
+        APPEND s_scol TO ls_line-t_color.
+        s_scol-color-col = 4.
+        s_scol-color-int = 1.
+        s_scol-fname = gv_field.
+        APPEND s_scol TO ls_line-t_color.
+        INSERT ls_line INTO gt_alv_data INDEX i_row + lv_index - 1.
+      ENDIF.
+    ENDLOOP.
+
+Компилятор ругается вот таким вот матом цитирую
+ABAP-оператор с &quot;...(LV_COND)&quot; в конце неожиданно завершен		
+конец цитаты
+Заранее спасибо]]></description>
+			<content:encoded><![CDATA[<p>Я прошу прощения, но в какой версии это сделано? Потому как на вот такую сентенцию<br />
+    LOOP AT gt_all_data INTO ls_line WHERE (lv_cond).<br />
+      lv_index = lv_index + 1.<br />
+      IF lv_index &gt; 1.<br />
+        CLEAR s_scol.<br />
+        s_scol-color-col = 4.<br />
+        APPEND s_scol TO ls_line-t_color.<br />
+        s_scol-color-col = 4.<br />
+        s_scol-color-int = 1.<br />
+        s_scol-fname = gv_icon_field.<br />
+        APPEND s_scol TO ls_line-t_color.<br />
+        s_scol-color-col = 4.<br />
+        s_scol-color-int = 1.<br />
+        s_scol-fname = gv_field.<br />
+        APPEND s_scol TO ls_line-t_color.<br />
+        INSERT ls_line INTO gt_alv_data INDEX i_row + lv_index &#8212; 1.<br />
+      ENDIF.<br />
+    ENDLOOP.</p>
+<p>Компилятор ругается вот таким вот матом цитирую<br />
+ABAP-оператор с &#171;&#8230;(LV_COND)&#187; в конце неожиданно завершен<br />
+конец цитаты<br />
+Заранее спасибо</p>
+]]></content:encoded>
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,997 @@
+﻿<!DOCTYPE html>
+<html lang="ru-RU" id="html">
+<head>
+		<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="profile" href="../../xfn/11.html">
+	<link rel="pingback" href="https://abap-blog.ru/xmlrpc.php">
+	<title>ABAP Blog | ABAP Object Services — Persistence Service — часть 1.</title>
+
+		<!-- All in One SEO 4.1.4.4 -->
+		<meta name="description" content="Введение в использование Object Services в ABAP.">
+		<meta name="robots" content="max-image-preview:large">
+		<meta name="keywords" content="abap object services,persistence service,работа с бд">
+		<link rel="canonical" href="index.htm">
+		<script type="application/ld+json" class="aioseo-schema">
+			{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebSite","@id":"https:\/\/abap-blog.ru\/#website","url":"https:\/\/abap-blog.ru\/","name":"ABAP Blog","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445 \u043e\u0442 SAP","inLanguage":"ru-RU","publisher":{"@id":"https:\/\/abap-blog.ru\/#person"}},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/#person","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/database-work\/abap-object-services-persistence-service\/#personImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"BreadcrumbList","@id":"https:\/\/abap-blog.ru\/database-work\/abap-object-services-persistence-service\/#breadcrumblist","itemListElement":[{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/#listItem","position":1,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/","name":"\u0413\u043b\u0430\u0432\u043d\u0430\u044f","description":"\u0412\u0441\u0435 \u043e \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435 \u0432 SAP \u0440\u0435\u0448\u0435\u043d\u0438\u044f\u0445: ABAP, HANA, UI5, OData, Fiori.","url":"https:\/\/abap-blog.ru\/"},"nextItem":"https:\/\/abap-blog.ru\/database-work\/#listItem"},{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/database-work\/#listItem","position":2,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/database-work\/","name":"\u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u0411\u0414","description":"\u0412\u0432\u0435\u0434\u0435\u043d\u0438\u0435 \u0432 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435 Object Services \u0432 ABAP.","url":"https:\/\/abap-blog.ru\/database-work\/"},"nextItem":"https:\/\/abap-blog.ru\/database-work\/abap-object-services-persistence-service\/#listItem","previousItem":"https:\/\/abap-blog.ru\/#listItem"},{"@type":"ListItem","@id":"https:\/\/abap-blog.ru\/database-work\/abap-object-services-persistence-service\/#listItem","position":3,"item":{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/database-work\/abap-object-services-persistence-service\/","name":"ABAP Object Services - Persistence Service - \u0447\u0430\u0441\u0442\u044c 1.","description":"\u0412\u0432\u0435\u0434\u0435\u043d\u0438\u0435 \u0432 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435 Object Services \u0432 ABAP.","url":"https:\/\/abap-blog.ru\/database-work\/abap-object-services-persistence-service\/"},"previousItem":"https:\/\/abap-blog.ru\/database-work\/#listItem"}]},{"@type":"Person","@id":"https:\/\/abap-blog.ru\/author\/admin\/#author","url":"https:\/\/abap-blog.ru\/author\/admin\/","name":"Astrafox","image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/database-work\/abap-object-services-persistence-service\/#authorImage","url":"https:\/\/secure.gravatar.com\/avatar\/907cc9d3a027be8998658f18c0a7fa4e?s=96&d=retro&r=g","width":96,"height":96,"caption":"Astrafox"}},{"@type":"WebPage","@id":"https:\/\/abap-blog.ru\/database-work\/abap-object-services-persistence-service\/#webpage","url":"https:\/\/abap-blog.ru\/database-work\/abap-object-services-persistence-service\/","name":"ABAP Blog | ABAP Object Services \u2014 Persistence Service \u2014 \u0447\u0430\u0441\u0442\u044c 1.","description":"\u0412\u0432\u0435\u0434\u0435\u043d\u0438\u0435 \u0432 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435 Object Services \u0432 ABAP.","inLanguage":"ru-RU","isPartOf":{"@id":"https:\/\/abap-blog.ru\/#website"},"breadcrumb":{"@id":"https:\/\/abap-blog.ru\/database-work\/abap-object-services-persistence-service\/#breadcrumblist"},"author":"https:\/\/abap-blog.ru\/author\/admin\/#author","creator":"https:\/\/abap-blog.ru\/author\/admin\/#author","datePublished":"2014-05-28T19:03:16+04:00","dateModified":"2021-03-02T06:10:43+04:00"},{"@type":"Article","@id":"https:\/\/abap-blog.ru\/database-work\/abap-object-services-persistence-service\/#article","name":"ABAP Blog | ABAP Object Services \u2014 Persistence Service \u2014 \u0447\u0430\u0441\u0442\u044c 1.","description":"\u0412\u0432\u0435\u0434\u0435\u043d\u0438\u0435 \u0432 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435 Object Services \u0432 ABAP.","inLanguage":"ru-RU","headline":"ABAP Object Services - Persistence Service - \u0447\u0430\u0441\u0442\u044c 1.","author":{"@id":"https:\/\/abap-blog.ru\/author\/admin\/#author"},"publisher":{"@id":"https:\/\/abap-blog.ru\/#person"},"datePublished":"2014-05-28T19:03:16+04:00","dateModified":"2021-03-02T06:10:43+04:00","commentCount":8,"articleSection":"\u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u0411\u0414, ABAP Object Services, persistence service","mainEntityOfPage":{"@id":"https:\/\/abap-blog.ru\/database-work\/abap-object-services-persistence-service\/#webpage"},"isPartOf":{"@id":"https:\/\/abap-blog.ru\/database-work\/abap-object-services-persistence-service\/#webpage"},"image":{"@type":"ImageObject","@id":"https:\/\/abap-blog.ru\/#articleImage","url":"https:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/orm.jpg","width":362,"height":438}}]}
+		</script>
+		<script type="text/javascript">
+			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+			ga('create', "UA-150412824-1", { 'cookieDomain': 'abap-blog.ru' } );
+			ga('require', 'outboundLinkTracker');
+			ga('send', 'pageview');
+		</script>
+		<script async="" src="../../analytics.js"></script>
+		<script async="" src="../../wp-content/plugins/all-in-one-seo-pack/app/Common/Assets/js/autotrack.js?ver=4.1.4.4"></script>
+		<!-- All in One SEO -->
+
+<link rel='dns-prefetch' href='../../index-1.htm'>
+<link rel='dns-prefetch' href='//fonts.googleapis.com'>
+<link rel='dns-prefetch' href='../../index-2.htm'>
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента" href="../../feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев" href="../../comments/feed/index.htm.rss">
+<link rel="alternate" type="application/rss+xml" title="ABAP Blog &raquo; Лента комментариев к &laquo;ABAP Object Services &#8212; Persistence Service &#8212; часть 1.&raquo;" href="feed/index.htm.rss">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/abap-blog.ru\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8.1"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='urvanov_syntax_highlighter-css' href='../../wp-content/plugins/urvanov-syntax-highlighter/css/min/urvanov_syntax_highlighter.min.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='crayon-theme-abapblog-css' href='../../wp-content/uploads/urvanov-syntax-highlighter/themes/abapblog/abapblog.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='crayon-font-monospace-css' href='../../wp-content/plugins/urvanov-syntax-highlighter/fonts/monospace.css?ver=2.8.22' media='all'>
+<link rel='stylesheet' id='wp-block-library-css' href='../../wp-includes/css/dist/block-library/style.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='arve-main-css' href='../../wp-content/plugins/advanced-responsive-video-embedder/build/main.css?ver=b809f4d4c33c91a5ae3a5099af09bdde' media='all'>
+<link rel='stylesheet' id='contact-form-7-css' href='../../wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.5.1' media='all'>
+<link rel='stylesheet' id='bg-shce-genericons-css' href='../../wp-content/plugins/show-hidecollapse-expand/assets/css/genericons/genericons.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='bg-show-hide-css' href='../../wp-content/plugins/show-hidecollapse-expand/assets/css/bg-show-hide.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='dashicons-css' href='../../wp-includes/css/dashicons.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='tooltip-css' href='../../wp-content/plugins/wp-poll/assets/tool-tip.min.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-cb-css' href='../../wp-content/plugins/wp-poll/assets/front/css/checkbox.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='wpp-front-css' href='../../wp-content/plugins/wp-poll/assets/front/css/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='flat-fonts-css' href='../../css.css?family=Lobster%7CRoboto:400,700%7CRoboto+Slab%7CRoboto%20Condensed' media='all'>
+<link rel='stylesheet' id='flat-theme-css' href='../../wp-content/themes/flat/assets/css/flat.css?ver=1.7.11' media='all'>
+<link rel='stylesheet' id='flat-style-css' href='../../wp-content/themes/flat/style.css?ver=5.8.1' media='all'>
+<link rel='stylesheet' id='slb_core-css' href='../../wp-content/plugins/simple-lightbox/client/css/app.css?ver=2.8.1' media='all'>
+<link rel='stylesheet' id='decent-comments-widget-css' href='../../wp-content/plugins/decent-comments/css/decent-comments-widget.css' media='all'>
+<script src='../../wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script src='../../wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' id='urvanov_syntax_highlighter_js-js-extra'>
+/* <![CDATA[ */
+var UrvanovSyntaxHighlighterSyntaxSettings = {"version":"2.8.22","is_admin":"0","ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","prefix":"urvanov-syntax-highlighter-","setting":"urvanov-syntax-highlighter-setting","selected":"urvanov-syntax-highlighter-setting-selected","changed":"urvanov-syntax-highlighter-setting-changed","special":"urvanov-syntax-highlighter-setting-special","orig_value":"data-orig-value","debug":""};
+var UrvanovSyntaxHighlighterSyntaxStrings = {"copy":"\u041d\u0430\u0436\u043c\u0438\u0442\u0435 %s \u0434\u043b\u044f \u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f, %s \u0434\u043b\u044f \u0432\u0441\u0442\u0430\u0432\u043a\u0438","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/urvanov-syntax-highlighter/js/min/urvanov_syntax_highlighter.min.js?ver=2.8.22' id='urvanov_syntax_highlighter_js-js'></script>
+<script src='../../wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.7' id='regenerator-runtime-js'></script>
+<script src='../../wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
+<script async="async" src='../../wp-content/plugins/advanced-responsive-video-embedder/build/main.js?ver=b809f4d4c33c91a5ae3a5099af09bdde' id='arve-main-js'></script>
+<script src='../../wp-content/plugins/wp-poll/assets/front/js/svgcheckbx.js?ver=5.8.1' id='wpp-front-cb-js'></script>
+<script type='text/javascript' id='wpp-front-js-extra'>
+/* <![CDATA[ */
+var wpp_object = {"ajaxurl":"https:\/\/abap-blog.ru\/wp-admin\/admin-ajax.php","copyText":"Copied !","voteText":"Vote(s)","tempProDownload":"https:\/\/pluginbazar.com\/my-account\/downloads\/","tempProDownloadTxt":"Download Version 1.1.0"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/wp-poll/assets/front/js/scripts.js?ver=5.8.1' id='wpp-front-js'></script>
+<script src='../../wp-content/themes/flat/assets/js/flat.js?ver=1.7.11' id='flat-js-js'></script>
+<!--[if lt IE 9]>
+<script src='https://abap-blog.ru/wp-content/themes/flat/assets/js/html5shiv.min.js?ver=3.7.2' id='html5shiv-js'></script>
+<![endif]-->
+<link rel="https://api.w.org/" href="../../wp-json/index.htm.json"><link rel="alternate" type="application/json" href="../../wp-json/wp/v2/posts/1977.json"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="../../xmlrpc.php.xml?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../../wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.8.1">
+<link rel='shortlink' href='index.htm?p=1977'>
+<link rel="alternate" type="application/json+oembed" href="../../wp-json/oembed/1.0/embed-117.json?url=https%3A%2F%2Fabap-blog.ru%2Fdatabase-work%2Fabap-object-services-persistence-service%2F">
+<link rel="alternate" type="text/xml+oembed" href="../../wp-json/oembed/1.0/embed-117.xml?url=https%3A%2F%2Fabap-blog.ru%2Fdatabase-work%2Fabap-object-services-persistence-service%2F&#038;format=xml">
+
+<!-- WP Youtube Player 1.7 by unijimpe -->
+<style type="text/css">#page:before, .sidebar-offcanvas, #secondary { background-color: #272727; }@media (max-width: 1199px) { #page &gt; .container { background-color: #272727; } }body { background-size: initial; }</style><style type="text/css">#masthead .site-title {font-family:Lobster}body {font-family:Roboto }h1,h2,h3,h4,h5,h6 {font-family:Roboto Slab}#masthead .site-description, .hentry .entry-meta {font-family:Roboto Condensed}</style><style type="text/css" media="screen">body{position:relative}#dynamic-to-top{display:none;overflow:hidden;width:auto;z-index:90;position:fixed;bottom:20px;right:20px;top:auto;left:auto;font-family:sans-serif;font-size:1em;color:#fff;text-decoration:none;text-shadow:0 1px 0 #333;font-weight:bold;padding:17px 16px;border:2px solid #000;background:#4c5055;-webkit-background-origin:border;-moz-background-origin:border;-icab-background-origin:border;-khtml-background-origin:border;-o-background-origin:border;background-origin:border;-webkit-background-clip:padding-box;-moz-background-clip:padding-box;-icab-background-clip:padding-box;-khtml-background-clip:padding-box;-o-background-clip:padding-box;background-clip:padding-box;-webkit-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-ms-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-moz-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-o-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-khtml-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-icab-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-webkit-border-radius:30px;-moz-border-radius:30px;-icab-border-radius:30px;-khtml-border-radius:30px;border-radius:30px}#dynamic-to-top:hover{background:#4fd650;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 255, 255, 255, .2 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );cursor:pointer}#dynamic-to-top:active{background:#4c5055;background:#4c5055 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 0, 0, 0, .3 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#4c5055 -webkit-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -moz-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -khtml-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -o-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -ms-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 -icab-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#4c5055 linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) )}#dynamic-to-top,#dynamic-to-top:active,#dynamic-to-top:focus,#dynamic-to-top:hover{outline:none}#dynamic-to-top span{display:block;overflow:hidden;width:14px;height:12px;background:url( ../../wp-content/plugins/dynamic-to-top/css/images/up.png )no-repeat center center}</style><style type="text/css" id="custom-background-css">
+body.custom-background { background-image: url("../../wp-content/uploads/2014/10/escheresque_ste.png"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+		</head>
+
+<body class="post-template-default single single-post postid-1977 single-format-standard custom-background" itemscope="" itemtype="http://schema.org/WebPage">
+		<div id="page">
+	<div class="container">
+		<div class="row row-offcanvas row-offcanvas-left" style="background: #272727;">			
+			
+			<div id="secondary1" class="col-lg-t" style="background: #272727; display:none">
+								<header id="masthead1" class="site-headerex" role="banner">
+										<div class="hgroupex">
+						<h1 class="site-title display-title"><a href="../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+									</header>
+							</div>
+
+
+			<div id="secondary" class="col-lg-3" style="display:block">
+								<header id="masthead" class="site-header" role="banner">
+										<div class="hgroup">
+						<h1 class="site-title display-title"><a href="../../index.htm" title="ABAP Blog" rel="home"><span itemprop="name">ABAP Blog</span></a></h1><h2 itemprop="description" class="site-description">Все о разработке в решениях от SAP</h2>					</div>
+					<button type="button" class="btn btn-link hidden-lg toggle-sidebar" data-toggle="offcanvas" aria-label="Sidebar"><i class="fa fa-gear"></i></button>
+					<button type="button" class="btn btn-link hidden-lg toggle-navigation" aria-label="Navigation Menu"><i class="fa fa-bars"></i></button>
+					<nav id="site-navigation" class="navigation main-navigation" role="navigation">
+						<ul id="menu-glavnoe-menyu" class="nav-menu"><li id="menu-item-2313" class="fa fa-home menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-2313"><a href="../../index.htm">Главная</a>
+<ul class="sub-menu">
+	<li id="menu-item-2363" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2363"><a href="../../category/osnovy-abap/index.htm">Основы ABAP</a>
+	<ul class="sub-menu">
+		<li id="menu-item-2906" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2906"><a href="../../category/osnovy-abap/oop/index.htm">ABAP Objects</a></li>
+		<li id="menu-item-2370" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2370"><a href="../../category/osnovy-abap/slovar/index.htm">ABAP Словарь</a></li>
+		<li id="menu-item-2367" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2367"><a href="../../category/osnovy-abap/files/index.htm">Работа с файлами</a></li>
+		<li id="menu-item-2364" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2364"><a href="../../category/osnovy-abap/sap-dynpro/index.htm">SAP Dynpro</a></li>
+		<li id="menu-item-6845" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6845"><a href="../../category/osnovy-abap/vnutrennie-tablicy/index.htm">Внутренние таблицы</a></li>
+		<li id="menu-item-6849" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6849"><a href="../../category/osnovy-abap/dinamicheskoe-programmirovanie/index.htm">Динамическое программирование</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2366" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children menu-item-2366"><a href="../../category/database-work/index.htm">Работа с БД</a>
+	<ul class="sub-menu">
+		<li id="menu-item-7303" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7303"><a href="../../category/hana/index.htm">HANA</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2368" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2368"><a href="../../category/network/index.htm">Сетевые технологии</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6328" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6328"><a href="../../category/network/ui5fiori/index.htm">UI5 &amp; Fiori</a></li>
+		<li id="menu-item-6327" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6327"><a href="../../category/network/odata-network/index.htm">OData</a></li>
+		<li id="menu-item-2907" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2907"><a href="../../category/network/web-dynpro/index.htm">Web Dynpro</a></li>
+	</ul>
+</li>
+	<li id="menu-item-2369" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2369"><a href="../../category/enhancements/index.htm">Расширения</a></li>
+	<li id="menu-item-6329" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6329"><a href="../../category/abap-cloud/index.htm">ABAP Cloud</a></li>
+	<li id="menu-item-2365" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2365"><a href="../../category/others/index.htm">Прочее</a></li>
+</ul>
+</li>
+<li id="menu-item-3536" class="fa fa-bell menu-item menu-item-type-post_type menu-item-object-page menu-item-3536"><a href="../../abap-the-best-practice/index.htm">ABAP Best Practice</a></li>
+<li id="menu-item-3727" class="fa fa-child menu-item menu-item-type-post_type menu-item-object-page menu-item-3727"><a href="../../vakansii/index.htm">Вакансии ABAP</a></li>
+<li id="menu-item-3885" class="fa fa-bookmark menu-item menu-item-type-post_type menu-item-object-page menu-item-3885"><a href="../../abap-notes/index.htm">Быстрые заметки</a></li>
+<li id="menu-item-2316" class="fa fa-info-circle menu-item menu-item-type-post_type menu-item-object-page menu-item-2316"><a href="../../about/index.htm">Обо мне</a></li>
+</ul>					</nav>
+									</header>
+				
+				<div class="sidebar-offcanvas">
+<div id="main-sidebar" class="widget-area" role="complementary">
+											<aside id="search-2" class="widget widget_search">
+	<form method="get" id="searchform" action="https://abap-blog.ru/">
+		<label for="s" class="assistive-text">Поиск</label>
+		<input type="text" class="field" name="s" id="s" placeholder="Поиск">
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Поиск">
+	</form>
+					</aside>
+					<aside id="linkcat-2" class="widget widget_links">
+						<h3 class='widget-title'>Ссылки</h3>
+
+	<ul class='xoxo blogroll'>
+<li><a href="../../topics/abap.html" target="_blank">ABAP Community</a></li>
+<li><a href="../../wiki/display/ABAP/ABAP Development.html" title="Wiki по ABAP" target="_blank">ABAP Development Wiki</a></li>
+<li><a href="../../doc/abapdocu_latest_index_htm/latest/en-US/index.htm" title="Последняя версия справки по ABAP" target="_blank">ABAP Help</a></li>
+<li><a href="../../doc/abapdocu_cp_index_htm/CLOUD/en-US/index.htm" target="_blank">ABAP Help (Cloud)</a></li>
+<li><a href="../../learning-journeys/overview.html?role=Developer" target="_blank">Developer Learning Journeys</a></li>
+<li><a href="../../index-3.htm" target="_blank">Open Source Projects</a></li>
+<li><a href="../../tutorial-navigator.html" target="_blank">SAP Tutorials</a></li>
+<li><a href="https://t.me/abapblog" target="_blank"><img src="../../wp-content/uploads/2020/04/telegram-1.png" alt="Канал в Telegram"> Канал в Telegram</a></li>
+
+	</ul>
+					</aside>
+
+					<aside id="endo_wrc_widget-2" class="widget widget_endo_wrc_widget">
+						<h3 class='widget-title'>Цитаты</h3>
+<p>Самым важным отличием хорошо спроектированного модуля от плохо спроектированного является степень, в которой модуль скрывает свои внутренние данные и другие детали реализации от других модулей.</p>
+<p><strong>Джошуа Блох</strong></p>
+					</aside>
+								<aside id="custom-post-type-recent-posts-3" class="widget widget_recent_entries">
+						<h3 class='widget-title'>Новое</h3>
+			<ul>
+													<li>
+										<a href="../../abap-notes/poluchenie-instancii-cl_gui_alv_grid-dlya-salv/index.htm">Получение инстанции cl_gui_alv_grid для SALV</a>
+											<span class="post-date">11.09.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-cloud/introduction-to-abap-in-the-cloud/index.htm">Introduction to ABAP in the Cloud</a>
+											<span class="post-date">18.08.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/getting-started-with-fpm-bopf-integration/index.htm">Getting Started with FPM BOPF Integration</a>
+											<span class="post-date">01.06.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/how-to-use-authority-checks-in-business-object-processing-framework/index.htm">30. How to Use Authority Checks in Business Object Processing Framework</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-extensibility/index.htm">29. BOPF Extensibility</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-enterprise-procurement-model-epm/index.htm">28. BOPF Enterprise Procurement Model (EPM)</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-integration/index.htm">27. BOPF Integration</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-business-configuration-objects/index.htm">26. BOPF Business Configuration Objects</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-performance/index.htm">25. BOPF Performance</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+													<li>
+										<a href="../../abap-notes/bopf-supportability/index.htm">24. BOPF Supportability</a>
+											<span class="post-date">29.05.2021</span>
+														</li>
+							</ul>
+								</aside>
+					<aside id="decent_comments_widget-2" class="widget widget_decent_comments_widget">
+						<h3 class='widget-title'>Последние комментарии</h3>
+<div class="decent-comments"><ul><li><div class="comment"><span class="comment-author">Николай</span><span class="comment-date"> 27.10.2021 в 15:19</span><span class="comment-link"> на <a href="../../osnovy-abap/internal-table-as-data-source-select/index.htm#comment-17857">Внутренние таблицы как источник в SQL запросах</a></span><span class="comment-excerpt">Спасибо за статью. Если нужно сделать агрегацию внутренней таблицы то агрегация через передачу во временную таблицу на БД тоже будет работать медленней чем через loop/collect? Например таблица 100к записей, которая становится 5к после агрегации. </span></div></li><li><div class="comment"><span class="comment-author">Аноним</span><span class="comment-date"> 14.10.2021 в 13:50</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17856">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Так поведение Decorator не надо будет повторно описывать повторно в других Component. Но это возможно при изменении типа mo_component, например, на object. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 11.10.2021 в 06:50</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17854">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет:) Возможно, я не так выразил мысль. Я имел ввиду, какая ценность от класса Decorator, если можно декорировать поведение от Component и от него же наследовать конкретные декораторы? (см. первую UML диаграмму) </span></div></li><li><div class="comment"><span class="comment-author">Astrafox</span><span class="comment-date"> 10.10.2021 в 12:39</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17853">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">Привет! Можно и так, однако конкретный компонент может иметь более широкий интерфейс, нежели тот, что нужен в декораторах. Тут скорее пример не совсем удачный, декорируемое поведение лучше вынести в отдельный интерфейс, реализуемый как компонентом, так и декораторами. </span></div></li><li><div class="comment"><span class="comment-author">Александр</span><span class="comment-date"> 04.10.2021 в 12:51</span><span class="comment-link"> на <a href="../../osnovy-abap/oop/dekorator-decorator-wrapper/index.htm#comment-17850">Декоратор (Decorator, Wrapper)</a></span><span class="comment-excerpt">А какую роль играет базовый класс декоратора lcl_decorator? Что мешает конкретные декораторы наследовать от компонента lcl_concrete_component? Клиентский код и логика выполнения не поменяется. </span></div></li></ul></div>					</aside>
+											</div>
+				</div>
+			</div>
+
+						<div id="primary" class="content-area col-lg-9" itemprop="mainContentOfPage" style="">
+							<div id="content" class="site-content" role="main" itemscope="" itemtype="http://schema.org/Article">
+			<article id="post-1977" class="post-1977 post type-post status-publish format-standard hentry category-database-work tag-abap-object-services tag-persistence-service">
+	<header class="entry-header">
+		<h1 class="entry-title" itemprop="name">ABAP Object Services &#8212; Persistence Service &#8212; часть 1.</h1>
+							<div class="entry-meta"><span class="entry-date"><a href="index.htm" rel="bookmark"><time class="entry-date published" datetime="2014-05-28T23:03:16+04:00" itemprop="datepublished">28.05.2014</time></a></span> от <span class="author vcard" itemscope="" itemprop="author" itemtype="http://schema.org/Person"><a class="url fn n" href="../../author/admin/index.htm" rel="author" itemprop="url"><span itemprop="name">Astrafox</span></a></span><span class="sep">&middot;</span><span class="comments-link"><a href="index.htm#comments" itemprop="discussionUrl">8 комментариев</a></span></div>
+			</header>
+		
+	
+	<div class="entry-content" itemprop="articleBody">
+				<p><a href="../../wp-content/uploads/2014/05/orm.jpg" data-slb-active="1" data-slb-asset="801011134" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignleft wp-image-2003 size-full" src="../../wp-content/uploads/2014/05/orm.jpg" alt="orm" width="362" height="438" srcset="../../wp-content/uploads/2014/05/orm.jpg 362w, ../../wp-content/uploads/2014/05/orm-247x300.jpg 247w" sizes="(max-width: 362px) 100vw, 362px"></a>При разработке с использованием ABAP Objects разработчик неизбежно сталкивается с ситуацией, когда данные нужно либо загружать из каких-либо источников данных (БД, файлы и т.п.) в объекты, либо выгружать из объектов куда-либо.</p>
+<p>Системы, решающие задачу сопоставления информации из БД в объекты и обратно принято называть <a href="../../wiki/ORM.html">ORM</a> системами.</p>
+<p>В объектно-ориентированном программировании объекты в программе представляют объекты из реального мира. В качестве примера можно рассмотреть адресную книгу, которая содержит список людей с нулём или более телефонов и нулём или более адресов. В терминах объектно-ориентированного программирования они будут представляться объектами класса «Человек», которые будут содержать следующий список полей: имя, список (или массив) телефонов и список адресов.</p>
+<p>Суть задачи состоит в преобразовании таких объектов в форму, в которой они могут быть сохранены в файлах или базах данных, и которые легко могут быть извлечены в последующем, с сохранением свойств объектов и отношений между ними. Эти объекты называют «хранимыми» (англ. persistent).  В концепции SAP понятие «хранимый» объект заменено понятием «постоянный». В дальнейшем в статье будет использовано понятие «хранимый».</p>
+<p>Работа с хранимыми объектами осуществляется с помощью встроенной в AS ABAP технологии ABAP Object Services. Данный инструмент можно разделить на три составляющие:</p>
+<ul>
+<li>Инструмент загрузки и сохранения объектов (Persistence Service)</li>
+<li>Инструмент поиска в объектах по определенным критериям (Query Service)</li>
+<li>Инструмент обработки транзакций (Transaction Service)</li>
+</ul>
+<p><span id="more-1977"></span></p>
+<h2>Введение в Persistence Service</h2>
+<p>В большинстве языков программирования объекты являются временными данными и хранятся непосредственно в памяти во время выполнения программы (в ABAP до момента, когда сборщик мусора их удалит). Обычно для сохранения или загрузки данных из объектов в БД понадобится писать специальные методы преобразования данных объекта в реляционную структуру и наоборот (например, <a href="../../wiki/Сериализация.html">сериализовать</a>/десериализовать объект в XML и сохранить в таком виде в таблице). В качестве более простой альтернативы можно использовать Persistence Service, который представляет из себя отдельный программный слой, скрывающий от разработчика большинство деталей по обработке данных.</p>
+<p><a href="../../wp-content/uploads/2014/05/Persistence-service1.png" data-slb-active="1" data-slb-asset="1668678147" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="size-full wp-image-1979 aligncenter" src="../../wp-content/uploads/2014/05/Persistence-service1.png" alt="Persistence service" width="404" height="418" srcset="../../wp-content/uploads/2014/05/Persistence-service1.png 404w, ../../wp-content/uploads/2014/05/Persistence-service1-289x300.png 289w" sizes="(max-width: 404px) 100vw, 404px"></a></p>
+<p>Persistence Service позволяет связывать атрибуты хранимого объекта с полями в таблице базы данных, ракурсе или структуре. Каждая отдельная запись в таблице или ракурсе будет связана с отдельным объектом.</p>
+<p>Есть несколько способов связывания хранимых объектов с данными в таблицах, ракурсах:</p>
+<ul>
+<li><strong>Связывание одного класса с одной записью в таблице (ракурсе)</strong>. Данный способ используется, когда все данные объекта хранятся в рамках одной записи таблицы/ракурса.</li>
+<li><strong>Связывание одного класса с несколькими записями в разных таблицах (ракурсах)</strong>. Применяется, когда данные класса разбросаны по нескольким таблицам (У таблиц должен быть один бизнес ключ, либо один общий GUID – глобальный идентификатор). В реальной жизни чаще встречаются связи таблиц, где есть основная таблица, например, заголовок закупочного заказа (EKKO) и таблица с позицией (EKPO). Так как бизнес ключ у них разный, (в EKPO есть ключевое поле позиция, которого нет в EKKO) данный способ связи не подойдет.</li>
+<li><strong>Связывание иерархий классов с записями в таблицах (ракурсах).</strong> Реализуется через ООП наследование. Наследование может быть двух видов: горизонтальным и вертикальным, подробное описание будет ниже.</li>
+</ul>
+<blockquote><p><span style="background-color: #ffffff;">Ракурсы используются в тех случаях, когда надо связать не все табличные поля с атрибутами хранимого класса.</span></p>
+<p><span style="background-color: #ffffff;">Связывание со структурой из словаря используется в тех случаях, когда вы сами определяете методы для связи с объектом хранения информации (БД, файлом и т.п.) и сами заполняете данными хранимые объекты.</span></p></blockquote>
+<p>Далее в статье в качестве источника данных всегда будет рассматриваться БД.</p>
+<p>Чтобы создать класс для хранимых объектов, необходимо при его создании выставить специальный флаг:­­</p>
+<p><a href="../../wp-content/uploads/2014/05/persistence-flag.png" data-slb-active="1" data-slb-asset="26309643" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1980" src="../../wp-content/uploads/2014/05/persistence-flag.png" alt="persistence flag" width="350" height="340" srcset="../../wp-content/uploads/2014/05/persistence-flag.png 350w, ../../wp-content/uploads/2014/05/persistence-flag-300x291.png 300w" sizes="(max-width: 350px) 100vw, 350px"></a></p>
+<p>При создании хранимого класса, система автоматически генерирует код для манипуляции с объектами этого класса. Генерируемый код включает методы: чтения и изменения атрибутов объекта; загрузки объектов; сохранения объектов; удаление объектов и др. Если объект связан с БД, все эти методы генерируют SQL без участия программиста, в отдельных случаях программист может переопределить методы связывающие атрибуты хранимого объекта и базу данных.</p>
+<p>При работе с хранимыми объектами, система позволяет создать в рамках рабочего процесса только один уникальный экземпляр для каждого хранимого объекта (не может быть создано несколько одинаковых хранимых объектов с одним и тем же ключом). Если во время работы программы потребуется получить ссылку на уже инициализированный хранимый объект, Persistence Service вернет ссылку на полученный ранее объект, без использования базы данных (получит ссылку из памяти). Таким образом, мы избегаем возможной несогласованности данных, если бы мы работали с несколькими одинаковыми объектами в рамках одного рабочего процесса и избежать лишней нагрузки на БД при получении объекта из памяти.</p>
+<p>В специальном атрибуте агента класса (см. ниже), сохраняются все хранимые объекты. Объекты со статусом NOT_LOADED, хранятся только по <a href="../../wiki/Слабая_ссылка.html">слабой ссылке</a>, что позволяет сборщику мусора в нужный ему момент их удалять (например, если не хватает памяти). Объекты с другими статусами хранятся как по слабой ссылке, так и по «сильной ссылке».</p>
+<p>Так как объекты PS всегда хранятся в системной памяти, сборщик мусора не удаляет хранимые объекты, когда на них нет ссылок внутри программы. Сделано это для того, чтобы потом не загружать объект заново.  Если Вам необходимо сократить объем выделенной в приложении памяти, можно освободить неиспользуемые более хранимые объекты вручную, вызвав специальный метод. (IF_OS_FACTORY~RELEASE см. ниже).</p>
+<p>Каждый хранимый объект имеет уникальный идентификатор, который отличает его от остальных объектов. Существует два типа идентификаторов:</p>
+<ul>
+<li><strong>Бизнес ключ</strong>, может состоять из определенных пользователем ключевых полей, всех допустимых типов кроме OS_GUID. Если вы используете бизнес ключ, вы должны связать ключевые поля из таблицы с атрибутами хранимого объекта. Если используется структура, то Вы сами решаете какое поле будет являться ключевым:<a href="../../wp-content/uploads/2014/05/business-key.png" data-slb-active="1" data-slb-asset="1263136526" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1981" src="../../wp-content/uploads/2014/05/business-key.png" alt="business key" width="571" height="100" srcset="../../wp-content/uploads/2014/05/business-key.png 571w, ../../wp-content/uploads/2014/05/business-key-300x52.png 300w" sizes="(max-width: 571px) 100vw, 571px"></a></li>
+</ul>
+<ul>
+<li><a href="../../wiki/GUID.html">GUID</a> (глобальный идентификатор) генерируемый Persistence Service при создании хранимого объекта. Если вы используете GUID, в таблице, с которой связан хранимый объект, должно быть поле с типом OS_GUID. Данное поле может быть как ключевым полем таблицы, так и нет. Если вдруг, по какой-то причине, понадобится генерация GUID ручным образом, можно использовать класс: <strong>cl_</strong><strong>system_</strong><strong>uuid</strong>. При работе с объектами на основе GUID, может возникать ситуация, когда в БД сохранились записи с одним идентификатором, а класс уже получил новый GUID (после удаления и создания класса заново). После чего при попытке получить по GUID ссылку на объект будет вызываться исключение CX_OS_CLASS_NOT_FOUND (класс не найден). Для решения проблемы смотрите ноту 567253.</li>
+</ul>
+<p>Persistence Service позволяет работать со ссылочными атрибутами на другие хранимые объекты. К примеру, если хранимый объект имеет атрибут А со ссылкой на хранимый объект Б, система сохранит ссылку на хранимый объект Б в базе данных. А когда объект А будет загружаться из БД, объект Б по сохраненной ранее ссылке будет восстановлен. В целях производительности Persistence Service не загружает связанные таким образом объекты (объект Б) до момента их реального использования в программе («ленивая загрузка»). Это следует запомнить т.к. в случае отладки, может возникнуть вопрос, почему объект получен, но все еще пустой.</p>
+<p>По типу хранения атрибуты могут быть двух видов:</p>
+<ul>
+<li><strong>Хранимые атрибуты</strong>. Содержимое <strong>хранимых</strong> атрибутов которые были изменены, после выполнения COMMIT WORK, сохраняется в связанной с этим атрибутом таблице, а при инициализации объекта загружается из неё. Загрузка хранимых атрибутов происходит только в момент доступа к какому-либо атрибуту через соответствующий метод. Доступ к ним возможен только через сгенерированные методы, несмотря на то, что доступ у такого атрибута будет Public.</li>
+<li><strong>Временные атрибуты</strong>. Содержимое <strong>временных</strong> атрибутов не сохраняется в БД и существует только во время выполнения программы.  При первоначальной загрузке хранимого объекта из БД, эти атрибуты имеют свое первоначальное (intial) значение. Подобные атрибуты могут использоваться, например для каких либо расчётных полей.</li>
+</ul>
+<p>Следует запомнить, что для табличных полей должен быть явно определен тип в словаре, иначе их нельзя будет связывать с атрибутами классов. Т.е. если вы захотите использовать встроенный тип в таблице:</p>
+<p><a href="../../wp-content/uploads/2014/05/table-key.png" data-slb-active="1" data-slb-asset="1828485814" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1982" src="../../wp-content/uploads/2014/05/table-key.png" alt="table key" width="587" height="201" srcset="../../wp-content/uploads/2014/05/table-key.png 587w, ../../wp-content/uploads/2014/05/table-key-300x102.png 300w" sizes="(max-width: 587px) 100vw, 587px"></a></p>
+<p>Система не даст вам сделать сопоставление этого поля в атрибут класса.</p>
+<h3>Сопоставление с атрибутами хранимых классов</h3>
+<p>Далее на основе демонстрационной модели с полётами (пакет SAPBC_DATAMODEL) рассмотрим пример создания хранимого класса. Запускаем транзакцию <strong>SE24</strong> и создаем класс с именем ZCL_SFLIGHT:</p>
+<p><a href="../../wp-content/uploads/2014/05/new-class.png" data-slb-active="1" data-slb-asset="1670169001" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1983" src="../../wp-content/uploads/2014/05/new-class.png" alt="new class" width="350" height="340" srcset="../../wp-content/uploads/2014/05/new-class.png 350w, ../../wp-content/uploads/2014/05/new-class-300x291.png 300w" sizes="(max-width: 350px) 100vw, 350px"></a><br>
+Переходим к связыванию данных из таблицы SFLIGHT с атрибутами нашего класса:</p>
+<p><a href="../../wp-content/uploads/2014/05/sflight-connect.png" data-slb-active="1" data-slb-asset="153328552" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1984" src="../../wp-content/uploads/2014/05/sflight-connect.png" alt="sflight connect" width="427" height="121" srcset="../../wp-content/uploads/2014/05/sflight-connect.png 427w, ../../wp-content/uploads/2014/05/sflight-connect-300x85.png 300w" sizes="(max-width: 427px) 100vw, 427px"></a></p>
+<p><a href="../../wp-content/uploads/2014/05/sflight-connect-2.png" data-slb-active="1" data-slb-asset="623384693" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1985" src="../../wp-content/uploads/2014/05/sflight-connect-2.png" alt="sflight connect 2" width="399" height="98" srcset="../../wp-content/uploads/2014/05/sflight-connect-2.png 399w, ../../wp-content/uploads/2014/05/sflight-connect-2-300x73.png 300w" sizes="(max-width: 399px) 100vw, 399px"></a><br>
+На следующем экране необходимо связать поля из таблицы с атрибутами класса, т.к. в таблице SFLIGHT нет поля с типом OS_GUID, в качестве ключа будут использоваться ключевые поля из таблицы (бизнес ключ). Ключевые поля в классе будут доступны только для чтения. На данном этапе можно переопределить имя и описание для атрибута, видимость методов для доступа к атрибуту и необходимость создавать метод для записи атрибута (только чтение):</p>
+<p><a href="../../wp-content/uploads/2014/05/sflight-attributes.png" data-slb-active="1" data-slb-asset="666501549" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1986" src="../../wp-content/uploads/2014/05/sflight-attributes.png" alt="sflight attributes" width="668" height="601" srcset="../../wp-content/uploads/2014/05/sflight-attributes.png 668w, ../../wp-content/uploads/2014/05/sflight-attributes-300x269.png 300w" sizes="(max-width: 668px) 100vw, 668px"></a></p>
+<p>Для некоторых полей на данном диалоге можно выбрать тип присвоения (на рисунке С – Атрибут значения), все они будут рассмотрены на примерах более подробно.</p>
+<p>Для каждого отображения создается запись в системных таблицах: <strong>SEOMAPATT </strong>и <strong>SEOMAPCLS</strong>. Если в ходе разработки к таблицам, связанным с хранимыми классами, добавятся поля (не ключевые), классы по-прежнему будут активны и никаких проблем с их работой не возникнет. Но если вы хотите добавить новые поля к классу, понадобится заново перейти в диалог сопоставления и связать все новые поля с атрибутами класса, после чего активировать класс.</p>
+<p>Следующим шагом сохраняем наш класс и активируем его. После сохранения будут сгенерированы методы доступа к атрибутам класса и специальные классы для манипулирования хранимыми объектами нашего класса.</p>
+<blockquote><p>Не рекомендуется вносить изменения в SET_ и GET_ методы, т.к. повторная активация класса связанная с изменением связывания объекта приведет к их повторной генерации и все пользовательские изменения будут затерты (для добавления в эти методы каких-либо своих проверок, можно воспользоваться специальными методиками, будут рассмотрены отдельно).</p></blockquote>
+<p><a href="../../wp-content/uploads/2014/05/generated-methods.png" data-slb-active="1" data-slb-asset="192024324" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1987" src="../../wp-content/uploads/2014/05/generated-methods.png" alt="generated methods" width="708" height="439" srcset="../../wp-content/uploads/2014/05/generated-methods.png 708w, ../../wp-content/uploads/2014/05/generated-methods-300x186.png 300w" sizes="(max-width: 708px) 100vw, 708px"></a></p>
+<p>Если потребуется создать временные атрибуты, их можно создать, так же, как и обычные атрибуты класса, непосредственно на закладке атрибуты.</p>
+<h3>Компоненты Persistence Service</h3>
+<p>Прежде чем работать с созданными классами, необходимо понять, каким образом с ними можно работать и что они из себя представляют.</p>
+<p>Persistence Service это программный слой состоящий из основной части (системных классов) и части относящейся непосредственно к хранимому классу (классы генерируемые на этапе сохранения/активации). На следующем изображении показаны составные части PS:</p>
+<p><a href="../../wp-content/uploads/2014/05/pscomp.gif" data-slb-active="1" data-slb-asset="1233256439" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1988" src="../../wp-content/uploads/2014/05/pscomp.gif" alt="pscomp" width="650" height="872"></a></p>
+<h4>CL_persistent</h4>
+<p>Данный класс создается Вами в строителе классов (созданный ранее ZCL_SFLIGHT). Нельзя создать объект этого класса непосредственно через оператор CREATE OBJECT, т.к. в его свойствах выставлен параметр CREATE PRIVATE или CREATE ABSTRACT.</p>
+<p>Для создания класса необходимо будет воспользоваться специальными методами сгенерированного класса агента или актора (перевод SAP). Как было уже упомянуто выше в примере, система сама создает методы для доступа к атрибутам класса.</p>
+<p>Каждый хранимый класс реализует интерфейс <strong>IF_OS_STATE</strong>. В данном интерфейсе можно переопределить следующие методы:</p>
+<ul>
+<li><strong>HANDLE_EXCEPTION</strong>. Данный метод вызывается, если произошло исключение в методах доступа к атрибутам. В данном методе можно обработать вызванное исключение, однако обычно это делает тот, кто использует методы доступа к атрибутам.</li>
+<li><strong>INIT</strong>. Вызывается при создании временного или хранимого объекта сразу после того как были считаны хранимые атрибуты. В данном методе можно инициализировать временные атрибуты, назначить обработчики событий и т.п.</li>
+<li><strong>INVALIDATE</strong>. Вызывается при удалении хранимого объекта, обновления его хранимых атрибутов из БД. Тут вы можете вновь инициализировать временные атрибуты, переназначить обработчики событий и т.п.</li>
+</ul>
+<p>Остальные методы (SET,GET) являются системными и их нельзя переопределять. Вообще, что касается переопределения, увидеть разрешено оно или нет, можно увидеть непосредственно в коде:</p>
+<p><a href="../../wp-content/uploads/2014/05/donotmodify.png" data-slb-active="1" data-slb-asset="2132654238" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1990" src="../../wp-content/uploads/2014/05/donotmodify.png" alt="donotmodify" width="586" height="332" srcset="../../wp-content/uploads/2014/05/donotmodify.png 586w, ../../wp-content/uploads/2014/05/donotmodify-300x169.png 300w" sizes="(max-width: 586px) 100vw, 586px"></a></p>
+<p><a href="../../wp-content/uploads/2014/05/modify.png" data-slb-active="1" data-slb-asset="132755784" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1991" src="../../wp-content/uploads/2014/05/modify.png" alt="modify" width="581" height="439" srcset="../../wp-content/uploads/2014/05/modify.png 581w, ../../wp-content/uploads/2014/05/modify-300x226.png 300w" sizes="(max-width: 581px) 100vw, 581px"></a></p>
+<h4>CA_persistent и CB_persistent</h4>
+<p>Для каждого хранимого класса, среда создает еще два класса начинающихся с префикса CA_ (агент класса) и CB_ (базовый агент). Эти два класса относятся к части Persistence Service специфичной для конкретного хранимого класса. CA_ является наследником от CB_, который в свою очередь наследуется от класса <strong>CL_OS_CA_COMMON</strong>.</p>
+<p>Класс, с префиксом CA_ является так называемым агентом (актором) класса CL_, данный класс реализует шаблон одиночки (т.е. в рамках рабочего процесса может существовать всего одна его инстанция) доступ к которому можно получить через статический атрибут agent:</p>
+<p><a href="../../wp-content/uploads/2014/05/agentattribute.png" data-slb-active="1" data-slb-asset="1026611235" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1992" src="../../wp-content/uploads/2014/05/agentattribute.png" alt="agentattribute" width="740" height="187" srcset="../../wp-content/uploads/2014/05/agentattribute.png 740w, ../../wp-content/uploads/2014/05/agentattribute-300x75.png 300w" sizes="(max-width: 740px) 100vw, 740px"></a></p>
+<p>Когда вы первый раз обращаетесь к этому атрибуту, в статическом конструкторе агента происходит его инициализация.</p>
+<p>Агент класса используется для управления объектами хранимого класса: созданием, удалением, обновлением и т.п. Программист может переопределять некоторые отдельные методы класса агента, в частности используется для переопределения доступа к БД. Класс CB_ не предназначен для изменения. При генерации CL_ класса в качестве его «друга» определяется автоматом класс агент:</p>
+<p><a href="../../wp-content/uploads/2014/05/friendship.png" data-slb-active="1" data-slb-asset="1699539220" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1993" src="../../wp-content/uploads/2014/05/friendship.png" alt="friendship" width="389" height="145" srcset="../../wp-content/uploads/2014/05/friendship.png 389w, ../../wp-content/uploads/2014/05/friendship-300x111.png 300w" sizes="(max-width: 389px) 100vw, 389px"></a></p>
+<p>Класс агент реализует следующие интерфейсы: <strong>IF_OS_FACTORY</strong>, <strong>IF_OS_CA_SERVICE</strong>, <strong>IF_OS_CA_PERSISTENCY</strong> и <strong>IF_OS_CA_INSTANCE</strong>. Вы можете использовать как методы интерфейсов, так и методы класса.</p>
+<p>&nbsp;</p>
+<p><strong>Методы, унаследованные от класса CB_</strong></p>
+<p><strong>CREATE_</strong><strong>PERSISTENT</strong>. Инициирует создания нового хранимого объекта. Интерфейс данного метода генерируется в зависимости от настроек сопоставления в хранимом классе. Если хранимый класс управляется бизнес ключом, в интерфейсе будут соответствующие поля. Для указанного выше примера ZCL_SFLIGHT:</p>
+<p><a href="../../wp-content/uploads/2014/05/sflight_keys.png" data-slb-active="1" data-slb-asset="2019569143" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1994" src="../../wp-content/uploads/2014/05/sflight_keys.png" alt="sflight_keys" width="551" height="195" srcset="../../wp-content/uploads/2014/05/sflight_keys.png 551w, ../../wp-content/uploads/2014/05/sflight_keys-300x106.png 300w" sizes="(max-width: 551px) 100vw, 551px"></a></p>
+<p>Если управление происходит через GUID, никаких дополнительных полей вы тут не увидите (т.к. GUID система генерирует самостоятельно). Когда Persistence Service инициализирует объект, система <strong>НЕ</strong> проверяет наличие объекта с теми же ключами в БД, ошибок происходить не будет до тех пор, пока вы не захотите сохранить объект, вызвав COMMIT WORK. Соответственно следует помнить, что перед созданием объекта, надо убедиться в том, что он отсутствует в БД, сделать это можно с помощью метода <strong>GET_PERSISTENT</strong>. Пример создания объекта:</p><!-- Urvanov Syntax Highlighter v2.8.22 -->
+
+		<div id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072" class="urvanov-syntax-highlighter-syntax crayon-theme-abapblog urvanov-syntax-highlighter-font-monospace urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-bottom: 12px; clear: none; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="urvanov-syntax-highlighter-plain-wrap"></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-8">8</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-9">9</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-10">10</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-11">11</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-12">12</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-13">13</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-14">14</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-15">15</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-16">16</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-17">17</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-18">18</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-19">19</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-20">20</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-21">21</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-22">22</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-23">23</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-24">24</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-25">25</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-26">26</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-27">27</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-28">28</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-29">29</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-1"><span class="crayon-st">DATA</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-2"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>sflight<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>sflight<span class="crayon-sy">,</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-3"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>sflight<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>sflight<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-4">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-5">go<span class="crayon-sy">_</span>sflight<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>sflight<span class="crayon-o">=</span><span class="crayon-o">&gt;</span>agent<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-6">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-7"><span class="crayon-st">TRY</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-8"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-c">" Пытаемся получить объект из БД</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-9"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>sflight<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>go<span class="crayon-sy">_</span>sflight<span class="crayon-sy">_</span>agent<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-e">get_persistent</span><span class="crayon-o">(</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>i<span class="crayon-sy">_</span>carrid<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'AA'</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>i<span class="crayon-sy">_</span>connid<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'0017'</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>i<span class="crayon-sy">_</span>fldate<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'20140501'</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-13"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-14">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-15"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">CATCH</span><span class="crayon-h"> </span><span class="crayon-t">cx_os_object_not_found</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">" Объект не найден, создаем новый</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">TRY</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>sflight<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>go<span class="crayon-sy">_</span>sflight<span class="crayon-sy">_</span>agent<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-e">create_persistent</span><span class="crayon-o">(</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>i<span class="crayon-sy">_</span>carrid<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'AA'</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>i<span class="crayon-sy">_</span>connid<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'0017'</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>i<span class="crayon-sy">_</span>fldate<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'20140501'</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-22"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">CATCH</span><span class="crayon-h"> </span><span class="crayon-t">cx_os_object_existing</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">EXIT</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">ENDTRY</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-26">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-27"><span class="crayon-st">ENDTRY</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-28">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ec9031973072-29">go<span class="crayon-sy">_</span>sflight<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-e">set_price</span><span class="crayon-o">(</span><span class="crayon-h"> </span><span class="crayon-s">'100'</span><span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0030 seconds] -->
+<p>Если в памяти PS уже есть объект с таким же ключом, система вызовет исключение &#8212; <strong>CX_OS_OBJECT_EXISTING</strong>.</p>
+<p><strong>GET_</strong><strong>PERSISTENT</strong>. Загружает хранимый объект и создает экземпляр хранимого класса внутри программы. Интерфейс так же зависит от способа сопоставления в хранимом классе (может либо принимать на вход бизнес ключ, либо ничего, если используется GUID). Как уже было упомянуто выше, если объект ранее в программе уже был создан, Persistence Service вернет ссылку на него, при этом, не загружая его заново из базы данных.</p>
+<p><strong>DELETE_</strong><strong>PERSISTENT</strong>. Удаляет хранимый объект, для удаления его данных из БД, необходимо вызвать COMMIT WORK. Интерфейс так же зависит от способа сопоставления в хранимом классе (может либо принимать на вход бизнес ключ, либо ничего, если используется GUID). Пример:</p><!-- Urvanov Syntax Highlighter v2.8.22 -->
+
+		<div id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105" class="urvanov-syntax-highlighter-syntax crayon-theme-abapblog urvanov-syntax-highlighter-font-monospace urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-bottom: 12px; clear: none; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="urvanov-syntax-highlighter-plain-wrap"></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-8">8</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-9">9</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-10">10</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-11">11</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-12">12</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-13">13</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-14">14</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-15">15</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-16">16</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-1"><span class="crayon-st">DATA</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-2"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>sflight<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>sflight<span class="crayon-sy">,</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-3"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>sflight<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>sflight<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-4">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-5">go<span class="crayon-sy">_</span>sflight<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>sflight<span class="crayon-o">=</span><span class="crayon-o">&gt;</span>agent<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-6">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-7"><span class="crayon-st">TRY</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-8"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>sflight<span class="crayon-sy">_</span>agent<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-e">delete_persistent</span><span class="crayon-o">(</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">EXPORTING</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>i<span class="crayon-sy">_</span>carrid<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'AA'</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>i<span class="crayon-sy">_</span>connid<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'0017'</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>i<span class="crayon-sy">_</span>fldate<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'20140501'</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-13"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-14"><span class="crayon-st">CATCH</span><span class="crayon-h"> </span><span class="crayon-t">cx_os_object_not_found</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-15"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">EXIT</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8ef3750602105-16"><span class="crayon-st">ENDTRY</span><span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0013 seconds] -->
+<p><strong>CREATE_</strong><strong>TRANSIENT</strong>. Создает временный объект хранимого класса. Интерфейс аналогичен интерфейсу <strong>CREATE_ </strong><strong>PERSISTENT</strong>. Временные объекты не связаны с каким-либо источником данных и используются только внутри программы.  Не существует способа автоматического преобразования временного объекта в постоянный объект. Чтобы сделать подобное нужно сначала сохранить данные временного объекта в каком-либо буфере, затем удалить временный объект из памяти PS, после чего создать хранимый объект и загрузить в него данные из буфера.</p>
+<p><strong>GET_TRANSIENT</strong>. Получает временный объект хранимого класса. Интерфейс аналогичен интерфейсу <strong>GET_ PERSISTENT</strong>. Объект должен быть создан с помощью метода <strong>CREATE_TRANSIENT</strong>.</p>
+<p>&nbsp;</p>
+<p><strong>Методы интерфейса IF_OS_FACTORY</strong></p>
+<p><strong>IF_OS_FACTORY~CREATE_PERSISTENT</strong>. Создает хранимый объект. Используется для хранимых объектов, идентифицируемых через GUID, его генерация происходит в данном методе.</p>
+<p><strong>IF_OS_FACTORY~CREATE_PERSISTENT_BY_KEY</strong>. Создает хранимый объект. Используется если объект хранимого класса идентифицируется через бизнес ключ. В качестве входящего параметра i_key должна передаваться либо структура (составной ключ), либо строка. Структура должна быть с полями в определённом порядке (по алфавиту), чтобы узнать, что от вас ожидает система, можно открыть класс CB_ и посмотреть определение типа TYP_BUSINESS_KEY:</p>
+<p><a href="../../wp-content/uploads/2014/05/keys.png" data-slb-active="1" data-slb-asset="1506611443" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1995" src="../../wp-content/uploads/2014/05/keys.png" alt="keys" width="460" height="244" srcset="../../wp-content/uploads/2014/05/keys.png 460w, ../../wp-content/uploads/2014/05/keys-300x159.png 300w" sizes="(max-width: 460px) 100vw, 460px"></a></p>
+<p><strong>IF_OS_FACTORY~REFRESH_PERSISTENT</strong>. Метод используется для обновления хранимого объекта (считывания данных происходит заново).  В качестве входного параметра I_OBJECT необходимо передать ссылку на хранимый объект. Данные будут считаны не сразу, а только в момент работы с каким-либо хранимым атрибутом. При обновлении хранимый объект может получить либо статус OSCON_OSTATUS_LOADED при успешной загрузке, либо OSCON_OSTATUS_NOT_LOADED. Сразу после вызова метода, до момента считывания, статус объекта меняется на OSCON_OSTATUS_NOT_LOADED. Вызывать данный метод можно только для объектов со статусами: OSCON_OSTATUS_NOT_LOADED, OSCON_OSTATUS_LOADED,  для объектов со статусами: CHANGED, NEW и DELETE вызовет исключение. Чтобы обновить измененные или удаленные объекты можно воспользоваться методом UNDO для транзакции (см. описание Transaction Service).    Приведу два дополнительных метода для обновления всех объектов относительно агента и для всех активных для текущей программы агентов:</p>
+<p><a href="../../wp-content/uploads/2014/05/refresh_by_agent.png" data-slb-active="1" data-slb-asset="1756271755" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1996" src="../../wp-content/uploads/2014/05/refresh_by_agent.png" alt="refresh_by_agent" width="523" height="44" srcset="../../wp-content/uploads/2014/05/refresh_by_agent.png 523w, ../../wp-content/uploads/2014/05/refresh_by_agent-300x25.png 300w" sizes="(max-width: 523px) 100vw, 523px"></a></p><!-- Urvanov Syntax Highlighter v2.8.22 -->
+
+		<div id="urvanov-syntax-highlighter-618a0f8cd8f07018659621" class="urvanov-syntax-highlighter-syntax crayon-theme-abapblog urvanov-syntax-highlighter-font-monospace urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-bottom: 12px; clear: none; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="urvanov-syntax-highlighter-plain-wrap"></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-8">8</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-9">9</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-10">10</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-11">11</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-12">12</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-13">13</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-14">14</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-15">15</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-16">16</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-17">17</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-18">18</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-19">19</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-20">20</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-21">21</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f07018659621-22">22</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-1">method<span class="crayon-h"> </span>REFRESH<span class="crayon-sy">_</span>OBJECTS<span class="crayon-sy">_</span>BY<span class="crayon-sy">_</span>AGENT<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-2"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">DATA</span><span class="crayon-o">:</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>lt<span class="crayon-sy">_</span>objects<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span>ostyp<span class="crayon-sy">_</span>ref<span class="crayon-sy">_</span>tab<span class="crayon-sy">,</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>lo<span class="crayon-sy">_</span>state<span class="crayon-sy">_</span>object<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>if<span class="crayon-sy">_</span>os<span class="crayon-sy">_</span>state<span class="crayon-sy">,</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>lo<span class="crayon-sy">_</span>object<span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>object<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-6">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-7"><span class="crayon-h">&nbsp;&nbsp;</span>lt<span class="crayon-sy">_</span>objects<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>im<span class="crayon-sy">_</span>agent<span class="crayon-o">-</span><span class="crayon-o">&gt;</span>if<span class="crayon-sy">_</span>os<span class="crayon-sy">_</span>ca<span class="crayon-sy">_</span>instance<span class="crayon-sy">~</span><span class="crayon-e">get_loaded</span><span class="crayon-o">(</span><span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-8">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-9"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">LOOP</span><span class="crayon-h"> </span><span class="crayon-st">AT</span><span class="crayon-h"> </span>lt<span class="crayon-sy">_</span>objects<span class="crayon-h"> </span><span class="crayon-st">INTO</span><span class="crayon-h"> </span>lo<span class="crayon-sy">_</span>object<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">TRY</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>lo<span class="crayon-sy">_</span>state<span class="crayon-sy">_</span>object<span class="crayon-h"> </span><span class="crayon-o">?=</span><span class="crayon-h"> </span>lo<span class="crayon-sy">_</span>object<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">CATCH</span><span class="crayon-h"> </span><span class="crayon-t">cx_sy_move_cast_error</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">CONTINUE</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">ENDTRY</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-15">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">TRY</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>im<span class="crayon-sy">_</span>agent<span class="crayon-o">-</span><span class="crayon-o">&gt;</span>if<span class="crayon-sy">_</span>os<span class="crayon-sy">_</span>factory<span class="crayon-sy">~</span><span class="crayon-e">refresh_persistent</span><span class="crayon-o">(</span><span class="crayon-h"> </span>lo<span class="crayon-sy">_</span>state<span class="crayon-sy">_</span>object<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">CATCH</span><span class="crayon-h"> </span><span class="crayon-t">cx_os_object_not_refreshable</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">CONTINUE</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">ENDTRY</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-21"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">ENDLOOP</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f07018659621-22">endmethod<span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0019 seconds] -->
+<p>Обновление относительно всех активных агентов:</p><!-- Urvanov Syntax Highlighter v2.8.22 -->
+
+		<div id="urvanov-syntax-highlighter-618a0f8cd8f11959216354" class="urvanov-syntax-highlighter-syntax crayon-theme-abapblog urvanov-syntax-highlighter-font-monospace urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-bottom: 12px; clear: none; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="urvanov-syntax-highlighter-plain-wrap"></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-8">8</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-9">9</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-10">10</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-11">11</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-12">12</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-13">13</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-14">14</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-15">15</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f11959216354-16">16</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-1">method<span class="crayon-h"> </span>REFRESH<span class="crayon-sy">_</span>ALL<span class="crayon-sy">_</span>OBJECTS<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-2"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">DATA</span><span class="crayon-o">:</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>lo<span class="crayon-sy">_</span>agent<span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>cl<span class="crayon-sy">_</span>os<span class="crayon-sy">_</span>ca<span class="crayon-sy">_</span>common<span class="crayon-sy">,</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>ls<span class="crayon-sy">_</span>agent<span class="crayon-sy">_</span>info<span class="crayon-h">&nbsp;&nbsp; </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span>ostyp<span class="crayon-sy">_</span>ca<span class="crayon-sy">_</span>info<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-6"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">LOOP</span><span class="crayon-h"> </span><span class="crayon-st">AT</span><span class="crayon-h"> </span>cl<span class="crayon-sy">_</span>os<span class="crayon-sy">_</span>system<span class="crayon-o">=</span><span class="crayon-o">&gt;</span>active<span class="crayon-sy">_</span>class<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-st">INTO</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>agent<span class="crayon-sy">_</span>info<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">TRY</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>lo<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-o">?=</span><span class="crayon-h"> </span>ls<span class="crayon-sy">_</span>agent<span class="crayon-sy">_</span>info<span class="crayon-o">-</span>class<span class="crayon-sy">_</span>agent<span class="crayon-sy">_</span>ref<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">CATCH</span><span class="crayon-h"> </span><span class="crayon-t">cx_sy_move_cast_error</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">CONTINUE</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">ENDTRY</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-12">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span>zcl<span class="crayon-sy">_</span>po<span class="crayon-sy">_</span>utils<span class="crayon-o">=</span><span class="crayon-o">&gt;</span><span class="crayon-e">refresh_objects_by_agent</span><span class="crayon-o">(</span><span class="crayon-h"> </span>lo<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-14"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">ENDLOOP</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-15">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f11959216354-16">endmethod<span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0014 seconds] -->
+<p><strong>IF_OS_FACTORY~DELETE_PERSISTENT</strong>.Удаление хранимого объекта. В качестве входного параметра ожидает ссылку на хранимый объект.</p>
+<p><strong>IF_OS_FACTORY~CREATE_TRANSIENT. </strong>Если хранимый объект не идентифицируется через бизнес ключ, для создания временного объекта хранимого класса (не связанного с источником данных) можно использовать данный метод.</p>
+<p><strong>IF_OS_FACTORY~CREATE_TRANSIENT_BY_KEY. </strong>Создает временный объект хранимого класса. Используется, если хранимый объект идентифицируется через бизнес ключ. В качестве входящего параметра i_key должна передаваться либо структура (составной ключ), либо строка.</p>
+<p><strong>IF_OS_FACTORY~RELEASE. </strong>Удаляет хранимый объект из памяти Persistent Service. Может использоваться для объектов со статусами: OSCON_OSTATUS_LOADED и OSCON_OSTATUS_NOT_LOADED. При повторной инициализации хранимого объекта, он будет загружен из БД заново.</p>
+<p>&nbsp;</p>
+<p><strong>Методы интерфейса IF_OS_CA_PERSISTENCY</strong></p>
+<p><strong>IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_OID. </strong>Загружает хранимый объект и создает экземпляр хранимого класса внутри программы. Данный метод используется, когда хранимый объект не идентифицируется по бизнес ключу. Входной параметр ID объекта с типом OS_GUID:</p><!-- Urvanov Syntax Highlighter v2.8.22 -->
+
+		<div id="urvanov-syntax-highlighter-618a0f8cd8f14560869318" class="urvanov-syntax-highlighter-syntax crayon-theme-abapblog urvanov-syntax-highlighter-font-monospace urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-bottom: 12px; clear: none; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="urvanov-syntax-highlighter-plain-wrap"></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f14560869318-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f14560869318-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f14560869318-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f14560869318-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f14560869318-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f14560869318-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f14560869318-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f14560869318-8">8</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f14560869318-1"><span class="crayon-st">DATA</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f14560869318-2"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>passkey<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>passkey<span class="crayon-sy">,</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f14560869318-3"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>passkey<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>passkey<span class="crayon-sy">,</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f14560869318-4"><span class="crayon-h">&nbsp;&nbsp;</span>gv<span class="crayon-sy">_</span>guid<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span>os<span class="crayon-sy">_</span>guid<span class="crayon-h"> </span><span class="crayon-st">VALUE</span><span class="crayon-h"> </span><span class="crayon-s">'53730C660E6600D5E10080000A0000A9'</span><span class="crayon-sy">,</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f14560869318-5"><span class="crayon-h">&nbsp;&nbsp;</span>gv<span class="crayon-sy">_</span>pass<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span>char10<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f14560869318-6">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f14560869318-7">go<span class="crayon-sy">_</span>passkey<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>passkey<span class="crayon-o">=</span><span class="crayon-o">&gt;</span>agent<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f14560869318-8">go<span class="crayon-sy">_</span>passkey<span class="crayon-h"> </span><span class="crayon-o">?=</span><span class="crayon-h"> </span>go<span class="crayon-sy">_</span>passkey<span class="crayon-sy">_</span>agent<span class="crayon-o">-</span><span class="crayon-o">&gt;</span>if<span class="crayon-sy">_</span>os<span class="crayon-sy">_</span>ca<span class="crayon-sy">_</span>persistency<span class="crayon-sy">~</span><span class="crayon-e">get_persistent_by_oid</span><span class="crayon-o">(</span><span class="crayon-h"> </span>gv<span class="crayon-sy">_</span>guid<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0013 seconds] -->
+<p><strong>IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY</strong><strong>. </strong>Загружает хранимый объект и создает экземпляр хранимого класса внутри программы. Данный метод используется, когда хранимый объект идентифицируется по бизнес ключу. В качестве входящего параметра i_key должна передаваться либо структура (составной ключ), либо строка.</p>
+<p><strong>IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_OID_TAB. </strong>Аналогичен методу GET_PERSISTENT_BY_OID, за исключением того что в данном методе объекты можно загрузить массово. Использование метода возможно, только если в генераторе стоит галочка:</p>
+<p><a href="../../wp-content/uploads/2014/05/mass_access.png" data-slb-active="1" data-slb-asset="94144050" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1997" src="../../wp-content/uploads/2014/05/mass_access.png" alt="mass_access" width="637" height="208" srcset="../../wp-content/uploads/2014/05/mass_access.png 637w, ../../wp-content/uploads/2014/05/mass_access-300x97.png 300w" sizes="(max-width: 637px) 100vw, 637px"></a></p>
+<p><strong>IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY_TAB. </strong>Аналогичен методу IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY, за исключением того что в данном методе объекты загружаются массово. Использовать можно так же только если стоит вышеуказанная галочка. Данный метод вызывает исключение, если в памяти есть объект с тем же ключом и статусом: OSCON_OSTATUS_TRANSIENT  и OSCON_OSTATUS_DELETED.Если какой-либо объект по указанным ключам не будет найден, исключение не будет вызвано (будет возвращена пустая ссылка). Пример массовой инициализации объектов:</p><!-- Urvanov Syntax Highlighter v2.8.22 -->
+
+		<div id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936" class="urvanov-syntax-highlighter-syntax crayon-theme-abapblog urvanov-syntax-highlighter-font-monospace urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-bottom: 12px; clear: none; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="urvanov-syntax-highlighter-plain-wrap"></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-8">8</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-9">9</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-10">10</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-11">11</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-12">12</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-13">13</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-14">14</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-15">15</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-16">16</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-1"><span class="crayon-st">DATA</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-2"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>sflight<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>sflight<span class="crayon-sy">,</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-3"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>sflight<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>sflight<span class="crayon-sy">,</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-4"><span class="crayon-h">&nbsp;&nbsp;</span>gt<span class="crayon-sy">_</span>flights<span class="crayon-sy">_</span>keys<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">STANDARD</span><span class="crayon-h"> </span><span class="crayon-st">TABLE</span><span class="crayon-h"> </span><span class="crayon-st">OF</span><span class="crayon-h"> </span>scol<span class="crayon-sy">_</span>flight<span class="crayon-sy">_</span>key<span class="crayon-sy">,</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-5"><span class="crayon-h">&nbsp;&nbsp;</span>gt<span class="crayon-sy">_</span>sflights<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span>osreftab<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-6">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-7">go<span class="crayon-sy">_</span>sflight<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>sflight<span class="crayon-o">=</span><span class="crayon-o">&gt;</span>agent<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-8">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-9"><span class="crayon-c">" 1. Получаем ключевые поля для инициализации объектов</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-10"><span class="crayon-st">SELECT</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-st">FROM</span><span class="crayon-h"> </span>sflight<span class="crayon-h"> </span><span class="crayon-st">INTO</span><span class="crayon-h"> </span><span class="crayon-st">CORRESPONDING</span><span class="crayon-h"> </span><span class="crayon-st">FIELDS</span><span class="crayon-h"> </span><span class="crayon-st">OF</span><span class="crayon-h"> </span><span class="crayon-st">TABLE</span><span class="crayon-h"> </span>gt<span class="crayon-sy">_</span>flights<span class="crayon-sy">_</span>keys<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-12"><span class="crayon-c">" 2. Получаем таблицу с объектами</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-13"><span class="crayon-st">TRY</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-14"><span class="crayon-h">&nbsp;&nbsp;</span>gt<span class="crayon-sy">_</span>sflights<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>go<span class="crayon-sy">_</span>sflight<span class="crayon-sy">_</span>agent<span class="crayon-o">-</span><span class="crayon-o">&gt;</span>if<span class="crayon-sy">_</span>os<span class="crayon-sy">_</span>ca<span class="crayon-sy">_</span>persistency<span class="crayon-sy">~</span><span class="crayon-e">get_persistent_by_key_tab</span><span class="crayon-o">(</span><span class="crayon-h"> </span>gt<span class="crayon-sy">_</span>flights<span class="crayon-sy">_</span>keys<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-15"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">CATCH</span><span class="crayon-h"> </span><span class="crayon-t">cx_os_object_not_found</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1b154631936-16"><span class="crayon-st">ENDTRY</span><span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0018 seconds] -->
+<p><strong>IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_QUERY. </strong>Данный метод используется для массового выбора объектов из базы данных по указанному в параметрах метода запросу. Запрос представлен в виде класса реализующего интерфейс <strong>IF_OS_QUERY</strong>. Данная методика относится к Query Service и будет рассматриваться далее. Объект запроса создается через метод CREATE_QUERY в классе, реализующем интерфейс <strong>IF_OS_QUERY_MANAGER</strong>.  Значения для сравнения в запросе передаются через таблицу I_PARAMETER_TAB, если для сравнения используется не более трех атрибутов, и они являются атрибутами элементарного типа, тогда можно использовать параметры I_PAR1-3. Вы можете использовать параметры I_SUBCLASSES и I_UPTO для того чтобы загружать подклассы и ограничить максимальное число возвращаемых объектов. Использовать можно, только если стоит галочка:</p>
+<p><a href="../../wp-content/uploads/2014/05/query-methods.png" data-slb-active="1" data-slb-asset="1745614748" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1998" src="../../wp-content/uploads/2014/05/query-methods.png" alt="query methods" width="637" height="208" srcset="../../wp-content/uploads/2014/05/query-methods.png 637w, ../../wp-content/uploads/2014/05/query-methods-300x97.png 300w" sizes="(max-width: 637px) 100vw, 637px"></a></p>
+<p>&nbsp;</p>
+<p><strong>Методы интерфейса IF_OS_CA_INSTANCE</strong></p>
+<p><strong>IF_OS_CA_INSTANCE~GET_STATUS. </strong>Получение статуса хранимого объекта относительно переданной ссылочной переменной.<br>
+<strong>IF_OS_CA_INSTANCE~GET_NOT_LOADED. </strong>Получение всех объектов (относительно класса агента) которые имеют статус OSCON_OSTATUS_NOT_LOADED (0).<br>
+<strong>IF_OS_CA_INSTANCE~GET_CREATED. </strong>Получение всех объектов (относительно класса агента) которые имеют статус OSCON_OSTATUS_NEW (1).<br>
+<strong>IF_OS_CA_INSTANCE~GET_LOADED. </strong>Получение всех объектов (относительно класса агента) которые имеют статус OSCON_OSTATUS_LOADED (2).<br>
+<strong>IF_OS_CA_INSTANCE~GET_CHANGED. </strong>Получение всех объектов (относительно класса агента) которые имеют статус OSCON_OSTATUS_CHANGED (3).<br>
+<strong>IF_OS_CA_INSTANCE~GET_DELETED. </strong>Получение всех объектов (относительно класса агента) которые имеют статус OSCON_OSTATUS_DELETED (4).<br>
+<strong>IF_OS_CA_INSTANCE~TRANSIENT. </strong>Получение всех объектов (относительно класса агента) которые имеют статус OSCON_OSTATUS_TRANSIENT (10).</p>
+<p>&nbsp;</p>
+<p><strong>Методы интерфейса IF_OS_CA_SERVICE</strong></p>
+<p><strong>GET_</strong><strong>OID_</strong><strong>BY_</strong><strong>REF. </strong>Если для идентификации используется GUID, данный метод позволяет по ссылке на объект его получить.<br>
+<strong>GET_REF_BY_OID. </strong>Если для идентификации используется GUID, данный метод позволяет получить по GUIDссылку на объект.</p>
+<p>Одним из важнейших атрибутов агента класса является атрибут –<strong> OBJECT_INFO</strong>:</p>
+<p><a href="../../wp-content/uploads/2014/05/object_info.png" data-slb-active="1" data-slb-asset="1836760355" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-1999" src="../../wp-content/uploads/2014/05/object_info.png" alt="object_info" width="550" height="97" srcset="../../wp-content/uploads/2014/05/object_info.png 550w, ../../wp-content/uploads/2014/05/object_info-300x52.png 300w" sizes="(max-width: 550px) 100vw, 550px"></a></p>
+<p>Внутри этой внутренней таблицы находится информация обо всех управляемых этим агентом объектах. Основные поля таблицы:</p>
+<ul>
+<li><strong>OBJECT_ID</strong>. Идентификатор объекта, используемый для каждого класса ABAP.</li>
+<li><strong>OBJECT_IREF</strong>. Ссылка на объект ABAP</li>
+<li><strong>PM_STATUS</strong>. Статус объекта</li>
+<li><strong>PM_DBSTATUS</strong>. Статус хранимого объекта, относительно БД. OSCON_DBSTATUS_UNKNOWN (0) – нет информации о том, есть ли объект в БД. OSCON_DBSTATUS_EXISTING (1) – объект существует в БД. OSCON_DBSTATUS_NOT_EXISTING (2) – объект не существует в БД.</li>
+</ul>
+<p>&nbsp;</p>
+<h3>Статусы хранимых объектов</h3>
+<p>Статус хранимого объекта позволяет определить, например, был ли объект сохранен, изменен или удален, перенесены ли эти изменения в БД и т.п. Статус отвечает за то, какие в данный момент времени можно вызывать методы, а какие приведут к ошибкам. Существует семь различных статусов. Для получения информации о статусе хранимого объекта, можно использовать метод <strong>GET_</strong><strong>STATUS </strong>интерфейса  <strong>IF_OS_CA_INSTANCE</strong>, который реализован в агенте класса.</p>
+<p>Имеющиеся статусы (группа типов OSCON):</p>
+<table>
+<tbody>
+<tr>
+<td><strong>Константа</strong></td>
+<td><strong>Значение</strong></td>
+<td><strong>Обозначение</strong></td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_NOT_LOADED</strong></td>
+<td>0</td>
+<td>Объект создан, но данные из БД не считаны. Может возникать в случае связанных объектов (один является вложенным атрибутом другого), пример рассматривается ниже.</td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_NEW</strong></td>
+<td>1</td>
+<td>Создан новый хранимый объект</td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_LOADED</strong></td>
+<td>2</td>
+<td>Хранимый объект успешно загружен</td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_CHANGED</strong></td>
+<td>3</td>
+<td>Хранимый объект изменен</td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_DELETED</strong></td>
+<td>4</td>
+<td>Хранимый объект удален</td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_TRANSIENT</strong></td>
+<td>10</td>
+<td>Объект хранимого класса является временным, т.е. не связан с БД.</td>
+</tr>
+<tr>
+<td><strong>OSCON_OSTATUS_LOADING</strong></td>
+<td>12</td>
+<td>Объект загружается. Данный статус может быть у объекта только в методе INITинтерфейса IF_OS_STATE.</td>
+</tr>
+</tbody>
+</table>
+<p>Ниже представлена таблица методов и возможного вызова COMMIT WORK при различных статусах хранимых объектов, и к чему они приведут, т.е. вызову исключения (exc) или новому статусу:</p>
+<table>
+<tbody>
+<tr>
+<td><span style="color: #000080;"><strong>Статус до вызова</strong></span></td>
+<td><strong>&#8212;</strong></td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td><strong>2</strong></td>
+<td><strong>3</strong></td>
+<td><strong>4</strong></td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>CREATE_PERSISTENT</strong></td>
+<td>1</td>
+<td>3</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>3</td>
+<td>exc</td>
+</tr>
+<tr>
+<td><strong>DELETE_PERSISTENT</strong></td>
+<td>&#8212;</td>
+<td>4</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>exc</td>
+</tr>
+<tr>
+<td><strong>GET_PERSISTENT</strong></td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>exc</td>
+<td>exc</td>
+</tr>
+<tr>
+<td><strong>GET_attribute</strong></td>
+<td>exc</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>exc</td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>SET_attribute</strong></td>
+<td>exc</td>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>exc</td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>REFRESH_PERSISTENT</strong></td>
+<td>exc</td>
+<td>0</td>
+<td>exc</td>
+<td>0</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+</tr>
+<tr>
+<td><strong>RELEASE</strong></td>
+<td>exc</td>
+<td>&#8212;</td>
+<td>exc</td>
+<td>&#8212;</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+</tr>
+<tr>
+<td><strong>CREATE_TRANSIENT</strong></td>
+<td>10</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+</tr>
+<tr>
+<td><strong>GET_TRANSIENT</strong></td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>exc</td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>COMMIT WORK</strong></td>
+<td>&#8212;</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>&#8212;</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p>Далее диаграмма изменения статуса хранимого объекта, который еще не был создан в БД, при работе с ним:</p>
+<p><a href="../../wp-content/uploads/2014/05/no_in_db.gif" data-slb-active="1" data-slb-asset="913518825" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-2025" src="../../wp-content/uploads/2014/05/no_in_db.gif" alt="no_in_db" width="626" height="516"></a></p>
+<p>Диаграмма изменения статуса хранимого объекта, который был загружен из БД, при работе с ним:</p>
+<p><a href="../../wp-content/uploads/2014/05/in_db.gif" data-slb-active="1" data-slb-asset="657301835" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-2026" src="../../wp-content/uploads/2014/05/in_db.gif" alt="in_db" width="633" height="466"></a></p>
+<p>Как будет рассмотрено ниже в примерах, Persistence Service при загрузке объекта, атрибут которого является ссылкой на другой хранимый объект, не загружает ссылочный объект сразу, а делает это только при его использовании. До момента использования такой объект имеет статус – NOT_LOADED.</p>
+<p>При удалении хранимого объекта, он помечается в памяти как удаленный, в БД удаление происходит только при подтверждении транзакции.</p>
+<p>После пометки объекта как удалённый, вы можете создать новый объект с тем же идентификатором, при этом его статус изменится на changed.</p>
+<p>Возможна ситуация, когда при изменении временных атрибутов хранимых объектов статус объекта изменится на <strong>OSCON_OSTATUS_CHANGED</strong>.  Таким образом, Persistence Service будет сохранять объект в БД, даже если не изменялись хранимые атрибуты, по умолчанию данное поведение отключено (Начиная с ASABAP 7.0 EhP2):</p>
+<p><a href="../../wp-content/uploads/2014/05/no_transient_status.png" data-slb-active="1" data-slb-asset="1288320670" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-2027" src="../../wp-content/uploads/2014/05/no_transient_status.png" alt="no_transient_status" width="694" height="374" srcset="../../wp-content/uploads/2014/05/no_transient_status.png 694w, ../../wp-content/uploads/2014/05/no_transient_status-300x161.png 300w" sizes="(max-width: 694px) 100vw, 694px"></a></p>
+<p>Ранее подобное поведение нельзя было отключить, что могло приводить к значительным нагрузкам на БД при изменении большого числа объектов.</p>
+<p>&nbsp;</p>
+<h3>Ссылочные атрибуты</h3>
+<p>Объекты зачастую внутри себя содержат ссылки на другие объекты, например: «Студент» &#8212; «Пропуск», «Покупатель» &#8212; «Продавец» и т.п.</p>
+<p>Persistence Service позволяет в качестве атрибута хранимого класса использовать ссылку на объект другого хранимого класса. Но для того чтобы иметь возможность сохранить подобный класс в базе данных, необходимо чтобы соблюдались некоторые условия:</p>
+<ul>
+<li>Чтобы Persistence Service мог найти связанный (вложенный) класс, в таблице, где он хранится, должно существовать поле с типом OS_GUID (если другого ключа нет, должно быть ключевым).</li>
+<li>В таблице, которая содержит данные вложенного объекта, должны быть два поля с типом OS_GUID, первое (ссылка на объект) поле будет идентификатором вложенного объекта, а второе (Ид. класса) идентификатором класса вложенного объекта (на одну и ту же таблицу может быть много классов).</li>
+</ul>
+<p>При связывании атрибута содержащего хранимый объект, необходимо связать два поля с типом OS_GUID с данным атрибутом (при связывании для обоих полей OS_GUID имя атрибута должно быть одинаковым).</p>
+<p>Рассмотрим пример. Таблица студентов:</p>
+<p><a href="../../wp-content/uploads/2014/05/students.png" data-slb-active="1" data-slb-asset="1857876975" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-2009" src="../../wp-content/uploads/2014/05/students.png" alt="students" width="644" height="267" srcset="../../wp-content/uploads/2014/05/students.png 644w, ../../wp-content/uploads/2014/05/students-300x124.png 300w" sizes="(max-width: 644px) 100vw, 644px"></a></p>
+<p>Поле PASS_INSTANCE будет хранить ссылку на идентификатор объекта. Поле PASS_CLASS будет идентификатором класса. Поле ID будет содержать ключ студента.</p>
+<p>Таблица с кодами пропуска:</p>
+<p><a href="../../wp-content/uploads/2014/05/pass.png" data-slb-active="1" data-slb-asset="429340433" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-2010" src="../../wp-content/uploads/2014/05/pass.png" alt="pass" width="653" height="219" srcset="../../wp-content/uploads/2014/05/pass.png 653w, ../../wp-content/uploads/2014/05/pass-300x100.png 300w" sizes="(max-width: 653px) 100vw, 653px"></a></p>
+<p>Так как в нашем примере объект пропуск не может существовать без объекта студент, отдельного ключевого поля для идентификации пропуска нам не нужно. Считывать пропуска всегда будем через объект студента.</p>
+<p>Создаем класс ZCL_PASSKEY и связываем с таблицей ZPASSKEY.</p>
+<p>Далее создаем класс ZCL_STUDENT, связываем с таблицей ZSTUDENTS. Поле PASS_INSTANCE объявляем, как поле со ссылкой на объект:</p>
+<p><a href="../../wp-content/uploads/2014/05/link_students.png" data-slb-active="1" data-slb-asset="1170304595" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-2011" src="../../wp-content/uploads/2014/05/link_students.png" alt="link_students" width="586" height="172" srcset="../../wp-content/uploads/2014/05/link_students.png 586w, ../../wp-content/uploads/2014/05/link_students-300x88.png 300w" sizes="(max-width: 586px) 100vw, 586px"></a></p>
+<p>Для поля PASS_CLASSставим тип Ид. Класса и присваиваем с тем же именем:</p>
+<p><a href="../../wp-content/uploads/2014/05/class_students.png" data-slb-active="1" data-slb-asset="700127824" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-2012" src="../../wp-content/uploads/2014/05/class_students.png" alt="class_students" width="558" height="145" srcset="../../wp-content/uploads/2014/05/class_students.png 558w, ../../wp-content/uploads/2014/05/class_students-300x77.png 300w" sizes="(max-width: 558px) 100vw, 558px"></a></p>
+<p>В итоге получаем следующую связь:</p>
+<p><a href="../../wp-content/uploads/2014/05/class_links.png" data-slb-active="1" data-slb-asset="1885805168" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-2013" src="../../wp-content/uploads/2014/05/class_links.png" alt="class_links" width="648" height="130" srcset="../../wp-content/uploads/2014/05/class_links.png 648w, ../../wp-content/uploads/2014/05/class_links-300x60.png 300w" sizes="(max-width: 648px) 100vw, 648px"></a></p>
+<p>Сохраняем класс и активируем.</p>
+<p>Создадим программу создающую объект пропуска и студента и связывающую их вместе (обратите внимание, что для краткости в примерах опущена обработка исключений. Все исключения в Object Services являются ООП исключениями, как их обрабатывать смотрите в <a href="../../osnovy-abap/obrabotka-osobyx-situacij-v-abap/index.htm">этой</a> статье.):</p><!-- Urvanov Syntax Highlighter v2.8.22 -->
+
+		<div id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915" class="urvanov-syntax-highlighter-syntax crayon-theme-abapblog urvanov-syntax-highlighter-font-monospace urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-bottom: 12px; clear: none; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="urvanov-syntax-highlighter-plain-wrap"></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-8">8</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-9">9</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-10">10</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-11">11</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-12">12</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-13">13</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-14">14</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-15">15</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-16">16</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-17">17</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-18">18</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-19">19</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-20">20</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-21">21</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-22">22</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-1"><span class="crayon-st">DELETE</span><span class="crayon-h"> </span><span class="crayon-st">FROM</span><span class="crayon-h"> </span><span class="crayon-st">ZSTUDENTS</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-2"><span class="crayon-st">DELETE</span><span class="crayon-h"> </span><span class="crayon-st">FROM</span><span class="crayon-h"> </span><span class="crayon-st">ZPASSKEY</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-4"><span class="crayon-st">COMMIT</span><span class="crayon-h"> </span><span class="crayon-st">WORK</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-6"><span class="crayon-st">DATA</span><span class="crayon-o">:</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-7"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>student<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>student<span class="crayon-sy">,</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-8"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>student<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>student<span class="crayon-sy">,</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-9"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>passkey<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>passkey<span class="crayon-sy">,</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-10"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>passket<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>passkey<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-12">go<span class="crayon-sy">_</span>student<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>student<span class="crayon-o">=</span><span class="crayon-o">&gt;</span>agent<span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-13">go<span class="crayon-sy">_</span>passket<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>passkey<span class="crayon-o">=</span><span class="crayon-o">&gt;</span>agent<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-14">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-15">go<span class="crayon-sy">_</span>student<span class="crayon-h"> </span><span class="crayon-o">?=</span><span class="crayon-h"> </span>go<span class="crayon-sy">_</span>student<span class="crayon-sy">_</span>agent<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-e">create_persistent</span><span class="crayon-o">(</span><span class="crayon-h"> </span>i<span class="crayon-sy">_</span>id<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'1'</span><span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-16">go<span class="crayon-sy">_</span>passkey<span class="crayon-h"> </span><span class="crayon-o">?=</span><span class="crayon-h"> </span>go<span class="crayon-sy">_</span>passket<span class="crayon-sy">_</span>agent<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-e">create_persistent</span><span class="crayon-o">(</span><span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-17">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-18">go<span class="crayon-sy">_</span>passkey<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-e">set_passkey</span><span class="crayon-o">(</span><span class="crayon-h"> </span><span class="crayon-s">'$$FFFF123'</span><span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-19">go<span class="crayon-sy">_</span>student<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-e">set_name</span><span class="crayon-o">(</span><span class="crayon-h"> </span><span class="crayon-s">'MIKE'</span><span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-20">go<span class="crayon-sy">_</span>student<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-e">set_passkey</span><span class="crayon-o">(</span><span class="crayon-h"> </span>go<span class="crayon-sy">_</span>passkey<span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-21">&nbsp;</div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f1f564018915-22"><span class="crayon-st">COMMIT</span><span class="crayon-h"> </span><span class="crayon-st">WORK</span><span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0028 seconds] -->
+<p>Содержимое таблицы ZPASSKEY:</p>
+<p><a href="../../wp-content/uploads/2014/05/pass_tab.png" data-slb-active="1" data-slb-asset="2041394397" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-2014" src="../../wp-content/uploads/2014/05/pass_tab.png" alt="pass_tab" width="370" height="101" srcset="../../wp-content/uploads/2014/05/pass_tab.png 370w, ../../wp-content/uploads/2014/05/pass_tab-300x81.png 300w" sizes="(max-width: 370px) 100vw, 370px"></a></p>
+<p>Содержимое таблицы ZSTUDENTS:</p>
+<p><a href="../../wp-content/uploads/2014/05/stud_tab.png" data-slb-active="1" data-slb-asset="1405527056" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-2015" src="../../wp-content/uploads/2014/05/stud_tab.png" alt="stud_tab" width="682" height="116" srcset="../../wp-content/uploads/2014/05/stud_tab.png 682w, ../../wp-content/uploads/2014/05/stud_tab-300x51.png 300w" sizes="(max-width: 682px) 100vw, 682px"></a></p>
+<p>Считывание происходит следующим образом:</p><!-- Urvanov Syntax Highlighter v2.8.22 -->
+
+		<div id="urvanov-syntax-highlighter-618a0f8cd8f3b675138707" class="urvanov-syntax-highlighter-syntax crayon-theme-abapblog urvanov-syntax-highlighter-font-monospace urvanov-syntax-highlighter-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-bottom: 12px; clear: none; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="urvanov-syntax-highlighter-plain-wrap"></div>
+			<div class="urvanov-syntax-highlighter-main" style="">
+				<table class="crayon-table">
+					<tr class="urvanov-syntax-highlighter-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="urvanov-syntax-highlighter-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-1">1</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-2">2</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-3">3</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-4">4</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-5">5</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-6">6</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-7">7</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-8">8</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-9">9</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-10">10</div><div class="crayon-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-11">11</div><div class="crayon-num crayon-striped-num" data-line="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-12">12</div></div>
+				</td>
+						<td class="urvanov-syntax-highlighter-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-1"><span class="crayon-st">DATA</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-2"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>student<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>student<span class="crayon-sy">,</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-3"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>student<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>student<span class="crayon-sy">,</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-4"><span class="crayon-h">&nbsp;&nbsp;</span>go<span class="crayon-sy">_</span>passkey<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span><span class="crayon-st">REF</span><span class="crayon-h"> </span><span class="crayon-st">TO</span><span class="crayon-h"> </span>zcl<span class="crayon-sy">_</span>passkey<span class="crayon-sy">,</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-5"><span class="crayon-h">&nbsp;&nbsp;</span>gv<span class="crayon-sy">_</span>pass<span class="crayon-h"> </span><span class="crayon-st">TYPE</span><span class="crayon-h"> </span>char10<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-6">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-7">go<span class="crayon-sy">_</span>student<span class="crayon-sy">_</span>agent<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>zca<span class="crayon-sy">_</span>student<span class="crayon-o">=</span><span class="crayon-o">&gt;</span>agent<span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-8">go<span class="crayon-sy">_</span>student<span class="crayon-h"> </span><span class="crayon-o">?=</span><span class="crayon-h"> </span>go<span class="crayon-sy">_</span>student<span class="crayon-sy">_</span>agent<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-e">get_persistent</span><span class="crayon-o">(</span><span class="crayon-h"> </span>i<span class="crayon-sy">_</span>id<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-9">go<span class="crayon-sy">_</span>passkey<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>go<span class="crayon-sy">_</span>student<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-e">get_passkey</span><span class="crayon-o">(</span><span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-10">&nbsp;</div><div class="crayon-line" id="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-11">gv<span class="crayon-sy">_</span>pass<span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span>go<span class="crayon-sy">_</span>passkey<span class="crayon-o">-</span><span class="crayon-o">&gt;</span><span class="crayon-e">get_passkey</span><span class="crayon-o">(</span><span class="crayon-h"> </span><span class="crayon-o">)</span><span class="crayon-o">.</span></div><div class="crayon-line crayon-striped-line" id="urvanov-syntax-highlighter-618a0f8cd8f3b675138707-12"><span class="crayon-st">WRITE</span><span class="crayon-h"> </span>gv<span class="crayon-sy">_</span>pass<span class="crayon-o">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0017 seconds] -->
+<p>При удалении хранимого объекта «студент» из БД, «пропуск» не будет автоматически удаляться, если это необходимо, то вызвать удаление придётся вручную.</p>
+<p>Реализовать вложенные хранимые объекты можно и вручную, без необходимости использования специальных полей типа OS_GUID в таблицах, но это потребует дополнительной разработки, например при инициализации хранимого объекта ZCL_STUDENT нужно будет переопределить метод INIT, в котором во временный атрибут PASSKEY положить хранимый объект класса ZCL_PASSKEY.</p>
+<p>В данном примере связь между хранимыми классами осуществляется через атрибут, к сожалению, нет стандартной возможности связать с одним хранимым классом группу хранимых классов, чтобы эта группа загружалась автоматически (Например, объект заказа и объекты позиции). Подобное поведение можно реализовать только вручную.</p>
+<p>&nbsp;</p>
+<h3>Наследование</h3>
+<p>Наследование — механизм языка, позволяющий описать новый класс на основе уже существующего (родительского, базового) класса. Класс-потомок может добавить собственные методы и свойства, а также пользоваться родительскими методами и свойствами. Позволяет строить иерархии классов.</p>
+<p>Persistent Service позволяет использовать механизм наследования для хранимых классов. При наследовании наследуется и то, каким образом родительский класс был связан с объектами в БД (наследование сопоставления). При этом в дочернем классе нельзя переопределить настройки сопоставления родительского класса.</p>
+<p>Существует два способа при наследовании настроек сопоставления:</p>
+<p><strong>Вертикальное наследование</strong>. На верхнем уровне иерархии находится не абстрактный класс. В наследуемых классах можно определить новые атрибуты из других таблиц, структур или ракурсов, но при этом ключевые поля должны совпадать с ключевыми полями, объявленными в родительском классе. Обычно схема выглядит следующим образом:</p>
+<p><a href="../../wp-content/uploads/2014/05/vertical_inheritence1.png" data-slb-active="1" data-slb-asset="1687106904" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-2034" src="../../wp-content/uploads/2014/05/vertical_inheritence1.png" alt="vertical_inheritence" width="774" height="446" srcset="../../wp-content/uploads/2014/05/vertical_inheritence1.png 774w, ../../wp-content/uploads/2014/05/vertical_inheritence1-300x172.png 300w" sizes="(max-width: 774px) 100vw, 774px"></a></p>
+<p>Класс cl_e_ticket наследуется от класса cl_ticket. Оба хранимых класса связаны с разными таблицами, но ключевые поля в этих таблицах одинаковые.</p>
+<p>Существует особый случай вертикального сопоставления, когда атрибуты, объявленные в дочернем классе, ссылаются на ту же таблицу, ракурс или структуру что и атрибуты в родительском классе. Для того чтобы установить к какому именно классу относится запись в таблице, структуре или ракурсе, необходимо чтобы в них было специальное поле с типом OS_GUID. При сопоставлении табличного поля, атрибут в классе будет иметь тип идентификатор типа:</p>
+<p><a href="../../wp-content/uploads/2014/05/type_ident.png" data-slb-active="1" data-slb-asset="980192630" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-2017" src="../../wp-content/uploads/2014/05/type_ident.png" alt="type_ident" width="268" height="149"></a></p>
+<p><strong>Горизонтальное наследование</strong>. Если родительский класс является абстрактным, вы можете объявлять хранимые атрибуты без необходимости их сопоставления.  Настройка сопоставления атрибутов необходима только в дочерних (не абстрактных) классах, при этом они могут быть связаны с совершенно разными таблицами.</p>
+<p><a href="../../wp-content/uploads/2014/05/hor_inh1.png" data-slb-active="1" data-slb-asset="2027310193" data-slb-internal="0" data-slb-group="1977"><img loading="lazy" class="alignnone size-full wp-image-2035" src="../../wp-content/uploads/2014/05/hor_inh1.png" alt="hor_inh" width="775" height="444" srcset="../../wp-content/uploads/2014/05/hor_inh1.png 775w, ../../wp-content/uploads/2014/05/hor_inh1-300x171.png 300w" sizes="(max-width: 775px) 100vw, 775px"></a></p>
+<p>Как видно из рисунка могут быть не только разные таблицы, но и разные ключевые поля для наследуемых объектов.</p>
+<blockquote><p>Если при создании класса наследника, возникает проблема в том, что интерфейс IF_OS_STATE не может быть реализован дважды, просто перейдите на закладку интерфейсы и удалите лишнюю запись.</p></blockquote>
+<p>В следующей части будут рассмотрены темы: Преобразование хранимых объектов в структуры (таблицы) и обратно,  менеджер инстанций и менеджер постоянства, пользовательские проверки в методах изменения/получения атрибутов, интеграция с системой блокировок SAP, переопределение методов доступа к данным, Transaction Service и Query Service.</p>
+							</div>
+		<div class="tags-links"><a href="../../tag/abap-object-services/index.htm" rel="tag">ABAP Object Services</a> <a href="../../tag/persistence-service/index.htm" rel="tag">persistence service</a></div></article>
+	
+	<nav class="navigation post-navigation" role="navigation" aria-label="Записи">
+		<h2 class="screen-reader-text">Навигация по записям</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="../../osnovy-abap/diagramma-klassov-uml/index.htm" rel="prev"><span class="meta-nav" aria-hidden="true">Назад</span> <span class="screen-reader-text">Предыдущая запись:</span> <span class="post-title">Диаграмма классов UML</span></a></div><div class="nav-next"><a href="../abap-object-services-transaction-service/index.htm" rel="next"><span class="meta-nav" aria-hidden="true">Далее</span> <span class="screen-reader-text">Следующая запись:</span> <span class="post-title">ABAP Object Services – Transaction Service</span></a></div></div>
+	</nav>
+
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			<span itemprop="interactionCount">8</span> комментариев		</h2>
+
+		<ol class="comment-list">
+					<li id="comment-17531" class="comment even thread-even depth-1">
+			<article id="div-comment-17531" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/633ada55ad6d9831e08a6ae23270baf4.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/633ada55ad6d9831e08a6ae23270baf4-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">vxd.dev</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17531"><time datetime="2014-05-30T13:50:00+04:00">30.05.2014 в 13:50</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Интересно, насколько это решение применимо в реальных проектах. Пока даже представить не могу где это может понадобится. Спасибо за статью 🙂</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-1.htm?replytocom=17531#respond' data-commentid="17531" data-postid="1977" data-belowelement="div-comment-17531" data-respondelement="respond" data-replyto="Комментарий к записи vxd.dev" aria-label='Комментарий к записи vxd.dev'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-17534" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-17534" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/47a1eb6e85596e832b844631b7c9dd09.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/47a1eb6e85596e832b844631b7c9dd09-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Astrafox</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17534"><time datetime="2014-05-30T21:24:00+04:00">30.05.2014 в 21:24</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Был опыт реализации вручную слоя обмена данными между объектами и БД, когда эти обязанности выполняет за тебя система стало проще 🙂</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-2.htm?replytocom=17534#respond' data-commentid="17534" data-postid="1977" data-belowelement="div-comment-17534" data-respondelement="respond" data-replyto="Комментарий к записи Astrafox" aria-label='Комментарий к записи Astrafox'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-17535" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-17535" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/633ada55ad6d9831e08a6ae23270baf4.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/633ada55ad6d9831e08a6ae23270baf4-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">vxd.dev</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17535"><time datetime="2014-06-02T09:41:00+04:00">02.06.2014 в 09:41</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Теперь и я попробую :). А в новых версиях сапа нет таких уже заранее созданных классов для работы со стандартными табличками? Смущает, что все равно нужно расширять классы блокировками, еще и переживать, что каждая активация может перезатереть все мои методы. Кстати, как быть, если есть уже сгенерированный рабочий класс, но мне нужно добавить поле в таблицу &#8212; не перезатрутся ли мои методы в этом случае?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-3.htm?replytocom=17535#respond' data-commentid="17535" data-postid="1977" data-belowelement="div-comment-17535" data-respondelement="respond" data-replyto="Комментарий к записи vxd.dev" aria-label='Комментарий к записи vxd.dev'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-17536" class="comment odd alt depth-2 parent">
+			<article id="div-comment-17536" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/47a1eb6e85596e832b844631b7c9dd09.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/47a1eb6e85596e832b844631b7c9dd09-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Astrafox</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17536"><time datetime="2014-06-02T20:23:00+04:00">02.06.2014 в 20:23</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Во второй части будут рассмотрены эти вопросы, добавлю в блог на днях 😉</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-4.htm?replytocom=17536#respond' data-commentid="17536" data-postid="1977" data-belowelement="div-comment-17536" data-respondelement="respond" data-replyto="Комментарий к записи Astrafox" aria-label='Комментарий к записи Astrafox'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-17537" class="comment even depth-3">
+			<article id="div-comment-17537" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/47a1eb6e85596e832b844631b7c9dd09.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/47a1eb6e85596e832b844631b7c9dd09-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Astrafox</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17537"><time datetime="2014-06-02T20:26:00+04:00">02.06.2014 в 20:26</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Что касается добавления новых полей в таблицу, не ключевых, классы будут работать и без перегенерации. Если надо будет добавить новый хранимый атрибут, только тогда понадобится повторная активация.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-5.htm?replytocom=17537#respond' data-commentid="17537" data-postid="1977" data-belowelement="div-comment-17537" data-respondelement="respond" data-replyto="Комментарий к записи Astrafox" aria-label='Комментарий к записи Astrafox'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-17670" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-17670" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/60e19ed4413425dd72b2401ef0b916ca.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/60e19ed4413425dd72b2401ef0b916ca-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Андрей</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17670"><time datetime="2016-01-03T22:45:00+04:00">03.01.2016 в 22:45</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Мы (один из стандартных модулей) это делаем &#171;ручками&#187; &#8212; у каждого класса  из Application Layer есть корреспондирующий класс с Persistence Layer (если нужно, конечно) &#8212; со всеми преимуществами и недостатками.</p>
+<p>Интересно, насколько техника, используется в реальный проектах.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-6.htm?replytocom=17670#respond' data-commentid="17670" data-postid="1977" data-belowelement="div-comment-17670" data-respondelement="respond" data-replyto="Комментарий к записи Андрей" aria-label='Комментарий к записи Андрей'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-17777" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-17777" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/6537b4492a2b7dfd02ae0c120f82a461.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/6537b4492a2b7dfd02ae0c120f82a461-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Константин Полушкин</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17777"><time datetime="2019-10-03T15:33:14+04:00">03.10.2019 в 15:33</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Добрый день.</p>
+<p>по пункту: Ссылочные атрибуты</p>
+<p>Такие<br>
+ <a href="../../images/cee6bdfbd7d98f97117768c85041bc2e8f79ec5985260fa64ddaaea0fa64d33c.png" rel="nofollow ugc">https://uploads.disquscdn.com/images/cee6bdfbd7d98f97117768c85041bc2e8f79ec5985260fa64ddaaea0fa64d33c.png</a> </p>
+<p>Получаю ошибку при активации<br>
+ <a href="../../images/64f409da2a4aaa8dc54e0a654336031e5e67369b65d45ccfa2acec59c1f3684d.png" rel="nofollow ugc">https://uploads.disquscdn.com/images/64f409da2a4aaa8dc54e0a654336031e5e67369b65d45ccfa2acec59c1f3684d.png</a> </p>
+<p>Почему то не подтягивается Ид Класса  в строке PASS_INSTANCE<br>
+Сталкивались с такой ошибкой? версия 7.40</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-7.htm?replytocom=17777#respond' data-commentid="17777" data-postid="1977" data-belowelement="div-comment-17777" data-respondelement="respond" data-replyto="Комментарий к записи Константин Полушкин" aria-label='Комментарий к записи Константин Полушкин'>Ответить</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-17778" class="comment odd alt depth-2">
+			<article id="div-comment-17778" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='../../avatar/e18c6494f10281b610f032c4557fc29b.png?s=80&#038;d=retro&#038;r=g' srcset='../../avatar/e18c6494f10281b610f032c4557fc29b-1.png 2x?s=160&#038;d=retro&#038;r=g 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy'>						<b class="fn">Mike Sidorochkin</b><span class="says">:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="index.htm#comment-17778"><time datetime="2019-10-03T19:54:38+04:00">03.10.2019 в 19:54</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Добрый день!</p>
+<p>Не сталкивался. В целом с ORM этим уже давно не работаю.  SAP давно отказались от их развития, есть официальные ответы на SCN по этому поводу. Посмотрите, много ли у вас в системе persistent классов от SAP и сделайте выводы. </p>
+<p>Как альтернативу они предлагали ранее BOPF, но и его перспективы в настоящий момент туманны,  по крайней мере в части Odata. В целом как фреймворк он будет жить вместе с TM модулем, т.к. это его ядро по сути.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='index-8.htm?replytocom=17778#respond' data-commentid="17778" data-postid="1977" data-belowelement="div-comment-17778" data-respondelement="respond" data-replyto="Комментарий к записи Mike Sidorochkin" aria-label='Комментарий к записи Mike Sidorochkin'>Ответить</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		</ol>
+
+		
+		
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Добавить комментарий для <a href="#comment-17531">vxd.dev</a> <small><a rel="nofollow" id="cancel-comment-reply-link" href="index.htm#respond">Отменить ответ</a></small></h3><form action="https://abap-blog.ru/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate=""><p class="comment-notes"><span id="email-notes">Ваш адрес email не будет опубликован.</span></p><p class="comment-form-comment"><label for="comment">Комментарий</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Имя</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
+<div class="anr_captcha_field"><div id="anr_captcha_field_1" class="anr_captcha_field_div"></div></div><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Отправить комментарий"> <input type='hidden' name='comment_post_ID' value='1977' id='comment_post_ID'>
+<input type='hidden' name='comment_parent' id='comment_parent' value='17531'>
+</p></form>	</div><!-- #respond -->
+	
+	
+</div>
+
+			</div>
+							</div>
+					</div>
+	</div>
+</div>
+<script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"api":{"root":"https:\/\/abap-blog.ru\/wp-json\/","namespace":"contact-form-7\/v1"}};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.5.1' id='contact-form-7-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect.min.js?ver=1.12.1' id='jquery-effects-core-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-slide.min.js?ver=1.12.1' id='jquery-effects-slide-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-highlight.min.js?ver=1.12.1' id='jquery-effects-highlight-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-fold.min.js?ver=1.12.1' id='jquery-effects-fold-js'></script>
+<script src='../../wp-includes/js/jquery/ui/effect-blind.min.js?ver=1.12.1' id='jquery-effects-blind-js'></script>
+<script src='../../wp-content/plugins/show-hidecollapse-expand/assets/js/bg-show-hide.js?ver=5.8.1' id='bg-show-hide-script-js'></script>
+<script src='../../wp-includes/js/comment-reply.min.js?ver=5.8.1' id='comment-reply-js'></script>
+<script src='../../wp-content/plugins/dynamic-to-top/js/libs/jquery.easing.js?ver=1.3' id='jquery-easing-js'></script>
+<script type='text/javascript' id='dynamic-to-top-js-extra'>
+/* <![CDATA[ */
+var mv_dynamic_to_top = {"text":"To Top","version":"0","min":"300","speed":"1100","easing":"easeInExpo","margin":"20"};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/dynamic-to-top/js/dynamic.to.top.min.js?ver=3.5' id='dynamic-to-top-js'></script>
+<script src='../../recaptcha/api.js?render=6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC&#038;ver=3.0' id='google-recaptcha-js'></script>
+<script type='text/javascript' id='wpcf7-recaptcha-js-extra'>
+/* <![CDATA[ */
+var wpcf7_recaptcha = {"sitekey":"6LdA3s4UAAAAADBjYG-YFAEz4zKS3lKp1CB_BHMC","actions":{"homepage":"homepage","contactform":"contactform"}};
+/* ]]> */
+</script>
+<script src='../../wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.5.1' id='wpcf7-recaptcha-js'></script>
+<script src='../../wp-includes/js/wp-embed.min.js?ver=5.8.1' id='wp-embed-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/client/js/prod/lib.core.js?ver=2.8.1' id='slb_core-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/client/js/prod/lib.view.js?ver=2.8.1' id='slb_view-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/themes/baseline/js/prod/client.js?ver=2.8.1' id='slb-asset-slb_baseline-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/themes/default/js/prod/client.js?ver=2.8.1' id='slb-asset-slb_default-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/template-tags/item/js/prod/tag.item.js?ver=2.8.1' id='slb-asset-item-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/template-tags/ui/js/prod/tag.ui.js?ver=2.8.1' id='slb-asset-ui-base-js'></script>
+<script src='../../wp-content/plugins/simple-lightbox/content-handlers/image/js/prod/handler.image.js?ver=2.8.1' id='slb-asset-image-base-js'></script>
+<script type="text/javascript" id="slb_footer">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB && SLB.has_child('View.init') ) { SLB.View.init({"ui_autofit":true,"ui_animate":true,"slideshow_autostart":false,"slideshow_duration":"6","group_loop":true,"ui_overlay_opacity":"0.8","ui_title_default":false,"theme_default":"slb_default","ui_labels":{"loading":"\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430","close":"\u0417\u0430\u043a\u0440\u044b\u0442\u044c","nav_next":"\u0412\u043f\u0435\u0440\u0435\u0434","nav_prev":"\u041d\u0430\u0437\u0430\u0434","slideshow_start":"\u0417\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0441\u043b\u0430\u0439\u0434\u0448\u043e\u0443","slideshow_stop":"\u041e\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c \u0441\u043b\u0430\u0439\u0434\u0448\u043e\u0443","group_status":"\u0418\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435 %current%  \u0438\u0437 %total%"}}); }
+if ( !!window.SLB && SLB.has_child('View.assets') ) { {$.extend(SLB.View.assets, {"801011134":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/orm.jpg"},"1668678147":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/Persistence-service1.png"},"26309643":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/persistence-flag.png"},"1263136526":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/business-key.png"},"1828485814":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/table-key.png"},"1670169001":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/new-class.png"},"153328552":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/sflight-connect.png"},"623384693":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/sflight-connect-2.png"},"666501549":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/sflight-attributes.png"},"192024324":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/generated-methods.png"},"1233256439":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/pscomp.gif"},"2132654238":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/donotmodify.png"},"132755784":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/modify.png"},"1026611235":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/agentattribute.png"},"1699539220":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/friendship.png"},"2019569143":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/sflight_keys.png"},"1506611443":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/keys.png"},"1756271755":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/refresh_by_agent.png"},"94144050":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/mass_access.png"},"1745614748":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/query-methods.png"},"1836760355":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/object_info.png"},"913518825":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/no_in_db.gif"},"657301835":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/in_db.gif"},"1288320670":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/no_transient_status.png"},"1857876975":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/students.png"},"429340433":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/pass.png"},"1170304595":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/link_students.png"},"700127824":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/class_students.png"},"1885805168":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/class_links.png"},"2041394397":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/pass_tab.png"},"1405527056":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/stud_tab.png"},"1687106904":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/vertical_inheritence1.png"},"980192630":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/type_ident.png"},"2027310193":{"id":null,"type":"image","internal":true,"source":"http:\/\/abap-blog.ru\/wp-content\/uploads\/2014\/05\/hor_inh1.png"}});} }
+/* THM */
+if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_baseline',{"name":"\u0411\u0430\u0437\u043e\u0432\u0430\u044f \u043b\u0438\u043d\u0438\u044f","parent":"","styles":[{"handle":"base","uri":"https:\/\/abap-blog.ru\/wp-content\/plugins\/simple-lightbox\/themes\/baseline\/css\/style.css","deps":[]}],"layout_raw":"<div class=\"slb_container\"><div class=\"slb_content\">{{item.content}}<div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><div class=\"slb_controls\"><span class=\"slb_close\">{{ui.close}}<\/span><span class=\"slb_slideshow\">{{ui.slideshow_control}}<\/span><\/div><div class=\"slb_loading\">{{ui.loading}}<\/div><\/div><div class=\"slb_details\"><div class=\"inner\"><div class=\"slb_data\"><div class=\"slb_data_content\"><span class=\"slb_data_title\">{{item.title}}<\/span><span class=\"slb_group_status\">{{ui.group_status}}<\/span><div class=\"slb_data_desc\">{{item.description}}<\/div><\/div><\/div><div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><\/div><\/div><\/div>"}); }if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_default',{"name":"\u041f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e (\u0441\u0432\u0435\u0442\u043b\u044b\u0439)","parent":"slb_baseline","styles":[{"handle":"base","uri":"https:\/\/abap-blog.ru\/wp-content\/plugins\/simple-lightbox\/themes\/default\/css\/style.css","deps":[]}]}); }})})(jQuery);}/* ]]> */</script>
+<script type="text/javascript" id="slb_context">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB ) { {$.extend(SLB, {"context":["public","user_guest"]});} }})})(jQuery);}/* ]]> */</script>
+			<script type="text/javascript">
+				var anr_onloadCallback = function() {
+					for ( var i = 0; i < document.forms.length; i++ ) {
+						var form = document.forms[i];
+						var captcha_div = form.querySelector( '.anr_captcha_field_div' );
+
+						if ( null === captcha_div )
+							continue;
+						captcha_div.innerHTML = '';
+						( function( form ) {
+							var anr_captcha = grecaptcha.render( captcha_div,{
+								'sitekey' : '6LfmhbAaAAAAABBrfPpMngzFHB6qZ4ATxXd3rvOR',
+								'size'  : 'normal',
+								'theme' : 'light'
+							});
+							if ( typeof jQuery !== 'undefined' ) {
+								jQuery( document.body ).on( 'checkout_error', function(){
+									grecaptcha.reset(anr_captcha);
+								});
+							}
+							if ( typeof wpcf7 !== 'undefined' ) {
+								document.addEventListener( 'wpcf7submit', function() {
+									grecaptcha.reset(anr_captcha);
+								}, false );
+							}
+						})(form);
+					}
+				};
+			</script>
+						<script src="../../recaptcha/api-1.js?onload=anr_onloadCallback&#038;render=explicit" async="" defer="">
+			</script>
+			</body>
+</html>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>lock concept | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/lock-concept/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:11:09 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>ABAP Object Services &#8212; Интеграция с системой блокировок</title>
+		<link>https://abap-blog.ru/database-work/abap-object-services-integraciya-s-sistemoj-blokirovok/</link>
+					<comments>https://abap-blog.ru/database-work/abap-object-services-integraciya-s-sistemoj-blokirovok/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 28 Jun 2014 17:03:42 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<category><![CDATA[ABAP Object Services]]></category>
+		<category><![CDATA[lock concept]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=2209</guid>
+
+					<description><![CDATA[<p>На сервере приложений одновременно может работать большое число пользователей, которые в свою очередь работают параллельно с одними и теми же программами, может случиться ситуация, когда они попытаются одновременно обработать один и тот же объект (например, изменить поставку, заказ на закупку и т.п.). Чтобы в системе не возникало противоречивости данных, были придуманы блокировки, более подробно о [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-integraciya-s-sistemoj-blokirovok/">ABAP Object Services — Интеграция с системой блокировок</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>На сервере приложений одновременно может работать большое число пользователей, которые в свою очередь работают параллельно с одними и теми же программами, может случиться ситуация, когда они попытаются одновременно обработать один и тот же объект (например, изменить поставку, заказ на закупку и т.п.). Чтобы в системе не возникало противоречивости данных, были придуманы блокировки, более подробно о концепции блокировок читайте в <a href="http://abap-blog.ru/abap/optimizaciya_integrazia/koncepciya-blokirovok-v-sap/">предыдущей статье</a>.</p>
+<p>К сожалению, в ABAP Object Services нет встроенного механизма поддержки блокировок, что может привести к ошибкам и противоречивости данных при одновременном изменении одинаковых объектов.</p>
+<p>Далее в ходе статьи мы разберем один из способов интеграции с системой блокировок.</p>
+<p><span id="more-2209"></span></p>
+<p>Но прежде чем рассматривать механизм интеграции, необходимо отметить следующее:</p>
+<ul>
+<li>При использовании системы блокировок, программисты должны позаботиться о том, чтобы заблокированный объект был, как можно быстрее разблокирован.</li>
+<li>За установку и снятие блокировок, прежде всего, отвечает разработчик, но снятие блокировок может происходить и автоматически, данный аспект следует учитывать при интеграции с хранимыми объектами. Так если при выставлении блокировки был указан параметр _SCOPE= 2, система может автоматически снимет все блокировки при завершении транзакции верхнего уровня через метод UNDO или при вызове ROLLBACK WORK в режиме совместимости.  Если транзакция верхнего уровня была завершена методом END, либо в режиме совместимости был вызван оператор COMMIT WORK, система снимет блокировки только в том случае, если был зарегистрирован хотя бы один модуль обновления (V1). Transaction Service регистрирует модуль обновления, если не было указано что обновления необходимо производить напрямую (direct update) и если хранимый объект был изменен (по умолчанию, касается только изменения хранимых атрибутов).  Если вы используете прямое обновление или хранимый объект не изменялся, при выставленном параметре _SCOPE = 2, блокировки снимаются при завершении SAP LUW, либо принудительно через модуль разблокирования DEQUEUE_*.</li>
+</ul>
+<h4>Пессимистичные и оптимистичные блокировки</h4>
+<p>Существует две основные стратегии блокирования: пессимистичная и оптимистичная. Стратегия, в данном случае, определяет порядок действий, выполняемых при блокировании и разблокировании объектов, а также поведение системы при обработке объектов блокировки.</p>
+<ul>
+<li>Оптимистичная стратегия подразумевает проверку на блокировку непосредственно перед записью в БД, т.е. множество пользователей в один момент времени могут изменять какой-либо объект (выставлена оптимистичная блокировка), но записывать эти изменения в БД можно только после преобразования оптимистичной блокировки в эксклюзивную. При этом после преобразования, все другие оптимистичные блокировки снимаются. Основное преимущество в такой стратегии, блокировка объекта происходит в достаточно короткие временные сроки.</li>
+<li>Пессимистичная стратегия подразумевает блокировку непосредственно до начала выполнения какого-либо действия над объектом, т.е. чтобы начать изменять объект выставляется блокировка и если она успешна, интерфейс из состояния чтения объекта переходит в состояние изменения. После сохранения данных объекта блокировка снимается.</li>
+</ul>
+<p>Для того чтобы иметь возможность редактировать объект и быть уверенными в том, что блокировка установлена в классе агенте мы реализуем следующий метод:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/lock_and_get_persistent.png"><img loading="lazy" class="alignnone size-full wp-image-2211" src="http://abap-blog.ru/wp-content/uploads/2014/06/lock_and_get_persistent.png" alt="lock_and_get_persistent" width="790" height="156" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/lock_and_get_persistent.png 790w, https://abap-blog.ru/wp-content/uploads/2014/06/lock_and_get_persistent-300x59.png 300w" sizes="(max-width: 790px) 100vw, 790px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD lock_and_get_persistent.
+
+  DATA:
+    lv_status TYPE string,
+    ls_key    TYPE typ_business_key,
+    lv_text   TYPE string.
+
+  ro_persistent =  me-&gt;get_persistent(
+      i_carrid = iv_carrid
+      i_connid = iv_connid
+      i_fldate = iv_fldate
+  ).
+
+  ls_key-carrid = ro_persistent-&gt;get_carrid( ).
+  ls_key-connid = ro_persistent-&gt;get_connid( ).
+  ls_key-fldate = ro_persistent-&gt;get_fldate( ).
+
+  CHECK iv_enqueue_mode IS NOT INITIAL.
+
+  READ TABLE gt_locks
+    WITH KEY carrid = ls_key-carrid
+             connid = ls_key-connid
+             fldate = ls_key-fldate
+      TRANSPORTING NO FIELDS.
+
+  CHECK sy-subrc NE 0.
+
+  CALL FUNCTION 'ENQUEUE_ESFLIGHT'
+    EXPORTING
+      mode_sflight   = iv_enqueue_mode
+      carrid         = ls_key-carrid
+      connid         = ls_key-connid
+      fldate         = ls_key-fldate
+      _scope         = '3'
+    EXCEPTIONS
+      foreign_lock   = 1
+      system_failure = 2
+      OTHERS         = 3.
+  IF sy-subrc &lt;&gt; 0.
+    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno INTO lv_text
+               WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+
+    RAISE EXCEPTION TYPE zcx_os_object_not_blocked
+      EXPORTING
+        text = lv_text.
+  ENDIF.
+
+  APPEND ls_key TO gt_locks.
+
+  " После установки блокировки, необходимо обновить хранимый объект
+  TRY.
+      me-&gt;if_os_factory~refresh_persistent( ro_persistent ).
+    CATCH cx_os_object_not_refreshable.
+  ENDTRY.
+
+ENDMETHOD.</pre><p>В методе присутствует входной параметр iv_enqueue_mode, внутри которого будем указывать стратегию блокировки, используемую для загружаемого объекта:</p>
+<ul>
+<li>«Е» &#8212; пессимистичная стратегия</li>
+<li>«О» &#8212; оптимистичная стратегия</li>
+</ul>
+<p>Внутри метода происходит повторная загрузка хранимого объекта из БД и вызов модуля установки блокировки.</p>
+<p>Благодаря параметру _scope = ‘3’ мы точно будем уверены в том, что блокировка не будет снята автоматически.</p>
+<p>Так же был добавлен свой класс исключения zcx_os_object_not_blocked, данный класс уведомляет нас о невозможности продолжения работы с объектом из-за ошибки при выставлении блокировки. Подробнее о классах исключений смотрите <a href="http://abap-blog.ru/abap/abap-osnovi/obrabotka-osobyx-situacij-v-abap/">тут</a>. В классе исключения определен текст внутри которого выводится переданный в параметрах исключения text:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked_text.png"><img loading="lazy" class="alignnone size-full wp-image-2212" src="http://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked_text.png" alt="zcx_os_object_not_blocked_text" width="507" height="153" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked_text.png 507w, https://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked_text-300x90.png 300w" sizes="(max-width: 507px) 100vw, 507px" /></a></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked2.png"><img loading="lazy" class="alignnone size-full wp-image-2213" src="http://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked2.png" alt="zcx_os_object_not_blocked2" width="928" height="288" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked2.png 928w, https://abap-blog.ru/wp-content/uploads/2014/06/zcx_os_object_not_blocked2-300x93.png 300w" sizes="(max-width: 928px) 100vw, 928px" /></a></p>
+<p>Все заблокированные нашей программой объекты будут храниться в атрибуте класса агента с табличным типом TYP_BUSINESS_KEY_TAB:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/gt_locks.png"><img loading="lazy" class="alignnone size-full wp-image-2214" src="http://abap-blog.ru/wp-content/uploads/2014/06/gt_locks.png" alt="gt_locks" width="847" height="23" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/gt_locks.png 847w, https://abap-blog.ru/wp-content/uploads/2014/06/gt_locks-300x8.png 300w" sizes="(max-width: 847px) 100vw, 847px" /></a></p>
+<p>При повторном вызове метода для уже заблокированного объекта, модуль блокировки запускаться не будет. <strong>Кроме того надо иметь в виду, что вызывать данный метод необходимо перед редактированием хранимого объекта. </strong></p>
+<p>Тестовая программа, выводящая ошибку, в случае невозможности блокирования объекта (объект уже заблокирован эксклюзивной блокировкой):</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA:
+  go_flight TYPE REF TO zcl_spfliht,
+  go_agent  TYPE REF TO zca_spfliht,
+  go_error  TYPE REF TO zcx_os_object_not_blocked,
+  gv_error  TYPE string.
+
+  go_agent = zca_spfliht=&gt;agent.
+
+  TRY.
+      go_flight = go_agent-&gt;lock_and_get_persistent(
+          iv_enqueue_mode = 'E'
+          iv_carrid = 'AA'
+          iv_connid = 17
+          iv_fldate = '20130206'
+      ).
+    CATCH zcx_os_object_not_blocked INTO go_error.
+      gv_error = go_error-&gt;get_text( ).
+      WRITE gv_error.
+      EXIT.
+  ENDTRY.</pre><p>Результат обработки исключения:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/TestProgram.png"><img loading="lazy" class="alignnone size-full wp-image-2215" src="http://abap-blog.ru/wp-content/uploads/2014/06/TestProgram.png" alt="TestProgram" width="443" height="58" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/TestProgram.png 443w, https://abap-blog.ru/wp-content/uploads/2014/06/TestProgram-300x39.png 300w" sizes="(max-width: 443px) 100vw, 443px" /></a></p>
+<p>Следующий шаг после изменения полученного объекта определяется в зависимости от стратегии блокировки, для пессимистичной стратегии необходимо чтобы после сохранения данных объекта в БД, выставленные ранее блокировки были сняты.</p>
+<p>Для этого в классе агенте создан специальный метод снятия блокировки:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/unlock_object1.png"><img loading="lazy" class="alignnone size-full wp-image-2217" src="http://abap-blog.ru/wp-content/uploads/2014/06/unlock_object1.png" alt="unlock_object" width="426" height="38" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/unlock_object1.png 426w, https://abap-blog.ru/wp-content/uploads/2014/06/unlock_object1-300x26.png 300w" sizes="(max-width: 426px) 100vw, 426px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">method UNLOCK_OBJECT.
+  DATA:
+    ls_key TYPE typ_business_key.
+
+  TRY.
+    ls_key-carrid = io_persistent-&gt;get_carrid( ).
+    ls_key-connid = io_persistent-&gt;get_connid( ).
+    ls_key-fldate = io_persistent-&gt;get_fldate( ).
+  CATCH cx_os_object_not_found.
+    RETURN.
+  ENDTRY.
+
+  DELETE TABLE gt_locks 
+    WITH TABLE KEY carrid = ls_key-carrid 
+                   connid = ls_key-connid 
+                   fldate = ls_key-fldate.
+
+  IF sy-subrc = 0.
+
+    CALL FUNCTION 'DEQUEUE_ESFLIGHT'
+      EXPORTING
+        mode_sflight = 'E'
+        carrid       = ls_key-carrid
+        connid       = ls_key-connid
+        fldate       = ls_key-fldate.
+
+    CALL FUNCTION 'DEQUEUE_ESFLIGHT'
+      EXPORTING
+        mode_sflight = 'O'
+        carrid       = ls_key-carrid
+        connid       = ls_key-connid
+        fldate       = ls_key-fldate.
+
+  ENDIF.
+
+endmethod.</pre><p>Так как мы не знаем, какого типа в настоящий момент установлена блокировка, модуль разблокировки вызывается дважды.</p>
+<p>Для оптимистичной стратегии блокирования необходимо до момента запроса на сохранение в БД, преобразовать выставленную ранее блокировку в эксклюзивную. Создадим в классе агенте следующий метод преобразования:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/convert_lock.png"><img loading="lazy" class="alignnone size-full wp-image-2218" src="http://abap-blog.ru/wp-content/uploads/2014/06/convert_lock.png" alt="convert_lock" width="696" height="62" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/convert_lock.png 696w, https://abap-blog.ru/wp-content/uploads/2014/06/convert_lock-300x26.png 300w" sizes="(max-width: 696px) 100vw, 696px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD convert_lock.
+  DATA:
+    ls_key  TYPE typ_business_key,
+    lv_key  TYPE eqegraarg,
+    lv_text TYPE string.
+
+  TRY.
+      ls_key-carrid = io_persistent-&gt;get_carrid( ).
+      ls_key-connid = io_persistent-&gt;get_connid( ).
+      ls_key-fldate = io_persistent-&gt;get_fldate( ).
+
+    CATCH cx_os_object_not_found.
+      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno INTO lv_text
+                 WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+
+      RAISE EXCEPTION TYPE zcx_os_object_not_blocked
+        EXPORTING
+          text = lv_text.
+  ENDTRY.
+
+  READ TABLE gt_locks
+    WITH TABLE KEY
+      carrid = ls_key-carrid
+      connid = ls_key-connid
+      fldate = ls_key-fldate
+    TRANSPORTING NO FIELDS.
+
+  IF sy-subrc NE 0.
+    RAISE EXCEPTION TYPE zcx_os_object_not_blocked
+      EXPORTING
+        text = 'Объект не блокирован, преобразование невозможно'.
+  ENDIF.
+
+  CALL FUNCTION 'ENQUEUE_ESFLIGHT'
+    EXPORTING
+      mode_sflight   = 'R'
+      carrid         = ls_key-carrid
+      connid         = ls_key-connid
+      fldate         = ls_key-fldate
+      _scope         = '3'
+    EXCEPTIONS
+      foreign_lock   = 1
+      system_failure = 2
+      OTHERS         = 3.
+
+  IF sy-subrc &lt;&gt; 0.
+    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno INTO lv_text
+               WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+
+    IF sy-subrc = 1.
+      " Блокировка уже преобразована, если блокировка установлена не
+      " нами, сбросим внутренние блокировки
+      lv_key = ls_key.
+      lv_key = sy-mandt &amp;&amp; lv_key.
+      IF zenqueue_tools=&gt;check_enqueue(
+          im_table_name    = 'SFLIGHT'
+          im_key           = lv_key
+          im_mode          = 'E'
+      ) = abap_false.
+        DELETE TABLE gt_locks WITH TABLE KEY
+            carrid = ls_key-carrid
+            connid = ls_key-connid
+            fldate = ls_key-fldate.
+      ELSE.
+        " Если блокировка была преобразована нами,
+        " выйдем
+        RETURN.
+      ENDIF.
+    ENDIF.
+
+    RAISE EXCEPTION TYPE zcx_os_object_not_blocked
+      EXPORTING
+        text = lv_text.
+  ENDIF.
+
+ENDMETHOD.</pre><p>Метод определения была ли блокировка выставлена нами выглядит следующим образом:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2014/06/check_enqueue.png"><img loading="lazy" class="alignnone size-full wp-image-2232" src="http://abap-blog.ru/wp-content/uploads/2014/06/check_enqueue.png" alt="check_enqueue" width="667" height="99" srcset="https://abap-blog.ru/wp-content/uploads/2014/06/check_enqueue.png 667w, https://abap-blog.ru/wp-content/uploads/2014/06/check_enqueue-300x44.png 300w" sizes="(max-width: 667px) 100vw, 667px" /></a></p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD check_enqueue.
+  DATA:
+    lt_enqueues TYPE STANDARD TABLE OF seqg3,
+    lv_wpnum    TYPE wpinfo-wp_no.
+
+  CALL FUNCTION 'ENQUEUE_READ'
+    EXPORTING
+      gname                 = im_table_name
+      garg                  = im_key
+    TABLES
+      enq                   = lt_enqueues
+    EXCEPTIONS
+      communication_failure = 1
+      system_failure        = 2
+      OTHERS                = 3.
+  IF sy-subrc &lt;&gt; 0.
+    rv_ownwp_enqueue = abap_false.
+    RETURN.
+  ENDIF.
+
+  CALL FUNCTION 'TH_GET_OWN_WP_NO'
+    IMPORTING
+      wp_no = lv_wpnum.
+
+  READ TABLE lt_enqueues WITH KEY gtwp = lv_wpnum gmode = im_mode TRANSPORTING NO FIELDS.
+  IF sy-subrc = 0.
+    rv_ownwp_enqueue = abap_true.
+  ELSE.
+    rv_ownwp_enqueue = abap_false.
+  ENDIF.
+ENDMETHOD.</pre><p>После успешного преобразования может быть вызван COMMIT WORK или метод транзакции END. Закончив сохранения объекта в БД, можно вызвать снятие блокировок через метод рассмотренный ранее.</p>
+<p>Описанная в данной статье схема интеграции с системой блокировок является лишь одной из возможных, в качестве альтернативной можно использовать автоматическое выставление блокировок до момента загрузки хранимого объекта из БД, делается это через переопределение метода в классе агенте: MAP_LOAD_FROM_DATABASE_KEY &#8212; если бизнес ключ на основе ключевых полей таблицы, MAP_LOAD_FROM_DATABASE_GUID – если бизнес ключ на основе GUID.</p>
+<p>Можно так же автоматически снимать блокировки через агента проверки консистентности (класс реализующий интерфейс IF_OS_CHECK) хранимого объекта, но подобная автоматизация возможна только для ООП транзакций, т.к. исключения выдаваемые в агентах проверки невозможно обработать в транзакциях в режиме совместимости.</p>
+<p>Подробнее об альтернативной схеме интеграции с системой блокировок можете прочитать в книге: <a href="http://store.sapinsider.wispubs.com/products/Object-Services-in-ABAP.html">Object Services in ABAP</a>.</p><p>The post <a href="https://abap-blog.ru/database-work/abap-object-services-integraciya-s-sistemoj-blokirovok/">ABAP Object Services — Интеграция с системой блокировок</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/abap-object-services-integraciya-s-sistemoj-blokirovok/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

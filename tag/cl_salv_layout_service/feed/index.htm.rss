@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>cl_salv_layout_service | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_salv_layout_service/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:56:06 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>SALV Table &#8212; Настройка формата</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-formata/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-formata/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 12 Feb 2012 09:29:47 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[cl_salv_layout]]></category>
+		<category><![CDATA[cl_salv_layout_service]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=455</guid>
+
+					<description><![CDATA[<p>Формат ALV определяет: сортировки, группировки, внешний вид, настройку оптимизации колонок и т.п. Для выбора форматов служит класс  cl_salv_layout_service. Для настройки сохранения и привязки к ALV объекту класс cl_salv_layout. Первое что необходимо при работе с форматами дать пользователю возможность его выбрать на экране выбора. Для выбора формата необходимо использовать статический метод  f4_layouts класса  cl_salv_layout_service. На вход необходимо подать [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-formata/">SALV Table — Настройка формата</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Формат ALV определяет: сортировки, группировки, внешний вид, настройку оптимизации колонок и т.п. Для выбора форматов служит класс  <strong>cl_salv_layout_service</strong>. Для настройки сохранения и привязки к ALV объекту класс <strong>cl_salv_layout.</strong> Первое что необходимо при работе с форматами дать пользователю возможность его выбрать на экране выбора.</p>
+<p><span id="more-455"></span></p>
+<p>Для выбора формата необходимо использовать статический метод  <strong>f4_layouts</strong> класса  <strong>cl_salv_layout_service</strong>. На вход необходимо подать структуру отвечающую за идентификацию объекта ALV к которому необходимо получить формат, структура S_KEY имеет тип <strong>SALV_S_LAYOUT_KEY</strong>. Основное что необходимо заполнить в этой структуре это id отчёта (report). Остальные параметры необходимы когда вы используете несколько ALV объектов в программе и для каждого необходимо выбирать свои форматы. Еще один параметр метода &#8212; <strong>restrict, </strong>он определяет какие форматы будут показаны пользователю. Может принимать следующие значения:  if_salv_c_layout=&gt;restrict_none &#8212; без ограничений,  if_salv_c_layout=&gt;restrict_user_dependant &#8212; только форматы своего пользователя,  if_salv_c_layout=&gt;restrict_user_independant &#8212; только общие форматы.</p>
+<p>Для того чтобы пользователь смог сохранять (создавать) форматы, необходимо указать ALV объекту идентификатор формата (тот самый s_key), формат по умолчанию и ограничение при сохранении. Указанные параметры задаются с помощью класса:  <strong>cl_salv_layout.</strong> Пример программы ниже продемонстрирует каким образом с ним работать:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZALV_SIMPLE.
+
+PARAMETERS: p_format TYPE disvariant-variant.
+
+DATA:
+      gt_data      TYPE spfli_tab,  " Таблица с данными
+      go_alv       TYPE REF TO cl_salv_table.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_format.
+  PERFORM get_format.
+
+START-OF-SELECTION.
+  SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_data.
+  " Фабричный метод возвращяет экзмепляр ALV объекта
+  TRY.
+      cl_salv_table=&gt;factory(
+         IMPORTING
+           r_salv_table = go_alv
+         CHANGING
+           t_table = gt_data ).
+    CATCH cx_salv_msg .
+      MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+  ENDTRY.
+  go_alv-&gt;set_screen_status( EXPORTING
+                              REPORT = 'SAPLSALV_METADATA_STATUS'
+                              pfstatus = 'SALV_TABLE_STANDARD'
+                              set_functions = CL_SALV_MODEL_BASE=&gt;C_FUNCTIONS_ALL ).
+  PERFORM setup_layout.
+  " Отобразить ALV представление
+  go_alv-&gt;display( ).
+
+" Выбор формата
+ FORM get_format.
+  DATA:
+    ls_key         TYPE salv_s_layout_key,
+    ls_layout_info TYPE salv_s_layout_info.
+
+  ls_key-REPORT = sy-repid.
+
+  ls_layout_info = cl_salv_layout_service=&gt;f4_layouts(
+        s_key = ls_key
+        restrict = if_salv_c_layout=&gt;restrict_user_independant ).
+
+  p_format = ls_layout_info-LAYOUT.
+ ENDFORM.
+
+" Настройка ALV объекта 
+ FORM setup_layout.
+  DATA:
+    ls_key    TYPE salv_s_layout_key,
+    lo_layout TYPE REF TO cl_salv_layout.
+
+  TRY.
+      lo_layout = go_alv-&gt;get_layout( ).
+      ls_key-REPORT = sy-repid.
+      lo_layout-&gt;set_key( ls_key ).
+      lo_layout-&gt;set_save_restriction( cl_salv_layout=&gt;restrict_none ).
+      lo_layout-&gt;set_initial_layout( p_format ).
+    CATCH cx_salv_msg.
+  ENDTRY.
+ ENDFORM.</pre><p>Для определения прав пользователей относительно форматов, можно воспользоваться объектом полномочий: <strong>F_IT_ALV. </strong>Следует так же отметить что:</p>
+<ul>
+<li>Имена общих форматов начинаются на /</li>
+<li>Имена пользовательских форматов начинаются с A-Z (А-Я)</li>
+<li>Имена стандартных форматов SAP начинаются с 0-9</li>
+</ul><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-formata/">SALV Table — Настройка формата</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-nastrojka-formata/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

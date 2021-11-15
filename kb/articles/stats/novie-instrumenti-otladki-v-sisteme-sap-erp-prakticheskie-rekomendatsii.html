@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><script>document.getElementsByTagName('html')[0].classList.add('js')</script>
+	<title>Сапёр / Статьи / База знаний / SAPLAND / SAPLand — Мир решений SAP</title>
+<meta name="keywords" content="инструменты, инструментальные средства, Tools, Информационные технологии, IT, Basis, ABAP, Ключевой пользователь, ExpertSAP Консультант, Consultant" />
+<meta name="description" content="В данной статье я расскажу о некоторых новых инструментах отладки, которые предлагает система ERP, приведу некоторые демонстрационные примеры и дам рекомендации по применению оных." />
+		    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700,800&display=swap&subset=cyrillic"
+          rel="stylesheet">
+	<link rel="stylesheet" href="/build/attention-block/login-article.cb663f57.css" />
+<link rel="stylesheet" href="/build/attention-block/attention-blue.23524ae8.css" />
+<link rel="stylesheet" href="/build/login.c6183aa5.css" />
+<link rel="stylesheet" href="/build/main-menu.83fc82c5.css" />
+<link rel="stylesheet" href="/build/header.fc38405f.css" />
+<link rel="stylesheet" href="/build/breadcrumbs.ff1969dd.css" />
+<link rel="stylesheet" href="/build/short-info.94d9a3a3.css" />
+<link rel="stylesheet" href="/build/short-info/author-statistic.53b83cff.css" />
+<link rel="stylesheet" href="/build/hovered-info.ea33fb03.css" />
+<link rel="stylesheet" href="/build/article/layout.8f67d1fe.css" />
+<link rel="stylesheet" href="/build/article-page/block-title.82fbb182.css" />
+<link rel="stylesheet" href="/build/article-page/share.321c2ae2.css" />
+<link rel="stylesheet" href="/build/parent-comment.1ea1934d.css" />
+<link rel="stylesheet" href="/build/comment.67a31886.css" />
+<link rel="stylesheet" href="/build/article-page/comment-article.881f89af.css" />
+<link rel="stylesheet" href="/build/article-page/note-gray.d9a735de.css" />
+<link rel="stylesheet" href="/build/page-container.0347724b.css" />
+<link rel="stylesheet" href="/build/arrow-up.bfddcdb1.css" />
+<link rel="stylesheet" href="/build/footer.953024a7.css" />
+<link rel="stylesheet" href="/build/article-page.c568a741.css" />
+<link rel="stylesheet" href="/build/article-page/article-close.3d00c05a.css" />
+<link rel="stylesheet" href="/build/global.3974230d.css" />
+</head>
+<body>
+		
+			<header>
+	<div class="header-wrap container">
+		<div class="menu-icon"><img src="/build/images/icons/menu.svg" alt=""></div><div class="logo">
+				<a href="/publications">
+					<img src="/os/modules/material/images/logo.svg" alt="">
+				</a>
+			</div><nav class="burger-menu">
+				<ul>
+					<li><a href="/publications">Публикации</a></li>
+					<li><a href="/comments">Обсуждения</a></li>
+					<li><a href="/authors">Авторы</a></li>
+					<li><a href="/authors-columns">Колонки</a></li>
+				</ul>
+				<div class="loop"><img src="/build/images/icons/search.svg" alt=""></div>
+				<form action="/publications" method="get">
+					<div class="search"><input type="text" placeholder="Искать" name="filter[search][full-search-criterion][]"><button type="submit"><img src="/build/images/icons/search-bl.svg" alt=""></button></div>
+				</form>
+			</nav>
+<div class="person-wrap">
+	<a href="//sappro.sapland.ru/subscription" class="btn-subscribe">Подписка</a>
+			<a href="/login/" class="btn-reg">Войти</a>
+	</div>
+
+		<div class="login-wrap">
+	<div class="enter">
+		<form class="enter-box" name="login-form" method="post">
+			<input type="hidden" name="auth[csrf]" value="ijIO2jwGg1UYp79rxK3wZlSd2XxtAkjpwlBBf441TDE" />
+			<p>Добро пожаловать</p>
+			<div class="input-box">
+				<span>Адрес электронной почты</span>
+				<input type="text" placeholder="E-mail" name="auth[login]" required>
+				<span>Пароль</span>
+				<input type="password" placeholder="Password" name="auth[password]" required>
+			</div>
+			<div class="btn-box">
+				<button class="enter-btn" type="submit">Войти</button>
+				<a href="?auth[reset_password]">Забыли пароль?</a>
+			</div>
+		</form>
+	</div>
+	<div class="registration">
+		<p>Станьте участником SAPLAND и получите доступ к самым интересным публикациям SAPPRO</p>
+		<a  style="background-color: #ff9920;" href="//sapland.ru/register/">Зарегистрироваться</a>
+	</div>
+</div>
+	</div>
+	<div class="main-menu-wrap">
+	<div class="main-menu-box container">
+		<div class="logo-menu">
+			<a href="/">
+				<img src="/build/images/logo-menu.svg" alt="">
+			</a>
+			<p>Развитие в экосистеме SAP</p>
+		</div>
+		<div class="main-menu-list">
+			<div class="main-menu-item">
+			<img src="/build/images/icons/project.svg" alt="">
+			<span class="menu-click">О проекте</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="//sapland.ru/about">Концепция</a>
+					</li>
+									<li>
+						<a href="/policy">Политики</a>
+					</li>
+									<li>
+						<a href="/contacts/">Контакты</a>
+					</li>
+									<li>
+						<a href="//sapland.ru/authors/to-author">Авторам</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/SAPPRO.svg" alt="">
+			<span class="menu-click">Журнал SAPPRO</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/publications">Публикации</a>
+					</li>
+									<li>
+						<a href="/comments">Обсуждения</a>
+					</li>
+									<li>
+						<a href="/authors">Авторы</a>
+					</li>
+									<li>
+						<a href="/authors-columns">Колонки</a>
+					</li>
+									<li>
+						<a href="/compilations">Антологии</a>
+					</li>
+									<li>
+						<a href="/subscription">Подписка</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/education.svg" alt="">
+			<span class="menu-click">Учебный центр</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="//edu.sapland.ru/courses/">Курсы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/master-classes/">Мастер-классы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/webinars/?materials_filter%5Bmaterial__by-format%5D%5B%5D=935&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bfrom%5D=&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bto%5D=&filter%5Bsearch%5D%5Bfull-search-criterion%5D%5B%5D=">Вебинары</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/SAPPRO1.svg" alt="">
+			<span class="menu-click">Книги SAP Press</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/books/novelty/">Книги на английском</a>
+					</li>
+									<li>
+						<a href="/books/Knigi_na_russkom/">Книги на русском</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/lib.svg" alt="">
+			<span class="menu-click">Библиотека презентаций</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/event">Мероприятия</a>
+					</li>
+									<li>
+						<a href="/presentations/">Презентации</a>
+					</li>
+							</ul>
+		</div>
+			<div class="main-menu-item">
+			<img src="/build/images/icons/eco.svg" alt="">
+			<span class="menu-click">Экосистема SAP СНГ</span>
+			<ul class="menu-hide">
+									<li>
+						<a href="/p-events/news/">Новости</a>
+					</li>
+									<li>
+						<a href="/a-list">Анонсы</a>
+					</li>
+							</ul>
+		</div>
+	</div>
+
+		<div class="social-menu">
+			<ul>
+	<li><a target="_blank" href="#" style=" pointer-events: none;" ><img src="/build/images/icons/sn/telegram-plane.svg" alt=""></a></li><li><a target="_blank" href="https://www.facebook.com/pages/SAPLand/127114854020362"><img src="/build/images/icons/sn/facebook.svg" alt=""></a></li><li><a target="_blank" href="https://vk.com/club4419971"><img src="/build/images/icons/sn/vk.svg" alt=""></a></li><li><a target="_blank" href="https://twitter.com/SAPLand"><img src="/build/images/icons/sn/twitter.svg" alt=""></a></li><li><a target="_blank" href="https://www.linkedin.com/groups/6797279/"><img src="/build/images/icons/sn/linkedin-in.svg" alt=""></a></li></ul>
+		</div>
+		<div class="close"></div>
+	</div>
+</div>
+</header>
+			<div class="container breadcrumbs">
+						<span><a href="//sapland.ru">SAPLAND</a></span>
+								<span><a href="/">SAPPRO</a></span>
+								<span><a href="/publications">Публикации</a></span>
+								<span>Статья</span>
+			</div>
+
+	
+		<div class="container page article-closed "><div class="sidebar">
+			</div>
+	<div class="content">				
+<div class="block-title">
+	
+			<div class="article">
+		<div class="info">
+						<p class="cat">
+							</p>
+
+			<h1>Новые инструменты отладки в системе SAP ERP. Практические рекомендации</h1><div class="bottom">
+				
+				
+
+
+
+								
+																			<div class="author">
+													<a href="/profile/19568/publications">Грибов Александр В.</a>
+												<div class="hovered-info">
+										<div class="avatar">
+		<img src="https://sappro.sapland.ru/images/cache/avatar64/userfiles/user/19568.png" alt="">
+	</div>
+<div class="information">
+			<h3 title="Грибов Александр В.">				<a href="/profile/19568/publications">Грибов Александр В.</a>
+			</h3>
+							<p>Инженер</p>
+	</div>
+
+			<div class="stat stat_author">
+											<span class="rating">572</span>
+									
+				<a href="/profile/19568/publications"
+				><span class="pubs">3</span></a>
+
+												
+				<span class="comments" >11</span>
+								</div>
+	<div class="rhombus"></div>
+
+		
+
+	
+							</div>
+
+					</div>
+
+																																
+				
+				
+				<p class="date">05 февраля 2018</p>
+							</div>
+		</div>
+	</div>
+</div>
+
+	 
+	 
+
+	<div class="article-body">
+		<div class="note-wrap gray-note pd">
+			<p>В данной статье я расскажу о некоторых новых инструментах отладки, которые предлагает система ERP, приведу некоторые демонстрационные примеры и дам рекомендации по применению оных.</p>
+		</div>
+<h1 style="text-align:justify">Оглавление</h1>
+
+<p style="text-align:justify"><a href="#_Toc499208225">Вступление</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208226">1. Программные точки прерывания</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208227">1.1. Подготовка. (SET\GET PARAMETER SAP_BS_FND_DEBUG)</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208228">1.2. Метод BREAK</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208229">1.3. Параметр IV_APPL метода CL_DEBUG=&gt;BREAK</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208230">1.4. Отложенные точки прерывания</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208231">1.4.1. Активные отложенные точки</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208232">1.4.2. Неактивные отложенные точки (использование метода ACTIVATE_BREAK)</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208233">1.5. А вдруг дамп?</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208234">1.6. Особенности, ограничения</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208235">1.7. Краткое резюме</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208236">2. Бесконечный цикл</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208237">2.1. Для чего?</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208238">2.2. Управление бесконечными циклами</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208239">2.3. Создание «бесконечного цикла» в программе</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208240">3. Хорошо забытое старое</a></p>
+
+<p style="text-align:justify"><a href="#_Toc499208241">Заключение</a></p>
+
+<h1 style="text-align:justify"><a name="_Toc499208225">Вступление</a></h1>
+
+<p style="text-align:justify">В данной статье я расскажу о некоторых новых инструментах отладки, которые предлагает система ERP, приведу некоторые демонстрационные примеры и дам рекомендации по применению оных.</p>
+
+<p style="text-align:justify">Строго говоря, новыми инструменты можно назвать только условно – они появились не вчера и даже не в прошлом году, и всё же являются редко используемыми, вероятно от малой известности. Как мне кажется, внимания к себе они определённо заслуживают и потому я решил рассказать о них. Речь пойдёт о следующем инструментарии:</p>
+
+<ul>
+	<li style="text-align:justify">Программные точки прерывания (класс CL_DEBUG);</li>
+	<li style="text-align:justify">Бесконечный цикл (класс CL_BCS_BREAKLOOP);</li>
+	<li style="text-align:justify">Отладочный SAP-ярлык.</li>
+</ul>
+
+<p style="text-align:justify">Изложенный материал будет полезен программистам любого уровня подготовки.</p>
+
+<h1 style="text-align:justify"><a name="_Toc499208226">1. Программные точки прерывания</a></h1>
+
+<p style="text-align:justify">Некоторое время назад SAP создал инструмент, позволяющий создавать программные точки прерывания. Этот инструмент – класс CL_DEBUG. Как и многое из того, что создаёт SAP, этот достаточно простой инструмент несколько специфичен и требует внимательного обращения.</p>
+
+<p>Заранее условимся о терминологии: в нижеприведённом тексте используется понятие «ID точки прерывания» - это текстовый идентификатор точки прерывания. SAP в своей документации использует понятие Application. Использовать слово «Приложение» (или «Применение\Заявка\Заявление\Прошение\Просьба\Употребление\Применимость\Прикладывание\Прилежание\Старание\Рвение») в данном контексте мне кажется неправильным, поэтому - «ID точки прерывания».</p>
+
+<h1 style="text-align:justify"><a name="_Toc499208227">1.1. Подготовка. (SET\GET PARAMETER SAP_BS_FND_DEBUG)</a></h1>
+
+<p style="text-align:justify">Чтобы пользователь мог работать с программными точками прерывания необходимо в параметрах пользователя (транзакция SU01D) присвоить SET\GET-параметр   SAP_BS_FND_DEBUG .</p>
+
+<p style="text-align:justify">Как заполнить этот параметр:</p>
+
+<ul>
+	<li style="text-align:justify">можно указать ‘X’ – тогда для пользователя будут срабатывать все программные точки прерывания.</li>
+	<li style="text-align:justify">можно указать ID точки прерывания, например ZDBG – будут срабатывать только точки прерывания, имеющие ID точки «ZDBG».  </li>
+	<li style="text-align:justify">можно указать несколько точек прерывания через пробел. Например, “ZDBG#INIT ZDBG#HDR ZDBG#POS ZBREAK#TST”.</li>
+	<li style="text-align:justify">Есть ограничение: длина ID точки прерывания – максимум 10 символов.</li>
+</ul>
+
+<p style="text-align:justify">Значение этого SET\GET-параметра SAP_BS_FND_DEBUG напрямую связано с параметром IV_APPL метода BREAK, поэтому некоторые особенности заполнения параметра указаны в разделе 1.2.1, обратите на это внимание.</p>
+
+<h1 style="text-align:justify"><a name="_Toc499208228">1.2. Метод BREAK</a></h1>
+
+<p style="text-align:justify">Метод BREAK отвечает за программное прерывание в месте вызова. Фактически, это главный метод всего класса.</p>
+
+<p style="text-align:justify"><u>Параметры вызова</u></p>
+
+<p style="text-align:justify">Метод  имеет следующие параметры:</p>
+
+<ul>
+	<li style="text-align:justify">IV_APPL  - Application for Break-Point. ID точки прерывания.</li>
+	<li style="text-align:justify">IV_UNAME – User Name. Имя пользователя, для которого может быть вызвано прерывание.</li>
+	<li style="text-align:justify">IV_PARID – SET\GET Parameter ID. Имя SET\GET-параметра, который будет содержать имя активной точки прерывания.</li>
+	<li style="text-align:justify">IV_RETURN_IF_NOT_INITIALISED – No evaluation if not initialized before.  Особый параметр для работы с событием Load-of-program. В данной статье не раскрывается.</li>
+</ul>
+
+<p style="text-align:justify"><u>Примеры вызова</u></p>
+
+<p style="text-align:justify"><strong>1. Чтобы создать простую динамическую точку прерывания</strong> достаточно вызвать статический метод без параметров:</p>
+
+<ol style="list-style-type:upper-alpha">
+	<li style="text-align:justify">_DEBUG=&gt;BREAK( ). “Простая безусловная точка прерывания</li>
+</ol>
+
+<p style="text-align:justify">Такая точка будет срабатывать только в тех случаях, если у пользователя параметр SAP_BS_FND_DEBUG = ‘X’.</p>
+
+<p style="text-align:justify"><strong>2. Немного более сложный (и более жизненный) случай</strong> – точка прерывания с ID:</p>
+
+<ol style="list-style-type:upper-alpha">
+	<li style="text-align:justify">_DEBUG=&gt;BREAK(‘ZTEST’) .</li>
+</ol>
+
+<p style="text-align:justify">В этом случае прерывание сработает, если у пользователя есть параметр SAP_BS_FND_DEBUG = ‘ZTEST’.</p>
+
+<p style="text-align:justify"><strong>3. Интересно работает параметр </strong><strong>IV</strong><strong>_</strong><strong>USER</strong>. Рассмотрим на примере:</p>
+
+<p style="text-align:justify">CL_DEBUG=&gt;BREAK( IV_APPL = ‘ZTEST’      </p>
+
+<p style="margin-left:106.2pt; text-align:justify">    IV_USER = ‘PROGRAMMER1’).</p>
+
+<p style="text-align:justify">Логика его такова: Допустим, я работаю под пользователем JUST_USER и вызываю программу с вышеуказанным кодом. Если у пользователя PROGRAMMER1 есть параметр SAP_BS_FND_DEBUG = ‘ZTEST’, то для пользователя JUST_USER точка прерывания сработает.</p>
+
+<p style="text-align:justify">Сделано это для того, чтобы можно было использовать программные точки прерывания для RFC-вызовов, во время которых работа в удалённой системе идёт не от пользователя PROGRAMMER1, а от, например, типичного RFC-USER. Тогда, как было сказано выше, если у пользователя PROGRAMMER1 есть параметр SAP_BS_FND_DEBUG = ‘ZTEST’, то для пользователя RFC-USER точка прерывания сработает.</p>
+
+<p style="text-align:justify"><strong>4. Иногда невозможно использовать </strong>SET\GET-параметр SAP_BS_FND_DEBUG . В таком случае можно использовать любой другой SET\GET-параметр. Имя этого параметра необходимо передать, используя параметр IV_PARID:</p>
+
+<p style="text-align:justify">CL_DEBUG=&gt;BREAK( IV_APPL = ‘ZTEST’</p>
+
+<p style="text-align:justify">                  IV_PARID = ‘ZBREAK_PARAMETER’).</p>
+
+<p style="text-align:justify">Обращаю внимание на то, что правила заполнения такого SET\GET-параметра (в данном случае ZBREAK_PARAMETER) идентичны правилам заполнения параметра SAP_BS_FND_DEBUG.</p>
+
+<h1 style="text-align:justify"><a name="_Toc499208229">1.3. Параметр IV_APPL метода CL_DEBUG=&gt;BREAK.</a></h1>
+
+<p style="text-align:justify">Рассмотрим чуть подробнее параметр IV_APPL. Строго говоря, это неуникальный ID точки прерывания. Как уже было сказано ранее:</p>
+
+<ul>
+	<li style="text-align:justify">точка прерывания сработает только если значение IV_APPL соответствует значению параметра SAP_BS_FND_DEBUG;</li>
+	<li style="text-align:justify">если использован параметр IV_PARID, то соответствует значению параметра, переданному через IV_PARID;</li>
+	<li style="text-align:justify">длина значения параметра – максимум 10 символов.</li>
+</ul>
+
+<p style="text-align:justify">ID точки прерывания является составным параметром. Согласно документации SAP, в общем виде он записывается в виде «<strong>Applicationgroup</strong><strong>#</strong><strong>Applicationpart</strong>».</p>
+
+<p style="text-align:justify"><strong>Applicationgroup</strong> может использоваться как общая часть для группировки для нескольких точек прерывания.</p>
+
+<p style="text-align:justify"><strong>Applicationpart </strong>– уникальная часть ID точки прерывания (в рамках группы).</p>
+
+<p style="text-align:justify">При этом вызывать точки прерывания можно как по «Applicationgroup#Applicationpart», так и по «Applicationgroup».</p>
+
+<p style="text-align:justify">Пример: предположим, в программе вызываются следующие динамические точки прерывания:</p>
+
+<p style="text-align:justify">1.  CL_DEBUG=&gt;BREAK(‘ZDBG#INIT’)</p>
+
+<p style="text-align:justify">2.  CL_DEBUG=&gt;BREAK(‘ZDBG#HEAD’)</p>
+
+<p style="text-align:justify">3.  CL_DEBUG=&gt;BREAK(‘ZDBG#POS’)</p>
+
+<p style="text-align:justify">4.  CL_DEBUG=&gt;BREAK(‘ZBREAK#PAR’)</p>
+
+<p style="text-align:justify">Если SET\GET-параметр SAP_BS_FND_DEBUG =’X’, то сработают все точки.</p>
+
+<p style="text-align:justify">Если SAP_BS_FND_DEBUG = ‘ZDBG#INIT’ , то сработает точка № 1.</p>
+
+<p style="text-align:justify">Если SAP_BS_FND_DEBUG = ‘ZDBG’, то сработают точки №1,2,3.</p>
+
+<p style="text-align:justify">Если SAP_BS_FND_DEBUG = ‘ZBREAK’, то сработает точка №4.</p>
+
+<p style="text-align:justify">Если SAP_BS_FND_DEBUG = ‘ZBREAK#PARAMETER’, то <strong>тоже сработает точка №4(!)</strong>: хотя ID точки прерывания и SAP_BS_FND_DEBUG не совпадают, но сравниваются только первые 10 символов. Тем не менее, пользоваться таким допущением не рекомендуется – при определённых условиях можно получить дамп.</p>
+
+<h1 style="text-align:justify"><a name="_Toc499208230">1.4. Отложенные точки прерывания</a></h1>
+
+<p style="text-align:justify">С помощью класса CL_DEBUG можно делать отложенные активные и отложенные неактивные точки прерывания.</p>
+
+<h1 style="text-align:justify"><a name="_Toc499208231">1.4.1. Активные отложенные точки</a></h1>
+
+<p></p>
+<div class="attention blue">
+		<p class="heading">Если хотите прочитать статью полностью и оставить свои комментарии присоединяйтесь к <span>sapland</span>
+	</p>
+	<a href="//sapland.ru/register/" class="btn-login">Зарегистрироваться</a>
+	<div>
+		<p class="text">У вас уже есть учетная запись?</p>
+		<a href="#" class = "btn-reg">Войти</a>
+	</div>
+	
+</div>
+
+	
+</div>
+
+	<div class="share-wrap">
+			<a class="btn-print" onclick="window.print();" type="button"><span>Распечатать</span></a>
+</div>
+	<div class="comment-article-wrap comments-h">
+	<h2 class="ifp-h">Обсуждения <span class="count"><img src="/build/images/icons/speak.svg"
+														  alt="Количество комментариев">5</span>
+		<a class="btn rpl rpl-h inactive" href="javascript:void(0)">Написать комментарий</a>
+	</h2>
+			<div class="show-comment">
+										<div class="comment-wrap comment-h" id="comment-2754" data-comment-id="2754">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/19171">Николай Кронский</a>
+								<span class="data-container"><span class="data">06 февраля 2018, 16:16</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/images/users/male.jpg" alt="">
+							</div>
+			<div class="comment-item">
+								<div class="answer">
+					Александр, с какой версии появилась функциональность "бесконечных циклов"? <br />
+С версиями компонента SAP_ABA 701 SP15 класса CL_BCS_BREAKLOOP не наблюдается. Как и ФМ монитора.<br />
+Вроде бы инструмент выглядит архаичнее Активируемых контрольных точек (транз. SAAB), а вроде бы отсутствует в системе...
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-2755" data-comment-id="2755">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/19568">Александр Грибов</a>
+								<span class="data-container"><span class="data">07 февраля 2018, 07:20</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userfiles/user/19568.png" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='2754'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/19171">Николай Кронский </a>
+								<span class="data-container"><a href="#comment-2754" class="data">06 февраля 2018, 16:16</a></span>
+			</p>
+		</div>
+		<p>
+			Александр, с какой версии появилась функциональность "бесконечных циклов"? <br />
+С версиями компонента SAP_ABA 701 SP15 класса CL_BCS_BREAKLOOP не наблюдается. Как и ФМ монитора.<br />
+Вроде бы инструмент выглядит архаичнее Активируемых контрольных точек (транз. SAAB), а вроде бы отсутствует в системе...
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Точную версию назвать не могу.
+<br />&nbsp;<br />
+Оба класса точно существуют в версии SAP_ABA 731 SP9 .
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-2756" data-comment-id="2756">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/758">Антон Сорокин</a>
+								<span class="data-container"><span class="data">08 февраля 2018, 15:46</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userfiles/user/758.jpg" alt="">
+							</div>
+			<div class="comment-item">
+								<div class="answer">
+					Про CL_DEBUG интересно, спасибо.
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-2757" data-comment-id="2757">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/758">Антон Сорокин</a>
+								<span class="data-container"><span class="data">08 февраля 2018, 15:49</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userfiles/user/758.jpg" alt="">
+							</div>
+			<div class="comment-item">
+								<div class="answer">
+					&gt;&gt;Самый популярный (а может и единственный?) способ: сделать «бесконечный» цикл, затем «провалиться»
+<br />&nbsp;<br />
+Тут было бы уместно упомянуть ФМ K_PLAN_WAIT_FOR_DEBUGGING. По сути тоже бесконечный цикл, но всё же..
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+											<div class="comment-wrap comment-h" id="comment-2760" data-comment-id="2760">
+			<div class="author-info">
+			<p>Комментарий от
+									<a href="/profile/19568">Александр Грибов</a>
+								<span class="data-container"><span class="data">08 февраля 2018, 21:30</span></span>
+			</p>
+		</div><div class="comment-box"><div class="img-box">
+									<img src="https://sappro.sapland.ru/images/cache/avatar150/userfiles/user/19568.png" alt="">
+							</div>
+			<div class="comment-item">
+					<div class="parent-comment" data-pcomment-id='2756'>
+						<div class="author-info">
+			<p>
+									<a href="/profile/758">Антон Сорокин </a>
+								<span class="data-container"><a href="#comment-2756" class="data">08 февраля 2018, 15:46</a></span>
+			</p>
+		</div>
+		<p>
+			Про CL_DEBUG интересно, спасибо.
+			<span class="t"></span>
+		</p>
+	</div>
+	
+				<div class="answer">
+					Взаимное спасибо, рад, что Вам понравилось.
+				</div>
+			</div></div>
+	<div class="flex-bottom-container">
+			<a href="#" class="like-comment-h like-box">
+				<img src="/build/images/icons/like.svg" alt="">
+				<span class="likes-h">0</span>
+			</a></div>
+</div>
+			
+	</div>
+</div>
+
+
+
+	
+			</div></div>
+	<div id="arrowUp"></div>
+
+
+		<div class="footer-wrapper">
+				<footer>
+	<div class="footer-wrap container">
+		<div class="logo-wrap">
+			<a href="/">
+				<img src="/build/images/logo-footer.svg" alt="">
+			</a>
+			<ul>
+	<li><a target="_blank" href="#" style=" pointer-events: none;" ><img src="/build/images/icons/sn/telegram-plane.svg" alt=""></a></li><li><a target="_blank" href="https://www.facebook.com/pages/SAPLand/127114854020362"><img src="/build/images/icons/sn/facebook.svg" alt=""></a></li><li><a target="_blank" href="https://vk.com/club4419971"><img src="/build/images/icons/sn/vk.svg" alt=""></a></li><li><a target="_blank" href="https://twitter.com/SAPLand"><img src="/build/images/icons/sn/twitter.svg" alt=""></a></li><li><a target="_blank" href="https://www.linkedin.com/groups/6797279/"><img src="/build/images/icons/sn/linkedin-in.svg" alt=""></a></li></ul>
+		</div>
+		<div class="menu-wrap">
+			<div class="menu-item">
+			<span>О проекте</span>
+			<ul>
+									<li>
+						<a href="//sapland.ru/about">Концепция</a>
+					</li>
+									<li>
+						<a href="/policy">Политики</a>
+					</li>
+									<li>
+						<a href="/contacts/">Контакты</a>
+					</li>
+									<li>
+						<a href="//sapland.ru/authors/to-author">Авторам</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Журнал SAPPRO</span>
+			<ul>
+									<li>
+						<a href="/publications">Публикации</a>
+					</li>
+									<li>
+						<a href="/comments">Обсуждения</a>
+					</li>
+									<li>
+						<a href="/authors">Авторы</a>
+					</li>
+									<li>
+						<a href="/authors-columns">Колонки</a>
+					</li>
+									<li>
+						<a href="/compilations">Антологии</a>
+					</li>
+									<li>
+						<a href="/subscription">Подписка</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Учебный центр</span>
+			<ul>
+									<li>
+						<a href="//edu.sapland.ru/courses/">Курсы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/master-classes/">Мастер-классы</a>
+					</li>
+									<li>
+						<a href="//edu.sapland.ru/webinars/?materials_filter%5Bmaterial__by-format%5D%5B%5D=935&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bfrom%5D=&materials_filter%5Bmaterial__by-year-of-publication%5D%5Bto%5D=&filter%5Bsearch%5D%5Bfull-search-criterion%5D%5B%5D=">Вебинары</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Книги SAP Press</span>
+			<ul>
+									<li>
+						<a href="/books/novelty/">Книги на английском</a>
+					</li>
+									<li>
+						<a href="/books/Knigi_na_russkom/">Книги на русском</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Библиотека презентаций</span>
+			<ul>
+									<li>
+						<a href="/event">Мероприятия</a>
+					</li>
+									<li>
+						<a href="/presentations/">Презентации</a>
+					</li>
+							</ul>
+		</div>
+			<div class="menu-item">
+			<span>Экосистема SAP СНГ</span>
+			<ul>
+									<li>
+						<a href="/p-events/news/">Новости</a>
+					</li>
+									<li>
+						<a href="/a-list">Анонсы</a>
+					</li>
+							</ul>
+		</div>
+	</div>
+		<span class="text-info">Републикация материалов — только со ссылкой на SAPLAND.RU, с разрешения редакции сайта.
+								Редакция не несет ответственности за высказывания пользователей на сайте.</span>
+		<span class	= "writeUs">Связаться с нами:&nbsp;<a href="mailto:support@sapland.ru" class="text-mail"> support@sapland.ru</a></span>
+		<span class="text-right">18+ &copy; 2009 - 2021, Учредитель ООО «Эксперт РП». Все права защищены</span>
+	</div>
+</footer>
+	
+	</div>
+
+			
+	
+			
+	
+		<script src="/build/runtime.f011bcb1.js"></script>
+<script src="/build/5.faf5a91c.js"></script>
+<script src="/build/global.648d4089.js"></script>
+	<script src="/build/attention-block/login-article.69d7841a.js"></script>
+<script src="/build/attention-block/attention-blue.3ff74d37.js"></script>
+<script src="/build/0.1fec29ad.js"></script>
+<script src="/build/blocks/user.f97fe11c.js"></script>
+<script src="/build/login.b895675d.js"></script>
+<script src="/build/main-menu.31eac860.js"></script>
+<script src="/build/header.7fd84952.js"></script>
+<script src="/build/breadcrumbs.e36f86c3.js"></script>
+<script src="/build/short-info.76413a3a.js"></script>
+<script src="/build/short-info/author-statistic.d460c927.js"></script>
+<script src="/build/hovered-info.16280c01.js"></script>
+<script src="/build/1.32feafaf.js"></script>
+<script src="/build/article/layout.a7a2b8ff.js"></script>
+<script src="/build/article-page/block-title.a6d5d176.js"></script>
+<script src="/build/article-page/share.f5b6dade.js"></script>
+<script src="/build/parent-comment.fa26b620.js"></script>
+<script src="/build/comment.139721f4.js"></script>
+<script src="/build/article-page/comment-article.38d7be87.js"></script>
+<script src="/build/article-page/note-gray.e6c6d3bb.js"></script>
+<script src="/build/page-container.ef05586f.js"></script>
+<script src="/build/arrow-up.cb27db9e.js"></script>
+<script src="/build/footer.b018aec7.js"></script>
+<script src="/build/article-page.2915c0e5.js"></script>
+<script src="/build/article-page/article-close.68bb7c2e.js"></script>
+	<style>
+        @media print {
+            header {
+                display: none !important;
+            }
+			.breadcrumbs {
+                display: none; !important;
+			}
+			.comment-article-wrap {
+                display: none; !important;
+			}
+			.books-wrap-sl {
+                display: none; !important;
+			}
+			.share-wrap {
+                display: none; !important;
+			}
+			#arrowUp {
+                display: none; !important;
+			}
+            footer {
+                display: none; !important;
+            }
+        }
+	</style>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(1375405, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        trackHash:true
+    });
+    ym(1375405,'reachGoal','NEW_DESIGN');
+
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/1375405" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-28264801-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-28264801-1');
+</script>
+</body>
+</html>

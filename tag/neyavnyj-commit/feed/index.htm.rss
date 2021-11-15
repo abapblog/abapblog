@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Неявный COMMIT | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/neyavnyj-commit/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sat, 07 Aug 2021 06:39:16 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Программирование обновлений БД в ABAP</title>
+		<link>https://abap-blog.ru/database-work/programmirovanie-obnovlenij-bd-v-r3/</link>
+					<comments>https://abap-blog.ru/database-work/programmirovanie-obnovlenij-bd-v-r3/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 21 Mar 2012 14:56:22 +0000</pubDate>
+				<category><![CDATA[Работа с БД]]></category>
+		<category><![CDATA[PERFORM ON COMMIT]]></category>
+		<category><![CDATA[SET UPDATE TASK LOCAL]]></category>
+		<category><![CDATA[V1]]></category>
+		<category><![CDATA[V2]]></category>
+		<category><![CDATA[Модули обновления]]></category>
+		<category><![CDATA[Неявный COMMIT]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=625</guid>
+
+					<description><![CDATA[<p>Транзакция &#8212; в информатике, группа последовательных операций, которая представляет собой логическую единицу работы с данными. Транзакция может быть выполнена либо целиком и успешно, с соблюдением целостности данных и независимо от параллельно идущих других транзакций, либо не выполнена вообще, в каковом случае она не должна произвести никакого эффекта. Транзакционность в системе SAP поддерживается на двух уровнях; [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/database-work/programmirovanie-obnovlenij-bd-v-r3/">Программирование обновлений БД в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Транзакция &#8212; в информатике, группа последовательных операций, которая представляет собой логическую единицу работы с данными. Транзакция может быть выполнена либо целиком и успешно, с соблюдением целостности данных и независимо от параллельно идущих других транзакций, либо не выполнена вообще, в каковом случае она не должна произвести никакого эффекта. Транзакционность в системе SAP поддерживается на двух уровнях; на уровне СУБД и на уровне сервера приложений:</p>
+<p><span id="more-625"></span></p>
+<ul>
+<li>На уровне СУБД транзакционность поддерживается путем открытия ЛЕР (логических единиц работы, английский вариант LUW Logical Unit of Work). В начале выполнения программы при обращении к базе данных открывается ЛЕР на уровне базы данных, далее при работе программы, если происходит явный или не явный COMMIT, то текущий ЛЕР закрывается, все данные сохраняются в БД и открывается новый ЛЕР.</li>
+</ul>
+<div><span style="line-height: 18px;"> </span></div>
+<ul>
+<li>На уровне сервера приложений для обеспечения транзакционности используются «модули обновления» (такие как CALL FUNCTION IN UPDATE TASK, PERFORM ON COMMIT), данные модули при вызове регистрируются в системе, но не выполняются сразу. Система собирает очередь обновления, после того, как в программе появляется явный оператор завершения транзакции (COMMIT WORK), система начинает выполнять последовательно зарегистрированные процессы обновления. Если в программе выполняется явный оператор отката транзакции (ROLLBACK WORK), то система удаляет вызовы из очереди обновления и откатывает текущий ЛЕР на уровне БД.</li>
+</ul>
+<p>По способу организации обновление базы данных может происходить следующим образом:</p>
+<ol start="1">
+<li>Обновление, инициируемое в основном приложении:</li>
+</ol>
+<ul>
+<li>Прямое обновление</li>
+<li>Обновление, использующее отложенные вызовы процедур</li>
+</ul>
+<ol start="2">
+<li>Обновления, запускаемые программами обновления, со следующими параметрами:</li>
+</ol>
+<div>
+<ul>
+<li>Синхронный, асинхронный и локальный запуск</li>
+<li>Через модули обновлений с типом V1 или V2.</li>
+</ul>
+</div>
+<p>&nbsp;</p>
+<p><strong>Прямое обновление</strong></p>
+<p>Прямое обновление подразумевает использование операторов OpenSQL изменяющих состояние базы данных, после чего происходит вызов COMMIT WORK. Программа будет остановлена на операторе COMMIT WORK до тех пор, пока все обновления не выполнятся.</p><pre class="urvanov-syntax-highlighter-plain-tag">UPDATE &lt;ИмяТаблицы&gt; SET &lt;ИмяПоля&gt; = &lt;Значение&gt; WHERE &lt;Ключ&gt; = 1.
+COMMIT WORK.</pre><p><strong>Отложенный вызов процедур обновлений</strong></p>
+<p>Отложенный вызов подразумевает собой регистрацию процедур обновления с помощью ключевого слова PERFORM &lt;ИмяПроцедуры&gt; <strong>ON </strong><strong>COMMIT</strong> (ROLLBACK). Запуск этих процедур не происходит сразу, они начинают выполняться только после оператора COMMIT WORK (ROLLBACK). Данные процедуры не должны иметь интерфейса. В случае, если в какой либо зарегистрированной процедуре происходит ошибка, для отмены изменений необходимо вызвать MESSAGE с типом A.  Работа программы возобновляется после того как отработает последняя процедура.</p><pre class="urvanov-syntax-highlighter-plain-tag">* Регистрация процедуры обновления
+PERFORM UPDATE ON COMMIT.
+...
+* (Сбор данных) Заполнение внутренней таблицы, из которой будет происходить
+* обновление таблицы базы данных..
+...
+
+COMMIT WORK.
+* Продолжение работы программы после обновления
+
+FORM UPDATE.
+  UPDATE &lt;ИмяТаблицы&gt; FROM TABLE &lt;ИмяТаблицы&gt;.
+ENDFORM.</pre><p>Кроме того отложенные вызовы процедур могут быть использованы в обновлениях запускаемых программой обновления (см. ниже).</p>
+<p>Обычно выполнение процедур происходит в том же порядке, в котором они вызваны, однако можно переопределить порядок вызова процедуры с помощью ключевого слова LEVEL &lt;Уровень&gt;. Чем ниже уровень, тем раньше будет запущена процедура.</p><pre class="urvanov-syntax-highlighter-plain-tag">PERFORM X ON COMMIT LEVEL 2.
+PERFORM Y ON COMMIT LEVEL 1.
+
+COMMIT WORK.
+
+FORM X.
+  WRITE 'X'.
+ENDFORM.
+
+FORM Y.
+  WRITE 'Y'.
+ENDFORM.
+
+* Результат: Y X.</pre><p>Прямые обновления рекомендуется использовать, когда количество обновляемых данных минимально.</p>
+<p>Крайне не рекомендуется использовать одновременно прямые и обновления запускаемые программой обновления, тем более в расширениях системы, где во время работы программы может быть вызван неявный DB COMMIT из-за чего прямые обновления в систему будут записаны, а те что делались программой обновления нет (небыли запущены). Проблемы неявных COMMIT’ов рассмотрена ниже.</p>
+<p>Отменить отложенные вызовы, без отмены SAP LUW можно следующим способом:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT zpoc_roc_clear.
+
+FIELD-SYMBOLS: &lt;fs_poc_orders&gt; TYPE STANDARD TABLE.
+
+PERFORM ZTEST ON COMMIT.
+
+" Отчистим зарегистрированные POC события
+ASSIGN ('(SAPMSSY0)orders') TO &lt;fs_poc_orders&gt;.
+IF &lt;fs_poc_orders&gt; IS ASSIGNED.
+  REFRESH &lt;fs_poc_orders&gt;.
+ENDIF.
+
+" Отчистим зарегистрированные ROC события
+ASSIGN ('(SAPMSSY0)rb_orders') TO &lt;fs_poc_orders&gt;.
+IF &lt;fs_poc_orders&gt; IS ASSIGNED.
+  REFRESH &lt;fs_poc_orders&gt;.
+ENDIF.
+
+COMMIT WORK.
+
+FORM ZTEST.
+  BREAK-POINT.
+ENDFORM.</pre><p><strong>Обновления, запускаемые программой обновления</strong></p>
+<p>Общая схема работы выглядит следующим образом:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/11.png"><img loading="lazy" class="alignnone size-full wp-image-626" title="1" src="http://abap-blog.ru/wp-content/uploads/2012/03/11.png" alt="" width="1440" height="900" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/11.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/11-300x187.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/11-1024x640.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p>Как правило, программа обновления запускается в отдельном рабочем процессе, отдельно от главной диалоговой программы (исключение локальное обновление).  Рассмотрим процесс по шагам:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/21.png"><img loading="lazy" class="alignnone size-full wp-image-627" title="2" src="http://abap-blog.ru/wp-content/uploads/2012/03/21.png" alt="" width="1440" height="900" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/21.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/21-300x187.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/21-1024x640.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p><strong>Шаг 1</strong>. Диалоговая программа получает данные от пользователя и заносит их специальную таблицу с запросами на обновление.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/31.png"><img loading="lazy" class="alignnone size-full wp-image-628" title="3" src="http://abap-blog.ru/wp-content/uploads/2012/03/31.png" alt="" width="1440" height="900" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/31.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/31-300x187.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/31-1024x640.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p><strong>Шаг 2</strong>. Диалоговая программа завершает свой LUW, инициируя перенос пакета созданных запросов в программу обновления, вызывает оператор COMMIT WORK (AND WAIT).</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/41.png"><img loading="lazy" class="alignnone size-full wp-image-629" title="4" src="http://abap-blog.ru/wp-content/uploads/2012/03/41.png" alt="" width="1440" height="900" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/41.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/41-300x187.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/41-1024x640.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p><strong>Шаг 3</strong>. На третьем шаге  пакет запросов будет перенесен системой в программу обновления.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/5.png"><img loading="lazy" class="alignnone size-full wp-image-630" title="5" src="http://abap-blog.ru/wp-content/uploads/2012/03/5.png" alt="" width="1440" height="900" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/5.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/5-300x187.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/5-1024x640.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p><strong>Шаг 4. </strong>Программа обновления переносит все данные из запросов в базу данных.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/6.png"><img loading="lazy" class="alignnone size-full wp-image-631" title="6" src="http://abap-blog.ru/wp-content/uploads/2012/03/6.png" alt="" width="1440" height="900" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/6.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/6-300x187.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/6-1024x640.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p><strong>Шаг 5. </strong>Если программа обновления выполнилась успешно, система удаляет все запросы, связанные с текущим LUW. В случае если происходит ошибка, обрабатываемые записи в таблице помечаются как некорректные. Пользователь, запустивший обновление, получает уведомление на SAP почту. За отправку уведомлений отвечает параметр rdisp/vbmail, за список пользователей параметр rdisp/vb_mail_user_list. Транзакция показывающая запросы обновлений – <strong>SM13</strong>.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/7.png"><img loading="lazy" class="alignnone size-full wp-image-632" title="7" src="http://abap-blog.ru/wp-content/uploads/2012/03/7.png" alt="" width="1440" height="908" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/7.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/7-300x189.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/7-1024x645.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p>С технической точки зрения, регистрация запросов на обновление происходит с помощью специальных ФМ – модулей обновления. Определяется в свойствах ФМ:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/8.png"><img loading="lazy" class="alignnone size-full wp-image-633" title="8" src="http://abap-blog.ru/wp-content/uploads/2012/03/8.png" alt="" width="428" height="183" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/8.png 428w, https://abap-blog.ru/wp-content/uploads/2012/03/8-300x128.png 300w" sizes="(max-width: 428px) 100vw, 428px" /></a></p>
+<p>Интерфейс данных функций поддерживает только IMPORTING и TABLES параметры. Параметры EXPORTING и EXCEPTIONS игнорируются и не должны использоваться.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/9.png"><img loading="lazy" class="alignnone size-full wp-image-634" title="9" src="http://abap-blog.ru/wp-content/uploads/2012/03/9.png" alt="" width="1440" height="940" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/9.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/9-300x195.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/9-1024x668.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p>Регистрация запросов на обновление в диалоговой программе происходит с помощью специального вызова ФМ с ключевым выражением – IN UPDATE TASK. Все запросы сохраняются в таблице со специальным ключом VBKEY, который идентифицирует текущий LUW.  Как только вы запустите COMMIT WORK (Шаг 2), будет инициировано обновление (Шаг 3).</p>
+<p>Для того чтобы удалить все запросы на обновления можно воспользоваться либо ROLLBACK WORK, либо MESSAGE TYPE A. При этом будут отменены как все запросы на обновления, так и все прямые изменения (если они были, нежелательно), будет создан новый LUW.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/10.png"><img loading="lazy" class="alignnone size-full wp-image-635" title="10" src="http://abap-blog.ru/wp-content/uploads/2012/03/10.png" alt="" width="1440" height="941" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/10.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/10-300x196.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/10-1024x669.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p>В модулях обновления запрещено использование COMMIT WORK или ROLLBACK WORK, но если вы хотите отменить все изменения вносимые запросами, необходимо вызывать MESSAGE TYPE A. После чего все запросы в текущем LUW будут отмечены как ошибочные (тр. SM13), пользователь совершающий обновление будет оповещен об ошибке.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/112.png"><img loading="lazy" class="alignnone size-full wp-image-637" title="11" src="http://abap-blog.ru/wp-content/uploads/2012/03/112.png" alt="" width="1440" height="940" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/112.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/112-300x195.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/112-1024x668.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p>При использовании системы блокировок, если параметр _scope выставлен по умолчанию (2), система снимет все поставленные блокировки (см. статью про блокировки).</p>
+<p><strong>Асинхронный запуск модулей обновления</strong></p>
+<p>При асинхронном обновлении диалоговая программа и программа обновления запускаются в разных рабочих процессах на сервере приложений:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/12.png"><img loading="lazy" class="alignnone size-full wp-image-638" title="12" src="http://abap-blog.ru/wp-content/uploads/2012/03/12.png" alt="" width="1440" height="900" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/12.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/12-300x187.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/12-1024x640.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p>После вызова COMMIT WORK системой будет запущена программа обновления, при этом диалоговая программа не будет остановлена и продолжит свою работу, не ожидая конца обновлений.</p>
+<p>Асинхронные обновления должны использоваться в программах, где обновление базы данных занимает продолжительное время.</p>
+<p><strong>Синхронный запуск модулей обновления</strong></p>
+<p>При синхронном запуске модулей обновления необходимо использовать конструкцию COMMIT WORK <strong>AND WAIT</strong>.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/13.png"><img loading="lazy" class="alignnone size-full wp-image-639" title="13" src="http://abap-blog.ru/wp-content/uploads/2012/03/13.png" alt="" width="1440" height="933" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/13.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/13-300x194.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/13-1024x663.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p>При синхронном запуске диалоговая программа и программа обновления так же запускаются в разных рабочих процессах на сервере приложений. Разница состоит в том, что программа приостанавливает свою работу до тех пор, пока не будет завершена программа обновления. При этом в после ошибки sy-subrc попадет код ошибки, в случае если она произошла в программе обновления.</p>
+<p><strong>Локальные обновления</strong></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/14.png"><img loading="lazy" class="alignnone size-full wp-image-640" title="14" src="http://abap-blog.ru/wp-content/uploads/2012/03/14.png" alt="" width="1440" height="884" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/14.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/14-300x184.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/14-1024x628.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p>При локальном обновлении обработка запросов на обновление осуществляется в той же диалоговой программе, где они были зарегистрированы, сами запросы хранятся при этом в области памяти, а не в таблице. Для того чтобы включить локальные обновления необходимо воспользоваться следующим выражением <strong>SET </strong><strong>UPDATE </strong><strong>TASK </strong><strong>LOCAL</strong> до момента регистрации запросов.  Работа программы возобновляется только после обработки всех запросов текущего LUW, т.о. обновление происходит синхронно, из-за этого локальные обновления применяются в основном в <strong>фоновом режиме</strong>.</p>
+<p>&nbsp;</p>
+<p><strong>Типы модулей обновления</strong></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/15.png"><img loading="lazy" class="alignnone size-full wp-image-641" title="15" src="http://abap-blog.ru/wp-content/uploads/2012/03/15.png" alt="" width="417" height="178" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/15.png 417w, https://abap-blog.ru/wp-content/uploads/2012/03/15-300x128.png 300w" sizes="(max-width: 417px) 100vw, 417px" /></a></p>
+<p>Существует два типа модулей обновления V1 и V2. Тип определяет порядок обработки запросов. Сначала обрабатываются все запросы V1 в своем LUW (в отдельном рабочем процессе, если в системе настроены V2 модули обновления), затем если все V1 запросы были выполнены, запускается обновление V2 запросов в отдельном LUW.</p>
+<p>V1 модули могут быть с возможностью повторного запуска и без. Повторить запросы можно через транзакцию SM13. Запросы V2 модулей можно всегда повторить.</p>
+<p>Общая схема работы V1 и V2 модулей:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/16.png"><img loading="lazy" class="alignnone size-full wp-image-642" title="16" src="http://abap-blog.ru/wp-content/uploads/2012/03/16.png" alt="" width="1440" height="900" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/16.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/16-300x187.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/16-1024x640.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p>Как видно из рисунка – V1 и V2 запросы обрабатываются в отдельных рабочих процессах. В случае если в системе не настроено использование V2 модулей, они будут выполняться в том же рабочем процессе что и V1, но в разных DB LUW. Следует отметить, что если используются блокировки и параметр _scope стоит по умолчанию (2), в момент запуска обработки V2 запросов все блокировки будут уже сняты.</p>
+<p><span style="color: #ff0000;">Стоит обратить особое внимание на то, что при запуске в синхронном режиме ожидание будет происходить только для V1 модулей, система не будет ожидать пока выполнятся V2 модули.</span></p>
+<p><strong>Отложенный запуск процедур обновлений в модулях обновлений</strong></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/17.png"><img loading="lazy" class="alignnone size-full wp-image-643" title="17" src="http://abap-blog.ru/wp-content/uploads/2012/03/17.png" alt="" width="1440" height="906" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/17.png 1440w, https://abap-blog.ru/wp-content/uploads/2012/03/17-300x188.png 300w, https://abap-blog.ru/wp-content/uploads/2012/03/17-1024x644.png 1024w" sizes="(max-width: 1440px) 100vw, 1440px" /></a></p>
+<p>Во время обновлений часто используемых таблиц, важно чтобы обновление прошло как можно позже (не держать физическую блокировку базы данных на протяжении выполнения всех запросов, либо сделать какие-то действия на этапе их непосредственного сохранения в расширении системы). Для этого можно воспользоваться  отложенными процедурами обновления, схема их работы аналогична той, что была описана выше (прямые обновления), их вызов происходит в момент, когда все запросы были обработаны.</p>
+<p><strong>Проблемы неявных </strong><strong>COMMIT’ов</strong></p>
+<p>При обработке программы на сервере приложений системы часто происходит закрытие текущей ЛЕР БД и открытие новой ЛЕР БД в рамках одной программы (неявные COMMIT’ы). Данная ситуация постоянно происходит при обработке экранов. На из справки (ниже) по обновлению системы видно, что при каждой обработке событий PAI на экране происходит неявный DB COMMIT, после чего текущий ЛЕР БД закрывается и открывается новый, и все прямые обновления сделанные в БД больше откатить нельзя. На первый взгляд, что в этом такого, но давайте рассмотрим пример.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/19.png"><img loading="lazy" class="alignnone size-full wp-image-644" title="19" src="http://abap-blog.ru/wp-content/uploads/2012/03/19.png" alt="" width="494" height="360" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/19.png 494w, https://abap-blog.ru/wp-content/uploads/2012/03/19-300x218.png 300w" sizes="(max-width: 494px) 100vw, 494px" /></a></p>
+<p>Для примера была создана таблица ZTEST_UPDATE в БД</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/20.png"><img loading="lazy" class="alignnone size-full wp-image-645" title="20" src="http://abap-blog.ru/wp-content/uploads/2012/03/20.png" alt="" width="725" height="369" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/20.png 725w, https://abap-blog.ru/wp-content/uploads/2012/03/20-300x152.png 300w" sizes="(max-width: 725px) 100vw, 725px" /></a></p>
+<p><strong>Написана простая программа.</strong></p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/21.jpg"><img loading="lazy" class="alignnone size-full wp-image-646" title="21" src="http://abap-blog.ru/wp-content/uploads/2012/03/21.jpg" alt="" width="734" height="382" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/21.jpg 734w, https://abap-blog.ru/wp-content/uploads/2012/03/21-300x156.jpg 300w" sizes="(max-width: 734px) 100vw, 734px" /></a></p>
+<p>До запуска данной программы таблица была пустая.</p>
+<p>После запуска программы из общих соображений ожидается, что таблица так и останется пустой, но это не так. Сообщение выданное в виде окошка, вызывает неявный DB COMMIT и после этого оператор отката ROLLBACK WORK откатывает уже новую ЛЕР, а ЛЕР в которой был сделан MODIFY уже закрыт, и изменения в БД сохранены.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/03/22.png"><img loading="lazy" class="alignnone size-full wp-image-647" title="22" src="http://abap-blog.ru/wp-content/uploads/2012/03/22.png" alt="" width="494" height="415" srcset="https://abap-blog.ru/wp-content/uploads/2012/03/22.png 494w, https://abap-blog.ru/wp-content/uploads/2012/03/22-300x252.png 300w" sizes="(max-width: 494px) 100vw, 494px" /></a></p>
+<p>Однако, если убрать оператор MESSAGE (в Программе 1), то таблица так и останется пустой.</p>
+<p>Неявные DB COMMIT’ы вызываются в следующих случаях:</p>
+<ul>
+<li>Смена SAP экрана</li>
+<li>Вызов диалогового сообщения</li>
+<li>Оператор Wait прерван рабочим процессом</li>
+<li>Синхронный или асинхронный вызов RFC функции (исключение qRFC, tRFC, bgRFC)</li>
+<li>&#8230;</li>
+</ul>
+<p>Полный перечень таких ситуаций можно посмотреть в <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abendb_commit.htm" target="_blank" rel="noopener">справке</a>.</p>
+<p>Неявные DB ROLLBACK&#8217;и вызываются в следующих случаях:</p>
+<ul>
+<li>Ошибка времени выполнения</li>
+<li>Сообщение об ошибке с типом A,X</li>
+</ul><p>The post <a href="https://abap-blog.ru/database-work/programmirovanie-obnovlenij-bd-v-r3/">Программирование обновлений БД в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/database-work/programmirovanie-obnovlenij-bd-v-r3/feed/</wfw:commentRss>
+			<slash:comments>8</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

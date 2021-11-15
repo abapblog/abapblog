@@ -1,0 +1,1289 @@
+
+<!DOCTYPE html>
+<html lang="en-gb" dir="ltr"
+	  class='com_content view-article itemid-102 j36 mm-hover '>
+<head>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=Ryo7YlqWnJ">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=Ryo7YlqWnJ">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=Ryo7YlqWnJ">
+<link rel="manifest" href="/manifest.json?v=Ryo7YlqWnJ">
+<link rel="mask-icon" href="/safari-pinned-tab.svg?v=Ryo7YlqWnJ" color="#5bbad5">
+<link rel="shortcut icon" href="/favicon.ico?v=Ryo7YlqWnJ">
+<meta name="theme-color" content="#ffffff">
+<meta name="google-site-verification" content="tCElRFE9yCqBaotbH2DZO4IMknxNkXQl1evqMzFESpE" />
+		<base href="https://abapblog.com/articles/tricks/104-send-mail-in-badi-or-user-exit-without-commiting" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="CL_BCS, CL_BCS_MESSAGE, SBCS_SEND, SBCS_SEND_UPDATE, RSBCS_EXAMPLE_EMAIL, RSBCS_EXAMPLE_EMAIL_SIMPLE" />
+	<meta name="rights" content="Łukasz Pęgiel - abapblog.com" />
+	<meta name="author" content="Łukasz Pęgiel" />
+	<meta name="copyright" content="ABAPBlog.com" />
+	<meta name="description" content="ABAP Blog - Tips &amp; Tricks for ABAP language. A blog founded by Łukasz Pęgiel in 2013 to provide code samples and ways of using ABAP hidden functions." />
+	<title>ABAPblog.com - Send mail in BADI or User-Exit without commiting</title>
+	<link href="/templates/purity_iii/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+	<link href="https://abapblog.com/component/search/?Itemid=102&amp;catid=8&amp;id=104&amp;format=opensearch" rel="search" title="Search ABAPblog.com" type="application/opensearchdescription+xml" />
+	<link href="/templates/purity_iii/local/css/themes/green/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="/plugins/editors/jckeditor/typography/typography2.php" rel="stylesheet" type="text/css" />
+	<link href="/index.php?option=com_ajax&plugin=arktypography&format=json" rel="stylesheet" type="text/css" />
+	<link href="/plugins/content/jw_disqus/jw_disqus/tmpl/css/template.css" rel="stylesheet" type="text/css" />
+	<link href="/media/plg_content_showtags/css/showtags.css" rel="stylesheet" type="text/css" />
+	<link href="/media/system/css/modal.css" rel="stylesheet" type="text/css" />
+	<link href="/media/com_attachments/css/attachments_hide.css" rel="stylesheet" type="text/css" />
+	<link href="/media/com_attachments/css/attachments_list.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/system/css/system.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/purity_iii/local/css/themes/green/template.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/purity_iii/local/css/themes/green/megamenu.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/purity_iii/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/purity_iii/css/custom.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/purity_iii/local/css/themes/green/layouts/corporate.css" rel="stylesheet" type="text/css" />
+	<link href="https://abapblog.com/media/editors/arkeditor/css/squeezebox.css" rel="stylesheet" type="text/css" />
+	<link href="https://abapblog.com/modules/mod_ablockdetector/js/sweetalert/sweetalert2.css" rel="stylesheet" type="text/css" />
+	<script src="/media/system/js/mootools-core.js" type="text/javascript"></script>
+	<script src="/media/system/js/core.js" type="text/javascript"></script>
+	<script src="/media/system/js/mootools-more.js" type="text/javascript"></script>
+	<script src="/media/system/js/modal.js" type="text/javascript"></script>
+	<script src="/media/jui/js/jquery.min.js" type="text/javascript"></script>
+	<script src="/media/jui/js/jquery-noconflict.js" type="text/javascript"></script>
+	<script src="/media/jui/js/jquery-migrate.min.js" type="text/javascript"></script>
+	<script src="/media/com_attachments/js/attachments_refresh.js" type="text/javascript"></script>
+	<script src="/media/system/js/caption.js" type="text/javascript"></script>
+	<script src="/plugins/system/t3/base-bs3/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+	<script src="/plugins/system/t3/base-bs3/js/jquery.tap.min.js" type="text/javascript"></script>
+	<script src="/plugins/system/t3/base-bs3/js/script.js" type="text/javascript"></script>
+	<script src="/plugins/system/t3/base-bs3/js/menu.js" type="text/javascript"></script>
+	<script src="/templates/purity_iii/js/script.js" type="text/javascript"></script>
+	<script src="/plugins/system/t3/base-bs3/js/nav-collapse.js" type="text/javascript"></script>
+	<script src="https://abapblog.com/media/editors/arkeditor/js/jquery.easing.min.js" type="text/javascript"></script>
+	<script src="https://abapblog.com/media/editors/arkeditor/js/squeezebox.min.js" type="text/javascript"></script>
+	<script src="https://abapblog.com/modules/mod_ablockdetector/js/bl0ck.js" type="text/javascript"></script>
+	<script src="https://abapblog.com/modules/mod_ablockdetector/js/sweetalert/sweetalert2.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+(function(d){
+					  var js, id = 'powr-js', ref = d.getElementsByTagName('script')[0];
+					  if (d.getElementById(id)) {return;}
+					  js = d.createElement('script'); js.id = id; js.async = true;
+					  js.src = 'https://abapblog.com/plugins/content/powrshortcodes/powr_joomla.js';
+					  js.setAttribute('powr-token','gtQIdXAbek1486302588');
+					  js.setAttribute('external-type','joomla');
+					  ref.parentNode.insertBefore(js, ref);
+					}(document));
+		jQuery(function($) {
+			SqueezeBox.initialize({});
+			SqueezeBox.assign($('a.modal').get(), {
+				parse: 'rel'
+			});
+		});
+
+		window.jModalClose = function () {
+			SqueezeBox.close();
+		};
+		
+		// Add extra modal close functionality for tinyMCE-based editors
+		document.onreadystatechange = function () {
+			if (document.readyState == 'interactive' && typeof tinyMCE != 'undefined' && tinyMCE)
+			{
+				if (typeof window.jModalClose_no_tinyMCE === 'undefined')
+				{	
+					window.jModalClose_no_tinyMCE = typeof(jModalClose) == 'function'  ?  jModalClose  :  false;
+					
+					jModalClose = function () {
+						if (window.jModalClose_no_tinyMCE) window.jModalClose_no_tinyMCE.apply(this, arguments);
+						tinyMCE.activeEditor.windowManager.close();
+					};
+				}
+		
+				if (typeof window.SqueezeBoxClose_no_tinyMCE === 'undefined')
+				{
+					if (typeof(SqueezeBox) == 'undefined')  SqueezeBox = {};
+					window.SqueezeBoxClose_no_tinyMCE = typeof(SqueezeBox.close) == 'function'  ?  SqueezeBox.close  :  false;
+		
+					SqueezeBox.close = function () {
+						if (window.SqueezeBoxClose_no_tinyMCE)  window.SqueezeBoxClose_no_tinyMCE.apply(this, arguments);
+						tinyMCE.activeEditor.windowManager.close();
+					};
+				}
+			}
+		};
+		jQuery(window).on('load',  function() {
+				new JCaption('img.caption');
+			});jQuery(function($){ $(".hasTooltip").tooltip({"html": true,"container": "body"}); });(function()
+				{
+					if(typeof jQuery == 'undefined')
+						return;
+					
+					jQuery(function($)
+					{
+						if($.fn.squeezeBox)
+						{
+							$( 'a.modal' ).squeezeBox({ parse: 'rel' });
+				
+							$( 'img.modal' ).each( function( i, el )
+							{
+								$(el).squeezeBox({
+									handler: 'image',
+									url: $( el ).attr( 'src' )
+								});
+							})
+						}
+						else if(typeof(SqueezeBox) !== 'undefined')
+						{
+							$( 'img.modal' ).each( function( i, el )
+							{
+								SqueezeBox.assign( el, 
+								{
+									handler: 'image',
+									url: $( el ).attr( 'src' )
+								});
+							});
+						}
+						
+						function jModalClose() 
+						{
+							if(typeof(SqueezeBox) == 'object')
+								SqueezeBox.close();
+							else
+								ARK.squeezeBox.close();
+						}
+					
+					});
+				})();function adBlockDetected() {
+	swal({  
+		title: 'AdBlock detected !',   
+		html:  '<div>This site maintenance is possible thanks to advertising revenues. To keep on browsing this site, thank you for disabling AdBlock. Refresh the page when done.</div><br /><div><a class=\'btn btn-large btn-block btn-success\'  onclick=\'location.reload();\' >Refresh this page</a></div><br />'    , 
+		type: 'error',
+		allowOutsideClick: 1,
+		allowEscapeKey: 1,
+		showConfirmButton: false
+		});
+	}
+	if(typeof blockAdBlock === 'undefined') {
+	} else {
+		blockAdBlock.onDetected(adBlockDetected);
+		blockAdBlock.on(true, adBlockDetected);
+	}
+	</script>
+	<meta property="og:image" content="https://abapblog.com//images/articles/cl_bcs_message01.png"/>
+	<meta property="og:site_name" content="ABAPblog.com"/>
+	<meta property="og:title" content="Send mail in BADI or User-Exit without commiting"/>
+	<meta property="og:type" content="article"/>
+	<meta property="og:url" content="https://abapblog.com/articles/tricks/104-send-mail-in-badi-or-user-exit-without-commiting"/>
+	<style type="text/css" media="screen">
+#inner_TC110 .cloud_TC110  {padding:3px; text-decoration: none;line-height:102%; }
+#inner_TC110 .cloud_TC110:link  {color:#777777 !important; }
+#inner_TC110 .cloud_TC110:visited {color:#777799 !important; }
+#inner_TC110 .cloud_TC110:hover {color:#ffffff !important;background:#707090 !important;text-decoration:none; }
+#inner_TC110 .cloud_TC110:active {color:#ffffff !important;background:#AC65FC !important; }#holder_TC110{margin-top:5px;margin-bottom:5px;margin-top:5px;background-color:#FFFFFF;overflow:hidden;width:100%;} #holder_TC110 table, #holder_TC110 tr , #holder_TC110 td{padding:0px;margin:0px;border:0px;border-collapse:collapse;}
+#holder_TC110  p, #holder_TC110 h6, #holder_TC110 h5, #holder_TC110 h4, #holder_TC110 h3, #holder_TC110 h2, #holder_TC110 h1 {font-weight:400;font-family:arial ;color:#000000;text-align:center;}#holder_TC110 table{background:#FFFFFF;}#contentcell_TC110 {
+padding:3px;}
+</style>
+
+	
+<!-- META FOR IOS & HANDHELD -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<style type="text/stylesheet">
+		@-webkit-viewport   { width: device-width; }
+		@-moz-viewport      { width: device-width; }
+		@-ms-viewport       { width: device-width; }
+		@-o-viewport        { width: device-width; }
+		@viewport           { width: device-width; }
+	</style>
+	<script type="text/javascript">
+		//<![CDATA[
+		if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+			var msViewportStyle = document.createElement("style");
+			msViewportStyle.appendChild(
+				document.createTextNode("@-ms-viewport{width:auto!important}")
+			);
+			document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+		}
+		//]]>
+	</script>
+<meta name="HandheldFriendly" content="true"/>
+<meta name="apple-mobile-web-app-capable" content="YES"/>
+<!-- //META FOR IOS & HANDHELD -->
+
+
+
+
+<!-- Le HTML5 shim and media query for IE8 support -->
+<!--[if lt IE 9]>
+<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<script type="text/javascript" src="/plugins/system/t3/base-bs3/js/respond.min.js"></script>
+<![endif]-->
+
+<!-- You can add Google Analytics here or use T3 Injection feature -->
+
+<!--[if lt IE 9]>
+<link rel="stylesheet" href="/templates/purity_iii/css/ie8.css" type="text/css" />
+<![endif]-->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-5244692525759828",
+          enable_page_level_ads: true
+     });
+</script>
+
+</head>
+<body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.5&appId=264201023716853";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="t3-wrapper corporate"> <!-- Need this wrapper for off-canvas menu. Remove if you don't use of-canvas -->
+
+	
+<!-- MAIN NAVIGATION -->
+<header id="t3-mainnav" class="wrap navbar navbar-default navbar-fixed-top t3-mainnav">
+
+	<!-- OFF-CANVAS -->
+		<!-- //OFF-CANVAS -->
+
+	<div class="container">
+
+		<!-- NAVBAR HEADER -->
+		<div class="navbar-header">
+
+			<!-- LOGO -->
+			<div class="logo logo-text">
+				<div class="logo-text">
+					<a href="/" title=" ">
+						
+												
+						<span> </span>
+					</a>
+				</div>
+			</div>
+			<!-- //LOGO -->
+
+											<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".t3-navbar-collapse">
+					<i class="fa fa-bars"></i>
+				</button>
+			
+	    	    <!-- HEAD SEARCH -->
+	    <div class="head-search">     
+	      <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-39947454-1', 'abapblog.com');
+  ga('send', 'pageview');
+
+</script><form class="form-search" action="/articles/tricks" method="post">
+	<div class="search">
+		<label for="mod-search-searchword">Search ...</label><i class="fa fa-search"></i><input name="searchword" id="mod-search-searchword" maxlength="200"  class="form-control " type="text" size="200" />	<input type="hidden" name="task" value="search" />
+	<input type="hidden" name="option" value="com_search" />
+	<input type="hidden" name="Itemid" value="102" />
+	</div>
+</form>
+
+	    </div>
+	    <!-- //HEAD SEARCH -->
+	    
+		</div>
+		<!-- //NAVBAR HEADER -->
+
+		<!-- NAVBAR MAIN -->
+				<nav class="t3-navbar-collapse navbar-collapse collapse"></nav>
+		
+		<nav class="t3-navbar navbar-collapse collapse">
+			<div  class="t3-megamenu animate fading"  data-duration="400" data-responsive="true">
+<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="nav navbar-nav level0">
+<li itemprop='name'  data-id="101" data-level="1">
+<a itemprop='url' class="" href="/"   data-target="#">Home </a>
+
+</li>
+<li itemprop='name'  data-id="117" data-level="1">
+<a itemprop='url' class="" href="/about-me"   data-target="#">About me </a>
+
+</li>
+<li itemprop='name'  data-id="190" data-level="1">
+<a itemprop='url' class="" href="/falv"   data-target="#">FALV </a>
+
+</li>
+<li itemprop='name' class="dropdown mega" data-id="227" data-level="1">
+<a itemprop='url' class=" dropdown-toggle" href="/alv-grid-in-the-nutshell"   data-target="#" data-toggle="dropdown">ALV Grid in the nutshell <em class="caret"></em></a>
+
+<div class="nav-child dropdown-menu mega-dropdown-menu"  ><div class="mega-dropdown-inner">
+<div class="row">
+<div class="col-xs-12 mega-col-nav" data-width="12"><div class="mega-inner">
+<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="mega-nav level1">
+<li itemprop='name'  data-id="229" data-level="2">
+<a itemprop='url' class="" href="/alv-grid-in-the-nutshell/basic-information"   data-target="#">Basic Information </a>
+
+</li>
+<li itemprop='name'  data-id="230" data-level="2">
+<a itemprop='url' class="" href="/alv-grid-in-the-nutshell/field-catalog"   data-target="#">Field catalog </a>
+
+</li>
+</ul>
+</div></div>
+</div>
+</div></div>
+</li>
+<li itemprop='name' class="active dropdown mega" data-id="120" data-level="1">
+<a itemprop='url' class=" dropdown-toggle" href="/articles"   data-target="#" data-toggle="dropdown">Articles <em class="caret"></em></a>
+
+<div class="nav-child dropdown-menu mega-dropdown-menu"  ><div class="mega-dropdown-inner">
+<div class="row">
+<div class="col-xs-12 mega-col-nav" data-width="12"><div class="mega-inner">
+<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="mega-nav level1">
+<li itemprop='name' class="current active" data-id="102" data-level="2">
+<a itemprop='url' class="" href="/articles/tricks"   data-target="#">Tricks </a>
+
+</li>
+<li itemprop='name'  data-id="189" data-level="2">
+<a itemprop='url' class="" href="/articles/falv"   data-target="#">FALV (Fast ALV Grid) </a>
+
+</li>
+<li itemprop='name'  data-id="228" data-level="2">
+<a itemprop='url' class="" href="/articles/alv-grid-in-the-nutshell"   data-target="#">ALV Grid in the nutshell </a>
+
+</li>
+<li itemprop='name'  data-id="116" data-level="2">
+<a itemprop='url' class="" href="/articles/tips"   data-target="#">Tips </a>
+
+</li>
+<li itemprop='name'  data-id="121" data-level="2">
+<a itemprop='url' class="" href="/articles/how-to"   data-target="#">How to... </a>
+
+</li>
+<li itemprop='name'  data-id="136" data-level="2">
+<a itemprop='url' class="" href="/articles/for-beginners"   data-target="#">For beginners </a>
+
+</li>
+<li itemprop='name'  data-id="187" data-level="2">
+<a itemprop='url' class="" href="/articles/thoughts"   data-target="#">Thoughts </a>
+
+</li>
+</ul>
+</div></div>
+</div>
+</div></div>
+</li>
+<li itemprop='name' class="dropdown mega" data-id="155" data-level="1">
+<a itemprop='url' class=" dropdown-toggle" href="/by-topic"   data-target="#" data-toggle="dropdown">By Topic <em class="caret"></em></a>
+
+<div class="nav-child dropdown-menu mega-dropdown-menu"  style="width: 400px"  data-width="400"><div class="mega-dropdown-inner">
+<div class="row">
+<div class="col-xs-6 mega-col-nav" data-width="6"><div class="mega-inner">
+<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="mega-nav level1">
+<li itemprop='name'  data-id="166" data-level="2">
+<a itemprop='url' class="" href="/by-topic/alv"   data-target="#">ALV </a>
+
+</li>
+<li itemprop='name'  data-id="167" data-level="2">
+<a itemprop='url' class="" href="/by-topic/alv-oo"   data-target="#">ALV OO </a>
+
+</li>
+<li itemprop='name'  data-id="168" data-level="2">
+<a itemprop='url' class="" href="/by-topic/salv"   data-target="#">SALV </a>
+
+</li>
+<li itemprop='name'  data-id="171" data-level="2">
+<a itemprop='url' class="" href="/by-topic/gos"   data-target="#">GOS </a>
+
+</li>
+<li itemprop='name'  data-id="152" data-level="2">
+<a itemprop='url' class="" href="/by-topic/selection-screen"   data-target="#">Selection screen </a>
+
+</li>
+<li itemprop='name'  data-id="159" data-level="2">
+<a itemprop='url' class="" href="/by-topic/purchase-requisitions"   data-target="#">Purchase Requisitions </a>
+
+</li>
+<li itemprop='name'  data-id="170" data-level="2">
+<a itemprop='url' class="" href="/by-topic/purchase-orders"   data-target="#">Purchase Orders </a>
+
+</li>
+<li itemprop='name'  data-id="160" data-level="2">
+<a itemprop='url' class="" href="/by-topic/attachments"   data-target="#">Attachments </a>
+
+</li>
+<li itemprop='name'  data-id="158" data-level="2">
+<a itemprop='url' class="" href="/by-topic/others"   data-target="#">Others </a>
+
+</li>
+</ul>
+</div></div>
+<div class="col-xs-6 mega-col-nav" data-width="6"><div class="mega-inner">
+<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="mega-nav level1">
+<li itemprop='name'  data-id="156" data-level="2">
+<a itemprop='url' class="" href="/by-topic/characteristics"   data-target="#">Characteristics </a>
+
+</li>
+<li itemprop='name'  data-id="157" data-level="2">
+<a itemprop='url' class="" href="/by-topic/sample-programs"   data-target="#">Sample Programs </a>
+
+</li>
+<li itemprop='name'  data-id="161" data-level="2">
+<a itemprop='url' class="" href="/by-topic/zip"   data-target="#">ZIP </a>
+
+</li>
+<li itemprop='name'  data-id="162" data-level="2">
+<a itemprop='url' class="" href="/by-topic/ole"   data-target="#">OLE </a>
+
+</li>
+<li itemprop='name'  data-id="163" data-level="2">
+<a itemprop='url' class="" href="/by-topic/mails"   data-target="#">Mails </a>
+
+</li>
+<li itemprop='name'  data-id="164" data-level="2">
+<a itemprop='url' class="" href="/by-topic/routings"   data-target="#">Routings </a>
+
+</li>
+<li itemprop='name'  data-id="165" data-level="2">
+<a itemprop='url' class="" href="/by-topic/ewb"   data-target="#">EWB </a>
+
+</li>
+<li itemprop='name'  data-id="169" data-level="2">
+<a itemprop='url' class="" href="/by-topic/excel"   data-target="#">Excel </a>
+
+</li>
+</ul>
+</div></div>
+</div>
+</div></div>
+</li>
+<li itemprop='name'  data-id="123" data-level="1">
+<a itemprop='url' class="" href="/keywords"   data-target="#">Keywords </a>
+
+</li>
+<li itemprop='name'  data-id="124" data-level="1">
+<a itemprop='url' class="" href="https://abapblog.com/?format=feed&amp;type=rss"   data-target="#">RSS</a>
+
+</li>
+<li itemprop='name'  data-id="142" data-level="1">
+<a itemprop='url' class="" href="/download"   data-target="#">Download </a>
+
+</li>
+</ul>
+</div>
+
+		</nav>
+    <!-- //NAVBAR MAIN -->
+
+	</div>
+</header>
+<!-- //MAIN NAVIGATION -->
+
+
+
+
+
+
+  
+<!-- SLIDESHOW -->
+<div class="slideshow hidden-xs ">
+	
+
+<div class="custom"  >
+	<div class="abtop">
+<div class="abtopimage"><img alt="" src="/images/back.png" style="" /></div>
+
+<div class="abtoppicture"><img alt="" src="/images/lukasz190x190.jpg" style="" /></div>
+
+<div class="abtopsocial">
+<ul class="share-buttons">
+	<li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fabapblog.com&amp;t=" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&amp;t=' + encodeURIComponent(document.URL)); return false;" target="_blank" title="Share on Facebook"><img alt="" src="/images/social_flat_rounded_rects_svg/Facebook.svg" style="" /></a></li>
+	<li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fabapblog.com&amp;text=:%20http%3A%2F%2Fabapblog.com&amp;via=abapblog" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;" target="_blank" title="Tweet"><img alt="" src="/images/social_flat_rounded_rects_svg/Twitter.svg" style="" /></a></li>
+	<li><a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fabapblog.com&amp;description=" onclick="window.open('http://pinterest.com/pin/create/button/?url=' + encodeURIComponent(document.URL) + '&amp;description=' +  encodeURIComponent(document.title)); return false;" target="_blank" title="Pin it"><img alt="" src="/images/social_flat_rounded_rects_svg/Pinterest.svg" style="" /></a></li>
+	<li><a href="https://getpocket.com/save?url=http%3A%2F%2Fabapblog.com&amp;title=" onclick="window.open('https://getpocket.com/save?url=' + encodeURIComponent(document.URL) + '&amp;title=' +  encodeURIComponent(document.title)); return false;" target="_blank" title="Add to Pocket"><img alt="" src="/images/social_flat_rounded_rects_svg/Pocket.svg" style="" /></a></li>
+	<li><a href="http://www.reddit.com/submit?url=http%3A%2F%2Fabapblog.com&amp;title=" onclick="window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(document.URL) + '&amp;title=' +  encodeURIComponent(document.title)); return false;" target="_blank" title="Submit to Reddit"><img alt="" src="/images/social_flat_rounded_rects_svg/Reddit.svg" style="" /></a></li>
+	<li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fabapblog.com&amp;title=&amp;summary=&amp;source=http%3A%2F%2Fabapblog.com" onclick="window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url=' + encodeURIComponent(document.URL) + '&amp;title=' +  encodeURIComponent(document.title)); return false;" target="_blank" title="Share on LinkedIn"><img alt="" src="/images/social_flat_rounded_rects_svg/LinkedIn.svg" style="" /></a></li>
+	<li><a href="https://pinboard.in/popup_login/?url=http%3A%2F%2Fabapblog.com&amp;title=&amp;description=" onclick="window.open('https://pinboard.in/popup_login/?url=' + encodeURIComponent(document.URL) + '&amp;title=' +  encodeURIComponent(document.title)); return false;" target="_blank" title="Save to Pinboard"><img alt="" src="/images/social_flat_rounded_rects_svg/Pinboard.svg" style="" /></a></li>
+</ul>
+</div>
+</div>
+</div>
+
+</div>
+<!-- //SLIDESHOW -->
+
+
+  
+	<!-- SPOTLIGHT 1 -->
+	<div class="wrap t3-sl t3-sl-1">
+    <div class="container">
+  			<!-- SPOTLIGHT -->
+	<div class="t3-spotlight t3-spotlight-1  row">
+					<div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="t3-module module " id="Mod17"><div class="module-inner"><div class="module-ct">
+<ul class="breadcrumb">
+	<li class="active"><span class="divider icon-location"></span></li><li><span itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="/" class="pathway"><span itemprop="title">Home</span></a></span><span class="divider"><img src="/templates/purity_iii/images/system/arrow.png" alt="" /></span></li><li><span itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="/articles" class="pathway"><span itemprop="title">Articles</span></a></span><span class="divider"><img src="/templates/purity_iii/images/system/arrow.png" alt="" /></span></li><li><span itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="/articles/tricks" class="pathway"><span itemprop="title">Tricks</span></a></span><span class="divider"><img src="/templates/purity_iii/images/system/arrow.png" alt="" /></span></li><li class="active"><span itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="https://abapblog.com/articles/tricks/104-send-mail-in-badi-or-user-exit-without-commiting" class="pathway"><span itemprop="title">Send mail in BADI or User-Exit without commiting</span></a></span></li></ul>
+</div></div></div><div class="t3-module module " id="Mod106"><div class="module-inner"><div class="module-ct"><div style="text-align:center;"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Billboard top -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5244692525759828"
+     data-ad-slot="9310764195"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div></div></div></div>
+							</div>
+			</div>
+<!-- SPOTLIGHT -->
+    </div>
+	</div>
+	<!-- //SPOTLIGHT 1 -->
+
+
+	
+<div id="t3-mainbody" class="container t3-mainbody">
+	<div class="row">
+
+		<!-- MAIN CONTENT -->
+		<div id="t3-content" class="t3-content col-xs-12 col-sm-8  col-md-9">
+						
+
+<div class="item-page clearfix">
+
+
+<!-- Article -->
+<article itemscope itemtype="http://schema.org/BlogPosting">
+	<meta itemprop="inLanguage" content="en-GB" />
+	<meta itemprop="url" content="/articles/tricks/104-send-mail-in-badi-or-user-exit-without-commiting" />
+    <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+    <meta itemprop="datePublished" content="2016-02-22" >
+    <meta itemprop="headline" content="Tricks" >
+      
+<header class="article-header clearfix">
+	<h1 class="article-title" itemprop="headline">
+					<a href="/articles/tricks/104-send-mail-in-badi-or-user-exit-without-commiting" itemprop="url" title="Send mail in BADI or User-Exit without commiting">
+				Send mail in BADI or User-Exit without commiting</a>
+			</h1>
+
+			</header>
+  
+  <!-- Aside -->
+    <aside class="article-aside clearfix">
+          	<dl class="article-info muted">
+
+		
+			<dt class="article-info-term">
+									Details							</dt>
+
+							<dd class="createdby" itemprop="author" itemscope itemtype="https://schema.org/Person">
+					Written by <span itemprop="name">Łukasz Pęgiel</span>	</dd>
+			
+			
+										<dd class="category-name">
+																		Category: <a href="/articles/tricks" itemprop="genre">Tricks</a>							</dd>			
+										<dd class="published">
+				<span class="icon-calendar"></span>
+				<time datetime="2016-02-22T14:21:56+00:00" itemprop="datePublished">
+					Published: 22 February 2016				</time>
+			</dd>					
+					
+			
+										<dd class="hits">
+					<span class="icon-eye-open"></span>
+					<meta itemprop="interactionCount" content="UserPageVisits:22229" />
+					Hits: 22229			</dd>						</dl>
+        
+      </aside>  
+    <!-- //Aside -->
+
+  
+  
+  
+  
+	
+  
+	
+	<section class="article-content clearfix" itemprop="articleBody">
+		<div class="attachmentsContainer">
+
+<div class="attachmentsList" id="attachmentsList_com_content_default_104"></div>
+
+</div>	<div class="content-showtags">
+		<span>Tags: </span>
+								<a href="/component/search/?searchword=CL_BCS&amp;ordering=&amp;searchphrase=all"><span itemprop="keywords">CL_BCS</span></a>
+					,			<a href="/component/search/?searchword=CL_BCS_MESSAGE&amp;ordering=&amp;searchphrase=all"><span itemprop="keywords">CL_BCS_MESSAGE</span></a>
+					,			<a href="/component/search/?searchword=SBCS_SEND&amp;ordering=&amp;searchphrase=all"><span itemprop="keywords">SBCS_SEND</span></a>
+					,			<a href="/component/search/?searchword=SBCS_SEND_UPDATE&amp;ordering=&amp;searchphrase=all"><span itemprop="keywords">SBCS_SEND_UPDATE</span></a>
+					,			<a href="/component/search/?searchword=RSBCS_EXAMPLE_EMAIL&amp;ordering=&amp;searchphrase=all"><span itemprop="keywords">RSBCS_EXAMPLE_EMAIL</span></a>
+					,			<a href="/component/search/?searchword=RSBCS_EXAMPLE_EMAIL_SIMPLE&amp;ordering=&amp;searchphrase=all"><span itemprop="keywords">RSBCS_EXAMPLE_EMAIL_SIMPLE</span></a>
+			</div>
+
+
+<!-- JoomlaWorks "Disqus Comments (for Joomla)" (v3.6.0) starts here -->
+
+<a id="startOfPage"></a>
+
+<!-- DISQUS comments counter and anchor link -->
+<div class="jwDisqusArticleCounter">
+	<span>
+		<a class="jwDisqusArticleCounterLink" href="#disqus_thread" data-disqus-identifier="22c52f1e06_id104">View Comments</a>
+	</span>
+	<div class="clr"></div>
+</div>
+
+<div>Everybody sends mails from SAP, some are still using old <span class="abap-comment">FM&nbsp;</span><span style="color: rgb(51, 51, 51); font-family: arial, helvetica, sans-serif; line-height: 18px;"><span class="abap-comment">SO_NEW_DOCUMENT_ATT_SEND_API1</span> but some <span class="abap-normal">CL_BCS</span> class. This class is really powerful but it has one disadvantage - it does commit work, and not only when sending emails but also during adding of attachments. In this case it&#39;s really not safe to use this class in BADIs or User-Exits, but there is one replacement for <span class="abap-normal">CL_BCS</span> -&gt;<span class="abap-normal"> CL_BCS_MESSAGE</span>. This class only collects the data, and when send method is run then calling a FM <span class="abap-comment">SBCS_SEND</span> with destination NONE, or <span class="abap-comment">SBCS_SEND_UPDATE</span> in update&nbsp;task, depending what attributes are passed to the class. It means you can use it also in BADIs or User-Exits where commits are not welcomed.</span></div><div>&nbsp;</div><div><img alt="" src="/images/articles/cl_bcs_message01.png" style="max-width: 689px; max-height: 576px; width: auto; height: auto;" /></div><div>&nbsp;</div><div> </div><div>&nbsp;</div><div><img alt="" src="/images/articles/cl_bcs_message02.png" style="max-width: 621px; max-height: 417px;  width: auto; height: auto;" /></div><div>&nbsp;</div><div>You can find sample programs in SAP:&nbsp;<span class="abap-normal">RSBCS_EXAMPLE_EMAIL</span>&nbsp;or&nbsp;<span class="abap-normal">RSBCS_EXAMPLE_EMAIL_SIMPLE</span>, or you can look at this small piece of code bellow to see how it is easy to use this class.</div><div>&nbsp;</div><p class="blabox-jck"><span><span class="L0S52">try</span><span class="L0S55">.</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">data</span><span class="L0S55">(</span>msg<span class="L0S55">)&nbsp;</span><span class="L0S55">=&nbsp;</span><span class="L0S52">new&nbsp;</span>cl_bcs_message<span class="L0S55">(&nbsp;</span><span class="L0S55">)</span><span class="L0S55">.</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;msg<span class="L0S70">-&gt;</span>set_subject<span class="L0S55">(&nbsp;</span><span class="L0S33">&#39;My&nbsp;test&nbsp;email&#39;&nbsp;&nbsp;</span><span class="L0S55">)</span><span class="L0S55">.</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;msg<span class="L0S70">-&gt;</span>add_recipient<span class="L0S55">(</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">exporting</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S55">=&nbsp;</span><span class="L0S33">&#39;<span id="cloak95d87416e999b7ab6986b3d48e852938">This email address is being protected from spambots. You need JavaScript enabled to view it.</span><script type='text/javascript'>
+				document.getElementById('cloak95d87416e999b7ab6986b3d48e852938').innerHTML = '';
+				var prefix = '&#109;a' + 'i&#108;' + '&#116;o';
+				var path = 'hr' + 'ef' + '=';
+				var addy95d87416e999b7ab6986b3d48e852938 = 'wr&#105;t&#101;.y&#111;&#117;r' + '&#64;';
+				addy95d87416e999b7ab6986b3d48e852938 = addy95d87416e999b7ab6986b3d48e852938 + 'r&#101;c&#105;p&#105;&#101;nt' + '&#46;' + 'h&#101;r&#101;';
+				var addy_text95d87416e999b7ab6986b3d48e852938 = 'wr&#105;t&#101;.y&#111;&#117;r' + '&#64;' + 'r&#101;c&#105;p&#105;&#101;nt' + '&#46;' + 'h&#101;r&#101;';document.getElementById('cloak95d87416e999b7ab6986b3d48e852938').innerHTML += '<a ' + path + '\'' + prefix + ':' + addy95d87416e999b7ab6986b3d48e852938 + '\'>'+addy_text95d87416e999b7ab6986b3d48e852938+'<\/a>';
+		</script>&#39;</span><br />
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_commtype&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;iv_commtype&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;Communication&nbsp;Type</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_visible_name&nbsp;<span class="L0S55">=&nbsp;</span><span class="L0S33">&#39;WRITE&nbsp;Yours&#39;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="L0S31">&quot;&nbsp;Display&nbsp;Name&nbsp;of&nbsp;an&nbsp;Address</span><br />
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_copy&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;iv_copy&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;Copy&nbsp;Recipients&nbsp;(None,&nbsp;CC,&nbsp;BCC)</span><br />
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_fax_country&nbsp;&nbsp;=&nbsp;iv_fax_country&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;Country&nbsp;for&nbsp;Telephone/Fax&nbsp;Number</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S55">)</span><span class="L0S55">.</span><br />
+&nbsp;&nbsp;&nbsp;msg<span class="L0S70">-&gt;</span>set_sender<span class="L0S55">(</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">exporting</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S55">=&nbsp;</span><span class="L0S33">&#39;<span id="cloakfec73d9a7c3511dd363d12967435337e">This email address is being protected from spambots. You need JavaScript enabled to view it.</span><script type='text/javascript'>
+				document.getElementById('cloakfec73d9a7c3511dd363d12967435337e').innerHTML = '';
+				var prefix = '&#109;a' + 'i&#108;' + '&#116;o';
+				var path = 'hr' + 'ef' + '=';
+				var addyfec73d9a7c3511dd363d12967435337e = 'd&#111;' + '&#64;';
+				addyfec73d9a7c3511dd363d12967435337e = addyfec73d9a7c3511dd363d12967435337e + 'n&#111;t' + '&#46;' + 'r&#101;ply';
+				var addy_textfec73d9a7c3511dd363d12967435337e = 'd&#111;' + '&#64;' + 'n&#111;t' + '&#46;' + 'r&#101;ply';document.getElementById('cloakfec73d9a7c3511dd363d12967435337e').innerHTML += '<a ' + path + '\'' + prefix + ':' + addyfec73d9a7c3511dd363d12967435337e + '\'>'+addy_textfec73d9a7c3511dd363d12967435337e+'<\/a>';
+		</script>&#39;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="L0S31">&quot;&nbsp;Communication&nbsp;Address&nbsp;(for&nbsp;INT,&nbsp;FAX,&nbsp;SMS,&nbsp;and&nbsp;so&nbsp;on)</span><br />
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_commtype&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;iv_commtype&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;Communication&nbsp;Type</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_visible_name&nbsp;<span class="L0S55">=&nbsp;</span><span class="L0S33">&#39;Do&nbsp;not&nbsp;reply&nbsp;&#39;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="L0S31">&quot;&nbsp;Display&nbsp;Name&nbsp;of&nbsp;an&nbsp;Address</span><br />
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_fax_country&nbsp;&nbsp;=&nbsp;iv_fax_country&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;Country&nbsp;for&nbsp;Telephone/Fax&nbsp;Number</span><br />
+&nbsp;&nbsp;&nbsp;<span class="L0S55">)</span><span class="L0S55">.</span><br />
+&nbsp;&nbsp;&nbsp;msg<span class="L0S70">-&gt;</span>set_main_doc<span class="L0S55">(</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">exporting</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_contents_txt&nbsp;<span class="L0S55">=&nbsp;</span>|<span class="L0S33">&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;br/&gt;&lt;b&gt;TEST&nbsp;MESSAGE&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</span>|<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;&nbsp;|<span class="L0S33">sample&nbsp;<span class="L0S52">from&nbsp;</span>&lt;a&nbsp;href=&#39;http://ABAPblog.com&#39;&gt;ABAPblog<span class="L0S55">.</span>com&lt;/a&gt;&lt;/body&gt;&lt;/html&gt;</span>|<br />
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_contents_bin&nbsp;=&nbsp;iv_contents_bin&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;Main&nbsp;Document,&nbsp;First&nbsp;Body&nbsp;Part&nbsp;(Binary)</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_doctype&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S55">=&nbsp;</span><span class="L0S33">&#39;htm&#39;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="L0S31">&quot;&nbsp;Document&nbsp;Category</span><br />
+<span class="L0S31">*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv_codepage&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;iv_codepage&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;Character&nbsp;Set&nbsp;of&nbsp;a&nbsp;Document</span><br />
+&nbsp;&nbsp;&nbsp;<span class="L0S55">)</span><span class="L0S55">.</span><br />
+&nbsp;&nbsp;&nbsp;msg<span class="L0S70">-&gt;</span>set_send_immediately<span class="L0S55">(&nbsp;</span>abap_true&nbsp;<span class="L0S55">)</span><span class="L0S55">.</span><br />
+&nbsp;&nbsp;&nbsp;msg<span class="L0S70">-&gt;</span>send<span class="L0S55">(&nbsp;</span><span class="L0S55">)</span><span class="L0S55">.</span><br />
+<span class="L0S52">catch&nbsp;</span>cx_bcs_send&nbsp;<span class="L0S52">into&nbsp;</span><span class="L0S52">data</span><span class="L0S55">(</span>ex<span class="L0S55">)</span><span class="L0S55">.</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="L0S52">message&nbsp;</span>ex<span class="L0S70">-&gt;</span>get_text<span class="L0S55">(&nbsp;</span><span class="L0S55">)&nbsp;</span><span class="L0S52">type&nbsp;</span><span class="L0S33">&#39;E&#39;</span><span class="L0S55">.</span><br />
+<span class="L0S52">endtry</span><span class="L0S55">.</span></span></p><div>&nbsp;</div><div>Have fun!</div>
+<!-- DISQUS comments block -->
+<div class="jwDisqusForm">
+	
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">
+				//<![CDATA[
+				var disqus_shortname = 'abapblog';
+				var disqus_url = 'https://abapblog.com/articles/tricks/104-send-mail-in-badi-or-user-exit-without-commiting';
+				var disqus_identifier = '22c52f1e06_id104';
+				var disqus_developer = '0';
+				var disqus_config = function(){
+					this.language = '';
+				};
+				(function() {
+					var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+					dsq.src = 'https://abapblog.disqus.com/embed.js';
+					(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
+				//]]>
+			</script>
+			<noscript>
+				<a href="https://abapblog.disqus.com/?url=ref">View the discussion thread.</a>
+			</noscript>
+				<div id="jwDisqusFormFooter">
+		<a target="_blank" href="http://disqus.com" class="dsq-brlink">
+			blog comments powered by <span class="logo-disqus">DISQUS</span>
+		</a>
+		<a id="jwDisqusBackToTop" href="#startOfPage">
+			back to top		</a>
+		<div class="clr"></div>
+	</div>
+</div>
+
+<div class="clr"></div>
+
+
+<!-- JoomlaWorks "Disqus Comments (for Joomla)" (v3.6.0) ends here -->
+<div style="clear:both;"></div><div class="socialbuttons" style="padding-top: 5px;padding-bottom:5px; overflow: hidden; float: left;"><div style="width: 80px !important; height: 20px; float: left; border: none;"><iframe src="https://www.facebook.com/plugins/like.php?locale=en_US&href=https%3A%2F%2Fabapblog.com%2Farticles%2Ftricks%2F104-send-mail-in-badi-or-user-exit-without-commiting&amp;layout=button_count&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=arial&amp;height=20" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width: 80px; height :20px;" allowTransparency="true"></iframe></div><div style="width: 65px !important; height: 20px; float: left; margin-left: 10px; border: none;"><a rel="nofollow" href="http://twitter.com/share" class="twitter-share-button" data-url="https://abapblog.com/articles/tricks/104-send-mail-in-badi-or-user-exit-without-commiting" data-count="horizontal" data-lang="en">Twitter</a><script src="https://platform.twitter.com/widgets.js" type="text/javascript"></script></div><div style="width: 110px !important; height: 20px; float: left; margin-left: 10px; border: none;"><script type="text/javascript" src="https://platform.linkedin.com/in.js"></script><script type="IN/share" data-url="https://abapblog.com/articles/tricks/104-send-mail-in-badi-or-user-exit-without-commiting" data-counter="right"></script></div></div><div style="clear:both;"></div>	</section>
+  
+  <!-- footer -->
+    <!-- //footer -->
+
+			<hr class="divider-vertical" />
+<ul class="pager pagenav">
+	<li class="previous">
+		<a href="/articles/tricks/105-how-to-access-private-or-protected-data-and-methods-of-cl-gui-alv-grid" rel="prev">
+			<span class="icon-chevron-left"></span> Prev		</a>
+	</li>
+	<li class="next">
+		<a href="/articles/tricks/103-wysiwyg-html-editor-in-abap" rel="next">
+			Next <span class="icon-chevron-right"></span>		</a>
+	</li>
+</ul>
+	
+	
+	</article>
+<!-- //Article -->
+
+
+</div>
+
+
+		</div>
+		<!-- //MAIN CONTENT -->
+
+		<!-- SIDEBAR RIGHT -->
+		<div class="t3-sidebar t3-sidebar-right col-xs-12 col-sm-4  col-md-3 ">
+			<div class="t3-module module " id="Mod173"><div class="module-inner"><div class="module-ct"><script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="pl_PL" data-type="vertical" data-theme="dark" data-vanity="lukaszpegiel"><a class="LI-simple-link" href='https://pl.linkedin.com/in/lukaszpegiel?trk=profile-badge'>Łukasz Pęgiel</a></div></div></div></div><div class="t3-module module " id="Mod144"><div class="module-inner"><div class="module-ct"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Slider 300x1050 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5244692525759828"
+     data-ad-slot="2609925795"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div></div></div><div class="t3-module module " id="Mod110"><div class="module-inner"><div class="module-ct"><div id="holder_TC110"><div id="inner_TC110"><a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=LOOP&ordering=&searchphrase=exact&Itemid=102&option=com_search" >LOOP</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=REDISPATCH&ordering=&searchphrase=exact&Itemid=102&option=com_search" >REDISPATCH</a>
+<a style="font-family:arial;font-weight:400;font-size: 23px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ALV GRID&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ALV GRID</a>
+<a style="font-family:arial;font-weight:400;font-size: 14px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=SAVE&ordering=&searchphrase=exact&Itemid=102&option=com_search" >SAVE</a>
+<a style="font-family:arial;font-weight:400;font-size: 18px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=USER&ordering=&searchphrase=exact&Itemid=102&option=com_search" >USER</a>
+<a style="font-family:arial;font-weight:400;font-size: 15px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=OBJECTS&ordering=&searchphrase=exact&Itemid=102&option=com_search" >OBJECTS</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=LOAD&ordering=&searchphrase=exact&Itemid=102&option=com_search" >LOAD</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=COMPLEX&ordering=&searchphrase=exact&Itemid=102&option=com_search" >COMPLEX</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ITM&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ITM</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=Dynamic GUI STATUS &ordering=&searchphrase=exact&Itemid=102&option=com_search" >Dynamic GUI STATUS </a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword= TITLE with ABAP code&ordering=&searchphrase=exact&Itemid=102&option=com_search" > TITLE with ABAP code</a>
+<a style="font-family:arial;font-weight:400;font-size: 30px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=GUI&ordering=&searchphrase=exact&Itemid=102&option=com_search" >GUI</a>
+<a style="font-family:arial;font-weight:400;font-size: 28px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ALV&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ALV</a>
+<a style="font-family:arial;font-weight:400;font-size: 27px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=GRID&ordering=&searchphrase=exact&Itemid=102&option=com_search" >GRID</a>
+<a style="font-family:arial;font-weight:400;font-size: 24px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=LVC&ordering=&searchphrase=exact&Itemid=102&option=com_search" >LVC</a>
+<a style="font-family:arial;font-weight:400;font-size: 23px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=FCAT&ordering=&searchphrase=exact&Itemid=102&option=com_search" >FCAT</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=SAPGUI&ordering=&searchphrase=exact&Itemid=102&option=com_search" >SAPGUI</a>
+<a style="font-family:arial;font-weight:400;font-size: 16px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=SET&ordering=&searchphrase=exact&Itemid=102&option=com_search" >SET</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=FUNCTIONCODE&ordering=&searchphrase=exact&Itemid=102&option=com_search" >FUNCTIONCODE</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=Save message with attachment in Outlook's Drafts&ordering=&searchphrase=exact&Itemid=102&option=com_search" >Save message with attachment in Outlook's Drafts</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=Enhanced MB51 Part 2 - Structure for data&ordering=&searchphrase=exact&Itemid=102&option=com_search" >Enhanced MB51 Part 2 - Structure for data</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=RM07DOCS&ordering=&searchphrase=exact&Itemid=102&option=com_search" >RM07DOCS</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=EXPORT TO MEMORY ID&ordering=&searchphrase=exact&Itemid=102&option=com_search" >EXPORT TO MEMORY ID</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=QFIELDNAME&ordering=&searchphrase=exact&Itemid=102&option=com_search" >QFIELDNAME</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=VIDEO&ordering=&searchphrase=exact&Itemid=102&option=com_search" >VIDEO</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=MEREQ&ordering=&searchphrase=exact&Itemid=102&option=com_search" >MEREQ</a>
+<a style="font-family:arial;font-weight:400;font-size: 15px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=GET&ordering=&searchphrase=exact&Itemid=102&option=com_search" >GET</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=FACTORY&ordering=&searchphrase=exact&Itemid=102&option=com_search" >FACTORY</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=Get filename and extension from full path&ordering=&searchphrase=exact&Itemid=102&option=com_search" >Get filename and extension from full path</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=About me&ordering=&searchphrase=exact&Itemid=102&option=com_search" >About me</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=APPEND&ordering=&searchphrase=exact&Itemid=102&option=com_search" >APPEND</a>
+<a style="font-family:arial;font-weight:400;font-size: 23px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ALV Grid in the nutshell&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ALV Grid in the nutshell</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=FALV &ordering=&searchphrase=exact&Itemid=102&option=com_search" >FALV </a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=Fast ALV Grid&ordering=&searchphrase=exact&Itemid=102&option=com_search" >Fast ALV Grid</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=HEADER&ordering=&searchphrase=exact&Itemid=102&option=com_search" >HEADER</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=HANDLE&ordering=&searchphrase=exact&Itemid=102&option=com_search" >HANDLE</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=MM-&ordering=&searchphrase=exact&Itemid=102&option=com_search" >MM-</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=GTGET&ordering=&searchphrase=exact&Itemid=102&option=com_search" >GTGET</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=GOS&ordering=&searchphrase=exact&Itemid=102&option=com_search" >GOS</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=MANAGER&ordering=&searchphrase=exact&Itemid=102&option=com_search" >MANAGER</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=DFIELDNANE&ordering=&searchphrase=exact&Itemid=102&option=com_search" >DFIELDNANE</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=BINARY&ordering=&searchphrase=exact&Itemid=102&option=com_search" >BINARY</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=RELATION&ordering=&searchphrase=exact&Itemid=102&option=com_search" >RELATION</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=GTREAD&ordering=&searchphrase=exact&Itemid=102&option=com_search" >GTREAD</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=LINKS&ordering=&searchphrase=exact&Itemid=102&option=com_search" >LINKS</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=BINRELS&ordering=&searchphrase=exact&Itemid=102&option=com_search" >BINRELS</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ADT&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ADT</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=JSON2ABAPtype&ordering=&searchphrase=exact&Itemid=102&option=com_search" >JSON2ABAPtype</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=FRONTEND&ordering=&searchphrase=exact&Itemid=102&option=com_search" >FRONTEND</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=SERVICES&ordering=&searchphrase=exact&Itemid=102&option=com_search" >SERVICES</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=GTENVIRONMENT&ordering=&searchphrase=exact&Itemid=102&option=com_search" >GTENVIRONMENT</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=VARIABLE&ordering=&searchphrase=exact&Itemid=102&option=com_search" >VARIABLE</a>
+<a style="font-family:arial;font-weight:400;font-size: 15px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ZDEMO&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ZDEMO</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=FALV02 - Full screen with redefinitions&ordering=&searchphrase=exact&Itemid=102&option=com_search" >FALV02 - Full screen with redefinitions</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=TOTLINE&ordering=&searchphrase=exact&Itemid=102&option=com_search" >TOTLINE</a>
+<a style="font-family:arial;font-weight:400;font-size: 14px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ABAP&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ABAP</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ELEMDESCR&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ELEMDESCR</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=RSDBRUNT&ordering=&searchphrase=exact&Itemid=102&option=com_search" >RSDBRUNT</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword= Field catalog - do&ordering=&searchphrase=exact&Itemid=102&option=com_search" > Field catalog - do</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=sum&ordering=&searchphrase=exact&Itemid=102&option=com_search" >sum</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=MS07&ordering=&searchphrase=exact&Itemid=102&option=com_search" >MS07</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=Create fieldcatalog from internal table&ordering=&searchphrase=exact&Itemid=102&option=com_search" >Create fieldcatalog from internal table</a>
+<a style="font-family:arial;font-weight:400;font-size: 23px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ALV GRID IN THE NUTSHELL&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ALV GRID IN THE NUTSHELL</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=How to handle CL&ordering=&searchphrase=exact&Itemid=102&option=com_search" >How to handle CL</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=GRID events in SALV&ordering=&searchphrase=exact&Itemid=102&option=com_search" >GRID events in SALV</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=SELECTED&ordering=&searchphrase=exact&Itemid=102&option=com_search" >SELECTED</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ROWS&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ROWS</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=OLE2&ordering=&searchphrase=exact&Itemid=102&option=com_search" >OLE2</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=OBJECT&ordering=&searchphrase=exact&Itemid=102&option=com_search" >OBJECT</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=By Topic&ordering=&searchphrase=exact&Itemid=102&option=com_search" >By Topic</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=AUTHORITY-CHECK&ordering=&searchphrase=exact&Itemid=102&option=com_search" >AUTHORITY-CHECK</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=UI2&ordering=&searchphrase=exact&Itemid=102&option=com_search" >UI2</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=JSON&ordering=&searchphrase=exact&Itemid=102&option=com_search" >JSON</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=REUSE&ordering=&searchphrase=exact&Itemid=102&option=com_search" >REUSE</a>
+<a style="font-family:arial;font-weight:400;font-size: 24px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=FIELDCATALOG&ordering=&searchphrase=exact&Itemid=102&option=com_search" >FIELDCATALOG</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=MERGE&ordering=&searchphrase=exact&Itemid=102&option=com_search" >MERGE</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=CHART&ordering=&searchphrase=exact&Itemid=102&option=com_search" >CHART</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ENGINE&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ENGINE</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ZIP a file using ABAP&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ZIP a file using ABAP</a>
+<a style="font-family:arial;font-weight:400;font-size: 15px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=SALV&ordering=&searchphrase=exact&Itemid=102&option=com_search" >SALV</a>
+<a style="font-family:arial;font-weight:400;font-size: 14px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=TABLE&ordering=&searchphrase=exact&Itemid=102&option=com_search" >TABLE</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ISOLATE&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ISOLATE</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=SELSCREEN&ordering=&searchphrase=exact&Itemid=102&option=com_search" >SELSCREEN</a>
+<a style="font-family:arial;font-weight:400;font-size: 17px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=FALV&ordering=&searchphrase=exact&Itemid=102&option=com_search" >FALV</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=DISPLAY&ordering=&searchphrase=exact&Itemid=102&option=com_search" >DISPLAY</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=Create a nice looking chart with CL&ordering=&searchphrase=exact&Itemid=102&option=com_search" >Create a nice looking chart with CL</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ENGINE - Part 3 - Chart Data and render&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ENGINE - Part 3 - Chart Data and render</a>
+<a style="font-family:arial;font-weight:400;font-size: 14px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=PURCHASE&ordering=&searchphrase=exact&Itemid=102&option=com_search" >PURCHASE</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ORDER&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ORDER</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=MDC7&ordering=&searchphrase=exact&Itemid=102&option=com_search" >MDC7</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=TSK&ordering=&searchphrase=exact&Itemid=102&option=com_search" >TSK</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=EXTEND PROGRAM RUNTIME&ordering=&searchphrase=exact&Itemid=102&option=com_search" >EXTEND PROGRAM RUNTIME</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=RECEIVE RESULTS FROM FUNCTION&ordering=&searchphrase=exact&Itemid=102&option=com_search" >RECEIVE RESULTS FROM FUNCTION</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=ZCL&ordering=&searchphrase=exact&Itemid=102&option=com_search" >ZCL</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=COLUMN - column &ordering=&searchphrase=exact&Itemid=102&option=com_search" >COLUMN - column </a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=fcat&ordering=&searchphrase=exact&Itemid=102&option=com_search" >fcat</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword= settings&ordering=&searchphrase=exact&Itemid=102&option=com_search" > settings</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword= Field catalog - fix&ordering=&searchphrase=exact&Itemid=102&option=com_search" > Field catalog - fix</a>
+<a style="font-family:arial;font-weight:400;font-size: 12px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=column&ordering=&searchphrase=exact&Itemid=102&option=com_search" >column</a>
+<a style="font-family:arial;font-weight:400;font-size: 13px" class="cloud_TC110" href="https://abapblog.com/search/?searchword=BOM&ordering=&searchphrase=exact&Itemid=102&option=com_search" >BOM</a>
+</div></div></div></div></div><div class="t3-module module " id="Mod165"><div class="module-inner"><div class="module-ct">
+	<ul class="weblinks">
+					<li>
+								<a href="http://zofia.pegiel.pl/twarz/emerge" rel="follow">Laserowe usuwanie blizn Tychy</a>
+				
+							</li>
+					<li>
+								<a href="http://zofia.pegiel.pl/twarz/emerge" rel="follow">Laserowe usuwanie zmarszczek Tychy</a>
+				
+							</li>
+					<li>
+								<a href="http://zofia.pegiel.pl/dlonie/paznokcie-hybrydowe" rel="follow">Paznokcie hybrydowe Tychy</a>
+				
+							</li>
+					<li>
+								<a href="http://zofia.pegiel.pl/dlonie/manicure-tytanowy" rel="follow">Paznokcie tytanowe Tychy</a>
+				
+							</li>
+					<li>
+								<a href="http://zofia.pegiel.pl" rel="follow">Salon Kosmetyczny Tychy</a>
+				
+							</li>
+					<li>
+								<a href="http://trycholog.tychy.pl" rel="follow">Trycholog Tychy</a>
+				
+							</li>
+					<li>
+								<a href="http://trycholog.tychy.pl" rel="follow">Wypadanie włosów Tychy</a>
+				
+							</li>
+			</ul>
+</div></div></div><div class="t3-module module " id="Mod146"><div class="module-inner"><div class="module-ct"><a class="twitter-timeline" data-height="900" data-dnt="true" data-theme="dark" href="https://twitter.com/abapblog?ref_src=twsrc%5Etfw">Tweets by abapblog</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div></div></div><div class="t3-module module " id="Mod166"><div class="module-inner"><h3 class="module-title "><span>Eclipse Plugins for ABAP</span></h3><div class="module-ct">
+
+<div class="custom"  >
+	<p>ABAP Favorites</p>
+
+<p><a class="drag" href="https://marketplace.eclipse.org/marketplace-client-intro?mpc_install=3522403" title="Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client"><img alt="Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client" class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" /></a></p>
+
+<p>ABAP ADT Extensions</p>
+
+<p><a class="drag" href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=4441477" title="Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client"><img alt="Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client" class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" style="" typeof="foaf:Image" /></a></p>
+
+<p>ABAP Quick Fixes</p>
+
+<p><a class="drag" href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=4666037" title="Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client"><img alt="Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client" class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" typeof="foaf:Image" /></a></p>
+
+<p>&nbsp;</p>
+</div>
+</div></div></div>
+		</div>
+		<!-- //SIDEBAR RIGHT -->
+
+	</div>
+</div> 
+
+
+
+  
+	<!-- SPOTLIGHT 2 -->
+	<div class="wrap t3-sl t3-sl-2">
+    <div class="container">
+  			<!-- SPOTLIGHT -->
+	<div class="t3-spotlight t3-spotlight-2  row">
+					<div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="t3-module module " id="Mod145"><div class="module-inner"><div class="module-ct"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Billboard bottom -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5244692525759828"
+     data-ad-slot="1787497399"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div></div></div>
+							</div>
+			</div>
+<!-- SPOTLIGHT -->
+    </div>
+	</div>
+	<!-- //SPOTLIGHT 2 -->
+
+
+  
+
+
+	
+<!-- BACK TOP TOP BUTTON -->
+<div id="back-to-top" data-spy="affix" data-offset-top="300" class="back-to-top hidden-xs hidden-sm affix-top">
+  <button class="btn btn-primary" title="Back to Top"><i class="fa fa-caret-up"></i></button>
+</div>
+<script type="text/javascript">
+(function($) {
+	// Back to top
+	$('#back-to-top').on('click', function(){
+		$("html, body").animate({scrollTop: 0}, 500);
+		return false;
+	});
+    $(window).load(function(){
+        // hide button to top if the document height not greater than window height*2;using window load for more accurate calculate.    
+        if ((parseInt($(window).height())*2)>(parseInt($(document).height()))) {
+            $('#back-to-top').hide();
+        } 
+    });
+})(jQuery);
+</script>
+<!-- BACK TO TOP BUTTON -->
+
+<!-- FOOTER -->
+<footer id="t3-footer" class="wrap t3-footer">
+
+			<!-- FOOTER SPOTLIGHT -->
+		<div class="container hidden-xs">
+				<!-- SPOTLIGHT -->
+	<div class="t3-spotlight t3-footer-sl  row">
+					<div class=" col-lg-4 col-md-4 col-sm-4 col-xs-6">
+								<div class="t3-module module " id="Mod108"><div class="module-inner"><h3 class="module-title "><span>Latest Articles</span></h3><div class="module-ct"><ul class="latestnews">
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="ABAP in Eclipse - Install, Configure, Use, and Enhance Your ADT" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2021-06-11" >
+      	 <a href="/articles/thoughts/181-abap-in-eclipse-install-configure-use-and-enhance-your-adt" itemprop="url">
+			<span itemprop="name">
+				ABAP in Eclipse - Install, Configure, Use, and Enhance Your ADT			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="ALV Grid in the nutshell: Field catalog -  col_id - ALV control: Column ID" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2020-06-08" >
+      	 <a href="/articles/alv-grid-in-the-nutshell/179-alv-grid-in-the-nutshell-field-catalog-col-id-alv-control-column-id" itemprop="url">
+			<span itemprop="name">
+				ALV Grid in the nutshell: Field catalog -  col_id - ALV control: Column ID			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="ALV Grid in the nutshell: Field catalog -  dfieldname – Fieldname for column group" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2020-04-27" >
+      	 <a href="/articles/alv-grid-in-the-nutshell/178-alv-grid-in-the-nutshell-field-catalog-dfieldname-fieldname-for-column-group" itemprop="url">
+			<span itemprop="name">
+				ALV Grid in the nutshell: Field catalog -  dfieldname – Fieldname for column group			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="ALV Grid in the nutshell: Field catalog - Hotspot - ALV control: SingleClick-sensitive" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2020-04-27" >
+      	 <a href="/articles/alv-grid-in-the-nutshell/177-alv-grid-in-the-nutshell-field-catalog-hotspot-alv-control-singleclick-sensitive" itemprop="url">
+			<span itemprop="name">
+				ALV Grid in the nutshell: Field catalog - Hotspot - ALV control: SingleClick-sensitive			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="ALV Grid in the nutshell: Field catalog - sp_group - Group key" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2020-04-18" >
+      	 <a href="/articles/alv-grid-in-the-nutshell/176-alv-grid-in-the-nutshell-field-catalog-sp-group-group-key" itemprop="url">
+			<span itemprop="name">
+				ALV Grid in the nutshell: Field catalog - sp_group - Group key			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="ALV Grid in the nutshell: Field catalog - domname - Domain name" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2020-04-18" >
+      	 <a href="/articles/alv-grid-in-the-nutshell/175-alv-grid-in-the-nutshell-field-catalog-domname-domain-name" itemprop="url">
+			<span itemprop="name">
+				ALV Grid in the nutshell: Field catalog - domname - Domain name			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="ALV Grid in the nutshell: Field catalog - reprep - ALV control: Value is selection criterion for rep./rep.intf." itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2020-04-13" >
+      	 <a href="/articles/alv-grid-in-the-nutshell/174-alv-grid-in-the-nutshell-field-catalog-reprep-alv-control-value-is-selection-criterion-for-rep-rep-intf" itemprop="url">
+			<span itemprop="name">
+				ALV Grid in the nutshell: Field catalog - reprep - ALV control: Value is selection criterion for rep./rep.intf.			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="ALV Grid in the nutshell: Field catalog - reptext – Heading" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2020-04-13" >
+      	 <a href="/articles/alv-grid-in-the-nutshell/173-alv-grid-in-the-nutshell-field-catalog-reptext-heading" itemprop="url">
+			<span itemprop="name">
+				ALV Grid in the nutshell: Field catalog - reptext – Heading			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="ALV Grid in the nutshell: Field catalog - lowercase - Lowercase letters allowed/not allowed" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2020-04-13" >
+      	 <a href="/articles/alv-grid-in-the-nutshell/172-alv-grid-in-the-nutshell-field-catalog-lowercase-lowercase-letters-allowed-not-allowed" itemprop="url">
+			<span itemprop="name">
+				ALV Grid in the nutshell: Field catalog - lowercase - Lowercase letters allowed/not allowed			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="ALV Grid in the nutshell: Field catalog - intlen - Internal Length in Bytes" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2020-04-13" >
+      	 <a href="/articles/alv-grid-in-the-nutshell/171-alv-grid-in-the-nutshell-field-catalog-intlen-internal-length-in-bytes" itemprop="url">
+			<span itemprop="name">
+				ALV Grid in the nutshell: Field catalog - intlen - Internal Length in Bytes			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="Downloading Exchange Rates from NBP (National Bank of Poland)" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2020-04-06" >
+      	 <a href="/articles/how-to/170-downloading-exchange-rates-from-nbp-national-bank-of-poland" itemprop="url">
+			<span itemprop="name">
+				Downloading Exchange Rates from NBP (National Bank of Poland)			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="Downloading Exchange Rates from Central Bank of Turkey" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2020-04-06" >
+      	 <a href="/articles/how-to/169-downloading-exchange-rates-from-central-bank-of-turkey" itemprop="url">
+			<span itemprop="name">
+				Downloading Exchange Rates from Central Bank of Turkey			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="ABAP Extensions - Automatic Logon" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2020-01-04" >
+      	 <a href="/articles/how-to/168-abap-extensions-automatic-logon" itemprop="url">
+			<span itemprop="name">
+				ABAP Extensions - Automatic Logon			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="ALV Grid in the nutshell: Field catalog - inttype - ABAP data type (C,D,N,...)" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2019-12-18" >
+      	 <a href="/articles/alv-grid-in-the-nutshell/167-alv-grid-in-the-nutshell-field-catalog-inttype-abap-data-type-c-d-n" itemprop="url">
+			<span itemprop="name">
+				ALV Grid in the nutshell: Field catalog - inttype - ABAP data type (C,D,N,...)			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="http://schema.org/BlogPosting">
+		<meta content="ALV Grid in the nutshell: Field catalog - datatype" itemprop="headline">
+        <meta content="http://abapblog.com/images/yt.jpg" itemprop="image">
+        <meta itemprop="datePublished" content="2019-12-11" >
+      	 <a href="/articles/alv-grid-in-the-nutshell/166-alv-grid-in-the-nutshell-field-catalog-datatype" itemprop="url">
+			<span itemprop="name">
+				ALV Grid in the nutshell: Field catalog - datatype			</span>
+		</a>
+	</li>
+</ul>
+</div></div></div>
+							</div>
+					<div class=" col-lg-4 col-md-4 col-sm-4 col-xs-6">
+								<div class="t3-module module " id="Mod109"><div class="module-inner"><h3 class="module-title "><span>Most Read</span></h3><div class="module-ct"><ul class="mostread">
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/tricks/33-create-xlsx-mhtml-file-from-internal-table-in-background" itemprop="url">
+			<span itemprop="name">
+				Create XLSX/MHTML file from internal table in background			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/tricks/22-refresh-alv-grid-and-keep-position-and-current-cell" itemprop="url">
+			<span itemprop="name">
+				Refresh ALV GRID and keep position and current cell			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/how-to/41-call-standard-f4-search-help-with-customized-parameters" itemprop="url">
+			<span itemprop="name">
+				Call standard F4 search help with customized parameters			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/falv" itemprop="url">
+			<span itemprop="name">
+				FALV (Fast ALV Grid)			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/tricks/77-dynamic-gui-status-title" itemprop="url">
+			<span itemprop="name">
+				Dynamic GUI STATUS & TITLE with ABAP code			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/how-to/31-create-a-nice-looking-chart-with-cl-gui-chart-engine-part-3-chart-data-and-render" itemprop="url">
+			<span itemprop="name">
+				Create a nice looking chart with CL_GUI_CHART_ENGINE - Part 3 - Chart Data and render			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/tricks/13-link-attachments-of-purchase-requisition-to-purchase-order" itemprop="url">
+			<span itemprop="name">
+				Link Attachments of Purchase Requisition to Purchase Order			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/tricks/71-gos-how-to-add-business-documents-at-creation-of-object" itemprop="url">
+			<span itemprop="name">
+				GOS - How to add business documents at creation of object			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/tips/124-atc-pseudo-comments-list" itemprop="url">
+			<span itemprop="name">
+				ATC Pseudo Comments list			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/how-to/76-create-fieldcatalog-from-internal-table" itemprop="url">
+			<span itemprop="name">
+				Create fieldcatalog from internal table			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/tricks/120-create-xlsx-file-from-internal-table-in-background-v2" itemprop="url">
+			<span itemprop="name">
+				Create XLSX file from internal table in background v2			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/tricks/27-subtotal-lines-of-alv-grid-oo-as-content-separator" itemprop="url">
+			<span itemprop="name">
+				Subtotal lines of ALV GRID OO as content separator			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/tips/40-endless-loop-in-badi-me-proicess-po-cust" itemprop="url">
+			<span itemprop="name">
+				Endless loop in BADI ME_PROCESS_PO_CUST			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/tricks/105-how-to-access-private-or-protected-data-and-methods-of-cl-gui-alv-grid" itemprop="url">
+			<span itemprop="name">
+				How to access private or protected data and methods of CL_GUI_ALV_GRID			</span>
+		</a>
+	</li>
+	<li itemscope itemtype="https://schema.org/Article">
+		<a href="/articles/how-to/68-ewb-components-allocation-to-routing-operation-multilevel-bom" itemprop="url">
+			<span itemprop="name">
+				EWB Components allocation to routing operation (multilevel BOM)			</span>
+		</a>
+	</li>
+</ul>
+</div></div></div>
+							</div>
+					<div class=" col-lg-4 col-md-4 col-sm-4 col-xs-12">
+								<div class="t3-module module " id="Mod149"><div class="module-inner"><h3 class="module-title "><span>Latest Comments</span></h3><div class="module-ct"><div id="recentcomments" class="dsq-widget">
+	<script type="text/javascript" src="https://abapblog.disqus.com/recent_comments_widget.js?num_items=5&hide_avatars=1&avatar_size=24&excerpt_length=200"></script>
+</div>
+</div></div></div>
+							</div>
+			</div>
+<!-- SPOTLIGHT -->
+		</div>
+		<!-- //FOOTER SPOTLIGHT -->
+	
+	<section class="t3-copyright">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 copyright ">
+					
+
+<div class="custom"  >
+	<p style="text-align: center;"><span style="font-size: 9px;">ABAP code and articles provided on http://abapblog.com, if it is not statet otherwise, were created by Łukasz Pęgiel. You can use the code in your SAP instance for commercial and non-commercial use without any warranty from side of the author. You cannot sell the code as a full program or a part of it.<br />
+Replicating of the articles and code is prohibited unless the agreement of the author is given to you.&nbsp;</span></p></div>
+<div style="text-align:center;"><p><div style="display:inline-flex;text-align:center; margin: 0 auto;"><div style="float:none;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Linki New 1 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:200px;height:90px"
+     data-ad-client="ca-pub-5244692525759828"
+     data-ad-slot="7614998597"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<div style="float:none;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Linki New2 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:200px;height:90px"
+     data-ad-client="ca-pub-5244692525759828"
+     data-ad-slot="1568464991"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div><div style="float:none;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Linki New 3 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:200px;height:90px"
+     data-ad-client="ca-pub-5244692525759828"
+     data-ad-slot="3045198193"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div></div></P></div>
+    
+				</div>
+							</div>
+		</div>
+	</section>
+
+</footer>
+<!-- //FOOTER -->
+
+</div>
+<script id="dsq-count-scr" src="https://abapblog.disqus.com/count.js" async></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<Script>
+(Function () {
+    var bp = document.createElement ('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName ("script") [0];
+    s.parentNode.insertBefore (bp, s);
+}) ();
+</ Script>
+
+				<!-- JoomlaWorks "Disqus Comments (for Joomla)" (v3.6.0) -->
+				<script type="text/javascript">
+					//<![CDATA[
+					var disqus_shortname = 'abapblog';
+					var disqus_config = function(){
+						this.language = '';
+					};
+					(function () {
+						var s = document.createElement('script'); s.async = true;
+						s.type = 'text/javascript';
+						s.src = 'https://abapblog.disqus.com/count.js';
+						(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+					}());
+					//]]>
+				</script>
+			
+
+</body>
+</html>

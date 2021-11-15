@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>CL_SALV_EVENTS_HIERSEQ | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/cl_salv_events_hierseq/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:01:59 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Работа с SALV Hierseq Table</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-salv-hierseq-tabl/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-salv-hierseq-tabl/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 28 Apr 2012 13:55:48 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[cl_salv_columns_hierseq]]></category>
+		<category><![CDATA[cl_salv_column_hierseq]]></category>
+		<category><![CDATA[CL_SALV_EVENTS_HIERSEQ]]></category>
+		<category><![CDATA[cl_salv_functions]]></category>
+		<category><![CDATA[cl_salv_hierseq_table]]></category>
+		<category><![CDATA[cl_salv_sorts]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=806</guid>
+
+					<description><![CDATA[<p>Для отображения иерархической таблицы с двумя уровнями иерархии (главный и подчиненный) в SALV модели используется класс &#8212; cl_salv_hierseq_table. Примером подобной иерархии может служить заказ на закупку, который состоит из заголовочной части и позиций заказа. Связь в этой иерархии осуществляется с помощью ключевого поля «номер заказа» в заголовке и позиции заказа. Таблица создается с помощью фабрично-статического [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-salv-hierseq-tabl/">Работа с SALV Hierseq Table</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Для отображения иерархической таблицы с двумя уровнями иерархии (главный и подчиненный) в SALV модели используется класс &#8212; <strong>cl_salv_hierseq_table</strong>.</p>
+<p><strong><a href="http://abap-blog.ru/wp-content/uploads/2012/04/image021.png"><img loading="lazy" title="image02" src="http://abap-blog.ru/wp-content/uploads/2012/04/image021.png" alt="" width="509" height="170" /></a></strong></p>
+<p>Примером подобной иерархии может служить заказ на закупку, который состоит из заголовочной части и позиций заказа. Связь в этой иерархии осуществляется с помощью ключевого поля «номер заказа» в заголовке и позиции заказа.</p>
+<p>Таблица создается с помощью фабрично-статического метода factory(). При его вызове необходимо передать две таблицы с данными и таблицу, в которой прописана связь между ними с типом <strong>salv_t_hierseq_binding</strong>. <strong>В данной таблице указываются ключевые поля которые связывают таблицы, но не более 5 полей. Если у вас больше создавайте составные ключи в технических полях.</strong><br />
+Следующий пример покажет, как вывести иерархическую таблицу закупочных заказов с позициями:</p>
+<p><span id="more-806"></span></p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  zrep_hier_tab.
+
+CLASS lcl_report DEFINITION FINAL.
+  PUBLIC SECTION.
+    TYPES: BEGIN OF ty_ekko_data,
+                      ebeln TYPE ebeln, " Заказ
+                      lifnr TYPE lifnr, " Поставщик
+           END OF ty_ekko_data,
+           BEGIN OF ty_ekpo_data,
+                      ebeln TYPE ebeln,
+                      ebelp TYPE ebelp,
+                      matnr TYPE matnr,
+                      MENGE TYPE bstmg,
+                      aedat TYPE aedat, " Дата изменения
+           END OF ty_ekpo_data.
+    CLASS-DATA:
+      go_hier_table TYPE REF TO cl_salv_hierseq_table,
+      gt_ekko_data TYPE STANDARD TABLE OF ty_ekko_data, " Таблица с заголовками заказов
+      gt_ekpo_data TYPE STANDARD TABLE OF ty_ekpo_data. " Таблица с позициями заказов
+    CLASS-METHODS:
+      get_data,     " Получение данных из БД
+      create_table, " Создание иерархической таблицы
+      display.
+ENDCLASS.                    "lcl_report DEFINITION
+
+START-OF-SELECTION.
+  lcl_report=&gt;get_data( ).
+  lcl_report=&gt;create_table( ).
+  lcl_report=&gt;display( ).
+
+CLASS lcl_report IMPLEMENTATION.
+  METHOD get_data.
+    CLEAR: gt_ekko_data, gt_ekpo_data.
+    SELECT * FROM ekko INTO CORRESPONDING FIELDS OF TABLE gt_ekko_data UP TO 10 ROWS WHERE bsart = 'NB'.
+    SELECT * FROM ekpo INTO CORRESPONDING FIELDS OF TABLE gt_ekpo_data
+      FOR ALL ENTRIES IN gt_ekko_data
+      WHERE ebeln = gt_ekko_data-ebeln.
+  ENDMETHOD.                    "get_data
+
+  METHOD create_table.
+    DATA:
+      lt_bind TYPE salv_t_hierseq_binding,
+      ls_bind TYPE salv_s_hierseq_binding.
+
+    " Заполняем таблицу со связью между таблицми
+    ls_bind-master = 'EBELN'.
+    ls_bind-slave  = 'EBELN'.
+    APPEND ls_bind TO lt_bind.
+
+    TRY.
+        CALL METHOD cl_salv_hierseq_table=&gt;factory
+          EXPORTING
+            t_binding_level1_level2 = lt_bind
+          IMPORTING
+            r_hierseq               = go_hier_table
+          CHANGING
+            t_table_level1          = gt_ekko_data
+            t_table_level2          = gt_ekpo_data.
+
+      CATCH cx_salv_data_error cx_salv_not_found.
+        MESSAGE 'Ошибка при создании таблицы' TYPE 'S'.
+    ENDTRY.
+
+  ENDMETHOD.                    "create_table
+
+  METHOD display.
+    go_hier_table-&gt;display( ).
+  ENDMETHOD.                    "display
+ENDCLASS.                    "lcl_report IMPLEMENTATION</pre><p>Результат работы программы:</p>
+<p><strong><a href="http://abap-blog.ru/wp-content/uploads/2012/04/image001.png"><img loading="lazy" class="alignnone size-full wp-image-807" title="image00" src="http://abap-blog.ru/wp-content/uploads/2012/04/image001.png" alt="" width="462" height="307" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/image001.png 462w, https://abap-blog.ru/wp-content/uploads/2012/04/image001-300x199.png 300w" sizes="(max-width: 462px) 100vw, 462px" /></a></strong></p>
+<p><strong id="internal-source-marker_0.35741033777594566">Настройка функций</strong></p>
+<p><strong id="internal-source-marker_0.35741033777594566"><br />
+</strong>Как и в случае с <strong>cl_salv_table</strong>, в полноэкранном режиме для установки GUI статуса необходимо использовать метод <strong>SET_SCREEN_STATUS</strong>, параметр <strong>REPORT</strong> отвечает за то из какой программы будет взят GUI статус, <strong>PFSTATUS</strong> – имя GUI статуса, <strong>SET_FUNCTIONS</strong> – определяет какие стандартные функции будут использованы в программе.<br />
+Может принимать значения: <strong>C_FUNCTIONS_DEFAULT</strong> – сортировки, фильтры, выбор формата. <strong>C_FUNCTIONS_ALL</strong> – все функции ALV, <strong>C_FUNCTIONS_NONE</strong> – по умолчанию, только пользовательские функции. Константы определены в классе: <strong>CL_SALV_MODEL_BASE</strong>.<br />
+Стандартный GUI статус можно взять в группе функций: <strong>SALV_METADATA_STATUS</strong> – статус: <strong>SALV_TABLE_STANDARD</strong> или <strong>SALV_TABLE_STDPOPUP</strong>, скопировать в свою программу и расширить необходимыми функциями.<br />
+Для того чтобы динамически исключить какую либо функцию можно применить класс <strong>cl_salv_functions</strong>, но вместо метода remove_function использовать метод <strong>set_function</strong>, параметр name определяет какую функцию будем скрывать, boolean — определяет скрыта она или нет, если скрываем, ставим в abap_true. Метод <strong>remove_function</strong> не работает для полно экранного режима.<br />
+Пример настройки функций через класс (когда используется контейнер):</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD setup_functions.
+    DATA:
+      lo_functions TYPE REF TO cl_salv_functions_list.
+
+      lo_functions = go_hier_table-&gt;get_functions( ).
+      lo_functions-&gt;set_all( ).
+  ENDMETHOD.</pre><p>Настройка через GUI статус:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD setup_functions.
+    go_hier_table-&gt;set_screen_status(
+      EXPORTING
+        REPORT        = sy-repid
+        pfstatus      = 'SALV_STANDARD'
+        set_functions = CL_SALV_MODEL_BASE=&gt;C_FUNCTIONS_ALL
+    ).
+  ENDMETHOD.</pre><p>Результат:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/04/image011.png"><img loading="lazy" class="alignnone size-full wp-image-808" title="image01" src="http://abap-blog.ru/wp-content/uploads/2012/04/image011.png" alt="" width="464" height="238" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/image011.png 464w, https://abap-blog.ru/wp-content/uploads/2012/04/image011-300x153.png 300w" sizes="(max-width: 464px) 100vw, 464px" /></a></p>
+<p><strong id="internal-source-marker_0.35741033777594566">Настройка колонок</strong></p>
+<p><strong id="internal-source-marker_0.35741033777594566"><br />
+</strong>Настройка колонок работает так же как и с <strong>cl_salv_table</strong>, за исключением того что для настройки колонок используются классы – <strong>cl_salv_columns_hierseq</strong> и <strong>cl_salv_column_hierseq</strong>. Кроме того колонки настраиваются относительно уровня иерархии, при получении ссылки на экземпляр класса <strong>cl_salv_columns_hierseq</strong> необходимо указать уровень в иерархии.<br />
+В настройке колонок можно настроить сворачивание иерархии, для этого в структуры необходимо добавить поле expand с типом char1. И в настройке колонок верхнего уровня указать колонку, отвечающую за эту логику через метод set_expand_column.<br />
+Для того чтобы иерархия была развернута необходимо получить ссылку на экземпляр уровня иерархии представленный классом <strong>cl_salv_hierseq_level</strong> и вызвать метод – <strong>set_items_expanded</strong>. Для получения экземпляра данного класса необходимо использовать метод <strong>get_level</strong> (уровень) класса <strong>cl_salv_hierseq_table</strong>.</p>
+<p>Пример настройки колонок:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD setup_columns.
+    DATA:
+      lo_columns TYPE REF TO cl_salv_columns_hierseq,
+      ls_color   TYPE LVC_S_COLO,
+      lo_level   TYPE REF TO cl_salv_hierseq_level,
+      lo_column  TYPE REF TO cl_salv_column_hierseq.
+
+    ls_color-col = 4.
+    ls_color-int = 1.
+
+    TRY.
+      lo_columns = go_hier_table-&gt;get_columns( LEVEL = 1 ).
+      lo_columns-&gt;set_expand_column( 'EXPAND' ).
+
+      lo_level = go_hier_table-&gt;get_level( 1 ).
+      lo_level-&gt;set_items_expanded( abap_true ).
+
+      lo_column ?= lo_columns-&gt;get_column( 'EBELN' ).
+      lo_column-&gt;set_cell_type( IF_SALV_C_CELL_TYPE=&gt;hotspot ).
+
+      lo_columns = go_hier_table-&gt;get_columns( LEVEL = 2 ).
+      lo_column ?= lo_columns-&gt;get_column( 'EBELN' ).
+      lo_column-&gt;set_cell_type( IF_SALV_C_CELL_TYPE=&gt;hotspot ).
+      lo_column-&gt;set_color( ls_color ).
+
+    CATCH cx_salv_not_found cx_salv_method_not_supported cx_salv_data_error.
+    ENDTRY.
+  ENDMETHOD.</pre><p>Результат:</p>
+<p><strong><a href="http://abap-blog.ru/wp-content/uploads/2012/04/image021.png"><img loading="lazy" class="alignnone size-full wp-image-809" title="image02" src="http://abap-blog.ru/wp-content/uploads/2012/04/image021.png" alt="" width="509" height="170" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/image021.png 509w, https://abap-blog.ru/wp-content/uploads/2012/04/image021-300x100.png 300w" sizes="(max-width: 509px) 100vw, 509px" /></a></strong></p>
+<p><strong id="internal-source-marker_0.35741033777594566">Настройка сортировок</strong></p>
+<p><strong id="internal-source-marker_0.35741033777594566"><br />
+</strong>Настройка сортировок как и в классе <strong>cl_salv_table</strong> происходит через класс <strong>cl_salv_sorts</strong>, за исключением того что ссылку на него мы получаем указывая уровень иерархии.<br />
+Пример настройки сортировок:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD setup_sorts.
+    DATA:
+      lo_sorts TYPE REF TO cl_salv_sorts.
+
+      TRY.
+        lo_sorts = go_hier_table-&gt;get_sorts( 1 ).
+        lo_sorts-&gt;add_sort(
+          EXPORTING
+            columnname = 'LIFNR'
+            sequence   = IF_SALV_C_SORT=&gt;SORT_UP
+            group      = IF_SALV_C_SORT=&gt;group_with_newpage ).
+      CATCH cx_salv_not_found cx_salv_existing cx_salv_data_error.
+      ENDTRY.
+  ENDMETHOD.</pre><p>Результат:</p>
+<p><strong><a href="http://abap-blog.ru/wp-content/uploads/2012/04/image031.png"><img loading="lazy" class="alignnone size-full wp-image-810" title="image03" src="http://abap-blog.ru/wp-content/uploads/2012/04/image031.png" alt="" width="499" height="461" srcset="https://abap-blog.ru/wp-content/uploads/2012/04/image031.png 499w, https://abap-blog.ru/wp-content/uploads/2012/04/image031-300x277.png 300w" sizes="(max-width: 499px) 100vw, 499px" /></a></strong></p>
+<p><strong><strong>Обработка событий</strong></strong></p>
+<p><strong><strong><br />
+</strong></strong>За обработку событий отвечает класс <strong>CL_SALV_EVENTS_HIERSEQ</strong>, он позволяет обработать следующие события:</p>
+<ul>
+<li>TOP_OF_PAGE – обработка заголовка</li>
+<li>END_OF_PAGE – обработка подвала</li>
+<li>BEFORE_SALV_FUNCTION – событие срабатывает до стандартной функции</li>
+<li>AFTER_SALV_FUNCTION – событие срабатывающее после стандартной функции</li>
+<li>ADDED_FUNCTION – событие срабатывающее на нажатие своих функций</li>
+<li>DOUBLE_CLICK – двойной щелчок</li>
+<li>LINK_CLICK – обработка нажатий на активные элементы (в иерархической таблице только hotspot)</li>
+</ul>
+<p>Как видно из примера выше поле EBELN мы сделали активным элементом (hotspot), допустим нам необходимо, чтобы при нажатии на него открывалась транзакция на просмотр заказа. Первое что нужно сделать, это создать обработчик события. Объявление метода:</p><pre class="urvanov-syntax-highlighter-plain-tag">on_link_click FOR EVENT link_click OF cl_salv_events_hierseq IMPORTING row COLUMN LEVEL.</pre><p>Его реализация:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD on_link_click.
+    " Т.к. у нас 1 активный элемент, столбец проверять нет необходимости
+    " Необходимо проверить на каком уровне был щелчок - level
+    DATA:
+      ls_ekpo_data TYPE ty_ekpo_data,
+      lv_ebeln     TYPE ebeln,
+      ls_ekko_data TYPE ty_ekko_data.
+
+    CASE LEVEL.
+      WHEN 1.
+        READ TABLE gt_ekko_data INTO ls_ekko_data INDEX row.
+        lv_ebeln = ls_ekko_data-ebeln.
+      WHEN 2.
+        READ TABLE gt_ekpo_data INTO ls_ekpo_data INDEX row.
+        lv_ebeln = ls_ekpo_data-ebeln.
+    ENDCASE.
+
+    CHECK lv_ebeln IS NOT INITIAL.
+    SET PARAMETER ID 'BES' FIELD lv_ebeln.
+    CALL TRANSACTION 'ME23N' AND SKIP FIRST SCREEN.
+  ENDMETHOD.</pre><p>Далее необходимо зарегистрировать обработчик события:</p><pre class="urvanov-syntax-highlighter-plain-tag">METHOD setup_events.
+    DATA:
+      lo_events TYPE REF TO cl_salv_events_hierseq.
+
+     lo_events = go_hier_table-&gt;get_event( ).
+     SET HANDLER on_link_click FOR lo_events.
+  ENDMETHOD.</pre><p>Напоследок код программы целиком:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT  zrep_hier_tab.
+
+CLASS lcl_report DEFINITION FINAL.
+  PUBLIC SECTION.
+    TYPES: BEGIN OF ty_ekko_data,
+                      expand TYPE char1,
+                      ebeln TYPE ebeln, " Заказ
+                      lifnr TYPE lifnr, " Поставщик
+           END OF ty_ekko_data,
+           BEGIN OF ty_ekpo_data,
+                      expand TYPE char1,
+                      ebeln TYPE ebeln,
+                      ebelp TYPE ebelp,
+                      matnr TYPE matnr,
+                      MENGE TYPE bstmg,
+                      aedat TYPE aedat, " Дата изменения
+           END OF ty_ekpo_data.
+    CLASS-DATA:
+      go_hier_table TYPE REF TO cl_salv_hierseq_table,
+      gt_ekko_data TYPE STANDARD TABLE OF ty_ekko_data, " Таблица с заголовками заказов
+      gt_ekpo_data TYPE STANDARD TABLE OF ty_ekpo_data. " Таблица с позициями заказов
+    CLASS-METHODS:
+      get_data,     " Получение данных из БД
+      create_table, " Создание иерархической таблицы
+      setup_columns,    " Настройка колонок
+      setup_functions,  " Настройка функций
+      setup_sorts,      " Настройка сортировки
+      setup_events,     " Настройка событий
+      on_link_click FOR EVENT link_click OF cl_salv_events_hierseq IMPORTING row COLUMN LEVEL,
+      display.
+ENDCLASS.                    "lcl_report DEFINITION
+
+START-OF-SELECTION.
+  lcl_report=&gt;get_data( ).
+  lcl_report=&gt;create_table( ).
+  lcl_report=&gt;setup_functions( ).
+  lcl_report=&gt;setup_columns( ).
+  lcl_report=&gt;setup_sorts( ).
+  lcl_report=&gt;setup_events( ).
+  lcl_report=&gt;display( ).
+
+CLASS lcl_report IMPLEMENTATION.
+  METHOD get_data.
+    CLEAR: gt_ekko_data, gt_ekpo_data.
+    SELECT * FROM ekko INTO CORRESPONDING FIELDS OF TABLE gt_ekko_data UP TO 10 ROWS WHERE bsart = 'NB'.
+    SELECT * FROM ekpo INTO CORRESPONDING FIELDS OF TABLE gt_ekpo_data
+      FOR ALL ENTRIES IN gt_ekko_data
+      WHERE ebeln = gt_ekko_data-ebeln.
+  ENDMETHOD.                    "get_data
+
+  METHOD create_table.
+    DATA:
+      lt_bind TYPE salv_t_hierseq_binding,
+      ls_bind TYPE salv_s_hierseq_binding.
+
+    " Заполняем таблицу со связью между таблицми
+    ls_bind-master = 'EBELN'.
+    ls_bind-slave  = 'EBELN'.
+    APPEND ls_bind TO lt_bind.
+
+    TRY.
+        CALL METHOD cl_salv_hierseq_table=&gt;factory
+          EXPORTING
+            t_binding_level1_level2 = lt_bind
+          IMPORTING
+            r_hierseq               = go_hier_table
+          CHANGING
+            t_table_level1          = gt_ekko_data
+            t_table_level2          = gt_ekpo_data.
+
+      CATCH cx_salv_data_error cx_salv_not_found.
+        MESSAGE 'Ошибка при создании таблицы' TYPE 'S'.
+    ENDTRY.
+  ENDMETHOD.                    "create_table
+
+  METHOD display.
+    go_hier_table-&gt;display( ).
+  ENDMETHOD.                    "display
+
+  METHOD setup_functions.
+    go_hier_table-&gt;set_screen_status(
+      EXPORTING
+        REPORT        = sy-repid
+        pfstatus      = 'SALV_TABLE_STANDARD'
+        set_functions = CL_SALV_MODEL_BASE=&gt;C_FUNCTIONS_ALL
+    ).
+  ENDMETHOD.
+
+  METHOD setup_sorts.
+    DATA:
+      lo_sorts TYPE REF TO cl_salv_sorts.
+
+      TRY.
+        lo_sorts = go_hier_table-&gt;get_sorts( 1 ).
+        lo_sorts-&gt;add_sort(
+          EXPORTING
+            columnname = 'LIFNR'
+            sequence   = IF_SALV_C_SORT=&gt;SORT_UP
+            group      = IF_SALV_C_SORT=&gt;group_with_newpage ).
+      CATCH cx_salv_not_found cx_salv_existing cx_salv_data_error.
+      ENDTRY.
+  ENDMETHOD.
+
+  METHOD setup_columns.
+    DATA:
+      lo_columns TYPE REF TO cl_salv_columns_hierseq,
+      ls_color   TYPE LVC_S_COLO,
+      lo_level   TYPE REF TO cl_salv_hierseq_level,
+      lo_column  TYPE REF TO cl_salv_column_hierseq.
+
+    ls_color-col = 4.
+    ls_color-int = 1.
+
+    TRY.
+      lo_columns = go_hier_table-&gt;get_columns( LEVEL = 1 ).
+      lo_columns-&gt;set_expand_column( 'EXPAND' ).
+
+      lo_level = go_hier_table-&gt;get_level( 1 ).
+      lo_level-&gt;set_items_expanded( abap_true ).
+
+      lo_column ?= lo_columns-&gt;get_column( 'EBELN' ).
+      lo_column-&gt;set_cell_type( IF_SALV_C_CELL_TYPE=&gt;hotspot ).
+
+      lo_columns = go_hier_table-&gt;get_columns( LEVEL = 2 ).
+      lo_column ?= lo_columns-&gt;get_column( 'EBELN' ).
+      lo_column-&gt;set_cell_type( IF_SALV_C_CELL_TYPE=&gt;hotspot ).
+      lo_column-&gt;set_color( ls_color ).
+
+    CATCH cx_salv_not_found cx_salv_method_not_supported cx_salv_data_error.
+    ENDTRY.
+  ENDMETHOD.
+
+  METHOD on_link_click.
+    " Т.к. у нас 1 активный элемент, столбец проверять нет необходимости
+    " Необходимо проверить на каком уровне был щелчок - level
+    DATA:
+      ls_ekpo_data TYPE ty_ekpo_data,
+      lv_ebeln     TYPE ebeln,
+      ls_ekko_data TYPE ty_ekko_data.
+
+    CASE LEVEL.
+      WHEN 1.
+        READ TABLE gt_ekko_data INTO ls_ekko_data INDEX row.
+        lv_ebeln = ls_ekko_data-ebeln.
+      WHEN 2.
+        READ TABLE gt_ekpo_data INTO ls_ekpo_data INDEX row.
+        lv_ebeln = ls_ekpo_data-ebeln.
+    ENDCASE.
+
+    CHECK lv_ebeln IS NOT INITIAL.
+    SET PARAMETER ID 'BES' FIELD lv_ebeln.
+    CALL TRANSACTION 'ME23N' AND SKIP FIRST SCREEN.
+  ENDMETHOD.
+
+  METHOD setup_events.
+    DATA:
+      lo_events TYPE REF TO cl_salv_events_hierseq.
+
+     lo_events = go_hier_table-&gt;get_event( ).
+     SET HANDLER on_link_click FOR lo_events.
+  ENDMETHOD.
+
+ENDCLASS.                    "lcl_report IMPLEMENTATION</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-salv-hierseq-tabl/">Работа с SALV Hierseq Table</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/rabota-s-salv-hierseq-tabl/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Обработка событий в SALV модели</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/obrabotka-sobytij-v-salv-obektax/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/obrabotka-sobytij-v-salv-obektax/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 02 Apr 2012 15:23:09 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[CL_SALV_EVENTS]]></category>
+		<category><![CDATA[CL_SALV_EVENTS_HIERSEQ]]></category>
+		<category><![CDATA[CL_SALV_EVENTS_LIST]]></category>
+		<category><![CDATA[CL_SALV_EVENTS_TABLE]]></category>
+		<category><![CDATA[CL_SALV_EVENTS_TREE]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=660</guid>
+
+					<description><![CDATA[<p>Объектная модель SALV не позволяет редактировать данные (нормальным способом), однако Вы можете обрабатывать множество других событий: нажатие на кнопки, hotspot элементы, ссылки, checkbox&#8217;ы, добавлять свои собственные функции, обрабатывать щелчки (двойные щелчки), нажатие специальных клавиш (F1,F2). Обработка событий полностью основана на событийной модели ABAP Objects. В первую очередь необходимо получить ссылку на класс вызывающий событие (с [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/obrabotka-sobytij-v-salv-obektax/">Обработка событий в SALV модели</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Объектная модель SALV не позволяет редактировать данные (нормальным способом), однако Вы можете обрабатывать множество других событий: нажатие на кнопки, hotspot элементы, ссылки, checkbox&#8217;ы, добавлять свои собственные функции, обрабатывать щелчки (двойные щелчки), нажатие специальных клавиш (F1,F2).</p>
+<p><span id="more-660"></span></p>
+<p>Обработка событий полностью основана на событийной модели ABAP Objects. В первую очередь необходимо получить ссылку на класс вызывающий событие (с помощью метода get_events &#8212; sALV объекта), затем зарегистрировать обработчик. Классы вызывающие события:</p>
+<ul>
+<li>CL_SALV_EVENTS &#8212; общие события для всех sALV объектов</li>
+<li>CL_SALV_EVENTS_HIERSEQ &#8212; для иерархического списка</li>
+<li>CL_SALV_EVENTS_LIST &#8212; для ALV в виде списка</li>
+<li>CL_SALV_EVENTS_TABLE &#8212; для ALV таблицы</li>
+<li>CL_SALV_EVENTS_TREE &#8212; для древовидного ALV</li>
+</ul>
+<div><span style="line-height: 18px;"> </span></div>
+<div>В качестве примера рассмотрим обработку стандартных для всех sALV объектов событий:</div>
+<div></div>
+<div>
+<pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZALV_EVENTS NO STANDARD PAGE HEADING.
+
+CLASS lcl_report DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      get_data, " Получение данных
+      show_alv, " Показать ALV
+      " Обработчик вызывается до нажатия стандартных функций
+      on_before_salv_function FOR EVENT BEFORE_SALV_FUNCTION OF cl_salv_events IMPORTING E_SALV_FUNCTION,
+      " Обработчик вызывается после нажатия стандартных функций
+      on_after_salv_function  FOR EVENT AFTER_SALV_FUNCTION  OF cl_salv_events IMPORTING E_SALV_FUNCTION,
+      " Обработчик своих функций
+      on_added_salv_function  FOR EVENT ADDED_FUNCTION       OF cl_salv_events IMPORTING E_SALV_FUNCTION.
+  PRIVATE SECTION.
+  DATA:
+    gt_data      TYPE spfli_tab,  " Таблица с данными
+    go_alv       TYPE REF TO cl_salv_table,
+    go_functions TYPE REF TO cl_salv_functions,
+    gv_string    TYPE STRING,
+    go_events    TYPE REF TO cl_salv_events.
+ENDCLASS.
+
+CLASS lcl_report IMPLEMENTATION.
+
+  METHOD get_data.
+    SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_data.
+  ENDMETHOD.
+
+  METHOD show_alv.
+    CHECK go_alv IS NOT BOUND.
+
+    TRY.
+        cl_salv_table=&gt;factory(
+           IMPORTING
+             r_salv_table = go_alv
+           CHANGING
+             t_table = gt_data ).
+      CATCH cx_salv_msg .
+        MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+    ENDTRY.
+
+    " Вешаем обработку событий для объекта go_events:
+    go_events = go_alv-&gt;get_event( ).
+    SET HANDLER on_before_salv_function FOR go_events.
+    SET HANDLER on_added_salv_function FOR go_events.
+    SET HANDLER on_after_salv_function FOR go_events.
+
+    " Настройка функций
+    go_functions = go_alv-&gt;get_functions( ).
+    go_functions-&gt;set_all( abap_true ).
+
+    go_alv-&gt;display( ).
+  ENDMETHOD.
+
+  METHOD on_before_salv_function.
+    CONCATENATE 'BEFORE ALV FUNCTION:' E_SALV_FUNCTION INTO gv_string.
+    MESSAGE gv_string TYPE 'I'.
+  ENDMETHOD.
+
+  METHOD on_after_salv_function.
+    CONCATENATE 'AFTER ALV FUNCTION:' E_SALV_FUNCTION INTO gv_string.
+    MESSAGE gv_string TYPE 'I'.
+  ENDMETHOD.
+
+  METHOD on_added_salv_function.
+    CONCATENATE 'CUSTOM ALV FUNCTION:' E_SALV_FUNCTION INTO gv_string.
+    MESSAGE gv_string TYPE 'I'.
+  ENDMETHOD.
+
+ENDCLASS.
+
+DATA:
+  lo_report TYPE REF TO lcl_report.
+
+START-OF-SELECTION.
+   CREATE OBJECT lo_report.
+   lo_report-&gt;get_data( ).
+   lo_report-&gt;show_alv( ).</pre><br />
+Таким же образом, Вы можете назначить свои обработчики для событий sALV объектов. Описание основных событий:</p>
+</div>
+<ul>
+<li><strong>TOP_OF_PAGE</strong> &#8212; позволяет создать свой заголовок для sALV объекьа</li>
+<li><strong>END_OF_PAGE</strong> &#8212; позволяет создать подвал</li>
+<li><strong>BEFORE_SALV_FUNCTION</strong> &#8212; вызывает обработчик до непосредственно обработки стандартной функции</li>
+<li><strong>AFTER_SALV_FUNCTION</strong> &#8212; вызывается после обработки стандартной функции</li>
+<li><strong>ADDED_FUNCTION</strong> &#8212; обработка собственных функций</li>
+<li><strong>DOUBLE_CLICK</strong> &#8212; двойной щелчок по sALV объекту</li>
+<li><strong>LINK_CLICK</strong> &#8212; щелчок по hotspot элементы (кнопке, ссылке, checkbox&#8217;у, hotspot ячейке)</li>
+<li><strong>KEYPRESS</strong> (для дерева) &#8212; обработка специальных клавиш (F1,F2)</li>
+<li><strong>CHECKBOX_CHANGE</strong> (для дерева) &#8212; обработка изменения состояния checkbox элемента</li>
+</ul><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/obrabotka-sobytij-v-salv-obektax/">Обработка событий в SALV модели</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/obrabotka-sobytij-v-salv-obektax/feed/</wfw:commentRss>
+			<slash:comments>7</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>alv object model | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/alv-object-model/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:55:53 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>SALV Table &#8212; Введение</title>
+		<link>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-vvedenie/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-vvedenie/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Mon, 06 Feb 2012 17:25:08 +0000</pubDate>
+				<category><![CDATA[SAP Dynpro]]></category>
+		<category><![CDATA[alv object model]]></category>
+		<category><![CDATA[cl_salv_table]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=428</guid>
+
+					<description><![CDATA[<p>Начиная с версии Netweaver 04 SAP предоставляет разработчикам новую модель для построения ALV таблиц. Новая модель описывается классами семейства CL_SALV*. Основные преимущества новой модели: Благодаря проработанной объектно-ориентированной модели обеспечивается легкость программирования Данная модель позволяет с помощью одного единственного класса управлять всем макетом отчёта (настраивать фильтры, сортировки, форматы и пр.) Главный недостаток данной модели: невозможность использования для ввода [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-vvedenie/">SALV Table — Введение</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Начиная с версии<strong> Netweaver 04</strong> SAP предоставляет разработчикам новую модель для построения ALV таблиц. Новая модель описывается классами семейства <strong>CL_SALV</strong>*.</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/02/salv1.png"><img loading="lazy" class="alignright size-full wp-image-430" title="salv1" src="http://abap-blog.ru/wp-content/uploads/2012/02/salv1.png" alt="" width="822" height="167" srcset="https://abap-blog.ru/wp-content/uploads/2012/02/salv1.png 822w, https://abap-blog.ru/wp-content/uploads/2012/02/salv1-300x60.png 300w" sizes="(max-width: 822px) 100vw, 822px" /></a></p>
+<p><span id="more-428"></span></p>
+<p>Основные преимущества новой модели:</p>
+<ul>
+<li>Благодаря проработанной объектно-ориентированной модели обеспечивается легкость программирования</li>
+<li>Данная модель позволяет с помощью одного единственного класса управлять всем макетом отчёта (настраивать фильтры, сортировки, форматы и пр.)</li>
+</ul>
+<div>Главный недостаток данной модели:</div>
+<div></div>
+<div>
+<ul>
+<li><span style="line-height: 19px;">невозможность использования для ввода данных (скорее всего данное ограничение будет снято в будущем)</span></li>
+</ul>
+</div>
+<div><span style="line-height: 18px;"> </span></div>
+<p>Основные классы используемые в новой модели:</p>
+<ul>
+<li>Обычная ALV таблица &#8212; <strong>CL_SALV_TABLE</strong></li>
+<li>Таблица с иерархическим представлением &#8212; <strong>CL_SALV_HIERSEQU_TABLE</strong></li>
+<li>Древовидное представление &#8212; <strong>CL_SALV_TREE</strong></li>
+</ul>
+<p>Все классы имеют статический (фабричный) метод, который по входящим данным создает экземпляр ALV объекта. Как правило в качестве входящих данных используется внутренняя таблица, по которой автоматически, без создания каталога полей (в старой модели и функциональной модели) строится ALV таблица.</p>
+<p>Простейший пример создания ALV отчёта:</p><pre class="urvanov-syntax-highlighter-plain-tag">REPORT ZALV_SIMPLE.
+
+DATA:
+      gt_data      TYPE spfli_tab,  " Таблица с данными
+      go_alv       TYPE REF TO cl_salv_table.
+
+START-OF-SELECTION.
+  SELECT * FROM spfli INTO CORRESPONDING FIELDS OF TABLE gt_data.
+  " Фабричный метод возвращяет экзмепляр ALV объекта
+  TRY.
+      cl_salv_table=&gt;factory(
+         IMPORTING
+           r_salv_table = go_alv
+         CHANGING
+           t_table = gt_data ).
+    CATCH cx_salv_msg .
+      MESSAGE 'Ошибка при создании ALV' TYPE 'E'.
+  ENDTRY.
+  " Отобразить ALV представление
+  go_alv-&gt;display( ).</pre><p><a title="SAP ALV Help" href="http://help.sap.com/saphelp_nw73ehp1/helpdata/en/4e/c38f8788d22b90e10000000a42189d/frameset.htm">SAP Help</a></p>
+<p>Дерево SALV классов:</p>
+<p><a href="http://abap-blog.ru/wp-content/uploads/2012/02/ppt_img1.gif"><img loading="lazy" class="alignnone size-full wp-image-500" title="ppt_img[1]" src="http://abap-blog.ru/wp-content/uploads/2012/02/ppt_img1.gif" alt="" width="708" height="850" srcset="https://abap-blog.ru/wp-content/uploads/2012/02/ppt_img1.gif 708w, https://abap-blog.ru/wp-content/uploads/2012/02/ppt_img1-249x300.gif 249w" sizes="(max-width: 708px) 100vw, 708px" /></a></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-vvedenie/">SALV Table — Введение</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/sap-dynpro/salv-table-vvedenie/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

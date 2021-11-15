@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>javascript | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/javascript/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 05:51:10 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Использование JS в ABAP</title>
+		<link>https://abap-blog.ru/osnovy-abap/js-abap/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/js-abap/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 04 Jan 2012 06:06:21 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[Прочее]]></category>
+		<category><![CDATA[javascript]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=70</guid>
+
+					<description><![CDATA[<p>Для интерпретации JavaScript кода в ABAP можно воспользоваться глобальным классом: CL_JAVA_SCRIPT. Далее в примере будет наглядно показано как можно вычислять выражения используя JS функцию eval(). [crayon-618a1eacea93f514402158/] JS дает предлагает множество удобных функций, например в объекте Math, конечно скорость работы будет не на высоте. Возведение в степень: [crayon-618a1eacea94d204681015/] Стандартный саповский пример использования интерпретатора программа: SJSEU и программы DEMO_JAVA*. [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/js-abap/">Использование JS в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Для интерпретации JavaScript кода в ABAP можно воспользоваться глобальным классом: <strong>CL_JAVA_SCRIPT.</strong> Далее в примере будет наглядно показано как можно вычислять выражения используя JS функцию eval().</p>
+<p><span id="more-70"></span></p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: v_expression TYPE STRING.
+
+DATA: js_processor TYPE REF TO cl_java_script,
+      js_source TYPE STRING,
+      return_value TYPE STRING.
+
+* Создадим выражение которое необходимо вычислить
+v_expression = '(2+2)*2'.
+* Создаем объект интерпретатора Javascript
+js_processor = cl_java_script=&gt;create( ).
+
+* Создаем выражение на JS
+CONCATENATE
+  'var string = ' v_expression ';'
+  'function evaluate_expression() '
+  ' { string = eval(string); ' " JS функция eval - вычисляет выражения.
+  ' } '
+  'evaluate_expression(); '
+  'string; '
+    INTO js_source SEPARATED BY cl_abap_char_utilities=&gt;cr_lf.
+
+" Получаем результат обработки JS кода
+return_value = js_processor-&gt;evaluate( js_source ).
+
+" Если произошли ошибки при выполнении покажем их
+IF js_processor-&gt;last_condition_code IS NOT INITIAL.
+  WRITE: /'Error message', js_processor-&gt;last_error_message,
+         /'Error Code', js_processor-&gt;last_condition_code.
+ELSE.
+  " Выведем результат обработки JS выражения
+  WRITE: /'Result of', v_expression ,' is: ', return_value.
+ENDIF.</pre><p>JS дает предлагает множество удобных функций, например в объекте Math, конечно скорость работы будет не на высоте. Возведение в степень:</p><pre class="urvanov-syntax-highlighter-plain-tag">CONCATENATE
+  'var x = Math.pow(10,2);'
+  'x; '
+    INTO js_source SEPARATED BY cl_abap_char_utilities=&gt;cr_lf.</pre><p>Стандартный саповский пример использования интерпретатора программа: <strong>SJSEU и программы DEMO_JAVA*</strong>. Для изучения самого JS рекомендую книгу Д. Флэнагана &#171;JavaScript подробное руководство&#187;.</p>
+<p><strong>Обновление</strong>. На официальном сайте по поводу использования JS сказано следующее:</p>
+<p><strong>Note</strong></p>
+<p><strong>Support for the connection of JavaScript to ABAP will be discontinued in a future release, without replacement. Therefore, the CL_JAVA_SCRIPT class must no longer be used.</strong></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/js-abap/">Использование JS в ABAP</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/js-abap/feed/</wfw:commentRss>
+			<slash:comments>5</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

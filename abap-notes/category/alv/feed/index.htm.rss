@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>ALV | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/alv/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Sat, 11 Sep 2021 09:29:57 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Получение инстанции cl_gui_alv_grid для SALV</title>
+		<link>https://abap-blog.ru/abap-notes/poluchenie-instancii-cl_gui_alv_grid-dlya-salv/</link>
+					<comments>https://abap-blog.ru/abap-notes/poluchenie-instancii-cl_gui_alv_grid-dlya-salv/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 11 Sep 2021 09:28:43 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=7888</guid>
+
+					<description><![CDATA[<p>[crayon-618a1530bf126287776678/] Для полноэкранной версии: [crayon-618a1530bf139857889091/]</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/poluchenie-instancii-cl_gui_alv_grid-dlya-salv/">Получение инстанции cl_gui_alv_grid для SALV</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_access_salv DEFINITION INHERITING FROM cl_salv_model_list FINAL.
+  PUBLIC SECTION.
+    CLASS-METHODS:
+      get_cl_gui_alv_grid IMPORTING io_salv        TYPE REF TO cl_salv_model_list
+                          RETURNING VALUE(ro_grid) TYPE REF TO cl_gui_alv_grid.
+ENDCLASS.
+
+CLASS lcl_access_salv IMPLEMENTATION.
+  METHOD get_cl_gui_alv_grid.
+    DATA:lo_salv    TYPE REF TO cl_salv_table.
+*--------------------------------------------------------------------*
+* Must be bound
+*--------------------------------------------------------------------*
+    IF io_salv IS NOT BOUND.
+      RETURN.
+    ENDIF.
+*--------------------------------------------------------------------*
+* Adapter must be bound
+*--------------------------------------------------------------------*
+    IF   io_salv-&gt;r_controller IS NOT BOUND
+      OR io_salv-&gt;r_controller-&gt;r_adapter IS NOT BOUND.
+      MESSAGE 'Minor programming fault: Call GET_GRID_FROM_SALV after SALV-&gt;DISPLAY( )!'(001) 
+         TYPE 'S' DISPLAY LIKE 'W'.
+      lo_salv ?= io_salv.  " Calling method has cl_salv_table typed in interface
+      lo_salv-&gt;display( ).
+    ENDIF.
+    IF   io_salv-&gt;r_controller IS NOT BOUND
+      OR io_salv-&gt;r_controller-&gt;r_adapter IS NOT BOUND.
+      RETURN.  " Still not bound  --&gt; can't do anything
+    ENDIF.
+*--------------------------------------------------------------------*
+* If method not present or wrong return type exception will handle this and we return unbound grid
+*--------------------------------------------------------------------*
+    TRY.
+
+        " Works for CL_SALV_FULLSCREEN_ADAPTER as well as for CL_SALV_GRID_ADAPTER
+        CALL METHOD io_salv-&gt;r_controller-&gt;r_adapter-&gt;('GET_GRID')  
+          RECEIVING
+            value = ro_grid.
+      CATCH cx_root ##CATCH_ALL. " don't dump
+        RETURN.
+    ENDTRY.
+  ENDMETHOD.
+ENDCLASS.</pre><p>Для полноэкранной версии:</p><pre class="urvanov-syntax-highlighter-plain-tag">CALL FUNCTION 'GET_GLOBALS_FROM_SLVC_FULLSCR'
+      IMPORTING
+        e_grid = go_grid.</pre><p></p><p>The post <a href="https://abap-blog.ru/abap-notes/poluchenie-instancii-cl_gui_alv_grid-dlya-salv/">Получение инстанции cl_gui_alv_grid для SALV</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/poluchenie-instancii-cl_gui_alv_grid-dlya-salv/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ALV Master-Detail</title>
+		<link>https://abap-blog.ru/abap-notes/alv-master-detail/</link>
+					<comments>https://abap-blog.ru/abap-notes/alv-master-detail/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 08 Apr 2021 11:13:48 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=7078</guid>
+
+					<description><![CDATA[<p>Простой пример Master-detail отчёта, при выборе в Master ALV обновляются данные в Detail ALV. Использование интерфейса if_alv_rm_grid_friend обусловлено необходимостью доступа к защищённому методу set_delay_change_selection. Альтернативным вариантом будет сделать свой класс от грида и в его конструкторе вызвать данный метод. [crayon-618a1530c171e975865691/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/alv-master-detail/">ALV Master-Detail</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Простой пример Master-detail отчёта, при выборе в Master ALV обновляются данные в Detail ALV. Использование интерфейса if_alv_rm_grid_friend обусловлено необходимостью доступа к защищённому методу set_delay_change_selection. Альтернативным вариантом будет сделать свой класс от грида и в его конструкторе вызвать данный метод.</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_app DEFINITION FINAL.
+  PUBLIC SECTION.
+    INTERFACES:
+      if_alv_rm_grid_friend.
+    METHODS: run,
+      handle_change_selection FOR EVENT delayed_changed_sel_callback OF cl_gui_alv_grid.
+    DATA:
+      mt_flights    TYPE STANDARD TABLE OF sflight,
+      mt_sbooks     TYPE STANDARD TABLE OF sbook,
+      mt_sbooks_all LIKE mt_sbooks.
+  PRIVATE SECTION.
+    DATA:
+      mo_master_alv TYPE REF TO cl_gui_alv_grid,
+      mo_detail_alv TYPE REF TO cl_gui_alv_grid,
+      mo_split_cont TYPE REF TO cl_gui_splitter_container,
+      mo_master_cnt TYPE REF TO cl_gui_container,
+      mo_detail_cnt TYPE REF TO cl_gui_container.
+    METHODS:
+      create_controls,
+      read_data.
+ENDCLASS.
+
+CLASS lcl_app IMPLEMENTATION.
+  METHOD run.
+    read_data( ).
+    create_controls( ).
+
+    WRITE space.
+  ENDMETHOD.
+
+  METHOD handle_change_selection.
+    CLEAR mt_sbooks.
+
+    mo_master_alv-&gt;get_selected_rows( IMPORTING et_row_no = DATA(lt_rows) ).
+    DELETE lt_rows WHERE row_id &lt;= 0.
+
+    LOOP AT lt_rows ASSIGNING FIELD-SYMBOL(&lt;ls_rows&gt;).
+      READ TABLE mt_flights INDEX &lt;ls_rows&gt;-row_id
+        ASSIGNING FIELD-SYMBOL(&lt;ls_flight&gt;).
+
+      CHECK sy-subrc = 0.
+
+      LOOP AT mt_sbooks_all ASSIGNING FIELD-SYMBOL(&lt;ls_sbook&gt;) WHERE carrid = &lt;ls_flight&gt;-carrid AND
+                                                                     connid = &lt;ls_flight&gt;-connid AND
+                                                                     fldate = &lt;ls_flight&gt;-fldate.
+        INSERT &lt;ls_sbook&gt; INTO TABLE mt_sbooks.
+      ENDLOOP.
+    ENDLOOP.
+
+    mo_detail_alv-&gt;refresh_table_display(
+      EXPORTING
+        is_stable      = VALUE #( row = abap_true col = abap_true )
+        i_soft_refresh = abap_true
+      EXCEPTIONS
+        OTHERS         = 0 ).
+  ENDMETHOD.
+
+  METHOD read_data.
+    SELECT * FROM sflight INTO TABLE @mt_flights.
+    SELECT * FROM sbook INTO TABLE @mt_sbooks_all.
+  ENDMETHOD.
+
+  METHOD create_controls.
+    CREATE OBJECT mo_split_cont
+      EXPORTING
+        parent                  = cl_gui_container=&gt;default_screen
+        no_autodef_progid_dynnr = abap_true
+        rows                    = 2
+        columns                 = 1
+      EXCEPTIONS
+        OTHERS                  = 1.
+
+    CHECK mo_split_cont IS BOUND.
+
+    mo_split_cont-&gt;set_row_mode( EXPORTING mode = cl_gui_splitter_container=&gt;mode_absolute
+                                 EXCEPTIONS OTHERS = 0 ).
+
+    mo_master_cnt = mo_split_cont-&gt;get_container(
+      EXPORTING
+        row       = 1
+        column    = 1 ).
+
+    mo_detail_cnt = mo_split_cont-&gt;get_container(
+      EXPORTING
+        row       = 2
+        column    = 1 ).
+
+    mo_master_alv = NEW cl_gui_alv_grid( i_parent = mo_master_cnt ).
+    mo_master_alv-&gt;set_delay_change_selection( 1 ).
+    mo_master_alv-&gt;register_delayed_event( i_event_id = cl_gui_alv_grid=&gt;mc_evt_delayed_change_select ).
+    mo_master_alv-&gt;set_table_for_first_display( EXPORTING
+                                                  i_structure_name = 'SFLIGHT'
+                                                  is_layout = VALUE #( sel_mode = 'A' )
+                                                CHANGING
+                                                  it_outtab        = mt_flights ).
+    SET HANDLER me-&gt;handle_change_selection FOR mo_master_alv.
+
+    mo_detail_alv = NEW cl_gui_alv_grid( i_parent = mo_detail_cnt ).
+    mo_detail_alv-&gt;set_table_for_first_display( EXPORTING
+                                                  i_structure_name = 'SBOOK'
+                                                CHANGING
+                                                  it_outtab        = mt_sbooks ).
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  NEW lcl_app( )-&gt;run( ).</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/alv-master-detail/">ALV Master-Detail</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/alv-master-detail/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Доступ к приватным атрибутам CL_GUI_ALV_GRID</title>
+		<link>https://abap-blog.ru/abap-notes/dostup-k-privatnym-atributam-cl_gui_alv_grid/</link>
+					<comments>https://abap-blog.ru/abap-notes/dostup-k-privatnym-atributam-cl_gui_alv_grid/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 13 Mar 2021 19:36:16 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=6658</guid>
+
+					<description><![CDATA[<p>Внутри CL_GUI_ALV_GRID есть объявление дружбы со всеми классами реализующими интерфейс: IF_ALV_RM_GRID_FRIEND. Соответственно имплементировав его в свой класс, вы можете получить доступ к приватным атрибутам инстанции ALV.</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/dostup-k-privatnym-atributam-cl_gui_alv_grid/">Доступ к приватным атрибутам CL_GUI_ALV_GRID</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Внутри CL_GUI_ALV_GRID есть объявление дружбы со всеми классами реализующими интерфейс: IF_ALV_RM_GRID_FRIEND. Соответственно имплементировав его в свой класс, вы можете получить доступ к приватным атрибутам инстанции ALV.</p><p>The post <a href="https://abap-blog.ru/abap-notes/dostup-k-privatnym-atributam-cl_gui_alv_grid/">Доступ к приватным атрибутам CL_GUI_ALV_GRID</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/dostup-k-privatnym-atributam-cl_gui_alv_grid/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Очистка буфера ALV</title>
+		<link>https://abap-blog.ru/abap-notes/ochistka-bufera-alv/</link>
+					<comments>https://abap-blog.ru/abap-notes/ochistka-bufera-alv/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Thu, 23 Jul 2020 14:48:34 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4460</guid>
+
+					<description><![CDATA[<p>Очистка буферов может быть выполнена с помощью программ: BALVBUFDEL BCALV_BUFFER_DELETE BCALV_BUFFER_DEL_SHARED При изменении текстов в элементах данных можно использовать ФМ передав в качестве параметра структуру используемую в ALV: DD_INT_DELETE_DDFTX</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/ochistka-bufera-alv/">Очистка буфера ALV</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Очистка буферов может быть выполнена с помощью программ:</p>
+<ul>
+<li>BALVBUFDEL</li>
+<li>BCALV_BUFFER_DELETE</li>
+<li>BCALV_BUFFER_DEL_SHARED</li>
+</ul>
+<p>При изменении текстов в элементах данных можно использовать ФМ передав в качестве параметра структуру используемую в ALV:</p>
+<ul>
+<li>DD_INT_DELETE_DDFTX</li>
+</ul><p>The post <a href="https://abap-blog.ru/abap-notes/ochistka-bufera-alv/">Очистка буфера ALV</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/ochistka-bufera-alv/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ALV без экрана</title>
+		<link>https://abap-blog.ru/abap-notes/alv-bez-ekrana/</link>
+					<comments>https://abap-blog.ru/abap-notes/alv-bez-ekrana/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Wed, 08 Jul 2020 18:02:13 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4386</guid>
+
+					<description><![CDATA[<p>Создание на write экране: [crayon-618a1530c19ab283375841/] Создание на подэкране: [crayon-618a1530c19b3137728164/] Два ALV через разделитель: [crayon-618a1530c19b5298538878/] Во всплывающем диалоге: [crayon-618a1530c19b8564737350/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/alv-bez-ekrana/">ALV без экрана</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p>Создание на write экране:</p><pre class="urvanov-syntax-highlighter-plain-tag">START-OF-SELECTION.
+  DATA: it_sflight TYPE STANDARD TABLE OF sflight.
+  SELECT * FROM sflight INTO TABLE @it_sflight.
+  DATA(o_alv) = NEW cl_gui_alv_grid( i_parent = cl_gui_container=&gt;default_screen ).
+
+  o_alv-&gt;set_table_for_first_display( EXPORTING
+                                        i_structure_name = 'SFLIGHT'
+                                      CHANGING
+                                        it_outtab        = it_sflight ).
+  WRITE space.</pre><p>Создание на подэкране:</p><pre class="urvanov-syntax-highlighter-plain-tag">SELECTION-SCREEN BEGIN OF SCREEN 100.
+SELECTION-SCREEN END OF SCREEN 100.
+
+START-OF-SELECTION.
+  DATA: it_sflight TYPE STANDARD TABLE OF sflight.
+
+  SELECT * FROM sflight INTO TABLE @it_sflight.
+
+  DATA(o_alv) = NEW cl_gui_alv_grid( i_parent = cl_gui_container=&gt;default_screen ).
+
+  o_alv-&gt;set_table_for_first_display( EXPORTING
+                                        i_structure_name = 'SFLIGHT'
+                                      CHANGING
+                                        it_outtab        = it_sflight ).
+
+  CALL SCREEN 100.</pre><p>Два ALV через разделитель:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: lt_sflight TYPE TABLE OF sflight.
+
+START-OF-SELECTION.
+  SELECT * FROM sflight INTO TABLE @lt_sflight.
+
+  DATA(l_splitter) = NEW cl_gui_splitter_container( parent = cl_gui_container=&gt;default_screen
+                                                    no_autodef_progid_dynnr = abap_true       " wichtig
+                                                    rows = 1
+                                                    columns = 2 ).
+
+  DATA(l_container_left) = l_splitter-&gt;get_container( row = 1 column = 1 ).
+  DATA(l_container_right) = l_splitter-&gt;get_container( row = 1 column = 2 ).
+
+  l_splitter-&gt;set_column_width( id = 1 width = 30 ).
+
+  DATA(l_alv_left) = NEW cl_gui_alv_grid( i_parent = l_container_left ).
+  DATA(l_alv_right) = NEW cl_gui_alv_grid( i_parent = l_container_right ).
+
+  l_alv_left-&gt;set_table_for_first_display( EXPORTING
+                                             i_structure_name = 'SFLIGHT'
+                                           CHANGING
+                                             it_outtab        = lt_sflight ).
+
+  l_alv_right-&gt;set_table_for_first_display( EXPORTING
+                                              i_structure_name = 'SFLIGHT'
+                                            CHANGING
+                                              it_outtab        = lt_sflight ).
+
+  WRITE: space.</pre><p>Во всплывающем диалоге:</p><pre class="urvanov-syntax-highlighter-plain-tag">CLASS lcl_events DEFINITION.
+  PUBLIC SECTION.
+    CLASS-METHODS:
+      on_close FOR EVENT close OF cl_gui_dialogbox_container
+        IMPORTING sender.
+ENDCLASS.
+
+CLASS lcl_events IMPLEMENTATION.
+  METHOD on_close.
+    IF sender IS NOT INITIAL.
+      sender-&gt;free( ).
+    ENDIF.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+
+  DATA: it_sflight TYPE STANDARD TABLE OF sflight WITH DEFAULT KEY.
+
+  SELECT * INTO TABLE it_sflight FROM sflight WHERE carrid = 'LH'.
+
+  DATA(o_cnt) = NEW cl_gui_dialogbox_container( no_autodef_progid_dynnr = abap_true
+                                                caption                 = 'Flüge'
+                                                top                     = 1
+                                                left                    = 1
+                                                width                   = 640
+                                                height                  = 480 ).
+
+* Dialogbox-Container fullscreen (maximized) setzen
+  o_cnt-&gt;set_alignment( cl_gui_control=&gt;align_at_left + cl_gui_control=&gt;align_at_right + cl_gui_control=&gt;align_at_top + cl_gui_control=&gt;align_at_bottom ).
+
+* OnClose-Handler setzen
+  SET HANDLER lcl_events=&gt;on_close FOR o_cnt.
+
+  DATA: o_salv TYPE REF TO cl_salv_table.
+
+* SALV-Grid erzeugen
+  cl_salv_table=&gt;factory( EXPORTING
+                            r_container  = o_cnt
+                          IMPORTING
+                            r_salv_table = o_salv
+                          CHANGING
+                            t_table      = it_sflight ).
+
+  o_salv-&gt;display( ).
+
+* cl_gui_container=&gt;screen0 erzwingen
+  WRITE: / space.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/alv-bez-ekrana/">ALV без экрана</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/alv-bez-ekrana/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Easy Reference for ALV Grid Control</title>
+		<link>https://abap-blog.ru/abap-notes/easy-reference-for-alv-grid-control/</link>
+					<comments>https://abap-blog.ru/abap-notes/easy-reference-for-alv-grid-control/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 19 Jun 2020 11:12:13 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4342</guid>
+
+					<description><![CDATA[]]></description>
+										<content:encoded><![CDATA[<style>
+                    </style>
+        	    <div id="h5vp618a1530da4da" class="pdfp_wrapper">
+                        <div class="cta_wrapper">
+                	            <p><a href="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/ALV.pdf&#038;download=true&#038;print=&#038;openfile=false"><button>View Fullscreen</button></a></p>
+            </div>
+            <div class="iframe_wrapper">
+                <iframe loading="lazy" width="100%" height="1122px" src="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/ALV.pdf&#038;download=true&#038;print=&#038;openfile=false"></iframe>
+            </div>
+	    </div><p>The post <a href="https://abap-blog.ru/abap-notes/easy-reference-for-alv-grid-control/">Easy Reference for ALV Grid Control</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/easy-reference-for-alv-grid-control/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Коды ALV функций</title>
+		<link>https://abap-blog.ru/abap-notes/kody-alv-funkcij/</link>
+					<comments>https://abap-blog.ru/abap-notes/kody-alv-funkcij/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Fri, 19 Jun 2020 11:09:00 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4338</guid>
+
+					<description><![CDATA[]]></description>
+										<content:encoded><![CDATA[<style>
+                    </style>
+        	    <div id="h5vp618a1530dd604" class="pdfp_wrapper">
+                        <div class="cta_wrapper">
+                	            <p><a href="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/ALV-Function-Codes.pdf&#038;download=true&#038;print=&#038;openfile=false"><button>View Fullscreen</button></a></p>
+            </div>
+            <div class="iframe_wrapper">
+                <iframe loading="lazy" width="100%" height="1122px" src="https://abap-blog.ru/wp-content/plugins/pdf-poster/pdfjs/web/viewer.php?file=https://abap-blog.ru/wp-content/uploads/2020/04/ALV-Function-Codes.pdf&#038;download=true&#038;print=&#038;openfile=false"></iframe>
+            </div>
+	    </div><p>The post <a href="https://abap-blog.ru/abap-notes/kody-alv-funkcij/">Коды ALV функций</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/kody-alv-funkcij/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

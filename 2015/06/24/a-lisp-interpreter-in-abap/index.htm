@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+
+<!--[if gte IE 9]>
+<html class="ie" lang="en-US">
+<![endif]-->
+
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar" content="black"/>
+    <title>A Lisp interpreter in ABAP | SAP Blogs</title>
+    <link rel="profile" href="http://gmpg.org/xfn/11"/>
+
+    
+    
+    <!--[if lt IE 9]>
+    <script src="https://blogs.sap.com/wp-content/themes/sap-v3-neo/js/html5.min.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link rel="icon" type="image"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.png" /><link rel="shortcut icon" type="image/x-icon"  href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/favicon.ico" /><link rel="apple-touch-icon" href="https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/images/apple-touch-icon.png" /><meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//static.community.services.sap' />
+<link rel='dns-prefetch' href='//assets.adobedtm.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Feed" href="https://blogs.sap.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; Comments Feed" href="https://blogs.sap.com/comments/feed/" />
+<meta name="type" content="Blog" /><meta name="description" content="I have long thought about writing a Lisp interpreter in ABAP, after coming across an article by Peter Norvig entitled &#8220;(How to Write a (Lisp) Interpreter (in Python))&#8220;. In that article, he shows" /><meta name="sm_tech_ids" content="833755570260738661924709785639136"/><meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" /><link rel="alternate" type="application/rss+xml" title="SAP Blogs &raquo; A Lisp interpreter in ABAP Comments Feed" href="https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/blogs.sap.com\/res1dx-135\/wp-includes\/js\/wp-emoji-release.min.js"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/style.min.css' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/css/ie.css' type='text/css' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='designmate_styles-css'  href='https://static.community.services.sap/designmate/v3/136/latest/designmate.css' type='text/css' media='all' />
+<link rel='stylesheet' id='designsystem_styles-css'  href='https://static.community.services.sap/community-ds/v1/188/main.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dist/block-library/style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='prism-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/js/tinymce/plugins/codesample/css/prism.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_custom_link_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom//include/css/sap-core-custom.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sap_lightbox_gallery_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='pt_style_css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-primary-tag/css/pt_style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-popular-posts-css-css'  href='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/css/wpp.css' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery.min.js' id='jquery-core-js'></script>
+<script type='text/javascript' id='jquery-core-js-after'>
+if (jQuery !== undefined) {
+                jQuery(window).on("load", function(){
+                    var _wpWindowLoaded = document.createElement("div");
+                    _wpWindowLoaded.setAttribute("class", "hidden");
+                    _wpWindowLoaded.setAttribute("id", "wp_window_loaded");
+                    document.body.appendChild(_wpWindowLoaded);
+                });
+            }
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/jquery/jquery-migrate.min.js' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='//assets.adobedtm.com/ccc66c06b30b/d266848b2882/launch-f095fbc32a96.min.js' id='scn_adobe_dtm-js'></script>
+<script type='text/javascript' id='wpp-js-js-extra'>
+/* <![CDATA[ */
+var wpp_params = {"sampling_active":"","sampling_rate":"100","ajax_url":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php","action":"update_views_ajax","ID":"127576","token":"938e4875d9"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/wordpress-popular-posts/public/js/wpp.js' id='wpp-js-js'></script>
+<link rel="https://api.w.org/" href="https://blogs.sap.com/wp-json/" /><link rel="alternate" type="application/json" href="https://blogs.sap.com/wp-json/wp/v2/posts/127576" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.sap.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.sap.com/wp-includes/wlwmanifest.xml" /> 
+
+<link rel="canonical" href="https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/" />
+<link rel='shortlink' href='https://blogs.sap.com/?p=127576' />
+<script type="text/javascript">var ajaxurl = "https://blogs.sap.com/wp-admin/admin-ajax.php";var likePostLabel = "Like";var unLikePostLabel = "Liked";var likeCommentLabel = "Like";var unLikeCommentLabel = "Liked";</script>    <!--[if IE ]>
+    <link rel="stylesheet" id="scn-ie-styles" href="https://blogs.sap.com/wp-content/themes/sap-v3-neo/css/ie.css"
+          type="text/css" media="all">
+    <link id="ids-popup-css" href="https://accounts.sap.com/universalui/shared/stylesheets/idsPopup.css"
+          rel="stylesheet"
+          type="text/css">
+    <![endif]-->
+
+
+</head>
+
+<body class="post-template-default single single-post postid-127576 single-format-standard custom-font-enabled">
+
+
+<div class="page-wrapper">
+<b class="cn-accessibility"><a href="#main" tabindex="0" accesskey="S">Skip to Content</a></b>
+<div id="page" class="hfeed site">
+
+<header id="masthead" class="blogs-nav sap-header">
+    <header id="comm-hdr-Header" role="masthead"><div class="dm-header"><div class="dm-header__inner"><div class="dm-header__logo-wrapper"><a class="dm-logo--header" href="http://www.sap.com/" title="SAP"></a></div><nav id="comm-hdr-Navigation" class="dm-mainNav"><div class="dm-mobileSearch"><form class="dm-header__search-form" action=""><div class="dm-search-container dm-input dm-search__input"><label class="dm-input__box" aria-label="search SAP Community"><input class="dm-input__control" placeholder="Search SAP Community" name="filter-search" type="search" required="" aria-label="type here to search"><button class="dm-search__button dm-search__button-clear" type="reset" role="button" title="Reset Search"><span class="dm-search__buttonIcon dm-icon-encoded--close" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" role="button" title="Search SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form></div><ul class="dm-mainNav__menu dm-mainNav__menu--withGroups" role="menubar"><li class="dm-header__homeItem" role="none"><a class="dm-header__homeItem-link" role="menuitem" aria-label="Community Home" target="_self" href="https://community.sap.com">Community</a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/topics" aria-label="" aria-haspopup="false" role="menuitem">Topics<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://groups.sap.com" aria-label="Groups. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Groups<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://answers.sap.com/index.html" aria-label="Answers. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Answers<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://blogs.sap.com" aria-label="Blogs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Blogs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/events" aria-label="Events. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Events<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/programs" aria-label="Programs. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Programs<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem dm-mainNav--hasSubMenu" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources" aria-label="Resources. Press Arrow Down to expand the submenu and navigate with arrow keys." aria-haspopup="true" role="menuitem">Resources<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li><li class="dm-mainNav__menuItem" role="none"><a class="dm-mainNav__menuItem-link" href="https://community.sap.com/resources/what-is-new" aria-label="" aria-haspopup="false" role="menuitem">What's New<span class="dm-mainNav__menuItem-arrow dm-icon-encoded dm-icon-encoded--arrow-right"></span></a></li></ul></nav><ul class="dm-header__actions"><li id="comm-hdr-Search" class="dm-header__actions-item dm-headerSearch"><a class="dm-search-action dm-icon-encoded dm-header__search-icon" aria-label="Search the SAP Community" href="#" role="button" aria-expanded="false" title="Search"></a><div class="dm-headerSearch__wrapper"><form class="dm-searchdropdown dm-align-center" action=""><div class="dm-search__input dm-input" role="search"><label class="dm-input__box" aria-label="search the SAP community"><input class="dm-input__control" placeholder="Search the SAP Community" name="filter-search" aria-label="type here to search" type="input"><button class="dm-search__button dm-search__button-clear" type="reset" title="Reset"><span class="dm-search__buttonIcon dm-icon-encoded--clear" role="img" aria-label="Reset"></span></button><button class="dm-search__button dm-search__button-submit" type="submit" title="Search the SAP Community"><span class="dm-search__buttonIcon dm-icon-encoded--search" role="img" aria-label="Search"></span></button></label></div></form><a class="dm-headerSearch__closeButton" type="submit" role="button" title="Close search input" href="javascript:void(0);"><span class="dm-icon-encoded dm-icon-encoded--close" role="img" aria-label="Close search input"></span></a></div></li><li id="comm-hdr-Authentication" class="dm-header__actions-item dm-header__account"><a id="comm-hdr-SignIn" class="dm-user__login-button--wrapper" aria-haspopup="true" aria-expanded="false" role="button" href="#" title="Log In" rel="IDS_login"><div id="comm-hdr-AnonymousIcon" class="dm-icon-encoded dm-icon-encoded--account dm-hidden" aria-label="click here to login"></div><div id="comm-hdr-Avatar" class="dm-user dm-header__avatar"><img class="dm-header__avatar-image dm-hidden" data-src="" src="" width="24px" height="24px"><span class="dm-header__notifications dm-hidden js-notification-indicator"></span></div></a><ul id="comm-hdr-UserProfileMenu" class="dm-header__actionsSubMenu dm-profileFlyoutMenu dm-profileMenuDropdown" role="menu" aria-label="drop down menu of people profile"><li class="dm-profileMenu__userData"><div id="comm-hdr-Username" class="dm-profileMenu__userName"></div><div id="comm-hdr-Email" class="dm-profileMenu__userEmail"></div><a id="comm-hdr-SubMenuTitleLink" class="dm-link" href="#">Manage my Account</a></li><li id="comm-hdr-ProfileMenuTopSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li id="comm-hdr-ProfileMenuMiddleSection" class="dm-profileMenu__section"><ul class="dm-profileMenu__list"></ul></li><li class="dm-profileMenu__section"><ul class="dm-profileMenu__list dm-profileMenu__logout"><li class="dm-profileMenu__item"><a id="comm-hdr-LogOut" class="dm-button dm-button--secondary" href="#" role="button"><span class="dm-button-text">Logout</span></a></li></ul></li></ul></li><li class="dm-header__actions-item dm-header__mobileMenu"><a id="comm-hdr-MobileMenuBtn" class="dm-mobileMenuButton" aria-label="Search SAP community"><span class="dm-icon-encoded dm-icon-encoded--mobile-menu"></span><span style="display:none;">Search</span></a></li></ul></div></div></header><div class="announcements" role="menubar"></div><div class="dm-wrapper dm-subheader dm-subheader--wrapper  dm-user--unauthenticated "><div class="dm-grid"><div class="dm-breadcrumb dm-user--unauthenticated" role="menubar">
+    <ul class="dm-breadcrumb-nav" role="navigation" aria-label="breadcrumb navigation to trace the path back to original landing point">
+        
+        <li><a id="comm-shdr-breadcrumb-home" href="https://www.sap.com" title="Home">Home</a></li>
+        
+        <li><a id="comm-shdr-breadcrumb-community" href="https://community.sap.com" title="Community">Community</a></li>
+        
+    </ul>
+    <ul class="dm-breadcrumb-actions" role="menu">
+        
+        <li><a id="comm-shdr-AskQuestion" href="https://answers.sap.com/questions/ask.html" title="Ask a Question">Ask a Question</a></li>
+        
+        <li><a id="comm-shdr-WriteBlogPost" href="https://blogs.sap.com/wp-admin/post-new.php" title="Write a Blog Post">Write a Blog Post</a></li>
+        
+        <li class="dm-user__login-button--wrapper"><a class="dm-button-small dm-button--primary" role="button" rel="IDS_login" aria-label="Login or Sign up. Click here to log in or sign up"><span class="dm-button-text">Login / Sign-up</span></a></li>
+        <li class="dm-breadcrumb-actions__dropdown">
+            <span id="comm-shdr-actions-opener" class="dm-breadcrumb-actions__dropdown-toggle" title="Community actions">
+                 <span class="dm-icon-encoded dm-icon-encoded--3dots"></span>
+            </span>
+            <ul id="comm-shdr-user-actions-ul" class="dm-breadcrumb-actions__dropdown-menu" role="menu">
+            </ul>
+        </li>
+    </ul>
+</div>
+</div></div>    <!-- #site-navigation -->
+
+</header>
+
+<!-- #masthead -->
+<div id="main" tabindex="0" class="wrapper">
+
+
+
+
+<div class="ds-blog-post-detail">
+<div class="ds-flexGrid">
+  <div class="ds-flexRow">
+    <div class="ds-flexCol">
+            <div class="ds-content-wrapper ds-blog-post__content-wrapper">
+        <h6 class="ds-heading ds-heading--xs ds-blog-post__sub-title"></h6>
+        <div class="ds-flexRow">
+          <div class="ds-flexCol-sm-12 ds-flexCol-md-9">
+            
+<div class="ds-blog-post__body-wrapper">
+  <div class="ds-blog-post__content">
+    <div class="ds-blog-post__header-wrapper">
+      <a target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member" class="ds-blog-post__avatar disabled" aria-disabled='true' >
+        <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />      </a>
+      <div class="ds-blog-post__author-info-wrapper">
+        <div class="ds-user ds-blog-post__author">
+          <a class="ds-link ds-user__name disabled" href="https://people.sap.com/former.member" target="_blank" title="Former Member" aria-label="" rel="noopener noreferrer">Former Member</a>
+                  </div>
+        <div class="ds-blog-post__meta-info">
+          <span class="ds-blog-post__date">June 24, 2015</span>
+          <span class="ds-blog-post__read-duration">11 minute read</span>
+        </div>
+      </div>
+    </div>
+    <h1 class="ds-heading ds-heading--m ds-blog-post__title">A Lisp interpreter in ABAP</h1>
+    <div class="ds-blog-post__social-stats-wrapper">
+      <div class="ds-social-stats ">
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--comments"></i>22        </span>
+        <span id="post-likes-counter" class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--likes-outline"></i>23        </span>
+        <span class="ds-social-stats__stat">
+          <i class="ds-icon ds-icon--views"></i>6,393        </span>
+      </div>
+          </div>
+    <div class="ds-blog-post__body ds-editor-content">
+      <div class="jive-rendered-content">
+<p><a href="/wp-content/uploads/2015/06/saplambda_732475.jpg" ><img class="jive-image jive-image-thumbnail jiveImage ds-lightbox__img" loading="lazy" alt="/wp-content/uploads/2015/06/saplambda_732475.jpg" height="93" src="/wp-content/uploads/2015/06/saplambda_732475.jpg" style="font-size: 13.3333330154419px;float: right" width="186" data-index="1" data-id="plbox-127576" /></a>I have long thought about writing a Lisp interpreter in ABAP, after coming across an article by Peter Norvig entitled <span style="font-size: 13.3333330154419px">&#8220;</span><a class="jive-link-external-small" href="http://norvig.com/lispy.html"  target="_blank" >(How to Write a (Lisp) Interpreter (in Python))</a><span style="font-size: 13.3333330154419px">&#8220;. In that article, he shows how to construct a Lisp interpreter in what amounts to only a few lines of Python. Anthony Hay is someone, also inspired by Norvig&#8217;s article, who did the same thing in C++ with his article entitled <span style="font-size: 13.3333330154419px">&#8220;</span><a class="jive-link-external-small" href="http://howtowriteaprogram.blogspot.com/2010/11/lisp-interpreter-in-90-lines-of-c.html"  target="_blank" >Lisp interpreter in 90 lines of C++</a><span style="font-size: 13.3333330154419px">&#8220;. (In the article he does point out that the 90 lines are for the core of the interpreter, not the built-in functions).</span></span></p>
+</p>
+<p>Well, taking the lead of their work, especially getting some insight from Hay, I have built a Lisp interpreter in ABAP now, though obviously it was never going to be in just 90 lines. In fact, doing most things in 90 lines of ABAP or less is somewhat of a <a class="jive-link-external-small" href="http://dict.leo.org/ende/index_de.html#/search=Zumutung&amp;searchLoc=0&amp;resultOrder=basic&amp;multiwordShowSingle=on"  target="_blank" >Zumutung</a><span style="font-size: 13.3333330154419px">.</span></p>
+</p>
+<p>Before looking at the result though, let me give you a little background on Lisp.</p>
+</p>
+<p>(<strong>UPDATE!</strong> The interpreter is now able to call ABAP function modules. The whole solution is not very stable yet as I have done little to no negative testing. Please have a look on the wiki of the github project: <a class="jive-link-external-small" href="https://github.com/mydoghasworms/abap-lisp/wiki"  target="_blank" >https://github.com/mydoghasworms/abap-lisp/wiki</a>. Here I have documented the latest functions and a getting started guide; there is also a section on ABAP integration).</p>
+</p>
+<h3>Lisp: An executive summary</h3>
+</p>
+<p>Lisp, which is an acronym for &#8220;LISt Processing&#8221;, is one of the oldest high-level computer languages, dating back to 1958, with only Fortran being older. You could say that Lisp is the oldest <em>surviving</em> computer language, as (I think) no-one uses Fortran anymore, except perhaps hobbyists. <strong>Correction:</strong> I have just read up a bit on Fortran and it seems there are still people using it for scientific applications. My apologies, Fortran lovers &lt;3</p>
+</p>
+<p>In spite of being a product of the late 50s, Lisp implemented some way-ahead-of-its-time concepts, some which have started to appear in mainstream languages like Java only recently (the introduction of closures, for example), and some which have yet to make their appearance*<em>(1)</em>.</p>
+</p>
+<p>Lisp, which is often regarded as a functional language (though not limited to that) is incredibly powerful and, due to its association with Artificial Intelligence, has been used widely by academia. However, it has found a very loyal following among a large contingency of IT specialists. Today it exists primarily in two dialects: Common Lisp and Scheme.</p>
+</p>
+<p>With the resurgence of interest in functional programming (consider also the recent SCN article on Functional Programming in ABAP), Lisp is getting a lot more attention these days, and this is a good thing.</p>
+</p>
+<p>Here is an example of List code:</p>
+</p>
+<blockquote class="jive-quote">
+<p><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 11.9999990463257px">(</span><span class="pl-st" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 11.9999990463257px">defun</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 11.9999990463257px"> </span><span class="pl-en" style="color: #795da3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 11.9999990463257px">double</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 11.9999990463257px"> (x) (* x </span><span class="pl-c1" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 11.9999990463257px">2</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 11.9999990463257px">))</span></p>
+</blockquote>
+<p>This defines a function called &#8220;double&#8221;, which takes one argument, x, which it multiplies by two. (I have to warn you upfront though, that this is Common Lisp, and the Scheme syntax for defining a function, which we will use, is slightly different &#8211; read on).</p>
+</p>
+<p>Lisp code consists of parenthesized lists. A function call is constructed of a list in which the first element is the name of the function, and the elements following that are its arguments. In the example above, &#8220;defun&#8221; is the name of a function that creates a function, the first parameter is the name of the function, the second is a list of the arguments the function will receive, and the last is the body that will be evaluated when the function is called.</p>
+</p>
+<p>To call our function, we would write the following:</p>
+</p>
+<blockquote class="jive-quote">
+<p><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 11.9999990463257px">(double </span><span class="pl-c1" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 11.9999990463257px">7</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 11.9999990463257px">)</span></p>
+</blockquote>
+<p>which, if it were evaluated, would give us 14. It may seem weird at first, especially when putting mathematical operators at the beginning of an expression, like (* 3 7), but it does become easier as you carry on.</p>
+</p>
+<p>An interesting aspect of Lisp is that code and data are represented in the same way. (Lists are just data after, all). This makes Lisp what is called a &#8220;homoiconic&#8221; language, and has some interesting implications, namely that if your code can emit data, it can potentially also emit other code, and this is in fact something that people do with Lisp: they write programs that construct other programs*<em>(2)</em>.</p>
+</p>
+<p>There are numerous reasons to learn Lisp, and Eric S. Raymond, a well-known open source pundit, makes the following alluring statement:</p>
+</p>
+<p style="padding-left: 30px"><em>LISP is worth learning for a different reason &#8212; the profound enlightenment experience you will have when you finally get it. That experience will make you a better programmer for the rest of your days, even if you never actually use LISP itself a lot.</em></p>
+<p><em><br /></em></p>
+<h3>A Lisp interpreter in ABAP</h3>
+<p><em><br /></em></p>
+<p>Now I will show you the Lisp interpreter I have built in ABAP. It&#8217;s not exactly a piece of art, more the result of some late-night slogging away at the keyboard, lots of testing and troubleshooting and prayer. It&#8217;s not coding poetry, but it&#8217;s functional (if you can excuse the terrible pun), and I think it&#8217;s pretty cool.</p>
+</p>
+<p><span style="font-size: 13.3333330154419px">Although Norvig&#8217;s (and therefore Hay&#8217;s) interpreters clearly lean toward the Scheme persuasion, I at some point diverged and started using the book &#8220;<a class="jive-link-external-small" href="https://www.cs.cmu.edu/~dst/LispBook/"  target="_blank" >Common Lisp: A Gentle Introduction to Symbolic Computation</a>&#8221; as a reference for my implementation, primarily because I changed at one point from representing lists as internal tables of cells to using linked lists (cons cells). This is because, even though there are some performance gains to using tables, e.g. determining the size of a list, I ended up copying parts of tables everywhere, and this leads to greater memory consumption. The result is that I have adopted the Common Lisp approach to some things (e.g. <em>false</em> is represented by <em>nil</em>).</span></p>
+</p>
+<p>Apart from the pure fun in doing this, the great thing about implementing your own Lisp is that you are not bound to any particular standard. For example, for historical reasons, there are some weird names for functions dealing with lists, such as CAR (which retrieves the first element of a list) and CDR, which returns the remainder of the list, both important constructs. If I wanted, I could rename them HEAD and TAIL (and maybe I will).<em>*(3)</em></p>
+</p>
+<p>The great thing about creating a Lisp interpreter for ABAP is that now you have an interactive means to write code on your ABAP application server, which opens up all sorts of possibilities. Imagine coding business rules in Lisp, for example.</p>
+</p>
+<h3>Trying it out</h3>
+</p>
+<p>To try out the interpreter, you will have to download the source from the following GitHub repo and install it on your system: <a class="jive-link-external-small" href="https://github.com/mydoghasworms/abap-lisp"  target="_blank" >mydoghasworms/abap-lisp &middot; GitHub</a>. By my own convention, the source files starting with &#8216;ZUSR&#8217; must go into a type &#8216;1&#8217; (report) program, and the &#8216;ZLIB&#8217; programs into a type &#8216;I&#8217; (Include) program<em>*(4)</em>. At minimum you will need ZLIB_LISP, which contains the interpreter, and ZUSR_LISP_REPL, which is just a simple REPL (Read-Eval-Print Loop) front-end to the interpreter which consists of s single input and output field. (Sorry, no fancy multi-line inputs and script parsing at this point; hopefully in the future).</p>
+</p>
+<p>When you run ZLIB_LISP_REPL, you will get the following:</p>
+</p>
+<p><a href="http://i.imgur.com/BelJ9DH.png"  target="_blank" ><img class="jive-image ds-lightbox__img" alt="http://i.imgur.com/BelJ9DH.png" src="http://i.imgur.com/BelJ9DH.png" data-index="2" data-id="plbox-127576" /></a></p>
+<p>Now type in a number in the INPUT field and press Enter. The REPL responds with the number, because that is an expression on its own and a number will just evaluate to itself.</p>
+</p>
+<p><a href="http://i.imgur.com/ktyCPTR.png"  target="_blank" ><img class="jive-image ds-lightbox__img" alt="http://i.imgur.com/ktyCPTR.png" src="http://i.imgur.com/ktyCPTR.png" data-index="3" data-id="plbox-127576" /></a></p>
+</p>
+<p>That&#8217;s not very impressive. Now enter something different, like &#8216;a&#8217;:</p>
+</p>
+<p><a href="http://i.imgur.com/LqGBtt7.png"  target="_blank" ><img class="jive-image ds-lightbox__img" alt="http://i.imgur.com/LqGBtt7.png" src="http://i.imgur.com/LqGBtt7.png" data-index="4" data-id="plbox-127576" /></a></p>
+<p>The interpreter responds correctly by telling us that the symbol &#8216;a&#8217; is not defined. Let&#8217;s define it with some value:</p>
+</p>
+<blockquote class="jive-quote">
+<p><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">(</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">define</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> </span><span class="pl-vo" style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">a</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> 22)</span></p>
+</blockquote>
+<p>The REPL will respond with the defined symbol, which is &#8216;a&#8217;. If you enter &#8216;a&#8217; now, it will respond with 22.</p>
+</p>
+<p>Now let&#8217;s define a function called &#8216;abs&#8217; to calculate the absolute value of a number. (I told you earlier that the syntax is somewhat different in Scheme. I wasn&#8217;t lying):</p>
+</p>
+<blockquote class="jive-quote">
+<p><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">(</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">define</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> </span><span class="pl-vo" style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">abs</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> (</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">lambda</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> (</span><span class="pl-v" style="color: #1d3e81;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">n</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">) ((</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">if</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> (</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">&gt;</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> n </span><span class="pl-c1" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">0</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">) </span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">+</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> -)</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> n)))</span></p>
+</blockquote>
+<p>The built-in function &#8216;lambda&#8217; creates a function which we can call, and by using that as input to the value portion of the built-in &#8216;define&#8217; function, we assign a name to it that we can reference later. The body of the function makes use of a few built-in functions, namely &#8216;if&#8217;, &#8216;&gt;&#8217; (greater than), &#8216;+&#8217; (add) and &#8216;-&#8216; (minus).</p>
+</p>
+<p>Let us try and execute the new function:</p>
+</p>
+<blockquote class="jive-quote">
+<p><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">(</span><span class="pl-s3" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">abs</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> -22)</span></p>
+</blockquote>
+<p>If everything went well, the interpreter should respond with 22.</p>
+</p>
+<p>We could have written the &#8216;abs&#8217; function as follows and produced the same result:</p>
+</p>
+<blockquote class="jive-quote">
+<p><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">(</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">define</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> </span><span class="pl-vo" style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">abs</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> (</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">lambda</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> (</span><span class="pl-v" style="color: #1d3e81;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">n</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">) (</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">if</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> (</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">&lt;</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> n </span><span class="pl-c1" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">0</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">) (</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">&#8211;</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> n) n)))</span></p>
+</blockquote>
+<p>The first way, however, demonstrates an interesting feature: In the first definition of the &#8216;abs&#8217; function, the invocation of &#8216;if&#8217; evaluates to a function, which is either &#8216;+&#8217; or &#8216;-&#8216;, that is then subsequently applied to the input, n. This technique of determining the function to call based on some criteria within an expression is a powerful construct, and not something you would necessarily be used to from imperative or object-oriented programming. Needless to say, a transition to Lisp (and functional programming for that matter) involves a big mind-shift.</p>
+</p>
+<p>Let&#8217;s carry on: here is an example of a recursive function to calculate a factorial:</p>
+</p>
+<blockquote class="jive-quote">
+<p><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">(</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">define</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> </span><span class="pl-vo" style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">fact</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> (</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">lambda</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> (</span><span class="pl-v" style="color: #1d3e81;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">n</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">) (</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">if</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> (</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">&lt;=</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> n </span><span class="pl-c1" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">1</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">) </span><span class="pl-c1" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">1</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> (</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">*</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> n (fact (</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">&#8211;</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> n </span><span class="pl-c1" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">1</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">))))))</span></p>
+</blockquote>
+<p>Run it with a few numbers and see what happens. If you run it with 2000, for example, you will probably notice a significant delay. With an input of 3000, you will cause a CX_SY_ARITHMETIC_OVERFLOW exception. (At least I assume that the ABAP kernel manages the same data types consistently across platforms).*(5)</p>
+</p>
+<p><a href="http://i.imgur.com/jNQmgxJ.png"  target="_blank" ><img class="jive-image ds-lightbox__img" alt="http://i.imgur.com/jNQmgxJ.png" src="http://i.imgur.com/jNQmgxJ.png" data-index="5" data-id="plbox-127576" /></a></p>
+<p>Lastly, let&#8217;s play around with lists a little. Create a list and assign it to a symbol with the following:</p>
+<blockquote class="jive-quote">
+<p><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">(</span><span class="pl-k" style="color: #a71d5d;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">define</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> </span><span class="pl-vo" style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">mylist</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> (</span><span class="pl-s3" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">list</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> </span><span class="pl-c1" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">1</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> </span><span class="pl-c1" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">2</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> </span><span class="pl-c1" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">3</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> </span><span class="pl-c1" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">4</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">) )</span></p>
+</blockquote>
+<p>You can check the result by evaluating the symbol &#8216;mylist&#8217;. Now, to get the first element of the list:</p>
+<blockquote class="jive-quote">
+<p><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">(</span><span class="pl-s3" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">car</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> list)</span></p>
+</blockquote>
+<p>and to get the remainder (i.e. the rest of the list starting after the first element:</p>
+<blockquote class="jive-quote">
+<p><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">(</span><span class="pl-s3" style="color: #0086b3;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px">cdr</span><span style="color: #333333;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size: 12px"> list)</span></p>
+</blockquote>
+<p>To try out some more examples and see some code showing the interpreter in action, look at the ZUSR_LISP_TESTS program.</p>
+</p>
+<h3>A short reference</h3>
+</p>
+<p>The following is a short reference of the built-in functions available in the interpreter. Some are available as symbols which map to native procedures which, like the functions you define, can be passed around in expressions. The other list are just symbols that are directly evaluated by the interpreter and by contrast, can not be passed around in expressions*(6).</p>
+</p>
+<p>These are the functions you can use in the current interpreter:</p>
+</p>
+<table border="1" class="jiveBorder" style="border: 1px solid #000000;width: 100%">
+<thead>
+<tr>
+<th style="border:1px solid black;border: 1px solid #000000;padding: 2px;color: #ffffff;background-color: #6690bc;text-align: center" valign="middle"><strong>Function</strong></th>
+<th style="border:1px solid black;border: 1px solid #000000;padding: 2px;color: #ffffff;background-color: #6690bc;text-align: center" valign="middle"><strong>Arguments</strong></th>
+<th style="border:1px solid black;border: 1px solid #000000;padding: 2px;color: #ffffff;background-color: #6690bc;text-align: center" valign="middle">First-class*</th>
+<th style="border:1px solid black;border: 1px solid #000000;padding: 2px;color: #ffffff;background-color: #6690bc;text-align: center" valign="middle"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000;padding: 2px">+, -, *, /</td>
+<td style="border:1px solid black;border: 1px solid #000000;padding: 2px">1-n</td>
+<td style="border:1px solid black;border: 1px solid #000000;padding: 2px">Yes</td>
+<td style="border:1px solid black;border: 1px solid #000000;padding: 2px">Basic arithmetic functions</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000;padding: 2px">append</td>
+<td style="border:1px solid black;border: 1px solid #000000;padding: 2px">2</td>
+<td style="border:1px solid black;border: 1px solid #000000;padding: 2px">Yes</td>
+<td style="border:1px solid black;border: 1px solid #000000;padding: 2px">Takes an element and a list, appends the element to the list</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000">list</td>
+<td style="border:1px solid black;border: 1px solid #000000">1-n</td>
+<td style="border:1px solid black;border: 1px solid #000000">Yes</td>
+<td style="border:1px solid black;border: 1px solid #000000">Makes a list out of all given arguments</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000">length</td>
+<td style="border:1px solid black;border: 1px solid #000000">1</td>
+<td style="border:1px solid black;border: 1px solid #000000">Yes</td>
+<td style="border:1px solid black;border: 1px solid #000000">Length of the given list</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000">car</td>
+<td style="border:1px solid black;border: 1px solid #000000">1</td>
+<td style="border:1px solid black;border: 1px solid #000000">Yes</td>
+<td style="border:1px solid black;border: 1px solid #000000">Returns the first item in a list, or nil given an empty list (or nil)</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000">cdr</td>
+<td style="border:1px solid black;border: 1px solid #000000">1</td>
+<td style="border:1px solid black;border: 1px solid #000000">Yes</td>
+<td style="border:1px solid black;border: 1px solid #000000">Returns the tail of a list, which will be a list, or nil, given an empty list (or nil)</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000">cons</td>
+<td style="border:1px solid black;border: 1px solid #000000">2</td>
+<td style="border:1px solid black;border: 1px solid #000000">Yes</td>
+<td style="border:1px solid black;border: 1px solid #000000">Constructs a new list, making the first element the head and the second input (usually a list) the tail (like prepending, almost)</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000">nil?, null?</td>
+<td style="border:1px solid black;border: 1px solid #000000">1</td>
+<td style="border:1px solid black;border: 1px solid #000000">Yes</td>
+<td style="border:1px solid black;border: 1px solid #000000">Tests if the input is <em>nil</em> or not (null? is an alias added for compatibility with Scheme-based tests)</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000">&gt;, &gt;=, &lt;, &lt;=</td>
+<td style="border:1px solid black;border: 1px solid #000000">1-n</td>
+<td style="border:1px solid black;border: 1px solid #000000">Yes</td>
+<td style="border:1px solid black;border: 1px solid #000000">Comparison operators</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000">equal?</td>
+<td style="border:1px solid black;border: 1px solid #000000">2</td>
+<td style="border:1px solid black;border: 1px solid #000000">Yes</td>
+<td style="border:1px solid black;border: 1px solid #000000">Tests if the given arguments are equal (either by symbol or number) or, in the case of a list, whether it is the same list.</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000">quote</td>
+<td style="border:1px solid black;border: 1px solid #000000">1</td>
+<td style="border:1px solid black;border: 1px solid #000000">No</td>
+<td style="border:1px solid black;border: 1px solid #000000">Returns the argument verbatim, without evaluating it</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000">if</td>
+<td style="border:1px solid black;border: 1px solid #000000">2-3</td>
+<td style="border:1px solid black;border: 1px solid #000000">No</td>
+<td style="border:1px solid black;border: 1px solid #000000">Evaluates the first argument. If true, the second argument is evaluated. If not, a third argument is evaluated, otherwise nil (false) is returned</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000">define</td>
+<td style="border:1px solid black;border: 1px solid #000000">2</td>
+<td style="border:1px solid black;border: 1px solid #000000">No</td>
+<td style="border:1px solid black;border: 1px solid #000000">Assigns a value (second argument) to a symbol (first argument)</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000">lambda</td>
+<td style="border:1px solid black;border: 1px solid #000000">2</td>
+<td style="border:1px solid black;border: 1px solid #000000">No</td>
+<td style="border:1px solid black;border: 1px solid #000000">Defines an anonymous function; first input is a list of formal parameters; second is the body to be evaluated</td>
+</tr>
+<tr>
+<td style="border:1px solid black;border: 1px solid #000000">begin</td>
+<td style="border:1px solid black;border: 1px solid #000000">0-n</td>
+<td style="border:1px solid black;border: 1px solid #000000">No</td>
+<td style="border:1px solid black;border: 1px solid #000000">Evaluates all arguments as expressions in turn; a nice way to string a lot of expressions together to be executed</td>
+</tr>
+</tbody>
+</table>
+<p><em>*meaning you can use it as an argument or return-value. I&#8217;m not sure what the correct term is<br /></em></p>
+<p><em><br /></em></p>
+<p>There are also two other built-in values: <em>nil</em> and <em>true</em>. Anything that is not nil can be considered true. <em>nil</em> is essentially the same as an empty list, and this is more of a Common Lisp thing. Scheme also has a <em>true</em> keyword.<em><br /></em></p>
+<p><em><br /></em></p>
+<h3>Where to from here? (Caution: Rough edges!)</h3>
+</p>
+<p>While there is a certain thrill in creating a Fibonacci function and watching it execute, knowing that the code is being parsed, built into an abstract syntax tree and evaluated in ABAP, you quickly grow tired of it. What would make an interpreter like this really useful, is if you can interact with the rest of the system, by accessing the database or particularly consuming classes and function modules. It should be fairly straightforward to extend the list of built-in types in the interpreter and provide a set of built-in functions to achieve this.</p>
+</p>
+<p>At the moment, the interpreter lacks the notion of a string type, as well as other syntactic shortcuts (like prepending a symbol or list with a single quote, which is the shortcut for quoting something without the need to use QUOTE). That is definitely on the list. (Sorry, another bad pun).</p>
+</p>
+<p>There are other aspects to consider, such as the performance. Many applications in functional programming involve making use of recursive functions, and for this reason, many implement what is called &#8220;Tail Call Optimization&#8221;, which eliminates the need for a growing stack*(7). Inherently, this implementation makes use of the stack in ABAP, so perhaps another approach would be to realize the evaluation of functions using other ABAP constructs.</p>
+</p>
+<p>Also, I have not done a lot of negative testing, especially on the parsing side, so don&#8217;t be surprised if you come across problems. For now I assume all input is valid. (Feel free to raise an issue on the GitHub repo though. It would warm my heart to know that someone is actually playing with this).</p>
+</p>
+<h3>Further Reading</h3>
+</p>
+<p>Lisp makes an interesting topic of study, and there are many wonderful resources on the internet. I haven&#8217;t delved so much into all the technical aspects, so I am not going to try and recommend any books I have not read myself. Instead, because I love sensationalism, I have spent a lot of time reading blogs by people who rave about Lisp. One of the best reads I can recommend is an article by Paul Graham entitled &#8220;<a class="jive-link-external-small" href="http://www.paulgraham.com/icad.html"  target="_blank" >Revenge of the Nerds</a>&#8220;.</p>
+</p>
+<p>While on the subject of futuristic, ahead-of-their-time languages, I could not finish this article without pointing you to <a class="jive-link-external-small" href="http://www.rebol.com/"  target="_blank" >REBOL</a>, a language developed by Carl Sassenrath, one of the brains behind Amiga in the 90s. It&#8217;s not Lisp, but it embodies some of its spirit. You can almost think of it as &#8220;Lisp without the parentheses&#8221; (though I&#8217;m sure that hardly does it justice; it is probably the best thought-out language on the planet). It does a fantastic job of looking like an ordinary procedural language, but with the power of Lisp. REBOL is not developed so much anymore, but it&#8217;s spiritual successor, the <a class="jive-link-external-small" href="http://www.red-lang.org/"  target="_blank" >Red Language</a> is what you need to keep your eye on. If robots ever take over the world, the AI would be written in Red.</p>
+</p>
+<h3>*Footnotes</h3>
+<p>(1) See the link to the Paul Graham article somewhere in this post, where these features are listed.</p>
+<p>(2) You have probably done this too before in ABAP if you have used the GENERATE SUBROUTINE POOL statement to generate code on the fly, which is a technique that was used more frequently in the past before the availability of more dynamic statements in ABAP. I can assure you though, that it is very rudimentary compared to what Lisp has to offer.</p>
+<p>(3) The explanation is that on the hardware on which Lisp was initially implemented, CAR stood for &#8220;Contents of the Address portion of the Register&#8221; and CAR stood for <span style="font-size: 13.3333330154419px">&#8220;Contents of the Decrement portion of the Register&#8221;, i.e. references to assembly instructions.</span></p>
+<p><span style="font-size: 13.3333330154419px">(4) In hindsight, ZBIN would be more applicable to executable programs; it&#8217;s more Unix-like</span></p>
+<p><span style="font-size: 13.3333330154419px">(5) <span style="font-size: 13.3333330154419px"> </span><span style="font-size: 13.3333330154419px">It should be noted that the interpreter makes use of the types provided by ABAP, so there is no support for big numbers like in other languages. But in 40 years of SAP, I don&#8217;t think anyone has complained of not being able to count a gazillion dollars.</span></span></p>
+<p>(6) I just followed the lead of Norvig and Hay on this. In some cases it is obvious that if the function is independent of context, it is easy to use as a procedure. This may warrant a little closer inspection though.</p>
+<p>(7)<span style="font-size: 13.3333330154419px"> </span><span style="font-size: 13.3333330154419px">though admittedly ABAP seems to have no problem with sky-high stacks, probably because an application server is normally configured with a lot of memory.</span></p>
+</div>
+    </div>
+  </div>
+  <div class="ds-blog-post__social-side-bar">
+    <div class="ds-sticky-on-scroll ">
+      <div class="ds-sticky-on-scroll__wrapper  ">
+        <div class="ds-sticky-on-scroll__content">
+          <div class="ds-blog-post__social-actions">
+            <button class="sap-button-follow ds-button ds-button--primary ds-blog-post__social-action ds-blog-post__social-action--follow" id="sap-button-follow-hdr-id" onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2015%2F06%2F24%2Fa-lisp-interpreter-in-abap%2F%3Fs_action%3Dss_change_follow_status%26nonce%3D705a693f83'" rel="IDS_login"  type="button" data-content-type="blogpost" data-content-id="127576" data-nonce="705a693f83" title="Please log into the system to use follow/unfollow functionality."><span class="ds-button-text">Follow</span></button>            <button type='button' class='ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action likes-post-link dolike ' rel='IDS_login' onclick="location.href='https://blogs.sap.com/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sap.com%2F2015%2F06%2F24%2Fa-lisp-interpreter-in-abap%2F%3Fs_action%3Dss_change_like_status%26nonce%3D580b46d63f'" title='Like' data-nonce='580b46d63f' data-post-id='127576'><i class='ds-icon ds-icon--likes-outline ds-icon--regular ds-m-r-xs' tabindex='-1'></i><span class='ds-button-text'>Like</span></button>            <button type="button" class="ds-button ds-button--secondary ds-button--icon-button ds-blog-post__social-action" title="RSS Feed" onclick="location.href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/feed/'">
+              <i class="ds-icon ds-icon--rss-feed ds-icon--regular ds-m-r-xs" tabindex="-1"></i>RSS Feed
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+            <div class="ds-blog-post__social-row">
+              <div class="ds-blog-post__social-icons">
+                <a href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.sap.com%2F2015%2F06%2F24%2Fa-lisp-interpreter-in-abap%2F' title='Share on Facebook' target='_blank'><span class='ds-social-icon ds-social-icon--dark-facebook'></span></a><a href='https://twitter.com/share?url=https%3A%2F%2Fblogs.sap.com%2F2015%2F06%2F24%2Fa-lisp-interpreter-in-abap%2F&text=A+Lisp+interpreter+in+ABAP' title='Share on Twitter' target='_blank'><span class='ds-social-icon ds-social-icon--dark-twitter'></span></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.sap.com%2F2015%2F06%2F24%2Fa-lisp-interpreter-in-abap%2F&title=A+Lisp+interpreter+in+ABAP' title='Share on LinkedIn' target='_blank'><span class='ds-social-icon ds-social-icon--dark-linkedin'></span></a>              </div>
+              <div class='ds-tooltip__wrapper'>
+    <div class='ds-tooltip__anchor'>
+    <button
+      type="button"
+      class="ds-button ds-button--secondary ds-blog-post__alert-moderator-button ds-button--disabled"
+      aria-label="Alert Moderator"
+      data-toggle="collapse"
+      data-hide-class="ds-collapse"
+      data-triggers=".alertModerator"
+      aria-expanded="false">Alert Moderator
+    </button>
+    </div>
+    <div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Alerting is not available for unauthorized users</div>
+</div>
+            </div>
+            
+  <div class="wprc-content-v3">
+    <div class="ds-blog-post-form ds-blog-post__alert-moderator-form ds-collapse alertModerator wprc-form-v3" data-toggle="collapseComponent" data-name="alertModerator">
+          </div>
+  </div>
+          </div>
+          <div class="ds-blog-post__right-side-bar ds-flexCol-sm-12 ds-flexCol-md-3">
+            <div id="sapassignedtagswidget-v3-2" class="ds-side-bar-widget ds-assigned-tags ds-m-b-l"><h3 class="ds-side-bar-widget__heading">Assigned Tags</h3></div><div id="sap-relatedcontent-widget-v3-2" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Similar Blog Posts<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="blogpost" data-limit="3"></ul></div></div><div id="sap-relatedcontent-widget-v3-3" class="ds-side-bar-widget widget_sap-relatedcontent-widget-v3"><button type="button" class="ds-side-bar-widget__heading ds-side-bar-widget__heading--collapsible" aria-expanded="true">Related Questions<i class="ds-icon ds-icon--arrow-down ds-icon--big" tabindex="-1"></i></button><div class="ds-side-bar-widget__content"><ul class="ds-relatedContent ds-relatedContent__list" data-types="question" data-limit="3"></ul></div></div>          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="content-lightbox-modal"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="plbox-127576"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="plbox-127576" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2015/06/saplambda_732475.jpg" alt="/wp-content/uploads/2015/06/saplambda_732475.jpg"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="http://i.imgur.com/BelJ9DH.png" alt="http://i.imgur.com/BelJ9DH.png"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="http://i.imgur.com/ktyCPTR.png" alt="http://i.imgur.com/ktyCPTR.png"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="http://i.imgur.com/LqGBtt7.png" alt="http://i.imgur.com/LqGBtt7.png"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="http://i.imgur.com/jNQmgxJ.png" alt="http://i.imgur.com/jNQmgxJ.png"/></div><a class="lightbox-gallery-button--prev ds-lightbox__gallery-button ds-icon ds-icon--arrow-left" href="javascript:void(0);" aria-label="Show previous image"></a><a class="ds-lightbox__gallery-button lightbox-gallery-button--next ds-icon ds-icon--arrow-right" href="javascript:void(0);" aria-label="Show next image"></a></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>
+  <div class="ds-blog-post__comment-section">
+    <div class="ds-flexGrid">
+      <div class="ds-flexRow">
+        <div class="ds-flexCol-12 ds-flexCol-md-10 ds-flexCol-lg-10">
+          
+<div id="comments" class="ds-blog-post-comments">
+  
+      <div class="ds-blog-post-comments__counter" title="Number of Comments">
+      22 Comments      </div>
+              <div class="dm-section dm-align-center dm-section-header__title" title="Please log on to comment" aria-role="alert">
+                You must be <a href="https://blogs.sap.com/wp-login.php?redirect_to=2015/06/24/a-lisp-interpreter-in-abap" class="opener js-idspopup" rel="IDS_login" title="Log On">Logged on</a> to comment or reply to a post.
+        </div>
+      
+    <div class="ds-blog-post-comments__list">
+              <div class="comment byuser comment-author-johnstuddert even thread-even depth-1 ds-blog-post-comment" id="li-comment-195831">
+        <div id="comment-195831" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/john.studdert">
+                <img alt='Author&#039;s profile photo John Studdert' src='https://avatars.services.sap.com/images/john.studdert_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name John Studdert' href='https://people.sap.com/john.studdert' rel='external nofollow' class='ds-link ds-user__name ' >John Studdert</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-24T20:59:06+00:00"
+                >June 24, 2015 at 8:59 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>I never get a chance to code anymore but this was a fun read - brought me back to my college days... Nice work and a well written and entertaining post!</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195831" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195831" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195831'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-johnstuddert odd alt depth-2 ds-blog-post-comment" id="li-comment-195832">
+        <div id="comment-195832" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/john.studdert">
+                <img alt='Author&#039;s profile photo John Studdert' src='https://avatars.services.sap.com/images/john.studdert_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name John Studdert' href='https://people.sap.com/john.studdert' rel='external nofollow' class='ds-link ds-user__name ' >John Studdert</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-24T21:01:38+00:00"
+                >June 24, 2015 at 9:01 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>By the way I think it's "castles in the air" 🙂</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195832" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195832" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195832'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember bypostauthor even depth-3 ds-blog-post-comment" id="li-comment-195833">
+        <div id="comment-195833" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-25T04:52:12+00:00"
+                >June 25, 2015 at 4:52 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Thanks for the feedback John. Yes, "air castles" is the expression that I was looking for. You also made me realize that my Disqus plugin on my blog is not working.</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195833" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195833" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195833'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember odd alt thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-195836">
+        <div id="comment-195836" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-25T04:54:34+00:00"
+                >June 25, 2015 at 4:54 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Some very nice work indeed Mr C. 🙂 </p>
+</div>
+              </div>
+
+            <div id="comment-actions-195836" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195836" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195836'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember bypostauthor even depth-2 ds-blog-post-comment" id="li-comment-195847">
+        <div id="comment-195847" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-25T05:02:34+00:00"
+                >June 25, 2015 at 5:02 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hey Arden, this is a surprise! Nice to hear from you. Thanks for the feedback.</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195847" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195847" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195847'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-matthewbillingham odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-195837">
+        <div id="comment-195837" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/matthew.billingham">
+                <img alt='Author&#039;s profile photo Matthew Billingham' src='https://avatars.services.sap.com/images/matthew.billingham_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Matthew Billingham' href='https://people.sap.com/matthew.billingham' rel='external nofollow' class='ds-link ds-user__name ' >Matthew Billingham</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-25T05:37:23+00:00"
+                >June 25, 2015 at 5:37 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Really super. I'm learning a couple of functional languages at the moment (clojure and R), having been inspired by <a class="jiveTT-hover-user jive-link-profile-small" data-containerid="-1" data-containertype="-1" data-objectid="8010" data-objecttype="3" href="http://scn.sap.com/people/chris.whealy" rel="nofollow"  target="_blank">Chris Whealy</a> and <a class="jiveTT-hover-user jive-link-profile-small" data-containerid="-1" data-containertype="-1" data-objectid="218073" data-objecttype="3" href="http://scn.sap.com/people/christian.drumm" rel="nofollow"  target="_blank">Christian Drumm</a> (check out their blogs on the subject).</p>
+</p>
+<p>One enhancement - instead of input output, how about using a text control as a <a class="jive-link-external-small" href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop" rel="nofollow"  target="_blank">REPL</a>?</p>
+</p>
+<p>Oh... and a cool name is needed. How about "thap". (That's SAP, with a lisp).</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195837" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195837" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195837'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember bypostauthor even depth-2 ds-blog-post-comment" id="li-comment-195848">
+        <div id="comment-195848" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-25T06:25:09+00:00"
+                >June 25, 2015 at 6:25 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hello Matthew,</p>
+</p>
+<p>I am actually working on a text-control based editor, hoping to turn it into more of an IDE (using my <a class="jive-link-blog-small" data-containerid="30827" data-containertype="37" data-objectid="126008" data-objecttype="38" href="/?p=126008" rel="nofollow">registry solution</a> to store and retrieve scripts).</p>
+</p>
+<p>I have been playing around with some names, but I thought I might wait until I get a bit more traction. (Personally I was thinking about naming it "Barcelona", for all my Spanish friends (one, by my last count), who pronounce it with a 'th' 🙂 but I would be a little cautious as I wouldn't want to offend anyone (especially those with a true speech impediment).</p>
+</p>
+<p>Anyway, all the best with your learning! It's fun, right?</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195848" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195848" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195848'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-christiandrumm odd alt thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-195834">
+        <div id="comment-195834" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/christian.drumm">
+                <img alt='Author&#039;s profile photo Christian Drumm' src='https://avatars.services.sap.com/images/christian.drumm_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Christian Drumm' href='https://people.sap.com/christian.drumm' rel='external nofollow' class='ds-link ds-user__name ' >Christian Drumm</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--mentor-alumni" title="This user is an SAP Mentor Alumnus" data-role-name="Mentor Alumni"></i><i class="ds-user__role ds-user__role--champion" title="This user is an SAP Champion" data-role-name="SAP Champion"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-25T06:16:19+00:00"
+                >June 25, 2015 at 6:16 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Martin,</p>
+</p>
+<p>great work. I'll definitely try this out myself.</p>
+<p>A REPL would be a very cool extension indeed. I've been thinking for a while if something like a REPL would be possible for ABAP at all. I'd love to have the possibility to try some SAP APIs without the need to write a test report again and again.</p>
+</p>
+<p>Christian</p>
+</p>
+<p>ps.:<a class="jiveTT-hover-user jive-link-profile-small" data-containerid="-1" data-containertype="-1" data-objectid="24079" data-objecttype="3" href="http://scn.sap.com/people/matthew.billingham" rel="nofollow"  target="_blank">Matthew Billingham</a>: Thanks for the pointer!</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195834" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195834" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195834'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember bypostauthor even depth-2 ds-blog-post-comment" id="li-comment-195835">
+        <div id="comment-195835" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-25T06:40:55+00:00"
+                >June 25, 2015 at 6:40 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Thanks Chris.</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195835" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195835" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195835'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-peterinotai odd alt thread-even depth-1 ds-blog-post-comment" id="li-comment-195838">
+        <div id="comment-195838" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/peter.inotai">
+                <img alt='Author&#039;s profile photo Peter Inotai' src='https://avatars.services.sap.com/images/peter.inotai_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Peter Inotai' href='https://people.sap.com/peter.inotai' rel='external nofollow' class='ds-link ds-user__name ' >Peter Inotai</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-25T12:36:52+00:00"
+                >June 25, 2015 at 12:36 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Very cool 🙂 </p>
+<p>I'm looking forward for the next version.</p>
+<p>Peter</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195838" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195838" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195838'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-naimeshpatel even thread-odd thread-alt depth-1 ds-blog-post-comment" id="li-comment-195841">
+        <div id="comment-195841" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/naimesh.patel">
+                <img alt='Author&#039;s profile photo Naimesh Patel' src='https://avatars.services.sap.com/images/naimesh.patel_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Naimesh Patel' href='https://people.sap.com/naimesh.patel' rel='external nofollow' class='ds-link ds-user__name ' >Naimesh Patel</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-25T13:39:11+00:00"
+                >June 25, 2015 at 1:39 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hello Martin, Nicely done 🙂 </p>
+</p>
+<p>I didn't even know before reading this that LISP exist. The code also looks great, I still have to test it out though.</p>
+</p>
+<p>Great Work.</p>
+</p>
+<p>Regards,<br />Naimesh Patel</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195841" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195841" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195841'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-195849">
+        <div id="comment-195849" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-25T15:11:37+00:00"
+                >June 25, 2015 at 3:11 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Thanks Naimesh. I hope you take the time to check out Lisp programming in general; it's highly recommended! 🙂</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195849" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195849" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195849'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+    <div class="comment byuser comment-author-jelenaperfiljeva even thread-even depth-1 ds-blog-post-comment" id="li-comment-195839">
+        <div id="comment-195839" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/jelena.perfiljeva">
+                <img alt='Author&#039;s profile photo Jelena Perfiljeva' src='https://avatars.services.sap.com/images/jelena.perfiljeva_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Jelena Perfiljeva' href='https://people.sap.com/jelena.perfiljeva' rel='external nofollow' class='ds-link ds-user__name ' >Jelena Perfiljeva</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--mentor" title="This user is an SAP Mentor" data-role-name="Mentor"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-25T16:28:11+00:00"
+                >June 25, 2015 at 4:28 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>This is some fine artisan-grade ABAP. 🙂 Thanks for sharing, awesome blog!</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195839" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195839" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195839'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember bypostauthor odd alt depth-2 ds-blog-post-comment" id="li-comment-195840">
+        <div id="comment-195840" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-06-25T16:38:48+00:00"
+                >June 25, 2015 at 4:38 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Thank you Jelena, glad you liked it.</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195840" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195840" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195840'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-jacquesnomssi even depth-3 ds-blog-post-comment" id="li-comment-195842">
+        <div id="comment-195842" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/jacques.nomssi">
+                <img alt='Author&#039;s profile photo Jacques Nomssi' src='https://avatars.services.sap.com/images/jacques.nomssi_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Jacques Nomssi' href='https://people.sap.com/jacques.nomssi' rel='external nofollow' class='ds-link ds-user__name ' >Jacques Nomssi</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-07-07T11:47:35+00:00"
+                >July 7, 2015 at 11:47 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hello Martin,</p>
+</p>
+<p><span style="font-size: 13.3333330154419px;">Nice work, I think I will dive in your code by automating the tests with ABAP unit. </span></p>
+<p>Note the july 2nd commit breaks the ABAP native function integration test (<span style="font-size: 10pt;">symbol changed from abap-function to ab-function).</span></p>
+</p>
+<p>best regards,</p>
+</p>
+<p>JNN </p>
+</div>
+              </div>
+
+            <div id="comment-actions-195842" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195842" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195842'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-formermember bypostauthor odd alt depth-4 ds-blog-post-comment" id="li-comment-195843">
+        <div id="comment-195843" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-07-07T16:31:42+00:00"
+                >July 7, 2015 at 4:31 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Thank you Jacques, I would appreciate the help. I especially need help in doing negative tests. My tests are very superficial and cover positive cases.</p>
+<p>I must warn you, however, that I am making rather significant changes, which means fixes would only happen slowly. In fact, at the moment I am breaking more than I am fixing.</p>
+<p>On the positive side, the interface for the interpreter does not change due to the changes I am making; only, as you point out, the symbols for built-in functions could change here and there.</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195843" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195843" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195843'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            <div class="ds-blog-post-comment__comments">
+    <div class="comment byuser comment-author-jacquesnomssi even depth-5 ds-blog-post-comment" id="li-comment-195844">
+        <div id="comment-195844" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/jacques.nomssi">
+                <img alt='Author&#039;s profile photo Jacques Nomssi' src='https://avatars.services.sap.com/images/jacques.nomssi_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Jacques Nomssi' href='https://people.sap.com/jacques.nomssi' rel='external nofollow' class='ds-link ds-user__name ' >Jacques Nomssi</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-07-30T02:47:22+00:00"
+                >July 30, 2015 at 2:47 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hello Martin,</p>
+</p>
+<p>I have made a fork of your latest public code with:</p>
+<p>- a text control based editor</p>
+<p>- ABAP Unit tests</p>
+<p>- more validation to avoid short dumps.</p>
+</p>
+<p>It is all here: <a class="jive-link-external-small" href="http://wiki.scn.sap.com/wiki/display/Snippets/Lisp+Interpreter+in+ABAP" rel="nofollow"  target="_blank">Lisp Interpreter in ABAP - Code Gallery - SCN Wiki</a></p>
+<p>Hope you will integrate some of it in your code base.</p>
+</p>
+<p>best regards,</p>
+</p>
+<p>JNN</p>
+<p><a href="http://wiki.scn.sap.com/wiki/download/attachments/428605896/abap_lisp.png?version=1&amp;modificationDate=1438223859000&amp;api=v2" rel="nofollow"  target="_blank"><img class="jive-image ds-lightbox__img" alt="http://wiki.scn.sap.com/wiki/download/attachments/428605896/abap_lisp.png?version=1&amp;modificationDate=1438223859000&amp;api=v2" height="350" src="http://wiki.scn.sap.com/wiki/download/attachments/428605896/abap_lisp.png?version=1&amp;modificationDate=1438223859000&amp;api=v2" style="width: 457px; height: 349.704347826087px;" width="457" data-index="1" data-id="clbox-195844" /></a></p>
+</div>
+              </div>
+
+            <div id="comment-actions-195844" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195844" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195844'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+        <div id="content-lightbox-modal--195844"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="clbox-195844"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="clbox-195844" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="http://wiki.scn.sap.com/wiki/download/attachments/428605896/abap_lisp.png?version=1&modificationDate=1438223859000&api=v2" alt="http://wiki.scn.sap.com/wiki/download/attachments/428605896/abap_lisp.png?version=1&modificationDate=1438223859000&api=v2"/></div></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>    </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-formermember bypostauthor odd alt depth-5 ds-blog-post-comment" id="li-comment-195845">
+        <div id="comment-195845" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/former.member">
+                <img alt='Author&#039;s profile photo Former Member' src='https://avatars.services.sap.com/images/former.member_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Former Member' href='https://people.sap.com/former.member' rel='external nofollow' class='ds-link ds-user__name disabled' aria-disabled='true'>Former Member</a> <div class="ds-user__note">Blog Post Author</div>                 </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-07-30T12:27:14+00:00"
+                >July 30, 2015 at 12:27 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hello Jacques,</p>
+<p>Sorry I have been a bit out of touch lately. That's excellent work with the Lisp editor! I was developing something that uses the Javascript Ace Editor (<a class="jive-link-external-small" href="http://ace.c9.io/#nav=about" rel="nofollow"  target="_blank">Ace - The High Performance Code Editor for the Web</a>) running in an HTML view control; <span style="font-size: 13.3333330154419px;">it provides syntax highlighting but </span>it makes the integration rather difficult. I suspect your solution will be a lot easier to maintain.</p>
+<p>I got your other message too, by the way. I will respond shortly on your email address!</p>
+<p>Kind Regards,</p>
+<p>Martin</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195845" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195845" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195845'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-peterinotai even depth-5 ds-blog-post-comment" id="li-comment-195846">
+        <div id="comment-195846" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/peter.inotai">
+                <img alt='Author&#039;s profile photo Peter Inotai' src='https://avatars.services.sap.com/images/peter.inotai_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Peter Inotai' href='https://people.sap.com/peter.inotai' rel='external nofollow' class='ds-link ds-user__name ' >Peter Inotai</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-07-30T12:45:22+00:00"
+                >July 30, 2015 at 12:45 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi,</p>
+<p>I just wonder if using the new ABAP editor control, passing "LISP" as language would work if some XML file would be prepared for LISP in the </p>
+<p>...\AppData\Roaming\SAP\SAP GUI\ABAP Editor\ folder. However I'm not sure what the logic is for that in the editor control, or the languages are hardcoded somewhere in the backend side. Anyway worth to try.</p>
+<p>Maybe @<a class="jiveTT-hover-user jive-link-profile-small" data-containerid="-1" data-containertype="-1" data-objectid="5996" data-objecttype="3" href="http://scn.sap.com/people/alexey.arseniev" rel="nofollow"  target="_blank">Alexey Arseniev</a> could help us to make it work.</p>
+</p>
+<p>Peter</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195846" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195846" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195846'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-peterinotai odd alt depth-5 ds-blog-post-comment" id="li-comment-195850">
+        <div id="comment-195850" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/peter.inotai">
+                <img alt='Author&#039;s profile photo Peter Inotai' src='https://avatars.services.sap.com/images/peter.inotai_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Peter Inotai' href='https://people.sap.com/peter.inotai' rel='external nofollow' class='ds-link ds-user__name ' >Peter Inotai</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-07-30T13:41:57+00:00"
+                >July 30, 2015 at 1:41 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Just gave a try and seems to work:</p>
+<p><a href="/wp-content/uploads/2015/07/lisp1_759428.jpg" rel="nofollow"><img class="jive-image ds-lightbox__img" alt="lisp1.JPG" src="/wp-content/uploads/2015/07/lisp1_759428.jpg" data-index="1" data-id="clbox-195850" /></a></p>
+<p><span class="L0S52">DATA</span><span class="L0S55">:</span></p>
+<p>&nbsp;&nbsp;&nbsp; lr_controller <span class="L0S52">TYPE </span><span class="L0S52">REF </span><span class="L0S52">TO </span>cl_gui_custom_container<span class="L0S55">,</span></p>
+<p>&nbsp;&nbsp;&nbsp; lr_editor&nbsp;&nbsp;&nbsp;&nbsp; <span class="L0S52">TYPE </span><span class="L0S52">REF </span><span class="L0S52">TO </span>cl_gui_sourceedit<span class="L0S55">,</span></p>
+<p><span class="L0S55">...</span></p>
+<p><span class="L0S52">CREATE </span>OBJECT lr_controller</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; <span class="L0S52">EXPORTING</span></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; container_name <span class="L0S55">= </span><span class="L0S33">'MAIN'</span><span class="L0S55">.</span></p>
+</p>
+<p>&nbsp;&nbsp; <span class="L0S52">CREATE </span>OBJECT lr_editor</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; <span class="L0S52">EXPORTING</span></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; parent <span class="L0S55">= </span>lr_controller<span class="L0S55">.</span></p>
+</p>
+<p>&nbsp;&nbsp; lr_editor<span class="L0S70">-&gt;</span>set_source_type<span class="L0S55">( </span><span class="L0S33">'LISP' </span><span class="L0S55">)</span><span class="L0S55">.</span></p>
+<p>&nbsp;&nbsp; lr_editor<span class="L0S70">-&gt;</span>set_limit_text<span class="L0S55">( </span>line_length <span class="L0S55">= </span><span class="L0S32">255 </span><span class="L0S55">)</span><span class="L0S55">.</span></p>
+<p>&nbsp;&nbsp; lr_editor<span class="L0S70">-&gt;</span>create_document<span class="L0S55">( </span><span class="L0S55">)</span><span class="L0S55">.</span></p>
+<p>&nbsp;&nbsp; lr_editor<span class="L0S70">-&gt;</span>upload_properties<span class="L0S55">( </span><span class="L0S55">)</span><span class="L0S55">.</span></p>
+<p><span class="L0S55"><br /></span></p>
+<p><span class="L0S55">I copied the ABAP files to LISP files:</span></p>
+<p><span class="L0S55"><br /></span></p>
+<p><span class="L0S55"><a href="/wp-content/uploads/2015/07/lisp_files_759430.jpg" rel="nofollow"><img class="jive-image ds-lightbox__img" alt="lisp_files.JPG" src="/wp-content/uploads/2015/07/lisp_files_759430.jpg" data-index="2" data-id="clbox-195850" /></a></span></p>
+<p><span class="L0S55"><br /></span></p>
+<p><span class="L0S55"><br /></span></p>
+<p><span class="L0S55"><br /></span></p>
+<p>added some keywords and it seems to work.</p>
+<p><a href="/wp-content/uploads/2015/07/lisp_files2_759434.jpg" rel="nofollow"><img class="jive-image ds-lightbox__img" alt="lisp_files2.JPG" src="/wp-content/uploads/2015/07/lisp_files2_759434.jpg" data-index="3" data-id="clbox-195850" /></a></p>
+<p>Only problem that these files have to be maintained locally. But just for fun it should be ok.</p>
+<p>Peter</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195850" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195850" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195850'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+        <div id="content-lightbox-modal--195850"aria-modal="true" aria-label="Lightbox gallery opened" role="dialog" tabindex="-1" class="ds-lightbox" data-id="clbox-195850"><div class="ds-lightbox__box"><div class="ds-lightbox__slideNumber"><span class="ds-lightbox__slideNumber--current"></span>/<span class="ds-lightbox__slideNumber--total"></span></div><div class="ds-lightbox__header"><a href="javascript:void(0);" data-id="clbox-195850" class="ds-lightbox__headerIcon ds-icon-encoded--close" aria-label="Close lightbox"></a></div><div class="ds-lightbox__content--scrollable ds-lightbox__content"><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2015/07/lisp1_759428.jpg" alt="lisp1.JPG"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2015/07/lisp_files_759430.jpg" alt="lisp_files.JPG"/></div><div class="ds-lightbox__slide"><img class="ds-lightbox__slide--img" src="/wp-content/uploads/2015/07/lisp_files2_759434.jpg" alt="lisp_files2.JPG"/></div><a class="lightbox-gallery-button--prev ds-lightbox__gallery-button ds-icon ds-icon--arrow-left" href="javascript:void(0);" aria-label="Show previous image"></a><a class="ds-lightbox__gallery-button lightbox-gallery-button--next ds-icon ds-icon--arrow-right" href="javascript:void(0);" aria-label="Show next image"></a></div><div class="zoom-buttons"><a class="ds-lightbox__zoom-out" href="javascript:void(0);" aria-label="Enter to zoom out"><i class="ds-icon ds-icon--minus"></i></a><a class="ds-lightbox__zoom-in" href="javascript:void(0);" aria-label="Enter to zoom in"><i class="ds-icon ds-icon--plus"></i></a></div></div></div>    </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-alexeyarseniev even depth-5 ds-blog-post-comment" id="li-comment-195851">
+        <div id="comment-195851" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/alexey.arseniev">
+                <img alt='Author&#039;s profile photo Alexey Arseniev' src='https://avatars.services.sap.com/images/alexey.arseniev_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Alexey Arseniev' href='https://people.sap.com/alexey.arseniev' rel='external nofollow' class='ds-link ds-user__name ' >Alexey Arseniev</a>  <div class="ds-user__roles"><i class="ds-user__role ds-user__role--employee" title="This user is an SAP Employee" data-role-name="SAP Employee"></i></div>                </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-07-31T15:20:17+00:00"
+                >July 31, 2015 at 3:20 pm</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Peter,</p>
+</p>
+<p>good try 🙂 Yes, it shall work more or less OK, while Lisp sintax is rather simple. One can get also folding rather easy, adding:</p>
+<p>&nbsp; &lt;STRUCTURES&gt;</p>
+<p>&nbsp;&nbsp;&nbsp; &lt;Structure open="(" close=")"/&gt;</p>
+<p>&nbsp; &lt;/STRUCTURES&gt;</p>
+<p>to syntax file. As in ams_spec.xml</p>
+<p>And another yes, as far as I know, there is no other way as placing syntax files locally.</p>
+</p>
+<p>BR, Alexey.</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195851" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195851" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195851'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+    <div class="comment byuser comment-author-peterinotai odd alt depth-5 ds-blog-post-comment" id="li-comment-195852">
+        <div id="comment-195852" class="ds-blog-post-comment__wrapper">
+                    <div class="ds-blog-post-comment__header">
+              <a class="ds-blog-post-comment__avatar" target="_blank" rel="noopener noreferrer" href="https://people.sap.com/peter.inotai">
+                <img alt='Author&#039;s profile photo Peter Inotai' src='https://avatars.services.sap.com/images/peter.inotai_small.png' class='avatar avatar-48 photo avatar-default ds-avatar-component ds-avatar-component--small' height='48' width='48' />              </a>
+              <div class="ds-blog-post-comment__meta-info">
+                <div class="ds-user ds-blog-post-comment__author">
+                  <a target='_blank' aria-label='Author name Peter Inotai' href='https://people.sap.com/peter.inotai' rel='external nofollow' class='ds-link ds-user__name ' >Peter Inotai</a>                  </div>
+                <span class="ds-blog-post-comment__date"><time datetime="2015-08-03T07:11:24+00:00"
+                >August 3, 2015 at 7:11 am</time></span>
+              </div>
+            </div>
+
+            <div class="ds-blog-post-comment__body">
+              <div class="ds-blog-post-comment__content ds-editor-content">
+                <div class="jive-rendered-content">
+<p>Hi Alexey,</p>
+<p>Thanks a lot for your quick help!</p>
+<p>I feel honored that the "Godfather of the new ABAP editor" helped us 🙂 </p>
+<p>Peter</p>
+</div>
+              </div>
+
+            <div id="comment-actions-195852" class="comment-actions ds-blog-post-comment__actions">
+                <ul class="ds-content-actionbar ds-actionbar--links" role="menubar" aria-label="action menu">
+                    <!-- render like, reply, edit, delete links -->
+                    <li class='ds-content-actionbar__item'><span class='ds-link ds-button--link ds-content-actionbar__link ds-button--disabled'><div class="ds-button__inner-container " id="nbLikeComment_195852" tabindex="-1">Like 0</span></span></li><li class='ds-content-actionbar__item'><div class='ds-tooltip__wrapper'><div class='ds-tooltip__anchor'><a class='ds-link ds-button--link ds-content-actionbar__link'  href='https://blogs.sap.com/2015/06/24/a-lisp-interpreter-in-abap/#comment-195852'>Share</a></div><div role='tooltip' class='ds-tooltip ds-tooltip--bottom'>Right click and copy the link to share this comment</div></div></li>                </ul>
+                <div class="ds-actionbar--forms"></div>
+            </div>
+          </div>
+        </div>
+            </div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+</div><!-- .children -->
+</div><!-- #comment-## -->
+
+      
+        </div> <!-- main comments content area -->
+
+    
+            
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+                </div> <!-- #main -->
+                <div id="shared_footer" class="dm-container dm-wrapper">
+                    <footer class="dm-footer">
+    <div class="dm-footer__inner-wrapper">
+        <div class="dm-socialmedia">
+            <h5 class="dm-socialmedia__headline" id="hl-sharefollow">Find us on</h5>
+            <ul class="dm-socialmedia__links" aria-labelledby="hl-sharefollow">
+                <li><a href="https://www.facebook.com/sapcommunity" title="Facebook"><span class="dm-icon-encoded--facebook"></span></a></li>
+                <li><a href="https://twitter.com/SAPCommunity" title="Twitter"><span class="dm-icon-encoded--twitter"></span></a></li>
+                <li><a href="https://www.youtube.com/c/SAPCommunities" title="YouTube"><span class="dm-icon-encoded--youtube"></span></a></li>
+                <li><a href="https://www.linkedin.com/company/sap" title="LinkedIn"><span class="dm-icon-encoded--linkedin"></span></a></li>
+                <li><a href="https://instagram.com/sap/" title="Instagram"><span class="dm-icon-encoded--instagram"></span></a></li>
+                <li><a href="http://www.slideshare.net/SAP" title="Slideshare"><span class="dm-icon-encoded--slideshare"></span></a></li>
+                <li><a href="mailto:?subject='SAP Community'" title="Email Share"><span class="dm-icon-encoded--email"></span></a></li>
+            </ul>
+        </div>
+        <nav role="navigation" class="dm-footer__navigation">
+            <ul class="dm-footer__navigation__list" aria-label="footer navigation">
+                <li><a href="http://sap.com/about/legal/privacy.html" target="_blank">Privacy</a></li>
+                <li><a href="http://sap.com/corporate/en/legal/terms-of-use.html" target="_blank">Terms of Use</a></li>
+                <li><a href="http://sap.com/about/legal/impressum.html" target="_blank">Legal Disclosure</a></li>
+                <li><a href="http://sap.com/about/legal/copyright.html" target="_blank">Copyright</a></li>
+                <li><a href="http://sap.com/about/legal/trademark.html" target="_blank">Trademark</a></li>
+                <li id="teconsent"></li>
+                <li><a href="https://www.sap.com/cmp/nl/sap-community-voice/index.html" target="_blank">Newsletter</a></li>
+                <li><a href="mailto:sapnetwork@sap.com" target="_blank">Support</a></li>
+            </ul>
+        </nav>
+    </div>
+</footer>                </div>
+            </div> <!-- #page -->
+            <script type="application/ld+json" data-schema="127576-post-Default">{"@context":"https:\/\/schema.org\/","@type":"BlogPosting","@id":"https:\/\/blogs.sap.com\/2015\/06\/24\/a-lisp-interpreter-in-abap\/#BlogPosting","mainEntityOfPage":"https:\/\/blogs.sap.com\/2015\/06\/24\/a-lisp-interpreter-in-abap\/","headline":"A Lisp interpreter in ABAP","name":"A Lisp interpreter in ABAP","description":"I have long thought about writing a Lisp interpreter in ABAP, after coming across an article by Peter Norvig entitled &#8220;(How to Write a (Lisp) Interpreter (in Python))&#8220;. In that article, he shows how to","datePublished":"2015-06-24","dateModified":"2015-06-24","author":{"@type":"Person","@id":"https:\/\/blogs.sap.com\/author\/former.member\/#Person","name":"Former Member","url":"https:\/\/blogs.sap.com\/author\/former.member\/","image":{"@type":"ImageObject","@id":"https:\/\/avatars.services.sap.com\/images\/former.member_small.png","url":"https:\/\/avatars.services.sap.com\/images\/former.member_small.png","height":96,"width":96}},"publisher":{"@type":"Organization","name":"SAP Community Blogs","logo":{"@type":"ImageObject","@id":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","url":"https:\/\/blogs.sap.com\/wp-content\/uploads\/2020\/03\/SAP_scrn_R-2.png","width":600,"height":60}},"image":{"@type":"ImageObject","@id":"\/wp-content\/uploads\/2015\/06\/saplambda_732475.jpg","url":"\/wp-content\/uploads\/2015\/06\/saplambda_732475.jpg","height":"93","width":"186"},"url":"https:\/\/blogs.sap.com\/2015\/06\/24\/a-lisp-interpreter-in-abap\/","about":["Uncategorized"],"wordCount":5624,"keywords":["abap","code","functional programming","Open Source"]}</script>
+<script type="application/ld+json" data-schema="Breadcrumb">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"2015","item":"https:\/\/blogs.sap.com\/2015\/#breadcrumbitem"},{"@type":"ListItem","position":2,"name":"06","item":"https:\/\/blogs.sap.com\/2015\/\/06\/#breadcrumbitem"},{"@type":"ListItem","position":3,"name":"24","item":"https:\/\/blogs.sap.com\/2015\/\/06\/\/24\/#breadcrumbitem"},{"@type":"ListItem","position":4,"name":"A Lisp interpreter in ABAP","item":"https:\/\/blogs.sap.com\/2015\/06\/24\/a-lisp-interpreter-in-abap\/#breadcrumbitem"}]}</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/action-tooltip-handler.js' id='tooltip-handler-js'></script>
+<script type='text/javascript' id='unified_header-js-extra'>
+/* <![CDATA[ */
+var headerInitArgs = {"system":"blogs","wrapperID":"page","breadcrumbItems":[{"text":"Blogs","href":"https:\/\/blogs.sap.com"}]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/com-hdr/v8/57.37.4/shared-ui/1dx-assets/js/scn-header.min.js' id='unified_header-js'></script>
+<script type='text/javascript' id='unified_header-js-after'>
+            scnHeader.init(headerInitArgs);
+            setCookie("userArgs", headerInitArgs.user ? JSON.stringify(headerInitArgs.user) : "", { path : "/" });
+    
+</script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/header.js' id='designmate_header_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/subheader.js' id='designmate_subheader_script-js'></script>
+<script type='text/javascript' src='https://static.community.services.sap/designmate/v3/136/latest/designmate.js' id='designmate_script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-includes/js/comment-reply.min.js' id='comment-reply-js'></script>
+<script type='text/javascript' id='satm_handler-js-extra'>
+/* <![CDATA[ */
+var satmContentSelectors = ["div.dm-contentDetail__body-content","div.dm-list-comments__item-content","div.ds-blog-post__body","div.ds-blog-post-comment__content"];
+var satmProfileBaseUrl = "people.sap.com\/";
+var satmChangeableElementsSelectors = ["div.dm-list-comments__item-content","div.ds-blog-post-comment__content"];
+var satmPluginEnabled = "1";
+var satmApiUrl = "https:\/\/uss.api.community.sap.com";
+var satmApiCallWithCredentials = "1";
+var satmRequestDelayMs = "100";
+/* ]]> */
+</script>
+<script type='text/javascript' defer src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-at-mention/js/sap-at-mention.min.js' id='satm_handler-js'></script>
+<script type='text/javascript' id='sap-comment-validation-js-extra'>
+/* <![CDATA[ */
+var commentValidation = {"validateMaxLinks":"1","max_links_number":"7","BLOGS_PAGE":"single"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-comment-editor/js/sap-comment-validation.min.js' id='sap-comment-validation-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-post-status.min.js' id='scn_post_status_check-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/jquery-plugins.min.js' id='sap_jquery_plugins-js'></script>
+<script type='text/javascript' id='sap-login-csrf-cookie-js-extra'>
+/* <![CDATA[ */
+var sapLoginCookieConfig = {"cookieName":"SAP_BLOGS_ANONYMOUS_NONCE","sapActionName":"s_action"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-core-custom/include/js/sap-login-csrf-cookie.min.js' id='sap-login-csrf-cookie-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-lightbox-gallery/lib/lightbox-gallery.min.js' id='sap_lightbox_gallery_js-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/choices.min.js' id='choices.js-js'></script>
+<script type='text/javascript' id='wprc-script-js-extra'>
+/* <![CDATA[ */
+var wprcajaxhandler = {"ajaxurl":"https:\/\/blogs.sap.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-report-content/static/js/v3/scripts.min.js' id='wprc-script-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/single.min.js' id='sap_single_v3-js'></script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/js/onscroll-sticky.min.js' id='onscroll_sticky-js'></script>
+<script type='text/javascript' id='blog-detail-page-js-extra'>
+/* <![CDATA[ */
+var alertReasonsSelectArgs = {"selectId":"sap-blog-alert-reasons","reasons":["Incorrect Tag\/Category\r","Cross-Posting\r","Private Information\r","Unprofessional Conduct\r","Spam"]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/themes/sap-v3-neo/dist/blog-detail.min.js' id='blog-detail-page-js'></script>
+<script type='text/javascript' id='sap_assignedtags_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var assignedTagsWidgetSettings = {"maxItemsBeforeHide":"7","data":{"ABAP Development":"https:\/\/blogs.sap.com\/tags\/833755570260738661924709785639136\/","abap":"https:\/\/blogs.sap.com\/tag\/abap\/","code":"https:\/\/blogs.sap.com\/tag\/code\/","functional programming":"https:\/\/blogs.sap.com\/tag\/functional-programming\/","Open Source":"https:\/\/blogs.sap.com\/tag\/open-source\/"},"widgetClassname":".ds-assigned-tags"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/assigned-tags/js/sap-assigned-tags-widget.min.js' id='sap_assignedtags_widget_js_v3-js'></script>
+<script type='text/javascript' id='sap_relatedcontent_widget_js_v3-js-extra'>
+/* <![CDATA[ */
+var relatedContentWidgetSettings = {"widgetSelector":".widget_sap-relatedcontent-widget-v3","contentServiceUrl":"https:\/\/content.services.sap.com\/cse\/search\/topic","profileUrl":"https:\/\/people.sap.com","targetContentItem":{"id":127576,"type":"blogpost","title":"A Lisp interpreter in ABAP","primary_tag":"833755570260738661924709785639136"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.sap.com/res1dx-135/wp-content/plugins/sap-widgets/include/related-content/js/sap-related-content-widget.min.js' id='sap_relatedcontent_widget_js_v3-js'></script>
+<div id="wp-load_tinymce-wrap" class="wp-core-ui wp-editor-wrap html-active"><link rel='stylesheet' id='dashicons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/dashicons.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='editor-buttons-css'  href='https://blogs.sap.com/res1dx-135/wp-includes/css/editor.min.css' type='text/css' media='all' />
+<style>#wp-load_tinymce-wrap {display:none;}</style>
+<div id="wp-load_tinymce-editor-container" class="wp-editor-container"><div id="qt_load_tinymce_toolbar" class="quicktags-toolbar"></div><textarea class="wp-editor-area" rows="20" cols="40" name="load_tinymce" id="load_tinymce"></textarea></div>
+</div>
+
+<link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/skin.min.css?wp-mce-49110-20201110' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/plugins/codesample/css/prism.css' as='style'><link rel='preload' href='https://blogs.sap.com/wp-includes/js/tinymce/skins/lightgray/content.min.css?wp-mce-49110-20201110' as='style'>
+		<script type="text/javascript">
+		tinyMCEPreInit = {
+			baseURL: "https://blogs.sap.com/wp-includes/js/tinymce",
+			suffix: ".min",
+						mceInit: {},
+			qtInit: {'load_tinymce':{id:"load_tinymce",buttons:"strong,em,link,block,del,ins,img,ul,ol,li,code,more,close"}},
+			ref: {plugins:"",theme:"modern",language:""},
+			load_ext: function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
+		};
+		</script>
+				<script type="text/javascript">
+		var ajaxurl = "/wp-admin/admin-ajax.php";
+		( function() {
+			var init, id, $wrap;
+
+			if ( typeof tinymce !== 'undefined' ) {
+				if ( tinymce.Env.ie && tinymce.Env.ie < 11 ) {
+					tinymce.$( '.wp-editor-wrap ' ).removeClass( 'tmce-active' ).addClass( 'html-active' );
+					return;
+				}
+
+				for ( id in tinyMCEPreInit.mceInit ) {
+					init = tinyMCEPreInit.mceInit[id];
+					$wrap = tinymce.$( '#wp-' + id + '-wrap' );
+
+					if ( ( $wrap.hasClass( 'tmce-active' ) || ! tinyMCEPreInit.qtInit.hasOwnProperty( id ) ) && ! init.wp_skip_init ) {
+						tinymce.init( init );
+
+						if ( ! window.wpActiveEditor ) {
+							window.wpActiveEditor = id;
+						}
+					}
+				}
+			}
+
+			if ( typeof quicktags !== 'undefined' ) {
+				for ( id in tinyMCEPreInit.qtInit ) {
+					quicktags( tinyMCEPreInit.qtInit[id] );
+
+					if ( ! window.wpActiveEditor ) {
+						window.wpActiveEditor = id;
+					}
+				}
+			}
+		}());
+		</script>
+				<div id="wp-link-backdrop" style="display: none"></div>
+		<div id="wp-link-wrap" class="wp-core-ui" style="display: none" role="dialog" aria-labelledby="link-modal-title">
+		<form id="wp-link" tabindex="-1">
+		<input type="hidden" id="_ajax_linking_nonce" name="_ajax_linking_nonce" value="d98c848450" />		<h3 id="link-modal-title">Insert/edit link</h3>
+		<button type="button" id="wp-link-close"><span class="screen-reader-text">Close</span></button>
+		<div id="link-selector">
+			<div id="link-options">
+				<p class="howto" id="wplink-enter-url">Enter the destination URL</p>
+				<div>
+					<label><span>URL</span>
+					<input id="wp-link-url" type="text" aria-describedby="wplink-enter-url" /></label>
+				</div>
+				<div class="wp-link-text-field">
+					<label><span>Link Text</span>
+					<input id="wp-link-text" type="text" /></label>
+				</div>
+				<div class="link-target">
+					<label><span></span>
+					<input type="checkbox" id="wp-link-target" /> Open link in a new tab</label>
+				</div>
+			</div>
+			<p class="howto" id="wplink-link-existing-content">Or link to existing content</p>
+			<div id="search-panel">
+				<div class="link-search-wrapper">
+					<label>
+						<span class="search-label">Search</span>
+						<input type="search" id="wp-link-search" class="link-search-field" autocomplete="off" aria-describedby="wplink-link-existing-content" />
+						<span class="spinner"></span>
+					</label>
+				</div>
+				<div id="search-results" class="query-results" tabindex="0">
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+				<div id="most-recent-results" class="query-results" tabindex="0">
+					<div class="query-notice" id="query-notice-message">
+						<em class="query-notice-default">No search term specified. Showing recent items.</em>
+						<em class="query-notice-hint screen-reader-text">Search or use up and down arrow keys to select an item.</em>
+					</div>
+					<ul></ul>
+					<div class="river-waiting">
+						<span class="spinner"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="submitbox">
+			<div id="wp-link-cancel">
+				<button type="button" class="button">Cancel</button>
+			</div>
+			<div id="wp-link-update">
+				<input type="submit" value="Add Link" class="button button-primary" id="wp-link-submit" name="wp-link-submit">
+			</div>
+		</div>
+		</form>
+		</div>
+		<script type="text/javascript">jQuery(window).on("load", function() {tinymce.codesampleplugin.Prism.highlightAll();});</script><script type='text/javascript'>_satellite.pageBottom();</script>        </div> <!-- .page-wrapper -->
+    </body>
+</html>

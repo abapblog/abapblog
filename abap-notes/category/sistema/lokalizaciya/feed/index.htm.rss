@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Локализация | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/abap-notes/category/sistema/lokalizaciya/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Mon, 15 Mar 2021 20:05:48 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Получить текущую кодировку</title>
+		<link>https://abap-blog.ru/abap-notes/poluchit-tekushhuyu-kodirovku/</link>
+					<comments>https://abap-blog.ru/abap-notes/poluchit-tekushhuyu-kodirovku/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 22 Nov 2020 16:21:37 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=5668</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e4c472f7593440198/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-tekushhuyu-kodirovku/">Получить текущую кодировку</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">TRY.
+    DATA(lv_logon_charset) = ||.
+
+
+    cl_http_utility=&gt;get_logon_charset( IMPORTING id = lv_logon_charset ).
+    WRITE: / lv_logon_charset.
+
+
+  CATCH cx_root INTO DATA(e_txt).
+    WRITE: / e_txt-&gt;get_text( ).
+ENDTRY.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/poluchit-tekushhuyu-kodirovku/">Получить текущую кодировку</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/poluchit-tekushhuyu-kodirovku/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Переключение языка</title>
+		<link>https://abap-blog.ru/abap-notes/pereklyuchenie-yazyka/</link>
+					<comments>https://abap-blog.ru/abap-notes/pereklyuchenie-yazyka/#respond</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sun, 03 May 2020 13:16:07 +0000</pubDate>
+				<guid isPermaLink="false">https://abap-blog.ru/?post_type=epkb_post_type_1&#038;p=4194</guid>
+
+					<description><![CDATA[<p>[crayon-618a1e4c47aec156666963/] &#160;</p>
+<p>The post <a href="https://abap-blog.ru/abap-notes/pereklyuchenie-yazyka/">Переключение языка</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p></p><pre class="urvanov-syntax-highlighter-plain-tag">PARAMETERS:
+  p_langu LIKE sy-langu OBLIGATORY MATCHCODE OBJECT h_t002.
+
+DATA:
+  gt_servers TYPE STANDARD TABLE OF msxxlist WITH DEFAULT KEY.
+
+START-OF-SELECTION.
+
+  CALL FUNCTION 'TH_SERVER_LIST'
+    TABLES
+      list = gt_servers.
+
+  READ TABLE gt_servers ASSIGNING FIELD-SYMBOL(&lt;server&gt;) WITH KEY host = sy-host.
+
+  SET LOCALE LANGUAGE p_langu.
+
+  CALL FUNCTION 'TH_REMOTE_TRANSACTION'
+    EXPORTING
+      tcode = space
+      dest  = &lt;server&gt;-name.</pre><p>&nbsp;</p><p>The post <a href="https://abap-blog.ru/abap-notes/pereklyuchenie-yazyka/">Переключение языка</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/abap-notes/pereklyuchenie-yazyka/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

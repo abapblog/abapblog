@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>выражения | ABAP Blog</title>
+	<atom:link href="https://abap-blog.ru/tag/vyrazheniya/feed/" rel="self" type="application/rss+xml" />
+	<link>https://abap-blog.ru</link>
+	<description>Все о разработке в решениях от SAP</description>
+	<lastBuildDate>Tue, 02 Mar 2021 06:03:32 +0000</lastBuildDate>
+	<language>ru-RU</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8.1</generator>
+	<item>
+		<title>Прощай WRITE TO, привет шаблоны!</title>
+		<link>https://abap-blog.ru/osnovy-abap/proshhaj-write-to-privet-shablony/</link>
+					<comments>https://abap-blog.ru/osnovy-abap/proshhaj-write-to-privet-shablony/#comments</comments>
+		
+		<dc:creator><![CDATA[Astrafox]]></dc:creator>
+		<pubDate>Sat, 13 Oct 2012 10:32:35 +0000</pubDate>
+				<category><![CDATA[Основы ABAP]]></category>
+		<category><![CDATA[выражения]]></category>
+		<category><![CDATA[строковые шаблоны]]></category>
+		<guid isPermaLink="false">http://abap-blog.ru/?p=1016</guid>
+
+					<description><![CDATA[<p>Начиная с версии 7.0, EhP2 в язык ABAP вместе с большими изменениями в выражениях, внедрены так называемые строковые шаблоны. С помощью шаблонов можно сильно сократить объем кода программы, полностью избавившись от оператора WRITE TO и CONCATENATE. Использование шаблонов возможно только в Unicode программах. Далее будут рассмотрены некоторые особенности работы с шаблонами. Шаблоны могут содержать в [&#8230;]</p>
+<p>The post <a href="https://abap-blog.ru/osnovy-abap/proshhaj-write-to-privet-shablony/">Прощай WRITE TO, привет шаблоны!</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></description>
+										<content:encoded><![CDATA[<p><a href="http://help.sap.com/abapdocu_731/en/std/STRING_TEMPLATE.xml" target="_blank" rel="noopener"><img loading="lazy" class="wp-image-1030 alignright" title="string_template" src="http://abap-blog.ru/wp-content/uploads/2012/10/string_template.png" alt="" width="372" height="95" srcset="https://abap-blog.ru/wp-content/uploads/2012/10/string_template.png 620w, https://abap-blog.ru/wp-content/uploads/2012/10/string_template-300x76.png 300w" sizes="(max-width: 372px) 100vw, 372px" /></a>Начиная с версии 7.0, EhP2 в язык ABAP вместе с большими изменениями в выражениях, внедрены так называемые строковые шаблоны. С помощью шаблонов можно сильно сократить объем кода программы, полностью избавившись от оператора <strong>WRITE TO</strong> и <strong>CONCATENATE</strong>.</p>
+<p>Использование шаблонов возможно только в <a href="http://help.sap.com/abapdocu_731/en/abenunicode_program_glosry.htm" target="_blank" rel="noopener"><strong>Unicode</strong></a> программах.<br />
+Далее будут рассмотрены некоторые особенности работы с шаблонами.</p>
+<p><span id="more-1016"></span></p>
+<p>Шаблоны могут содержать в себе как простую текстовую последовательность, так и встроенные выражения, и управляющие символы (\n\r\t). Специальные символы экранируются символом &#171;\&#187;</p>
+<p>Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">s2 = |Linebreak:\n. Tab: \t. Reserved: \\, \{, \}.|.</pre><p>Результат:</p><pre class="urvanov-syntax-highlighter-plain-tag">S2 = `Linebreak: . Tab: . Reserved: \, {, }.`</pre><p>Шаблон должен начинаться с символа «|» и так же заканчиваться им в той же строке исходного кода. Исключением из этого правила могут быть встроенные выражения, которые система позволяет переносить на новую строку.</p><pre class="urvanov-syntax-highlighter-plain-tag">gv_str = | { go_dt-&gt;add_day( 1 
+                   )-&gt;add_hours( 1 
+                   )-&gt;add_minutes( 1 
+                   )-&gt;date( ) } |.</pre><p>Для объединения строковых шаблонов могут использоваться как оператор «&amp;» так и «&amp;&amp;». Таким образом шаблон может быть длинной в несколько строк, кроме того не запрещается использовать комментарии при переносе шаблона.</p><pre class="urvanov-syntax-highlighter-plain-tag">gv_str = | { go_dt-&gt;add_day( 1 "добавляем день, час, минуту
+                   )-&gt;add_hours( 1 
+                   )-&gt;add_minutes( 1 
+                   )-&gt;date( ) } |.</pre><p><strong>Примечания:</strong></p>
+<ul>
+<li>Символ «|» является частью синтаксиса ABAP, для того чтобы использовать его в тексте необходимо воспользоваться escape символом \. Подсветка данного символа так же может быть настроена в опциях редактора.</li>
+<li>При использовании оператора «&amp;» в строковых шаблонах, нет ограничения на длину до 255 символов.</li>
+</ul>
+<p>Гибкость использования шаблонов обеспечивает внедрение в них встроенных выражений. Выражение должно  быть помещено в фигурные скобки «{}». Между скобками справа и слева должен быть как минимум один пробел. В качестве выражения могут выступать:</p>
+<ul>
+<li>Встроенные функции (возвращающие результат &#8212; substring и т.п.)</li>
+<li>Рассчитываемые выражения (арифметические операции, битовые выражения, символьные выражения)</li>
+<li>Функциональные методы (методы классов) или цепочка вызовов методов, возвращающая результат</li>
+<li>Значения переменных (sy-datum и т.п.)</li>
+</ul>
+<p>Результат работы выражения должен быть в виде, который преобразуем в строковую последовательность.</p>
+<p>Пример:</p><pre class="urvanov-syntax-highlighter-plain-tag">s1 = |A VALUE:{SQRT(9)/2}. Another VALUE:{ lcl=&gt;mi(2)}.|.</pre><p>Результат:</p><pre class="urvanov-syntax-highlighter-plain-tag">S1 =`A value: 1.5. Another value: 20.`</pre><p>Когда происходит анализ встроенного выражения, его результат преобразуется в строку и вставляется в указанном месте, формат строки может быть либо стандартным, либо переопределен с помощью опции форматирования и ключевых слов.</p>
+<p>Следующий пример демонстрирует использование опций форматирования выражения, для вывода даты в ISO формате:</p><pre class="urvanov-syntax-highlighter-plain-tag">gv_str = | { sy-datum DATE=ISO} |.</pre><p>Анализ строкового шаблона происходит последовательно слева на право.</p>
+<p><strong>Примечания:</strong></p>
+<ul>
+<li>Для отображения фигурных скобок необходимо использовать escape символ «\»</li>
+<li>Фигурные скобки не могут быть вложенными напрямую. Опции форматирования нельзя использовать для выражений следующим образом:<br />
+<pre class="urvanov-syntax-highlighter-plain-tag">gv_str = | { sy-datum DATE = ISO } |.</pre>
+</li>
+</ul>
+<p>Примеры использования строковых выражений можно найти в программе: <strong>DEMO_EXPRESSIONS</strong>. Описание встроенных параметров форматирования выражений можно найти либо в справке по F1, либо по адресу: <a href="http://help.sap.com/abapdocu_731/en/abapcompute_string_format_options.htm">http://help.sap.com/abapdocu_731/en/abapcompute_string_format_options.htm</a>.</p>
+<p>Пример того как использование строковых шаблонов помогло сократить объем кода и сделать его более понятным для восприятия.</p>
+<p>До:</p>
+<p>&nbsp;</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: tmp TYPE STRING,
+        tmp2 TYPE STRING.
+
+  IF HIDDEN EQ 'X'.
+    CONCATENATE tmp2 'display:none;' INTO tmp2 SEPARATED BY SPACE.
+  ENDIF.
+
+  IF WIDTH IS NOT INITIAL.
+    CONCATENATE tmp2 'width:' WIDTH ';' INTO tmp2 SEPARATED BY SPACE.
+  ENDIF.
+
+  CONCATENATE tmp2 'style="' tmp2 '"' INTO tmp2 SEPARATED BY SPACE.
+
+  IF CENTER EQ 'X'.
+    CONCATENATE tmp2 'id="center"' INTO tmp2 SEPARATED BY SPACE.
+  ENDIF.
+
+  IF COLSPAN IS NOT INITIAL.
+    CONCATENATE 'colspan="' colspan '"' INTO tmp.
+    CONCATENATE tmp2 tmp INTO tmp2 SEPARATED BY SPACE.
+  ENDIF.
+
+  IF CLASS IS NOT INITIAL.
+    CONCATENATE 'class="' CLASS '"' INTO tmp.
+    CONCATENATE tmp2 tmp INTO tmp2 SEPARATED BY SPACE.
+  ENDIF.
+
+  tmp = VALUE.
+  CONCATENATE '&lt;TD ' tmp2 '&gt;' INTO tmp SEPARATED BY SPACE.
+  CONCATENATE tmp VALUE '&lt;/td&gt;' INTO tmp.
+  APPEND tmp TO CONTENT.</pre><p>После:</p><pre class="urvanov-syntax-highlighter-plain-tag">DATA: tmp TYPE STRING,
+   lv_html_td = |&lt;td STYLE="| &amp;
+               |{ iif( i_a = hidden i_b = 'display:none;' ) }| &amp;
+               |{ iif( i_a = invisible i_b = 'visibility:hidden;' ) }| &amp;
+               |" | &amp;
+               |{ iif( i_a = WIDTH i_b = ' width="' &amp;&amp; WIDTH &amp;&amp; '"' ) }| &amp;
+               |{ iif( i_a = CENTER i_b = ' id="center"' ) }| &amp;
+               |{ iif( i_a = colspan i_b = ' colspan="' &amp;&amp; colspan &amp;&amp; '"' ) }| &amp;
+               |{ iif( i_a = CLASS i_b = ' class="' &amp;&amp; CLASS &amp;&amp; '"' ) }| &amp;
+               |&gt;{ VALUE }&lt;/td&gt;|.
+
+  APPEND lv_html_td TO content.</pre><p></p><p>The post <a href="https://abap-blog.ru/osnovy-abap/proshhaj-write-to-privet-shablony/">Прощай WRITE TO, привет шаблоны!</a> first appeared on <a href="https://abap-blog.ru">ABAP Blog</a>.</p>]]></content:encoded>
+					
+					<wfw:commentRss>https://abap-blog.ru/osnovy-abap/proshhaj-write-to-privet-shablony/feed/</wfw:commentRss>
+			<slash:comments>8</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>
